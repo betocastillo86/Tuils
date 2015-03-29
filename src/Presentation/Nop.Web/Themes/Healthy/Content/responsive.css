@@ -756,7 +756,7 @@
  * Widescreen          -   1200px
  */
 .container { padding: 0 10px; margin: 0 auto; clear: none; }
-.row:after { content: "."; display: block; height: 0; clear: none; visibility: hidden; }
+.row:after { /*content: ".";*/ display: block; height: 0; clear: none; visibility: hidden; }
 html.ie7 .row { display: inline-block; }
 html.ie6 .row { height: 1%; }
 html.oldie .container { width: 940px; }
