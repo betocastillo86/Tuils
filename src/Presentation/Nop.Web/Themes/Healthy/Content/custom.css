@@ -91,8 +91,8 @@ nav #mega-menu li .sub li.mega-hdr a.mega-hdr-a {
 .price-range-filter .filter-title { background: none repeat scroll 0 0 transparent; padding: 0 0 0 10px; }
 .block li { padding: 4px 1px 3px 5px; }
 
-/*.header-links a:hover,*/.block a:hover,.block-category-navigation .active > a:hover, .block-manufacturer-navigation .active a:hover,.block-account-navigation a.inactive:hover {color:#95B009 !important; }/*rewrite for styles.css*/
-a:hover {color:#95B009}
+/*.header-links a:hover,*/.block a:hover,.block-category-navigation .active > a:hover, .block-manufacturer-navigation .active a:hover,.block-account-navigation a.inactive:hover {color:#FA4C2A !important; }/*rewrite for styles.css*/
+a:hover {color:#FA4C2A}
 .block a,.block-category-navigation .active > a, .block-manufacturer-navigation .active a {color:#666 }
 p { line-height: 17px; }
 
@@ -207,7 +207,7 @@ sitemap-page .topic-box .item, .sitemap-page .manufacturer-box .item, .sitemap-p
 .footer-disclaimer, .footer-poweredby { text-align: left;}
 #social {float: right;margin: -10px 0 0;}
 #social a {display: inline-block; height: 28px; width: 33px; border-radius: 2px;}
-#social a.first {margin:0 }
+#social a.first {/*margin:0*/ }
 
 a.facebook, a.twitter, a.youtube{background:#FB7055; color: #FFF; font-size: 25px; text-align: center; padding: 3px 0; margin: 0 10px 0 0;}
 .bottom-footer {background: none repeat scroll 0 0 #F7F7F7;clear: both;height: 240px;margin-bottom: 20px;padding-top: 0;width: 100%;}
@@ -372,16 +372,15 @@ h2, h3 { font-size: 14px; }
 .product-viewmode {line-height: 25px; }
     .product-viewmode > a { display: inline-block; font-size: 1.6em; margin-left: 5px; vertical-align: bottom; }
     .product-viewmode .fontawesome-reorder { font-size: 1.75em; }
-.product-viewmode a.active {cursor:default;color: #95B009; }
+.product-viewmode a.active {cursor:default;color: #FA4C2A; }
 .list.icon {margin-right:0 }
 
 #tab-container h1 {font-size:18px; }
 .header .fontawesome-phone { display: inline-block; font-size: 1.5em; margin-right: 10px; margin-top: -5px; }
 #social .fontawesome-phone { margin-top: 5px; }
 #social > ul { margin: 5px 0; }
-.fontawesome-phone:before,.fontawesome-envelope-alt:before {font-size: 1.2em;}
-.fontawesome-phone,.fontawesome-envelope-alt {font-size: 1.3em;line-height: 1.6em;color:#FB7055; }
-.fontawesome-phone a{ color:#95B009 }
+.fontawesome-phone,.fontawesome-envelope-alt {font-size: 16px; line-height: 1.6em; color:#FB7055; font-weight: 200;}
+.fontawesome-phone a{ color:#FA4C2A; }
 .fontawesome-plus, .fontawesome-minus { position: absolute; right: 25px; }
 .estimate-shipping { min-height: 150px; }
 .shipping-results {max-width: 220px;}
