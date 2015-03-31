@@ -27,6 +27,8 @@
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>f94c814a</NuGetPackageImportStamp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -192,7 +194,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Api\CategoryController.cs" />
+    <Compile Include="Controllers\Api\CategoriesController.cs" />
     <Compile Include="Controllers\BasePublicController.cs" />
     <Compile Include="Controllers\BoardsController.cs" />
     <Compile Include="Controllers\BackInStockSubscriptionController.cs" />
@@ -208,6 +210,7 @@
     <Compile Include="Controllers\ExternalAuthenticationController.cs" />
     <Compile Include="Controllers\InstallController.cs" />
     <Compile Include="Controllers\PollController.cs" />
+    <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="Controllers\PrivateMessagesController.cs" />
     <Compile Include="Controllers\TopicController.cs" />
@@ -227,6 +230,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\BundleConfig.cs" />
     <Compile Include="Infrastructure\Cache\ModelCacheEventConsumer.cs" />
     <Compile Include="Infrastructure\BackwardCompatibility2XRouteProvider.cs" />
     <Compile Include="Infrastructure\GenericUrlRouteProvider.cs" />
@@ -349,6 +353,7 @@
     <Compile Include="Models\Profile\ProfileIndexModel.cs" />
     <Compile Include="Models\Profile\PostsModel.cs" />
     <Compile Include="Models\Profile\ProfilePostsModel.cs" />
+    <Compile Include="Models\Sales\PublishProductModel.cs" />
     <Compile Include="Models\ShoppingCart\MiniShoppingCartModel.cs" />
     <Compile Include="Models\ShoppingCart\WishlistEmailAFriendModel.cs" />
     <Compile Include="Models\ShoppingCart\WishlistModel.cs" />
@@ -959,6 +964,14 @@
     <Content Include="Content\tinymce\skins\lightgray\skin.min.css" />
     <Content Include="Content\tinymce\themes\modern\theme.min.js" />
     <Content Include="Content\tinymce\tinymce.min.js" />
+    <Content Include="Scripts\backbone.js" />
+    <Content Include="Scripts\backbone.min.js" />
+    <Content Include="Scripts\backbone\models\tuils.category.js" />
+    <Content Include="Scripts\backbone\models\tuils.product.js" />
+    <Content Include="Scripts\backbone\tuils.router.js" />
+    <Content Include="Scripts\backbone\views\tuils.publishProduct.productDetail.js" />
+    <Content Include="Scripts\backbone\views\tuils.publishProduct.selectCategoryView.js" />
+    <Content Include="Scripts\backbone\views\tuils.publishProductView.js" />
     <Content Include="Scripts\fineuploader\edit.gif" />
     <Content Include="Scripts\fineuploader\fineuploader-4.2.2.css" />
     <Content Include="Scripts\fineuploader\fineuploader-4.2.2.min.css" />
@@ -1020,6 +1033,8 @@
     <Content Include="Content\kendo\2014.1.318\images\kendoui.woff" />
     <Content Include="Content\kendo\2014.1.318\images\kendoui.ttf" />
     <Content Include="App_Data\uas_20140809-02.ini" />
+    <Content Include="Scripts\backbone.min.map" />
+    <Content Include="Scripts\backbone\tuils.app.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />
@@ -1523,6 +1538,9 @@
     <Content Include="Scripts\kendo\2014.1.318\kendo.binder.min.js.map" />
     <Content Include="Scripts\kendo\2014.1.318\kendo.autocomplete.min.js.map" />
     <Content Include="Scripts\kendo\2014.1.318\jquery.min.map" />
+    <Content Include="Scripts\underscore.js" />
+    <Content Include="Scripts\underscore.min.js" />
+    <Content Include="Scripts\underscore.min.map" />
     <None Include="Scripts\_references.js" />
     <Content Include="Themes\DefaultClean\Content\images\free-shipping.png" />
     <Content Include="Themes\DefaultClean\Content\images\mobile-menu-collapse.png" />
@@ -2263,8 +2281,13 @@
     <Content Include="Themes\Healthy\Views\Shared\_RootPopup.cshtml" />
     <Content Include="Themes\Healthy\Views\ShoppingCart\OrderSummary.cshtml" />
     <Content Include="Themes\Healthy\Views\Web.config" />
+    <Content Include="Views\Sales\Index.cshtml" />
+    <Content Include="Views\Sales\PublishProduct.cshtml" />
+    <Content Include="Views\Sales\_SelectCategory.cshtml" />
+    <Content Include="Views\Sales\_ProductDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\Api\" />
     <Folder Include="Plugins\bin\" />
   </ItemGroup>
   <ItemGroup>
@@ -2565,4 +2588,5 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

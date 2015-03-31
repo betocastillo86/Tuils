@@ -32,9 +32,23 @@ namespace Nop.Web.Extensions
                 MetaDescription = entity.GetLocalized(x => x.MetaDescription),
                 MetaTitle = entity.GetLocalized(x => x.MetaTitle),
                 SeName = entity.GetSeName(),
+                ChildrenCategories = entity.SubCategories.ToModels()
             };
             return model;
         }
+
+        public static List<CategoryModel> ToModels(this ICollection<Category> entities)
+        {
+            var models = new List<CategoryModel>();
+            
+            foreach (var entity in entities)
+            {
+                models.Add(entity.ToModel());
+            }
+            return models;
+        }
+
+
 
         //manufacturer
         public static ManufacturerModel ToModel(this Manufacturer entity)

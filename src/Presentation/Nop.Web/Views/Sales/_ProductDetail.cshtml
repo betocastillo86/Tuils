@@ -1,0 +1,19 @@
+﻿@model Nop.Web.Models.Sales.PublishProductModel
+
+<div>
+    <div>
+        @T("PublishProduct.ProductTitle") : <input id="txtTitle" type="text"  />
+    </div>
+    <div>
+        @T("PublishProduct.Manufacturer") : @Html.DropDownList("ddlManufacturer", new SelectList(Model.Manufacturers, "Id", "Name", "-"))
+    </div>
+    <div>
+        @T("PublishProduct.HasShipping") : <input id="chkHasShipping" type="checkbox" />
+    </div>
+    <div>
+        @T("PublishProduct.ShippingValue") : $ <input id="chkShippingValue" type="checkbox" />
+    </div>
+    <div>
+        @T("PublishProduct.Price") :  $ <input id="txtPrice" type="text" />
+    </div>
+</div>

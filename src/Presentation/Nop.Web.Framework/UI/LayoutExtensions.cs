@@ -153,6 +153,31 @@ namespace Nop.Web.Framework.UI
             var pageHeadBuilder = EngineContext.Current.Resolve<IPageHeadBuilder>();
             pageHeadBuilder.AppendScriptParts(location, part, excludeFromBundle);
         }
+
+        /// <summary>
+        /// Agrega los recursos basicos de Backbone, es decir backbonejs, underscorejs y la app y router
+        /// </summary>
+        /// <param name="html">helper</param>
+        public static void AppendScriptsBasicBackbone(this HtmlHelper html)
+        {
+            AppendScriptParts(html, ResourceLocation.Head, "~/Scripts/backbone/tuils.router.js", false);
+            AppendScriptParts(html, ResourceLocation.Head, "~/Scripts/backbone/tuils.app.js", false);
+            AppendScriptParts(html, ResourceLocation.Head, "~/Scripts/backbone.js", false);
+            AppendScriptParts(html, ResourceLocation.Head, "~/Scripts/underscore.js", false);
+        }
+        
+        
+        /// <summary>
+        /// Agrega una parte creada previmente de JS
+        /// </summary>
+        //public static void AppendScriptPart(this HtmlHelper html, ResourceLocation location, params string[] parts)
+        //{
+        //    foreach (var part in parts)
+        //    {
+                    
+        //    }
+        //}
+
         /// <summary>
         /// Generate all script parts
         /// </summary>

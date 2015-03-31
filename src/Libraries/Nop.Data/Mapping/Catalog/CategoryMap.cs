@@ -13,6 +13,18 @@ namespace Nop.Data.Mapping.Catalog
             this.Property(c => c.MetaTitle).HasMaxLength(400);
             this.Property(c => c.PriceRanges).HasMaxLength(400);
             this.Property(c => c.PageSizeOptions).HasMaxLength(200);
+
+            this.Ignore(c => c.SubCategories);
+
+            this.HasMany(c => c.SpecialCategoriesByProduct)
+                .WithRequired(cs => cs.Category)
+                .WillCascadeOnDelete(false);
+
+            this.HasMany(c => c.Manufacturers)
+                .WithRequired(m => m.Category)
+                .HasForeignKey(m => m.CategoryId)
+                .WillCascadeOnDelete(false);
+
         }
     }
 }

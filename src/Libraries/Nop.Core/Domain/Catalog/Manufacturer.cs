@@ -3,6 +3,7 @@ using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Seo;
 using Nop.Core.Domain.Stores;
+using System.Collections.Generic;
 
 namespace Nop.Core.Domain.Catalog
 {
@@ -11,6 +12,8 @@ namespace Nop.Core.Domain.Catalog
     /// </summary>
     public partial class Manufacturer : BaseEntity, ILocalizedEntity, ISlugSupported, IAclSupported, IStoreMappingSupported
     {
+        private ICollection<ManufacturerCategory> _categories;
+        
         /// <summary>
         /// Gets or sets the name
         /// </summary>
@@ -100,5 +103,13 @@ namespace Nop.Core.Domain.Catalog
         /// Gets or sets the date and time of instance update
         /// </summary>
         public DateTime UpdatedOnUtc { get; set; }
+
+        /// <summary>
+        /// Categorias que aplican para la marca
+        /// </summary>
+        public virtual ICollection<ManufacturerCategory> Categories {
+            get { return _categories ?? new List<ManufacturerCategory>(); }
+            set { _categories = value;  }
+        }
     }
 }

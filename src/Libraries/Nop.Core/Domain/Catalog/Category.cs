@@ -14,6 +14,10 @@ namespace Nop.Core.Domain.Catalog
     public partial class Category : BaseEntity, ILocalizedEntity, ISlugSupported, IAclSupported, IStoreMappingSupported
     {
         private ICollection<Discount> _appliedDiscounts;
+        private ICollection<SpecialCategoryProduct> _specialCategoriesByProduct;
+        private ICollection<Category> _subCategories;
+        private ICollection<ManufacturerCategory> _manufacturers;
+        
 
         /// <summary>
         /// Gets or sets the name
@@ -130,12 +134,34 @@ namespace Nop.Core.Domain.Catalog
         public DateTime UpdatedOnUtc { get; set; }
 
         /// <summary>
+        /// Subcategorias con las que cuenta la principal
+        /// </summary>
+        public virtual ICollection<Category> SubCategories {
+            get { return _subCategories ?? new List<Category>(); }
+            set { _subCategories = value; }
+        }
+
+        /// <summary>
+        /// Marcas que aplican para la categoria
+        /// </summary>
+        public virtual ICollection<ManufacturerCategory> Manufacturers
+        {
+            get { return _manufacturers ?? new List<ManufacturerCategory>(); }
+            set { _manufacturers = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the collection of applied discounts
         /// </summary>
         public virtual ICollection<Discount> AppliedDiscounts
         {
             get { return _appliedDiscounts ?? (_appliedDiscounts = new List<Discount>()); }
             protected set { _appliedDiscounts = value; }
+        }
+        
+        public virtual ICollection<SpecialCategoryProduct> SpecialCategoriesByProduct {
+            get { return _specialCategoriesByProduct ?? (_specialCategoriesByProduct = new List<SpecialCategoryProduct>()); }
+            protected set { _specialCategoriesByProduct = value; }
         }
     }
 }

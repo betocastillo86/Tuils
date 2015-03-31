@@ -90,5 +90,42 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="productManufacturer">Product manufacturer mapping</param>
         void UpdateProductManufacturer(ProductManufacturer productManufacturer);
+
+        /// <summary>
+        /// Retonra todas las categorias asociadadas a una marca
+        /// </summary>
+        /// <param name="manufacturerId">id de la marca por la que se desea filtrar</param>
+        /// <param name="showHidden"></param>
+        /// <returns></returns>
+        IList<ManufacturerCategory> GetCategoriesByManufacturerId(int manufacturerId, bool showHidden = false);
+
+        /// <summary>
+        /// Inserta una relación de una narca con una categoria
+        /// </summary>
+        /// <param name="manufacturerCategory">datos de la relación</param>
+        void InsertManufacturerCategory(ManufacturerCategory manufacturerCategory);
+
+        /// <summary>
+        /// Actualiza los datos de la relación de la marca y la categoria
+        /// </summary>
+        /// <param name="manufacturerCategory">datos de la marca y categoria</param>
+        void UpdateProductCategory(ManufacturerCategory manufacturerCategory);
+
+
+        /// <summary>
+        /// Elimina la relación de una marca con una cateogoria
+        /// </summary>
+        /// <param name="manufacturerCategory">objeto a ser eliminado</param>
+        void DeleteManufacturerCategory(ManufacturerCategory manufacturerCategory);
+
+        /// <summary>
+        /// Retorna la relaciona de una categoria con una marca
+        /// </summary>
+        /// <param name="manufacturerCategoryId">id de la relación</param>
+        /// <returns></returns>
+        ManufacturerCategory GetManufacturerCategoryById(int manufacturerCategoryId);
+
+
+        
     }
 }

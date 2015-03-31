@@ -77,6 +77,7 @@ namespace Nop.Web.Controllers
         private readonly ForumSettings _forumSettings;
         private readonly LocalizationSettings _localizationSettings;
         private readonly CaptchaSettings _captchaSettings;
+        private readonly TuilsSettings _tuilsSettings;
 
         #endregion
 
@@ -112,7 +113,8 @@ namespace Nop.Web.Controllers
             NewsSettings newsSettings,
             ForumSettings forumSettings,
             LocalizationSettings localizationSettings, 
-            CaptchaSettings captchaSettings)
+            CaptchaSettings captchaSettings,
+            TuilsSettings tuilsSettings)
         {
             this._categoryService = categoryService;
             this._productService = productService;
@@ -146,6 +148,7 @@ namespace Nop.Web.Controllers
             this._forumSettings = forumSettings;
             this._localizationSettings = localizationSettings;
             this._captchaSettings = captchaSettings;
+            this._tuilsSettings = tuilsSettings;
         }
 
         #endregion
@@ -803,6 +806,31 @@ namespace Nop.Web.Controllers
             Response.ContentType = "text/plain";
             Response.Write(sb.ToString());
             return null;
+        }
+
+
+        /// <summary>
+        /// Retorna un Json con la configuración algunas variables de la aplicación
+        /// </summary>
+        /// <returns>Objeto json con la información de la configuración</returns>
+        public  JavaScriptResult JsConfiguration()
+        {
+            var config = new { 
+                    
+                        configuration = new {
+                            //Configuración de las categorias base
+                            productBaseTypes = new
+                            {
+                                product = _tuilsSettings.productBaseTypes_product,
+                                service = _tuilsSettings.productBaseTypes_service,
+                                bike = _tuilsSettings.productBaseTypes_bike
+                            }
+                        }
+            };
+
+            //Convierte el valor del json a un string
+            var jsonString = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(config);
+            return JavaScript(string.Format("$.extend(TuilsApp, {0})", jsonString));
         }
 
         public ActionResult GenericUrl()

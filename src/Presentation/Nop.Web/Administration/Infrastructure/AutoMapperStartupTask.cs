@@ -204,7 +204,9 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.SelectedCustomerRoleIds, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableStores, mo => mo.Ignore())
                 .ForMember(dest => dest.SelectedStoreIds, mo => mo.Ignore())
-                .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
+                .ForMember(dest => dest.CustomProperties, mo => mo.Ignore())
+                .ForMember(dest => dest.AvailableCategories, mo => mo.Ignore());
+
             Mapper.CreateMap<ManufacturerModel, Manufacturer>()
                 .ForMember(dest => dest.CreatedOnUtc, mo => mo.Ignore())
                 .ForMember(dest => dest.UpdatedOnUtc, mo => mo.Ignore())

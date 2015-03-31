@@ -55,6 +55,14 @@ namespace Nop.Services.Catalog
         /// </summary>
         private const string PRODUCTMANUFACTURERS_PATTERN_KEY = "Nop.productmanufacturer.";
 
+        /// <summary>
+        /// Llave de cache para las categorias por marca
+        /// {0} : categoryId
+        /// {1} : showHidden
+        /// </summary>
+        private const string PRODUCTMANUFACTURERS_CATEGORIES_KEY = "Nop.categorymanufacturer.categories-{0}-{1}";
+
+
         #endregion
 
         #region Fields
@@ -64,6 +72,8 @@ namespace Nop.Services.Catalog
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<AclRecord> _aclRepository;
         private readonly IRepository<StoreMapping> _storeMappingRepository;
+        private readonly IRepository<Category> _categoryRepository;
+        private readonly IRepository<ManufacturerCategory> _manufacturerCategoryRepository;
         private readonly IWorkContext _workContext;
         private readonly IStoreContext _storeContext;
         private readonly IEventPublisher _eventPublisher;
@@ -96,7 +106,9 @@ namespace Nop.Services.Catalog
             IWorkContext workContext,
             IStoreContext storeContext,
             CatalogSettings catalogSettings,
-            IEventPublisher eventPublisher)
+            IEventPublisher eventPublisher,
+            IRepository<ManufacturerCategory> manufacturerCategoryRepository,
+            IRepository<Category> categoryRepository)
         {
             this._cacheManager = cacheManager;
             this._manufacturerRepository = manufacturerRepository;
@@ -108,6 +120,8 @@ namespace Nop.Services.Catalog
             this._storeContext = storeContext;
             this._catalogSettings = catalogSettings;
             this._eventPublisher = eventPublisher;
+            this._manufacturerCategoryRepository = manufacturerCategoryRepository;
+            this._categoryRepository = categoryRepository;
         }
         #endregion
 
@@ -439,6 +453,116 @@ namespace Nop.Services.Catalog
             _eventPublisher.EntityUpdated(productManufacturer);
         }
 
+        #region Categories
+        /// <summary>
+        /// Retorna todas las categorias asociadas a una marca
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="showHidden"></param>
+        /// <returns></returns>
+        public IList<ManufacturerCategory> GetCategoriesByManufacturerId(int manufacturerId, bool showHidden = false)
+        {
+            if (manufacturerId == 0)
+                return new List<ManufacturerCategory>();
+
+            string key = string.Format(PRODUCTMANUFACTURERS_CATEGORIES_KEY, manufacturerId, showHidden);
+            return _cacheManager.Get(key, () =>
+            {
+                var query = from mc in _manufacturerCategoryRepository.Table
+                            join c in _categoryRepository.Table on mc.CategoryId equals c.Id
+                            where mc.ManufacturerId == manufacturerId &&
+                                  !c.Deleted &&
+                                  (showHidden || c.Published)
+                            orderby mc.DisplayOrder
+                            select mc;
+
+                var allMenufactureCategories = query.ToList();
+                return allMenufactureCategories;
+            });
+        }
+
+        /// <summary>
+        /// Inserta la relación entre una marca y una categoria
+        /// </summary>
+        /// <param name="manufacturerCategory">datos de la entidad que se va insertar</param>
+        public void InsertManufacturerCategory(ManufacturerCategory manufacturerCategory)
+        {
+            if (manufacturerCategory == null)
+                throw new ArgumentNullException("manufacturerCategory");
+
+            _manufacturerCategoryRepository.Insert(manufacturerCategory);
+
+            //cache
+            _cacheManager.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(PRODUCTMANUFACTURERS_CATEGORIES_KEY);
+
+            //event notification
+            _eventPublisher.EntityInserted(manufacturerCategory);
+        }
+
+        /// <summary>
+        /// Actualiza los datos de una relación entre una categoria y una marca
+        /// </summary>
+        /// <param name="manufacturerCategory"></param>
+        public void UpdateProductCategory(ManufacturerCategory manufacturerCategory)
+        {
+
+            if (manufacturerCategory == null)
+                throw new ArgumentNullException("manufacturerCategory");
+
+            _manufacturerCategoryRepository.Update(manufacturerCategory);
+
+            //cache
+            _cacheManager.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(PRODUCTMANUFACTURERS_CATEGORIES_KEY);
+
+            //event notification
+            _eventPublisher.EntityUpdated(manufacturerCategory);
+        }
+
+        /// <summary>
+        /// Elimina los datos de una marca y una categoria
+        /// </summary>
+        /// <param name="manufacturerCategory">modelo con los datos a eliminar</param>
+        public void DeleteManufacturerCategory(ManufacturerCategory manufacturerCategory)
+        {
+            if (manufacturerCategory == null)
+                throw new ArgumentNullException("productCategory");
+
+            _manufacturerCategoryRepository.Delete(manufacturerCategory);
+
+            //cache
+            _cacheManager.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(PRODUCTMANUFACTURERS_CATEGORIES_KEY);
+
+            //event notification
+            _eventPublisher.EntityDeleted(manufacturerCategory);
+        }
+
+        /// <summary>
+        /// Retorna la relacion especifica de una marca con una categoria
+        /// </summary>
+        /// <param name="manufacturerCategoryId"></param>
+        /// <returns></returns>
+        public ManufacturerCategory GetManufacturerCategoryById(int manufacturerCategoryId)
+        {
+            return _manufacturerCategoryRepository.Table
+                .FirstOrDefault(mc => mc.Id == manufacturerCategoryId);
+        }
+
         #endregion
+
+        #endregion
+
+
+
+
+
+
+
+
+
+
+        
     }
 }

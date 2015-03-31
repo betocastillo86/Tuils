@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "PublishProduct";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.category.js");
+    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProduct.selectCategoryView.js");
+    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProductView.js");
+    Html.AppendScriptsBasicBackbone();
+    
+    
+}
+
+<h2>PublishProduct</h2>
+
+<div>
+    <h2>@Html.ActionLink("Producto", "PublishProduct")</h2>
+    <h2>@Html.ActionLink("Servicio", "PublishProduct")</h2>
+    <h2>@Html.ActionLink("Moto", "PublishProduct")</h2>
+</div>
+
+<div>
+    <div id="btnPublishProductStep1">@T("PublishProduct.StepMenu1")</div>
+</div>
+
+    <div id="divStep_1">
+        @Html.Partial("_SelectCategory")
+    </div>
+    <div id="divStep_2">
+        @Html.Partial("_ProductDetail")
+    </div>
+
+
+

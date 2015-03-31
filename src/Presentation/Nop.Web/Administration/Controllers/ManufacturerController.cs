@@ -19,6 +19,7 @@ using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Mvc;
+using Nop.Core;
 
 namespace Nop.Admin.Controllers
 {
@@ -44,6 +45,7 @@ namespace Nop.Admin.Controllers
         private readonly IAclService _aclService; 
         private readonly IPermissionService _permissionService;
         private readonly CatalogSettings _catalogSettings;
+        private readonly IWorkContext _workContext;
 
         #endregion
         
@@ -66,7 +68,8 @@ namespace Nop.Admin.Controllers
             IVendorService vendorService,
             IAclService aclService,
             IPermissionService permissionService,
-            CatalogSettings catalogSettings)
+            CatalogSettings catalogSettings,
+            IWorkContext workContext)
         {
             this._categoryService = categoryService;
             this._manufacturerTemplateService = manufacturerTemplateService;
@@ -86,6 +89,7 @@ namespace Nop.Admin.Controllers
             this._aclService = aclService;
             this._permissionService = permissionService;
             this._catalogSettings = catalogSettings;
+            this._workContext = workContext;
         }
 
         #endregion
@@ -274,6 +278,103 @@ namespace Nop.Admin.Controllers
 
         #endregion
 
+        #region Manufacturer categories
+
+        [HttpPost]
+        public ActionResult ManufacturerCategoryList(DataSourceRequest command, int manufacturerId)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+          
+
+            var manufacturerCategories = _manufacturerService.GetCategoriesByManufacturerId(manufacturerId, true);
+            var manufacturerCategoriesModel = manufacturerCategories
+                .Select(x => new ManufacturerModel.ManufacturerCategoryModel
+                {
+                    Id = x.Id,
+                    Category = _categoryService.GetCategoryById(x.CategoryId).GetFormattedBreadCrumb(_categoryService),
+                    ManufacturerId = x.ManufacturerId,
+                    CategoryId = x.CategoryId,
+                    IsFeaturedManufacturer = x.IsFeaturedManufacturer,
+                    DisplayOrder = x.DisplayOrder
+                })
+                .ToList();
+
+            var gridModel = new DataSourceResult
+            {
+                Data = manufacturerCategoriesModel,
+                Total = manufacturerCategoriesModel.Count
+            };
+
+            return Json(gridModel);
+        }
+
+        [HttpPost]
+        public ActionResult ManufacturerCategoryInsert(ManufacturerModel.ManufacturerCategoryModel model)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageManufacturers))
+                return AccessDeniedView();
+
+            var manufacturerId = model.ManufacturerId;
+            var categoryId = model.CategoryId;
+
+            var existingManufacturerCategories = _manufacturerService.GetCategoriesByManufacturerId(manufacturerId, true);
+            if (existingManufacturerCategories.FirstOrDefault(mc => mc.CategoryId == model.CategoryId) == null)
+            {
+                var manufacturerCategory = new ManufacturerCategory
+                {
+                    ManufacturerId = manufacturerId,
+                    CategoryId = categoryId,
+                    DisplayOrder = model.DisplayOrder,
+                    IsFeaturedManufacturer = model.IsFeaturedManufacturer
+                };
+                
+                _manufacturerService.InsertManufacturerCategory(manufacturerCategory);
+            }
+
+            return new NullJsonResult();
+        }
+
+        [HttpPost]
+        public ActionResult ManufacturerCategoryUpdate(ManufacturerModel.ManufacturerCategoryModel model)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageManufacturers))
+                return AccessDeniedView();
+
+            var manufacturerCategory = _manufacturerService.GetManufacturerCategoryById(model.Id);
+            if (manufacturerCategory == null)
+                throw new ArgumentException("No product category mapping found with the specified id");
+
+            
+            manufacturerCategory.CategoryId = model.CategoryId;
+            manufacturerCategory.DisplayOrder = model.DisplayOrder;
+            manufacturerCategory.IsFeaturedManufacturer = model.IsFeaturedManufacturer;
+            
+            _manufacturerService.UpdateProductCategory(manufacturerCategory);
+
+            return new NullJsonResult();
+        }
+
+        [HttpPost]
+        public ActionResult ManufacturerCategoryDelete(int id)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageManufacturers))
+                return AccessDeniedView();
+
+            var manufacturerCategory = _manufacturerService.GetManufacturerCategoryById(id);
+            if (manufacturerCategory == null)
+                throw new ArgumentException("No product category mapping found with the specified id");
+
+            var manufacturerId = manufacturerCategory.ManufacturerId;
+
+            _manufacturerService.DeleteManufacturerCategory(manufacturerCategory);
+
+            return new NullJsonResult();
+        }
+
+        #endregion
+
         #region Create / Edit / Delete
 
         public ActionResult Create()
@@ -291,6 +392,11 @@ namespace Nop.Admin.Controllers
             //Stores
             PrepareStoresMappingModel(model, null, false);
             //default values
+            //Categorias asociadas
+            PrepareCategoriesModel(model, null, false);
+
+
+
             model.PageSize = 4;
             model.Published = true;
 
@@ -298,6 +404,19 @@ namespace Nop.Admin.Controllers
             model.PageSizeOptions = _catalogSettings.DefaultManufacturerPageSizeOptions;
             
             return View(model);
+        }
+
+        private void PrepareCategoriesModel(ManufacturerModel model, Manufacturer manufacturer, bool excludeProperties)
+        {
+            var allCategories = _categoryService.GetAllCategories(showHidden: true);
+            foreach (var category in allCategories)
+            {
+                model.AvailableCategories.Add(new SelectListItem
+                {
+                    Text = category.Name,
+                    Value = category.Id.ToString()
+                });
+            }
         }
 
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
@@ -338,6 +457,8 @@ namespace Nop.Admin.Controllers
             PrepareAclModel(model, null, true);
             //Stores
             PrepareStoresMappingModel(model, null, true);
+            //Categorias asociadas
+            PrepareCategoriesModel(model, null, false);
 
             return View(model);
         }
@@ -369,6 +490,8 @@ namespace Nop.Admin.Controllers
             PrepareAclModel(model, manufacturer, false);
             //Stores
             PrepareStoresMappingModel(model, manufacturer, false);
+            //Categories
+            PrepareCategoriesModel(model, manufacturer, false);
 
             return View(model);
         }
@@ -432,6 +555,8 @@ namespace Nop.Admin.Controllers
             PrepareAclModel(model, manufacturer, true);
             //Stores
             PrepareStoresMappingModel(model, manufacturer, true);
+            //Categories
+            PrepareCategoriesModel(model, manufacturer, false);
 
             return View(model);
         }

@@ -24,6 +24,7 @@ namespace Nop.Core.Domain.Catalog
         private ICollection<TierPrice> _tierPrices;
         private ICollection<Discount> _appliedDiscounts;
         private ICollection<ProductWarehouseInventory> _productWarehouseInventory;
+        private ICollection<SpecialCategoryProduct> _specialCategoryProducts;
 
 
         /// <summary>
@@ -670,6 +671,14 @@ namespace Nop.Core.Domain.Catalog
         {
             get { return _productWarehouseInventory ?? (_productWarehouseInventory = new List<ProductWarehouseInventory>()); }
             protected set { _productWarehouseInventory = value; }
+        }
+
+        /// <summary>
+        /// Listado de categorias especiales de un producto
+        /// </summary>
+        public virtual  ICollection<SpecialCategoryProduct> SpecialCategories{
+            get { return _specialCategoryProducts ?? (_specialCategoryProducts = new List<SpecialCategoryProduct>()); }
+            protected set { _specialCategoryProducts = value; }
         }
     }
 }

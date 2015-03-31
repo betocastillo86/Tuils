@@ -672,6 +672,33 @@ namespace Nop.Web.Infrastructure
                             "page-not-found",
                             new { controller = "Common", action = "PageNotFound" },
                             new[] { "Nop.Web.Controllers" });
+
+
+
+            /************NUEVAS RUTAS TUILS ******/
+            //Javascript de configuraciones
+            routes.MapLocalizedRoute("JsConfiguration",
+               "Scripts/configuration",
+               new { controller = "Common", action = "JsConfiguration" },
+               new[] { "Nop.Web.Controllers" }
+               );
+
+            //publicar producto
+            routes.MapLocalizedRoute("PublishNewItem",
+                "quiero-vender",
+                new { controller = "Sales", action = "Index" },
+                new[] { "Nop.Web.Controllers" }
+                );
+
+            //publicar producto simple
+            routes.MapLocalizedRoute("PublishProduct",
+                "quiero-vender/producto",
+                new { controller = "Sales", action = "PublishProduct" },
+                new[] { "Nop.Web.Controllers" }
+                );
+
+
+
         }
 
         public int Priority

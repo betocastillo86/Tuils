@@ -47,7 +47,7 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
         /// <returns>Category</returns>
-        Category GetCategoryById(int categoryId);
+        Category GetCategoryById(int categoryId, bool includeSubcategories = false);
 
         /// <summary>
         /// Inserts category

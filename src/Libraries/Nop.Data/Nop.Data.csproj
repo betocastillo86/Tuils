@@ -13,6 +13,8 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,8 +64,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapping\Catalog\ManufacturerCategoryMap.cs" />
+    <Compile Include="Mapping\Catalog\SpecialCategoryProductMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeValueMap.cs" />
+    <Compile Include="Migrations\201503270505120_SpecialCategoryByProduct.cs" />
+    <Compile Include="Migrations\201503302358180_ManufacturerCategory.cs" />
+    <Compile Include="Migrations\201503302358180_ManufacturerCategory.Designer.cs">
+      <DependentUpon>201503302358180_ManufacturerCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="DataReaderExtensions.cs" />
@@ -187,12 +197,17 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201503302358180_ManufacturerCategory.resx">
+      <DependentUpon>201503302358180_ManufacturerCategory.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

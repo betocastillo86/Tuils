@@ -17,9 +17,14 @@ namespace Nop.Data
     public class NopObjectContext : DbContext, IDbContext
     {
         #region Ctor
+        public NopObjectContext()
+            : base("name=cs_nopCommerceTuils")
+        {
+            //((IObjectContextAdapter) this).ObjectContext.ContextOptions.LazyLoadingEnabled = true;
+        }
 
         public NopObjectContext(string nameOrConnectionString)
-            : base(nameOrConnectionString)
+            : base("name=cs_nopCommerceTuils")
         {
             //((IObjectContextAdapter) this).ObjectContext.ContextOptions.LazyLoadingEnabled = true;
         }

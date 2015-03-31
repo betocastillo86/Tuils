@@ -22,6 +22,7 @@ namespace Nop.Admin.Models.Catalog
             }
             Locales = new List<ManufacturerLocalizedModel>();
             AvailableManufacturerTemplates = new List<SelectListItem>();
+            AvailableCategories = new List<SelectListItem>();
         }
 
         [NopResourceDisplayName("Admin.Catalog.Manufacturers.Fields.Name")]
@@ -95,6 +96,8 @@ namespace Nop.Admin.Models.Catalog
         public List<StoreModel> AvailableStores { get; set; }
         public int[] SelectedStoreIds { get; set; }
 
+        public IList<SelectListItem> AvailableCategories { get; set; }
+
 
         #region Nested classes
 
@@ -111,6 +114,22 @@ namespace Nop.Admin.Models.Catalog
             public bool IsFeaturedProduct { get; set; }
 
             [NopResourceDisplayName("Admin.Catalog.Manufacturers.Products.Fields.DisplayOrder")]
+            public int DisplayOrder { get; set; }
+        }
+
+        public partial class ManufacturerCategoryModel : BaseNopEntityModel
+        {
+            [NopResourceDisplayName("Admin.Catalog.Manufacturers.Categories.Fields.Category")]
+            public string Category { get; set; }
+
+            public int ManufacturerId { get; set; }
+
+            public int CategoryId { get; set; }
+
+            [NopResourceDisplayName("Admin.Catalog.Manufacturers.Categories.Fields.IsFeaturedProduct")]
+            public bool IsFeaturedManufacturer { get; set; }
+
+            [NopResourceDisplayName("Admin.Catalog.Manufacturers.Categories.Fields.DisplayOrder")]
             public int DisplayOrder { get; set; }
         }
 
@@ -180,5 +199,7 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Manufacturers.Fields.SeName")]
         [AllowHtml]
         public string SeName { get; set; }
+
+        
     }
 }

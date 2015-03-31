@@ -306,14 +306,20 @@ namespace Nop.Services.Catalog
         /// Gets a category
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
+        /// <param name="includeSubCategories">Permite cargar las subcategorias o no </param>
         /// <returns>Category</returns>
-        public virtual Category GetCategoryById(int categoryId)
+        public virtual Category GetCategoryById(int categoryId, bool includeSubCategories = false)
         {
             if (categoryId == 0)
                 return null;
             
             string key = string.Format(CATEGORIES_BY_ID_KEY, categoryId);
-            return _cacheManager.Get(key, () => _categoryRepository.GetById(categoryId));
+            var category = _cacheManager.Get(key, () => _categoryRepository.GetById(categoryId));
+            
+            if(category != null && includeSubCategories)
+                category.SubCategories = GetAllCategoriesByParentCategoryId(categoryId, false);
+
+            return category;
         }
 
         /// <summary>

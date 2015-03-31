@@ -18,6 +18,8 @@ using Nop.Web.Framework.Mvc;
 using Nop.Web.Framework.Mvc.Routes;
 using Nop.Web.Framework.Themes;
 using StackExchange.Profiling;
+using Nop.Web.Infrastructure;
+using System.Web.Optimization;
 
 namespace Nop.Web
 {
@@ -64,6 +66,10 @@ namespace Nop.Web
             //fluent validation
             DataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;
             ModelValidatorProviders.Providers.Add(new FluentValidationModelValidatorProvider(new NopValidatorFactory()));
+
+
+            //Se agregan los Bundle adicionales para Tuils
+            //BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             //start scheduled tasks
             if (databaseInstalled)

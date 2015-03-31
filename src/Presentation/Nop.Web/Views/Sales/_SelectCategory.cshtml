@@ -1,0 +1,38 @@
+﻿
+
+    <div class="divShowCategories">
+
+        
+    </div>
+    <div class="clear"></div>
+
+<script id="templateCategorySelector" type="text/ng-template">
+    <ul class="divCategorySelector" tuils-level="{{obj.currentLevel}}" style="float:left">
+        
+        <%
+              
+            if(obj.ChildrenCategories.length > 0)
+            { 
+                %>
+                
+                    <input type="text" placeholder="@T("PublishProduct.SelectCategoryFilter")"  />
+                
+
+                <%
+                 _.each(obj.ChildrenCategories, function(element, index){ 
+                %>
+                    <li tuils-id="{{element.Id}}" tuils-level="{{obj.currentLevel}}" tuils-filter="{{element.Name.toLowerCase()}}"><a href="javascript:void(0);">{{element.Name}}</a></li>
+                <%
+                });
+            }
+            else
+            {%>
+               <li><h3>Categoria seleccionada = {{obj.Name}}</h3><br />
+                   <input type="button" class="btnFinishSelection" value="@T("PublishProduct.ContinueStep1")"/>
+                </li>
+            <%}
+
+        %>
+    </ul>
+</script>
+

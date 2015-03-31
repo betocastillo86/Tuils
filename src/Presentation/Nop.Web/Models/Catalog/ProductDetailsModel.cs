@@ -83,6 +83,8 @@ namespace Nop.Web.Models.Catalog
 
         public ProductBreadcrumbModel Breadcrumb { get; set; }
 
+        public int CategoryId { get; set; }
+
         public IList<ProductTagModel> ProductTags { get; set; }
 
         public IList<ProductAttributeModel> ProductAttributes { get; set; }
