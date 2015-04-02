@@ -32,23 +32,25 @@
     </li>
 }
 @if (Model.Categories.Count > 0 || !String.IsNullOrWhiteSpace(Model.CustomItems))
-{   
-    <nav>
-        <ul id="mega-menu" class="mega-menu">
-            @if (Model.DisplayHomePage)
-            {
-                <li><a class="home" href="@Url.RouteUrl("HomePage")">@T("HomePage")</a></li>
-            }
-            @foreach (var category in Model.Categories)
-            {
-                @RenderCategoryLine(category)
-            }
-            @if (!String.IsNullOrWhiteSpace(Model.CustomItems))
-            {
-                @Html.Raw(Model.CustomItems)
-            }
-        </ul>
-    </nav>
+{
+    <div class="container hd">
+        <nav>
+            <ul id="mega-menu" class="mega-menu">
+                @if (Model.DisplayHomePage)
+                {
+                    <li><a class="home" href="@Url.RouteUrl("HomePage")">@T("HomePage")</a></li>
+                }
+                @foreach (var category in Model.Categories)
+                {
+                    @RenderCategoryLine(category)
+                }
+                @if (!String.IsNullOrWhiteSpace(Model.CustomItems))
+                {
+                    @Html.Raw(Model.CustomItems)
+                }
+            </ul>
+        </nav>
+    </div>
 
     <script type="text/javascript">
         jQuery(document).ready(function (jQuery) {
