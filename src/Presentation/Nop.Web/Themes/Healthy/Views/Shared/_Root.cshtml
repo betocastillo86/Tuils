@@ -11,10 +11,18 @@
 @if ((browser.Browser == "IE" && browser.MajorVersion > 8) || browser.Browser != "IE")
 {
     <header class="row" role="banner">
+        <div class="header-links-wrapper">
+            <div class="container hd">
+                @Html.Action("HeaderLinks", "Common")
+                @Html.Action("FlyoutShoppingCart", "ShoppingCart")
+            </div>
+        </div>
         <div class="container hd">
             @Html.Partial("Header")
             <div class="header-menu">@Html.Widget("content_before")</div>
         </div>
+        @*added*@
+        @Html.Widget("header_selectors")
     </header>
 }
 

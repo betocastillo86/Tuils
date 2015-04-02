@@ -23,10 +23,6 @@
         </div>
         @*added*@
     </div>
-    <div class="header-links-wrapper">
-        @Html.Action("HeaderLinks", "Common")
-        @Html.Action("FlyoutShoppingCart", "ShoppingCart")
-    </div>
     <div class="search-box">
         @Html.Action("SearchBox", "Catalog")
     </div>
@@ -44,7 +40,5 @@
         <div class="fontawesome-phone">
             @T("Custom.CallUs"): <a href="tel:@T("Custom.PhoneNumber")">@T("Custom.PhoneNumber")</a>
         </div>
-        @*added*@
-        @Html.Widget("header_selectors")
     </div>
 </div>
