@@ -4,7 +4,24 @@ using Nop.Web.Models.Media;
 
 namespace Nop.Web.Models.Catalog
 {
-    public partial class CategoryModel : BaseNopEntityModel
+    public partial class CategoryBaseModel : BaseNopEntityModel
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string MetaKeywords { get; set; }
+        public string SeName { get; set; }
+        
+
+        public IList<CategoryBaseModel> ChildrenCategories { get; set; }
+        
+        public CategoryBaseModel()
+        {
+
+        }
+    }
+
+
+    public partial class CategoryModel : CategoryBaseModel
     {
         public CategoryModel()
         {
@@ -16,12 +33,8 @@ namespace Nop.Web.Models.Catalog
             CategoryBreadcrumb = new List<CategoryModel>();
         }
 
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string MetaKeywords { get; set; }
         public string MetaDescription { get; set; }
         public string MetaTitle { get; set; }
-        public string SeName { get; set; }
         
         public PictureModel PictureModel { get; set; }
 
@@ -34,9 +47,6 @@ namespace Nop.Web.Models.Catalog
 
         public IList<ProductOverviewModel> FeaturedProducts { get; set; }
         public IList<ProductOverviewModel> Products { get; set; }
-
-        public IList<CategoryModel> ChildrenCategories { get; set; }
-        
 
 		#region Nested Classes
 

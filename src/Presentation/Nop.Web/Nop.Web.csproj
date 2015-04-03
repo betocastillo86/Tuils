@@ -195,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Api\CategoriesController.cs" />
+    <Compile Include="Controllers\Api\ManufacturersController.cs" />
     <Compile Include="Controllers\BasePublicController.cs" />
     <Compile Include="Controllers\BoardsController.cs" />
     <Compile Include="Controllers\BackInStockSubscriptionController.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Extensions\ApiExtensions.cs" />
     <Compile Include="Extensions\AttributeParserHelper.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
@@ -241,6 +243,7 @@
     <Compile Include="Infrastructure\BackwardCompatibility1XRouteProvider.cs" />
     <Compile Include="Infrastructure\RouteApiProvider.cs" />
     <Compile Include="Infrastructure\RouteProvider.cs" />
+    <Compile Include="Models\Api\MinifiedJson.cs" />
     <Compile Include="Models\Blogs\BlogPostListModel.cs" />
     <Compile Include="Models\Blogs\BlogPagingFilteringModel.cs" />
     <Compile Include="Models\Blogs\BlogPostTagModel.cs" />
@@ -964,11 +967,18 @@
     <Content Include="Content\tinymce\skins\lightgray\skin.min.css" />
     <Content Include="Content\tinymce\themes\modern\theme.min.js" />
     <Content Include="Content\tinymce\tinymce.min.js" />
+    <Content Include="Scripts\backbone-validation.js" />
+    <Content Include="Scripts\backbone-validation.min.js" />
     <Content Include="Scripts\backbone.js" />
     <Content Include="Scripts\backbone.min.js" />
+    <Content Include="Scripts\backbone.stickit.js" />
+    <Content Include="Scripts\backbone.stickit.min.js" />
     <Content Include="Scripts\backbone\models\tuils.category.js" />
+    <Content Include="Scripts\backbone\models\tuils.manufacturer.js" />
     <Content Include="Scripts\backbone\models\tuils.product.js" />
     <Content Include="Scripts\backbone\tuils.router.js" />
+    <Content Include="Scripts\backbone\tuils.storage.js" />
+    <Content Include="Scripts\backbone\views\tuils.utilities.htmlEditorView.js" />
     <Content Include="Scripts\backbone\views\tuils.publishProduct.productDetail.js" />
     <Content Include="Scripts\backbone\views\tuils.publishProduct.selectCategoryView.js" />
     <Content Include="Scripts\backbone\views\tuils.publishProductView.js" />
@@ -1542,6 +1552,7 @@
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Scripts\underscore.min.map" />
     <None Include="Scripts\_references.js" />
+    <Content Include="Scripts\wysihtml5-0.3.0.min.js" />
     <Content Include="Themes\DefaultClean\Content\images\free-shipping.png" />
     <Content Include="Themes\DefaultClean\Content\images\mobile-menu-collapse.png" />
     <Content Include="Themes\DefaultClean\Content\images\mobile-menu-expand.png" />
@@ -2285,9 +2296,9 @@
     <Content Include="Views\Sales\PublishProduct.cshtml" />
     <Content Include="Views\Sales\_SelectCategory.cshtml" />
     <Content Include="Views\Sales\_ProductDetail.cshtml" />
+    <Content Include="Views\Shared\_TextEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\Api\" />
     <Folder Include="Plugins\bin\" />
   </ItemGroup>
   <ItemGroup>

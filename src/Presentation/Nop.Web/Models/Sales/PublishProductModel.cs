@@ -9,6 +9,6 @@ namespace Nop.Web.Models.Sales
 {
     public class PublishProductModel : BaseNopModel
     {
-        public List<ManufacturerModel> Manufacturers { get; set; }
+        public List<CategoryBaseModel> BikeBrands { get; set; }
     }
 }

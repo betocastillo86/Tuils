@@ -63,6 +63,13 @@ namespace Nop.Services.Catalog
         private const string PRODUCTMANUFACTURERS_CATEGORIES_KEY = "Nop.categorymanufacturer.categories-{0}-{1}";
 
 
+        /// <summary>
+        /// Llave de cache para las categorias por marca
+        /// {0} : categoryId
+        /// </summary>
+        private const string MANUFACTURERS_BY_CATEGORIES_KEY = "Nop.categorymanufacturer.manufacturers-{0}";
+
+
         #endregion
 
         #region Fields
@@ -550,9 +557,37 @@ namespace Nop.Services.Catalog
                 .FirstOrDefault(mc => mc.Id == manufacturerCategoryId);
         }
 
+        /// <summary>
+        /// Retorna la lista de marcas que aplcian a la categoria
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <param name="showHidden"></param>
+        /// <returns></returns>
+        public IList<Manufacturer> GetManufacturersByCategoryId(int categoryId, bool showHidden = false)
+        {
+            if (categoryId == 0)
+                return new List<Manufacturer>();
+
+            string key = string.Format(MANUFACTURERS_BY_CATEGORIES_KEY, categoryId);
+
+            return _cacheManager.Get(key, () => {
+                var query = from mc in _manufacturerCategoryRepository.Table
+                            join m in _manufacturerRepository.Table on mc.ManufacturerId equals m.Id
+                            where mc.CategoryId == categoryId &&
+                                    !m.Deleted &&
+                                    (showHidden || m.Published)
+                            orderby mc.DisplayOrder
+                            select m;
+                return query.ToList();
+            });
+        }
+
         #endregion
 
         #endregion
+
+
+
 
 
 

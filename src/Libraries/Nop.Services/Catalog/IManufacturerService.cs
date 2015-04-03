@@ -100,6 +100,14 @@ namespace Nop.Services.Catalog
         IList<ManufacturerCategory> GetCategoriesByManufacturerId(int manufacturerId, bool showHidden = false);
 
         /// <summary>
+        /// Retorna todas las marcas con filtrados por la categoria que va por parametro
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <param name="showHidden"></param>
+        /// <returns>Listado de marcas</returns>
+        IList<Manufacturer> GetManufacturersByCategoryId(int categoryId, bool showHidden = false);
+
+        /// <summary>
         /// Inserta una relación de una narca con una categoria
         /// </summary>
         /// <param name="manufacturerCategory">datos de la relación</param>

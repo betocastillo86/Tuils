@@ -435,7 +435,7 @@ namespace Nop.Web.Controllers
                 _webHelper.GetThisPageUrl(false),
                 _storeContext.CurrentStore.Id);
 
-            var model = category.ToModel();
+            var model =  category.ToModel();
             
 
 

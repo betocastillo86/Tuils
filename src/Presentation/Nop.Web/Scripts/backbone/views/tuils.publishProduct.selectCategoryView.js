@@ -5,40 +5,38 @@
         "keyup input[type='text']": "filterCategories",
         "click .btnFinishSelection": "finishSelection"
     },
-    
+
     //Tipos de productos posibles
     productType: undefined,
 
     //Nivel Actual de profundidad en el arbol
-    currentLevel : 0,
+    currentLevel: 0,
 
     //Categoria que se está seleccionando
-    currentCategory :0,
+    currentCategory: 0,
 
     //Solo comienza a hacer filtro cuando se pone más de una letra
-    minCharactersForFiltering : 1,
+    minCharactersForFiltering: 1,
 
     //Solo permite filtrar cuando hay más de 5 categorias
-    minChildrenCategoriesForFiltering : 5,
+    minChildrenCategoriesForFiltering: 5,
 
     divShowCategories: undefined,
 
-    template : _.template($("#templateCategorySelector").html()),
+    template: _.template($("#templateCategorySelector").html()),
 
     initialize: function (args) {
-        
+
         this.productType = args.productType;
         this.loadControls();
         this.loadDefaultCategories();
 
         this.render();
     },
-    render: function ()
-    {
+    render: function () {
         return this;
     },
-    loadControls: function ()
-    {
+    loadControls: function () {
         this.divShowCategories = this.$(".divShowCategories");
     },
     loadChildrenCategories: function (parentId) {
@@ -46,36 +44,42 @@
         category.on("sync", this.showCategories, this);
         category.get(this.currentCategory);
     },
-    loadDefaultCategories: function ()
-    {
+    loadDefaultCategories: function () {
         this.currentCategory = this.productType;
         this.loadChildrenCategories();
     },
-    loadCategories : function (obj)
-    {
+    loadCategories: function (obj) {
         obj = $(obj.currentTarget);
-        this.currentCategory = parseInt(obj.attr("tuils-id"));
-        var selectedLevel = parseInt(obj.attr("tuils-level"));
+        
+        var categoryId = parseInt(obj.attr("tuils-id"));
+        //Si la selección llega a ser del botón entonces no la tiene en cuenta
+        if (!isNaN(categoryId)) {
 
-        this.currentLevel = ++selectedLevel;
+            this.currentCategory = categoryId;
 
-        //Elimina las columnas de niveles inferiores
-        this.divShowCategories.find("ul").slice(selectedLevel).remove();
+            var selectedLevel = parseInt(obj.attr("tuils-level"));
 
-        this.loadChildrenCategories(this.currentCategory);
+            this.currentLevel = ++selectedLevel;
+
+            //Elimina las columnas de niveles inferiores
+            this.divShowCategories.find("ul").slice(selectedLevel).remove();
+
+            this.loadChildrenCategories(this.currentCategory);
+        }
+
     },
-    showCategories: function (category)
-    {
+    showCategories: function (category) {
         var obj = category.toJSON();
         obj['currentLevel'] = this.currentLevel;
         this.divShowCategories.append(this.template(obj));
 
-        if (obj.ChildrenCategories.length > 0)
-        {
+        if (obj.ChildrenCategories.length > 0) {
             //Solo permite mostrar el buscador para más de 5 categorias
             if (obj.ChildrenCategories.length < this.minChildrenCategoriesForFiltering)
                 this.divShowCategories.find("ul:last-child input[type='text']").hide();
         }
+
+        this.trigger("categories-loaded");
     },
     filterCategories: function (obj) {
 
@@ -92,8 +96,7 @@
             parentObj.find("li").show();
         }
     },
-    finishSelection : function ()
-    {
+    finishSelection: function () {
         this.trigger("category-selected", this.currentCategory);
     }
 });
