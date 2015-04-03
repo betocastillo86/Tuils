@@ -17,6 +17,9 @@ namespace Nop.Web.Extensions
 {
     public static class MappingExtensions
     {
+        
+        
+        
         //category
         public static CategoryModel ToModel(this Category entity)
         {
@@ -32,12 +35,29 @@ namespace Nop.Web.Extensions
                 MetaDescription = entity.GetLocalized(x => x.MetaDescription),
                 MetaTitle = entity.GetLocalized(x => x.MetaTitle),
                 SeName = entity.GetSeName(),
-                ChildrenCategories = entity.SubCategories.ToModels()
+                ChildrenCategories = entity.SubCategories.ToList().ToBaseModels()
             };
             return model;
         }
 
-        public static List<CategoryModel> ToModels(this ICollection<Category> entities)
+        public static CategoryBaseModel ToBaseModel(this Category entity)
+        {
+            if (entity == null)
+                return null;
+
+            var model = new CategoryBaseModel
+            {
+                Id = entity.Id,
+                Name = entity.GetLocalized(x => x.Name),
+                Description = entity.GetLocalized(x => x.Description),
+                MetaKeywords = entity.GetLocalized(x => x.MetaKeywords),
+                SeName = entity.GetSeName(),
+                ChildrenCategories = entity.SubCategories.ToList().ToBaseModels()
+            };
+            return model;
+        }
+
+        public static List<CategoryModel> ToModels(this IList<Category> entities)
         {
             var models = new List<CategoryModel>();
             
@@ -47,6 +67,29 @@ namespace Nop.Web.Extensions
             }
             return models;
         }
+
+        public static List<CategoryBaseModel> ToBaseModels(this IList<Category> entities)
+        {
+            var models = new List<CategoryBaseModel>();
+
+            foreach (var entity in entities)
+            {
+                models.Add(entity.ToBaseModel());
+            }
+            return models;
+        }
+
+
+        //public static List<CategoryBaseModel> ToBaseModels(this IList<Category> entities)
+        //{
+        //    var models = new List<CategoryBaseModel>();
+
+        //    foreach (var entity in entities)
+        //    {
+        //        models.Add(entity.ToModel());
+        //    }
+        //    return models;
+        //}
 
 
 
@@ -67,6 +110,17 @@ namespace Nop.Web.Extensions
                 SeName = entity.GetSeName(),
             };
             return model;
+        }
+
+        public static List<ManufacturerModel> ToModels(this IList<Manufacturer> entities)
+        {
+            var models = new List<ManufacturerModel>();
+
+            foreach (var entity in entities)
+            {
+                models.Add(entity.ToModel());
+            }
+            return models;
         }
 
 

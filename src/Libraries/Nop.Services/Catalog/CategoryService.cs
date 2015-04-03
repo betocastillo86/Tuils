@@ -10,6 +10,7 @@ using Nop.Core.Domain.Stores;
 using Nop.Services.Events;
 using Nop.Services.Security;
 using Nop.Services.Stores;
+using Nop.Core.Domain.Common;
 
 namespace Nop.Services.Catalog
 {
@@ -67,6 +68,11 @@ namespace Nop.Services.Catalog
         /// </summary>
         private const string PRODUCTCATEGORIES_PATTERN_KEY = "Nop.productcategory.";
 
+        /// <summary>
+        /// Todas las marcas registradas en la app
+        /// </summary>
+        private const string CATEGORIES_ALL_BIKEREFERENCES = "Nop.category.allbikebrands"; 
+
         #endregion
 
         #region Fields
@@ -83,6 +89,7 @@ namespace Nop.Services.Catalog
         private readonly IStoreMappingService _storeMappingService;
         private readonly IAclService _aclService;
         private readonly CatalogSettings _catalogSettings;
+        private readonly TuilsSettings _tuilsSettings;
 
         #endregion
         
@@ -114,7 +121,8 @@ namespace Nop.Services.Catalog
             IEventPublisher eventPublisher,
             IStoreMappingService storeMappingService,
             IAclService aclService,
-            CatalogSettings catalogSettings)
+            CatalogSettings catalogSettings,
+            TuilsSettings tuilsSettings)
         {
             this._cacheManager = cacheManager;
             this._categoryRepository = categoryRepository;
@@ -128,6 +136,7 @@ namespace Nop.Services.Catalog
             this._storeMappingService = storeMappingService;
             this._aclService = aclService;
             this._catalogSettings = catalogSettings;
+            this._tuilsSettings = tuilsSettings;
         }
 
         #endregion
@@ -153,6 +162,8 @@ namespace Nop.Services.Catalog
                 subcategory.ParentCategoryId = 0;
                 UpdateCategory(subcategory);
             }
+
+            
         }
         
         /// <summary>
@@ -225,7 +236,7 @@ namespace Nop.Services.Catalog
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Category collection</returns>
         public virtual IList<Category> GetAllCategoriesByParentCategoryId(int parentCategoryId,
-            bool showHidden = false)
+            bool showHidden = false, bool includeSubcategories = false)
         {
             string key = string.Format(CATEGORIES_BY_PARENT_CATEGORY_ID_KEY, parentCategoryId, showHidden, _workContext.CurrentCustomer.Id, _storeContext.CurrentStore.Id);
             return _cacheManager.Get(key, () =>
@@ -272,6 +283,12 @@ namespace Nop.Services.Catalog
                 }
 
                 var categories = query.ToList();
+
+                //Si se incluyen las subcategorias hace llamado así mismo para cargarlas en las ya existentes
+                if (includeSubcategories)
+                    categories
+                        .ForEach(c => c.SubCategories = GetAllCategoriesByParentCategoryId(c.Id, showHidden, false));
+
                 return categories;
             });
 
@@ -336,6 +353,8 @@ namespace Nop.Services.Catalog
             //cache
             _cacheManager.RemoveByPattern(CATEGORIES_PATTERN_KEY);
             _cacheManager.RemoveByPattern(PRODUCTCATEGORIES_PATTERN_KEY);
+            
+            
 
             //event notification
             _eventPublisher.EntityInserted(category);
@@ -574,6 +593,34 @@ namespace Nop.Services.Catalog
             _eventPublisher.EntityUpdated(productCategory);
         }
 
+
         #endregion
+
+        #region Brands
+
+        /// <summary>
+        /// Retorna todas las referencias de motocicletas existentes o filradas por marca. NO están anidadas
+        /// </summary>
+        /// <param name="categoryBrandId">Marca por defecto apra realizar un filtro. Ej: Todas las referencias de Kawasaki</param>
+        /// <returns>Referencias de motocicletas</returns>
+        public IList<Category> GetAllBikeReferences(int? categoryBrandId)
+        {
+            //Si viene de una categoria utiliza el metodo anterior
+            if (categoryBrandId.HasValue)
+                return GetCategoryById(categoryBrandId.Value, true).SubCategories.ToList();
+            else
+            {
+                string key = CATEGORIES_ALL_BIKEREFERENCES;
+
+                return _cacheManager.Get(key, () => {
+                    return GetAllCategoriesByParentCategoryId(_tuilsSettings.productBaseTypes_bike, includeSubcategories:true, showHidden:true);
+                });
+            }
+        }
+
+        #endregion
+
+
+
     }
 }

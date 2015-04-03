@@ -33,7 +33,7 @@ namespace Nop.Services.Catalog
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Category collection</returns>
         IList<Category> GetAllCategoriesByParentCategoryId(int parentCategoryId,
-            bool showHidden = false);
+            bool showHidden = false, bool includeSubcategories = false);
 
         /// <summary>
         /// Gets all categories displayed on the home page
@@ -118,5 +118,7 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="productCategory">>Product category mapping</param>
         void UpdateProductCategory(ProductCategory productCategory);
+
+        IList<Category> GetAllBikeReferences(int? categoryBrandId);
     }
 }

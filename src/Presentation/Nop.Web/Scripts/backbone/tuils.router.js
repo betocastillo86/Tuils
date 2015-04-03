@@ -11,6 +11,8 @@
     sellProduct: function ()
     {
         this.currentView = new PublishProductView({ el: this.defaultEl, productType: TuilsApp.configuration.productBaseTypes.product });
+        //Se cargan las referencias de las motocicletas desde el comienzo
+        TuilsStorage.loadBikeReferences();
     }
 
 });

@@ -1,19 +1,27 @@
 ﻿@model Nop.Web.Models.Sales.PublishProductModel
 
-<div>
+<div style="border:solid 1px black">
     <div>
-        @T("PublishProduct.ProductTitle") : <input id="txtTitle" type="text"  />
+        @T("PublishProduct.ProductTitle") : <input id="txtName" type="text" />
     </div>
     <div>
-        @T("PublishProduct.Manufacturer") : @Html.DropDownList("ddlManufacturer", new SelectList(Model.Manufacturers, "Id", "Name", "-"))
+        @T("PublishProduct.Manufacturer") : <select id="ddlManufacturerId"></select>
     </div>
     <div>
-        @T("PublishProduct.HasShipping") : <input id="chkHasShipping" type="checkbox" />
+        @T("PublishProduct.HasShipping") : <input id="chkIsShipEnabled" type="checkbox" />
+    </div>
+    <div tuils-for="shipping">
+        @T("PublishProduct.ShippingValue") : $ <input id="txtAdditionalShippingCharge" type="text" tuils-val="int" />
     </div>
     <div>
-        @T("PublishProduct.ShippingValue") : $ <input id="chkShippingValue" type="checkbox" />
+        @T("PublishProduct.Price") :  $ <input id="txtPrice" type="text" tuils-val="int" />
     </div>
     <div>
-        @T("PublishProduct.Price") :  $ <input id="txtPrice" type="text" />
+        @T("PublishProduct.Product.ForBrandBike") : <input id="txtBikeReferencesProduct"  />           
     </div>
+    <div id="divProductHtml">
+        @T("PublishProduct.Product.Html") : @Html.Partial("_TextEditor", "productHtml")
+    </div>
+
+    <a id="btnNextStep2" href="javascript:void(0)">Siguiente</a>
 </div>

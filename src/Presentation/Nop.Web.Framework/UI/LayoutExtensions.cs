@@ -160,8 +160,11 @@ namespace Nop.Web.Framework.UI
         /// <param name="html">helper</param>
         public static void AppendScriptsBasicBackbone(this HtmlHelper html)
         {
+            AppendScriptParts(html, ResourceLocation.Head, "~/Scripts/backbone/tuils.storage.js", false);
             AppendScriptParts(html, ResourceLocation.Head, "~/Scripts/backbone/tuils.router.js", false);
             AppendScriptParts(html, ResourceLocation.Head, "~/Scripts/backbone/tuils.app.js", false);
+            AppendScriptParts(html, ResourceLocation.Head, "~/Scripts/backbone.stickit.min.js", false);
+            AppendScriptParts(html, ResourceLocation.Head, "~/Scripts/backbone-validation.min.js", false);
             AppendScriptParts(html, ResourceLocation.Head, "~/Scripts/backbone.js", false);
             AppendScriptParts(html, ResourceLocation.Head, "~/Scripts/underscore.js", false);
         }
