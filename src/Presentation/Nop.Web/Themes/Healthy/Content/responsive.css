@@ -22,9 +22,8 @@
     /*Header*/
     .header { /*padding:0 10px;*/ height: 240px; }
     .admin-header-links { margin: 5px; padding: 5px; }
-    .header-links ul li { float: none; display: inline-block; padding: 5px; vertical-align: top; }
+    .header-links ul li { float: none; display: inline-block; padding:11px 5px; vertical-align: top; }
     .header-links li a { /*font-size:95%;*/ float: none; }
-    .header-links { display: inline-block; float: none; margin: 0; text-align: center; }
     a.logo { display: inline-block; }
     .header-logo { float: none; text-align: center; }
     .header-top-topmenu { margin: 10px 5px 0; }
@@ -41,7 +40,7 @@
     #small-searchterms { /*float: left;*/ width: 95%; margin: 0; font-size: 1.2em; }
 
     /*Menu*/
-    .header-menu { background: #fff; }
+    .header-menu { background: #DFE2EA; }
         .header-menu, .header-menu #mega-menu { height: 54px; }
             .header-menu a { font-size: 14px; }
             .header-menu.mean-container { height: 40px; }
@@ -340,8 +339,6 @@
     /*Header*/
     .search-box .search-box-text { width: 370px; }
     /*.search-box {width: 450px; }*/
-    .header-links { font-size: 15px; margin: 5px 0; padding: 0px 5px; }
-        .header-links ul li { padding: 0; /*margin-left:5px;*/ }
     .header { height: 220px; }
     .top-menu a { font-size: 1.2em; }
 
@@ -488,13 +485,11 @@
     .header { height: 120px; padding-top: 10px; }
     .header-logo { float: left; text-align: left; }
     .header-selectors-wrapper { float: right; }
-    .header-links { font-size: 13px; }
     .flyout-cart { top: 20px; }
 
-    .header .search-box { display: inline-block; float: right; text-align: left; padding: 7px 0 5px; width: 350px; }
+    .header .search-box { display: inline-block; float: right; text-align: left; padding: 7px 0 5px; width:calc(100% - 320px); }
     .search-box .search-box-text { width: 300px; }
 
-    .header-links { padding: 0; }
 
     /*Main*/
     .fieldset .inputs label { width: 130px; }
