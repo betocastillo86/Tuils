@@ -6,14 +6,21 @@
     Html.AppendCssFileParts("~/Content/tagit/jquery.tagit.css");
     Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/wysihtml5-0.3.0.min.js");
     Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.product.js");
+    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.file.js");
     Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.category.js");
     Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.manufacturer.js");
+
+    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/resize.js");
+    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/canvas-to-blob.min.js");
+    
     Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProduct.selectCategoryView.js");
     Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProduct.productDetail.js");
+    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProduct.summaryView.js");
     Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProductView.js");
     Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.utilities.htmlEditorView.js");
+    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.utilities.imagesSelectorView.js");
     
-    
+   
     
     Html.AppendScriptsBasicBackbone();
 
@@ -42,6 +49,8 @@
     <div>
         <div id="btnPublishProductStep1" style="float:left;border:solid 1px;padding:5px;" class="selectedStep">@T("PublishProduct.StepMenu1")</div>
         <div id="btnPublishProductStep2" style="float:left; border: solid 1px; padding: 5px; ">@T("PublishProduct.StepMenu2")</div>
+        <div id="btnPublishProductStep3" style="float:left; border: solid 1px; padding: 5px; ">@T("PublishProduct.StepMenu3")</div>
+        <div id="btnPublishProductStep4" style="float:left; border: solid 1px; padding: 5px; ">@T("PublishProduct.StepMenu4")</div>
         <div style="clear:both"></div>
     </div>
 
@@ -50,6 +59,14 @@
     </div>
     <div id="divStep_2">
         @Html.Partial("_ProductDetail")
+    </div>
+    <div id="divStep_3">
+        @Html.Partial("_ImageSelector", 3)
+        <a class="btnNext" >@T("PublishProduct.NextStep")</a>
+        <a class="btnBack" >@T("PublishProduct.BackStep")</a>
+    </div>
+    <div id="divStep_4">
+        @Html.Partial("_Summary")
     </div>
 </div>
 

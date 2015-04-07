@@ -15,6 +15,8 @@
     //Categoria que se está seleccionando
     currentCategory: 0,
 
+    breadCrumbCategories : undefined,
+
     //Solo comienza a hacer filtro cuando se pone más de una letra
     minCharactersForFiltering: 1,
 
@@ -30,6 +32,7 @@
         this.productType = args.productType;
         this.loadControls();
         this.loadDefaultCategories();
+        this.breadCrumbCategories = new Array();
 
         this.render();
     },
@@ -56,15 +59,18 @@
         if (!isNaN(categoryId)) {
 
             this.currentCategory = categoryId;
-
             var selectedLevel = parseInt(obj.attr("tuils-level"));
-
             this.currentLevel = ++selectedLevel;
+            
+            //actualiza la miga de pan
+            this.breadCrumbCategories = _.first(this.breadCrumbCategories, this.currentLevel -1);
+            this.breadCrumbCategories.push(obj.text());
 
             //Elimina las columnas de niveles inferiores
             this.divShowCategories.find("ul").slice(selectedLevel).remove();
 
             this.loadChildrenCategories(this.currentCategory);
+            this.trigger("categories-middle-selected", categoryId);
         }
 
     },

@@ -203,3 +203,6 @@ src/Presentation/Nop.Web/Content/Images/Thumbs/
 
 #NuGet
 **/.nuget
+
+#ArchivosTemporales
+src/Presentation/Nop.Web/TempFiles/*

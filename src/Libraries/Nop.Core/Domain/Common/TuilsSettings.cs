@@ -24,5 +24,16 @@ namespace Nop.Core.Domain.Common
         /// </summary>
         public int productBaseTypes_bike { get; set; }
 
+
+        /// <summary>
+        /// Ruta en la que se cargaran los archivos temporales 
+        /// </summary>
+        public string tempUploadFiles { get; set; }
+
+        /// <summary>
+        /// Tamaño máximo (en bytes) de los archivos cargados por usuarios externos
+        /// </summary>
+        public long maxFileUploadSize { get; set; }
+
     }
 }

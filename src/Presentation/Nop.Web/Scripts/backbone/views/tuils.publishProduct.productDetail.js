@@ -2,7 +2,8 @@
 var ProductDetailView = Backbone.View.extend({
 
     events: {
-        "click #btnNextStep2": "save",
+        "click .btnNext": "save",
+        "click .btnBack": "back",
         "change #chkIsShipEnabled" : "switchShipping"
     },
 
@@ -101,8 +102,12 @@ var ProductDetailView = Backbone.View.extend({
         this.model.set({ FullDescription: this.$("#productHtml_textarea").val() });
         this.validateControls();
         if (this.model.isValid()) {
+            this.model.set('ManufacturerName', this.$("#ddlManufacturerId :selected").text());
             this.trigger("detail-product-finished", this.model);
         }
+    },
+    back: function () {
+        this.trigger("detail-product-back");
     }
 
 });

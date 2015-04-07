@@ -50,6 +50,13 @@
 	    if (charCode > 31 && (charCode < 48 || charCode > 57))
 	        return false;
 	    return true;
+	},
+	toStringWithSeparator: function (array, separator) {
+	    var toString;
+	    _.each(array, function (element, index) {
+	        toString = toString ? toString + separator + element : element;
+	    });
+	    return toString ? toString : "";
 	}
 
 }
@@ -103,3 +110,15 @@ _.extend(Backbone.View.prototype, {
         this.$el.find(".invalid-field").removeClass("invalid-field");
     }
 });
+
+//metodos de extension de underscore
+//_.extend(_.prototype, {
+//    toStringWithSeparator: function (array, separator)
+//    {
+//        var toString;
+//        this.each(arry, function (element, index) {
+//            toString = toString ? separator + toString : toString;
+//        });
+//        return toString ? toString : "";
+//    }
+//});

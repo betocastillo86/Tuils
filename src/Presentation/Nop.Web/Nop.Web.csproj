@@ -195,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Api\CategoriesController.cs" />
+    <Compile Include="Controllers\Api\FilesController.cs" />
     <Compile Include="Controllers\Api\ManufacturersController.cs" />
     <Compile Include="Controllers\BasePublicController.cs" />
     <Compile Include="Controllers\BoardsController.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Infrastructure\Cache\ModelCacheEventConsumer.cs" />
     <Compile Include="Infrastructure\BackwardCompatibility2XRouteProvider.cs" />
     <Compile Include="Infrastructure\GenericUrlRouteProvider.cs" />
+    <Compile Include="Infrastructure\InMemoryMultipartFormDataStreamProvider.cs" />
     <Compile Include="Infrastructure\Installation\IInstallationLocalizationService.cs" />
     <Compile Include="Infrastructure\Installation\InstallationLanguage.cs" />
     <Compile Include="Infrastructure\Installation\InstallationLocalizationService.cs" />
@@ -978,10 +980,12 @@
     <Content Include="Scripts\backbone\models\tuils.product.js" />
     <Content Include="Scripts\backbone\tuils.router.js" />
     <Content Include="Scripts\backbone\tuils.storage.js" />
+    <Content Include="Scripts\backbone\views\tuils.utilities.imagesSelectorView.js" />
     <Content Include="Scripts\backbone\views\tuils.utilities.htmlEditorView.js" />
     <Content Include="Scripts\backbone\views\tuils.publishProduct.productDetail.js" />
     <Content Include="Scripts\backbone\views\tuils.publishProduct.selectCategoryView.js" />
     <Content Include="Scripts\backbone\views\tuils.publishProductView.js" />
+    <Content Include="Scripts\canvas-to-blob.min.js" />
     <Content Include="Scripts\fineuploader\edit.gif" />
     <Content Include="Scripts\fineuploader\fineuploader-4.2.2.css" />
     <Content Include="Scripts\fineuploader\fineuploader-4.2.2.min.css" />
@@ -1045,6 +1049,7 @@
     <Content Include="App_Data\uas_20140809-02.ini" />
     <Content Include="Scripts\backbone.min.map" />
     <Content Include="Scripts\backbone\tuils.app.js" />
+    <Content Include="Scripts\backbone\models\tuils.file.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />
@@ -1479,6 +1484,7 @@
     <Content Include="Scripts\kendo\2014.1.318\kendo.view.min.js" />
     <Content Include="Scripts\kendo\2014.1.318\kendo.web.min.js" />
     <Content Include="Scripts\kendo\2014.1.318\kendo.window.min.js" />
+    <Content Include="Scripts\resize.js" />
     <Content Include="Scripts\tag-it.js" />
     <Content Include="Scripts\tag-it.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
@@ -2297,6 +2303,8 @@
     <Content Include="Views\Sales\_SelectCategory.cshtml" />
     <Content Include="Views\Sales\_ProductDetail.cshtml" />
     <Content Include="Views\Shared\_TextEditor.cshtml" />
+    <Content Include="Views\Shared\_ImageSelector.cshtml" />
+    <Content Include="Views\Sales\_Summary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
