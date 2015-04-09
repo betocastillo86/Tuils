@@ -4,7 +4,9 @@
 	init: function ()
 	{
 	    TuilsApp.router = new TuilsRouter();
-		Backbone.history.start({ pushState: true });
+	    Backbone.history.start({ pushState: true });
+
+	    $(document).ajaxError(this.navigateFastLogin);
 	},
     //Carga un dropdownlist con los datos pasados en una lista
     //ddl: Objeto tipo select a cargar
@@ -57,6 +59,10 @@
 	        toString = toString ? toString + separator + element : element;
 	    });
 	    return toString ? toString : "";
+	},
+	navigateFastLogin: function (event, xhr) {
+	    if (xhr.status === 401)
+	        this.router.navigate("#login");
 	}
 
 }
@@ -108,6 +114,44 @@ _.extend(Backbone.View.prototype, {
     removeErrors: function ()
     {
         this.$el.find(".invalid-field").removeClass("invalid-field");
+    }
+});
+
+
+function wrapBackboneError(model, options) {
+    var error = options.error;
+    
+    options.error = function (response) {
+        if (response.status === 403) {
+            model.trigger("unauthorized", model);
+        } else {
+            if (error) error(response);
+        }
+    };
+}
+
+var AuthenticationModel = Backbone.Model.extend({
+    sync: function (method, model, options) {
+        wrapBackboneError(model, options);
+        Backbone.Model.prototype.sync.apply(this, arguments);
+    }
+});
+
+
+var BaseView = Backbone.View.extend({
+
+    viewLogin : undefined,
+
+    showLogin: function (model)
+    {
+        //viewLogin = new LoginView();
+        var us = "";
+        var ps = "";
+        prompt("Ingrese los datos", us, ps);
+    },
+    validateAuthorization: function ()
+    {
+        this.model.on('unauthorized', this.showLogin, this);
     }
 });
 

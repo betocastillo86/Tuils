@@ -43,5 +43,14 @@ namespace Nop.Services.Vendors
         /// </summary>
         /// <param name="vendor">Vendor</param>
         void UpdateVendor(Vendor vendor);
+
+        /// <summary>
+        /// Retorna el vendor asociado a un cliente. 
+        /// Si el cliente no tiene asociado ninguno se tiene la opción de crear uno por defecto basado en los datos del cliente
+        /// </summary>
+        /// <param name="createIfNotExists">True: Crea el vendor si el cliente no tiene ninguno asociado</param>
+        /// <param name="customerId">Id de cliente que sirve como filtro</param>
+        /// <returns>Vendor asociado al cliente ya sea creado o no</returns>
+        Vendor GetVendorByCustomerId(int customerId, bool createIfNotExists = false);
     }
 }

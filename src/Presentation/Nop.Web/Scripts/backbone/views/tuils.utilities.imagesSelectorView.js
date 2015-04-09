@@ -99,7 +99,13 @@
     },
     save: function ()
     {
-        this.trigger("images-save", this.collection);
+        if (this.collection.length > 0) {
+            this.trigger("images-save", this.collection);
+        }
+        else {
+            alert("Debe seleccionar por lo menos una imagen");
+        }
+        
     },
     back: function ()
     {

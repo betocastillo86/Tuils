@@ -12,6 +12,7 @@ using Nop.Services.Configuration;
 using Nop.Services.Events;
 using Nop.Services.Logging;
 using Nop.Services.Seo;
+using Nop.Core.Domain.Common;
 
 namespace Nop.Services.Media
 {
@@ -37,6 +38,7 @@ namespace Nop.Services.Media
         private readonly ILogger _logger;
         private readonly IEventPublisher _eventPublisher;
         private readonly MediaSettings _mediaSettings;
+        private readonly TuilsSettings _tuilsSettings;
 
         #endregion
 
@@ -56,7 +58,8 @@ namespace Nop.Services.Media
             IRepository<ProductPicture> productPictureRepository,
             ISettingService settingService, IWebHelper webHelper,
             ILogger logger, IEventPublisher eventPublisher,
-            MediaSettings mediaSettings)
+            MediaSettings mediaSettings,
+            TuilsSettings tuilsSettings)
         {
             this._pictureRepository = pictureRepository;
             this._productPictureRepository = productPictureRepository;
@@ -65,6 +68,7 @@ namespace Nop.Services.Media
             this._logger = logger;
             this._eventPublisher = eventPublisher;
             this._mediaSettings = mediaSettings;
+            this._tuilsSettings = tuilsSettings;
         }
 
         #endregion
@@ -740,6 +744,90 @@ namespace Nop.Services.Media
         
         #endregion
 
+        #region TempFiles
+        /// <summary>
+        /// Retorna los bytes de un archivo temporal buscando por el nombre
+        /// </summary>
+        /// <param name="tempFileName">nombre del archivo temporal</param>
+        /// <returns>bytes con la información del archivo que correspondiente al nombre</returns>
+        public byte[] GetTempFile(string tempFileName)
+        {
+            var pathFile = Path.Combine(_webHelper.MapPath(_tuilsSettings.tempUploadFiles), tempFileName);
+            return File.Exists(pathFile) ? File.ReadAllBytes(pathFile) : null;
+        }
+
+        /// <summary>
+        /// Inserta registros en la tabla Picture desde un listado de archivos temporales asociandolos a un producto
+        /// </summary>
+        /// <param name="tempFiles">Listado de nombres de archivos temporales</param>
+        /// <param name="productId">Id del producto al que se va asociar</param>
+        /// <returns>Listado de Picture insertados</returns>
+        public IList<Picture> InsertPicturesFromTempFiles(string[] tempFiles)
+        {
+            var pictures = new List<Picture>();
+            
+            for (int iTempFile = 0; iTempFile < tempFiles.Length; iTempFile++)
+            {
+                string fileName = tempFiles[iTempFile];
+                var  file = GetTempFile(fileName);
+                if (file != null)
+                {
+                    var picture = InsertPicture(file, GetContentTypeFromExtension(Path.GetExtension(fileName)), null, false);
+                    if (picture.Id > 0)
+                        pictures.Add(picture);
+                }
+            }
+
+            return pictures;
+        }
+
+        
+        #endregion
+
+        /// <summary>
+        /// Retorna el tipo de contenido desde la extension
+        /// </summary>
+        /// <param name="fileExtension"></param>
+        /// <returns></returns>
+        public string GetContentTypeFromExtension(string fileExtension)
+        {
+            string contentType = string.Empty;
+            //contentType is not always available 
+            //that's why we manually update it here
+            //http://www.sfsu.edu/training/mimetype.htm
+            if (String.IsNullOrEmpty(contentType))
+            {
+                switch (fileExtension)
+                {
+                    case ".bmp":
+                        contentType = "image/bmp";
+                        break;
+                    case ".gif":
+                        contentType = "image/gif";
+                        break;
+                    case ".jpeg":
+                    case ".jpg":
+                    case ".jpe":
+                    case ".jfif":
+                    case ".pjpeg":
+                    case ".pjp":
+                        contentType = "image/jpeg";
+                        break;
+                    case ".png":
+                        contentType = "image/png";
+                        break;
+                    case ".tiff":
+                    case ".tif":
+                        contentType = "image/tiff";
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return contentType;
+        }
+
         #region Properties
         
         /// <summary>
@@ -783,5 +871,7 @@ namespace Nop.Services.Media
         }
 
         #endregion
+
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Nop.Web.Models.Api;
+﻿using Nop.Core.Domain.Catalog;
+using Nop.Web.Models.Api;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -68,5 +69,7 @@ namespace Nop.Web.Extensions.Api
 
             return isMinify;
         }
+
+
     }
 }

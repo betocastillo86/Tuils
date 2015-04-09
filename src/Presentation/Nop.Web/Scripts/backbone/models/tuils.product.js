@@ -1,4 +1,4 @@
-﻿var ProductModel = Backbone.Model.extend({
+﻿var ProductModel = AuthenticationModel.extend({
     baseUrl : "/api/products",
     url: "/api/products",
     //defaults: {
@@ -39,6 +39,9 @@
             required: true,
             pattern: 'number'
         }
+    },
+    publish: function () {
+        this.save();
     }
 });
 

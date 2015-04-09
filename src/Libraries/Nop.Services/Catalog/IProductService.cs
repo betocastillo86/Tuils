@@ -440,5 +440,10 @@ namespace Nop.Services.Catalog
         void DeleteProductWarehouseInventory(ProductWarehouseInventory pwi);
 
         #endregion
+
+        #region Publish Product external user
+        void PublishProduct(Product product);
+        #endregion
+
     }
 }

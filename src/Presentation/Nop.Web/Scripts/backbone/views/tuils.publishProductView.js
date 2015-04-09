@@ -1,4 +1,4 @@
-﻿var PublishProductView = Backbone.View.extend({
+﻿var PublishProductView = BaseView.extend({
 
 
     //Views
@@ -18,7 +18,7 @@
 
     initialize: function (args) {        
         this.productType = args.productType;
-        this.model = new ProductModel();
+        this.model = new ProductModel('ProductTypeId', this.productType );
         this.loadControls();
         this.render();
     },
@@ -40,7 +40,7 @@
     },
     showProductDetail: function (categoryId)
     {
-        this.showStep(++this.currentStep);
+        this.showNextStep();
         this.model.set('CategoryId', categoryId);
 
         if (!this.viewProductDetail)
@@ -53,7 +53,7 @@
     showPictures: function(model)
     {
         this.model = model;
-        this.showStep(++this.currentStep);
+        this.showNextStep();
         if (!this.viewImageSelector)
         {
             this.viewImageSelector = new ImagesSelectorView({ el: "#divStep_3" });
@@ -62,7 +62,7 @@
         }
     },
     showSummary: function (images) {
-        this.showStep(++this.currentStep);
+        this.showNextStep();
         this.images = images;
         this.viewSummary = new SummaryView({ el: "#divStep_4", product: this.model, images: this.images, productType: this.productType, breadCrumb: this.viewSelectCategory.breadCrumbCategories });
         this.viewSummary.on("summary-back", this.showStepBack, this);
@@ -79,6 +79,10 @@
     {
         this.showStep(--this.currentStep);
     },
+    showNextStep : function()
+    {
+        this.showStep(++this.currentStep);
+    },
     //Reinicia la vista del siguiente paso xq el DOM cargado ya no va ser valido
     //Ejemplo: En detalle da clic en atras y selecciona una nueva categoria, esto inhbilita lo del siguiente paso
     restartNextStep: function ()
@@ -91,7 +95,24 @@
         else if (this.currentStep == 2 && this.viewImageSelector)
             this.viewImageSelector.undelegateEvents();
     },
+    errorOnSaving : function()
+    {
+        
+    },
+    productSaved : function(model)
+    {
+        this.viewSelectCategory.remove();
+        this.viewImageSelector.remove();
+        this.viewProductDetail.remove();
+        this.viewSummary.remove();
+        this.showNextStep();
+        AppTuils.router.navigate("quiero-vender/publicacion-exitosa/" + model.get('Id'));
+    },
     save: function () {
-
+        this.model.set('TempFiles', _.pluck(this.images.toJSON(), 'guid'));
+        this.model.on('sync', this.productSaved, this);
+        this.model.on('error', this.errorOnSaving, this);
+        this.validateAuthorization();
+        this.model.publish();
     }
 });

@@ -815,17 +815,22 @@ namespace Nop.Web.Controllers
         /// <returns>Objeto json con la información de la configuración</returns>
         public  JavaScriptResult JsConfiguration()
         {
-            var config = new { 
-                    
-                        configuration = new {
-                            //Configuración de las categorias base
-                            productBaseTypes = new
-                            {
-                                product = _tuilsSettings.productBaseTypes_product,
-                                service = _tuilsSettings.productBaseTypes_service,
-                                bike = _tuilsSettings.productBaseTypes_bike
-                            }
-                        }
+            var config = new
+            {
+
+                configuration = new
+                {
+                    //Configuración de las categorias base
+                    productBaseTypes = new
+                    {
+                        product = _tuilsSettings.productBaseTypes_product,
+                        service = _tuilsSettings.productBaseTypes_service,
+                        bike = _tuilsSettings.productBaseTypes_bike
+                    },
+                    specialCategories = new {
+                        bikeBrand = (int) SpecialCategoryProductType.BikeBrand
+                    }
+                }
             };
 
             //Convierte el valor del json a un string

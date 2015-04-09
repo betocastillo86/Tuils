@@ -145,5 +145,29 @@ namespace Nop.Services.Media
         /// Gets or sets a value indicating whether the images should be stored in data base.
         /// </summary>
         bool StoreInDb { get; set; }
+
+
+
+        /// <summary>
+        /// Retorna la información de un archivo teporal, si no existe lo retorna nulo
+        /// </summary>
+        /// <param name="tempFileName">nombre del archivo temporal</param>
+        /// <returns></returns>
+        byte[] GetTempFile(string tempFileName);
+
+        /// <summary>
+        /// Inserta registros en la tabla Picture desde un listado de archivos temporales asociandolos a un producto
+        /// </summary>
+        /// <param name="tempFiles">Listado de nombres de archivos temporales</param>
+        /// <param name="productId">Id del producto al que se va asociar</param>
+        /// <returns>Listado de Picture insertados</returns>
+        IList<Picture> InsertPicturesFromTempFiles(string[] tempFiles);
+
+        /// <summary>
+        /// Obtener tipo de contenido desde la extension
+        /// </summary>
+        /// <param name="fileExtension">extension del archivo</param>
+        /// <returns>tpo de contenido</returns>
+        string GetContentTypeFromExtension(string fileExtension);
     }
 }

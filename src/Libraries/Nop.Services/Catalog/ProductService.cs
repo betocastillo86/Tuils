@@ -18,6 +18,8 @@ using Nop.Services.Localization;
 using Nop.Services.Messages;
 using Nop.Services.Security;
 using Nop.Services.Stores;
+using Nop.Services.Media;
+using Nop.Services.Vendors;
 
 namespace Nop.Services.Catalog
 {
@@ -68,6 +70,9 @@ namespace Nop.Services.Catalog
         private readonly IEventPublisher _eventPublisher;
         private readonly IAclService _aclService;
         private readonly IStoreMappingService _storeMappingService;
+        private readonly IPictureService _pictureService;
+        private readonly IVendorService _vendorService;
+
 
         #endregion
 
@@ -127,7 +132,8 @@ namespace Nop.Services.Catalog
             CatalogSettings catalogSettings,
             IEventPublisher eventPublisher,
             IAclService aclService,
-            IStoreMappingService storeMappingService)
+            IStoreMappingService storeMappingService,
+            IPictureService pictureService)
         {
             this._cacheManager = cacheManager;
             this._productRepository = productRepository;
@@ -155,6 +161,7 @@ namespace Nop.Services.Catalog
             this._eventPublisher = eventPublisher;
             this._aclService = aclService;
             this._storeMappingService = storeMappingService;
+            this._pictureService = pictureService;
         }
 
         #endregion
@@ -1847,6 +1854,41 @@ namespace Nop.Services.Catalog
 
         #endregion
 
+        #region Public Product External User
+        /// <summary>
+        /// Permite publicar un producto de un usuario externo.
+        /// </summary>
+        /// <param name="customerId">Id del usuario que crea el contenido</param>
+        /// <param name="product">Datos del producto</param>
+        public void PublishProduct(Product product)
+        {
+            //Si tiene imagenes temporales por cargar las crea
+            if (product.TempFiles.Count > 0)
+            { 
+                var pictures = _pictureService.InsertPicturesFromTempFiles(product.TempFiles.ToArray());
+                for (int i = 0; i < pictures.Count; i++)
+                {
+                    product.ProductPictures.Add(new ProductPicture() { 
+                        PictureId = pictures[i].Id,
+                        DisplayOrder = i
+                    });
+                }
+            }
+
+            product.ProductTypeId = (int)ProductType.SimpleProduct;
+            product.VisibleIndividually = true;
+            product.ProductTemplateId = 1; //TODO:Revisar si puede ir quemado
+            product.ShowOnHomePage = false;
+            product.AllowCustomerReviews = true;
+            product.CreatedOnUtc = product.UpdatedOnUtc = DateTime.Now;
+            
+            InsertProduct(product);
+        }
         #endregion
+
+        #endregion
+
+
+
     }
 }

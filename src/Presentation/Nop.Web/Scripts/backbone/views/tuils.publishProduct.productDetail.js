@@ -21,7 +21,20 @@ var ProductDetailView = Backbone.View.extend({
         "#chkIsShipEnabled": "IsShipEnabled",
         "#txtAdditionalShippingCharge": "AdditionalShippingCharge",
         "#txtPrice": "Price",
-        "#txtBikeReferencesProduct": "SpecialCategories",
+        "#txtBikeReferencesProduct": {
+            observe: "SpecialCategories",
+            onGet: function (values) {
+                
+                
+            },
+            onSet: function (value) {
+                var brands = new Array();
+                _.each(value.split(','), function (element) {
+                    brands.push({ SpecialTypeId: TuilsApp.configuration.specialCategories.bikeBrand, CategoryId: parseInt(element) });
+                });
+                return brands;
+            }
+        },
         "#productHtml_textarea": {
             observe: "FullDescription",
             controlToMark: "#divProductHtml"

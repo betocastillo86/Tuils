@@ -81,7 +81,7 @@ namespace Nop.Web.Controllers.Api
                         string fileName = string.Empty;
                         SaveTempFile(fileToUpload.Data, extension, out fileName);
 
-                        return Ok(new { fileGuid = fileName });
+                        return Ok(new { fileGuid = string.Concat(fileName, extension) });
                     }
                     else
                     {
