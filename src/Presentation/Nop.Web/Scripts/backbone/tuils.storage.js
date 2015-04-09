@@ -7,13 +7,18 @@ TuilsStorage = {
     loadBikeReferences: function ()
     {
         var key = 'tuils_bikeReferences';
-        if (!localStorage.getItem(key))
-        {
+        if (!localStorage.getItem(key)) {
             var categories = new CategoryCollection();
-            categories.on("sync", function (response) { localStorage.setItem(key, JSON.stringify(response.toJSON())) }, this);
+            categories.on("sync", function (response) {
+                localStorage.setItem(key, JSON.stringify(response.toJSON()))
+                TuilsStorage.bikeReferences = response.toJSON();
+            }, this);
+
             categories.getBikeReferences();
         }
-        this.bikeReferences = JSON.parse(localStorage.getItem(key));
-        return this.bikeReferences;
-    }
+        else {
+            this.bikeReferences = JSON.parse(localStorage.getItem(key));
+        }
+    },
+
 }

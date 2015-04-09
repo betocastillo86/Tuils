@@ -99,9 +99,16 @@ var ProductDetailView = Backbone.View.extend({
                 addTag(child);
             });
         });
-
+        
         this.$("#txtBikeReferencesProduct")
-            .tagit({ availableTags: tagReferences, autocomplete: { source: TuilsApp.tagItAutocomplete } });
+            .tagit({
+                availableTags: tagReferences,
+                allowOnlyAvailableTags: true,
+                tagLimit : 5,
+                autocomplete: {
+                    source: TuilsApp.tagItAutocomplete
+                }
+            });
     },
     switchShipping: function (obj)
     {

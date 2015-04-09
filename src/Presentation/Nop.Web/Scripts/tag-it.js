@@ -51,6 +51,9 @@
             // When enabled, quotes are unneccesary for inputting multi-word tags.
             allowSpaces: false,
 
+            //True: Solo permite agregar tags que esten en la lista de disponibles
+            allowOnlyAvailableTags : false,
+
             // The below options are for using a single field instead of several
             // for our form values.
             //
@@ -390,6 +393,11 @@
         createTag: function (value, additionalClass, duringInitialization) {
             var that = this;
 
+
+            if (value === '') {
+                return false;
+            }
+
             //Variable que contiene la llave de la busqueda... Si la busqueda no tiene llave valor, toma el mismo del valor
             var internalValue;
             if (value['value']) {
@@ -397,8 +405,15 @@
                 value = value.label;
             }
             else {
-                value = $.trim(value);
-                internalValue = value;
+                if (!this.options.allowOnlyAvailableTags) {
+                    value = $.trim(value);
+                    internalValue = value;
+                }
+                else {
+                    this.tagList.find(".tagit-new input[type='text']").val("");
+                    return false;
+                }
+                
             }
 
 
@@ -407,9 +422,7 @@
                 value = this.options.preprocessTag(value);
             }
 
-            if (value === '') {
-                return false;
-            }
+            
 
             if (!this.options.allowDuplicates && !this._isNew(value)) {
                 var existingTag = this._findTagByLabel(value);

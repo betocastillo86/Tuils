@@ -109,10 +109,17 @@
         AppTuils.router.navigate("quiero-vender/publicacion-exitosa/" + model.get('Id'));
     },
     save: function () {
-        this.model.set('TempFiles', _.pluck(this.images.toJSON(), 'guid'));
-        this.model.on('sync', this.productSaved, this);
-        this.model.on('error', this.errorOnSaving, this);
-        this.validateAuthorization();
-        this.model.publish();
+
+        if (this.$("#chkConditions").is(":checked")) {
+            this.model.set('TempFiles', _.pluck(this.images.toJSON(), 'guid'));
+            this.model.on('sync', this.productSaved, this);
+            this.model.on('error', this.errorOnSaving, this);
+            this.validateAuthorization();
+            this.model.publish();
+        }
+        else {
+            alert("Debes aceptar terminos y condiciones");
+        }
+
     }
 });
