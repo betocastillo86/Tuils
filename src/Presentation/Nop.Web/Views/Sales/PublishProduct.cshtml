@@ -2,30 +2,32 @@
 @{
     ViewBag.Title = "PublishProduct";
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
-    Html.AppendScriptParts("~/Scripts/tag-it.js");
-    Html.AppendCssFileParts("~/Content/tagit/jquery.tagit.css");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/wysihtml5-0.3.0.min.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.product.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.file.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.category.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.manufacturer.js");
-
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/resize.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/canvas-to-blob.min.js");
     
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProduct.selectCategoryView.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProduct.productDetail.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProduct.summaryView.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProductView.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.utilities.htmlEditorView.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.utilities.imagesSelectorView.js");
+    Html.AppendCssFileParts("~/Content/tagit/jquery.tagit.css");
+    
+    //Html.AppendScriptParts("~/Scripts/tag-it.js");
+    //Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/wysihtml5-0.3.0.min.js");
+    //Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.product.js");
+    //Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.file.js");
+    //Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.category.js");
+    //Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.manufacturer.js");
+
+    //Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/resize.js");
+    //Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/canvas-to-blob.min.js");
+    
+    //Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProduct.selectCategoryView.js");
+    //Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProduct.productDetail.js");
+    //Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProduct.summaryView.js");
+    //Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProductView.js");
+    //Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.utilities.htmlEditorView.js");
+    //Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.utilities.imagesSelectorView.js");
     
    
     
-    Html.AppendScriptsBasicBackbone();
+    //Html.AppendScriptsBasicBackbone();
 
     //Tagit
-    
+    <script data-main="/scripts/tuils.require.main" src="~/Scripts/require.js"></script>
     
     
     

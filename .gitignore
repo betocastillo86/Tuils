@@ -206,3 +206,6 @@ src/Presentation/Nop.Web/Content/Images/Thumbs/
 
 #ArchivosTemporales
 src/Presentation/Nop.Web/TempFiles/*
+
+#JS de configuracion generado automaticamente
+src/Presentacion/Scripts/tuils/configuration.js
