@@ -1369,7 +1369,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 	.wizard-current{background: #FFF; color:#395983; font-size: 20px; font-weight: 700;}
 
 	.nav-category{list-style: none;}
-	.nav-category li{position:relative; width: 33.3%; max-width:394px; height: 312px; float: left; cursor: pointer; background-image: url(images/img_categorias_gris.svg); background-size: 300% auto; background-repeat: no-repeat; transition:ease background 0.4s;}
+	.nav-category li{position:relative; width: 33.3%; max-width:394px; height: 312px; float: left; cursor: pointer; background-image: url(images/img_categorias_gris.svg); background-size: 300% auto; background-repeat: no-repeat; transition:ease ease 0.4s;}
 	.nav-category li span{position: absolute; bottom: 44px; right: 50px; color: #FFF; font-size: 30px; font-weight: 700; text-align: right; text-transform: uppercase; text-shadow:1px 3px 1px rgba(0, 0, 0, 0.6);}
 	.nav-category li:hover, .nav-category li:active, .nav-category li.cat_select{background-image: url(images/img_categorias.svg); background-size: 300% auto;}
 	.hub-mot{background-position: 100% 0;}
