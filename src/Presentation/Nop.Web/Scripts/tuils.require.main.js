@@ -26,7 +26,9 @@
         backbone: 'backbone',
         stickit: 'backbone.stickit',
         jqueryui: 'jquery-ui-1.10.3.custom',
-        validations : 'backbone-validation.min',
+        validations: 'backbone-validation.min',
+        handlebars: 'handlebars',
+        handlebarsh: 'handelbars.helpers',
         //Basic Tuils
         router: 'tuils/router',
         configuration: 'tuils/configuration',

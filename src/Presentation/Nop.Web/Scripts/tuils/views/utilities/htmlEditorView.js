@@ -1,11 +1,10 @@
-﻿define(['jquery', 'underscore', 'backbone'], function ($, _, Backbone) {
+﻿define(['jquery', 'underscore', 'backbone', 'handlebars'], function ($, _, Backbone, Handlebars) {
     var HtmlEditorView = Backbone.View.extend({
-
 
 
         prefix: '',
 
-        template: _.template($("#templateHtmlEditor").html()),
+        template: Handlebars.compile($("#templateHtmlEditor").html()),
 
         editor: undefined,
 

@@ -1,13 +1,13 @@
 ﻿
-define(['jquery', 'underscore', 'backbone', 'configuration', 'util'],
-    function ($, _, Backbone, TuilsConfiguration, TuilsUtil) {
+define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars'],
+    function ($, _, Backbone, TuilsConfiguration, TuilsUtil, Handlebars) {
 
         var SummaryView = Backbone.View.extend({
             events: {
                 "click .btnFinish": "save",
                 "click .btnBack": "back"
             },
-            template: _.template($("#templateSummary").html()),
+            template: Handlebars.compile($("#templateSummary").html()),
 
             productType: undefined,
             //Propiedades que se van a mostrar en el resumen, esto depende del tipo de producto

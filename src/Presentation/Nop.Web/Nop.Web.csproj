@@ -979,6 +979,14 @@
     <Content Include="Scripts\backbone-min.js" />
     <Content Include="Scripts\backbone.stickit.js" />
     <Content Include="Scripts\backbone.stickit.min.js" />
+    <Content Include="Scripts\handlebars.amd.js" />
+    <Content Include="Scripts\handlebars.amd.min.js" />
+    <Content Include="Scripts\handlebars.js" />
+    <Content Include="Scripts\handlebars.min.js" />
+    <Content Include="Scripts\handlebars.runtime.amd.js" />
+    <Content Include="Scripts\handlebars.runtime.amd.min.js" />
+    <Content Include="Scripts\handlebars.runtime.js" />
+    <Content Include="Scripts\handlebars.runtime.min.js" />
     <Content Include="Scripts\tuils\collections\files.js" />
     <Content Include="Scripts\tuils\collections\manufacturers.js" />
     <Content Include="Scripts\tuils\collections\products.js" />
@@ -1061,6 +1069,9 @@
     <Content Include="Scripts\backbone-min.map" />
     <Content Include="Scripts\tuils\app.js" />
     <Content Include="Scripts\tuils\models\file.js" />
+    <Content Include="App_Readme\Handlebarsjs_README.md" />
+    <Content Include="App_Readme\Handlebarsjs_LICENSE" />
+    <Content Include="Scripts\handelbars.helpers.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />

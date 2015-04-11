@@ -6,33 +6,20 @@
     </div>
     <div class="clear"></div>
 
-<script id="templateCategorySelector" type="text/ng-template">
-    <ul class="divCategorySelector" tuils-level="{{obj.currentLevel}}" style="float:left">
-        
-        <%
-              
-            if(obj.ChildrenCategories.length > 0)
-            { 
-                %>
+<script id="templateCategorySelector" type="text/x-handlebars-template">
+    <ul class="divCategorySelector" tuils-level="{{currentLevel}}" style="float:left">
+        {{#if ChildrenCategories.length }} 
+            <input type="text" placeholder="@T("PublishProduct.SelectCategoryFilter")" />
+            {{#each ChildrenCategories}}
                 
-                    <input type="text" placeholder="@T("PublishProduct.SelectCategoryFilter")"  />
-                
-
-                <%
-                 _.each(obj.ChildrenCategories, function(element, index){ 
-                %>
-                    <li tuils-id="{{element.Id}}" tuils-level="{{obj.currentLevel}}" tuils-filter="{{element.Name.toLowerCase()}}"><a href="javascript:void(0);">{{element.Name}}</a></li>
-                <%
-                });
-            }
-            else
-            {%>
-               <li><h3>Categoria seleccionada = {{obj.Name}}</h3><br />
-                   <a href="#Detalle" class="btnFinishSelection">@T("PublishProduct.ContinueStep1")</a>
-                </li>
-            <%}
-
-        %>
+                <li tuils-id="{{Id}}" tuils-filter="{{toLowerCase Name}}" tuils-level='{{../currentLevel}}'><a href="javascript:void(0);">{{Name}}</a></li>
+            {{/each}}
+        {{else}}
+            <li>
+                <h3>Categoria seleccionada = {{Name}}</h3><br />
+                <a href="#Detalle" class="btnFinishSelection">@T("PublishProduct.ContinueStep1")</a>
+            </li>
+        {{/if}}
     </ul>
 </script>
 

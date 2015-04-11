@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'publishProductSelectCategoryView', 'storage'],
-    function ($, _, BaseView, ProductModel, SelectCategoryView, TuilsStorage) {
+﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'storage'],
+    function ($, _, BaseView, ProductModel, TuilsStorage) {
 
     var PublishProductView = BaseView.extend({
 
@@ -33,10 +33,13 @@
             this.showCategories();
         },
         showCategories: function () {
-            this.viewSelectCategory = new SelectCategoryView({ el: "#divStep_1", productType: this.productType });
-            this.viewSelectCategory.on("category-selected", this.showProductDetail, this);
-            this.viewSelectCategory.once("categories-loaded", TuilsStorage.loadBikeReferences);
-            this.viewSelectCategory.on("categories-middle-selected", this.restartNextStep, this);
+            var that = this;
+            require(['publishProductSelectCategoryView'], function (SelectCategoryView) {
+                that.viewSelectCategory = new SelectCategoryView({ el: "#divStep_1", productType: that.productType });
+                that.viewSelectCategory.on("category-selected", that.showProductDetail, that);
+                that.viewSelectCategory.once("categories-loaded", TuilsStorage.loadBikeReferences);
+                that.viewSelectCategory.on("categories-middle-selected", that.restartNextStep, that);
+            });
         },
         showProductDetail: function (categoryId) {
             this.showNextStep();

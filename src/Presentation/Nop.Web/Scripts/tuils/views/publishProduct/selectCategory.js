@@ -1,6 +1,6 @@
-﻿define(['jquery', 'underscore', 'backbone', 'categoryModel'],
-    function ($, _, Backbone, CategoryModel) {
-
+﻿define(['jquery', 'underscore', 'backbone', 'categoryModel', 'handlebars', 'handlebarsh'],
+    function ($, _, Backbone, CategoryModel, Handlebars) {
+        
         var SelectCategoryView = Backbone.View.extend({
 
             events: {
@@ -28,7 +28,7 @@
 
             divShowCategories: undefined,
 
-            template: _.template($("#templateCategorySelector").html()),
+            template: Handlebars.compile($("#templateCategorySelector").html()),
 
             initialize: function (args) {
 
