@@ -1,78 +1,56 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "PublishProduct";
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
-    Html.AppendScriptParts("~/Scripts/tag-it.js");
+
     Html.AppendCssFileParts("~/Content/tagit/jquery.tagit.css");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/wysihtml5-0.3.0.min.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.product.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.file.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.category.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/models/tuils.manufacturer.js");
+    Html.AppendCssFileParts("http://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700,500italic,700italic,400italic,300italic");
 
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/resize.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/canvas-to-blob.min.js");
-    
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProduct.selectCategoryView.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProduct.productDetail.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProduct.summaryView.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.publishProductView.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.utilities.htmlEditorView.js");
-    Html.AppendScriptParts(ResourceLocation.Foot, "~/Scripts/backbone/views/tuils.utilities.imagesSelectorView.js");
-    
-   
-    
-    Html.AppendScriptsBasicBackbone();
 
-    //Tagit
-    
-    
-    
-    
-    
+    <script data-main="/scripts/tuils.require.main" src="~/Scripts/require.js"></script>
+
 }
-<style>
-    .selectedStep {
-        border-color:red !important;
-    }
-</style>
+
 <div id="divMainSection">
-    <h2>PublishProduct</h2>
+    <div class="master-wrapper-page container hd">
+        <div class="master-wrapper-content">
+            <div class="master-wrapper-main">
+                <div class="product-public">
+                    <ol class="wizard-breadcrumb">
 
-    <div>
-        <h2 style="float: left; border: solid 1px; padding: 5px;">@Html.ActionLink("Producto", "PublishProduct")</h2>
-        <h2 style="float: left; border: solid 1px; padding: 5px;">@Html.ActionLink("Servicio", "PublishProduct")</h2>
-        <h2 style="float: left; border: solid 1px; padding: 5px;">@Html.ActionLink("Moto", "PublishProduct")</h2>
-        <div style="clear:both"></div>
+                        <li id="btnPublishProductStep1" class="wizard-current"><b>PASO 1</b><div>@T("PublishProduct.StepMenu1")</div></li>
+                        <li id="btnPublishProductStep2" class="wizard-step"><b>PASO 2</b><div>@T("PublishProduct.StepMenu2")</div></li>
+                        <li id="btnPublishProductStep3" class="wizard-step"><b>PASO 3</b><div>@T("PublishProduct.StepMenu3")</div></li>
+                        <li id="btnPublishProductStep4" class="wizard-step"><b>PASO 4</b><div>@T("PublishProduct.StepMenu4")</div></li>
+
+                        <br />
+                    </ol>
+
+                    <div id="divStep_1">
+                        @Html.Partial("_SelectCategory")
+                    </div>
+                    <div id="divStep_2" style="display:none">
+                        @Html.Partial("_ProductDetail")
+                    </div>
+                    <div id="divStep_3" style="display:none">
+                        @Html.Partial("_ImageSelector", 7)
+                        <input type="button" class="btn_continue button-1 btnNext" value="@T("PublishProduct.NextStep")">
+                        <input type="button" class="btn_continue button-1 btnBack" value="@T("PublishProduct.BackStep")">
+                    </div>
+                    <div id="divStep_4" style="display:none">
+                        @Html.Partial("_Summary")
+                    </div>
+                    <div id="divStep_5" style="display:none">
+                        Tu producto ha sido exitosamente publicado <br />
+                        @Html.ActionLink("Vender otra cosa", "PublishProduct") <br />
+                        @Html.ActionLink("Quiero Comprar Algo", "HomePage", "Home")
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div>
-        <div id="btnPublishProductStep1" style="float:left;border:solid 1px;padding:5px;" class="selectedStep">@T("PublishProduct.StepMenu1")</div>
-        <div id="btnPublishProductStep2" style="float:left; border: solid 1px; padding: 5px; ">@T("PublishProduct.StepMenu2")</div>
-        <div id="btnPublishProductStep3" style="float:left; border: solid 1px; padding: 5px; ">@T("PublishProduct.StepMenu3")</div>
-        <div id="btnPublishProductStep4" style="float:left; border: solid 1px; padding: 5px; ">@T("PublishProduct.StepMenu4")</div>
-        <div style="clear:both"></div>
-    </div>
-
-    <div id="divStep_1">
-        @Html.Partial("_SelectCategory")
-    </div>
-    <div id="divStep_2">
-        @Html.Partial("_ProductDetail")
-    </div>
-    <div id="divStep_3">
-        @Html.Partial("_ImageSelector", 3)
-        <a class="btnNext" >@T("PublishProduct.NextStep")</a>
-        <a class="btnBack" >@T("PublishProduct.BackStep")</a>
-    </div>
-    <div id="divStep_4">
-        @Html.Partial("_Summary")
-    </div>
-    <div id="divStep_5">
-        Tu producto ha sido exitosamente publicado <br />
-        @Html.ActionLink("Vender otra cosa", "PublishProduct") <br />
-        @Html.ActionLink("Quiero Comprar Algo", "HomePage", "Home")
-    </div>
 </div>
 
 

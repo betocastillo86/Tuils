@@ -1,29 +1,33 @@
 ﻿
 <script id="templateSummary" type="text/template">
-    <div>
-        <%
-        _.each(obj.Properties, function(element, index){  %>
-            <div>{{element.name}}: {{element.value}}</div>
-        <% }); %>
 
-        IMAGENES
-
-        <%
-        _.each(obj.Images, function(element, index){   %>
-        <div style="width: 100px; height: 100px; border: solid 1px; margin: 3px; float: left">
-            <img width="100%" height="100%" src="{{element.src}}"  />
+    <div class="content-public">
+        <div class="resumen-product">
+            <div class="title">Datos del producto</div>
+            {{#each Properties}}
+            <p><b>{{name}}:</b>  {{value}}</p>
+            {{/each}}
         </div>
-        <% }); %>
-        <div style="clear:both"></div>
-    </div>
-    
-    <div>
-    <input id="chkConditions" type="checkbox" /> Aceptar terminos y condiciones
-    </div>
-    
-    <a class="btnBack">@T("PublishProduct.BackStep")</a>
+        <div class="resumen-product">
+            <div class="title">Fotos</div>
+            <ul class="picture-resume">
+                {{#each Images}}
+                <li>
+                    <img src="{{src}}" />
+                </li>
 
-    
+                {{/each}}
+                <br />
+            </ul>
 
-    <a class="btnFinish">@T("PublishProduct.FinishStep")</a>
+        </div>
+        <br />
+    </div>
+    <hr />
+    <input type="button" class="btn_continue button-1 btnFinish" value="@T("PublishProduct.FinishStep")">
+    <input type="button" class="btn_continue button-1 btnBack" value="@T("PublishProduct.BackStep")">
+
+    <br />
+    <div class="txt-terminos"><input id="chkConditions" type="checkbox" />Al publicar un aviso, admites y aceptas los <a href="">Términos y Condiciones</a> de Tuils.</div>
+
 </script>

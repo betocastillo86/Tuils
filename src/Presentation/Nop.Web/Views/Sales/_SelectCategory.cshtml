@@ -1,38 +1,24 @@
 ﻿
+    @Html.ActionLink("< Volver atrás", "Index", null, new { @class = "btn_volver" })
 
-    <div class="divShowCategories">
+    <nav class="nav-category">
+        <li class="hub-std category-view cat_select"><span>productos</span></li>
+    </nav>
+    <div class="divShowCategories category-container">
 
-        
+
     </div>
-    <div class="clear"></div>
-
-<script id="templateCategorySelector" type="text/ng-template">
-    <ul class="divCategorySelector" tuils-level="{{obj.currentLevel}}" style="float:left">
-        
-        <%
-              
-            if(obj.ChildrenCategories.length > 0)
-            { 
-                %>
-                
-                    <input type="text" placeholder="@T("PublishProduct.SelectCategoryFilter")"  />
-                
-
-                <%
-                 _.each(obj.ChildrenCategories, function(element, index){ 
-                %>
-                    <li tuils-id="{{element.Id}}" tuils-level="{{obj.currentLevel}}" tuils-filter="{{element.Name.toLowerCase()}}"><a href="javascript:void(0);">{{element.Name}}</a></li>
-                <%
-                });
-            }
-            else
-            {%>
-               <li><h3>Categoria seleccionada = {{obj.Name}}</h3><br />
-                   <a href="#Detalle" class="btnFinishSelection">@T("PublishProduct.ContinueStep1")</a>
-                </li>
-            <%}
-
-        %>
-    </ul>
+    <input type="button" class="btn_continue button-1" value="Continuar" style="display:none">
+    
+<script id="templateCategorySelector" type="text/x-handlebars-template">
+    <div class="category-column">
+        <ul class="divCategorySelector" tuils-level="{{currentLevel}}">
+            {{#if ChildrenCategories.length }}
+            <input type="text" placeholder="@T("PublishProduct.SelectCategoryFilter")" />
+                {{#each ChildrenCategories}}
+                <li tuils-id="{{Id}}" tuils-filter="{{toLowerCase Name}}" tuils-level='{{../currentLevel}}'>{{Name}}</li>
+                {{/each}}
+            {{/if}}
+        </ul>
+    </div>
 </script>
-

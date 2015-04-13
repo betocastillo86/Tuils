@@ -68,8 +68,9 @@ namespace Nop.Web
             ModelValidatorProviders.Providers.Add(new FluentValidationModelValidatorProvider(new NopValidatorFactory()));
 
 
-            //Se agregan los Bundle adicionales para Tuils
-            //BundleConfig.RegisterBundles(BundleTable.Bundles);
+            //Se genera javascript de configuración
+            JavascriptConfiguration.CreateJavascriptConfigurationFile(EngineContext.Current.Resolve<TuilsSettings>());
+
 
             //start scheduled tasks
             if (databaseInstalled)
