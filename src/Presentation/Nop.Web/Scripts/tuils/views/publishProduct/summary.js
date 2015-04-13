@@ -1,6 +1,6 @@
 ﻿
-define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars'],
-    function ($, _, Backbone, TuilsConfiguration, TuilsUtil, Handlebars) {
+define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars', 'accounting'],
+    function ($, _, Backbone, TuilsConfiguration, TuilsUtil, Handlebars, accounting) {
 
         var SummaryView = Backbone.View.extend({
             events: {
@@ -28,7 +28,7 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
                 this.productProperties = new Array();
 
                 this.productProperties.push({ name: 'Titulo', value: this.model.get('Name') });
-                this.productProperties.push({ name: 'Valor', value: this.model.get('Price') });
+                this.productProperties.push({ name: 'Valor', value: accounting.formatMoney(this.model.get('Price'), { precision : 0 }) });
 
                 if (this.productType == TuilsConfiguration.productBaseTypes.product) {
                     this.productProperties.push({ name: 'Marca', value: this.model.get('ManufacturerName') });

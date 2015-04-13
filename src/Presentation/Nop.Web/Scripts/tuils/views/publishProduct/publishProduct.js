@@ -82,8 +82,9 @@
             
         },
         showStep: function () {
-            this.$("div[id^='btnPublishProductStep']").removeClass('selectedStep');
-            this.$("#btnPublishProductStep" + this.currentStep).addClass('selectedStep');
+            //this.$("div[id^='btnPublishProductStep']").removeClass('wizard-current').addClass();
+            this.$(".wizard-current").removeClass('wizard-current').addClass("wizard-step");
+            this.$("#btnPublishProductStep" + this.currentStep).removeClass("wizard-step").addClass('wizard-current');
             this.$("div[id^='divStep_']").hide();
             this.$("#divStep_" + this.currentStep).show();
         },

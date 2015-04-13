@@ -53,8 +53,7 @@
                 //Quita la imagen de la lista y la desvincula del control
                 var fileToRemove = obj.attr(this.attributeFile);
                 this.collection.remove(this.collection.findWhere({ guid: fileToRemove }))
-                obj.removeAttr(this.attributeFile);
-                obj.find("img").removeAttr("src");
+                this.switchImage();
                 //Elimina la imagen del servidor
                 var fileModel = new FileModel({ fileGuid: fileToRemove });
                 fileModel.remove();
@@ -74,7 +73,7 @@
                 this.resizer.photo(file, 1200, 'file', function (resizedFile) {
 
                     that.resizer.photo(resizedFile, 400, 'dataURL', function (thumbnail) {
-                        that.currentControlImage.find("img").attr("src", thumbnail);
+                        that.switchImage(thumbnail);
                         fileModel.set({ src: thumbnail, file: resizedFile });
                         fileModel.upload();
                     });
@@ -83,6 +82,18 @@
             }
 
         },
+        switchImage : function(urlImage)
+        {
+            if (urlImage) {
+                this.currentControlImage.find("img").attr("src", urlImage).show();
+                this.currentControlImage.find("span").hide();
+            }
+            else {
+                this.currentControlImage.find("img").removeAttr("src").hide();
+                this.currentControlImage.removeAttr(this.attributeFile);
+                this.currentControlImage.find("span").show();
+            }
+        },
         fileUploaded: function (model) {
             var srcImage = this.currentControlImage.find("img", "src");
             var guidImage = model.get('guid');
@@ -90,7 +101,7 @@
             this.currentControlImage.attr(this.attributeFile, guidImage);
         },
         fileErrorUpload: function (resp) {
-            this.currentControlImage.find("img").removeAttr("src");
+            this.switchImage();
         },
         save: function () {
             if (this.collection.length > 0) {

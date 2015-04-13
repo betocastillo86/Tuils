@@ -47,12 +47,21 @@
                     //recorre los errores y marca solo los que tienen objeto DOM
                     var domObj = that.$(fieldsToMark[index]);
                     if (domObj)
-                        domObj.addClass("invalid-field");
+                    {
+                        domObj.addClass("input-validation-error");
+                        var domMessage = that.$("span[tuils-val-for='" + index + "']");
+                        if (domMessage)
+                            domMessage.text(errorField);
+                    }
+
+                    
+                        
                 });
             }
         },
         removeErrors: function () {
-            this.$el.find(".invalid-field").removeClass("invalid-field");
+            this.$el.find(".input-validation-error").removeClass("input-validation-error");
+            this.$el.find(".field-validation-error").text("").removeClass("input-validation-error");
         }
     });
 
