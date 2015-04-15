@@ -27,15 +27,30 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
             loadFields: function (args) {
                 this.productProperties = new Array();
 
-                this.productProperties.push({ name: 'Titulo', value: this.model.get('Name') });
-                this.productProperties.push({ name: 'Valor', value: accounting.formatMoney(this.model.get('Price'), { precision : 0 }) });
+                pushProperty(this, 'Name');
+                this.productProperties.push({ name: this.model.labels.Price, value: accounting.formatMoney(this.model.get('Price'), { precision: 0 }) });
+
 
                 if (this.productType == TuilsConfiguration.productBaseTypes.product) {
-                    this.productProperties.push({ name: 'Marca', value: this.model.get('ManufacturerName') });
+                    pushProperty(this, 'ManufacturerId', true);
+                }
+                else if (this.productType == TuilsConfiguration.productBaseTypes.bike)
+                {
+                    pushProperty(this,"CarriagePlate");
+                    pushProperty(this, "Condition", true);
+                    pushProperty(this, "Color", true);
+                    pushProperty(this, "Year");
+                    pushProperty(this, "Kms");
+                    this.productProperties.push({ name: this.model.labels.Accesories, value: TuilsUtil.toStringWithSeparator(this.model.get('AccesoriesName'), ',') });
+                    this.productProperties.push({ name: this.model.labels.Negotiation, value: TuilsUtil.toStringWithSeparator(this.model.get('NegotiationName'), ',') });
                 }
 
                 this.productProperties.push({ name: 'Fecha Cierre Publicacion', value: '30 dias' });
                 this.productProperties.push({ name: 'Categoria', value: TuilsUtil.toStringWithSeparator(args.breadCrumb, ' > ') });
+
+                function pushProperty(ctx, field, isName) {
+                    ctx.productProperties.push({ name: ctx.model.labels[field] ? ctx.model.labels[field] : field, value: ctx.model.get(field + (isName ? 'Name' : '')) });
+                }
             },
             save: function () {
                 this.trigger("summary-save");

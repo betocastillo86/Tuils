@@ -697,6 +697,13 @@ namespace Nop.Web.Infrastructure
                 new[] { "Nop.Web.Controllers" }
                 );
 
+            //publicar producto simple
+            routes.MapLocalizedRoute("PublishProductBike",
+                "quiero-vender/moto",
+                new { controller = "Sales", action = "PublishProductBike" },
+                new[] { "Nop.Web.Controllers" }
+                );
+
 
 
         }

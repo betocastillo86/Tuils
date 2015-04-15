@@ -988,6 +988,7 @@
     <Content Include="Scripts\handlebars.runtime.amd.min.js" />
     <Content Include="Scripts\handlebars.runtime.js" />
     <Content Include="Scripts\handlebars.runtime.min.js" />
+    <Content Include="Scripts\tuils\collections\categories.js" />
     <Content Include="Scripts\tuils\collections\files.js" />
     <Content Include="Scripts\tuils\collections\manufacturers.js" />
     <Content Include="Scripts\tuils\collections\products.js" />
@@ -2331,6 +2332,7 @@
     <Content Include="Views\Shared\_TextEditor.cshtml" />
     <Content Include="Views\Shared\_ImageSelector.cshtml" />
     <Content Include="Views\Sales\_Summary.cshtml" />
+    <Content Include="Views\Sales\_BikeDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

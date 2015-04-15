@@ -1,4 +1,6 @@
 ﻿using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Common;
+using Nop.Core.Infrastructure;
 using Nop.Web.Models.Api;
 using System;
 using System.Collections.Generic;
@@ -19,12 +21,41 @@ namespace Nop.Web.Extensions.Api
             entity.AdditionalShippingCharge = model.AdditionalShippingCharge;
             entity.Price = model.Price;
 
+            var _tuilsSettings = EngineContext.Current.Resolve<TuilsSettings>();
 
-            //Agrega la marca con base en ManufacturerId
-            entity.ProductManufacturers.Add(new ProductManufacturer() 
-            { 
-                ManufacturerId = model.ManufacturerId
-            });
+            if (model.ManufacturerId > 0)
+                //Agrega la marca con base en ManufacturerId
+                entity.ProductManufacturers.Add(new ProductManufacturer() 
+                { 
+                    ManufacturerId = model.ManufacturerId
+                });
+
+            //Agrega los accesorios
+            if (model.Accesories != null && model.Accesories.Count > 0)
+                model.Accesories
+                    .ForEach(a => entity.ProductSpecificationAttributes
+                                            .Add(new ProductSpecificationAttribute() {
+                                                SpecificationAttributeOptionId = a,
+                                                ShowOnProductPage = true
+                                                }
+                                            ));
+            //Agrega las condiciones de negociación
+            if (model.Negotiation != null && model.Negotiation.Count > 0)
+                model.Negotiation
+                    .ForEach(a => entity.ProductSpecificationAttributes
+                                            .Add(new ProductSpecificationAttribute(){
+                                                //SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeNegotiation,
+                                                SpecificationAttributeOptionId = a,
+                                                ShowOnProductPage = true
+                                                }
+                                            ));
+            
+            //Si viene los kilometros los asocia
+            if (model.Kms > 0)
+                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute (){ AttributeType = SpecificationAttributeType.CustomText,  CustomValue = model.Kms.ToString(), SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionKms });
+            
+            if (!string.IsNullOrEmpty(model.CarriagePlate))
+                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.Kms.ToString(), SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionCarriagePlate });
 
             //Agrega la categoria con base en CategoryId
             entity.ProductCategories.Add(new ProductCategory() 

@@ -35,5 +35,38 @@ namespace Nop.Core.Domain.Common
         /// </summary>
         public long maxFileUploadSize { get; set; }
 
+        #region Atributos especialesde Productos
+        /// <summary>
+        /// Atributo de tipo  color 
+        /// </summary>
+        public int specificationAttributeColor { get; set; }
+
+        /// <summary>
+        /// Atributo de tipo condición
+        /// </summary>
+        public int specificationAttributeCondition { get; set; }
+
+        /// <summary>
+        /// Atributo de los accesorios de una moto
+        /// </summary>
+        public int specificationAttributeAccesories { get; set; }
+
+        /// <summary>
+        /// Atributo de las condiciones de negociación de una moto
+        /// </summary>
+        public int specificationAttributeNegotiation { get; set; }
+
+        /// <summary>
+        /// Opción por defecto que puede quedar seleccionada para el reccorido de una moto
+        /// </summary>
+        public int specificationAttributeOptionKms { get; set; }
+
+
+        /// <summary>
+        /// Opción por defecto que puede quedar seleccionada para las placas de moto
+        /// </summary>
+        public int specificationAttributeOptionCarriagePlate { get; set; }
+        #endregion
+        
     }
 }

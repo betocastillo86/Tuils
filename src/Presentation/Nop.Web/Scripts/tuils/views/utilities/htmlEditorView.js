@@ -4,7 +4,6 @@
 
         prefix: '',
 
-        template: Handlebars.compile($("#templateHtmlEditor").html()),
 
         editor: undefined,
 
@@ -14,6 +13,7 @@
             if (args.prefix)
                 this.prefix = args.prefix;
 
+            this.template = Handlebars.compile($("#templateHtmlEditor").html());
             this.divContainerHtml = this.$(".divContainerHtml");
 
             this.loadEditor();

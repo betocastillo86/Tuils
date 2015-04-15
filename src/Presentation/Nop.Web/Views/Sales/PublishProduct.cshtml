@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Nop.Web.Models.Sales.PublishProductModel
+@{
     ViewBag.Title = "PublishProduct";
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
@@ -29,7 +30,14 @@
                         @Html.Partial("_SelectCategory")
                     </div>
                     <div id="divStep_2" style="display:none">
-                        @Html.Partial("_ProductDetail")
+                        @if (Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Bike)
+                        { 
+                            @Html.Partial("_BikeDetail")
+                        }
+                        else if (Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Product)
+                        { 
+                            @Html.Partial("_ProductDetail")
+                        }
                     </div>
                     <div id="divStep_3" style="display:none">
                         @Html.Partial("_ImageSelector", 7)

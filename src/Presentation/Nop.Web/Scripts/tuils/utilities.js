@@ -51,6 +51,13 @@
         navigateFastLogin: function (event, xhr) {
             if (xhr.status === 401)
                 this.router.navigate("#login");
+        },
+        pluckPropertiesJquery: function (objsArray, property) {
+            var values = new Array();
+            _.each(objsArray, function (element, index) {
+                values.push($(element).attr(property));
+            });
+            return values;
         }
     };
 

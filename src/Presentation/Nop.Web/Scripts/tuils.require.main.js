@@ -43,6 +43,7 @@
         //Colecciones
         productCollection: 'tuils/collections/products',
         manufacturerCollection: 'tuils/collections/manufacturers',
+        categoryCollection : 'tuils/collections/categories',
         fileCollection: 'tuils/collections/files',
         //Vistas
         baseView: 'tuils/views/baseView',

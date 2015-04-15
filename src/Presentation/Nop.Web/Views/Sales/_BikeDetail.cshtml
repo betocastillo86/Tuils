@@ -1,0 +1,100 @@
+﻿@model Nop.Web.Models.Sales.PublishProductModel
+
+
+<form class="content-public">
+
+    <div class="title">@T("PublishProduct.StepMenu2_Bike")</div>
+
+
+    <div class="form-public">
+        <div class="inputs">
+            @Html.LabelT("PublishProduct.ProductTitle")
+            <input id="txtName" type="text" placeholder="@T("PublishProduct.TitleExample")" />
+            @ShowRequired("Name")
+        </div>
+                        
+
+          <div class="inputs">
+            @Html.LabelT("PublishProduct.Color")
+            @Html.DropDownList("ddlColor", Model.ColorOptions, "-")
+            @ShowRequired("Color")
+        </div>
+
+        
+       
+            <div class="inputs">
+                @Html.LabelT("PublishProduct.Codition")
+                @Html.DropDownList("ddlCondition", Model.ConditionOptions, "-")
+                @ShowRequired("Condition")
+            </div>
+            <div class="inputs">
+                @Html.LabelT("PublishProduct.Price")
+                <input id="txtPrice" type="text" tuils-val="int" placeholder="@T("PublishProduct.PriceExample")" maxlength="10" />
+                @ShowRequired("Price")
+            </div>
+            <div class="inputs">
+                @Html.LabelT("PublishProduct.CarriagePlate")
+                <input id="txtCarriagePlate" type="text" placeholder="@T("PublishProduct.CarriagePlateExample")" maxlength="7" />
+                @ShowRequired("CarriagePlate")
+            </div>
+            <div class="inputs">
+                @Html.LabelT("PublishProduct.Kms")
+                <input id="txtKms" type="text" tuils-val="int" maxlength="10" />
+                @ShowRequired("Kms")
+            </div>
+            <div class="inputs">
+                @Html.LabelT("PublishProduct.Year")
+                <select id="ddlYear">
+                    <option selected>-</option>
+                    @for (int i = DateTime.Now.Year; i > 1990; i--)
+                    {
+                        <option>@i</option>
+                    }
+                </select>
+                @ShowRequired("Year")
+            </div>
+
+            <br />
+        </div>
+    <br />
+    <div class="title">@T("PublishProduct.NegotiationOptions")</div>
+    <div class="form-public">
+        @foreach (var condition in Model.NegotiationOptions)
+        {
+            <div class="input_check">
+                <input type="checkbox" name="Negotiation" value="@condition.Id" tuils-name="@condition.Name">
+                <label>@condition.Name</label>
+            </div>
+        }
+    </div>
+    <br />
+    <div class="title">@T("PublishProduct.AccesoriesOptions")</div>
+    <div class="form-public">
+        @foreach (var accesory in Model.AccesoriesOptions)
+        {
+            <div class="input_check">
+                <input type="checkbox" name="Accesories" value="@accesory.Id" tuils-name="@accesory.Name">
+                <label>@accesory.Name</label>
+            </div>
+        }
+    </div>
+    <div class="title">@T("PublishProduct.Product.Html")</div>
+
+    <div id="divProductHtml" class="form-public">
+        <textarea id="productHtml_textarea"></textarea>
+        <div class="text-character"></div>
+        <span class="field-validation-error" tuils-val-for="FullDescription"></span>
+    </div>
+    
+
+</form>
+<input type="button" class="btn_continue button-1 btnNext" value="@T("PublishProduct.NextStep")">
+<input type="button" class="btn_continue button-1 btnBack" value="@T("PublishProduct.BackStep")">
+
+@helper ShowRequired(string fieldName)
+{
+    <span class="required">*</span>
+    <div class="text-character"></div>
+    <span class="field-validation-error" tuils-val-for="@fieldName"></span>
+
+}

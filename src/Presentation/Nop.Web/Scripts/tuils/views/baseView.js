@@ -1,6 +1,10 @@
-﻿define(['jquery', 'underscore', 'backbone', 'util'], function ($, _, Backbone, TuilsUtil) {
+﻿define(['jquery', 'underscore', 'backbone', 'util', 'validations'], function ($, _, Backbone, TuilsUtil) {
     
     var BaseView = Backbone.View.extend({
+        initialize: function()
+        {
+            debugger;
+        },
         viewLogin : undefined,
 
         showLogin: function (model)
@@ -20,6 +24,8 @@
             this.$("input[tuils-val='int']").on("keypress", TuilsUtil.onlyNumbers);
         },
         validateControls: function (model) {
+            //Formatea los mensajes de respuesta contra los label
+            
             this.removeErrors();
 
             if (!model)

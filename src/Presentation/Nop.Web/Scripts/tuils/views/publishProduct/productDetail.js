@@ -18,6 +18,11 @@
                     labelPath: 'Name',
                     valuePath: 'Id',
                     defaultOption: { label: '-', value: undefined }
+                },
+                onSet: function (value, ctx) {
+                    //Toma el texto seleccionado y se lo asigna al nombre de la marca
+                    ctx.view.model.set("ManufacturerIdName", ctx.view.$(ctx.selector + " :selected").text());
+                    return value;
                 }
             },
             "#chkIsShipEnabled": "IsShipEnabled",
@@ -25,10 +30,6 @@
             "#txtPrice": "Price",
             "#txtBikeReferencesProduct": {
                 observe: "SpecialCategories",
-                onGet: function (values) {
-
-
-                },
                 onSet: function (value) {
                     var brands = new Array();
                     _.each(value.split(','), function (element) {
@@ -40,6 +41,41 @@
             "#productHtml_textarea": {
                 observe: "FullDescription",
                 controlToMark: "#divProductHtml"
+            },
+            "#ddlCondition": {
+                observe : "Condition",
+                onSet: function (value, ctx) {
+                    //Toma el texto seleccionado y se lo asigna al nombre de la condición
+                    ctx.view.model.set("ConditionName", ctx.view.$(ctx.selector + " :selected").text());
+                    return value;
+                }
+            },
+            "#txtCarriagePlate": "CarriagePlate",
+            "#ddlColor": {
+                observe : "Color" ,
+                onSet: function (value,ctx) {
+                    //Toma el texto seleccionado y se lo asigna al nombre del color
+                    ctx.view.model.set("ColorName", ctx.view.$(ctx.selector + " :selected").text());
+                    return value;
+                }
+            },
+            "#ddlYear": "Year",
+            "#txtKms": "Kms",
+            "[name='Negotiation']": {
+                observe: "Negotiation",
+                onSet: function (value, ctx) {
+                    var names = TuilsUtil.pluckPropertiesJquery(ctx.view.$(ctx.selector + ":checked"), 'tuils-name');
+                    ctx.view.model.set('NegotiationName', names);
+                    return value;
+                }
+            },
+            "[name='Accesories']": {
+                observe: "Accesories",
+                onSet: function (value, ctx) {
+                    var names = TuilsUtil.pluckPropertiesJquery(ctx.view.$(ctx.selector + ":checked"), 'tuils-name');
+                    ctx.view.model.set('AccesoriesName', names);
+                    return value;
+                }
             }
         },
 
@@ -69,14 +105,20 @@
             this.tagBikeReferences();
             this.loadHtmlEditor();
             this.switchShipping();
+            this.myStickit();
         },
         loadHtmlEditor: function () {
-            this.viewHtmlEditor = new HtmlEditorView({ el: this.el, prefix: 'productHtml' });
+            //el HTML no está habilitado para las motos
+            if (this.productType != TuilsConfiguration.productBaseTypes.bike)
+                this.viewHtmlEditor = new HtmlEditorView({ el: this.el, prefix: 'productHtml' });
         },
         loadManufacturersByCategory: function () {
-            this.manufacturersCollection = new ManufacturerCollection();
-            this.manufacturersCollection.on("sync", this.myStickit, this);
-            this.manufacturersCollection.getByCategoryId(this.selectedCategory);
+            //Las marcas solo aplican para productos
+            if (this.productType == TuilsConfiguration.productBaseTypes.product) {
+                this.manufacturersCollection = new ManufacturerCollection();
+                this.manufacturersCollection.on("sync", this.myStickit, this);
+                this.manufacturersCollection.getByCategoryId(this.selectedCategory);
+            }
         },
         myStickit: function () {
             this.stickThem();
@@ -115,7 +157,6 @@
             this.model.set({ FullDescription: this.$("#productHtml_textarea").val() });
             this.validateControls();
             if (this.model.isValid()) {
-                this.model.set('ManufacturerName', this.$("#ddlManufacturerId :selected").text());
                 this.trigger("detail-product-finished", this.model);
             }
         },

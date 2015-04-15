@@ -21,7 +21,7 @@
 
         initialize: function (args) {
             this.productType = args.productType;
-            this.model = new ProductModel('ProductTypeId', this.productType);
+            this.model = new ProductModel({ 'ProductTypeId': this.productType });
             this.loadControls();
             this.render();
         },
