@@ -42,9 +42,6 @@ namespace Nop.Web.Controllers.Api
             return Ok();
         }
 
-
-
-
         [Route("api/products")]
         [HttpPost]
         [AuthorizeApi]

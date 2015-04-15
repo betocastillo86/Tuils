@@ -76,6 +76,10 @@
     <Compile Include="Migrations\201503302358180_ManufacturerCategory.Designer.cs">
       <DependentUpon>201503302358180_ManufacturerCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504151612466_NewPropertiesProduct.cs" />
+    <Compile Include="Migrations\201504151612466_NewPropertiesProduct.Designer.cs">
+      <DependentUpon>201504151612466_NewPropertiesProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -206,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503302358180_ManufacturerCategory.resx">
       <DependentUpon>201503302358180_ManufacturerCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504151612466_NewPropertiesProduct.resx">
+      <DependentUpon>201504151612466_NewPropertiesProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

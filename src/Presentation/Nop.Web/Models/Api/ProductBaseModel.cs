@@ -49,5 +49,9 @@ namespace Nop.Web.Models.Api
 
         public List<string> TempFiles { get; set; }
 
+        public bool IsNew { get; set; }
+
+        public int StateProvince { get; set; }
+
     }
 }

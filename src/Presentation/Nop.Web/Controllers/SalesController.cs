@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Nop.Web.Extensions;
+using Nop.Services.Directory;
 
 namespace Nop.Web.Controllers
 {
@@ -16,6 +17,7 @@ namespace Nop.Web.Controllers
         #region Fields
         private ICategoryService _categoryService;
         private ISpecificationAttributeService _specificationAttributeService;
+        private IStateProvinceService _stateProvinceService;
         private TuilsSettings _tuilsSettings;
         #endregion
 
@@ -23,11 +25,13 @@ namespace Nop.Web.Controllers
 
         public SalesController(ICategoryService categoryService,
             ISpecificationAttributeService specificationAttributeService,
+            IStateProvinceService stateProvinceService,
             TuilsSettings tuilsSettings)
         {
             this._categoryService = categoryService;
             this._tuilsSettings = tuilsSettings;
             this._specificationAttributeService = specificationAttributeService;
+            this._stateProvinceService = stateProvinceService;
         }
         #endregion
 
@@ -41,9 +45,13 @@ namespace Nop.Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Publicación de producto simple
+        /// </summary>
+        /// <returns></returns>
         public ActionResult PublishProduct()
         {
-            var model = new PublishProductModel();
+            var model = GetPublishModel();
 
             //Tipo de producto servicio
             model.ProductType = ProductTypePublished.Product;
@@ -51,9 +59,13 @@ namespace Nop.Web.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Publicación de producto tipo motocicleta
+        /// </summary>
+        /// <returns></returns>
         public ActionResult PublishProductBike()
         {
-            var model = new PublishProductModel();
+            var model = GetPublishModel();
             //Caga los colores existentes
             model.ColorOptions = new SelectList(
                 _specificationAttributeService
@@ -71,7 +83,6 @@ namespace Nop.Web.Controllers
                 "Id",
                 "Name");
 
-
             model.AccesoriesOptions = _specificationAttributeService
                 .GetSpecificationAttributeOptionsBySpecificationAttribute(_tuilsSettings.specificationAttributeAccesories);
 
@@ -83,7 +94,16 @@ namespace Nop.Web.Controllers
 
             return View("PublishProduct", model);
         }
-	}
+
+        #region Metodos Privados
+        private PublishProductModel GetPublishModel()
+        {
+            var model = new PublishProductModel();
+            model.StateProvinces = new SelectList(_stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry), "Id", "Name");
+            return model;
+        }
+        #endregion
+    }
 
     public enum ProductTypePublished { 
         Product,

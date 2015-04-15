@@ -7,13 +7,9 @@
 
 
     <div class="form-public">
-        <div class="inputs">
-            @Html.LabelT("PublishProduct.ProductTitle")
-            <input id="txtName" type="text" placeholder="@T("PublishProduct.TitleExample")" />
-            <span class="required">*</span>
-            <div class="text-character">Restan  10 caracteres</div>
-            <span class="field-validation-error"></span>
-        </div>
+        
+        @Html.Partial("_CommonFieldsProductBikeDetail", Model)
+
         <div class="inputs">
             @Html.LabelT("PublishProduct.Manufacturer")
             <select id="ddlManufacturerId"></select>
@@ -21,13 +17,7 @@
             <div class="text-character"></div>
             <span class="field-validation-error" tuils-val-for="ManufacturerId"></span>
         </div>
-        <div class="inputs">
-            @Html.LabelT("PublishProduct.Price")
-            <input id="txtPrice" type="text" tuils-val="int" placeholder="@T("PublishProduct.PriceExample")" />
-            <span class="required">*</span>
-            <div class="text-character"></div>
-            <span class="field-validation-error" tuils-val-for="Price"></span>
-        </div>
+        
         <br />
         <div class="inputs">
             <input id="chkIsShipEnabled" type="checkbox" /> @Html.Label(@T("PublishProduct.HasShipping").Text)

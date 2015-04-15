@@ -7,12 +7,7 @@
 
 
     <div class="form-public">
-        <div class="inputs">
-            @Html.LabelT("PublishProduct.ProductTitle")
-            <input id="txtName" type="text" placeholder="@T("PublishProduct.TitleExample")" />
-            @ShowRequired("Name")
-        </div>
-                        
+           @Html.Partial("_CommonFieldsProductBikeDetail", Model)  
 
           <div class="inputs">
             @Html.LabelT("PublishProduct.Color")
@@ -27,11 +22,7 @@
                 @Html.DropDownList("ddlCondition", Model.ConditionOptions, "-")
                 @ShowRequired("Condition")
             </div>
-            <div class="inputs">
-                @Html.LabelT("PublishProduct.Price")
-                <input id="txtPrice" type="text" tuils-val="int" placeholder="@T("PublishProduct.PriceExample")" maxlength="10" />
-                @ShowRequired("Price")
-            </div>
+           
             <div class="inputs">
                 @Html.LabelT("PublishProduct.CarriagePlate")
                 <input id="txtCarriagePlate" type="text" placeholder="@T("PublishProduct.CarriagePlateExample")" maxlength="7" />
@@ -96,5 +87,4 @@
     <span class="required">*</span>
     <div class="text-character"></div>
     <span class="field-validation-error" tuils-val-for="@fieldName"></span>
-
 }

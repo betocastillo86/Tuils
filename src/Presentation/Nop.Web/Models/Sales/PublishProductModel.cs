@@ -27,6 +27,11 @@ namespace Nop.Web.Models.Sales
         public SelectList ConditionOptions { get; set; }
 
         /// <summary>
+        /// Departamentos donde puede estar el producto
+        /// </summary>
+        public SelectList StateProvinces { get; set; }
+
+        /// <summary>
         /// Condiciones de negociación de la moto
         /// </summary>
         public IList<SpecificationAttributeOption> NegotiationOptions { get; set; }
@@ -35,6 +40,7 @@ namespace Nop.Web.Models.Sales
         /// Accesorios que acompañan la moto
         /// </summary>
         public IList<SpecificationAttributeOption> AccesoriesOptions { get; set; }
+
 
         /// <summary>
         /// Tipo de producto de publicación

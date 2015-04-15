@@ -30,6 +30,8 @@ namespace Nop.Web.Extensions.Api
                     ManufacturerId = model.ManufacturerId
                 });
 
+            #region Properties Bikes
+
             //Agrega los accesorios
             if (model.Accesories != null && model.Accesories.Count > 0)
                 model.Accesories
@@ -54,8 +56,18 @@ namespace Nop.Web.Extensions.Api
             if (model.Kms > 0)
                 entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute (){ AttributeType = SpecificationAttributeType.CustomText,  CustomValue = model.Kms.ToString(), SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionKms });
             
+            //La placa es exclusiva de las motos
             if (!string.IsNullOrEmpty(model.CarriagePlate))
                 entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.Kms.ToString(), SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionCarriagePlate });
+            
+            //El año es esclusivo de las motos
+            if (model.Year > 0)
+                entity.Year = model.Year;
+
+            #endregion
+
+
+            
 
             //Agrega la categoria con base en CategoryId
             entity.ProductCategories.Add(new ProductCategory() 
@@ -70,6 +82,8 @@ namespace Nop.Web.Extensions.Api
             }
 
             entity.TempFiles = model.TempFiles;
+            entity.IsNew = model.IsNew;
+            entity.StateProvinceId = model.StateProvince;
 
             return entity;
         }

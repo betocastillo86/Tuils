@@ -72,6 +72,16 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                     },
                     pattern: 'number',
                     maxLength :10
+                },
+                IsNew: {
+                    required:true,
+                    pattern: /^(true|false)$/
+                },
+                StateProvince: {
+                    required: function (val, attr, computed) {
+                        return computed.ProductTypeId != TuilsConfiguration.productBaseTypes.service;
+                    },
+                    pattern: 'number'
                 }
             },
             labels: {
@@ -87,7 +97,9 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                 Year: 'Año/Modelo',
                 Kms: 'Recorrido',
                 Negotiation: 'Condiciones de Negociación',
-                Accesories : 'Accesorios'
+                Accesories: 'Accesorios',
+                IsNew: 'Estado',
+                StateProvinceId : 'Ubicación',
             },
             publish: function () {
                 this.save();

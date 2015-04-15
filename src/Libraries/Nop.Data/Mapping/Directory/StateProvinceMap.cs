@@ -15,6 +15,7 @@ namespace Nop.Data.Mapping.Directory
             this.HasRequired(sp => sp.Country)
                 .WithMany(c => c.StateProvinces)
                 .HasForeignKey(sp => sp.CountryId);
+
         }
     }
 }

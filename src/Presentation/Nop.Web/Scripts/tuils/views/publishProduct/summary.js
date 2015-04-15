@@ -10,11 +10,13 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
             template: Handlebars.compile($("#templateSummary").html()),
 
             productType: undefined,
+            btnFinish:undefined,
             //Propiedades que se van a mostrar en el resumen, esto depende del tipo de producto
             productProperties: undefined,
 
             initialize: function (args) {
                 this.model = args.product;
+                this.model.on("error", this.showButtonBar, this);
                 this.images = args.images;
                 this.productType = args.productType;
                 this.loadFields({ breadCrumb: args.breadCrumb });
@@ -22,7 +24,12 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
             },
             render: function () {
                 this.$el.html(this.template({ Images: this.images.toJSON(), Properties: this.productProperties }));
+                this.loadControls();
                 return this;
+            },
+            loadControls : function()
+            {
+                
             },
             loadFields: function (args) {
                 this.productProperties = new Array();
@@ -52,8 +59,21 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
                     ctx.productProperties.push({ name: ctx.model.labels[field] ? ctx.model.labels[field] : field, value: ctx.model.get(field + (isName ? 'Name' : '')) });
                 }
             },
+            showButtonBar : function()
+            {
+                this.switchButtonBar(true);
+            },
+            switchButtonBar: function (show) {
+                this.$("#buttonsBar input[type='button']").prop("disabled", !show);
+            },
             save: function () {
-                this.trigger("summary-save");
+                if (this.$("#chkConditions").is(":checked")) {
+                    this.switchButtonBar(false);
+                    this.trigger("summary-save");
+                }
+                else {
+                    alert("Debes aceptar terminos y condiciones");
+                }
             },
             back: function () {
                 this.trigger("summary-back");

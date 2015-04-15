@@ -76,7 +76,9 @@
                     ctx.view.model.set('AccesoriesName', names);
                     return value;
                 }
-            }
+            },
+            "#ddlIsNew" : "IsNew",
+            "#ddlStateProvince": "StateProvince"
         },
 
         //views

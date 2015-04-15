@@ -34,6 +34,11 @@ namespace Nop.Core.Domain.Common
         /// Tamaño máximo (en bytes) de los archivos cargados por usuarios externos
         /// </summary>
         public long maxFileUploadSize { get; set; }
+        
+        /// <summary>
+        /// Pais por defecto del aplicativo
+        /// </summary>
+        public int defaultCountry { get; set; }
 
         #region Atributos especialesde Productos
         /// <summary>

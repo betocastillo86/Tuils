@@ -2333,6 +2333,7 @@
     <Content Include="Views\Shared\_ImageSelector.cshtml" />
     <Content Include="Views\Sales\_Summary.cshtml" />
     <Content Include="Views\Sales\_BikeDetail.cshtml" />
+    <Content Include="Views\Sales\_CommonFieldsProductBikeDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

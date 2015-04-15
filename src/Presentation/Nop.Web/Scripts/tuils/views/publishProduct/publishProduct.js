@@ -83,9 +83,13 @@
         },
         showStep: function () {
             //this.$("div[id^='btnPublishProductStep']").removeClass('wizard-current').addClass();
-            this.$(".wizard-current").removeClass('wizard-current').addClass("wizard-step");
-            this.$("#btnPublishProductStep" + this.currentStep).removeClass("wizard-step").addClass('wizard-current');
-            this.$("div[id^='divStep_']").hide();
+            if (this.currentStep < 5)
+            {
+                this.$(".wizard-current").removeClass('wizard-current').addClass("wizard-step");
+                this.$("#btnPublishProductStep" + this.currentStep).removeClass("wizard-step").addClass('wizard-current');
+                this.$("div[id^='divStep_']").hide();
+            }
+            
             this.$("#divStep_" + this.currentStep).show();
         },
         showStepBack: function () {
@@ -105,7 +109,7 @@
                 this.viewImageSelector.undelegateEvents();
         },
         errorOnSaving: function () {
-
+            alert("Ocurrió un error, intentalo de nuevo");
         },
         productSaved: function (model) {
             this.viewSelectCategory.remove();
@@ -116,18 +120,11 @@
             Backbone.history.navigate("quiero-vender/publicacion-exitosa/" + model.get('Id'));
         },
         save: function () {
-
-            if (this.$("#chkConditions").is(":checked")) {
-                this.model.set('TempFiles', _.pluck(this.images.toJSON(), 'guid'));
-                this.model.on('sync', this.productSaved, this);
-                this.model.on('error', this.errorOnSaving, this);
-                this.validateAuthorization();
-                this.model.publish();
-            }
-            else {
-                alert("Debes aceptar terminos y condiciones");
-            }
-
+            this.model.set('TempFiles', _.pluck(this.images.toJSON(), 'guid'));
+            this.model.on('sync', this.productSaved, this);
+            this.model.on('error', this.errorOnSaving, this);
+            this.validateAuthorization();
+            this.model.publish();
         }
     });
 

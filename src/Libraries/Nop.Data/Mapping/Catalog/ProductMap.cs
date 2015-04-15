@@ -28,6 +28,7 @@ namespace Nop.Data.Mapping.Catalog
             this.Property(p => p.RequiredProductIds).HasMaxLength(1000);
             this.Property(p => p.AllowedQuantities).HasMaxLength(1000);
 
+
             this.Ignore(p => p.ProductType);
             this.Ignore(p => p.BackorderMode);
             this.Ignore(p => p.DownloadActivationType);
@@ -44,7 +45,11 @@ namespace Nop.Data.Mapping.Catalog
             this.HasMany(p => p.SpecialCategories)
                 .WithRequired(c => c.Product)
                 .WillCascadeOnDelete(false);
-            
+
+            this.HasRequired(p => p.StateProvince)
+                .WithMany(s => s.Products)
+                .HasForeignKey(p => p.StateProvinceId)
+                .WillCascadeOnDelete(false);
         }
     }
 }

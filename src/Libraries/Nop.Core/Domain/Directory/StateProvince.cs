@@ -1,5 +1,7 @@
 
+using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Localization;
+using System.Collections.Generic;
 
 namespace Nop.Core.Domain.Directory
 {
@@ -37,6 +39,15 @@ namespace Nop.Core.Domain.Directory
         /// Gets or sets the country
         /// </summary>
         public virtual Country Country { get; set; }
+
+        /// <summary>
+        /// Listado de productos asociados
+        /// </summary>
+        private IList<Product> _products;
+        public virtual IList<Product> Products {
+            get { return _products ?? (_products = new List<Product>()); }
+            protected set { _products = value; }
+        }
     }
 
 }

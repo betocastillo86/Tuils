@@ -64,6 +64,8 @@
                         
                 });
             }
+
+            return errors;
         },
         removeErrors: function () {
             this.$el.find(".input-validation-error").removeClass("input-validation-error");
