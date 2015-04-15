@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'publishProductSelectCategoryView', 'storage'],
-    function ($, _, BaseView, ProductModel, SelectCategoryView, TuilsStorage) {
+﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'storage'],
+    function ($, _, BaseView, ProductModel, TuilsStorage) {
 
     var PublishProductView = BaseView.extend({
 
@@ -21,7 +21,7 @@
 
         initialize: function (args) {
             this.productType = args.productType;
-            this.model = new ProductModel('ProductTypeId', this.productType);
+            this.model = new ProductModel({ 'ProductTypeId': this.productType });
             this.loadControls();
             this.render();
         },
@@ -33,10 +33,13 @@
             this.showCategories();
         },
         showCategories: function () {
-            this.viewSelectCategory = new SelectCategoryView({ el: "#divStep_1", productType: this.productType });
-            this.viewSelectCategory.on("category-selected", this.showProductDetail, this);
-            this.viewSelectCategory.once("categories-loaded", TuilsStorage.loadBikeReferences);
-            this.viewSelectCategory.on("categories-middle-selected", this.restartNextStep, this);
+            var that = this;
+            require(['publishProductSelectCategoryView'], function (SelectCategoryView) {
+                that.viewSelectCategory = new SelectCategoryView({ el: "#divStep_1", productType: that.productType });
+                that.viewSelectCategory.on("category-selected", that.showProductDetail, that);
+                that.viewSelectCategory.once("categories-loaded", TuilsStorage.loadBikeReferences);
+                that.viewSelectCategory.on("categories-middle-selected", that.restartNextStep, that);
+            });
         },
         showProductDetail: function (categoryId) {
             this.showNextStep();
@@ -79,9 +82,14 @@
             
         },
         showStep: function () {
-            this.$("div[id^='btnPublishProductStep']").removeClass('selectedStep');
-            this.$("#btnPublishProductStep" + this.currentStep).addClass('selectedStep');
-            this.$("div[id^='divStep_']").hide();
+            //this.$("div[id^='btnPublishProductStep']").removeClass('wizard-current').addClass();
+            if (this.currentStep < 5)
+            {
+                this.$(".wizard-current").removeClass('wizard-current').addClass("wizard-step");
+                this.$("#btnPublishProductStep" + this.currentStep).removeClass("wizard-step").addClass('wizard-current');
+                this.$("div[id^='divStep_']").hide();
+            }
+            
             this.$("#divStep_" + this.currentStep).show();
         },
         showStepBack: function () {
@@ -101,7 +109,7 @@
                 this.viewImageSelector.undelegateEvents();
         },
         errorOnSaving: function () {
-
+            alert("Ocurrió un error, intentalo de nuevo");
         },
         productSaved: function (model) {
             this.viewSelectCategory.remove();
@@ -112,18 +120,11 @@
             Backbone.history.navigate("quiero-vender/publicacion-exitosa/" + model.get('Id'));
         },
         save: function () {
-
-            if (this.$("#chkConditions").is(":checked")) {
-                this.model.set('TempFiles', _.pluck(this.images.toJSON(), 'guid'));
-                this.model.on('sync', this.productSaved, this);
-                this.model.on('error', this.errorOnSaving, this);
-                this.validateAuthorization();
-                this.model.publish();
-            }
-            else {
-                alert("Debes aceptar terminos y condiciones");
-            }
-
+            this.model.set('TempFiles', _.pluck(this.images.toJSON(), 'guid'));
+            this.model.on('sync', this.productSaved, this);
+            this.model.on('error', this.errorOnSaving, this);
+            this.validateAuthorization();
+            this.model.publish();
         }
     });
 

@@ -26,7 +26,9 @@
         backbone: 'backbone',
         stickit: 'backbone.stickit',
         jqueryui: 'jquery-ui-1.10.3.custom',
-        validations : 'backbone-validation.min',
+        validations: 'backbone-validation.min',
+        handlebars: 'handlebars',
+        handlebarsh: 'handelbars.helpers',
         //Basic Tuils
         router: 'tuils/router',
         configuration: 'tuils/configuration',
@@ -41,6 +43,7 @@
         //Colecciones
         productCollection: 'tuils/collections/products',
         manufacturerCollection: 'tuils/collections/manufacturers',
+        categoryCollection : 'tuils/collections/categories',
         fileCollection: 'tuils/collections/files',
         //Vistas
         baseView: 'tuils/views/baseView',
@@ -55,7 +58,8 @@
         tagit: 'tag-it',
         wysihtml5: 'wysihtml5-0.3.0.min',
         resize: 'resize',
-        canvasBlob: 'canvas-to-blob.min'
+        canvasBlob: 'canvas-to-blob.min',
+        accounting: 'accounting.min'
     }
     
 });

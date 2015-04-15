@@ -667,38 +667,38 @@ namespace Nop.Web.Controllers
         public ActionResult TopMenu()
         {
             //categories
-            var customerRolesIds = _workContext.CurrentCustomer.CustomerRoles
-                .Where(cr => cr.Active).Select(cr => cr.Id).ToList();
-            string categoryCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_MENU_MODEL_KEY, _workContext.WorkingLanguage.Id,
-                string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id);
-            var cachedCategoriesModel = _cacheManager.Get(categoryCacheKey, () =>
-                PrepareCategorySimpleModels(0, null, 0, _catalogSettings.TopCategoryMenuSubcategoryLevelsToDisplay, true)
-                .ToList()
-            );
+            //var customerRolesIds = _workContext.CurrentCustomer.CustomerRoles
+            //    .Where(cr => cr.Active).Select(cr => cr.Id).ToList();
+            //string categoryCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_MENU_MODEL_KEY, _workContext.WorkingLanguage.Id,
+            //    string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id);
+            //var cachedCategoriesModel = _cacheManager.Get(categoryCacheKey, () =>
+            //    PrepareCategorySimpleModels(0, null, 0, _catalogSettings.TopCategoryMenuSubcategoryLevelsToDisplay, true)
+            //    .ToList()
+            //);
 
-            //top menu topics
-            string topicCacheKey = string.Format(ModelCacheEventConsumer.TOPIC_TOP_MENU_MODEL_KEY, 
-                _workContext.WorkingLanguage.Id, _storeContext.CurrentStore.Id);
-            var cachedTopicModel = _cacheManager.Get(topicCacheKey, () =>
-                _topicService.GetAllTopics(_storeContext.CurrentStore.Id)
-                .Where(t => t.IncludeInTopMenu)
-                .Select(t => new TopMenuModel.TopMenuTopicModel
-                {
-                    Id = t.Id,
-                    Name = t.GetLocalized(x => x.Title),
-                    SeName = t.GetSeName()
-                })
-                .ToList()
-            );
-            var model = new TopMenuModel
-            {
-                Categories = cachedCategoriesModel,
-                Topics = cachedTopicModel,
-                RecentlyAddedProductsEnabled = _catalogSettings.RecentlyAddedProductsEnabled,
-                BlogEnabled = _blogSettings.Enabled,
-                ForumEnabled = _forumSettings.ForumsEnabled
-            };
-            return PartialView(model);
+            ////top menu topics
+            //string topicCacheKey = string.Format(ModelCacheEventConsumer.TOPIC_TOP_MENU_MODEL_KEY, 
+            //    _workContext.WorkingLanguage.Id, _storeContext.CurrentStore.Id);
+            //var cachedTopicModel = _cacheManager.Get(topicCacheKey, () =>
+            //    _topicService.GetAllTopics(_storeContext.CurrentStore.Id)
+            //    .Where(t => t.IncludeInTopMenu)
+            //    .Select(t => new TopMenuModel.TopMenuTopicModel
+            //    {
+            //        Id = t.Id,
+            //        Name = t.GetLocalized(x => x.Title),
+            //        SeName = t.GetSeName()
+            //    })
+            //    .ToList()
+            //);
+            //var model = new TopMenuModel
+            //{
+            //    Categories = cachedCategoriesModel,
+            //    Topics = cachedTopicModel,
+            //    RecentlyAddedProductsEnabled = _catalogSettings.RecentlyAddedProductsEnabled,
+            //    BlogEnabled = _blogSettings.Enabled,
+            //    ForumEnabled = _forumSettings.ForumsEnabled
+            //};
+            return PartialView(new TopMenuModel());
         }
         
         [ChildActionOnly]

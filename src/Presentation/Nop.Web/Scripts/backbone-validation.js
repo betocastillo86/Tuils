@@ -465,22 +465,22 @@ Backbone.Validation = (function (_) {
     // Error message for the build in validators.
     // {x} gets swapped out with arguments form the validator.
     var defaultMessages = Validation.messages = {
-        required: '{0} is required',
+        required: '{0} es obligatorio',
         acceptance: '{0} must be accepted',
-        min: '{0} must be greater than or equal to {1}',
-        max: '{0} must be less than or equal to {1}',
-        range: '{0} must be between {1} and {2}',
-        length: '{0} must be {1} characters',
-        minLength: '{0} must be at least {1} characters',
-        maxLength: '{0} must be at most {1} characters',
-        rangeLength: '{0} must be between {1} and {2} characters',
-        oneOf: '{0} must be one of: {1}',
+        min: '{0} debe ser mayor o igual a {1}',
+        max: '{0} debe ser menor o igual a {1}',
+        range: '{0} de ser entre {1} y {2}',
+        length: '{0} debe tener {1} caracteres',
+        minLength: '{0} debe tener por lo menos {1} caracteres',
+        maxLength: '{0} debe tener máximo {1} caracteres',
+        rangeLength: '{0} debe estar entre {1} y {2} caracteres',
+        oneOf: '{0} debe ser uno de: {1}',
         equalTo: '{0} must be the same as {1}',
-        digits: '{0} must only contain digits',
-        number: '{0} must be a number',
-        email: '{0} must be a valid email',
-        url: '{0} must be a valid url',
-        inlinePattern: '{0} is invalid'
+        digits: '{0} solo puede tener números',
+        number: '{0} debe ser un número',
+        email: '{0} debe ser un correo valido',
+        url: '{0} debe ser una url',
+        inlinePattern: '{0} no es valido'
     };
 
     // Label formatters

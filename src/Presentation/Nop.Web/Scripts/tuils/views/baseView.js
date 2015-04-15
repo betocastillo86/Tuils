@@ -1,6 +1,10 @@
-﻿define(['jquery', 'underscore', 'backbone', 'util'], function ($, _, Backbone, TuilsUtil) {
+﻿define(['jquery', 'underscore', 'backbone', 'util', 'validations'], function ($, _, Backbone, TuilsUtil) {
     
     var BaseView = Backbone.View.extend({
+        initialize: function()
+        {
+            debugger;
+        },
         viewLogin : undefined,
 
         showLogin: function (model)
@@ -20,6 +24,8 @@
             this.$("input[tuils-val='int']").on("keypress", TuilsUtil.onlyNumbers);
         },
         validateControls: function (model) {
+            //Formatea los mensajes de respuesta contra los label
+            
             this.removeErrors();
 
             if (!model)
@@ -47,12 +53,23 @@
                     //recorre los errores y marca solo los que tienen objeto DOM
                     var domObj = that.$(fieldsToMark[index]);
                     if (domObj)
-                        domObj.addClass("invalid-field");
+                    {
+                        domObj.addClass("input-validation-error");
+                        var domMessage = that.$("span[tuils-val-for='" + index + "']");
+                        if (domMessage)
+                            domMessage.text(errorField);
+                    }
+
+                    
+                        
                 });
             }
+
+            return errors;
         },
         removeErrors: function () {
-            this.$el.find(".invalid-field").removeClass("invalid-field");
+            this.$el.find(".input-validation-error").removeClass("input-validation-error");
+            this.$el.find(".field-validation-error").text("").removeClass("input-validation-error");
         }
     });
 

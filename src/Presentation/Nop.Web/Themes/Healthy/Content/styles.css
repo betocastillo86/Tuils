@@ -1397,8 +1397,8 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 	.text-character{float: left; margin:0 0 0 160px; color: #889BB4; font-size: 12px;}
 	.tipo-marca{margin: 2px 0; min-width: 50%; float: left; font-size: 14px; height: 54px; margin:0 0 12px;}
 	.tipo-marca label{width: 150px; padding: 0 8px 0 0; position: relative; display:inline-block; text-align: right;}
-	.tipo-marca ul.tagit{width: calc(100% - 283px); list-style: none; display: inline-block; margin: 0; background: #f3f5f7; height: 35px; padding: 5px; position: relative; box-sizing:border-box; border-radius: 2px;}
-	.tipo-marca ul.tagit li{background:#627B9C; border-radius: 2px; color: #FFF; padding:4px 6px;}
+	.tipo-marca ul.tagit{width: calc(100% - 283px); list-style: none; display: inline-block; margin: 0; background: #f3f5f7; /*height: 35px;*/ padding: 5px; position: relative; box-sizing:border-box; border-radius: 2px;}
+	.tipo-marca ul.tagit  li.tagit-choice{background:#627B9C; border-radius: 2px; color: #FFF; padding:4px 6px;}
 
 	.picture-uploader{margin: 0 auto; padding: 0; width:680px; list-style: none;}
 	.picture-uploader li{box-sizing: border-box; cursor: pointer; width: 120px; height: 120px; background:#f6f9fd; border: 1px dashed #D8DEE6; text-align: center; color: #899CB5; font-size: 12px; float: left; margin:10px 0 10px 20px;}

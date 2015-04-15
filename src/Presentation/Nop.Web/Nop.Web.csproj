@@ -232,6 +232,7 @@
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Extensions\MappingExtensions.cs" />
+    <Compile Include="Extensions\MvcHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -979,6 +980,15 @@
     <Content Include="Scripts\backbone-min.js" />
     <Content Include="Scripts\backbone.stickit.js" />
     <Content Include="Scripts\backbone.stickit.min.js" />
+    <Content Include="Scripts\handlebars.amd.js" />
+    <Content Include="Scripts\handlebars.amd.min.js" />
+    <Content Include="Scripts\handlebars.js" />
+    <Content Include="Scripts\handlebars.min.js" />
+    <Content Include="Scripts\handlebars.runtime.amd.js" />
+    <Content Include="Scripts\handlebars.runtime.amd.min.js" />
+    <Content Include="Scripts\handlebars.runtime.js" />
+    <Content Include="Scripts\handlebars.runtime.min.js" />
+    <Content Include="Scripts\tuils\collections\categories.js" />
     <Content Include="Scripts\tuils\collections\files.js" />
     <Content Include="Scripts\tuils\collections\manufacturers.js" />
     <Content Include="Scripts\tuils\collections\products.js" />
@@ -1061,6 +1071,9 @@
     <Content Include="Scripts\backbone-min.map" />
     <Content Include="Scripts\tuils\app.js" />
     <Content Include="Scripts\tuils\models\file.js" />
+    <Content Include="App_Readme\Handlebarsjs_README.md" />
+    <Content Include="App_Readme\Handlebarsjs_LICENSE" />
+    <Content Include="Scripts\handelbars.helpers.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />
@@ -2319,6 +2332,8 @@
     <Content Include="Views\Shared\_TextEditor.cshtml" />
     <Content Include="Views\Shared\_ImageSelector.cshtml" />
     <Content Include="Views\Sales\_Summary.cshtml" />
+    <Content Include="Views\Sales\_BikeDetail.cshtml" />
+    <Content Include="Views\Sales\_CommonFieldsProductBikeDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

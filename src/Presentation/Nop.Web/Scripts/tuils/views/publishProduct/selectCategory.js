@@ -1,12 +1,12 @@
-﻿define(['jquery', 'underscore', 'backbone', 'categoryModel'],
-    function ($, _, Backbone, CategoryModel) {
-
+﻿define(['jquery', 'underscore', 'backbone', 'categoryModel', 'handlebars', 'configuration', 'handlebarsh'],
+    function ($, _, Backbone, CategoryModel, Handlebars, TuilsConfiguration) {
+        
         var SelectCategoryView = Backbone.View.extend({
 
             events: {
                 "click li": "loadCategories",
                 "keyup input[type='text']": "filterCategories",
-                "click .btnFinishSelection": "finishSelection"
+                "click .btn_continue": "finishSelection"
             },
 
             //Tipos de productos posibles
@@ -28,7 +28,7 @@
 
             divShowCategories: undefined,
 
-            template: _.template($("#templateCategorySelector").html()),
+            template: Handlebars.compile($("#templateCategorySelector").html()),
 
             initialize: function (args) {
 
@@ -44,6 +44,15 @@
             },
             loadControls: function () {
                 this.divShowCategories = this.$(".divShowCategories");
+
+                var button = this.$(".nav-category li");
+                if(this.productType == TuilsConfiguration.productBaseTypes.product)
+                    button.addClass("hub-std");
+                else if(this.productType == TuilsConfiguration.productBaseTypes.bike)
+                    button.addClass("hub-mot");
+                else
+                    button.addClass("hub-srv");
+
             },
             loadChildrenCategories: function (parentId) {
                 var category = new CategoryModel();
@@ -56,10 +65,14 @@
             },
             loadCategories: function (obj) {
                 obj = $(obj.currentTarget);
-
+                
                 var categoryId = parseInt(obj.attr("tuils-id"));
                 //Si la selección llega a ser del botón entonces no la tiene en cuenta
                 if (!isNaN(categoryId)) {
+
+                    obj.parent().find(".cat_select").removeClass("cat_select");
+                    obj.addClass("cat_select");
+                    
 
                     this.currentCategory = categoryId;
                     var selectedLevel = parseInt(obj.attr("tuils-level"));
@@ -70,7 +83,7 @@
                     this.breadCrumbCategories.push(obj.text());
 
                     //Elimina las columnas de niveles inferiores
-                    this.divShowCategories.find("ul").slice(selectedLevel).remove();
+                    this.divShowCategories.find(".category-column").slice(selectedLevel).remove();
 
                     this.loadChildrenCategories(this.currentCategory);
                     this.trigger("categories-middle-selected", categoryId);
@@ -80,15 +93,21 @@
             showCategories: function (category) {
                 var obj = category.toJSON();
                 obj['currentLevel'] = this.currentLevel;
-                this.divShowCategories.append(this.template(obj));
+                
 
                 if (obj.ChildrenCategories.length > 0) {
+                    this.divShowCategories.append(this.template(obj));
                     //Solo permite mostrar el buscador para más de 5 categorias
                     if (obj.ChildrenCategories.length < this.minChildrenCategoriesForFiltering)
                         this.divShowCategories.find("ul:last-child input[type='text']").hide();
+                    this.trigger("categories-loaded");
+                    this.$(".btn_continue").hide();
+                }
+                else {
+                    this.$(".btn_continue").show();
                 }
 
-                this.trigger("categories-loaded");
+                
             },
             filterCategories: function (obj) {
 

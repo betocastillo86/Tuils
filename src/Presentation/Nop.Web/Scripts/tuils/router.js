@@ -8,11 +8,17 @@
         defaultEl: "#divMainSection",
 
         routes: {
-            "quiero-vender/producto": "sellProduct"
+            "quiero-vender/producto": "sellProduct",
+            "quiero-vender/moto": "sellBike"
         },
 
         sellProduct: function () {
             this.currentView = new PublishProductView({ el: this.defaultEl, productType: TuilsConfiguration.productBaseTypes.product });
+            //Se cargan las referencias de las motocicletas desde el comienzo
+            TuilsStorage.loadBikeReferences();
+        },
+        sellBike: function () {
+            this.currentView = new PublishProductView({ el: this.defaultEl, productType: TuilsConfiguration.productBaseTypes.bike });
             //Se cargan las referencias de las motocicletas desde el comienzo
             TuilsStorage.loadBikeReferences();
         },

@@ -5,10 +5,25 @@
 }
 
 
+<div class="master-wrapper-page container hd">
+    <div class="master-wrapper-content">
+        <div class="master-wrapper-main">
+            <div class="product-public">
+                <ol class="wizard-breadcrumb">
+                    <li id="btnPublishProductStep1" class="wizard-current"><b>PASO 1</b><div>@T("PublishProduct.StepMenu1")</div></li>
+                    <li id="btnPublishProductStep2" class="wizard-step"><b>PASO 2</b><div>@T("PublishProduct.StepMenu2")</div></li>
+                    <li id="btnPublishProductStep3" class="wizard-step"><b>PASO 3</b><div>@T("PublishProduct.StepMenu3")</div></li>
+                    <li id="btnPublishProductStep4" class="wizard-step"><b>PASO 4</b><div>@T("PublishProduct.StepMenu4")</div></li>
+                    <br /> 
+                </ol> 
+                <nav class="nav-category">
+                   <a href="@Url.Action("PublishProduct")"><li class="hub-std"><span>productos</span></li></a> 
+                    <li class="hub-srv"><span>servicios</span></li>
+                    <a href="@Url.Action("PublishProductBike")"><li class="hub-mot"><span>motos</span></li></a> 
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
 
-Selecciona el producto que deseas vender:
-
-@Html.ActionLink("Producto", "PublishProduct")<br />
-Moto<br />
-Servicio<br />
 
