@@ -1,0 +1,13 @@
+--CONSULTA select 'if (select count(0) from Setting where name = '''+name+''') = 0  insert into Setting (name, value, StoreId) values ('''+name+''', '''+value+''', 0)' from setting where name like '%tuilssett%'
+if (select count(0) from Setting where name = 'tuilssettings.productbasetypes_bike') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.productbasetypes_bike', '135', 0)
+if (select count(0) from Setting where name = 'tuilssettings.productbasetypes_service') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.productbasetypes_service', '103', 0)
+if (select count(0) from Setting where name = 'tuilssettings.productbasetypes_product') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.productbasetypes_product', '10', 0)
+if (select count(0) from Setting where name = 'tuilssettings.tempuploadfiles') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.tempuploadfiles', '~/TempFiles', 0)
+if (select count(0) from Setting where name = 'tuilssettings.maxfileuploadsize') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.maxfileuploadsize', '1024000', 0)
+if (select count(0) from Setting where name = 'tuilssettings.specificationattributecolor') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.specificationattributecolor', '5', 0)
+if (select count(0) from Setting where name = 'tuilssettings.specificationattributecondition') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.specificationattributecondition', '6', 0)
+if (select count(0) from Setting where name = 'tuilssettings.specificationattributeaccesories') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.specificationattributeaccesories', '1007', 0)
+if (select count(0) from Setting where name = 'tuilssettings.specificationattributenegotiation') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.specificationattributenegotiation', '1006', 0)
+if (select count(0) from Setting where name = 'tuilssettings.specificationattributeoptionkms') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.specificationattributeoptionkms', '1031', 0)
+if (select count(0) from Setting where name = 'tuilssettings.specificationattributeoptioncarriageplate') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.specificationattributeoptioncarriageplate', '1033', 0)
+if (select count(0) from Setting where name = 'tuilssettings.defaultcountry') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.defaultcountry', '1', 0)

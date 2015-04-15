@@ -8,7 +8,8 @@
         viewSelectCategory: undefined,
         viewProductDetail: undefined,
         viewImageSelector: undefined,
-        viewSummary: undefined, 
+        viewSummary: undefined,
+        viewPublishFinished : undefined,
         //EndViews
 
         currentStep: 1,
@@ -111,12 +112,19 @@
         errorOnSaving: function () {
             alert("Ocurrió un error, intentalo de nuevo");
         },
+        showFinish: function () {
+            var that = this;
+            this.showNextStep();
+            require(['publishProductFinishedView'], function (PublishFinishedView) {
+                that.viewPublishFinished = new PublishFinishedView({ el: '#divStep_5', model: that.model, images: that.images });
+            });
+        },
         productSaved: function (model) {
             this.viewSelectCategory.remove();
             this.viewImageSelector.remove();
             this.viewProductDetail.remove();
             this.viewSummary.remove();
-            this.showNextStep();
+            this.showFinish();
             Backbone.history.navigate("quiero-vender/publicacion-exitosa/" + model.get('Id'));
         },
         save: function () {

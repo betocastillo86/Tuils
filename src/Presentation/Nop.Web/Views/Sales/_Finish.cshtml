@@ -1,0 +1,13 @@
+﻿<script id="templateFinishPublishProduct" type="text/x-handlebars-template">
+    <div class="imgPublicada">
+        <img src="{{ImgSrc}}" />
+    </div>
+    <div class="resumen-final">
+        <h2>@T("PublishProduct.PublishFinished")</h2>
+        <p>{{Name}} <b>{{{Price}}}</b></p>
+        <h3>@T("PublishProduct.TimeOutPost", 30)</h3>
+        @Html.ActionLink(T("PublishProduct.PublishSimilar").Text, "PublishProduct")
+        @Html.ActionLink(T("PublishProduct.GotoPublishing").Text,"Index", "Home")
+        @*<input type="button" class="btn_2 button-1" value="Ver publicación">*@
+    </div>
+</script>
