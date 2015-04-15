@@ -5,6 +5,7 @@ using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Seo;
 using Nop.Core.Domain.Stores;
+using Nop.Core.Domain.Directory;
 
 namespace Nop.Core.Domain.Catalog
 {
@@ -445,8 +446,20 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public DateTime UpdatedOnUtc { get; set; }
 
+        /// <summary>
+        /// Año o modelo de la moto
+        /// </summary>
+        public Nullable<int> Year { get; set; }
 
+        /// <summary>
+        /// Valida si el producto que se vende es nuevo o no
+        /// </summary>
+        public bool IsNew { get; set; }
 
+        /// <summary>
+        /// Ubicación geografica de la mercancia
+        /// </summary>
+        public int StateProvinceId { get; set; }
 
 
 
@@ -689,5 +702,12 @@ namespace Nop.Core.Domain.Catalog
             get { return _tempFiles ?? (_tempFiles = new List<string>()); }
             set { _tempFiles = value; }
         }
+
+        /// <summary>
+        /// Ciudad relacionada
+        /// </summary>
+        public virtual StateProvince StateProvince { get; set; }
+
+
     }
 }

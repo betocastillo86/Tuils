@@ -988,6 +988,7 @@
     <Content Include="Scripts\handlebars.runtime.amd.min.js" />
     <Content Include="Scripts\handlebars.runtime.js" />
     <Content Include="Scripts\handlebars.runtime.min.js" />
+    <Content Include="Scripts\tuils\collections\categories.js" />
     <Content Include="Scripts\tuils\collections\files.js" />
     <Content Include="Scripts\tuils\collections\manufacturers.js" />
     <Content Include="Scripts\tuils\collections\products.js" />
@@ -999,6 +1000,7 @@
     <Content Include="Scripts\tuils\storage.js" />
     <Content Include="Scripts\tuils\utilities.js" />
     <Content Include="Scripts\tuils\views\baseView.js" />
+    <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
     <Content Include="Scripts\tuils\views\utilities\imagesSelectorView.js" />
     <Content Include="Scripts\tuils\views\utilities\htmlEditorView.js" />
@@ -2331,6 +2333,9 @@
     <Content Include="Views\Shared\_TextEditor.cshtml" />
     <Content Include="Views\Shared\_ImageSelector.cshtml" />
     <Content Include="Views\Sales\_Summary.cshtml" />
+    <Content Include="Views\Sales\_BikeDetail.cshtml" />
+    <Content Include="Views\Sales\_CommonFieldsProductBikeDetail.cshtml" />
+    <Content Include="Views\Sales\_Finish.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

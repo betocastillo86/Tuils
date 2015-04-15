@@ -1415,3 +1415,13 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 	.txt-terminos{color:#A9A9AC; text-align: right; margin: 5px 0;}
 	.txt-terminos a{color: #F24C19;}
 
+	.imgPublicada{ width: 200px; height: 200px; float: left; margin: 0 20px 0 0;}
+	.imgPublicada img {width: 100%;}
+	.resumen-final{float: left; width: auto;}
+	.resumen-final h2{color:#3A5983; font-weight: 500; font-size: 20px;}
+	.resumen-final h3{font-weight: 500; font-size: 16px; margin: 0 0 20px;}
+	.resumen-final p{margin:0; padding: 7px 0;}
+	.resumen-final b{color:#F44D19; font-weight: 500;}
+	.resumen-final a{color:#F94C2A; text-decoration: underline; margin: 0 30px 0 0;}
+	.btn_2{margin: 20px 0 0 !important; padding: 7px 25px !important; display: block;}
+

@@ -25,7 +25,7 @@ namespace System.Web.Mvc.Html
         /// <returns>objeto </returns>
         public static MvcHtmlString LabelT(this HtmlHelper helper, string key)
         {
-            return helper.Label(localizationService.GetResource(key));
+            return helper.Label(localizationService.GetResource(key) ?? string.Empty);
         }
     }
 }

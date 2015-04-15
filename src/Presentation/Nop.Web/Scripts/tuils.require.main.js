@@ -43,6 +43,7 @@
         //Colecciones
         productCollection: 'tuils/collections/products',
         manufacturerCollection: 'tuils/collections/manufacturers',
+        categoryCollection : 'tuils/collections/categories',
         fileCollection: 'tuils/collections/files',
         //Vistas
         baseView: 'tuils/views/baseView',
@@ -50,8 +51,10 @@
         publishProductSelectCategoryView: 'tuils/views/publishProduct/selectCategory',
         publishProductProductDetailView: 'tuils/views/publishProduct/productDetail',
         publishProductSummaryView: 'tuils/views/publishProduct/summary',
+        publishProductFinishedView : 'tuils/views/publishProduct/finish',
         htmlEditorView: 'tuils/views/utilities/htmlEditorView',
         imageSelectorView: 'tuils/views/utilities/imagesSelectorView',
+        
         
         //Externas
         tagit: 'tag-it',

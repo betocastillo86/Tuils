@@ -1,5 +1,5 @@
 ﻿//Objeto que accede a algunos datos almacenados en el LocalStorage del navegador
-define([],function () {
+define(['categoryCollection'], function (CategoryCollection) {
     var TuilsStorage = {
 
         bikeReferences: undefined,
