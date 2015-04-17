@@ -1,6 +1,6 @@
 ﻿
-define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars', 'accounting'],
-    function ($, _, Backbone, TuilsConfiguration, TuilsUtil, Handlebars, accounting) {
+define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars', 'extensionNumbers'],
+    function ($, _, Backbone, TuilsConfiguration, TuilsUtil, Handlebars) {
 
         var SummaryView = Backbone.View.extend({
             events: {
@@ -15,35 +15,36 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
             productProperties: undefined,
 
             initialize: function (args) {
-                this.model = args.product;
-                this.model.on("error", this.showButtonBar, this);
-                this.images = args.images;
                 this.productType = args.productType;
-                this.loadFields({ breadCrumb: args.breadCrumb });
-                this.render();
+                this.loadControls(args);
+                this.model.on("error", this.showButtonBar, this);
+                this.model.on("unauthorized", this.showButtonBar, this);
             },
             render: function () {
-                this.$el.html(this.template({ Images: this.images.toJSON(), Properties: this.productProperties }));
-                this.loadControls();
+                this.$el.html(this.template({ Images: this.images != undefined ? this.images.toJSON() : undefined, Properties: this.productProperties }));
+                
                 return this;
             },
-            loadControls : function()
+            loadControls: function (args)
             {
-                
+                this.model = args.product;
+                this.images = args.images;
+                this.loadFields({ breadCrumb: args.breadCrumb });
+                this.render();
             },
             loadFields: function (args) {
                 this.productProperties = new Array();
 
                 pushProperty(this, 'Name');
-                this.productProperties.push({ name: this.model.labels.Price, value: accounting.formatMoney(this.model.get('Price'), { precision: 0 }) });
+                
+                this.productProperties.push({ name: this.model.labels.Price, value: this.model.get('Price').toPesos() });
 
 
                 if (this.productType == TuilsConfiguration.productBaseTypes.product) {
                     pushProperty(this, 'ManufacturerId', true);
                 }
-                else if (this.productType == TuilsConfiguration.productBaseTypes.bike)
-                {
-                    pushProperty(this,"CarriagePlate");
+                else if (this.productType == TuilsConfiguration.productBaseTypes.bike) {
+                    pushProperty(this, "CarriagePlate");
                     pushProperty(this, "Condition", true);
                     pushProperty(this, "Color", true);
                     pushProperty(this, "Year");
@@ -51,6 +52,28 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
                     this.productProperties.push({ name: this.model.labels.Accesories, value: TuilsUtil.toStringWithSeparator(this.model.get('AccesoriesName'), ',') });
                     this.productProperties.push({ name: this.model.labels.Negotiation, value: TuilsUtil.toStringWithSeparator(this.model.get('NegotiationName'), ',') });
                 }
+                else {
+                    debugger;
+                    pushProperty(this, "IncludeSupplies", true);
+                    pushProperty(this, "Supplies", true);
+                    //this.productProperties.push({ name: this.model.labels.Supplies, value: TuilsUtil.toStringWithSeparator(this.model.get('Supplies'), ',') });
+                    
+                    if (!this.model.get('IncludeSupplies'))
+                        this.productProperties.push({ name: this.model.labels.SuppliesValue, value: this.model.get('SuppliesValue').toPesos() });
+                     
+                }
+
+                
+                //Muestra los valores de envio
+                pushProperty(this, "IsShipEnabled", true);
+
+                if (this.model.get('IsShipEnabled'))
+                {
+                    this.productProperties.push({ name: this.model.labels.AdditionalShippingCharge, value: this.model.get('AdditionalShippingCharge').toPesos() });
+                    if (this.model.get('DetailShipping'))
+                        pushProperty(this, 'DetailShipping');
+                }
+                
 
                 this.productProperties.push({ name: 'Fecha Cierre Publicacion', value: '30 dias' });
                 this.productProperties.push({ name: 'Categoria', value: TuilsUtil.toStringWithSeparator(args.breadCrumb, ' > ') });

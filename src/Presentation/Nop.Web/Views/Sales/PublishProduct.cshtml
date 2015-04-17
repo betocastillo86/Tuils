@@ -39,6 +39,11 @@
                         { 
                             @Html.Partial("_ProductDetail")
                         }
+                        else
+                        {
+                            @Html.Partial("_ServiceDetail")
+                        }
+                            
                     </div>
                     <div id="divStep_3" style="display:none">
                         @Html.Partial("_ImageSelector", 7)
@@ -51,8 +56,9 @@
                     <div id="divStep_5" style="display:none">
                         @Html.Partial("_Finish")
                     </div>
-
+                    <br />
                 </div>
+                
             </div>
         </div>
 

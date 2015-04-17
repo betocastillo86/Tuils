@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'storage'],
-    function ($, _, BaseView, ProductModel, TuilsStorage) {
+﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'storage', 'configuration'],
+    function ($, _, BaseView, ProductModel, TuilsStorage, TuilsConfiguration) {
 
     var PublishProductView = BaseView.extend({
 
@@ -62,28 +62,42 @@
             this.model = model;
             this.showNextStep();
             var that = this;
-            if (!this.viewImageSelector) {
-                require(['imageSelectorView'], function (ImagesSelectorView) {
-                    that.viewImageSelector = new ImagesSelectorView({ el: "#divStep_3" });
-                    that.viewImageSelector.on("images-save", that.showSummary, that);
-                    that.viewImageSelector.on("images-back", that.showStepBack, that);
-                });
+
+            if (this.productType != TuilsConfiguration.productBaseTypes.service) {
+                if (!this.viewImageSelector) {
+                    require(['imageSelectorView'], function (ImagesSelectorView) {
+                        that.viewImageSelector = new ImagesSelectorView({ el: "#divStep_3" });
+                        that.viewImageSelector.on("images-save", that.showSummary, that);
+                        that.viewImageSelector.on("images-back", that.showStepBack, that);
+                    });
+                }
             }
+            else {
+                this.showSummary();
+            }
+
         },
         showSummary: function (images) {
+            
             this.showNextStep();
             this.images = images;
 
-            var that = this;
-            require(['publishProductSummaryView'], function (SummaryView) {
-                that.viewSummary = new SummaryView({ el: "#divStep_4", product: that.model, images: that.images, productType: that.productType, breadCrumb: that.viewSelectCategory.breadCrumbCategories });
-                that.viewSummary.on("summary-back", that.showStepBack, that);
-                that.viewSummary.on("summary-save", that.save, that);
-            });
+            if (!this.viewSummary) {
+
+                var that = this;
+                require(['publishProductSummaryView'], function (SummaryView) {
+                    that.viewSummary = new SummaryView({ el: "#divStep_4", product: that.model, images: that.images, productType: that.productType, breadCrumb: that.viewSelectCategory.breadCrumbCategories });
+                    that.viewSummary.on("summary-back", that.showStepBack, that);
+                    that.viewSummary.on("summary-save", that.save, that);
+                });
+
+            }
+            else {
+                this.viewSummary.loadControls({ product: this.model, images: this.images, breadCrumb: this.viewSelectCategory.breadCrumbCategories });
+            }
             
         },
         showStep: function () {
-            //this.$("div[id^='btnPublishProductStep']").removeClass('wizard-current').addClass();
             if (this.currentStep < 5)
             {
                 this.$(".wizard-current").removeClass('wizard-current').addClass("wizard-step");
@@ -95,6 +109,8 @@
         },
         showStepBack: function () {
             this.showStep(--this.currentStep);
+            //Para los casos en que es sevicio, valida que no muestre nunca las imagenes
+            if (this.productType == TuilsConfiguration.productBaseTypes.service && this.currentStep == 3) this.showStep(--this.currentStep);
         },
         showNextStep: function () {
             this.showStep(++this.currentStep);
@@ -103,11 +119,16 @@
         //Ejemplo: En detalle da clic en atras y selecciona una nueva categoria, esto inhbilita lo del siguiente paso
         restartNextStep: function () {
             if (this.currentStep == 1 && this.viewProductDetail) {
-                this.viewProductDetail.undelegateEvents();
+                this.viewProductDetail.cleanView();
                 this.viewProductDetail = undefined;
             }
             else if (this.currentStep == 2 && this.viewImageSelector)
                 this.viewImageSelector.undelegateEvents();
+            else if (this.currentStep == 4 && this.viewSummary)
+            {
+                this.viewSummary.undelegateEvents();
+                this.viewSummary = undefined;
+            }
         },
         errorOnSaving: function () {
             alert("Ocurrió un error, intentalo de nuevo");
@@ -121,14 +142,14 @@
         },
         productSaved: function (model) {
             this.viewSelectCategory.remove();
-            this.viewImageSelector.remove();
+            if(this.viewImageSelector) this.viewImageSelector.remove();
             this.viewProductDetail.remove();
             this.viewSummary.remove();
             this.showFinish();
             Backbone.history.navigate("quiero-vender/publicacion-exitosa/" + model.get('Id'));
         },
         save: function () {
-            this.model.set('TempFiles', _.pluck(this.images.toJSON(), 'guid'));
+            this.model.set('TempFiles', _.pluck(this.images ? this.images.toJSON() : undefined, 'guid'));
             this.model.on('sync', this.productSaved, this);
             this.model.on('error', this.errorOnSaving, this);
             this.validateAuthorization();

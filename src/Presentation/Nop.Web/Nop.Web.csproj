@@ -198,6 +198,7 @@
     <Compile Include="Controllers\Api\FilesController.cs" />
     <Compile Include="Controllers\Api\ManufacturersController.cs" />
     <Compile Include="Controllers\Api\ProductsController.cs" />
+    <Compile Include="Controllers\Api\SpecificationAttributeController.cs" />
     <Compile Include="Controllers\BasePublicController.cs" />
     <Compile Include="Controllers\BoardsController.cs" />
     <Compile Include="Controllers\BackInStockSubscriptionController.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Extensions\ApiExtensions.cs" />
     <Compile Include="Extensions\ApiMappingExtensions.cs" />
+    <Compile Include="Extensions\ApiValidationExtensions.cs" />
     <Compile Include="Extensions\AttributeParserHelper.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
@@ -251,6 +253,7 @@
     <Compile Include="Infrastructure\RouteProvider.cs" />
     <Compile Include="Models\Api\MinifiedJson.cs" />
     <Compile Include="Models\Api\ProductBaseModel.cs" />
+    <Compile Include="Models\Api\SpecificationAttributeModel.cs" />
     <Compile Include="Models\Blogs\BlogPostListModel.cs" />
     <Compile Include="Models\Blogs\BlogPagingFilteringModel.cs" />
     <Compile Include="Models\Blogs\BlogPostTagModel.cs" />
@@ -992,6 +995,9 @@
     <Content Include="Scripts\tuils\collections\files.js" />
     <Content Include="Scripts\tuils\collections\manufacturers.js" />
     <Content Include="Scripts\tuils\collections\products.js" />
+    <Content Include="Scripts\tuils\collections\specificationAttribute.js" />
+    <Content Include="Scripts\tuils\extensions\numbers.js" />
+    <Content Include="Scripts\tuils\models\specificationAttribute.js" />
     <Content Include="Scripts\tuils\models\_authentication.js" />
     <Content Include="Scripts\tuils\models\category.js" />
     <Content Include="Scripts\tuils\models\manufacturer.js" />
@@ -2336,6 +2342,7 @@
     <Content Include="Views\Sales\_BikeDetail.cshtml" />
     <Content Include="Views\Sales\_CommonFieldsProductBikeDetail.cshtml" />
     <Content Include="Views\Sales\_Finish.cshtml" />
+    <Content Include="Views\Sales\_ServiceDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

@@ -703,6 +703,12 @@ namespace Nop.Web.Infrastructure
                 new { controller = "Sales", action = "PublishProductBike" },
                 new[] { "Nop.Web.Controllers" }
                 );
+            //Publicar servicio
+            routes.MapLocalizedRoute("PublishProductService",
+               "quiero-vender/servicio-especializado",
+               new { controller = "Sales", action = "PublishProductService" },
+               new[] { "Nop.Web.Controllers" }
+               );
 
 
 

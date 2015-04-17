@@ -153,7 +153,7 @@ namespace Nop.Services.Media
         /// </summary>
         /// <param name="tempFileName">nombre del archivo temporal</param>
         /// <returns></returns>
-        byte[] GetTempFile(string tempFileName);
+        byte[] GetTempFile(ref string tempFileName);
 
         /// <summary>
         /// Inserta registros en la tabla Picture desde un listado de archivos temporales asociandolos a un producto

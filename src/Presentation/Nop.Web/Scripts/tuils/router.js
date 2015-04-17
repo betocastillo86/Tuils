@@ -9,7 +9,8 @@
 
         routes: {
             "quiero-vender/producto": "sellProduct",
-            "quiero-vender/moto": "sellBike"
+            "quiero-vender/moto": "sellBike",
+            "quiero-vender/servicio-especializado" : "sellService"
         },
 
         sellProduct: function () {
@@ -19,6 +20,9 @@
         },
         sellBike: function () {
             this.currentView = new PublishProductView({ el: this.defaultEl, productType: TuilsConfiguration.productBaseTypes.bike });
+        },
+        sellService : function(){
+            this.currentView = new PublishProductView({ el: this.defaultEl, productType: TuilsConfiguration.productBaseTypes.service });
             //Se cargan las referencias de las motocicletas desde el comienzo
             TuilsStorage.loadBikeReferences();
         },

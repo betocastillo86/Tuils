@@ -47,7 +47,7 @@ namespace Nop.Web.Controllers.Api
         [AuthorizeApi]
         public IHttpActionResult PublisProduct(ProductBaseModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.Validate())
             {
                 var product = model.ToEntity();
 
