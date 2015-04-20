@@ -104,7 +104,6 @@
                 onSet: function (value, ctx) {
                     var names = "";
                     _.each(value.split(','), function (element) {
-                        debugger;
                         //Carga los nombres de los insumos
                         var name = _.findWhere(ctx.view.suppliesCollection.get('Options'), { Id: element }).Name;
                         names += names!="" ? ("," + name) : name;

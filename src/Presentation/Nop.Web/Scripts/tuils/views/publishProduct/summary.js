@@ -53,14 +53,11 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
                     this.productProperties.push({ name: this.model.labels.Negotiation, value: TuilsUtil.toStringWithSeparator(this.model.get('NegotiationName'), ',') });
                 }
                 else {
-                    debugger;
                     pushProperty(this, "IncludeSupplies", true);
                     pushProperty(this, "Supplies", true);
-                    //this.productProperties.push({ name: this.model.labels.Supplies, value: TuilsUtil.toStringWithSeparator(this.model.get('Supplies'), ',') });
                     
                     if (!this.model.get('IncludeSupplies'))
                         this.productProperties.push({ name: this.model.labels.SuppliesValue, value: this.model.get('SuppliesValue').toPesos() });
-                     
                 }
 
                 
