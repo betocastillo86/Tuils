@@ -74,5 +74,18 @@ namespace Nop.Core.Domain.Vendors
         /// </summary>
         public string PageSizeOptions { get; set; }
 
+        /// <summary>
+        /// Tipo de vendedor que realiza la transacción 
+        /// </summary>
+        public int VendorTypeId { get; set; }
+
+        public VendorType VendorType
+        {
+            get { return (VendorType)VendorTypeId; }
+        }
+
+
+
+
     }
 }

@@ -46,6 +46,19 @@ namespace Nop.Web.Extensions.Api
             return true;
         }
         #endregion
-        
+
+        #region UserBaseModel
+
+        //public static bool ValidateRegister(this CustomerBaseModel model)
+        //{
+        //    return string.IsNullOrEmpty(model)
+        //}
+
+
+        #endregion
+
+
+
+
     }
 }

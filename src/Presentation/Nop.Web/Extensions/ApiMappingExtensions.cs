@@ -1,5 +1,6 @@
 ﻿using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Common;
+using Nop.Core.Domain.Customers;
 using Nop.Core.Infrastructure;
 using Nop.Web.Models.Api;
 using System;
@@ -131,7 +132,26 @@ namespace Nop.Web.Extensions.Api
             return model;
         }
         #endregion
-        
-        
+
+        #region Customer
+        public static Customer ToEntity(this CustomerBaseModel model, out Dictionary<string, object> attributes)
+        {
+            var entity = new Customer();
+            entity.Email = model.Email;
+            entity.Password = model.Password;
+            attributes = new Dictionary<string, object>();
+            //Agrega los atributos básicos del registro
+            attributes.Add(SystemCustomerAttributeNames.FirstName, model.Name);
+            attributes.Add(SystemCustomerAttributeNames.LastName, model.LastName);
+            
+            if(model.VendorType != Core.Domain.Vendors.VendorType.User)
+                attributes.Add(SystemCustomerAttributeNames.Company, model.CompanyName);
+
+            return entity;   
+        }
+
+        #endregion
+
+
     }
 }

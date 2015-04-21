@@ -84,6 +84,10 @@
     <Compile Include="Migrations\201504162346272_NewPropertiesProductForServices.Designer.cs">
       <DependentUpon>201504162346272_NewPropertiesProductForServices.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504212049237_VendorType.cs" />
+    <Compile Include="Migrations\201504212049237_VendorType.Designer.cs">
+      <DependentUpon>201504212049237_VendorType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -220,6 +224,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504162346272_NewPropertiesProductForServices.resx">
       <DependentUpon>201504162346272_NewPropertiesProductForServices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504212049237_VendorType.resx">
+      <DependentUpon>201504212049237_VendorType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -10,7 +10,6 @@
             this.render();
         },
         render: function () {
-            debugger;
             this.$el.html(this.template(
                 {
                     ImgSrc: this.images ? this.images.at(0).toJSON().src : undefined,

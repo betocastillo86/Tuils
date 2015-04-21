@@ -194,6 +194,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Api\AuthenticationController.cs" />
     <Compile Include="Controllers\Api\CategoriesController.cs" />
     <Compile Include="Controllers\Api\FilesController.cs" />
     <Compile Include="Controllers\Api\ManufacturersController.cs" />
@@ -254,6 +255,7 @@
     <Compile Include="Models\Api\MinifiedJson.cs" />
     <Compile Include="Models\Api\ProductBaseModel.cs" />
     <Compile Include="Models\Api\SpecificationAttributeModel.cs" />
+    <Compile Include="Models\Api\CustomerBaseModel.cs" />
     <Compile Include="Models\Blogs\BlogPostListModel.cs" />
     <Compile Include="Models\Blogs\BlogPagingFilteringModel.cs" />
     <Compile Include="Models\Blogs\BlogPostTagModel.cs" />
@@ -998,14 +1000,19 @@
     <Content Include="Scripts\tuils\collections\specificationAttribute.js" />
     <Content Include="Scripts\tuils\extensions\numbers.js" />
     <Content Include="Scripts\tuils\models\specificationAttribute.js" />
+    <Content Include="Scripts\tuils\models\userRegister.js" />
     <Content Include="Scripts\tuils\models\_authentication.js" />
     <Content Include="Scripts\tuils\models\category.js" />
     <Content Include="Scripts\tuils\models\manufacturer.js" />
     <Content Include="Scripts\tuils\models\product.js" />
+    <Content Include="Scripts\text.js" />
     <Content Include="Scripts\tuils\router.js" />
     <Content Include="Scripts\tuils\storage.js" />
     <Content Include="Scripts\tuils\utilities.js" />
     <Content Include="Scripts\tuils\views\baseView.js" />
+    <Content Include="Scripts\tuils\views\common\header.js" />
+    <Content Include="Scripts\tuils\views\login\createUser.js" />
+    <Content Include="Scripts\tuils\views\login\login.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
     <Content Include="Scripts\tuils\views\utilities\imagesSelectorView.js" />
@@ -1587,7 +1594,7 @@
     <Content Include="Scripts\kendo\2014.1.318\kendo.binder.min.js.map" />
     <Content Include="Scripts\kendo\2014.1.318\kendo.autocomplete.min.js.map" />
     <Content Include="Scripts\kendo\2014.1.318\jquery.min.map" />
-    <Content Include="Scripts\tuils.require.main.js" />
+    <Content Include="Scripts\tuils\main.js" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore-min.js" />
     <Content Include="Scripts\underscore-min.map" />
@@ -2343,9 +2350,12 @@
     <Content Include="Views\Sales\_CommonFieldsProductBikeDetail.cshtml" />
     <Content Include="Views\Sales\_Finish.cshtml" />
     <Content Include="Views\Sales\_ServiceDetail.cshtml" />
+    <Content Include="Views\Customer\_CreateUser.cshtml" />
+    <Content Include="Views\Customer\_Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
+    <Folder Include="Views\Templates\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Nop.Core\Nop.Core.csproj">
@@ -2359,6 +2369,10 @@
     <ProjectReference Include="..\..\Libraries\Nop.Services\Nop.Services.csproj">
       <Project>{210541AD-F659-47DA-8763-16F36C5CD2F4}</Project>
       <Name>Nop.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Nop.Utilities\Nop.Utilities.csproj">
+      <Project>{a210b081-8f58-4af1-aef3-be60a199505d}</Project>
+      <Name>Nop.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\Nop.Web.Framework\Nop.Web.Framework.csproj">
       <Project>{75FD4163-333C-4DD5-854D-2EF294E45D94}</Project>

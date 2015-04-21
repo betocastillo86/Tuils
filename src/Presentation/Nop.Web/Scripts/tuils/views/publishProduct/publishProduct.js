@@ -32,6 +32,7 @@
         loadControls: function () {
             this.showStep();
             this.showCategories();
+            this.on("user-authenticated", this.save, this);
         },
         showCategories: function () {
             var that = this;
@@ -150,8 +151,8 @@
         },
         save: function () {
             this.model.set('TempFiles', _.pluck(this.images ? this.images.toJSON() : undefined, 'guid'));
-            this.model.on('sync', this.productSaved, this);
-            this.model.on('error', this.errorOnSaving, this);
+            this.model.once('sync', this.productSaved, this);
+            this.model.once('error', this.errorOnSaving, this);
             this.validateAuthorization();
             this.model.publish();
         }

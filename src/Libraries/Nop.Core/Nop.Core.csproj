@@ -111,6 +111,7 @@
     <Compile Include="Domain\Shipping\DeliveryDate.cs" />
     <Compile Include="Domain\Vendors\VendorSettings.cs" />
     <Compile Include="Domain\Vendors\Vendor.cs" />
+    <Compile Include="Domain\Vendors\VendorType.cs" />
     <Compile Include="IStoreContext.cs" />
     <Compile Include="Domain\Catalog\BackInStockSubscription.cs" />
     <Compile Include="Domain\Cms\WidgetSettings.cs" />

@@ -53,9 +53,15 @@
         publishProductSelectCategoryView: 'tuils/views/publishProduct/selectCategory',
         publishProductProductDetailView: 'tuils/views/publishProduct/productDetail',
         publishProductSummaryView: 'tuils/views/publishProduct/summary',
-        publishProductFinishedView : 'tuils/views/publishProduct/finish',
+        publishProductFinishedView: 'tuils/views/publishProduct/finish',
+
+        loginView: 'tuils/views/login/createUser',
+        loginCreateUserView: 'tuils/views/login/createUser',
+        
+
         htmlEditorView: 'tuils/views/utilities/htmlEditorView',
         imageSelectorView: 'tuils/views/utilities/imagesSelectorView',
+        
         //Tuils Extensions
         extensionNumbers : 'tuils/extensions/numbers',
         //Externas

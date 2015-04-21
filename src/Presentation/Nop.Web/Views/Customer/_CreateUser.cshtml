@@ -1,0 +1,28 @@
+﻿@{
+    Layout = null;
+}
+
+<div id="step1">
+    <div tuils-action="@Convert.ToInt32(Nop.Core.Domain.Vendors.VendorType.RepairShop)">Taller</div>
+    <div tuils-action="@Convert.ToInt32(Nop.Core.Domain.Vendors.VendorType.Market)">Almacen</div>
+    <div tuils-action="@Convert.ToInt32(Nop.Core.Domain.Vendors.VendorType.User)">Persona</div>
+</div>
+<div id="step2" style="display:none">
+    <div >
+        @Html.TextBoxRequired("Name", labelResource: "CreateUser.Name")
+    </div>
+    <div>
+        @Html.TextBoxRequired("LastName", labelResource: "CreateUser.LastName")
+    </div>
+    <div tuils-for="establecimiento" style="display:none">
+        @Html.TextBoxRequired("CompanyName", labelResource: "CreateUser.CompanyName")
+    </div>
+    <div>
+        @Html.TextBoxRequired("Email", labelResource: "CreateUser.Email")
+    </div>
+    <div>
+        @Html.PasswordRequired("Password", labelResource: "CreateUser.Password")
+    </div>
+    <input id="btnCreateUser" type="button" value="@T("CreateUser.Save")" />
+    <input id="btnBack" type="button" value="@T("CreateUser.Back")" />
+</div>
