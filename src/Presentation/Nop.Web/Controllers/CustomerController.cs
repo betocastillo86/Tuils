@@ -364,6 +364,7 @@ namespace Nop.Web.Controllers
             model.DisplayVatNumber = _taxSettings.EuVatEnabled;
             model.VatNumberStatusNote = ((VatNumberStatus)customer.GetAttribute<int>(SystemCustomerAttributeNames.VatNumberStatusId))
                 .GetLocalizedEnum(_localizationService, _workContext);
+
             model.GenderEnabled = _customerSettings.GenderEnabled;
             model.DateOfBirthEnabled = _customerSettings.DateOfBirthEnabled;
             model.CompanyEnabled = _customerSettings.CompanyEnabled;
@@ -417,86 +418,88 @@ namespace Nop.Web.Controllers
         [NonAction]
         protected virtual void PrepareCustomerRegisterModel(RegisterModel model, bool excludeProperties)
         {
-            if (model == null)
-                throw new ArgumentNullException("model");
+            #region Codigo eliminado CONFIGURACIÓN DEL MODELO
+            //if (model == null)
+            //    throw new ArgumentNullException("model");
 
-            model.AllowCustomersToSetTimeZone = _dateTimeSettings.AllowCustomersToSetTimeZone;
-            foreach (var tzi in _dateTimeHelper.GetSystemTimeZones())
-                model.AvailableTimeZones.Add(new SelectListItem { Text = tzi.DisplayName, Value = tzi.Id, Selected = (excludeProperties ? tzi.Id == model.TimeZoneId : tzi.Id == _dateTimeHelper.CurrentTimeZone.Id) });
-            
-            model.DisplayVatNumber = _taxSettings.EuVatEnabled;
-            //form fields
-            model.GenderEnabled = _customerSettings.GenderEnabled;
-            model.DateOfBirthEnabled = _customerSettings.DateOfBirthEnabled;
-            model.CompanyEnabled = _customerSettings.CompanyEnabled;
-            model.CompanyRequired = _customerSettings.CompanyRequired;
-            model.StreetAddressEnabled = _customerSettings.StreetAddressEnabled;
-            model.StreetAddressRequired = _customerSettings.StreetAddressRequired;
-            model.StreetAddress2Enabled = _customerSettings.StreetAddress2Enabled;
-            model.StreetAddress2Required = _customerSettings.StreetAddress2Required;
-            model.ZipPostalCodeEnabled = _customerSettings.ZipPostalCodeEnabled;
-            model.ZipPostalCodeRequired = _customerSettings.ZipPostalCodeRequired;
-            model.CityEnabled = _customerSettings.CityEnabled;
-            model.CityRequired = _customerSettings.CityRequired;
-            model.CountryEnabled = _customerSettings.CountryEnabled;
-            model.CountryRequired = _customerSettings.CountryRequired;
-            model.StateProvinceEnabled = _customerSettings.StateProvinceEnabled;
-            model.StateProvinceRequired = _customerSettings.StateProvinceRequired;
-            model.PhoneEnabled = _customerSettings.PhoneEnabled;
-            model.PhoneRequired = _customerSettings.PhoneRequired;
-            model.FaxEnabled = _customerSettings.FaxEnabled;
-            model.FaxRequired = _customerSettings.FaxRequired;
-            model.NewsletterEnabled = _customerSettings.NewsletterEnabled;
-            model.AcceptPrivacyPolicyEnabled = _customerSettings.AcceptPrivacyPolicyEnabled;
-            model.UsernamesEnabled = _customerSettings.UsernamesEnabled;
-            model.CheckUsernameAvailabilityEnabled = _customerSettings.CheckUsernameAvailabilityEnabled;
-            model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnRegistrationPage;
-            
-            //countries and states
-            if (_customerSettings.CountryEnabled)
-            {
-                model.AvailableCountries.Add(new SelectListItem { Text = _localizationService.GetResource("Address.SelectCountry"), Value = "0" });
-                
-                foreach (var c in _countryService.GetAllCountries())
-                {
-                    model.AvailableCountries.Add(new SelectListItem
-                    {
-                        Text = c.GetLocalized(x => x.Name),
-                        Value = c.Id.ToString(),
-                        Selected = c.Id == model.CountryId
-                    });
-                }
+            //model.AllowCustomersToSetTimeZone = _dateTimeSettings.AllowCustomersToSetTimeZone;
+            //foreach (var tzi in _dateTimeHelper.GetSystemTimeZones())
+            //    model.AvailableTimeZones.Add(new SelectListItem { Text = tzi.DisplayName, Value = tzi.Id, Selected = (excludeProperties ? tzi.Id == model.TimeZoneId : tzi.Id == _dateTimeHelper.CurrentTimeZone.Id) });
 
-                if (_customerSettings.StateProvinceEnabled)
-                {
-                    //states
-                    var states = _stateProvinceService.GetStateProvincesByCountryId(model.CountryId).ToList();
-                    if (states.Count > 0)
-                    {
-                        model.AvailableStates.Add(new SelectListItem { Text = _localizationService.GetResource("Address.SelectState"), Value = "0" });
+            //model.DisplayVatNumber = _taxSettings.EuVatEnabled;
+            ////form fields
+            //model.GenderEnabled = _customerSettings.GenderEnabled;
+            //model.DateOfBirthEnabled = _customerSettings.DateOfBirthEnabled;
+            //model.CompanyEnabled = _customerSettings.CompanyEnabled;
+            //model.CompanyRequired = _customerSettings.CompanyRequired;
+            //model.StreetAddressEnabled = _customerSettings.StreetAddressEnabled;
+            //model.StreetAddressRequired = _customerSettings.StreetAddressRequired;
+            //model.StreetAddress2Enabled = _customerSettings.StreetAddress2Enabled;
+            //model.StreetAddress2Required = _customerSettings.StreetAddress2Required;
+            //model.ZipPostalCodeEnabled = _customerSettings.ZipPostalCodeEnabled;
+            //model.ZipPostalCodeRequired = _customerSettings.ZipPostalCodeRequired;
+            //model.CityEnabled = _customerSettings.CityEnabled;
+            //model.CityRequired = _customerSettings.CityRequired;
+            //model.CountryEnabled = _customerSettings.CountryEnabled;
+            //model.CountryRequired = _customerSettings.CountryRequired;
+            //model.StateProvinceEnabled = _customerSettings.StateProvinceEnabled;
+            //model.StateProvinceRequired = _customerSettings.StateProvinceRequired;
+            //model.PhoneEnabled = _customerSettings.PhoneEnabled;
+            //model.PhoneRequired = _customerSettings.PhoneRequired;
+            //model.FaxEnabled = _customerSettings.FaxEnabled;
+            //model.FaxRequired = _customerSettings.FaxRequired;
+            //model.NewsletterEnabled = _customerSettings.NewsletterEnabled;
+            //model.AcceptPrivacyPolicyEnabled = _customerSettings.AcceptPrivacyPolicyEnabled;
+            //model.UsernamesEnabled = _customerSettings.UsernamesEnabled;
+            //model.CheckUsernameAvailabilityEnabled = _customerSettings.CheckUsernameAvailabilityEnabled;
+            //model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnRegistrationPage;
 
-                        foreach (var s in states)
-                        {
-                            model.AvailableStates.Add(new SelectListItem { Text = s.GetLocalized(x => x.Name), Value = s.Id.ToString(), Selected = (s.Id == model.StateProvinceId) });
-                        }
-                    }
-                    else
-                    {
-                        bool anyCountrySelected = model.AvailableCountries.Any(x => x.Selected);
+            ////countries and states
+            //if (_customerSettings.CountryEnabled)
+            //{
+            //    model.AvailableCountries.Add(new SelectListItem { Text = _localizationService.GetResource("Address.SelectCountry"), Value = "0" });
 
-                        model.AvailableStates.Add(new SelectListItem
-                        {
-                            Text = _localizationService.GetResource(anyCountrySelected ? "Address.OtherNonUS" : "Address.SelectState"), 
-                            Value = "0"
-                        });
-                    }
+            //    foreach (var c in _countryService.GetAllCountries())
+            //    {
+            //        model.AvailableCountries.Add(new SelectListItem
+            //        {
+            //            Text = c.GetLocalized(x => x.Name),
+            //            Value = c.Id.ToString(),
+            //            Selected = c.Id == model.CountryId
+            //        });
+            //    }
 
-                }
-            }
+            //    if (_customerSettings.StateProvinceEnabled)
+            //    {
+            //        //states
+            //        var states = _stateProvinceService.GetStateProvincesByCountryId(model.CountryId).ToList();
+            //        if (states.Count > 0)
+            //        {
+            //            model.AvailableStates.Add(new SelectListItem { Text = _localizationService.GetResource("Address.SelectState"), Value = "0" });
 
-            //custom customer attributes
-            var customAttributes = PrepareCustomCustomerAttributes(null);
-            customAttributes.ForEach(model.CustomerAttributes.Add);
+            //            foreach (var s in states)
+            //            {
+            //                model.AvailableStates.Add(new SelectListItem { Text = s.GetLocalized(x => x.Name), Value = s.Id.ToString(), Selected = (s.Id == model.StateProvinceId) });
+            //            }
+            //        }
+            //        else
+            //        {
+            //            bool anyCountrySelected = model.AvailableCountries.Any(x => x.Selected);
+
+            //            model.AvailableStates.Add(new SelectListItem
+            //            {
+            //                Text = _localizationService.GetResource(anyCountrySelected ? "Address.OtherNonUS" : "Address.SelectState"), 
+            //                Value = "0"
+            //            });
+            //        }
+
+            //    }
+            //}
+
+            ////custom customer attributes
+            //var customAttributes = PrepareCustomCustomerAttributes(null);
+            //customAttributes.ForEach(model.CustomerAttributes.Add);
+            #endregion
         }
 
         [NonAction]
@@ -669,20 +672,7 @@ namespace Nop.Web.Controllers
             return RedirectToRoute("HomePage");
         }
 
-        [NopHttpsRequirement(SslRequirement.Yes)]
-        public ActionResult Register()
-        {
-            //check whether registration is allowed
-            if (_customerSettings.UserRegistrationType == UserRegistrationType.Disabled)
-                return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.Disabled });
-
-            var model = new RegisterModel();
-            PrepareCustomerRegisterModel(model, false);
-            //enable newsletter by default
-            model.Newsletter = _customerSettings.NewsletterTickedByDefault;
-
-            return View(model);
-        }
+        
 
         #endregion
 
@@ -780,6 +770,17 @@ namespace Nop.Web.Controllers
         #endregion
 
         #region Register
+        [NopHttpsRequirement(SslRequirement.Yes)]
+        public ActionResult Register()
+        {
+            var model = new RegisterModel();
+            #region Codigo Eliminado
+            //PrepareCustomerRegisterModel(model, false);
+            ////enable newsletter by default
+            //model.Newsletter = _customerSettings.NewsletterTickedByDefault;
+            #endregion
+            return View(model);
+        }
 
         [HttpPost]
         [CaptchaValidator]
@@ -789,115 +790,121 @@ namespace Nop.Web.Controllers
             //check whether registration is allowed
             if (_customerSettings.UserRegistrationType == UserRegistrationType.Disabled)
                 return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.Disabled });
-            
+            //un usuario registrado no se puede registrar de nuevo
             if (_workContext.CurrentCustomer.IsRegistered())
-            {
-                //Already registered customer. 
-                _authenticationService.SignOut();
-                
-                //Save a new record
-                _workContext.CurrentCustomer = _customerService.InsertGuestCustomer();
-            }
+                return RedirectToRoute("HomePage");
+
             //var customer = _workContext.CurrentCustomer;
             var customer = new Customer();
 
-            //validate CAPTCHA
-            if (_captchaSettings.Enabled && _captchaSettings.ShowOnRegistrationPage && !captchaValid)
-            {
-                ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
-            }
+            //Limpia los errores del nombre de la empresa cuando es un usuario simple
+            if (model.VendorType == Core.Domain.Vendors.VendorType.User && string.IsNullOrEmpty(model.Company))
+                ModelState["Company"].Errors.Clear();
+
+            #region CodigoEliminado CAPTCHA
+            ////validate CAPTCHA
+            //if (_captchaSettings.Enabled && _captchaSettings.ShowOnRegistrationPage && !captchaValid)
+            //{
+            //    ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
+            //}
 
             //custom customer attributes
-            var customerAttributes = ParseCustomCustomerAttributes(form);
-            var customerAttributeWarnings = _customerAttributeParser.GetAttributeWarnings(customerAttributes);
-            foreach (var error in customerAttributeWarnings)
-            {
-                ModelState.AddModelError("", error);
-            }
+            //var customerAttributes = ParseCustomCustomerAttributes(form);
+            //var customerAttributeWarnings = _customerAttributeParser.GetAttributeWarnings(customerAttributes);
+            //foreach (var error in customerAttributeWarnings)
+            //{
+            //    ModelState.AddModelError("", error);
+            //}
+            #endregion
 
             if (ModelState.IsValid)
             {
-                if (_customerSettings.UsernamesEnabled && model.Username != null)
-                {
-                    model.Username = model.Username.Trim();
-                }
-
+                #region Codigo Eliminado
+                //if (_customerSettings.UsernamesEnabled && model.Username != null)
+                //{
+                //    model.Username = model.Username.Trim();
+                //}
+                #endregion
+                
                 bool isApproved = _customerSettings.UserRegistrationType == UserRegistrationType.Standard;
                 customer.Email = model.Email;
                 customer.Password = model.Password;
 
                 var attributes = new Dictionary<string, object>();                 
 
-                //form fields
-                if (_customerSettings.GenderEnabled)
-                    attributes.Add(SystemCustomerAttributeNames.Gender, model.Gender);
-
                 attributes.Add(SystemCustomerAttributeNames.FirstName, model.FirstName);
                 attributes.Add(SystemCustomerAttributeNames.LastName, model.LastName);
 
-
-                if (_customerSettings.DateOfBirthEnabled)
-                {
-                    DateTime? dateOfBirth = null;
-                    try
-                    {
-                        dateOfBirth = new DateTime(model.DateOfBirthYear.Value, model.DateOfBirthMonth.Value, model.DateOfBirthDay.Value);
-                    }
-                    catch { }
-                    attributes.Add(SystemCustomerAttributeNames.DateOfBirth, dateOfBirth);
-                }
-
                 if (_customerSettings.CompanyEnabled)
                     attributes.Add(SystemCustomerAttributeNames.Company, model.Company);
-                if (_customerSettings.StreetAddressEnabled)
-                    attributes.Add(SystemCustomerAttributeNames.StreetAddress, model.StreetAddress);
-                if (_customerSettings.StreetAddress2Enabled)
-                    attributes.Add(SystemCustomerAttributeNames.StreetAddress2, model.StreetAddress2);
-                if (_customerSettings.ZipPostalCodeEnabled)
-                    attributes.Add(SystemCustomerAttributeNames.ZipPostalCode, model.ZipPostalCode);
-                if (_customerSettings.CityEnabled)
-                    attributes.Add(SystemCustomerAttributeNames.City, model.City);
-                if (_customerSettings.CountryEnabled)
-                    attributes.Add(SystemCustomerAttributeNames.CountryId, model.CountryId);
-                if (_customerSettings.CountryEnabled && _customerSettings.StateProvinceEnabled)
-                    attributes.Add(SystemCustomerAttributeNames.StateProvinceId, model.StateProvinceId);
-                if (_customerSettings.PhoneEnabled)
-                    attributes.Add(SystemCustomerAttributeNames.Phone, model.Phone);
-                if (_customerSettings.FaxEnabled)
-                    attributes.Add(SystemCustomerAttributeNames.Fax, model.Fax);
 
-                //newsletter
-                if (_customerSettings.NewsletterEnabled)
-                {
-                    //save newsletter value
-                    var newsletter = _newsLetterSubscriptionService.GetNewsLetterSubscriptionByEmailAndStoreId(model.Email, _storeContext.CurrentStore.Id);
-                    if (newsletter != null)
-                    {
-                        if (model.Newsletter)
-                        {
-                            newsletter.Active = true;
-                            _newsLetterSubscriptionService.UpdateNewsLetterSubscription(newsletter);
-                        }
-                    }
-                    else
-                    {
-                        if (model.Newsletter)
-                        {
-                            _newsLetterSubscriptionService.InsertNewsLetterSubscription(new NewsLetterSubscription
-                            {
-                                NewsLetterSubscriptionGuid = Guid.NewGuid(),
-                                Email = model.Email,
-                                Active = true,
-                                StoreId = _storeContext.CurrentStore.Id,
-                                CreatedOnUtc = DateTime.UtcNow
-                            });
-                        }
-                    }
-                }
+                #region Codigo Eliminado ATRIBUTOS
+                ////////form fields
+                //////if (_customerSettings.GenderEnabled)
+                //////    attributes.Add(SystemCustomerAttributeNames.Gender, model.Gender);
+                //////if (_customerSettings.DateOfBirthEnabled)
+                //////{
+                //////    DateTime? dateOfBirth = null;
+                //////    try
+                //////    {
+                //////        dateOfBirth = new DateTime(model.DateOfBirthYear.Value, model.DateOfBirthMonth.Value, model.DateOfBirthDay.Value);
+                //////    }
+                //////    catch { }
+                //////    attributes.Add(SystemCustomerAttributeNames.DateOfBirth, dateOfBirth);
+                //////}
 
-                //save customer attributes
-                attributes.Add(SystemCustomerAttributeNames.CustomCustomerAttributes, customerAttributes);
-                    
+                //////if (_customerSettings.CompanyEnabled)
+                //////    attributes.Add(SystemCustomerAttributeNames.Company, model.Company);
+                //////if (_customerSettings.StreetAddressEnabled)
+                //////    attributes.Add(SystemCustomerAttributeNames.StreetAddress, model.StreetAddress);
+                //////if (_customerSettings.StreetAddress2Enabled)
+                //////    attributes.Add(SystemCustomerAttributeNames.StreetAddress2, model.StreetAddress2);
+                //////if (_customerSettings.ZipPostalCodeEnabled)
+                //////    attributes.Add(SystemCustomerAttributeNames.ZipPostalCode, model.ZipPostalCode);
+                //////if (_customerSettings.CityEnabled)
+                //////    attributes.Add(SystemCustomerAttributeNames.City, model.City);
+                //////if (_customerSettings.CountryEnabled)
+                //////    attributes.Add(SystemCustomerAttributeNames.CountryId, model.CountryId);
+                //////if (_customerSettings.CountryEnabled && _customerSettings.StateProvinceEnabled)
+                //////    attributes.Add(SystemCustomerAttributeNames.StateProvinceId, model.StateProvinceId);
+                //////if (_customerSettings.PhoneEnabled)
+                //////    attributes.Add(SystemCustomerAttributeNames.Phone, model.Phone);
+                //////if (_customerSettings.FaxEnabled)
+                //////    attributes.Add(SystemCustomerAttributeNames.Fax, model.Fax);
+
+                ////////newsletter
+                //////if (_customerSettings.NewsletterEnabled)
+                //////{
+                //////    //save newsletter value
+                //////    var newsletter = _newsLetterSubscriptionService.GetNewsLetterSubscriptionByEmailAndStoreId(model.Email, _storeContext.CurrentStore.Id);
+                //////    if (newsletter != null)
+                //////    {
+                //////        if (model.Newsletter)
+                //////        {
+                //////            newsletter.Active = true;
+                //////            _newsLetterSubscriptionService.UpdateNewsLetterSubscription(newsletter);
+                //////        }
+                //////    }
+                //////    else
+                //////    {
+                //////        if (model.Newsletter)
+                //////        {
+                //////            _newsLetterSubscriptionService.InsertNewsLetterSubscription(new NewsLetterSubscription
+                //////            {
+                //////                NewsLetterSubscriptionGuid = Guid.NewGuid(),
+                //////                Email = model.Email,
+                //////                Active = true,
+                //////                StoreId = _storeContext.CurrentStore.Id,
+                //////                CreatedOnUtc = DateTime.UtcNow
+                //////            });
+                //////        }
+                //////    }
+                //////}
+
+                ////////save customer attributes
+                //////attributes.Add(SystemCustomerAttributeNames.CustomCustomerAttributes, customerAttributes);
+                #endregion
+
                 var registrationResult= _customerRegistrationService.Register(customer, attributes, Core.Domain.Vendors.VendorType.User);
 
                 if (registrationResult.Success)
