@@ -30,7 +30,7 @@
         inlinePattern: '{0} no es valido'
     });
 
-    
+
     
     return TuilsApp;
 });

@@ -53,5 +53,15 @@ namespace Nop.Web.Models.Api
 
         public int StateProvince { get; set; }
 
+        public int ProductTypeId { get; set; }
+
+        public string DetailShipping { get; set; }
+
+        public bool IncludeSupplies { get; set; }
+
+        public List<int> Supplies { get; set; }
+
+        public int SuppliesValue { get; set; }
+
     }
 }

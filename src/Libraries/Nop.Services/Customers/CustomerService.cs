@@ -19,6 +19,8 @@ using Nop.Core.Domain.Shipping;
 using Nop.Data;
 using Nop.Services.Common;
 using Nop.Services.Events;
+using Nop.Services.Logging;
+using Nop.Services.Messages;
 
 namespace Nop.Services.Customers
 {
@@ -68,8 +70,10 @@ namespace Nop.Services.Customers
         private readonly IDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
         private readonly IEventPublisher _eventPublisher;
+        
         private readonly CustomerSettings _customerSettings;
         private readonly CommonSettings _commonSettings;
+        
 
         #endregion
 
@@ -488,6 +492,10 @@ namespace Nop.Services.Customers
             if (customer == null)
                 throw new ArgumentNullException("customer");
 
+            customer.CreatedOnUtc = DateTime.Now;
+            customer.LastActivityDateUtc = DateTime.Now;
+
+
             _customerRepository.Insert(customer);
 
             //event notification
@@ -832,7 +840,8 @@ namespace Nop.Services.Customers
         }
 
         #endregion
+       
 
         #endregion
     }
-}
+}   

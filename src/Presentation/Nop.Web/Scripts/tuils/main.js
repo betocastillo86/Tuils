@@ -40,22 +40,30 @@
         categoryModel: 'tuils/models/category',
         manufacturerModel: 'tuils/models/manufacturer',
         fileModel: 'tuils/models/file',
+        specificationAttributeModel: 'tuils/models/specificationAttribute',
         //Colecciones
         productCollection: 'tuils/collections/products',
         manufacturerCollection: 'tuils/collections/manufacturers',
         categoryCollection : 'tuils/collections/categories',
         fileCollection: 'tuils/collections/files',
+        specificationAttributeCollection : 'tuils/collections/specificationAttribute',
         //Vistas
         baseView: 'tuils/views/baseView',
         publishProductView: 'tuils/views/publishProduct/publishProduct',
         publishProductSelectCategoryView: 'tuils/views/publishProduct/selectCategory',
         publishProductProductDetailView: 'tuils/views/publishProduct/productDetail',
         publishProductSummaryView: 'tuils/views/publishProduct/summary',
-        publishProductFinishedView : 'tuils/views/publishProduct/finish',
+        publishProductFinishedView: 'tuils/views/publishProduct/finish',
+
+        loginView: 'tuils/views/login/createUser',
+        loginCreateUserView: 'tuils/views/login/createUser',
+        
+
         htmlEditorView: 'tuils/views/utilities/htmlEditorView',
         imageSelectorView: 'tuils/views/utilities/imagesSelectorView',
         
-        
+        //Tuils Extensions
+        extensionNumbers : 'tuils/extensions/numbers',
         //Externas
         tagit: 'tag-it',
         wysihtml5: 'wysihtml5-0.3.0.min',

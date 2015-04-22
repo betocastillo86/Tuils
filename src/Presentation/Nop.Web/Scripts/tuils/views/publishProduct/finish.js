@@ -10,10 +10,9 @@
             this.render();
         },
         render: function () {
-            debugger;
             this.$el.html(this.template(
                 {
-                    ImgSrc: this.images.at(0).toJSON().src,
+                    ImgSrc: this.images ? this.images.at(0).toJSON().src : undefined,
                     Name: this.model.get('Name'),
                     Price: accounting.formatMoney(this.model.get('Price'), { precision: 0 })
                 }));

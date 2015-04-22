@@ -50,6 +50,10 @@ namespace Nop.Web.Models.Sales
         /// </summary>
         public ProductTypePublished ProductType { get; set; }
 
+        /// <summary>
+        /// Titulo del tipo de producto que se está ofreciendo
+        /// </summary>
+        public string SubSectionTitle { get; set; }
     }
 
     

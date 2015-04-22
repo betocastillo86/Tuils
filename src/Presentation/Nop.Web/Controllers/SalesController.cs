@@ -55,6 +55,7 @@ namespace Nop.Web.Controllers
 
             //Tipo de producto servicio
             model.ProductType = ProductTypePublished.Product;
+            model.SubSectionTitle = "Productos";
 
             return View(model);
         }
@@ -91,6 +92,22 @@ namespace Nop.Web.Controllers
 
             //Tipo de producto moto
             model.ProductType = ProductTypePublished.Bike;
+            model.SubSectionTitle = "Motos";
+
+            return View("PublishProduct", model);
+        }
+
+        /// <summary>
+        /// OPción para publicar un servicio
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult PublishProductService()
+        {
+            var model = GetPublishModel();
+
+            //Tipo de producto moto
+            model.ProductType = ProductTypePublished.Service;
+            model.SubSectionTitle = "Servicios";
 
             return View("PublishProduct", model);
         }

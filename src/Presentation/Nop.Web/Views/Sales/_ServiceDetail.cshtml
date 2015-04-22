@@ -1,0 +1,66 @@
+﻿@model Nop.Web.Models.Sales.PublishProductModel
+<form class="content-public">
+    <div class="title">@T("PublishProduct.StepMenu2_Service")</div>
+
+    <div class="form-public">
+
+        @Html.Partial("_CommonFieldsProductBikeDetail", Model)
+
+        <div class="tipo-marca">
+            @Html.LabelT("PublishProduct.Product.ForBrandBike")
+            <input id="txtBikeReferencesProduct" />
+        </div>
+
+        <br />
+
+        <div class="inputs">
+            <input id="chkIsShipEnabled" type="checkbox" /> @Html.LabelT("PublishProduct.IsDoorToDoor")
+        </div>
+
+        <br />
+        <div tuils-for="shipping">
+            <div class="title">@T("PublishProduct.TitleDoorToDoor")</div>
+            <div class="inputs">
+                @Html.LabelT("PublishProduct.ShippingValueDoorToDoor")
+                <input id="txtAdditionalShippingCharge" type="text" tuils-val="int" />
+                @ShowRequired("AdditionalShippingCharge")
+            </div>
+            <div class="inputs">
+                @Html.LabelT("PublishProduct.DetailDoorToDoor")
+                <input id="txtDetailShipping" type="text" />
+                @ShowRequired("DetailShipping")
+            </div>
+        </div>
+        <br />
+        <div class="title">@T("PublishProduct.TitleSupplies")</div>
+        <div class="inputs">
+            <input id="chkIncludeSupplies" type="checkbox" /> @Html.LabelT("PublishProduct.IncludeSupplies")
+        </div>
+        <div class="inputs" >
+            @Html.LabelT("PublishProduct.Supplies")
+            <input id="txtSupplies" />
+        </div>
+        <div class="inputs" tuils-for="no-supplies" >
+            @Html.LabelT("PublishProduct.SuppliesValue")
+            <input id="txtSuppliesValue" type="text" tuils-val="int"  />
+            @ShowRequired("SuppliesValue")
+        </div>
+        
+        <br />
+        <div class="title">@T("PublishProduct.Product.Html")</div>
+        <div id="divProductHtml" class="form-public">
+            @Html.Partial("_TextEditor", "productHtml")
+            <div class="text-character"></div>
+            <span class="field-validation-error" tuils-val-for="FullDescription"></span>
+        </div>
+
+    </div>
+</form>
+<input type="button" class="btn_continue button-1 btnNext" value="@T("PublishProduct.NextStep")">
+<input type="button" class="btn_continue button-1 btnBack" value="@T("PublishProduct.BackStep")">
+@helper ShowRequired(string fieldName)
+{
+    <span class="required">*</span>
+    <div id="addMessage@(fieldName)" class="text-character"></div>
+    <span class="field-validation-error" tuils-val-for="@fieldName"></span>
+}

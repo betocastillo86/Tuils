@@ -1,6 +1,11 @@
 ﻿define(['jquery', 'underscore', 'backbone', 'util', 'validations'], function ($, _, Backbone, TuilsUtil) {
     
     var BaseView = Backbone.View.extend({
+
+        viewLogin: undefined,
+
+        viewCreateUser : undefined,
+
         initialize: function()
         {
             debugger;
@@ -9,14 +14,15 @@
 
         showLogin: function (model)
         {
-            //viewLogin = new LoginView();
-            var us = "";
-            var ps = "";
-            prompt("Ingrese los datos", us, ps);
+            this.trigger('unauthorized');
         },
         validateAuthorization: function ()
         {
             this.model.on('unauthorized', this.showLogin, this);
+        },
+        userAuthenticated: function () {
+            //Relanza el evento que el usuario fue autenticado, para que la vista que hereda lo pueda capturar
+            this.trigger("user-authenticated");
         },
         stickThem: function () {
             this.stickit();

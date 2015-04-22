@@ -19,5 +19,8 @@ namespace Nop.Services.Catalog
         /// <returns>Product copy</returns>
         Product CopyProduct(Product product, string newName,
             bool isPublished = true, bool copyImages = true, bool copyAssociatedProducts = true);
+
+
+        void CopyAll();
     }
 }

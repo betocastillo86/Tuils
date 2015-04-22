@@ -1,16 +1,24 @@
-﻿define(['jquery', 'underscore', 'backbone', 'baseView', 'manufacturerModel', 'manufacturerCollection', 'storage', 'util', 'htmlEditorView', 'configuration', 'tagit', 'validations', 'stickit'],
-    function ($, _, Backbone, BaseView, ManufacturerModel, ManufacturerCollection, TuilsStorage, TuilsUtil, HtmlEditorView, TuilsConfiguration) {
+﻿define(['jquery', 'underscore', 'backbone', 'baseView', 'manufacturerModel', 'manufacturerCollection', 'storage', 'util', 'htmlEditorView', 'configuration', 'specificationAttributeModel','tagit', 'validations', 'stickit'],
+    function ($, _, Backbone, BaseView, ManufacturerModel, ManufacturerCollection, TuilsStorage, TuilsUtil, HtmlEditorView, TuilsConfiguration, SpecificationAttributeModel) {
     "use strict"
     var ProductDetailView = BaseView.extend({
 
         events: {
             "click .btnNext": "save",
             "click .btnBack": "back",
-            "change #chkIsShipEnabled": "switchShipping"
+            "change #chkIsShipEnabled": "switchShipping",
+            "change #chkIncludeSupplies" : "switchSupplies"
         },
 
         bindings: {
-            "#txtName": "Name",
+            "#txtName": {
+                observe: "Name",
+                onSet: function (value, ctx) {
+                    var maxSize = ctx.view.model.validation.Name.maxLength;
+                    ctx.view.$("#addMessageName").html("Restan " + (maxSize - value.length) + " caracteres");
+                    return value;
+                }
+            },
             "select#ddlManufacturerId": {
                 observe: 'ManufacturerId',
                 selectOptions: {
@@ -26,8 +34,18 @@
                 }
             },
             "#chkIsShipEnabled": "IsShipEnabled",
-            "#txtAdditionalShippingCharge": "AdditionalShippingCharge",
-            "#txtPrice": "Price",
+            "#txtAdditionalShippingCharge": {
+                observe : "AdditionalShippingCharge",
+                onSet : function(value){
+                    return parseInt(value);
+                }
+            } ,
+            "#txtPrice": {
+                observe: "Price",
+                onSet: function (value) {
+                    return parseInt(value);
+                }
+            },
             "#txtBikeReferencesProduct": {
                 observe: "SpecialCategories",
                 onSet: function (value) {
@@ -78,7 +96,29 @@
                 }
             },
             "#ddlIsNew" : "IsNew",
-            "#ddlStateProvince": "StateProvince"
+            "#ddlStateProvince": "StateProvince",
+            "#txtDetailShipping": "DetailShipping",
+            "#chkIncludeSupplies": "IncludeSupplies",
+            "#txtSupplies": {
+                observe: "Supplies",
+                onSet: function (value, ctx) {
+                    var names = "";
+                    _.each(value.split(','), function (element) {
+                        //Carga los nombres de los insumos
+                        var name = _.findWhere(ctx.view.suppliesCollection.get('Options'), { Id: element }).Name;
+                        names += names!="" ? ("," + name) : name;
+                    });
+                    ctx.view.model.set("SuppliesName", names);
+
+                    return value.split(',');
+                }
+            },
+            "#txtSuppliesValue": {
+                observe: 'SuppliesValue',
+                onSet: function (value) {
+                    return parseInt(value);
+                }
+            }
         },
 
         //views
@@ -90,6 +130,8 @@
         selectedCategory: undefined,
 
         manufacturersCollection: undefined,
+
+        suppliesCollection : undefined,
 
         initialize: function (args) {
             this.model = args.model;
@@ -105,9 +147,11 @@
         loadControls: function () {
             this.loadManufacturersByCategory();
             this.tagBikeReferences();
+            this.loadSupplies();
             this.loadHtmlEditor();
             this.switchShipping();
-            this.myStickit();
+            if(this.productType != TuilsConfiguration.productBaseTypes.product)
+                this.myStickit();
         },
         loadHtmlEditor: function () {
             //el HTML no está habilitado para las motos
@@ -122,26 +166,49 @@
                 this.manufacturersCollection.getByCategoryId(this.selectedCategory);
             }
         },
+        loadSupplies: function () {
+            if (this.productType == TuilsConfiguration.productBaseTypes.service) {
+                this.suppliesCollection = new SpecificationAttributeModel();
+                this.suppliesCollection.on("sync", this.tagSupplies, this);
+                this.suppliesCollection.getSupplies();
+            }
+        },
         myStickit: function () {
             this.stickThem();
         },
         tagBikeReferences: function () {
-            var tagReferences = [];
+            //Los tags no se cargan para las motocicletas
+            if (this.productType != TuilsConfiguration.productBaseTypes.bike)
+            {
+                var tagReferences = [];
 
-            var addTag = function (element) {
-                tagReferences.push({ label: element.Name, value: element.Id });
-            };
-            _.each(TuilsStorage.bikeReferences, function (element, index) {
-                addTag(element);
-                _.each(element.ChildrenCategories, function (child, index) {
-                    child.Name = element.Name + ' ' + child.Name;
-                    addTag(child);
+                var addTag = function (element) {
+                    tagReferences.push({ label: element.Name, value: element.Id });
+                };
+                _.each(TuilsStorage.bikeReferences, function (element, index) {
+                    addTag(element);
+                    _.each(element.ChildrenCategories, function (child, index) {
+                        child.Name = element.Name + ' ' + child.Name;
+                        addTag(child);
+                    });
                 });
-            });
 
-            this.$("#txtBikeReferencesProduct")
+                this.$("#txtBikeReferencesProduct")
+                    .tagit({
+                        availableTags: tagReferences,
+                        allowOnlyAvailableTags: true,
+                        tagLimit: 5,
+                        autocomplete: {
+                            source: TuilsUtil.tagItAutocomplete
+                        }
+                    });
+            }
+            
+        },
+        tagSupplies: function () {
+            this.$("#txtSupplies")
                 .tagit({
-                    availableTags: tagReferences,
+                    availableTags: TuilsUtil.tagitAvailableTags(this.suppliesCollection.get('Options')),
                     allowOnlyAvailableTags: true,
                     tagLimit: 5,
                     autocomplete: {
@@ -155,12 +222,25 @@
             else
                 this.$("[tuils-for='shipping']").hide();
         },
+        switchSupplies: function (obj) {
+            if (this.$("#chkIncludeSupplies").prop("checked")) {
+                this.$("[tuils-for='no-supplies']").hide();
+            }
+            else {
+                this.$("[tuils-for='no-supplies']").show();
+            }
+        },
         save: function () {
             this.model.set({ FullDescription: this.$("#productHtml_textarea").val() });
             this.validateControls();
             if (this.model.isValid()) {
                 this.trigger("detail-product-finished", this.model);
             }
+        },
+        cleanView: function () {
+            //Limpia la vis
+            this.unstickit();
+            this.undelegateEvents();
         },
         back: function () {
             this.trigger("detail-product-back");

@@ -1881,8 +1881,16 @@ namespace Nop.Services.Catalog
             product.ShowOnHomePage = false;
             product.AllowCustomerReviews = true;
             product.CreatedOnUtc = product.UpdatedOnUtc = DateTime.Now;
+
+            try
+            {
+                InsertProduct(product);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
             
-            InsertProduct(product);
         }
         #endregion
 

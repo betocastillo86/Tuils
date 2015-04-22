@@ -195,6 +195,7 @@ namespace Nop.Services.Customers
         /// <param name="customerRole">Customer role</param>
         void UpdateCustomerRole(CustomerRole customerRole);
 
+
         #endregion
     }
 }
