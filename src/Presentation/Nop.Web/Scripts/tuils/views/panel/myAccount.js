@@ -1,4 +1,4 @@
-﻿define(['jquery', 'underscore', 'backbone',  'categoryModel', 'util', 'baseView', 'jqueryui'], function ($, _, Backbone, CategoryModel, TuilsUtilities, BaseView) {
+﻿define(['underscore', 'backbone',  'categoryModel', 'util', 'baseView', 'jqueryui'], function (_, Backbone, CategoryModel, TuilsUtilities, BaseView) {
     var MyAccountView = BaseView.extend({
 
         events : {

@@ -1,4 +1,4 @@
-﻿define(['jquery', 'underscore', 'backbone'], function ($, _, Backbone) {
+﻿define(['underscore', 'backbone'], function (_, Backbone) {
     var HeaderView = Backbone.View.extend({
 
         el: ".header-links",

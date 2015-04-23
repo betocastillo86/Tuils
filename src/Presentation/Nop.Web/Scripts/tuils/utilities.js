@@ -1,4 +1,4 @@
-﻿define(['jquery', 'underscore'], function ($, _) {
+﻿define(['underscore'], function ( _) {
     var TuilsUtilities = {
         //Carga un dropdownlist con los datos pasados en una lista
         //ddl: Objeto tipo select a cargar

@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'backbone', 'text!/Customer/FastLogin', 'handlebars', 'tuils/models/userRegister', 'baseView', 'jqueryui' ],
-    function ($, _, Backbone, template, Handlebars, UserRegisterModel, BaseView) {
+﻿define([ 'underscore', 'backbone', 'text!/Customer/FastLogin', 'handlebars', 'tuils/models/userRegister', 'baseView', 'jqueryui' ],
+    function (_, Backbone, template, Handlebars, UserRegisterModel, BaseView) {
     var LoginView = BaseView.extend({
 
         viewCreateUser: undefined,

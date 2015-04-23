@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'backbone', 'configuration', 'storage'],
-    function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView) {
+﻿define(['underscore', 'backbone', 'configuration', 'storage'],
+    function (_, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -23,7 +23,7 @@
                     that.loadSubViews();
                     that.currentView = new PublishProductView({ el: that.defaultEl, productType: TuilsConfiguration.productBaseTypes.product });
                     //Se cargan las referencias de las motocicletas desde el comienzo
-                    TuilsStorage.loadBikeReferences();
+                    //TuilsStorage.loadBikeReferences();
                 });
             },
             sellBike: function () {
@@ -39,7 +39,7 @@
                     that.loadSubViews();
                     that.currentView = new PublishProductView({ el: that.defaultEl, productType: TuilsConfiguration.productBaseTypes.service });
                     //Se cargan las referencias de las motocicletas desde el comienzo
-                    TuilsStorage.loadBikeReferences();
+                    //TuilsStorage.loadBikeReferences();
                 });
             },
             myAccount: function () {

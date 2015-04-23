@@ -1,4 +1,4 @@
-﻿define(['jquery', 'underscore', 'backbone', 'util', 'validations'], function ($, _, Backbone, TuilsUtil) {
+﻿define(['underscore', 'backbone', 'util', 'validations'], function (_, Backbone, TuilsUtil) {
     
     var BaseView = Backbone.View.extend({
 
@@ -6,10 +6,6 @@
 
         viewCreateUser : undefined,
 
-        initialize: function()
-        {
-            debugger;
-        },
         viewLogin : undefined,
 
         showLogin: function (model)

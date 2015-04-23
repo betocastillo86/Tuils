@@ -11,3 +11,4 @@ if (select count(0) from Setting where name = 'tuilssettings.specificationattrib
 if (select count(0) from Setting where name = 'tuilssettings.specificationattributeoptionkms') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.specificationattributeoptionkms', '1031', 0)
 if (select count(0) from Setting where name = 'tuilssettings.specificationattributeoptioncarriageplate') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.specificationattributeoptioncarriageplate', '1033', 0)
 if (select count(0) from Setting where name = 'tuilssettings.defaultcountry') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.defaultcountry', '1', 0)
+if (select count(0) from Setting where name = 'tuilssettings.specificationattributesupplies') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.specificationattributesupplies', '1011', 0)

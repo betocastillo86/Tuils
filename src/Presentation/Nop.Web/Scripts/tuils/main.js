@@ -2,11 +2,12 @@
     baseUrl: '/Scripts',
     shim: {
         tagit: {
-            deps: ['jquery', 'jqueryui'],
+            //deps: ['jquery', 'jqueryui'],
             exports:'tagit'
         },
         backbone: {
-            deps: ['underscore', 'jquery'],
+            //deps: ['underscore', 'jquery'],
+            deps: ['underscore'],
             exports:'Backbone'
         },
         validations: {
@@ -21,13 +22,13 @@
     },
     paths: {
         //Externas
-        jquery: 'jquery-1.10.2',
-        underscore: 'underscore',
-        backbone: 'backbone',
-        stickit: 'backbone.stickit',
+        //jquery: 'jquery-1.10.2',
+        underscore: 'underscore-min',
+        backbone: 'backbone-min',
+        stickit: 'backbone.stickit.min',
         jqueryui: 'jquery-ui-1.10.3.custom.min',
         validations: 'backbone-validation.min',
-        handlebars: 'handlebars',
+        handlebars: 'handlebars.min',
         handlebarsh: 'handelbars.helpers',
         //Basic Tuils
         router: 'tuils/router',

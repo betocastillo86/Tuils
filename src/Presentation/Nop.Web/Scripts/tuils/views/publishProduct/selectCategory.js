@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'backbone', 'categoryModel', 'handlebars', 'configuration', 'handlebarsh'],
-    function ($, _, Backbone, CategoryModel, Handlebars, TuilsConfiguration) {
+﻿define(['underscore', 'backbone', 'categoryModel', 'handlebars', 'configuration', 'handlebarsh'],
+    function ( _, Backbone, CategoryModel, Handlebars, TuilsConfiguration) {
         
         var SelectCategoryView = Backbone.View.extend({
 
