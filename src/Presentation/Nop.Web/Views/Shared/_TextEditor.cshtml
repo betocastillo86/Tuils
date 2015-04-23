@@ -1,6 +1,6 @@
 ﻿@model string
 <div class="divContainerHtml"></div>
-<script id="templateHtmlEditor" type="text/template">
+<script id="templateHtmlEditor" type="text/x-handlebars-template">
     <div id="@(Model)_toolbar" style="display: none;">
         <a data-wysihtml5-command="bold" title="CTRL+B">bold</a> |
         <a data-wysihtml5-command="italic" title="CTRL+I">italic</a> |
@@ -40,5 +40,8 @@
             <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
         </div>
     </div>
+    <textarea id="@(Model)_textarea" placeholder="Enter text ..."></textarea>
+</script>
+<script id="templateHtmlEditorMobile" type="text/x-handlebars-template">
     <textarea id="@(Model)_textarea" placeholder="Enter text ..."></textarea>
 </script>
