@@ -203,6 +203,7 @@
     <Compile Include="Controllers\BasePublicController.cs" />
     <Compile Include="Controllers\BoardsController.cs" />
     <Compile Include="Controllers\BackInStockSubscriptionController.cs" />
+    <Compile Include="Controllers\ControlPanelController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
@@ -316,6 +317,7 @@
     <Compile Include="Models\Common\StoreThemeModel.cs" />
     <Compile Include="Models\Common\LanguageSelectorModel.cs" />
     <Compile Include="Models\Common\SitemapModel.cs" />
+    <Compile Include="Models\ControlPanel\MyAccountModel.cs" />
     <Compile Include="Models\Customer\CustomerAttributeModel.cs" />
     <Compile Include="Models\Catalog\CustomerBackInStockSubscriptionsModel.cs" />
     <Compile Include="Models\Boards\CustomerForumSubscriptionsModel.cs" />
@@ -1013,6 +1015,7 @@
     <Content Include="Scripts\tuils\views\common\header.js" />
     <Content Include="Scripts\tuils\views\login\createUser.js" />
     <Content Include="Scripts\tuils\views\login\login.js" />
+    <Content Include="Scripts\tuils\views\panel\myAccount.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
     <Content Include="Scripts\tuils\views\utilities\imagesSelectorView.js" />
@@ -2352,9 +2355,12 @@
     <Content Include="Views\Sales\_ServiceDetail.cshtml" />
     <Content Include="Views\Customer\_CreateUser.cshtml" />
     <Content Include="Views\Customer\_Login.cshtml" />
+    <Content Include="Views\ControlPanel\Index.cshtml" />
+    <Content Include="Views\ControlPanel\MyAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
+    <Folder Include="Views\Picture\" />
     <Folder Include="Views\Templates\" />
   </ItemGroup>
   <ItemGroup>

@@ -444,6 +444,31 @@ namespace Nop.Web.Framework
             return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
         }
 
+        /// <summary>
+        /// Crea un drop down list de numeros desde un valor inicial hasta uno final
+        /// </summary>
+        /// <typeparam name="TModel"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="html"></param>
+        /// <param name="expression"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="htmlAttributes"></param>
+        /// <returns></returns>
+        public static MvcHtmlString DropDownNumbersFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, int from, int to, string label, object htmlAttributes = null)
+        { 
+            var numbers = new List<int>();
+            if (from > to)
+                for (; from > to; from--)
+                    numbers.Add(from);
+            else
+                for (; from < to; from++)
+                    numbers.Add(from);
+
+            
+            return html.DropDownListFor<TModel, TValue>(expression, new SelectList(numbers), label);
+        }
+
         #endregion
     }
 }

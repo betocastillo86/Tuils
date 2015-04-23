@@ -6,7 +6,7 @@ define(['categoryCollection'], function (CategoryCollection) {
 
         //Carga las referencias de las motocicletas en la propiedad 
         loadBikeReferences: function () {
-            var key = 'tuils_bikeReferences';
+            var key = 'tuils-bikeReferences';
             if (!localStorage.getItem(key)) {
                 var categories = new CategoryCollection();
                 categories.on("sync", function (response) {
