@@ -155,7 +155,7 @@
         },
         loadHtmlEditor: function () {
             //el HTML no está habilitado para las motos
-            if (this.productType != TuilsConfiguration.productBaseTypes.bike)
+            if (this.productType != TuilsConfiguration.productBaseTypes.bike && !this.isMobile())
                 this.viewHtmlEditor = new HtmlEditorView({ el: this.el, prefix: 'productHtml' });
         },
         loadManufacturersByCategory: function () {

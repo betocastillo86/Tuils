@@ -81,6 +81,10 @@
         removeErrors: function () {
             this.$el.find(".input-validation-error").removeClass("input-validation-error");
             this.$el.find(".field-validation-error").text("").removeClass("input-validation-error");
+        },
+        isMobile: function ()
+        {
+            return window.mobilecheck();
         }
     });
 
