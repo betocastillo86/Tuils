@@ -13,13 +13,49 @@ using Nop.Services.Seo;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Common;
 
+using Nop.Web.Models.Customer;
+using Nop.Web.Models.ControlPanel;
+using Nop.Services.Messages;
+
 namespace Nop.Web.Extensions
 {
     public static class MappingExtensions
     {
-        
-        
-        
+
+        #region MyAccount
+
+        public static MyAccountModel ToMyAccountModel(this Customer entity, bool getNewsletter = true)
+        {
+            var model = new MyAccountModel();
+
+            model.FirstName = entity.GetAttribute<string>(SystemCustomerAttributeNames.FirstName);
+            model.LastName = entity.GetAttribute<string>(SystemCustomerAttributeNames.LastName);
+            model.Gender = entity.GetAttribute<string>(SystemCustomerAttributeNames.Gender);
+            model.DateOfBirth = entity.GetAttribute<DateTime?>(SystemCustomerAttributeNames.DateOfBirth);
+            model.StateProvinceId = entity.GetAttribute<int>(SystemCustomerAttributeNames.StateProvinceId);
+            model.StateProvinceChildId = entity.GetAttribute<int>(SystemCustomerAttributeNames.StateProvinceChildId);
+            model.BikeBrandId = entity.GetAttribute<int?>(SystemCustomerAttributeNames.BikeBrandId);
+            model.BikeReferenceId = entity.GetAttribute<int?>(SystemCustomerAttributeNames.BikeReferenceId);
+            model.BikeYear = entity.GetAttribute<int?>(SystemCustomerAttributeNames.BikeYear);
+            model.BikeCarriagePlate = entity.GetAttribute<string>(SystemCustomerAttributeNames.BikeCarriagePlate);
+            model.Phone = entity.GetAttribute<string>(SystemCustomerAttributeNames.Phone);
+            model.Email = entity.Email;
+
+            if (getNewsletter)
+            {   
+                var newsletterService = Nop.Core.Infrastructure.EngineContext.Current.Resolve<INewsLetterSubscriptionService>();
+                model.NewsletterBrand = newsletterService.IsEmailSubscribed(model.Email, Core.Domain.Messages.NewsLetterSuscriptionType.MyBrand);
+                model.Newsletter = newsletterService.IsEmailSubscribed(model.Email, Core.Domain.Messages.NewsLetterSuscriptionType.General);
+                model.NewsletterReference = newsletterService.IsEmailSubscribed(model.Email, Core.Domain.Messages.NewsLetterSuscriptionType.MyReference);
+            }
+
+            //NEWSLETEEEER*********************************
+
+            return model;
+        }
+        #endregion
+
+
         //category
         public static CategoryModel ToModel(this Category entity)
         {

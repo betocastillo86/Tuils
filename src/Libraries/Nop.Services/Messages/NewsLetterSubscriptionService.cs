@@ -5,6 +5,7 @@ using Nop.Core.Data;
 using Nop.Core.Domain.Messages;
 using Nop.Data;
 using Nop.Services.Events;
+using Nop.Services.Logging;
 
 namespace Nop.Services.Messages
 {
@@ -15,9 +16,12 @@ namespace Nop.Services.Messages
     {
         private readonly IEventPublisher _eventPublisher;
         private readonly IDbContext _context;
+        private readonly ILogger _logger;
         private readonly IRepository<NewsLetterSubscription> _subscriptionRepository;
 
-        public NewsLetterSubscriptionService(IDbContext context, IRepository<NewsLetterSubscription> subscriptionRepository, IEventPublisher eventPublisher)
+        public NewsLetterSubscriptionService(IDbContext context,
+            IRepository<NewsLetterSubscription> subscriptionRepository,
+            IEventPublisher eventPublisher)
         {
             _context = context;
             _subscriptionRepository = subscriptionRepository;
@@ -55,6 +59,7 @@ namespace Nop.Services.Messages
         /// <summary>
         /// Updates a newsletter subscription
         /// </summary>
+        /// <param name="insertIfNotExist">Si el registro no existe lo crea de nuevo</param>
         /// <param name="newsLetterSubscription">NewsLetter subscription</param>
         /// <param name="publishSubscriptionEvents">if set to <c>true</c> [publish subscription events].</param>
         public virtual void UpdateNewsLetterSubscription(NewsLetterSubscription newsLetterSubscription, bool publishSubscriptionEvents = true)
@@ -80,8 +85,8 @@ namespace Nop.Services.Messages
                 //If the previous entry was false, but this one is true, publish a subscribe.
                 PublishSubscriptionEvent(newsLetterSubscription.Email, true, publishSubscriptionEvents);
             }
-            
-            if ((originalSubscription.Active && newsLetterSubscription.Active) && 
+
+            if ((originalSubscription.Active && newsLetterSubscription.Active) &&
                 (originalSubscription.Email != newsLetterSubscription.Email))
             {
                 //If the two emails are different publish an unsubscribe.
@@ -151,15 +156,15 @@ namespace Nop.Services.Messages
         /// <param name="email">The newsletter subscription email</param>
         /// <param name="storeId">Store identifier</param>
         /// <returns>NewsLetter subscription</returns>
-        public virtual NewsLetterSubscription GetNewsLetterSubscriptionByEmailAndStoreId(string email, int storeId)
+        public virtual NewsLetterSubscription GetNewsLetterSubscriptionByEmailAndStoreId(string email, int storeId, NewsLetterSuscriptionType type = NewsLetterSuscriptionType.General)
         {
-            if (!CommonHelper.IsValidEmail(email)) 
+            if (!CommonHelper.IsValidEmail(email))
                 return null;
 
             email = email.Trim();
 
             var newsLetterSubscriptions = from nls in _subscriptionRepository.Table
-                                          where nls.Email == email && nls.StoreId == storeId
+                                          where nls.Email == email && nls.StoreId == storeId && nls.SuscriptionTypeId == (int)type
                                           orderby nls.Id
                                           select nls;
 
@@ -217,6 +222,83 @@ namespace Nop.Services.Messages
                     _eventPublisher.PublishNewsletterUnsubscribe(email);
                 }
             }
+        }
+
+        /// <summary>
+        /// Crea, actualiza o elimina las newsletter para un correo en especifico
+        /// </summary>
+        /// <param name="email">correo que se desea actualizar</param>
+        /// <param name="type">tipo de notificación</param>
+        /// <param name="storeId">Tienda es opcional, por defecto es 1</param>
+        public bool SwitchNewsletterByEmail(string email, bool active, NewsLetterSuscriptionType type, int storeId = 1)
+        {
+
+            try
+            {
+                var newsletter = GetNewsLetterSubscriptionByEmailAndStoreId(email, storeId, type);
+                if (newsletter != null)
+                {
+                    newsletter.Active = active;
+                    UpdateNewsLetterSubscription(newsletter);
+                    return true;
+                }
+                else
+                {
+                    if (active)
+                    {
+                        InsertNewsLetterSubscription(new NewsLetterSubscription
+                        {
+                            NewsLetterSubscriptionGuid = Guid.NewGuid(),
+                            Email = email,
+                            Active = true,
+                            StoreId = storeId,
+                            CreatedOnUtc = DateTime.UtcNow,
+                            SuscriptionTypeId = (int)type
+                        });
+                        return true;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Error actualizando el newsletter", e);
+                return false;
+            }
+
+            return true;
+
+        }
+
+        /// <summary>
+        /// Inserta una suscripción al correo desde el email
+        /// </summary>
+        /// <param name="email">correo electronico del usuario</param>
+        /// <param name="active">activo</param>
+        /// <param name="type">tipo de correo enviado</param>
+        /// <param name="storeId">tienda, por defecto es la 1</param>
+        public void InsertNewsLetterSubscription(string email, bool active, NewsLetterSuscriptionType type, int storeId = 1)
+        {
+            InsertNewsLetterSubscription(new NewsLetterSubscription()
+            {
+                NewsLetterSubscriptionGuid = Guid.NewGuid(),
+                Active = active,
+                Email = email,
+                SuscriptionTypeId = (int)type,
+                StoreId = storeId,
+                CreatedOnUtc = DateTime.Now
+            });
+        }
+
+        /// <summary>
+        /// Valida si un email está suscrito a newslettero no em un tipo
+        /// </summary>
+        /// <param name="email">correo suscrito</param>
+        /// <param name="type">tipo de correo</param>
+        /// <param name="storeId">tienda. Por defecto 1</param>
+        public bool IsEmailSubscribed(string email, NewsLetterSuscriptionType type, int storeId = 1)
+        {
+            var news = GetNewsLetterSubscriptionByEmailAndStoreId(email, storeId, type);
+            return news != null ? news.Active : false;
         }
     }
 }

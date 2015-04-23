@@ -25,7 +25,7 @@
         underscore: 'underscore',
         backbone: 'backbone',
         stickit: 'backbone.stickit',
-        jqueryui: 'jquery-ui-1.10.3.custom',
+        jqueryui: 'jquery-ui-1.10.3.custom.min',
         validations: 'backbone-validation.min',
         handlebars: 'handlebars',
         handlebarsh: 'handelbars.helpers',
@@ -65,7 +65,7 @@
         //Tuils Extensions
         extensionNumbers : 'tuils/extensions/numbers',
         //Externas
-        tagit: 'tag-it',
+        tagit: 'tag-it.min',
         wysihtml5: 'wysihtml5-0.3.0.min',
         resize: 'resize',
         canvasBlob: 'canvas-to-blob.min',

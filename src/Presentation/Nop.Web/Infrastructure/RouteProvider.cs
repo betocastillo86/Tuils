@@ -712,6 +712,20 @@ namespace Nop.Web.Infrastructure
 
 
 
+            #region Panel de Control
+            routes.MapLocalizedRoute("ControlPanel",
+              "mi-cuenta",
+              new { controller = "ControlPanel", action = "Index" },
+              new[] { "Nop.Web.Controllers" }
+              );
+
+            routes.MapLocalizedRoute("ControlPanelMyAccount",
+              "datos-basicos",
+              new { controller = "ControlPanel", action = "MyAccount" },
+              new[] { "Nop.Web.Controllers" }
+              );
+            #endregion
+
         }
 
         public int Priority

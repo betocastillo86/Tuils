@@ -26,8 +26,13 @@
         },
         stickThem: function () {
             this.stickit();
+            this.basicValidations();
+        },
+        basicValidations : function()
+        {
             //agrega las caracteristicas de tipos de datos a los combos
             this.$("input[tuils-val='int']").on("keypress", TuilsUtil.onlyNumbers);
+            this.$("input[tuils-val='none']").on("keypress", function () { return false; });
         },
         validateControls: function (model) {
             //Formatea los mensajes de respuesta contra los label
@@ -76,6 +81,10 @@
         removeErrors: function () {
             this.$el.find(".input-validation-error").removeClass("input-validation-error");
             this.$el.find(".field-validation-error").text("").removeClass("input-validation-error");
+        },
+        isMobile: function ()
+        {
+            return window.mobilecheck();
         }
     });
 

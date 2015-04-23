@@ -456,6 +456,9 @@ namespace Nop.Services.Customers
                         _genericAttributeService.SaveAttribute(customer, attribute.Key, attribute.Value);
                     }
 
+                    //Lo suscribe a los newsletters
+                    _newsLetterSubscriptionService.InsertNewsLetterSubscription(customer.Email, true, Core.Domain.Messages.NewsLetterSuscriptionType.General);
+
                     //Intenta envíar el correo al usuario
                     _workflowMessageService.SendCustomerEmailValidationMessage(customer, _workContext.WorkingLanguage.Id);
 

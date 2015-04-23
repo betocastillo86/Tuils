@@ -31,5 +31,12 @@ namespace Nop.Core.Domain.Messages
         /// Gets or sets the date and time when subscription was created
         /// </summary>
         public DateTime CreatedOnUtc { get; set; }
+
+        /// <summary>
+        /// Tipo de suscripción a la que se une el cliente
+        /// </summary>
+        public int SuscriptionTypeId { get; set; }
+
+        public NewsLetterSuscriptionType SuscriptionType { get { return (NewsLetterSuscriptionType)SuscriptionTypeId; } }
     }
 }
