@@ -109,7 +109,6 @@
     .button-2.apply-discount-coupon-code-button, .order-summary-content .apply-discount-coupon-code-button, .order-summary-content .apply-gift-card-coupon-code-button { width: 50%; }
     .email-a-friend-page .buttons { text-align: center; }
     .compare-products-table tr td.a-center { display: inline-block; width: 260px; }
-    .button-1, .button-2 { font-size: 20px; padding: 8px 5px; min-width: 100px; width: auto; }
     .buttons { text-align: center; }
     .registration-page .buttons { text-align: center; }
     .button-2.email-a-friend-wishlist-button { margin-top: 10px; }
@@ -296,7 +295,6 @@
     .footer-menu h3, .footer-menu-1 h3 { border-bottom: 1px solid #DDDDDD; display: block; padding: 5px 0; margin-left: 5px; cursor: pointer; }
     /*@toogle*/
 
-    /*.button-1, .button-2 {min-width: 80px;}*/
     .estimate-shipping { height: auto; }
     /*3.30*/
 
@@ -496,7 +494,6 @@
     /*Main*/
     .fieldset .inputs label { width: 130px; }
     .blogpost-page .new-comment .comment-text, .email-a-friend-page .personal-message, .contact-page .enquiry { width: 350px; }
-    .button-1, .button-2 { /*min-width: 80px;*/ padding: 5px; }
     .contact-page .inputs-right { float: left; }
     #newsletter-email, #newsletter-result-block { float: none; width: 170px; }
     .block-newsletter .buttons { float: none; margin: 10px 0; text-align: left; }
