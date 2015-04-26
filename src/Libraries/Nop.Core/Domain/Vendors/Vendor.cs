@@ -1,5 +1,8 @@
+using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Localization;
+using Nop.Core.Domain.Media;
 using Nop.Core.Domain.Seo;
+using System.Collections.Generic;
 
 namespace Nop.Core.Domain.Vendors
 {
@@ -8,6 +11,10 @@ namespace Nop.Core.Domain.Vendors
     /// </summary>
     public partial class Vendor : BaseEntity, ILocalizedEntity, ISlugSupported
     {
+        private ICollection<VendorPicture> _vendorPictures;
+        private ICollection<SpecialCategoryVendor> _specialCategoryVendors;
+        private ICollection<Address> _addresses;
+        
         /// <summary>
         /// Gets or sets the name
         /// </summary>
@@ -79,13 +86,57 @@ namespace Nop.Core.Domain.Vendors
         /// </summary>
         public int VendorTypeId { get; set; }
 
+
+        public bool? EnableCreditCardPayment { get; set; }
+
+        public bool? EnableShipping { get; set; }
+
+        public int? PictureId { get; set; }
+
+        public int? BackgroundPictureId { get; set; }
+
+        public double? AvgRating { get; set; }
+
+
         public VendorType VendorType
         {
             get { return (VendorType)VendorTypeId; }
         }
 
 
+        public virtual Picture Picture { get; set; }
+
+        public virtual Picture BackgroundPicture { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of ProductPicture
+        /// </summary>
+        public virtual ICollection<VendorPicture> VendorPictures
+        {
+            get { return _vendorPictures ?? (_vendorPictures = new List<VendorPicture>()); }
+            protected set { _vendorPictures = value; }
+        }
+
+        /// <summary>
+        /// Direcciones del vendedor
+        /// </summary>
+        public virtual ICollection<Address> Addresses
+        {
+            get { return _addresses ?? (_addresses = new List<Address>()); }
+            protected set { _addresses = value; }
+        }
+        
+        /// <summary>
+        /// Listado de categorias especiales de un producto
+        /// </summary>
+        public virtual ICollection<SpecialCategoryVendor> SpecialCategories
+        {
+            get { return _specialCategoryVendors ?? (_specialCategoryVendors = new List<SpecialCategoryVendor>()); }
+            protected set { _specialCategoryVendors = value; }
+        }
 
 
     }
 }
+
+

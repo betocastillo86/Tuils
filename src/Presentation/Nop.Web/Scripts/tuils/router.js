@@ -14,7 +14,8 @@
                 "quiero-vender/producto": "sellProduct",
                 "quiero-vender/moto": "sellBike",
                 "quiero-vender/servicio-especializado": "sellService",
-                "datos-basicos": "myAccount"
+                "datos-basicos": "myAccount",
+                "ControlPanel/Offices" : "myOffices"
             },
 
             sellProduct: function () {
@@ -46,6 +47,12 @@
                 var that = this;
                 require(['tuils/views/panel/myAccount'], function (MyAccountView) {
                     that.currentView = new MyAccountView({ el: that.defaultEl });
+                });
+            },
+            myOffices: function () {
+                var that = this;
+                require(['tuils/views/panel/offices'], function (OfficesView) {
+                    that.currentView = new OfficesView({ el: that.defaultEl });
                 });
             },
 

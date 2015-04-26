@@ -1,7 +1,7 @@
-﻿define(['underscore', 'backbone', 'categoryModel', 'handlebars', 'configuration', 'handlebarsh'],
-    function ( _, Backbone, CategoryModel, Handlebars, TuilsConfiguration) {
+﻿define(['underscore', 'backbone', 'categoryModel', 'handlebars', 'configuration', 'baseView', 'handlebarsh'],
+    function ( _, Backbone, CategoryModel, Handlebars, TuilsConfiguration, BaseView) {
         
-        var SelectCategoryView = Backbone.View.extend({
+        var SelectCategoryView = BaseView.extend({
 
             events: {
                 "click li": "loadCategories",
@@ -58,6 +58,7 @@
                 var category = new CategoryModel();
                 category.on("sync", this.showCategories, this);
                 category.get(this.currentCategory);
+                this.showLoading(category, true);
             },
             loadDefaultCategories: function () {
                 this.currentCategory = this.productType;

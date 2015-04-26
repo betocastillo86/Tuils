@@ -152,6 +152,57 @@ namespace Nop.Web.Extensions.Api
 
         #endregion
 
+        #region Address
+
+        public static List<AddressModel> ToModels(this IList<Address> list)
+        {
+            var models = new List<AddressModel>();
+            foreach (var entity in list)
+            {
+                models.Add(entity.ToModel());
+            }
+            return models;
+        }
+
+        public static AddressModel ToModel(this Address entity)
+        {
+            return new AddressModel() { 
+                Id= entity.Id,
+                Address = entity.Address1,
+                Email = entity.Email,
+                PhoneNumber = entity.PhoneNumber,
+                FaxNumber = entity.FaxNumber,
+                StateProvinceId = entity.StateProvinceId.Value,
+                DisplayOrder = entity.DisplayOrder,
+                Schedule = entity.Schedule,
+                VendorId = entity.VendorId ?? 0,
+                Name = entity.FirstName,
+                Latitude = entity.Latitude ?? 0,
+                Longitude = entity.Longitude ?? 0
+            };
+        }
+
+        public static Address ToEntity(this AddressModel model)
+        {
+            return new Address()
+            {
+                Id = model.Id,
+                Address1 = model.Address,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                FaxNumber = model.FaxNumber,
+                StateProvinceId = model.StateProvinceId,
+                DisplayOrder = model.DisplayOrder,
+                Schedule = model.Schedule,
+                VendorId = model.VendorId,
+                FirstName = model.Name,
+                Latitude = model.Latitude,
+                Longitude = model.Longitude
+            };
+        }
+
+        #endregion
+
 
     }
 }

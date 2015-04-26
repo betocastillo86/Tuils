@@ -5,7 +5,7 @@
 
         url: "/api/categories/",
 
-        get: function (id) {
+        getCategory: function (id) {
             this.url = this.baseUrl + id;
             this.fetch();
             return this;

@@ -31,13 +31,13 @@ namespace Nop.Core.Data
         /// Update entity
         /// </summary>
         /// <param name="entity">Entity</param>
-        void Update(T entity);
+        int Update(T entity);
 
         /// <summary>
         /// Delete entity
         /// </summary>
         /// <param name="entity">Entity</param>
-        void Delete(T entity);
+        int Delete(T entity);
 
         /// <summary>
         /// Delete entities

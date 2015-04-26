@@ -8,6 +8,7 @@ namespace Nop.Data.Mapping.Common
         {
             this.ToTable("Address");
             this.HasKey(a => a.Id);
+            this.Property(a => a.Schedule).HasMaxLength(100);
 
             this.HasOptional(a => a.Country)
                 .WithMany()

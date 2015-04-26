@@ -17,7 +17,7 @@ define(['categoryCollection'], function (CategoryCollection) {
                 categories.getBikeReferences();
             }
             else {
-                this.bikeReferences = JSON.parse(localStorage.getItem(key));
+                TuilsStorage.bikeReferences = JSON.parse(localStorage.getItem(key));
             }
         },
 

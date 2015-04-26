@@ -110,6 +110,9 @@
     <Compile Include="Domain\Shipping\Events.cs" />
     <Compile Include="Domain\Shipping\Warehouse.cs" />
     <Compile Include="Domain\Shipping\DeliveryDate.cs" />
+    <Compile Include="Domain\Vendors\SpecialCategoryVendor.cs" />
+    <Compile Include="Domain\Vendors\SpecialCategoryVendorType.cs" />
+    <Compile Include="Domain\Vendors\VendorPicture.cs" />
     <Compile Include="Domain\Vendors\VendorSettings.cs" />
     <Compile Include="Domain\Vendors\Vendor.cs" />
     <Compile Include="Domain\Vendors\VendorType.cs" />
@@ -355,7 +358,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlHelper.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />

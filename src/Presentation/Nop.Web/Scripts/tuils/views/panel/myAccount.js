@@ -23,7 +23,7 @@
             if (this.ddlBikeBrand.val()) {
                 var brand = new CategoryModel();
                 brand.on("sync", this.showReferences, this);
-                brand.get(this.ddlBikeBrand.val());
+                brand.getCategory(this.ddlBikeBrand.val());
             }
             else {
                 this.ddlBikeReference.empty();

@@ -5,6 +5,7 @@ using Nop.Core.Data;
 using Nop.Core.Domain.Common;
 using Nop.Services.Directory;
 using Nop.Services.Events;
+using System.Collections.Generic;
 
 namespace Nop.Services.Common
 {
@@ -167,7 +168,7 @@ namespace Nop.Services.Common
         /// Updates the address
         /// </summary>
         /// <param name="address">Address</param>
-        public virtual void UpdateAddress(Address address)
+        public virtual bool UpdateAddress(Address address)
         {
             if (address == null)
                 throw new ArgumentNullException("address");
@@ -178,14 +179,17 @@ namespace Nop.Services.Common
             if (address.StateProvinceId == 0)
                 address.StateProvinceId = null;
 
-            _addressRepository.Update(address);
+            int modified = _addressRepository.Update(address) ;
 
             //cache
             _cacheManager.RemoveByPattern(ADDRESSES_PATTERN_KEY);
 
             //event notification
             _eventPublisher.EntityUpdated(address);
+
+            return modified > 0;
         }
+
         
         /// <summary>
         /// Gets a value indicating whether address is valid (can be saved)
@@ -271,6 +275,21 @@ namespace Nop.Services.Common
                 return false;
 
             return true;
+        }
+
+        /// <summary>
+        /// Consulta las direcciones de un vendedor especifico
+        /// </summary>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        public IList<Address> GetAddressesByVendorId(int vendorId)
+        {
+            if (vendorId <= 0)
+                return new List<Address>();
+
+            return _addressRepository.Table
+                .Where(v => v.VendorId == vendorId)
+                .ToList();
         }
         
         #endregion

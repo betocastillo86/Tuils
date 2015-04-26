@@ -93,7 +93,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                 },
                 DetailShipping: {
                     required: function (val, attr, computed) {
-                        return computed.IsShipEnabled;
+                        return computed.IsShipEnabled && computed.ProductTypeId == TuilsConfiguration.productBaseTypes.service;
                     },
                     maxLength: 300
                 },

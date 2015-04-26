@@ -136,5 +136,15 @@ namespace Nop.Web.Controllers
         }
 
         #endregion
+
+        #region Offices
+        public ActionResult Offices()
+        {
+            var model = new OfficesModel();
+            model.States = _stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry);
+            model.VendorId = _workContext.CurrentVendor.Id;
+            return View(model);
+        }
+        #endregion
     }
 }

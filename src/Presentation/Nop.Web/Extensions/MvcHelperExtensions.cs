@@ -3,6 +3,7 @@ using Nop.Services.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -31,6 +32,63 @@ namespace System.Web.Mvc.Html
 
         #region Html Required Fields
 
+        #region  ControlRequiredFor
+        /// <summary>
+        /// Genera la estructura de una caja de texto, label y marcas de obligatorios
+        /// </summary>
+        /// <typeparam name="TModel">Modelo</typeparam>
+        /// <typeparam name="TProperty">Propiedad a revisar</typeparam>
+        /// <param name="helper">helper</param>
+        /// <param name="expression">expresion de la propiedad a evaluar</param>
+        /// <param name="htmlAttributes">attributos html</param>
+        /// <param name="labelText">si el texto no viene del modelo se envía en esta propiedad</param>
+        /// <param name="required">True: Muestra la zona de requerido. False: No lo muestra</param>
+        /// <returns></returns>
+        public static MvcHtmlString TextBoxRequiredFor<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null, string labelText = null, bool required = true)
+        {
+            return ControlRequiredFor(helper, ControlType.TextBox, expression, htmlAttributes, labelText, required);
+        }
+
+
+        private static MvcHtmlString ControlRequiredFor<TModel, TProperty>(this HtmlHelper<TModel> helper, ControlType controlType, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null, string labelText = null, bool required= true)
+        {
+            var htmlControl = new StringBuilder();
+
+            //Si el label viene de los recursos realiza la consulta sino pega el html que llegó
+            if (labelText != null)
+                htmlControl.Append(LabelExtensions.LabelFor(helper, expression, labelText, htmlAttributes).ToHtmlString());
+            else
+                htmlControl.Append(LabelExtensions.LabelFor(helper, expression, htmlAttributes).ToHtmlString());
+
+            ///Valida el tipo de control y lo carga en el html
+            switch (controlType)
+            {
+                case ControlType.TextBox:
+
+                    htmlControl.Append(helper.TextBoxFor(expression, htmlAttributes));
+                    break;
+                case ControlType.DropdownList:
+                    //htmlControl.Append(helper.DropDownList(string.Concat("txt", field), selectList, controlHtmlAttributes).ToHtmlString());
+                    break;
+                case ControlType.TextArea:
+                    //htmlControl.Append(helper.TextArea(string.Concat("txt", field), value ?? string.Empty, controlHtmlAttributes).ToHtmlString());
+                    break;
+                case ControlType.Password:
+                    //htmlControl.Append(helper.Password(string.Concat("txt", field), value ?? string.Empty, controlHtmlAttributes).ToHtmlString());
+                    break;
+                default:
+                    break;
+            }
+
+            //Agrega la sección de codigo que contiene lo que se marca como obligatorio
+            if (required)
+                htmlControl.Append(GetRequiredHtmlPart(ExpressionHelper.GetExpressionText(expression)));
+
+            return new MvcHtmlString(htmlControl.ToString());
+        }
+        #endregion
+
+        #region ControlRequired
         /// <summary>
         /// Retorna el HHTML completo de un textbox con su label y etiquetas relacionadas con las validaciones
         /// </summary>
@@ -43,7 +101,7 @@ namespace System.Web.Mvc.Html
         /// <param name="controlHtmlAttributes">objeto con las propiedades agregadas al control</param>
         /// <param name="selectList">Listado de opcines en los casos de dropdownlist</param>
         /// <returns></returns>
-        private static MvcHtmlString ControlRequired(this HtmlHelper helper, ControlType controlType, string field, string value = null, string labelText = null, string labelResource = null, object controlHtmlAttributes = null, IEnumerable<SelectListItem> selectList = null)
+        private static MvcHtmlString ControlRequired(this HtmlHelper helper, ControlType controlType, string field, string value = null, string labelText = null, string labelResource = null, object controlHtmlAttributes = null, IEnumerable<SelectListItem> selectList = null, bool required = true)
         {
             var htmlControl = new StringBuilder();
 
@@ -52,7 +110,7 @@ namespace System.Web.Mvc.Html
                 htmlControl.Append(LabelT(helper, labelResource).ToHtmlString());
             else
                 htmlControl.Append(helper.Label(labelText ?? string.Empty).ToHtmlString());
-            
+
             ///Valida el tipo de control y lo carga en el html
             switch (controlType)
             {
@@ -60,7 +118,7 @@ namespace System.Web.Mvc.Html
                     htmlControl.Append(helper.TextBox(string.Concat("txt", field), value ?? string.Empty, controlHtmlAttributes).ToHtmlString());
                     break;
                 case ControlType.DropdownList:
-                    htmlControl.Append(helper.DropDownList(string.Concat("txt", field), selectList, controlHtmlAttributes).ToHtmlString());
+                    htmlControl.Append(helper.DropDownList(string.Concat("ddl", field), selectList, "-", controlHtmlAttributes).ToHtmlString());
                     break;
                 case ControlType.TextArea:
                     htmlControl.Append(helper.TextArea(string.Concat("txt", field), value ?? string.Empty, controlHtmlAttributes).ToHtmlString());
@@ -74,10 +132,16 @@ namespace System.Web.Mvc.Html
 
 
             //Agrega la sección de codigo que contiene lo que se marca como obligatorio
-            htmlControl.Append(GetRequiredHtmlPart(field));
+            htmlControl.Append(GetRequiredHtmlPart(field, required));
 
             return new MvcHtmlString(htmlControl.ToString());
         }
+
+
+
+
+
+
 
         /// <summary>
         /// Retorna el HHTML completo de un textbox con su label y etiquetas relacionadas con las validaciones
@@ -89,9 +153,9 @@ namespace System.Web.Mvc.Html
         /// <param name="labelResource">texto tomado de los recursos que se carga en el Label (Este valor prima sobre labelText)</param>
         /// <param name="controlHtmlAttributes">objeto con las propiedades agregadas al control</param>
         /// <returns>contenido Html del control</returns>
-        public static MvcHtmlString TextBoxRequired(this HtmlHelper helper, string field, string value = null, string labelText = null, string labelResource = null, object controlHtmlAttributes = null) 
+        public static MvcHtmlString TextBoxRequired(this HtmlHelper helper, string field, string value = null, string labelText = null, string labelResource = null, object controlHtmlAttributes = null, bool required = true)
         {
-            return ControlRequired(helper, ControlType.TextBox, field, value, labelText, labelResource, controlHtmlAttributes);
+            return ControlRequired(helper, ControlType.TextBox, field, value, labelText, labelResource, controlHtmlAttributes, required: required);
         }
 
         /// <summary>
@@ -121,9 +185,9 @@ namespace System.Web.Mvc.Html
         /// <param name="controlHtmlAttributes">objeto con las propiedades agregadas al control</param>
         /// <param name="selectList">Lista de opciones del dropdown</param>
         /// <returns>contenido Html del control</returns>
-        public static MvcHtmlString DropDownRequired(this HtmlHelper helper, string field, SelectList selectList, string value = null, string labelText = null, string labelResource = null, object controlHtmlAttributes = null)
+        public static MvcHtmlString DropDownRequired(this HtmlHelper helper, string field, SelectList selectList, string value = null, string labelText = null, string labelResource = null, object controlHtmlAttributes = null, bool required = true)
         {
-            return ControlRequired(helper, ControlType.DropdownList, field, value, labelText, labelResource, controlHtmlAttributes, selectList);
+            return ControlRequired(helper, ControlType.DropdownList, field, value, labelText, labelResource, controlHtmlAttributes, selectList, required);
         }
 
 
@@ -132,14 +196,16 @@ namespace System.Web.Mvc.Html
         /// Retorna la parte final de los controles que deben ser obligatorios
         /// </summary>
         /// <returns></returns>
-        private static string GetRequiredHtmlPart(string field)
+        private static string GetRequiredHtmlPart(string field, bool required = true)
         {
             var str = new StringBuilder();
-            str.Append("<span class=\"required\">*</span>");
+            if(required)
+                str.Append("<span class=\"required\">*</span>");
             str.Append("<div class=\"text-character\"></div>");
             str.AppendFormat("<span class=\"field-validation-error\" tuils-val-for=\"{0}\"></span>", field);
             return str.ToString();
         }
+        #endregion
 
         #endregion
 

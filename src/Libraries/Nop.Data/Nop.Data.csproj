@@ -68,6 +68,8 @@
     <Compile Include="Mapping\Catalog\SpecialCategoryProductMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeValueMap.cs" />
+    <Compile Include="Mapping\Vendors\SpecialCategoryVendorMap.cs" />
+    <Compile Include="Mapping\Vendors\VendorPictureMap.cs" />
     <Compile Include="Migrations\201503270505120_SpecialCategoryByProduct.cs" />
     <Compile Include="Migrations\201503270505120_SpecialCategoryByProduct.Designer.cs">
       <DependentUpon>201503270505120_SpecialCategoryByProduct.cs</DependentUpon>
@@ -91,6 +93,10 @@
     <Compile Include="Migrations\201504230112117_NewslettersNewFields_Type.cs" />
     <Compile Include="Migrations\201504230112117_NewslettersNewFields_Type.Designer.cs">
       <DependentUpon>201504230112117_NewslettersNewFields_Type.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504232349220_Vendor_AddressesCategoriesPictures.cs" />
+    <Compile Include="Migrations\201504232349220_Vendor_AddressesCategoriesPictures.Designer.cs">
+      <DependentUpon>201504232349220_Vendor_AddressesCategoriesPictures.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
@@ -234,6 +240,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504230112117_NewslettersNewFields_Type.resx">
       <DependentUpon>201504230112117_NewslettersNewFields_Type.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504232349220_Vendor_AddressesCategoriesPictures.resx">
+      <DependentUpon>201504232349220_Vendor_AddressesCategoriesPictures.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

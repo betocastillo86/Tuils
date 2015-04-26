@@ -110,14 +110,14 @@ namespace Nop.Data
         /// Update entity
         /// </summary>
         /// <param name="entity">Entity</param>
-        public virtual void Update(T entity)
+        public virtual int Update(T entity)
         {
             try
             {
                 if (entity == null)
                     throw new ArgumentNullException("entity");
-
-                this._context.SaveChanges();
+                
+                return this._context.SaveChanges();
             }
             catch (DbEntityValidationException dbEx)
             {
@@ -137,7 +137,7 @@ namespace Nop.Data
         /// Delete entity
         /// </summary>
         /// <param name="entity">Entity</param>
-        public virtual void Delete(T entity)
+        public virtual int Delete(T entity)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace Nop.Data
 
                 this.Entities.Remove(entity);
 
-                this._context.SaveChanges();
+                return this._context.SaveChanges();
             }
             catch (DbEntityValidationException dbEx)
             {

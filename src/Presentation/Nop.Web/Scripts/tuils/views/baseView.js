@@ -1,4 +1,4 @@
-﻿define(['underscore', 'backbone', 'util', 'validations'], function (_, Backbone, TuilsUtil) {
+﻿define(['underscore', 'backbone', 'util', 'validations', 'stickit'], function (_, Backbone, TuilsUtil) {
     
     var BaseView = Backbone.View.extend({
 
@@ -6,7 +6,9 @@
 
         viewCreateUser : undefined,
 
-        viewLogin : undefined,
+        viewLogin: undefined,
+
+        loadingTemplate: '<img id="divLoadingback" src="/Content/loading_2x.gif" />',
 
         showLogin: function (model)
         {
@@ -29,6 +31,15 @@
             //agrega las caracteristicas de tipos de datos a los combos
             this.$("input[tuils-val='int']").on("keypress", TuilsUtil.onlyNumbers);
             this.$("input[tuils-val='none']").on("keypress", function () { return false; });
+        },
+        showLoading: function(model, append)
+        {
+            model.once("sync", this.removeLoading, this);
+            model.once("error", this.removeLoading, this);
+            append ? this.$el.append(this.loadingTemplate) : this.$el.html(this.loadingTemplate);
+        },
+        removeLoading : function(){
+            this.$el.find("#divLoadingback").remove();
         },
         validateControls: function (model) {
             //Formatea los mensajes de respuesta contra los label
@@ -60,12 +71,15 @@
                     //recorre los errores y marca solo los que tienen objeto DOM
                     var domObj = that.$(fieldsToMark[index]);
                     if (domObj)
-                    {
                         domObj.addClass("input-validation-error");
-                        var domMessage = that.$("span[tuils-val-for='" + index + "']");
-                        if (domMessage)
-                            domMessage.text(errorField);
+                    //busca el mensaje, si existe lo marca
+                    var domMessage = that.$("span[tuils-val-for='" + index + "']");
+                    if (domMessage)
+                    {
+                        domMessage.text(errorField);
+                        domMessage.addClass("field-validation-error");
                     }
+                        
 
                     
                         
@@ -73,6 +87,10 @@
             }
 
             return errors;
+        },
+        bindValidation : function()
+        {
+            Backbone.Validation.bind(this);
         },
         removeErrors: function () {
             this.$el.find(".input-validation-error").removeClass("input-validation-error");
