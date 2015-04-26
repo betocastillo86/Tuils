@@ -1,4 +1,6 @@
 using Nop.Core.Domain.Customers;
+using Nop.Core.Domain.Vendors;
+using System.Collections.Generic;
 
 namespace Nop.Services.Customers
 {
@@ -42,5 +44,14 @@ namespace Nop.Services.Customers
         /// <param name="customer">Customer</param>
         /// <param name="newUsername">New Username</param>
         void SetUsername(Customer customer, string newUsername);
+
+
+        /// <summary>
+        /// Crea un usuario y la agrega los attributos que se envían
+        /// </summary>
+        /// <param name="customer">Datos del usuario</param>
+        /// <param name="attributes">Attributos adicionales del usuario</param>
+        /// <returns>true, proceso ejecutado. False si tiene error</returns>
+        CustomerRegistrationResult Register(Customer customer, Dictionary<string, object> attributes, VendorType vendorType = VendorType.User);
     }
 }

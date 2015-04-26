@@ -104,6 +104,7 @@
     <Compile Include="Domain\Customers\CustomerAttribute.cs" />
     <Compile Include="Domain\Customers\CustomerAttributeValue.cs" />
     <Compile Include="Domain\Customers\CustomerLoginResults.cs" />
+    <Compile Include="Domain\Messages\NewsLetterSuscriptionType.cs" />
     <Compile Include="Domain\Orders\OrderByCountryReportLine.cs" />
     <Compile Include="Domain\Seo\WwwRequirement.cs" />
     <Compile Include="Domain\Shipping\Events.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Domain\Shipping\DeliveryDate.cs" />
     <Compile Include="Domain\Vendors\VendorSettings.cs" />
     <Compile Include="Domain\Vendors\Vendor.cs" />
+    <Compile Include="Domain\Vendors\VendorType.cs" />
     <Compile Include="IStoreContext.cs" />
     <Compile Include="Domain\Catalog\BackInStockSubscription.cs" />
     <Compile Include="Domain\Cms\WidgetSettings.cs" />

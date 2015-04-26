@@ -6,6 +6,8 @@ using Nop.Services.Localization;
 using Nop.Services.Media;
 using Nop.Services.Seo;
 using Nop.Services.Stores;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Nop.Services.Catalog
 {
@@ -217,7 +219,8 @@ namespace Nop.Services.Catalog
                 Published = isPublished,
                 Deleted = product.Deleted,
                 CreatedOnUtc = DateTime.UtcNow,
-                UpdatedOnUtc = DateTime.UtcNow
+                UpdatedOnUtc = DateTime.UtcNow,
+                StateProvinceId = product.StateProvinceId
             };
 
             //validate search engine name
@@ -536,6 +539,38 @@ namespace Nop.Services.Catalog
             }
 
             return productCopy;
+        }
+
+
+        public virtual void CopyAll() {
+
+            var products = _productService.SearchProducts(pageIndex: 0, pageSize: int.MaxValue);
+
+            int i = 0;
+
+            //var actions = new Action[products.Count()];
+            foreach (var product in products)
+            {
+                var p = _productService.GetProductById(product.Id);
+                if (p.ProductCategories.Count > 0)
+                {
+                    if (p.StateProvinceId == 0)
+                        p.StateProvinceId = 1;
+                    try
+                    {
+                        string name = Guid.NewGuid().ToString();
+                        CopyProduct(p, name, true, false, false);
+                        //actions[i] = new Tasks.Task()1
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                    i++;
+                }
+                   
+            }
+
         }
 
         #endregion

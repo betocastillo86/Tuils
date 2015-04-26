@@ -127,6 +127,7 @@ namespace Nop.Services.Customers
         /// </summary>
         /// <param name="customer">Customer</param>
         void UpdateCustomer(Customer customer);
+
         
         /// <summary>
         /// Reset data required for checkout
@@ -194,6 +195,7 @@ namespace Nop.Services.Customers
         /// </summary>
         /// <param name="customerRole">Customer role</param>
         void UpdateCustomerRole(CustomerRole customerRole);
+
 
         #endregion
     }

@@ -22,6 +22,29 @@ namespace Nop.Core.Domain.Customers
         public static string TimeZoneId { get { return "TimeZoneId"; } }
         public static string CustomCustomerAttributes { get { return "CustomCustomerAttributes"; } }
 
+        //Nuevos Tuils
+        /// <summary>
+        /// Define cual es el municipio donde está ubicado el usuario
+        /// </summary>
+        public static string StateProvinceChildId { get { return "StateProvinceChildId"; } }
+        /// <summary>
+        /// Marca de la moto
+        /// </summary>
+        public static string BikeBrandId { get { return "BikeBrandId"; } }
+        /// <summary>
+        /// Referencia de la moto del usuario
+        /// </summary>
+        public static string BikeReferenceId { get { return "BikeReferenceId"; } }
+        /// <summary>
+        /// Placa de  la moto
+        /// </summary>
+        public static string BikeCarriagePlate { get { return "BikeCarriagePlate"; } }
+        /// <summary>
+        /// Año de la moto
+        /// </summary>
+        public static string BikeYear { get { return "BikeYear"; } }
+
+
         //Other attributes
         public static string DiscountCouponCode { get { return "DiscountCouponCode"; } }
         public static string GiftCardCouponCodes { get { return "GiftCardCouponCodes"; } }

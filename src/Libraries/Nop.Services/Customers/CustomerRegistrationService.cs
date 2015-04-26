@@ -6,6 +6,12 @@ using Nop.Services.Localization;
 using Nop.Services.Messages;
 using Nop.Services.Security;
 using Nop.Services.Stores;
+using System.Collections.Generic;
+using Nop.Services.Common;
+using Nop.Services.Logging;
+using Nop.Core.Domain.Vendors;
+using Nop.Services.Vendors;
+using System.Net.Mail;
 
 namespace Nop.Services.Customers
 {
@@ -23,6 +29,11 @@ namespace Nop.Services.Customers
         private readonly IStoreService _storeService;
         private readonly RewardPointsSettings _rewardPointsSettings;
         private readonly CustomerSettings _customerSettings;
+        private readonly IGenericAttributeService _genericAttributeService;
+        private readonly ILogger _logger;
+        private readonly IWorkflowMessageService _workflowMessageService;
+        private readonly IWorkContext _workContext;
+        private readonly IVendorService _vendorService;
 
         #endregion
 
@@ -44,7 +55,12 @@ namespace Nop.Services.Customers
             ILocalizationService localizationService,
             IStoreService storeService,
             RewardPointsSettings rewardPointsSettings,
-            CustomerSettings customerSettings)
+            CustomerSettings customerSettings,
+            IGenericAttributeService genericAttributeService,
+            ILogger logger,
+            IWorkflowMessageService workflowMessageService,
+            IWorkContext workContext,
+            IVendorService vendorService)
         {
             this._customerService = customerService;
             this._encryptionService = encryptionService;
@@ -53,6 +69,11 @@ namespace Nop.Services.Customers
             this._storeService = storeService;
             this._rewardPointsSettings = rewardPointsSettings;
             this._customerSettings = customerSettings;
+            this._genericAttributeService = genericAttributeService;
+            this._logger = logger;
+            this._workflowMessageService = workflowMessageService;
+            this._workContext = workContext;
+            this._vendorService = vendorService;
         }
 
         #endregion
@@ -220,7 +241,8 @@ namespace Nop.Services.Customers
                 _rewardPointsSettings.PointsForRegistration > 0)
                 request.Customer.AddRewardPointsHistoryEntry(_rewardPointsSettings.PointsForRegistration, _localizationService.GetResource("RewardPoints.Message.EarnedForRegistration"));
 
-            _customerService.UpdateCustomer(request.Customer);
+            //_customerService.UpdateCustomer(request.Customer);
+            _customerService.InsertCustomer(request.Customer);
             return result;
         }
         
@@ -383,6 +405,79 @@ namespace Nop.Services.Customers
 
             customer.Username = newUsername;
             _customerService.UpdateCustomer(customer);
+        }
+
+        /// <summary>
+        /// Realiza las operaciones necesarias para registrar un usuario
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
+        public CustomerRegistrationResult Register(Customer customer, Dictionary<string, object> attributes, VendorType vendorType = VendorType.User)
+        {
+
+            try
+            {
+                bool isApproved = _customerSettings.UserRegistrationType == UserRegistrationType.Standard;
+                var registrationRequest = new CustomerRegistrationRequest(customer, customer.Email, customer.Email, customer.Password, _customerSettings.DefaultPasswordFormat, isApproved);
+                var registrationResult = RegisterCustomer(registrationRequest);
+
+                if (registrationResult.Success)
+                {
+                    if (vendorType != VendorType.User)
+                    {
+                        //Si esta habilitada la creación si no existe clona los datos del usuario en el vendedor
+                        var vendor = new Vendor();
+
+                        try
+                        {
+                            vendor.Name = attributes[SystemCustomerAttributeNames.Company].ToString();
+                            vendor.Email = customer.Email;
+                            vendor.Description = string.Empty;
+                            vendor.Active = true;
+                            vendor.VendorTypeId = (int)vendorType;
+                            _vendorService.InsertVendor(vendor);
+                            customer.VendorId = vendor.Id;
+                        }
+                        catch (Exception)
+                        {
+                            //Si ocurre una excepción y el vendor ya fue creado, lo elimina
+                            _vendorService.DeleteVendor(vendor);
+                            //Si ocurrió un error elimina el usuario
+                            _customerService.DeleteCustomer(customer);
+                            throw;
+                        }
+                        
+                    }
+
+
+                    //Agrega los atributos enviados
+                    foreach (var attribute in attributes)
+                    {
+                        _genericAttributeService.SaveAttribute(customer, attribute.Key, attribute.Value);
+                    }
+
+                    //Lo suscribe a los newsletters
+                    _newsLetterSubscriptionService.InsertNewsLetterSubscription(customer.Email, true, Core.Domain.Messages.NewsLetterSuscriptionType.General);
+
+                    //Intenta envíar el correo al usuario
+                    _workflowMessageService.SendCustomerEmailValidationMessage(customer, _workContext.WorkingLanguage.Id);
+
+                    //Si tiene un vendor asociado actualiza el cliente
+                    if(customer.VendorId > 0)
+                        _customerService.UpdateCustomer(customer);
+                    
+                }
+
+                return registrationResult;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e.ToString(), e);
+                var errors = new List<string>();
+                errors.Add("Ocurrió una excepción");
+                return new CustomerRegistrationResult() {  Errors = errors  } ;
+            }
+
         }
 
         #endregion

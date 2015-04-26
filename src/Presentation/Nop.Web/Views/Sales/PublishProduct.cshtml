@@ -7,7 +7,7 @@
     Html.AppendCssFileParts("http://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700,500italic,700italic,400italic,300italic");
 
 
-    <script data-main="/scripts/tuils.require.main" src="~/Scripts/require.js"></script>
+    <script data-main="/scripts/tuils/main" src="~/Scripts/require.js"></script>
 
 }
 
@@ -39,6 +39,11 @@
                         { 
                             @Html.Partial("_ProductDetail")
                         }
+                        else
+                        {
+                            @Html.Partial("_ServiceDetail")
+                        }
+                            
                     </div>
                     <div id="divStep_3" style="display:none">
                         @Html.Partial("_ImageSelector", 7)
@@ -51,8 +56,9 @@
                     <div id="divStep_5" style="display:none">
                         @Html.Partial("_Finish")
                     </div>
-
+                    <br />
                 </div>
+                
             </div>
         </div>
 

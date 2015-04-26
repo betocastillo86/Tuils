@@ -748,12 +748,12 @@ namespace Nop.Services.Media
         /// <summary>
         /// Retorna los bytes de un archivo temporal buscando por el nombre
         /// </summary>
-        /// <param name="tempFileName">nombre del archivo temporal</param>
+        /// <param name="tempFileName">nombre del archivo temporal. Cambia el valor del ingresado por la ruta completa del archivo</param>
         /// <returns>bytes con la información del archivo que correspondiente al nombre</returns>
-        public byte[] GetTempFile(string tempFileName)
+        public byte[] GetTempFile(ref string tempFileName)
         {
-            var pathFile = Path.Combine(_webHelper.MapPath(_tuilsSettings.tempUploadFiles), tempFileName);
-            return File.Exists(pathFile) ? File.ReadAllBytes(pathFile) : null;
+            tempFileName = Path.Combine(_webHelper.MapPath(_tuilsSettings.tempUploadFiles), tempFileName);
+            return File.Exists(tempFileName) ? File.ReadAllBytes(tempFileName) : null;
         }
 
         /// <summary>
@@ -769,12 +769,23 @@ namespace Nop.Services.Media
             for (int iTempFile = 0; iTempFile < tempFiles.Length; iTempFile++)
             {
                 string fileName = tempFiles[iTempFile];
-                var  file = GetTempFile(fileName);
+                var  file = GetTempFile(ref fileName);
                 if (file != null)
                 {
                     var picture = InsertPicture(file, GetContentTypeFromExtension(Path.GetExtension(fileName)), null, false);
                     if (picture.Id > 0)
+                    {
+                        try
+                        {
+                            File.Delete(fileName);
+                        }
+                        catch (Exception e)
+                        {
+                            _logger.Error(e.ToString());
+                        }
                         pictures.Add(picture);
+                    }
+                        
                 }
             }
 

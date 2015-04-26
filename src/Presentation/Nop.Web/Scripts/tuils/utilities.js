@@ -32,6 +32,17 @@
             }
             showChoices(choices);
         },
+        //Convierte una coleccion a el formato de los tags disponibles
+        //se le envian las propiedades que son el label y el valor, por defecto toma name y id
+        tagitAvailableTags : function(list, labelField, valueField){
+            if (!labelField) labelField = 'Name';
+            if (!valueField) valueField = 'Id';
+            var tagReferences = [];
+            _.each(list, function (element, index) {
+                tagReferences.push({ label: element[labelField], value: element[valueField] });
+            });
+            return tagReferences;
+        },
         addMinHeader: function (xhr) {
             xhr.setRequestHeader('min', true);
         },

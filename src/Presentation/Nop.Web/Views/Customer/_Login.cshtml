@@ -1,0 +1,13 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    @Html.TextBoxRequired("Email", labelResource: "Login.Email")
+</div>
+<div>
+    @Html.PasswordRequired("Password", labelResource: "Login.Password")
+</div>
+
+<input id="btnLogin" type="button" value="@T("Login.ButtonLogin")" />
+<input id="btnRegister" type="button" value="@T("Login.RegisterButton")" />

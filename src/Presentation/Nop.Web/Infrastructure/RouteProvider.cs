@@ -703,8 +703,28 @@ namespace Nop.Web.Infrastructure
                 new { controller = "Sales", action = "PublishProductBike" },
                 new[] { "Nop.Web.Controllers" }
                 );
+            //Publicar servicio
+            routes.MapLocalizedRoute("PublishProductService",
+               "quiero-vender/servicio-especializado",
+               new { controller = "Sales", action = "PublishProductService" },
+               new[] { "Nop.Web.Controllers" }
+               );
 
 
+
+            #region Panel de Control
+            routes.MapLocalizedRoute("ControlPanel",
+              "mi-cuenta",
+              new { controller = "ControlPanel", action = "Index" },
+              new[] { "Nop.Web.Controllers" }
+              );
+
+            routes.MapLocalizedRoute("ControlPanelMyAccount",
+              "datos-basicos",
+              new { controller = "ControlPanel", action = "MyAccount" },
+              new[] { "Nop.Web.Controllers" }
+              );
+            #endregion
 
         }
 

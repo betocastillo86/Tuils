@@ -71,7 +71,14 @@ namespace Nop.Core.Domain.Common
         /// Opción por defecto que puede quedar seleccionada para las placas de moto
         /// </summary>
         public int specificationAttributeOptionCarriagePlate { get; set; }
+
+        /// <summary>
+        /// Atributo de insumos
+        /// </summary>
+        public int specificationAttributeSupplies { get; set; }
         #endregion
+
+
         
     }
 }

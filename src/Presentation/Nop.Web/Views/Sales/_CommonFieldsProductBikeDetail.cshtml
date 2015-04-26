@@ -1,14 +1,19 @@
 ﻿@model Nop.Web.Models.Sales.PublishProductModel
 
-<div class="inputs">
-    @Html.LabelT("PublishProduct.IsNew")
-    <select id="ddlIsNew">
-        <option>-</option>
-        <option value="true">Nuevo</option>
-        <option value="false">Usado</option>
-    </select>
-    @ShowRequired("IsNew")
-</div>
+
+@if (Model.ProductType != Nop.Web.Controllers.ProductTypePublished.Service)
+{ 
+    <div class="inputs">
+        @Html.LabelT("PublishProduct.IsNew")
+        <select id="ddlIsNew">
+            <option>-</option>
+            <option value="true">Nuevo</option>
+            <option value="false">Usado</option>
+        </select>
+        @ShowRequired("IsNew")
+    </div>
+}
+
 
 <div class="inputs">
     @Html.LabelT("PublishProduct.StateProvince")
@@ -30,6 +35,6 @@
 @helper ShowRequired(string fieldName)
 {
     <span class="required">*</span>
-    <div class="text-character"></div>
+    <div id="addMessage@(fieldName)" class="text-character"></div>
     <span class="field-validation-error" tuils-val-for="@fieldName"></span>
 }

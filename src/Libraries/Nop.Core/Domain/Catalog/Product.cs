@@ -709,5 +709,19 @@ namespace Nop.Core.Domain.Catalog
         public virtual StateProvince StateProvince { get; set; }
 
 
+        /// <summary>
+        /// Detalle de cobertura de lo senvíos
+        /// </summary>
+        public string DetailShipping { get; set; }
+
+        /// <summary>
+        /// True: INcluye los insumos
+        /// </summary>
+        public bool IncludeSupplies { get; set; }
+
+        /// <summary>
+        /// Costo de los insumos
+        /// </summary>
+        public int SuppliesValue { get; set; }
     }
 }

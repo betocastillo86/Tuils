@@ -7,6 +7,16 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
         var ProductModel = AuthenticationModel.extend({
             baseUrl: "/api/products",
             url: "/api/products",
+
+            initialize : function(){
+                this.on('change:IsShipEnabled', function (value) {
+                    this.set('IsShipEnabledName', this.get('IsShipEnabled') ?  'Si': 'No');
+                }, this);
+                this.on('change:IncludeSupplies', function (){
+                    this.set('IncludeSuppliesName', this.get('IncludeSupplies') ? 'Si' : 'No')
+                }, this);
+            },
+
             validation: {
                 ProductTypeId: {
                     
@@ -34,13 +44,11 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                     required: function (val, attr, computed) {
                         return computed.IsShipEnabled;
                     },
-                    pattern: 'number',
-                    maxLength : 10
-                },
+                    pattern: 'number'
+                },  
                 Price: {
                     required: true,
-                    pattern: 'number',
-                    maxLength: 10
+                    pattern: 'number'
                 },
                 Color: {
                     required: function (val, attr, computed) {
@@ -74,21 +82,38 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                     maxLength :10
                 },
                 IsNew: {
-                    required:true,
-                    pattern: /^(true|false)$/
-                },
-                StateProvince: {
                     required: function (val, attr, computed) {
                         return computed.ProductTypeId != TuilsConfiguration.productBaseTypes.service;
                     },
+                    pattern: /^(true|false)$/
+                },
+                StateProvince: {
+                    required: true,
                     pattern: 'number'
+                },
+                DetailShipping: {
+                    required: function (val, attr, computed) {
+                        return computed.IsShipEnabled;
+                    },
+                    maxLength: 300
+                },
+                Supplies: {
+                    required: function (val, attr, computed) {
+                        return computed.IncludeSupplies;
+                    }
+                },
+                SuppliesValue: {
+                    required: function (val, attr, computed) {
+                        return !computed.IncludeSupplies && computed.ProductTypeId == TuilsConfiguration.productBaseTypes.service;
+                    },
+                    pattern:'number'
                 }
             },
             labels: {
                 Name: 'Título',
                 CategoryId : 'Categoría',
                 FullDescription :'Descripción',
-                IsShipEnabled : 'Realiza envíos',
+                IsShipEnabled : 'Realiza Envios/Domicilios',
                 ManufacturerId: 'Marca',
                 AdditionalShippingCharge: 'Costo por envío',
                 Price: 'Precio',
@@ -99,7 +124,12 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                 Negotiation: 'Condiciones de Negociación',
                 Accesories: 'Accesorios',
                 IsNew: 'Estado',
-                StateProvinceId : 'Ubicación',
+                StateProvinceId: 'Ubicación',
+                DetailShipping: 'Cobertura',
+                IncludeSupplies : 'Incluye los insumos',
+                SuppliesValue: 'Valor de Insumos',
+                Supplies: 'Insumos'
+
             },
             publish: function () {
                 this.save();
