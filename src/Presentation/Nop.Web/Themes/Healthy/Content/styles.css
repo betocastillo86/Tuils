@@ -30,7 +30,7 @@ h2,h3{font-size:16px;}
 <<<<<<< HEAD
 textarea{width:100%;border:1px solid transparent; background:#F3F5F7; border-radius: 2px; color:#53525A; font-family: 'Ubuntu', sans-serif; font-size: 14px; padding: 9px 10px; box-sizing: border-box; width: 300px; position: relative;}
 =======
-textarea{width:100%;font-family:Verdana,Arial,sans-serif;font-size:11px;border:1px solid transparent;background:#F3F5F7;color:#53525A;}
+textarea{width:100%;font-family:'Ubuntu', sans-serif;font-size:11px;border:1px solid transparent;background:#F3F5F7;color:#53525A;}
 >>>>>>> e88cd671e347586477fe048a64348e3967e3a082
 checkbox,input,radio,select,button{}
 fieldset{margin:0px 0px 15px;border:1px solid #c9c9c9;padding:15px;}
@@ -1467,7 +1467,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 		.items-ctl li b:before{border-bottom:solid 10px #D8DEE6; border-left:solid 12px transparent; position: absolute; content: ""; top: 8px; left: -12px;}
 	/*PERFILES*/
 	.coverPerfil{background:#627B9C; height: 300px; width: 100%; position: relative;}
-		.grad_cv{background: url(images/grad-cover.png) repeat-x; position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
+		.grad_cv{background: url(images/grad-cover.png) bottom repeat-x; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;}
 	.conte_perfil{background:#F3F5F7; height: 60px; margin: 0 0 22px; text-align: left;}
 		.conte_perfil .container.hd{position: relative;}
 		.pos-perfil{position: absolute; top:-120px;}
@@ -1475,13 +1475,16 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 		.ctl-tarjetas li{float: left; padding:6px 10px;}
 		.img_perfil{background:#627B9C; border:1px solid #FFF; width:250px; height:250px; position: absolute; top: -50px; left: 0;}
 		.tit-perfil{color: #fff; margin: 0 0 0 270px;}
+			.tit-perfil input{padding:6px 10px; display: block;}
 			.tit-perfil h2{font-size: 25px; font-weight: 500; text-shadow:2px 2px 4px #3A5985;}
+			.tit-perfil h2 span{cursor: pointer;}
 			.tit-perfil .product-review-box{margin: 0;}
 			.tit-perfil .product-review-box .rating div{background: url("images/star-x-active2.png") repeat-x scroll 0 0 transparent;}
 		.pr-perfil{margin: 0 0 0 270px;}
 			.pr-perfil p{color:#EBEDF2; text-align: justify; height: 55px; margin: 0 0 17px;}
+			.pr-perfil textarea{width:910px; resize:none; height: 55px; background: #f3f5f7; border-radius: 2px; margin:0 0 17px; padding: 9px 10px; box-sizing: border-box; color:#53525A; font-family: 'Ubuntu', sans-serif;}
 			.pr-perfil .items-ctl{float: left; margin: 16px 0;}
-			.btn_perfil{float: right; margin: 10px 0 10px 20px !important; padding: 7px 10px !important; text-align: center;}
+			.btn_perfil{float: right; margin: 10px 0 10px 20px !important; padding: 7px 10px; text-align: center;}
 	.col-sedes{float: left;}
 	.conte-sede{width: 427px; height: 460px; background:#292732; position: relative;}
 		.mapa{background:#FB7055; width: 100%; height: 210px;}
@@ -1496,7 +1499,12 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 			.btn-sedes a:after{border-top:35px solid #54525B; border-right: 10px solid transparent; content: ""; right:-10px; position:absolute; top:0;}
 	.conte-spc{background:#3B5A83; width:427px; height: 423px; margin: 20px 0 0;}
 	.col-producto{float: right; width: 730px;}
+		.col-producto .title{width: 30%; display: inline-block; padding: 0;}
 		.col-producto .product-grid .item-box{width: 33.3%;}
+		.search-pdt{display: inline-block; position: relative; width:69%;}
+			.search-pdt input{width: 90% !important;}
+			.btn_search{background: url(images/btn-search.png) no-repeat center / auto 100%; display: inline-block; height:35px; width: 79px; position: absolute; top: 0; right: 0; cursor: pointer;}
+				.btn_search span{color: #FFF; font-size: 22px; margin:6px 14px 6px 33px; text-align: center; display: block;}
 	.conte-comment{width: 100%; margin: 30px 0 0;}
 	.conte-comment h3{color:#F84C2A; font-size: 16px;}
 		.caja-comment{margin: 0 0 15px;}
