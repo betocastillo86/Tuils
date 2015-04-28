@@ -931,6 +931,7 @@ html.oldie .container { width: 940px; }
     .conte_perfil{height: 40px; margin: 0 15px 7px 0;}
         .pos-perfil{top: -135px;}
         .ctl-tarjetas{top:-50px;}
+        .ctl-switch{top:-50px;}
     .img_perfil{width: 170px; height: 170px; top: 10px;}
     .tit-perfil{margin: 0 0 0 190px;}
     .pr-perfil{margin: 0 0 0 190px;}
@@ -985,6 +986,7 @@ html.oldie .container { width: 940px; }
         .grad_cv{display: none;}
     .conte_perfil{height: 200px; margin: 0; padding: 0 10px 0 0;}
         .pos-perfil{top: 0; width:calc(100% - 10px);}
+        .ctl-switch{top:-57px;}
         .img_perfil{width: 70px; height: 70px; top:-20px;}
         .img_perfil .cover-editor span{font-size: 30px; padding:20px 5px;}
         .tit-perfil{margin:5px 0 0 90px;}
@@ -1018,8 +1020,11 @@ html.oldie .container { width: 940px; }
 
     .conte_perfil{height: 400px;}
         .ctl-tarjetas{position: relative; top: 0; width: 270px; margin: 0 auto;}
+        .ctl-switch{position: relative; top: 0; width: 290px; margin: 0 auto;}
+            .ctl-switch .txt_switch{color: #525259; text-shadow:none;}
         .pr-perfil .items-ctl{margin: 30px auto; float: none; width: 240px;}
         .pr-perfil p{margin: 0 0 30px; font-size: 14px;}
+        .pr-perfil textarea{margin: 0 0 30px;}
         .btpfl{clear: both; width:280px; margin:30px auto 0;}
             .btn_perfil{margin: 0 10px !important; font-size: 20px; padding: 8px 10px;}
     .conte-sede{width: 100%; float:none; height: auto;}

@@ -1478,7 +1478,10 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 		.conte_perfil .container.hd{position: relative;}
 		.pos-perfil{position: absolute; top:-120px;}
 		.ctl-tarjetas{background: #D8DEE6; border-radius:3px; color: #3A5983; position: absolute; top:0; right: 0; list-style: none;}
-		.ctl-tarjetas li{float: left; padding:6px 10px;}
+			.ctl-tarjetas li{float: left; padding:6px 10px;}
+		.ctl-switch{position: absolute; top:0; right: 0;}
+			.ctl-switch .txt_switch{float: left; padding: 8px 10px; color: #FFF; font-weight: 500; text-shadow:0 0 3px #292732, 0 0 3px #292732, 0 0 3px #292732, 0 0 3px #292732;}
+			.ctl-switch .onoffswitch{float: left;}
 		.img_perfil{overflow: hidden; background:#627B9C; border:1px solid #FFF; width:250px; height:250px; position: absolute; top: -50px; left: 0;}
 			.img_perfil .cover-editor{bottom: 20px; top:auto;}
 			.img_perfil img{width: 100%;}
