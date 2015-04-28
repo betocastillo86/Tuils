@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Nop.Web.Framework.Mvc;
+using Nop.Web.Models.Media;
 
 namespace Nop.Web.Models.Catalog
 {
@@ -18,6 +19,17 @@ namespace Nop.Web.Models.Catalog
         public string MetaTitle { get; set; }
         public string SeName { get; set; }
 
+        public double AvgRating { get; set; }
+
+        public int TotalActiveProducts { get; set; }
+
+        public int TotalSoldProducts { get; set; }
+
+        public bool AllowEdit { get; set; }
+
+        public PictureModel Picture { get; set; }
+
+        public PictureModel BackgroundPicture { get; set; }
 
         public CatalogPagingFilteringModel PagingFilteringContext { get; set; }
 

@@ -21,5 +21,10 @@ namespace Nop.Core.Domain.Vendors
         /// Gets or sets a value indicating whether to display vendor name on the product details page
         /// </summary>
         public bool ShowVendorOnProductDetailsPage { get; set; }
+
+        /// <summary>
+        /// Tamaño por defecto de los resultados por pagina de los vendedores
+        /// </summary>
+        public int DefaultPageSize { get; set; }
     }
 }

@@ -726,6 +726,13 @@ namespace Nop.Web.Infrastructure
               );
             #endregion
 
+            #region Mi Tienda
+
+
+
+            #endregion
+
+
         }
 
         public int Priority

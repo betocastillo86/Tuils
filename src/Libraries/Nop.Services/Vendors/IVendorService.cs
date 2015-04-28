@@ -13,7 +13,7 @@ namespace Nop.Services.Vendors
         /// </summary>
         /// <param name="vendorId">Vendor identifier</param>
         /// <returns>Vendor</returns>
-        Vendor GetVendorById(int vendorId);
+        Vendor GetVendorById(int vendorId, bool includeImages = false);
 
         /// <summary>
         /// Delete a vendor

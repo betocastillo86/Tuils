@@ -5,6 +5,7 @@ using Nop.Core.Data;
 using Nop.Core.Domain.Vendors;
 using Nop.Services.Events;
 using Nop.Services.Customers;
+using Nop.Services.Media;
 
 namespace Nop.Services.Vendors
 {
@@ -18,6 +19,8 @@ namespace Nop.Services.Vendors
         private readonly IRepository<Vendor> _vendorRepository;
         private readonly IEventPublisher _eventPublisher;
         private readonly ICustomerService _customerService;
+        private readonly IPictureService _pictureService;
+        private readonly VendorSettings _vendorSettings;
 
         #endregion
 
@@ -30,11 +33,15 @@ namespace Nop.Services.Vendors
         /// <param name="eventPublisher">Event published</param>
         public VendorService(IRepository<Vendor> vendorRepository,
             IEventPublisher eventPublisher,
-            ICustomerService customerService)
+            ICustomerService customerService,
+            VendorSettings vendorSettings,
+            IPictureService pictureService)
         {
             this._vendorRepository = vendorRepository;
             this._eventPublisher = eventPublisher;
             this._customerService = customerService;
+            this._vendorSettings = vendorSettings;
+            this._pictureService = pictureService;
         }
 
         #endregion
@@ -45,13 +52,22 @@ namespace Nop.Services.Vendors
         /// Gets a vendor by vendor identifier
         /// </summary>
         /// <param name="vendorId">Vendor identifier</param>
+        /// <param name="includeImages">Incluye el logo y el fondo del vendor</param>
         /// <returns>Vendor</returns>
-        public virtual Vendor GetVendorById(int vendorId)
+        public virtual Vendor GetVendorById(int vendorId, bool includeImages = false)
         {
             if (vendorId == 0)
                 return null;
 
-            return _vendorRepository.GetById(vendorId);
+            var vendor = _vendorRepository.GetById(vendorId);
+
+            if (includeImages && vendor.PictureId.HasValue)
+            {
+               vendor.Picture = _pictureService.GetPictureById(vendor.PictureId.Value);
+               if (vendor.BackgroundPictureId.HasValue) vendor.BackgroundPicture = _pictureService.GetPictureById(vendor.BackgroundPictureId.Value);
+            }
+
+            return vendor;
         }
 
         /// <summary>
@@ -98,6 +114,9 @@ namespace Nop.Services.Vendors
         {
             if (vendor == null)
                 throw new ArgumentNullException("vendor");
+
+            if (vendor.PageSize == 0)
+                vendor.PageSize = _vendorSettings.DefaultPageSize;
 
             _vendorRepository.Insert(vendor);
 

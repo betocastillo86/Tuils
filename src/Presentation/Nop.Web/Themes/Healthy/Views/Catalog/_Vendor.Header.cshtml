@@ -1,0 +1,57 @@
+﻿@model Nop.Web.Models.Catalog.VendorModel
+@{
+    Layout = null;
+}
+<div class="coverPerfil">
+    <div class="grad_cv" style="background-image: url(@Model.BackgroundPicture.ImageUrl)"></div>
+</div>
+<div class="conte_perfil">
+    <div class="container hd">
+        <div class="pos-perfil">
+            <div class="img_perfil" style="background-image: url(@Model.Picture.ImageUrl)">
+                <img alt="@Model.Picture.AlternateText" src="@Model.Picture.ImageUrl" title="@Model.Picture.Title" style="display:none" />
+            </div>
+            <div class="tit-perfil">
+                <h2>@Model.Name</h2>
+                @if (Model.AllowEdit)
+                { 
+                    @Html.TextBoxFor(m => m.Name, new { style = "display:none" })
+                }
+                <div class="product-review-box">
+                    <div class="rating no-margin">
+                        <div style="width: @(Model.AvgRating * 20)%">
+                            <a href="/productreviews/3"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pr-perfil">
+                <p>@Model.Description</p>
+                @if (Model.AllowEdit)
+                { 
+                    @Html.TextAreaFor(m => m.Description, new { style = "display:none" })
+                }
+                <div class="ctl-tarjetas">
+                    <li>Realizan envios <span class="icon-mail"></span></li>
+                    <li>Realizan envios <span class="icon-mail"></span></li>
+                    <br />
+                </div>
+                <ul class="items-ctl">
+                    <li>Productos<span><b>@Model.TotalActiveProducts</b></span></li>
+                    <li>Ventas<span><b>@Model.TotalSoldProducts</b></span></li>
+                    <br />
+                </ul>
+                <div class="btpfl">
+                    @if (Model.AllowEdit)
+                    { 
+                        <div id="btnEditVendorHeader" class="button-1 btn_perfil">Editar</div>
+                    }
+                    
+                    <a class="button-1 btn_perfil">Contactar</a>
+                    <a class="button-1 btn_perfil">Reseñar</a>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

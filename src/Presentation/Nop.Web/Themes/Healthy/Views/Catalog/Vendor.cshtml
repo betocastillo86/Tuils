@@ -1,6 +1,6 @@
 ﻿@model VendorModel
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
     Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
     Html.AddMetaDescriptionParts(Model.MetaDescription);
     Html.AddMetaKeywordParts(Model.MetaKeywords);
@@ -16,112 +16,225 @@
 @using Nop.Core.Infrastructure;
 @using Nop.Web.Models.Catalog;
 @using Nop.Web.Extensions;
-<div class="page vendor-page">
-    <div class="page-title">
-        <h1>@Model.Name</h1>
+
+
+
+
+<script data-main="/scripts/tuils/main" src="~/Scripts/require.js"></script>
+
+
+<div id="divMainSection">
+    @Html.Hidden("VendorId", Model.Id)
+    @Html.HiddenFor(m => m.AllowEdit)
+    <div id="divHeaderVendor">
+        @Html.Partial("_Vendor.Header", Model)
     </div>
-    <div class="page-body">
-        @Html.Widget("vendordetails_top", Model.Id)
-        @*description*@
-        @if (!String.IsNullOrWhiteSpace(Model.Description))
-        {
-            <div class="vendor-description">
-                @Html.Raw(Model.Description)
-            </div>
-        }
-        <div class="product-selectors">
-            @*view mode*@
-            @if (Model.PagingFilteringContext.AllowProductViewModeChanging && Model.Products.Count > 0)
-            {
-                @*edited*@
-                 <div class="product-viewmode">
-                   <a rel="nofollow" class="fontawesome-th" href="@Model.PagingFilteringContext.AvailableViewModes.First().Value"></a>
-                    <a rel="nofollow" class="fontawesome-reorder" href="@Model.PagingFilteringContext.AvailableViewModes.Last().Value"></a>
-                </div> 
-                <script>
-                    $( document ).ready(function() {
-                        $('div.product-list').length ? $('.fontawesome-reorder').addClass('active') : $('.fontawesome-th').addClass('active');
-                    });
-                </script>
-                @*<div class="product-viewmode">
-                    <span>@T("Catalog.ViewMode")</span>
-                    @Html.DropDownList("products-viewmode", Model.PagingFilteringContext.AvailableViewModes, new { onchange = "setLocation(this.value);" })
-                </div>*@
-                @*edited*@
-            }
-            @*sorting*@
-            @if (Model.PagingFilteringContext.AllowProductSorting && Model.Products.Count > 0)
-            {
-                <div class="product-sorting">
-                    <span>@T("Catalog.OrderBy")</span>
-                    @Html.DropDownList("products-orderby", Model.PagingFilteringContext.AvailableSortOptions, new { onchange = "setLocation(this.value);" })
-                </div>
-            }
-            @*page size*@
-            @*@if (Model.PagingFilteringContext.AllowCustomersToSelectPageSize && Model.Products.Count > 0)
-            {
-                <div class="product-page-size">
-                    <span>@T("Catalog.PageSize")</span>
-                    @Html.DropDownList("products-pagesize", Model.PagingFilteringContext.PageSizeOptions, new { onchange = "setLocation(this.value);" })
-                    <span>@T("Catalog.PageSize.PerPage")</span>
-                </div>
-            }*@
-        </div>
-        @*added*@
-        @if (Model.PagingFilteringContext.AllowCustomersToSelectPageSize && Model.Products.Count > 0)
-        {
-                <div class="product-page-size">
-                    <span>@T("Catalog.PageSize")</span>
-                    @Html.DropDownList("products-pagesize", Model.PagingFilteringContext.PageSizeOptions, new { onchange = "setLocation(this.value);" })
-                    <span>@T("Catalog.PageSize.PerPage")</span>
-                </div>
-        }      
-        @section left {
-            @Html.Widget("categorydetails_before_filters", Model.Id)
-            <div class="product-filters-wrapper">
-                @*filtering*@
-                @if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
-                {
-                    @Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
-                }
-                @*filtering*@
-                @if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
-                {
-                    @Html.Partial("_FilterSpecsBox", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
-                }
-            </div>
-        }
-        @*product list*@
-        @if (Model.Products.Count > 0)
-        {
-            if (Model.PagingFilteringContext.ViewMode == "list")
-            {
-            @*list mode*@
-            <div class="product-list">
-                @foreach (var product in Model.Products)
-                {
-                    <div class="item-box">
-                        @Html.Partial("_ProductBox", product)
+    
+    <div class="master-wrapper-page container hd">
+        <div class="master-wrapper-content">
+            <div class="master-wrapper-main">
+                <div class="col-sedes">
+                    <div class="conte-sede">
+                        <div class="mapa"></div>
+                        <div class="caja-sede">
+                            <h3>Calle 57 # 12-45 Local: 208 Bogotá</h3>
+                            <p><span class="icon-mail"></span> Bogotá - Serafina</p>
+                            <p><span class="icon-tel"></span>(+57) 320 3306813</p>
+                            <p><span class="icon-mail"></span>pepito_perez@tuils.com</p>
+                            <a class="button-1">Ver galeria</a>
+                        </div>
+                        <div class="btn-sedes">
+                            <a><span class="icon-mail"></span></a>
+                            <a><span class="icon-mail"></span></a>
+                        </div>
                     </div>
-                }
-            </div>
-            }
-            else
-            {
-            @*grid mode*@
-            <div class="product-grid">
-                @foreach (var product in Model.Products)
-                {
-                    <div class="item-box">
-                        @Html.Partial("_ProductBox", product)
+                    <div class="conte-spc">cd</div>
+                </div>
+                <div class="col-producto">
+                    <div class="product-grid home-page-product-grid">
+                        <div class="title"> <strong>Productos</strong> </div>
+                        <div class="search-pdt">
+                            <input type="text" />
+                            <a class="btn_search"><span class="icon-mail"></span></a>
+                        </div>
+
+
+                        @if (Model.Products.Count > 0)
+                        {
+                            @*grid mode*@
+                            <div class="product-grid">
+                                @foreach (var product in Model.Products)
+                                {
+                                    <div class="item-box">
+                                        @Html.Partial("_ProductBox", product)
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        <div class="pager">
+                            @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
+                        </div>
+
+
                     </div>
-                }
+                </div>
+                <br />
+                <div class="conte-comment">
+                    <h3>Comentarios</h3>
+                    <div class="caja-comment">
+                        <h4>Julian David Castillo Prada <span class="fecha">12/04/15</span></h4>
+                        <div class="product-review-box">
+                            <div class="rating no-margin">
+                                <div style="width: 60%">
+                                    <a href="/productreviews/3"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original.</p>
+                    </div>
+                    <div class="caja-comment">
+                        <h4>Julian David Castillo Prada <span class="fecha">12/04/15</span></h4>
+                        <div class="product-review-box">
+                            <div class="rating no-margin">
+                                <div style="width: 60%">
+                                    <a href="/productreviews/3"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original.</p>
+                    </div>
+                    <div class="caja-comment">
+                        <h4>Julian David Castillo Prada<span class="fecha">12/04/15</span></h4>
+                        <div class="product-review-box">
+                            <div class="rating no-margin">
+                                <div style="width: 60%">
+                                    <a href="/productreviews/3"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original.</p>
+                    </div>
+                </div>
             </div>
-            }
-        }
-        <div class="pager">
-            @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
         </div>
-        @Html.Widget("vendordetails_bottom", Model.Id)
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@{
+    #region EliminadoHTML
+    ///   <div class="page vendor-page">
+    ///   <div class="page-title">
+    ///       <h1>@Model.Name</h1>
+    ///   </div>
+    ///   <div class="page-body">
+    ///       @Html.Widget("vendordetails_top", Model.Id)
+    ///       @*description*@
+    ///       @if (!String.IsNullOrWhiteSpace(Model.Description))
+    ///       {
+    ///           <div class="vendor-description">
+    ///               @Html.Raw(Model.Description)
+    ///           </div>
+    ///       }
+    ///       <div class="product-selectors">
+    ///           @*view mode*@
+    ///           @if (Model.PagingFilteringContext.AllowProductViewModeChanging && Model.Products.Count > 0)
+    ///           {
+    ///               @*edited*@
+    ///                <div class="product-viewmode">
+    ///                  <a rel="nofollow" class="fontawesome-th" href="@Model.PagingFilteringContext.AvailableViewModes.First().Value"></a>
+    ///                   <a rel="nofollow" class="fontawesome-reorder" href="@Model.PagingFilteringContext.AvailableViewModes.Last().Value"></a>
+    ///               </div>
+    ///               <script>
+    ///                   $( document ).ready(function() {
+    ///                       $('div.product-list').length ? $('.fontawesome-reorder').addClass('active') : $('.fontawesome-th').addClass('active');
+    ///                   });
+    ///               </script>
+    ///               @*<div class="product-viewmode">
+    ///                   <span>@T("Catalog.ViewMode")</span>
+    ///                   @Html.DropDownList("products-viewmode", Model.PagingFilteringContext.AvailableViewModes, new { onchange = "setLocation(this.value);" })
+    ///               </div>*@
+    ///               @*edited*@
+    ///           }
+    ///           @*sorting*@
+    ///           @if (Model.PagingFilteringContext.AllowProductSorting && Model.Products.Count > 0)
+    ///           {
+    ///               <div class="product-sorting">
+    ///                   <span>@T("Catalog.OrderBy")</span>
+    ///                   @Html.DropDownList("products-orderby", Model.PagingFilteringContext.AvailableSortOptions, new { onchange = "setLocation(this.value);" })
+    ///               </div>
+    ///           }
+    ///           @*page size*@
+    ///           @*@if (Model.PagingFilteringContext.AllowCustomersToSelectPageSize && Model.Products.Count > 0)
+    ///           {
+    ///               <div class="product-page-size">
+    ///                   <span>@T("Catalog.PageSize")</span>
+    ///                   @Html.DropDownList("products-pagesize", Model.PagingFilteringContext.PageSizeOptions, new { onchange = "setLocation(this.value);" })
+    ///                   <span>@T("Catalog.PageSize.PerPage")</span>
+    ///               </div>
+    ///           }*@
+    ///       </div>
+    ///       @*added*@
+    ///       @*@if (Model.PagingFilteringContext.AllowCustomersToSelectPageSize && Model.Products.Count > 0)
+    ///       {
+    ///               <div class="product-page-size">
+    ///                   <span>@T("Catalog.PageSize")</span>
+    ///                   @Html.DropDownList("products-pagesize", Model.PagingFilteringContext.PageSizeOptions, new { onchange = "setLocation(this.value);" })
+    ///                   <span>@T("Catalog.PageSize.PerPage")</span>
+    ///               </div>
+    ///       }*@
+    ///       @*@section left {
+    ///           @Html.Widget("categorydetails_before_filters", Model.Id)
+    ///           <div class="product-filters-wrapper">
+    ///
+    ///               @if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
+    ///               {
+    ///                   @Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
+    ///               }
+    ///
+    ///               @if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
+    ///               {
+    ///                   @Html.Partial("_FilterSpecsBox", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
+    ///               }
+    ///           </div>
+    ///       }*@
+    ///       @*product list*@
+    ///
+    ///
+    ///       @Html.Widget("vendordetails_bottom", Model.Id)
+    ///   </div>
+    ////<div>
+    #endregion
+}
+
+

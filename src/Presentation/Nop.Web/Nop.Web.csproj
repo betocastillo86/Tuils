@@ -244,14 +244,12 @@
     </Compile>
     <Compile Include="Infrastructure\BundleConfig.cs" />
     <Compile Include="Infrastructure\Cache\ModelCacheEventConsumer.cs" />
-    <Compile Include="Infrastructure\BackwardCompatibility2XRouteProvider.cs" />
     <Compile Include="Infrastructure\GenericUrlRouteProvider.cs" />
     <Compile Include="Infrastructure\InMemoryMultipartFormDataStreamProvider.cs" />
     <Compile Include="Infrastructure\Installation\IInstallationLocalizationService.cs" />
     <Compile Include="Infrastructure\Installation\InstallationLanguage.cs" />
     <Compile Include="Infrastructure\Installation\InstallationLocalizationService.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
-    <Compile Include="Infrastructure\BackwardCompatibility1XRouteProvider.cs" />
     <Compile Include="Infrastructure\JavascriptConfiguration.cs" />
     <Compile Include="Infrastructure\RouteApiProvider.cs" />
     <Compile Include="Infrastructure\RouteProvider.cs" />
@@ -1611,6 +1609,8 @@
     <Content Include="Scripts\kendo\2014.1.318\jquery.min.map" />
     <Content Include="Scripts\tuils\main.js" />
     <Content Include="Scripts\tuils\views\utilities\selectPointMapView.js" />
+    <Content Include="Scripts\tuils\views\vendor\vendorDetailView.js" />
+    <Content Include="Scripts\tuils\views\vendor\vendorHeaderView.js" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore-min.js" />
     <Content Include="Scripts\underscore-min.map" />
@@ -2372,6 +2372,7 @@
     <Content Include="Views\ControlPanel\MyAccount.cshtml" />
     <Content Include="Views\ControlPanel\MyShop.cshtml" />
     <Content Include="Views\ControlPanel\Offices.cshtml" />
+    <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Header.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
