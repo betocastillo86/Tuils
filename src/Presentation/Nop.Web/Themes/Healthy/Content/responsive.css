@@ -935,6 +935,7 @@ html.oldie .container { width: 940px; }
     .tit-perfil{margin: 0 0 0 190px;}
     .pr-perfil{margin: 0 0 0 190px;}
         .pr-perfil p{height:80px; margin: 0 0 7px; font-size: 13px;}
+        .pr-perfil textarea{width: 568px; height:80px; margin: 0 0 7px; font-size: 13px;}
         .pr-perfil .items-ctl{margin:6px 0;}
         .btn_perfil{margin:5px 0 5px 20px !important; font-size: 16px; padding: 5px 10px;}
     .col-sedes{float: none;}
@@ -959,9 +960,16 @@ html.oldie .container { width: 940px; }
     .picture-uploader li.picture_principal{width: 120px; height: 120px; margin:10px 20px 10px 0;}
     .picture-uploader li.picture_principal span{font-size: 60px; margin: 30px 30px 0; height: 60px; width: 60px;}
 
+    .cover-editor{background: #3a5985;}
+    .cover-editor span{font-size: 20px; padding: 5px;}
+    .cover-editor i{display: inline-block;}
     .img_perfil{width: 140px; height: 140px;}
+        .img_perfil .cover-editor{background:none; width: 100%; height: 100%; bottom:0; left: 0; padding: 0; text-align: center;}
+        .img_perfil .cover-editor span{font-size: 50px; padding:45px 5px; display: block;}
+        .img_perfil .cover-editor i{display: none;}
     .tit-perfil{margin:0 0 0 160px;}
     .pr-perfil{margin: 0 0 0 160px;}
+        .pr-perfil textarea{width: 100%;}
 }
 @media screen and (max-width:640px) {
     input[type="text"],input[type="password"], select{width:calc(100% - 10px);}
@@ -976,12 +984,15 @@ html.oldie .container { width: 940px; }
     .coverPerfil{height: 80px;}
         .grad_cv{display: none;}
     .conte_perfil{height: 200px; margin: 0; padding: 0 10px 0 0;}
-        .pos-perfil{top: 0;}
+        .pos-perfil{top: 0; width:calc(100% - 10px);}
         .img_perfil{width: 70px; height: 70px; top:-20px;}
+        .img_perfil .cover-editor span{font-size: 30px; padding:20px 5px;}
         .tit-perfil{margin:5px 0 0 90px;}
             .tit-perfil h2{color:#292733; text-shadow:none; font-size: 20px;}
+            .tit-perfil input{ background: #FFF;}
         .pr-perfil{margin:20px 0 0;}
             .pr-perfil p{color:#525259; height: auto;}
+            .pr-perfil textarea{background: #FFF;}
     .col-producto .product-grid .item-box{width: 33.3%;}
 }
 @media screen and (max-width:600px) {
