@@ -776,7 +776,7 @@ html.oldie .container { width: 940px; }
 
 @media screen and (min-width:768px) {
     .container { width: 748px; }
-        .container .columns { width: 44px; float: left; margin-left: 20px; }
+        .container .columns { width: 44px; float: left; }
         .container .offset-one { padding-left: 64px; }
         .container .columns:first-child, .container .columns.first { margin-left: 0; }
         .container .columns.two { width: 108px; }
@@ -981,6 +981,17 @@ html.oldie .container { width: 940px; }
     .nav-category li span{bottom: 20px; right: 27px; font-size: 16px;}
     .category-column ul{font-size: 12px;}
     .resumen-product{width: 100%; float: none;}
+
+    /*mail*/
+    .mail_content li{height: 90px; position: relative; padding: 0 0 0 10px;}
+        .mail-usuer{width: 80%; padding:10px 0 0; float: none;}
+        .mail-txt{width:calc(100% - 45px); padding:5px 0 0; font-size: 12px; float: none; white-space:normal; height: 48px;}
+            .mail-subtxt{display: block;}
+            .mail-subtxt:before{content: "";}
+        .mail-date{position: absolute; top: 10px; font-size: 12px; padding: 0; width:auto; right: 10px; float: none;}
+        .delete-mail{float:none; position: absolute; top: 45px; right: 10px; padding: 3px 5px; background:#627B9C;}
+    .caja-mj h3 .fecha{float: none; display:block;}
+    /*fin mail*/
 
     .coverPerfil{height: 80px;}
         .grad_cv{display: none;}
