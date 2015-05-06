@@ -1,6 +1,7 @@
 
 
 using Nop.Core.Domain.Common;
+using Nop.Core.Domain.Media;
 using System.Collections.Generic;
 
 namespace Nop.Services.Common
@@ -58,5 +59,7 @@ namespace Nop.Services.Common
 
 
         IList<Address> GetAddressesByVendorId(int vendorId);
+
+        IList<Picture> GetPicturesByAddressId(int addressId);
     }
 }

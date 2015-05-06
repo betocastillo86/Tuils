@@ -20,6 +20,8 @@ namespace Nop.Web.Models.Api
 
         public int StateProvinceId { get; set; }
 
+        public string StateProvinceName { get; set; }
+
         [Required]
         public string Address { get; set; }
 

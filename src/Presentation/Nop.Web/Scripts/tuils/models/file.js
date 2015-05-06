@@ -10,7 +10,12 @@
         initialize: function () {
 
         },
-        upload: function () {
+        upload: function (args) {
+
+            var saveUrl = '/api/files/upload';
+            if (args && args.saveUrl)
+                saveUrl = args.saveUrl;
+
 
             var file = this.get('file');
             if (file) {
@@ -20,7 +25,7 @@
                 var context = this;
 
                 $.ajax({
-                    url: '/api/files/upload',
+                    url: saveUrl,
                     data: data,
                     cache: false,
                     contentType: false,

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Vendors;
+using Nop.Core.Domain.Common;
 
 namespace Nop.Core.Domain.Media
 {
@@ -10,7 +11,7 @@ namespace Nop.Core.Domain.Media
     public partial class Picture : BaseEntity
     {
         private ICollection<ProductPicture> _productPictures;
-        private ICollection<VendorPicture> _vendorPictures;
+        private ICollection<AddressPicture> _addressPictures;
         private ICollection<Vendor> _vendorBackgroundPictures;
         
 
@@ -48,10 +49,10 @@ namespace Nop.Core.Domain.Media
         /// <summary>
         /// Gets or sets the product pictures
         /// </summary>
-        public virtual ICollection<VendorPicture> VendorPictures
+        public virtual ICollection<AddressPicture> VendorPictures
         {
-            get { return _vendorPictures ?? (_vendorPictures = new List<VendorPicture>()); }
-            protected set { _vendorPictures = value; }
+            get { return _addressPictures ?? (_addressPictures = new List<AddressPicture>()); }
+            protected set { _addressPictures = value; }
         }
 
         /// <summary>

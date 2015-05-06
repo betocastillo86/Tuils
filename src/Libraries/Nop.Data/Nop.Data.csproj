@@ -68,8 +68,8 @@
     <Compile Include="Mapping\Catalog\SpecialCategoryProductMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeValueMap.cs" />
+    <Compile Include="Mapping\Common\AddressPictureMap.cs" />
     <Compile Include="Mapping\Vendors\SpecialCategoryVendorMap.cs" />
-    <Compile Include="Mapping\Vendors\VendorPictureMap.cs" />
     <Compile Include="Migrations\201503270505120_SpecialCategoryByProduct.cs" />
     <Compile Include="Migrations\201503270505120_SpecialCategoryByProduct.Designer.cs">
       <DependentUpon>201503270505120_SpecialCategoryByProduct.cs</DependentUpon>
@@ -97,6 +97,18 @@
     <Compile Include="Migrations\201504232349220_Vendor_AddressesCategoriesPictures.cs" />
     <Compile Include="Migrations\201504232349220_Vendor_AddressesCategoriesPictures.Designer.cs">
       <DependentUpon>201504232349220_Vendor_AddressesCategoriesPictures.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504301743179_DropTableVendorPicture.cs" />
+    <Compile Include="Migrations\201504301743179_DropTableVendorPicture.Designer.cs">
+      <DependentUpon>201504301743179_DropTableVendorPicture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504301745485_CreateTableAddressPicture.cs" />
+    <Compile Include="Migrations\201504301745485_CreateTableAddressPicture.Designer.cs">
+      <DependentUpon>201504301745485_CreateTableAddressPicture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504302351276_AddColumnVendor_BackgroundPosition.cs" />
+    <Compile Include="Migrations\201504302351276_AddColumnVendor_BackgroundPosition.Designer.cs">
+      <DependentUpon>201504302351276_AddColumnVendor_BackgroundPosition.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
@@ -243,6 +255,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504232349220_Vendor_AddressesCategoriesPictures.resx">
       <DependentUpon>201504232349220_Vendor_AddressesCategoriesPictures.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504301743179_DropTableVendorPicture.resx">
+      <DependentUpon>201504301743179_DropTableVendorPicture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504301745485_CreateTableAddressPicture.resx">
+      <DependentUpon>201504301745485_CreateTableAddressPicture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504302351276_AddColumnVendor_BackgroundPosition.resx">
+      <DependentUpon>201504302351276_AddColumnVendor_BackgroundPosition.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

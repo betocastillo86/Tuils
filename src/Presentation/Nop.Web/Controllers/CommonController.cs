@@ -829,7 +829,8 @@ namespace Nop.Web.Controllers
                     },
                     specialCategories = new {
                         bikeBrand = (int) SpecialCategoryProductType.BikeBrand
-                    }
+                    },
+                    maxFileUploadSize = _tuilsSettings.maxFileUploadSize
                 }
             };
 

@@ -11,7 +11,6 @@ namespace Nop.Core.Domain.Vendors
     /// </summary>
     public partial class Vendor : BaseEntity, ILocalizedEntity, ISlugSupported
     {
-        private ICollection<VendorPicture> _vendorPictures;
         private ICollection<SpecialCategoryVendor> _specialCategoryVendors;
         private ICollection<Address> _addresses;
         
@@ -97,6 +96,8 @@ namespace Nop.Core.Domain.Vendors
 
         public double? AvgRating { get; set; }
 
+        public int? BackgroundPosition { get; set; }
+
 
         public VendorType VendorType
         {
@@ -108,14 +109,6 @@ namespace Nop.Core.Domain.Vendors
 
         public virtual Picture BackgroundPicture { get; set; }
 
-        /// <summary>
-        /// Gets or sets the collection of ProductPicture
-        /// </summary>
-        public virtual ICollection<VendorPicture> VendorPictures
-        {
-            get { return _vendorPictures ?? (_vendorPictures = new List<VendorPicture>()); }
-            protected set { _vendorPictures = value; }
-        }
 
         /// <summary>
         /// Direcciones del vendedor

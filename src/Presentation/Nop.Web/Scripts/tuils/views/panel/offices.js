@@ -1,5 +1,5 @@
-﻿define(['underscore', 'util', 'baseView', 'tuils/models/vendor', 'handlebars', 'tuils/views/panel/addAddressView', 'handlebarsh'],
-    function (_, TuilsUtilities, BaseView, VendorModel, HandleBars, AddressView) {
+﻿define(['underscore', 'util', 'baseView', 'tuils/collections/addresses', 'handlebars', 'tuils/views/panel/addAddressView', 'imageSelectorView','handlebarsh'],
+    function (_, TuilsUtilities, BaseView, AddressCollection, HandleBars, AddressView, ImageSelectorView) {
     var OfficesView = BaseView.extend({
 
         events: {
@@ -13,6 +13,8 @@
         template: HandleBars.compile($("#templateListOffices").html()),
 
         viewAddAddress: undefined,
+
+        viewImages : undefined,
 
         accordion : undefined,
 
@@ -30,9 +32,9 @@
         },
         loadOffices : function()
         {
-            var vendor = new VendorModel();
-            vendor.on("sync", this.showOffices, this);
-            vendor.getOffices(this.vendorId);
+            this.collection = new AddressCollection();
+            this.collection.on("sync", this.showOffices, this);
+            this.collection.getOfficesByVendor(this.vendorId);
             this.showStep(0);
         },
         loadAddress : function(obj)

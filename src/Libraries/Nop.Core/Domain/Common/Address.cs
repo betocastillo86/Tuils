@@ -1,11 +1,15 @@
 ﻿using System;
 using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Vendors;
+using System.Collections.Generic;
 
 namespace Nop.Core.Domain.Common
 {
     public class Address : BaseEntity, ICloneable
     {
+
+        private ICollection<AddressPicture> _addressPictures;
+
         /// <summary>
         /// Gets or sets the first name
         /// </summary>
@@ -108,7 +112,15 @@ namespace Nop.Core.Domain.Common
         /// </summary>
         public virtual StateProvince StateProvince { get; set; }
 
-        
+
+        /// <summary>
+        /// Gets or sets the collection of ProductPicture
+        /// </summary>
+        public virtual ICollection<AddressPicture> AddressPictures
+        {
+            get { return _addressPictures ?? (_addressPictures = new List<AddressPicture>()); }
+            protected set { _addressPictures = value; }
+        }
 
 
         public object Clone()

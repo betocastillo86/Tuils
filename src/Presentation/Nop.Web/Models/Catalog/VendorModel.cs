@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Nop.Web.Framework.Mvc;
 using Nop.Web.Models.Media;
+using Nop.Core.Domain.Vendors;
 
 namespace Nop.Web.Models.Catalog
 {
@@ -27,6 +28,12 @@ namespace Nop.Web.Models.Catalog
 
         public bool AllowEdit { get; set; }
 
+        public bool EnableShipping { get; set; }
+
+        public int? BackgroundPosition { get; set; }
+
+        public bool EnableCreditCardPayment { get; set; }
+
         public PictureModel Picture { get; set; }
 
         public PictureModel BackgroundPicture { get; set; }
@@ -34,5 +41,7 @@ namespace Nop.Web.Models.Catalog
         public CatalogPagingFilteringModel PagingFilteringContext { get; set; }
 
         public IList<ProductOverviewModel> Products { get; set; }
+
+        public List<SpecialCategoryVendor> SpecialCategories { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-
+using System.Linq;
 namespace System.Web.Mvc.Html
 {
     public static class MvcHelperExtensions
@@ -208,6 +208,46 @@ namespace System.Web.Mvc.Html
         #endregion
 
         #endregion
+
+        #region FlipSwitch
+        public static MvcHtmlString FlipSwitchFor<TModel>(this HtmlHelper<TModel> helper, Expression<Func<TModel, bool>> expression, object htmlAttributes = null)
+        {
+            string field = ExpressionHelper.GetExpressionText(expression);
+            
+            var sbHtml = new StringBuilder();
+            sbHtml.Append("<div class=\"onoffswitch\">");
+
+            //////obtiene el listado de atributos adicionales enviados
+            ////var attributes = ((IDictionary<string, object>)HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes ?? new {}));
+            ////if(attributes.ContainsKey("class"))
+            ////    attributes["class"] +=  "onoffswitch-checkbox";
+            ////else
+            ////    attributes.Add("class", "onoffswitch-checkbox");
+
+
+            ////var strAttributes = new StringBuilder();
+            ////attributes.ToList().ForEach(x => strAttributes.AppendFormat())
+
+            ////attributes.Add("name", field);
+            ////attributes.Add("id", field);
+
+            //////Agrega los atributos al nuevo objeto
+            ////var tag = new TagBuilder("input");
+            ////tag.Attributes.Add("type", "checkbox");
+            ////tag.MergeAttributes(attributes, true);
+            ////sbHtml.Append(tag.ToString(TagRenderMode.Normal));
+
+            
+            sbHtml.AppendFormat("<input type=\"checkbox\" name=\"{0}\" class=\"onoffswitch-checkbox\" id=\"{0}\" {1}>", field, Convert.ToBoolean(ModelMetadata.FromLambdaExpression(expression, helper.ViewData).Model) ? "checked" : string.Empty);
+            sbHtml.AppendFormat("<label class=\"onoffswitch-label\" for=\"{0}\">", field);
+            sbHtml.Append("<span class=\"onoffswitch-inner\"></span>");
+            sbHtml.Append("<span class=\"onoffswitch-switch\"></span>");
+            sbHtml.Append("</label>");
+            sbHtml.Append("</div>");
+            return new MvcHtmlString(sbHtml.ToString());
+        }
+        #endregion
+        
 
         private enum ControlType
         { 

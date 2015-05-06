@@ -71,7 +71,8 @@
         wysihtml5: 'wysihtml5-0.3.0.min',
         resize: 'resize',
         canvasBlob: 'canvas-to-blob.min',
-        accounting: 'accounting.min'
+        accounting: 'accounting.min',
+        imagedrag: 'jquery.imagedrag'
     }
     
 });

@@ -1,4 +1,4 @@
-﻿define(['underscore'], function ( _) {
+﻿define(['underscore', 'configuration'], function ( _, TuilsConfiguration) {
     var TuilsUtilities = {
         //Carga un dropdownlist con los datos pasados en una lista
         //ddl: Objeto tipo select a cargar
@@ -69,7 +69,38 @@
                 values.push($(element).attr(property));
             });
             return values;
-        }
+        },
+        isValidSize: function (obj) {
+            if (obj.files[0].size > TuilsConfiguration.maxFileUploadSize) {
+                obj.files[0] = null;
+                obj.value = "";
+                return false;
+            }
+            else
+                return true;
+        },
+        isValidExtension: function (obj, typeFile) {
+            obj = $(obj);
+
+            var validExtensions;
+            if(typeFile == 'image')
+                validExtensions = /(jpg|JPG|jpeg|JPEG|gif|GIF|png|PNG)/
+
+            if (!validExtensions.test(obj.val())) {
+                obj.val("");
+                return false;
+            }
+            else {
+                return true;
+            }
+        },
+        //Convierte los ticks de .NET a ticks en JS
+        //ticks are recorded from 1/1/1; get microtime difference from 1/1/1/ to 1/1/1970
+        ticksToJs : function(ticks){
+            ticks = ticks / 1000;
+            return ticks - 2208988800000;
+        } 
+        
     };
 
     return TuilsUtilities;

@@ -287,6 +287,8 @@ namespace Nop.Web.Controllers
             {
                 command.PageSize = fixedPageSize;
             }
+
+            pagingFilteringModel.q = command.q;
         }
 
         [NonAction]
@@ -998,7 +1000,8 @@ namespace Nop.Web.Controllers
                 visibleIndividuallyOnly: true,
                 orderBy: (ProductSortingEnum)command.OrderBy,
                 pageIndex: command.PageNumber - 1,
-                pageSize: command.PageSize);
+                pageSize: command.PageSize,
+                keywords: string.IsNullOrWhiteSpace(command.q) ? null : command.q);
             model.Products = PrepareProductOverviewModels(products).ToList();
 
 
@@ -1025,14 +1028,17 @@ namespace Nop.Web.Controllers
                 MetaDescription = vendor.GetLocalized(x => x.MetaDescription),
                 MetaTitle = vendor.GetLocalized(x => x.MetaTitle),
                 SeName = vendor.GetSeName(),
-                AvgRating = vendor.AvgRating ?? 0
+                AvgRating = vendor.AvgRating ?? 0,
+                EnableCreditCardPayment = vendor.EnableCreditCardPayment ?? false,
+                EnableShipping = vendor.EnableShipping ?? false,
+                AllowEdit = _workContext.CurrentVendor != null && _workContext.CurrentVendor.Id == vendor.Id,
+                BackgroundPosition = vendor.BackgroundPosition
             };
             //Cargan las imagenes
-            int pictureSize = _mediaSettings.CategoryThumbPictureSize;
 
             var pictureModel = new PictureModel
             {
-                ImageUrl = _pictureService.GetPictureUrl(vendor.Picture, pictureSize),
+                ImageUrl = _pictureService.GetPictureUrl(vendor.Picture, _mediaSettings.VendorMainThumbPictureSize),
                 FullSizeImageUrl = _pictureService.GetPictureUrl(vendor.Picture),
                 Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), model.Name),
                 AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), model.Name)
@@ -1041,14 +1047,15 @@ namespace Nop.Web.Controllers
 
             var backgroundPictureModel = new PictureModel
             {
-                ImageUrl = _pictureService.GetPictureUrl(vendor.BackgroundPicture, pictureSize),
+                ImageUrl = _pictureService.GetPictureUrl(vendor.BackgroundPicture, _mediaSettings.VendorBackgroundThumbPictureSize),
                 FullSizeImageUrl = _pictureService.GetPictureUrl(vendor.BackgroundPicture),
                 Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), model.Name),
                 AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), model.Name)
             };
             model.BackgroundPicture = backgroundPictureModel;
 
-            model.AllowEdit = true;
+            //Carga las categorias especiales
+            model.SpecialCategories = _vendorService.GetSpecialCategoriesByVendorId(vendor.Id).ToList();
 
             return model;
         }
@@ -1113,6 +1120,8 @@ namespace Nop.Web.Controllers
             
             return PartialView(cacheModel);
         }
+
+ 
 
         #endregion
 

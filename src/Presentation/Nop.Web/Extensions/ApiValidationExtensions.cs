@@ -57,6 +57,19 @@ namespace Nop.Web.Extensions.Api
 
         #endregion
 
+        #region VendorModel
+        /// <summary>
+        /// Realiza las validaciones de obligatoriedad unicamente para los campos que van en el cabezote del vendor
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public static bool IsHeaderValid(this VendorModel model)
+        {
+            return !string.IsNullOrEmpty(model.Description) && !string.IsNullOrEmpty(model.Name);
+        }
+        #endregion
+
+
 
 
 

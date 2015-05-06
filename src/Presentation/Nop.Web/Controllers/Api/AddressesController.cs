@@ -9,6 +9,9 @@ using Nop.Web.Extensions.Api;
 using Nop.Services.Common;
 using Nop.Services.Logging;
 using Nop.Core;
+using Nop.Services.Media;
+using Nop.Core.Domain.Media;
+using Nop.Services.Localization;
 
 namespace Nop.Web.Controllers.Api
 {
@@ -19,16 +22,25 @@ namespace Nop.Web.Controllers.Api
         private readonly IAddressService _addressService;
         private readonly IWorkContext _workContext;
         private readonly ILogger _logger;
+        private readonly IPictureService _pictureService;
+        private readonly MediaSettings _mediaSettings;
+        private readonly ILocalizationService _localizationService;
         #endregion
 
         #region ctor
         public AddressesController(IAddressService addressService,
             IWorkContext workContext,
-            ILogger logger)
+            ILogger logger,
+            IPictureService pictureService,
+            MediaSettings mediaSettings,
+            ILocalizationService localizationService)
         {
             this._addressService = addressService;
             this._logger = logger;
             this._workContext = workContext;
+            this._pictureService = pictureService;
+            this._mediaSettings = mediaSettings;
+            this._localizationService = localizationService;
         }
         #endregion
 
@@ -133,7 +145,7 @@ namespace Nop.Web.Controllers.Api
 
         }
 
-
+       
         [Authorize]
         [Route("api/addresses/{id}")]
         [HttpDelete]
@@ -170,6 +182,21 @@ namespace Nop.Web.Controllers.Api
 
         }
 
+        #region Pictures
+
+        [HttpGet]
+        [Route("api/addresses/{id}/pictures")]
+        public IHttpActionResult GetPictures(int id)
+        {
+            if (id > 0)
+            {
+                int size = _mediaSettings.ProductThumbPictureSizeOnProductDetailsPage;
+                return Ok(_addressService.GetPicturesByAddressId(id).ToModels(string.Empty, size, _pictureService, _localizationService));
+            }
+            else
+                return NotFound();          
+        }
+        #endregion
 
         #endregion
 

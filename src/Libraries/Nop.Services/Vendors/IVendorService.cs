@@ -1,5 +1,7 @@
 using Nop.Core;
+using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Vendors;
+using System.Collections.Generic;
 
 namespace Nop.Services.Vendors
 {
@@ -42,7 +44,14 @@ namespace Nop.Services.Vendors
         /// Updates the vendor
         /// </summary>
         /// <param name="vendor">Vendor</param>
-        void UpdateVendor(Vendor vendor);
+        bool UpdateVendor(Vendor vendor);
+
+        /// <summary>
+        /// Actualiza unicamente los campos del header
+        /// </summary>
+        /// <param name="vendor">Nuevos datos del header</param>
+        /// <returns></returns>
+        bool UpdateVendorHeader(Vendor vendor);
 
         /// <summary>
         /// Retorna el vendor asociado a un cliente. 
@@ -52,5 +61,36 @@ namespace Nop.Services.Vendors
         /// <param name="customerId">Id de cliente que sirve como filtro</param>
         /// <returns>Vendor asociado al cliente ya sea creado o no</returns>
         Vendor GetVendorByCustomerId(int customerId, bool createIfNotExists = false);
+
+        /// <summary>
+        /// Permite cargar el archivo de un vendor
+        /// </summary>
+        /// <param name="dataFile">datos del archivo</param>
+        /// <param name="extension">extensión del archivo</param>
+        /// <param name="isMainPicture">True: es la imagen principal False: es el fondo</param>
+        bool UpdatePicture(int vendorId, byte[] dataFile, string extension, bool isMainPicture);
+
+        /// <summary>
+        /// Actualiza la posición vertical en porcentaje de fondo del vendedor en el sitio
+        /// </summary>
+        /// <param name="vendorId">Id del vendedor</param>
+        /// <param name="position">posición vertical del fondo</param>
+        /// <returns></returns>
+        bool UpdateBackgroundPosition(int vendorId, int position);
+
+        /// <summary>
+        /// Retorna las categorias especiales de un vendedor
+        /// </summary>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        IList<SpecialCategoryVendor> GetSpecialCategoriesByVendorId(int vendorId);
+
+
+        /// <summary>
+        /// Retorna los reviews hechos a los productos del vendedor
+        /// </summary>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        IList<ProductReview> GetReviewsByVendorId(int vendorId);
     }
 }

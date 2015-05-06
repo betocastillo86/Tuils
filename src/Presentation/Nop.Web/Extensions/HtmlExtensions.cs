@@ -13,6 +13,7 @@ using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Boards;
 using Nop.Web.Models.Common;
 
+
 namespace Nop.Web.Extensions
 {
     public static class HtmlExtensions
@@ -263,6 +264,9 @@ namespace Nop.Web.Extensions
             });
             return cachedSeName;
         }
+
+        
+        
 
     }
 }

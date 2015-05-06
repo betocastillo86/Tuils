@@ -60,6 +60,8 @@ namespace Nop.Core
         public PagedList(IEnumerable<T> source, int pageIndex, int pageSize, int totalCount)
         {
             TotalCount = totalCount;
+            pageSize = pageSize == 0 ? 1 : pageSize;
+
             TotalPages = TotalCount / pageSize;
 
             if (TotalCount % pageSize > 0)

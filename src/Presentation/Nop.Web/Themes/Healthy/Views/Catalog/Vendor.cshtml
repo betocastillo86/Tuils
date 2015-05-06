@@ -18,9 +18,11 @@
 @using Nop.Web.Extensions;
 
 
-
-
+<link href="~/Content/magnific-popup/magnific-popup.css" rel="stylesheet" />
+<script data-main="/scripts/tuils/main" src="~/Scripts/jquery.magnific-popup.js"></script>
 <script data-main="/scripts/tuils/main" src="~/Scripts/require.js"></script>
+
+
 
 
 <div id="divMainSection">
@@ -34,27 +36,27 @@
         <div class="master-wrapper-content">
             <div class="master-wrapper-main">
                 <div class="col-sedes">
-                    <div class="conte-sede">
-                        <div class="mapa"></div>
-                        <div class="caja-sede">
-                            <h3>Calle 57 # 12-45 Local: 208 Bogotá</h3>
-                            <p><span class="icon-mail"></span> Bogotá - Serafina</p>
-                            <p><span class="icon-tel"></span>(+57) 320 3306813</p>
-                            <p><span class="icon-mail"></span>pepito_perez@tuils.com</p>
-                            <a class="button-1">Ver galeria</a>
-                        </div>
-                        <div class="btn-sedes">
-                            <a><span class="icon-mail"></span></a>
-                            <a><span class="icon-mail"></span></a>
-                        </div>
+                    <div id="divOffices">
+                        @Html.Partial("_Vendor.Offices", Model)
                     </div>
-                    <div class="conte-spc">cd</div>
+                    <ul class="conte-spc">
+                        <h3>@T("Vendor.SpecialCategoriesServices") <span class="icon-mail"></span></h3>
+                        @foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.SpecializedCategory))
+                        {
+                            <li>@special.Category.Name</li>
+                        }
+                        <h3>@T("Vendor.SpecialCategoriesBikes") <span class="icon-mail"></span></h3>
+                        @foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.BikeBrand))
+                        {
+                            <li>@special.Category.Name</li>
+                        }
+                    </ul>
                 </div>
                 <div class="col-producto">
                     <div class="product-grid home-page-product-grid">
                         <div class="title"> <strong>Productos</strong> </div>
                         <div class="search-pdt">
-                            <input type="text" />
+                            <input type="text" class="searchinput" value="@Model.PagingFilteringContext.q" />
                             <a class="btn_search"><span class="icon-mail"></span></a>
                         </div>
 
@@ -81,40 +83,7 @@
                 </div>
                 <br />
                 <div class="conte-comment">
-                    <h3>Comentarios</h3>
-                    <div class="caja-comment">
-                        <h4>Julian David Castillo Prada <span class="fecha">12/04/15</span></h4>
-                        <div class="product-review-box">
-                            <div class="rating no-margin">
-                                <div style="width: 60%">
-                                    <a href="/productreviews/3"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original.</p>
-                    </div>
-                    <div class="caja-comment">
-                        <h4>Julian David Castillo Prada <span class="fecha">12/04/15</span></h4>
-                        <div class="product-review-box">
-                            <div class="rating no-margin">
-                                <div style="width: 60%">
-                                    <a href="/productreviews/3"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original.</p>
-                    </div>
-                    <div class="caja-comment">
-                        <h4>Julian David Castillo Prada<span class="fecha">12/04/15</span></h4>
-                        <div class="product-review-box">
-                            <div class="rating no-margin">
-                                <div style="width: 60%">
-                                    <a href="/productreviews/3"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original.</p>
-                    </div>
+                    @Html.Partial("_Vendor.Reviews")
                 </div>
             </div>
         </div>

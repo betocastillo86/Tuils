@@ -1,6 +1,8 @@
 ﻿using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Customers;
+using Nop.Core.Domain.Media;
+using Nop.Core.Domain.Vendors;
 using Nop.Core.Infrastructure;
 using Nop.Web.Models.Api;
 using System;
@@ -178,7 +180,8 @@ namespace Nop.Web.Extensions.Api
                 VendorId = entity.VendorId ?? 0,
                 Name = entity.FirstName,
                 Latitude = entity.Latitude ?? 0,
-                Longitude = entity.Longitude ?? 0
+                Longitude = entity.Longitude ?? 0,
+                StateProvinceName = entity.StateProvince != null ? entity.StateProvince.Name : null
             };
         }
 
@@ -201,6 +204,76 @@ namespace Nop.Web.Extensions.Api
             };
         }
 
+        #region AddressPictureModel
+        public static Nop.Web.Models.Media.PictureModel ToModel(this Picture entity, string name, int size, Nop.Services.Media.IPictureService _pictureService, Nop.Services.Localization.ILocalizationService _localizationService)
+        {
+            var model = new AddressPictureModel
+            {
+                ImageUrl = _pictureService.GetPictureUrl(entity, size),
+                FullSizeImageUrl = _pictureService.GetPictureUrl(entity),
+                Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), name),
+                AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), name)
+            };
+            return model;
+        }
+
+        public static List<Nop.Web.Models.Media.PictureModel> ToModels(this IList<Picture> list, string name, int size, Nop.Services.Media.IPictureService _pictureService, Nop.Services.Localization.ILocalizationService _localizationService)
+        {
+            var models = new List<Nop.Web.Models.Media.PictureModel>();
+            foreach (var entity in list)
+            {
+                models.Add(entity.ToModel(name, size, _pictureService, _localizationService));
+            }
+            return models;
+            
+        }
+        #endregion
+
+        #endregion
+
+        #region Vendor
+        public static Vendor ToEntity(this VendorModel model)
+        {
+            return new Vendor() {
+                Id = model.Id,
+                Name = model.Name,
+                Description = model.Description,
+                EnableShipping = model.EnableShipping,
+                EnableCreditCardPayment = model.EnableCreditCardPayment
+            };
+        }
+        #endregion
+
+        #region ProductReviewModel
+
+        public static ProductReviewModel ToModel(this ProductReview entity)
+        {
+            return new ProductReviewModel() { 
+                CustomerId = entity.CustomerId,
+                //CustomerName = entity.Customer != null ? entity.Customer.attr
+                IsApproved = entity.IsApproved,
+                ProductId = entity.ProductId,
+                ProductName = entity.Product != null ? entity.Product.Name : null,
+                Rating = entity.Rating,
+                ReviewText = entity.ReviewText,
+                Title = entity.Title,
+                CreatedOnUtcTicks = entity.CreatedOnUtc.Ticks,
+                CreatedOnUtc = entity.CreatedOnUtc
+            }; 
+        }
+
+
+        public static List<ProductReviewModel> ToModels(this IList<ProductReview> entities)
+        {
+            var models = new List<ProductReviewModel>();
+
+            foreach (var entity in entities)
+            {
+                models.Add(entity.ToModel());
+            }
+
+            return models;
+        }
         #endregion
 
 

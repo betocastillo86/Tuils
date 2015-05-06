@@ -26,5 +26,10 @@ namespace Nop.Core.Domain.Vendors
         /// Tamaño por defecto de los resultados por pagina de los vendedores
         /// </summary>
         public int DefaultPageSize { get; set; }
+
+        /// <summary>
+        /// Tamaño por defecto de los resultados por pagina de los vendedores
+        /// </summary>
+        public int DefaultReviewsPageSize { get; set; }
     }
 }

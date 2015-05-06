@@ -254,9 +254,11 @@
     <Compile Include="Infrastructure\RouteApiProvider.cs" />
     <Compile Include="Infrastructure\RouteProvider.cs" />
     <Compile Include="Models\Api\AddressModel.cs" />
+    <Compile Include="Models\Api\AddressPictureModel.cs" />
     <Compile Include="Models\Api\BaseApiModel.cs" />
     <Compile Include="Models\Api\MinifiedJson.cs" />
     <Compile Include="Models\Api\ProductBaseModel.cs" />
+    <Compile Include="Models\Api\ProductReviewModel.cs" />
     <Compile Include="Models\Api\SpecificationAttributeModel.cs" />
     <Compile Include="Models\Api\CustomerBaseModel.cs" />
     <Compile Include="Models\Api\VendorModel.cs" />
@@ -1000,17 +1002,21 @@
     <Content Include="Scripts\handlebars.runtime.amd.min.js" />
     <Content Include="Scripts\handlebars.runtime.js" />
     <Content Include="Scripts\handlebars.runtime.min.js" />
+    <Content Include="Scripts\jquery.imagedrag.js" />
+    <Content Include="Scripts\jquery.imagedrag.min.js" />
     <Content Include="Scripts\tuils\collections\addresses.js" />
     <Content Include="Scripts\tuils\collections\categories.js" />
     <Content Include="Scripts\tuils\collections\files.js" />
     <Content Include="Scripts\tuils\collections\manufacturers.js" />
     <Content Include="Scripts\tuils\collections\products.js" />
+    <Content Include="Scripts\tuils\collections\reviews.js" />
     <Content Include="Scripts\tuils\collections\specificationAttribute.js" />
     <Content Include="Scripts\tuils\extensions\numbers.js" />
     <Content Include="Scripts\tuils\models\address.js" />
     <Content Include="Scripts\tuils\models\specificationAttribute.js" />
     <Content Include="Scripts\tuils\models\userRegister.js" />
     <Content Include="Scripts\tuils\models\vendor.js" />
+    <Content Include="Scripts\tuils\models\vendor\vendorHeader.js" />
     <Content Include="Scripts\tuils\models\_authentication.js" />
     <Content Include="Scripts\tuils\models\category.js" />
     <Content Include="Scripts\tuils\models\manufacturer.js" />
@@ -1609,8 +1615,11 @@
     <Content Include="Scripts\kendo\2014.1.318\jquery.min.map" />
     <Content Include="Scripts\tuils\main.js" />
     <Content Include="Scripts\tuils\views\utilities\selectPointMapView.js" />
+    <Content Include="Scripts\tuils\views\utilities\singleMapView.js" />
+    <Content Include="Scripts\tuils\views\vendor\vendorOfficesView.js" />
     <Content Include="Scripts\tuils\views\vendor\vendorDetailView.js" />
     <Content Include="Scripts\tuils\views\vendor\vendorHeaderView.js" />
+    <Content Include="Scripts\tuils\views\vendor\vendorReviewsView.js" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore-min.js" />
     <Content Include="Scripts\underscore-min.map" />
@@ -2373,6 +2382,8 @@
     <Content Include="Views\ControlPanel\MyShop.cshtml" />
     <Content Include="Views\ControlPanel\Offices.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Header.cshtml" />
+    <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Offices.cshtml" />
+    <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Reviews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

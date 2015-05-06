@@ -5,17 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nop.Core.Domain.Vendors
+namespace Nop.Core.Domain.Common
 {
     /// <summary>
     /// Imagenes asociadas al vendedor
     /// </summary>
-    public class VendorPicture : BaseEntity
+    public class AddressPicture : BaseEntity
     {
         /// <summary>
-        /// Vendedor
+        /// Direccion
         /// </summary>
-        public int VendorId { get; set; }
+        public int AddressId { get; set; }
 
         /// <summary>
         /// Imagen que lo relaciona
@@ -26,7 +26,7 @@ namespace Nop.Core.Domain.Vendors
         /// Orden en el que se muestra
         /// </summary>
         public int DisplayOrder { get; set; }
-        
+
         /// <summary>
         /// Imagen
         /// </summary>
@@ -35,7 +35,7 @@ namespace Nop.Core.Domain.Vendors
         /// <summary>
         /// Vendedor
         /// </summary>
-        public virtual Vendor Vendor { get; set; }
-    
+        public virtual Address Address { get; set; }
+
     }
 }

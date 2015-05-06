@@ -1,4 +1,5 @@
 ﻿using Nop.Core.Domain.Common;
+using Nop.Utilities;
 using Nop.Web.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -59,23 +60,7 @@ namespace Nop.Web.Controllers.Api
 
                         if (string.IsNullOrEmpty(extension))
                         {
-                            switch (fileToUpload.ContentType)
-                            {
-                                case "image/bmp":
-                                    extension = ".bmp";
-                                    break;
-                                case "image/gif":
-                                    extension = ".gif";
-                                    break;
-                                case "image/jpeg":
-                                    extension = ".jpg";
-                                    break;
-                                case "image/png":
-                                    extension = ".png";
-                                    break;
-                                default:
-                                    break;
-                            }
+                            extension = Files.GetExtensionByContentType(fileToUpload.ContentType);
                         }
 
                         string fileName = string.Empty;

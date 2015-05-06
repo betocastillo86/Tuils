@@ -6,6 +6,12 @@ using Nop.Core.Domain.Vendors;
 using Nop.Services.Events;
 using Nop.Services.Customers;
 using Nop.Services.Media;
+using Nop.Core.Domain.Media;
+using System.IO;
+using Nop.Services.Logging;
+using System.Collections.Generic;
+using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Customers;
 
 namespace Nop.Services.Vendors
 {
@@ -17,10 +23,16 @@ namespace Nop.Services.Vendors
         #region Fields
 
         private readonly IRepository<Vendor> _vendorRepository;
+        private readonly IRepository<Customer> _customerRepository;
+        private readonly IRepository<ProductReview> _productReviewRepository;
+        private readonly IRepository<Product> _productRepository;
+        private readonly IRepository<Category> _categoryRepository;
+        private readonly IRepository<SpecialCategoryVendor> _specialCategoryVendorRepository;
         private readonly IEventPublisher _eventPublisher;
         private readonly ICustomerService _customerService;
         private readonly IPictureService _pictureService;
         private readonly VendorSettings _vendorSettings;
+        private readonly ILogger _logger;
 
         #endregion
 
@@ -35,13 +47,25 @@ namespace Nop.Services.Vendors
             IEventPublisher eventPublisher,
             ICustomerService customerService,
             VendorSettings vendorSettings,
-            IPictureService pictureService)
+            IPictureService pictureService,
+            ILogger logger,
+            IRepository<SpecialCategoryVendor> specialCategoryVendorRepository,
+            IRepository<Category> categoryRepository,
+            IRepository<ProductReview> productReviewRepository,
+            IRepository<Product> productRepository,
+            IRepository<Customer> customerRepository)
         {
             this._vendorRepository = vendorRepository;
             this._eventPublisher = eventPublisher;
             this._customerService = customerService;
             this._vendorSettings = vendorSettings;
             this._pictureService = pictureService;
+            this._logger = logger;
+            this._specialCategoryVendorRepository = specialCategoryVendorRepository;
+            this._categoryRepository = categoryRepository;
+            this._productReviewRepository = productReviewRepository;
+            this._productRepository = productRepository;
+            this._customerRepository = customerRepository;
         }
 
         #endregion
@@ -125,18 +149,49 @@ namespace Nop.Services.Vendors
         }
 
         /// <summary>
+        /// Actualiza unicamente los campos del header
+        /// </summary>
+        /// <param name="vendor">Nuevos datos del header</param>
+        /// <returns></returns>
+        public virtual bool UpdateVendorHeader(Vendor vendor)
+        {
+            var actual = GetVendorById(vendor.Id);
+            actual.Name = vendor.Name;
+            actual.Description = vendor.Description;
+            actual.EnableShipping = vendor.EnableShipping;
+            actual.EnableCreditCardPayment = vendor.EnableCreditCardPayment;
+            return UpdateVendor(actual);
+        }
+
+        /// <summary>
+        /// Actualiza la posición de fondo del vendedor en el sitio
+        /// </summary>
+        /// <param name="vendorId"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public virtual bool UpdateBackgroundPosition(int vendorId, int position)
+        {
+            var actual = GetVendorById(vendorId);
+            actual.BackgroundPosition = position;
+            return UpdateVendor(actual);
+        }
+
+
+        /// <summary>
         /// Updates the vendor
         /// </summary>
         /// <param name="vendor">Vendor</param>
-        public virtual void UpdateVendor(Vendor vendor)
+        public virtual bool UpdateVendor(Vendor vendor)
         {
             if (vendor == null)
                 throw new ArgumentNullException("vendor");
 
-            _vendorRepository.Update(vendor);
+            bool success = _vendorRepository.Update(vendor) > 0;
 
             //event notification
             _eventPublisher.EntityUpdated(vendor);
+
+            return success;
         }
 
         /// <summary>
@@ -176,5 +231,95 @@ namespace Nop.Services.Vendors
         }
 
         #endregion
+
+        #region Pictures
+        /// <summary>
+        /// Permite cargar el archivo de un vendor y actualizarlo como la foto principal o la de fondo
+        /// </summary>
+        /// <param name="dataFile">datos del archivo</param>
+        /// <param name="extension">extensión del archivo</param>
+        /// <param name="isMainPicture">True: es la imagen principal False: es el fondo</param>
+        public bool UpdatePicture(int vendorId, byte[] dataFile, string extension, bool isMainPicture)
+        {
+            var vendor = GetVendorById(vendorId);
+            int? pictureId = null;
+            if(isMainPicture)
+                 pictureId = vendor.PictureId;
+            else
+                pictureId = vendor.BackgroundPictureId;
+
+
+            try
+            {
+                string mimeType = _pictureService.GetContentTypeFromExtension(extension);
+                string seoName = Seo.SeoExtensions.GetSeName(vendor.Name);
+
+                //Si la foto ya está asignada la actualiza, sino la crea
+                Picture picture = null;
+                if (pictureId.HasValue)
+                {
+                    picture = _pictureService.UpdatePicture(pictureId.Value, dataFile, mimeType, seoName, true);
+                    return picture.Id > 0;
+                }
+                else
+                {
+                    picture = _pictureService.InsertPicture(dataFile, mimeType, seoName, true);
+
+                    if (isMainPicture)
+                        vendor.PictureId = picture.Id;
+                    else
+                        vendor.BackgroundPictureId = picture.Id;
+
+                    //Actualiza el vendor con los datos de la nueva foto
+                    return UpdateVendor(vendor);
+                }
+                    
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e.ToString(), e);
+                return false;
+            }
+            
+        }
+        #endregion
+
+        #region Special Categories
+        /// <summary>
+        /// Retorna el listado de categorias asociadas con el vendedor
+        /// </summary>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        public IList<SpecialCategoryVendor> GetSpecialCategoriesByVendorId(int vendorId)
+        {
+            
+            var query = from sc in _specialCategoryVendorRepository.Table 
+                        join c in _categoryRepository.Table on sc.CategoryId equals c.Id
+                        where sc.VendorId == vendorId
+                        select sc;
+
+            return query.ToList();
+        }
+        #endregion
+
+        #region Reviews
+        /// <summary>
+        /// Retorna el listado de reviews hechos a los productos de un vendedor
+        /// </summary>
+        /// <returns></returns>
+        public IList<ProductReview> GetReviewsByVendorId(int vendorId)
+        {
+            var query = from r in _productReviewRepository.Table
+                        join p in _productRepository.Table on r.ProductId equals p.Id
+                        join c in _customerRepository.Table on r.CustomerId equals c.Id
+                        where p.VendorId == vendorId && r.IsApproved
+                        orderby r.CreatedOnUtc descending
+                        select r;
+
+            return query.ToList();
+        }
+        #endregion
+
+
     }
 }

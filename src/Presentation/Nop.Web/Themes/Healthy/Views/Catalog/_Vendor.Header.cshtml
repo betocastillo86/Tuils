@@ -2,20 +2,154 @@
 @{
     Layout = null;
 }
-<div class="coverPerfil">
-    <div class="grad_cv" style="background-image: url(@Model.BackgroundPicture.ImageUrl)"></div>
+<div id="divMainCover" data-pos="@Model.BackgroundPosition" data-path="@Model.BackgroundPicture.ImageUrl">
+
+    <div class="coverPerfil" style="background-image: url(@Model.BackgroundPicture.ImageUrl);background-position:center @(Model.BackgroundPosition)%">
+
+        @if (Model.AllowEdit)
+        {
+            <div class="cover-editor">
+                <span class="icon-foto"></span>
+                <i>@T("vendor.backgroudPicture")</i>
+            </div>
+        }
+        <div class="grad_cv"></div>
+    </div>
 </div>
+<script src="~/Scripts/jquery.imagedrag.js"></script>
+
+<script>
+
+    //////////////$(document).on("ready", function () {
+
+
+    //////////////    //var url = $("#dv-cov").attr("data-path");
+    //////////////    //var img = $("<img style='position:relative; width:100%' />");
+    //////////////    ////img.hide();
+    //////////////    //var height = 0;
+    //////////////    //img.bind('load', function () {
+    //////////////    //    height = $(this).height();
+    //////////////    //    Cargar();
+    //////////////    //});
+    //////////////    //$("#dv-cov").prepend(img);
+    //////////////    //img.attr('src', url);
+
+    //////////////    var url = $("#dv-cov").attr("data-path");
+    //////////////    var img = new Image();
+    //////////////    img.src = url;
+    //////////////    img.onload = function () {
+    //////////////        //console.log('height: ' + this.naturalWidth);
+    //////////////        //height = this.naturalHeight;
+    //////////////        height = this.height;
+    //////////////        img = $(this);
+    //////////////        img.hide();
+    //////////////        Cargar();
+    //////////////    };
+    //////////////    $("#dv-cov").prepend(img);
+    //////////////    //img.attr('src', url);
+
+
+    //////////////    ////////////////$('#dv-cov').imagedrag({
+    //////////////    ////////////////    input: "#output",
+    //////////////    ////////////////    position: "middle",
+    //////////////    ////////////////    attribute: "html",
+    //////////////    ////////////////    target: ".coverPerfil"
+    //////////////    ////////////////});
+
+
+    //////////////    function Cargar()
+    //////////////    {
+    //////////////        var initPositionBackground = 0;
+
+    //////////////        var heightBack = height;
+    //////////////        var heightWrap = 300;
+
+    //////////////        //$('.coverPerfil').css("height", heightBack);
+    //////////////        $('.coverPerfil').css("background-position", "center " + initPositionBackground +"%");
+    //////////////        img.css('top', ((heightBack * initPositionBackground) / 100) * -1);
+
+
+
+    //////////////        //img.draggable({
+    //////////////        $('.coverPerfil').draggable({
+    //////////////            axis: 'y',
+    //////////////            drag: function (event, ui) {
+    //////////////                //debugger;
+    //////////////                //var perMovement = ((ui.originalPosition.top - ui.position.top) / 500) * 300;
+    //////////////                //initPositionBackground += perMovement;
+    //////////////                //console.log("Movimiento de " + perMovement + "%");
+    //////////////                //$('.coverPerfil').css('background-position', 'center ' + initPositionBackground + '%');
+    //////////////                //$('.coverPerfil').css('top', '0px');
+    //////////////                var position = ui.position.top;
+
+    //////////////                // //Margin should be <= 0
+    //////////////                //if (position > 0) {
+    //////////////                //    ui.position.top = 0;
+    //////////////                //}
+
+    //////////////                //var maxMove = (heightBack - heightWrap) * -1;
+    //////////////                //if (position < maxMove) {
+    //////////////                //    ui.position.top = maxMove;
+    //////////////                //}
+    //////////////            },
+    //////////////            stop: function (event, ui) {
+    //////////////                //////////////var perMovement = ((ui.originalPosition.top - ui.position.top) / heightBack) * 100;
+    //////////////                //////////////initPositionBackground += perMovement;
+    //////////////                //////////////$('.coverPerfil').css("background-position", 'center ' + initPositionBackground + '%');
+    //////////////                //////////////var anteriortop = $('.coverPerfil').css("top");
+    //////////////                //////////////$('.coverPerfil').css("top", '');
+    //////////////                //$('.coverPerfil').css("height", '');
+
+
+    //////////////                var perMovement = ((ui.originalPosition.top - ui.position.top) / heightBack) * 100;
+    //////////////                initPositionBackground += perMovement;
+    //////////////                var anteriortop = $('.coverPerfil').css("top");
+    //////////////                //$('.coverPerfil').css("height", heightBack + 'px');
+    //////////////                //$('.coverPerfil').css("top", anteriortop + 'px');
+    //////////////                $('.coverPerfil').css("background-position", 'center ' + initPositionBackground + '%');
+    //////////////                $('.coverPerfil').css("top", '');
+    //////////////                //$('.coverPerfil').draggable('destroy');
+    //////////////                //console.log("Movimiento de " + perMovement + "%");
+    //////////////            }
+
+    //////////////        });
+    //////////////    }
+
+
+
+
+    //////////////});
+
+
+</script>
+
+
+
 <div class="conte_perfil">
     <div class="container hd">
         <div class="pos-perfil">
-            <div class="img_perfil" style="background-image: url(@Model.Picture.ImageUrl)">
-                <img alt="@Model.Picture.AlternateText" src="@Model.Picture.ImageUrl" title="@Model.Picture.Title" style="display:none" />
-            </div>
-            <div class="tit-perfil">
-                <h2>@Model.Name</h2>
+
+            <div class="img_perfil">
                 @if (Model.AllowEdit)
-                { 
-                    @Html.TextBoxFor(m => m.Name, new { style = "display:none" })
+                {
+                    <div class="cover-editor">
+                        <span class="icon-foto"></span>
+                        <i>@T("vendor.profilepicture")</i>
+
+                    </div>
+
+                    <input type="file" style="display:none" />
+
+                }
+                <img alt="@Model.Picture.AlternateText" src="@Model.Picture.ImageUrl" title="@Model.Picture.Title" />
+            </div>
+
+
+            <div class="tit-perfil">
+                <h2 tuils-for="show">@Model.Name</h2>
+                @if (Model.AllowEdit)
+                {
+                    @Html.TextBoxFor(m => m.Name, new { style = "display:none", tuils_for = "edit" })
                 }
                 <div class="product-review-box">
                     <div class="rating no-margin">
@@ -26,16 +160,25 @@
                 </div>
             </div>
             <div class="pr-perfil">
-                <p>@Model.Description</p>
+                <p tuils-for="show">@Model.Description</p>
                 @if (Model.AllowEdit)
-                { 
-                    @Html.TextAreaFor(m => m.Description, new { style = "display:none" })
+                {
+                    @Html.TextAreaFor(m => m.Description, new { style = "display:none", tuils_for = "edit" })
                 }
-                <div class="ctl-tarjetas">
-                    <li>Realizan envios <span class="icon-mail"></span></li>
-                    <li>Realizan envios <span class="icon-mail"></span></li>
+                <div class="ctl-tarjetas" tuils-for="show">
+                    <li id="liShipping" @(Model.EnableShipping ? string.Empty : "style=display:none")>@T("vendor.enableShipping") <span class="icon-mail"></span></li>
+                    <li id="liCreditCard" @(Model.EnableCreditCardPayment ? string.Empty : "style=display:none")>@T("vendor.enableCreditCard") <span class="icon-mail"></span></li>
                     <br />
                 </div>
+                @if (Model.AllowEdit)
+                {
+                    <div class="ctl-switch" style="display:none" tuils-for="edit">
+                        <div class="txt_switch">@T("vendor.enableShipping")</div>
+                        @Html.FlipSwitchFor(m => m.EnableShipping)
+                        <div class="txt_switch">@T("vendor.enableCreditCard")</div>
+                        @Html.FlipSwitchFor(m => m.EnableCreditCardPayment)
+                    </div>
+                }
                 <ul class="items-ctl">
                     <li>Productos<span><b>@Model.TotalActiveProducts</b></span></li>
                     <li>Ventas<span><b>@Model.TotalSoldProducts</b></span></li>
@@ -43,12 +186,16 @@
                 </ul>
                 <div class="btpfl">
                     @if (Model.AllowEdit)
-                    { 
-                        <div id="btnEditVendorHeader" class="button-1 btn_perfil">Editar</div>
+                    {
+                        <div id="btnEditVendorHeader" class="button-1 btn_perfil" tuils-textedit="@T("vendor.edit")" tuils-textsave="@T("vendor.save")">@T("vendor.edit")</div>
+                        <div id="btnMoveCover" class="button-1 btn_perfil" style="display:none">@T("vendor.movecover")</div>
+                        <div id="btnSaveCoverPosition" class="button-1 btn_perfil" style="display:none">@T("vendor.save")</div>
                     }
-                    
-                    <a class="button-1 btn_perfil">Contactar</a>
-                    <a class="button-1 btn_perfil">Reseñar</a>
+                    else
+                    {
+                        <a class="button-1 btn_perfil">@T("vendor.contactus")</a>
+                        <a class="button-1 btn_perfil">@T("vendor.rateUs")</a>
+                    }
                     <br />
                 </div>
             </div>

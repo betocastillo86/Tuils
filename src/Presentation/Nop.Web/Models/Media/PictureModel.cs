@@ -11,5 +11,15 @@ namespace Nop.Web.Models.Media
         public string Title { get; set; }
 
         public string AlternateText { get; set; }
+
+        public SizePicture Size { get; set; }
+
+
+        public struct SizePicture
+        {
+            public int Width { get; set; }
+
+            public int Height { get; set; }
+        }
     }
 }
