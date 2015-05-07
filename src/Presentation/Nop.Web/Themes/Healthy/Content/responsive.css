@@ -936,6 +936,9 @@ html.oldie .container { width: 940px; }
     .category-column ul{height: 175px; font-size: 11px; }
     .category-column ul li{padding:5px;}
 
+    /*mis datos*/
+    .inputs_date{height: 71px;}
+    /*perfil*/
     .coverPerfil{height: 200px;}
     .conte_perfil{height: 40px; margin: 0 15px 7px 0;}
         .pos-perfil{top: -135px;}
@@ -995,7 +998,13 @@ html.oldie .container { width: 940px; }
 
     /*mis datos*/
     .inputs_mid{width: 50%;}
-    .inputs_mid input[type="text"], .inputs_mid input[type="password"], .inputs_mid select{width:calc(100% - 20px)!important;
+    .inputs_mid input[type="text"], .inputs_mid input[type="password"], .inputs_mid select{width:calc(100% - 20px)!important;}
+    .inputs_date{width: 50%; padding: 0;}
+        .date{display: block; width:calc(100% - 20px);}
+        .inputs_date .onoffswitch{display: block; margin: 0 25%;}
+    .conte_check{ text-align: left;}
+        .conte_check input[type="checkbox"]{margin:0;}
+        .conte_check label{margin:0 30px 0 5px;}
 
     /*mail*/
     .mail_content li{height: 90px; position: relative; padding: 0 0 0 10px;}
@@ -1028,6 +1037,9 @@ html.oldie .container { width: 940px; }
 
     .picture-uploader{font-size: 12px;}
     .txt-terminos{font-size: 12px;}
+    /*mis datos*/
+    .conte_check label{margin:10px 0 10px 5px; width:calc(100% - 20px); display:inline-block;}
+    
 }
 @media screen and (max-width:480px) {
     .wizard-step div, .wizard-current div{display: none;}
