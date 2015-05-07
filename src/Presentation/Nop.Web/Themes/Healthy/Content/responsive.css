@@ -897,6 +897,9 @@ html.oldie .container { width: 940px; }
 @media screen and (max-width:1200px) {
     input[type="text"],input[type="password"], select{width:270px;}
     .field-validation-error { margin: 0 35px 0 0;}
+    .master-wrapper-page .center-2.columns.ten input[type="text"], .master-wrapper-page .center-2.columns.ten select{width: 218px;}
+    .master-wrapper-page .center-2.columns.ten .inputs label{width: 120px;}
+    .master-wrapper-page .center-2.columns.ten .field-validation-error{margin: 0 12px 0 0;}
 
     .nav-category li{height: 248px;}
     .nav-category li span{bottom: 34px; right: 40px; font-size: 23px;}
@@ -908,13 +911,19 @@ html.oldie .container { width: 940px; }
     .conte-sede{width: 345px;}
     .conte-spc{width: 345px;}
     .col-producto{width: 565px;}
+
+    /*mis datos*/
+    .inputs_mid input[type="text"], .inputs_mid input[type="password"], .inputs_mid select{width: auto;}
+    .inputs_mid label{width: 120px; padding: 0 8px 0 0; position: relative; display:inline-block; text-align: right;}
 }
 @media screen and (max-width:960px) {
     input[type="text"],input[type="password"], select{width:300px;}
     .inputs{height: 71px;}
-    .inputs label{text-align: left; width: 90%;}
+    .inputs label, .inputs_mid label{text-align: left; width: 90%;}
     .text-character{margin: 0;}
     .field-validation-error{margin: 0 68px 0 0;}
+    .master-wrapper-page .center-2.columns.ten input[type="text"], .master-wrapper-page .center-2.columns.ten select{width: 235px;}
+    .master-wrapper-page .center-2.columns.ten .field-validation-error{margin: 0 20px 0 0;}
 
     .wizard-breadcrumb li{padding:6px; box-sizing:border-box;}
     .wizard-current{font-size: 13px;}
@@ -950,6 +959,8 @@ html.oldie .container { width: 940px; }
 @media screen and (max-width:768px) {
     input[type="text"],input[type="password"], select{width:calc(100% - 20px);}
     .field-validation-error{margin:0 20px 0 0;}
+    .master-wrapper-page .center-2.columns.ten input[type="text"], .master-wrapper-page .center-2.columns.ten select{width:calc(100% - 20px);}
+
 
     .category-view{display: none;}
     .category-container{width: 100%; padding-left: 0;}
@@ -982,6 +993,10 @@ html.oldie .container { width: 940px; }
     .category-column ul{font-size: 12px;}
     .resumen-product{width: 100%; float: none;}
 
+    /*mis datos*/
+    .inputs_mid{width: 50%;}
+    .inputs_mid input[type="text"], .inputs_mid input[type="password"], .inputs_mid select{width:calc(100% - 20px)!important;
+
     /*mail*/
     .mail_content li{height: 90px; position: relative; padding: 0 0 0 10px;}
         .mail-usuer{width: 80%; padding:10px 0 0; float: none;}
@@ -990,7 +1005,7 @@ html.oldie .container { width: 940px; }
             .mail-subtxt:before{content: "";}
         .mail-date{position: absolute; top: 10px; font-size: 12px; padding: 0; width:auto; right: 10px; float: none;}
         .delete-mail{float:none; position: absolute; top: 45px; right: 10px; padding: 3px 5px; background:#627B9C;}
-    .caja-mj h3 .fecha{float: none; display:block;}
+    .caja-mj h3 .fecha{float: none; display: block; font-size: 12px;}
     /*fin mail*/
 
     .coverPerfil{height: 80px;}

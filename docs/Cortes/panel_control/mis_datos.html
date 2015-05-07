@@ -48,36 +48,75 @@
 						<div class="title">Mis datos</div>
 						<div class="form-public">
                             <div class="inputs">
-                                <label>Titulo</label>
+                                <label>Nombre</label>
                                 <input type="text" class="input-validation-error">
                                 <span class="required">*</span>
-                                <span class="field-validation-error"><span>Completa este dato.</span></span>
+                                <span class="field-validation-error">Completa este dato.</span>
                             </div>
+                            <div class="inputs">
+                                <label>Apellidos</label>
+                                <input type="text">
+                                <span class="required">*</span>
+                            </div>
+                            <div class="inputs">
+                                <label>Email</label>
+                                <input type="text">
+                            </div>
+                            <div class="inputs">
+                                <label>Teléfono</label>
+                                <input type="text">
+                                <span class="required">*</span>
+                            </div>
+                            <div class="inputs_date">
+                            	<label class="label">Fecha de nacimiento</label>
+                            	<div class="date">
+                            		<input type="text" placeholder="dd/mm/aaaa">
+                            		<span class="icon-mail"></span>
+                            	</div>
+                            </div>
+                            <div class="inputs_date">
+                            	<label class="label">Genero</label>
+								<div class="onoffswitch">
+								    <input type="checkbox" id="envios-switch" class="onoffswitch-checkbox" name="envios-switch">
+								    <label for="envios-switch" class="onoffswitch-label">
+								        <span class="onoffswitch-inner"></span>
+								        <span class="onoffswitch-switch"></span>
+								    </label>
+								</div>
+                            </div>
+                            <a class="btn_password" href="javascript:;">Cambiar contraseña</a>
+                            <br>
+                        </div>
+                        <div class="title">Mi moto</div>
+                        <div class="form-public">
                             <div class="inputs">
                                 <label>Marca</label>
                                 <select>
-                                    <option>1</option>
-                                    <option>2</option>
+                                	<option>Selecciona</option>
                                 </select>
                             </div>
                             <div class="inputs">
-                                <label>Tipo de envío</label>
-                                <input type="text">
-                            </div>
-                            <div class="inputs">
-                                <label>Valor del envío</label>
-                                <input type="text">
+                                <label>Referencia</label>
+                                <select>
+                                	<option>Selecciona</option>
+                                </select>
                                 <span class="required">*</span>
                             </div>
-                            <div class="tipo-marca">
-                                <label>Para moto</label>
-                                <ul class="tagit">
-                                    <li>Moto</li>
-                                </ul>
+                            <div class="inputs_mid">
+                                <label>Año</label>
+                                <select>
+                                	<option>Selecciona</option>
+                                </select>
+                                <span class="required">*</span>
+                            </div>
+                            <div class="inputs_mid">
+                                <label>Placa</label>
+                                <input type="text">
                                 <span class="required">*</span>
                             </div>
                             <br>
                         </div>
+                        <div class="btn_2 button-1 right">Guardar</div>
 					</div>
 				</div>
 			</div>
