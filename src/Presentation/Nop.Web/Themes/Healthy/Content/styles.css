@@ -1475,7 +1475,9 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 	.inputs_mid{float: left; margin: 0 0 12px; height: 54px; width:auto;}
 		.inputs_mid label{width: 150px; padding: 0 8px 0 0; position: relative; display:inline-block; text-align: right;}
 		.inputs_mid input[type="text"], .inputs_mid input[type="password"], .inputs_mid select{width:120px !important;}
-
+		.conte_check{ text-align: right;}
+			.conte_check input[type="checkbox"]{margin:0 0 0 30px;}
+			.conte_check label{margin:0 0 0 5px;}
 	/*MAIL*/
 	.msnBody{width: 100%; padding: 20px 0;}
 	.tit_msn{font-size:16px; font-weight: 500; color: #282632; width: 100%; border-bottom:#D8DEE6 solid 1px; padding: 0 0 10px;}
@@ -1543,7 +1545,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 		.conte-spc h3{background: #3B5A83; font-size: 16px; color: #FFF; font-weight: 500; padding: 11px 15px;}
 		.conte-spc h3 span{cursor: pointer;}
 		.conte-spc li{list-style: none; color: #3A5983; padding:15px; font-size: 16px;}
-		.conte-spc li.dos{background: #E8EBF1;}
+		.conte-spc li:nth-child(2n+0){background: #E8EBF1;}
 	.col-producto{float: right; width: 730px;}
 		.col-producto .title{width: 30%; display: inline-block; padding: 0;}
 		.col-producto .title span{cursor: pointer;}
