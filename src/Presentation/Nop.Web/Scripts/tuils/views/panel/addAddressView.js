@@ -1,5 +1,5 @@
-﻿define(['underscore',  'util', 'baseView', 'tuils/models/address'],
-    function (_, TuilsUtilities, BaseView, AddressModel) {
+﻿define(['underscore', 'util', 'baseView', 'tuils/models/address', 'handlebars', 'tuils/views/utilities/selectPointMapView'],
+    function (_, TuilsUtilities, BaseView, AddressModel, Handlebars, MapView) {
 
         var AddAddressView = BaseView.extend({
             events: {
@@ -11,7 +11,9 @@
 
             btnSave: undefined,
 
-            viewMap : undefined,
+            viewMap: undefined,
+
+            template : Handlebars.compile($("#templateOfficeDetail").html()),
 
             bindings: {
                 "#txtName": "Name",
@@ -27,8 +29,8 @@
                 this.vendorId = args.VendorId;
                 this.model = new AddressModel({ 'VendorId': args.VendorId });
                 this.model.on('error', this.errorSaving, this);
-                this.loadControls();
                 this.render();
+                this.loadControls();
             },
             loadControls : function()
             {
@@ -42,11 +44,11 @@
                 this.model.getAddress(id);
             },
             loadMap: function () {
-                var that = this;
-                require(['tuils/views/utilities/selectPointMapView'], function (MapView) {
-                    that.viewMap = new MapView({ el: "#canvasMapAddress" });
-                    that.viewMap.on('set-position', that.setMapPosition, that);
-                });
+                //var that = this;
+                //require(['tuils/views/utilities/selectPointMapView'], function (MapView) {
+                    this.viewMap = new MapView({ el: "#canvasMapAddress" });
+                    this.viewMap.on('set-position', this.setMapPosition, this);
+                //});
             },
             newAddress : function()
             {
@@ -74,6 +76,7 @@
             },
             render : function()
             {
+                this.$el.html(this.template());
                 this.bindValidation();
                 this.stickThem();
                 return this;

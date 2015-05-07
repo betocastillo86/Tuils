@@ -1,4 +1,4 @@
-﻿define(['underscore', 'baseView', 'tuils/models/vendor/vendorHeader', 'util', 'configuration', 'imagedrag'],
+﻿define(['underscore', 'baseView', 'tuils/models/vendor/vendorHeader', 'util', 'configuration'],
     function (_, BaseView, VendorHeaderModel, TuilsUtilities, TuilsConfiguration) {
 
         var VendorHeaderView = BaseView.extend({

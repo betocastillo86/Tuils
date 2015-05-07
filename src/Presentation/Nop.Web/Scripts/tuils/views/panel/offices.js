@@ -18,6 +18,7 @@
 
         accordion : undefined,
 
+
         initialize: function (args)
         {
             this.vendorId = parseInt(this.$("#VendorId").val());
@@ -26,37 +27,69 @@
         loadControls : function()
         {
             this.loadOffices();
-            this.viewAddAddress = new AddressView({ el: "#divOfficeDetail", VendorId: this.vendorId });
-            this.viewAddAddress.on("saved", this.loadOffices, this);
-            this.viewAddAddress.on("back", this.showStep, this);
+            this.accordion = this.$("#divListOffices");
         },
         loadOffices : function()
         {
             this.collection = new AddressCollection();
             this.collection.on("sync", this.showOffices, this);
             this.collection.getOfficesByVendor(this.vendorId);
-            this.showStep(0);
         },
         loadAddress : function(obj)
         {
             var id = parseInt($(obj.target).attr('tuils-id'));
+            
+            if (this.viewAddAddress)
+            {
+                this.viewAddAddress.undelegateEvents();
+                this.viewAddAddress.remove();
+            }
+
+            this.viewAddAddress = new AddressView({ el: isNaN(id) ? "#divNewOffice" : "#divDetail"+id, VendorId: this.vendorId });
+            this.viewAddAddress.on("saved", this.loadOffices, this);
+            this.viewAddAddress.on("back", this.closeAccordion, this);
+            this.$('#divNewOffice').css('display', isNaN(id) ? 'block': 'none');
+
             if (!isNaN(id) && id > 0)
                 this.viewAddAddress.loadAddress(id);
             else
+            {
+                this.accordion.accordion({ active: this.$('.headerAccordion').length - 1 });
                 this.viewAddAddress.newAddress();
-            this.showStep(1);
+            }
+
         },
         removeAddress : function(obj)
         {
-            var id = parseInt($(obj.target).attr('tuils-id'));
-            this.viewAddAddress.deleteById(id);
-        },
-        showStep : function(step){
-            this.$("#officesAccordion").accordion({ active: step });
+            if (confirm("¿Seguro deseas eliminar esta sede?"))
+            {
+                var id = parseInt($(obj.target).attr('tuils-id'));
+                this.viewAddAddress.deleteById(id);
+            }
         },
         showOffices : function(offices)
         {
-            this.$("#divListOffices").html(this.template(offices.toJSON()));
+            this.accordion.html(this.template(offices.toJSON()));
+
+            this.accordion.accordion(
+                {
+                    header: '.headerAccordion',
+                    heightStyle: 'content',
+                    collapsible: true,
+                    active: false,
+                    beforeActivate: function (event, ui) {
+                        //Solo en el caso de darle editar puede abrir puede abrir
+                        if (event.originalEvent)
+                            return event.originalEvent.target.id == "btnEditAddress";
+                        else
+                            return true;
+                    }
+                });
+
+            this.accordion.accordion('refresh');
+        },
+        closeAccordion: function () {
+            this.accordion.accordion({ active: false })
         },
         render: function ()
         {
