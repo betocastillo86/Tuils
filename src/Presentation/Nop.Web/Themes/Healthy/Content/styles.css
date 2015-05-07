@@ -1380,6 +1380,8 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 		.wizard-current:after{position: absolute; top: -6px; right: 0px; content:"/"; z-index: 4; font-weight: 300; font-size: 28px;}
 	.btn_volver{background:url(images/btn_volver.png) no-repeat; display: block; width: 130px; height: 22px; color: #FFF !important; margin: 0 0 10px; padding: 2px 0 0 15px; box-sizing:border-box;}
 
+.master-wrapper-page .center-2.columns.ten .field-validation-error{margin: 0 20px 0 0;}
+
 	.nav-category{list-style: none;}
 	.nav-category li{position:relative; width: 33.3%; max-width:394px; height: 312px; float: left; cursor: pointer; background-image: url(images/img_categorias_gris.svg); background-size: 300% auto; background-repeat: no-repeat; transition:ease ease 0.4s;}
 	.nav-category li span{position: absolute; bottom: 44px; right: 50px; color: #FFF; font-size: 30px; font-weight: 700; text-align: right; text-transform: uppercase; text-shadow:1px 3px 1px rgba(0, 0, 0, 0.6);}
@@ -1440,11 +1442,11 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 		.sub-menu-panel a{border-bottom: 1px solid #F3E4E2; display: block; color: #7F7D84; font-size: 12px; padding: 6px 15px 6px 37px;}
 		.sub-menu-panel a span{background:#FA4C2A; color:#FFF; font-size: 14px; float: right; display: block; font-weight:400; padding:1px 6px; border-radius: 2px;}
 
-.panel-control .title{color:#F84C2A; font-size: 16px; font-weight: 500; margin: 0 0 10px;}
 .img_pf{background:#EBEEF2;}
 .tit_sec{color:#395983; font-size: 20px; font-weight: 500; padding:8px 0;}
 	.img_pf img{width: 100%; height: 100%;}
 .panel-control{}
+	.panel-control .title{color:#F84C2A; font-size: 16px; font-weight: 500; margin: 0 0 10px;}
 	.mail_content{background:#FFF; margin: 0; list-style: none;}
 	.mail_content li{height: 40px; background:#EBEEF2; border-bottom: 1px solid #F5F6F8; cursor: pointer; box-sizing: border-box; transition:ease all 0.4s;}
 	.mail_content li:hover, .mail_content li:active{background:#F2F4F7;}
@@ -1458,6 +1460,23 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 		.delete-mail:hover, .delete-mail:active{background:#FB7055; color:#FFF;}
 	.mail_content li.no-read{background:#F9FAFB; font-weight:700;}
 
+	/*MIS DATOS*/
+	.inputs_date{float: left; margin: 0 0 12px; padding: 0 20px 0 0; height: 54px;}
+		.inputs_date .label{padding: 0 8px 0 0; display: inline-block;}
+		.inputs_date .onoffswitch{display: inline-block; width:90px;}
+			.inputs_date .onoffswitch-switch{right: 58px;}
+			.inputs_date .onoffswitch-inner:before { content: "FEM";}
+			.inputs_date .onoffswitch-inner:after {content: "MAS";}
+		.date{position: relative; width: 135px; background:#F3F5F7; display: inline-block;}
+		.date input{ width: 100%; cursor: pointer;}
+		.date span[class^="icon-"]{width: 25px; font-size: 25px; background: #FB7055; transition:ease all 0.4s; color: #FFF; position: absolute; right: 0; top: 0; cursor: pointer; text-align: center; padding: 6px; border-radius: 2px;}
+	.btn_password{float: right; background: #395983; color: #FFF; border-radius: 2px; transition:ease all 0.4s; padding: 6px 15px; margin: 0 20px 0 0; display:block; position: relative;}
+	.btn_password:hover{background: #284171; color: #FFF;}
+	.inputs_mid{float: left; margin: 0 0 12px; height: 54px; width:auto;}
+		.inputs_mid label{width: 150px; padding: 0 8px 0 0; position: relative; display:inline-block; text-align: right;}
+		.inputs_mid input[type="text"], .inputs_mid input[type="password"], .inputs_mid select{width:120px !important;}
+
+	/*MAIL*/
 	.msnBody{width: 100%; padding: 20px 0;}
 	.tit_msn{font-size:16px; font-weight: 500; color: #282632; width: 100%; border-bottom:#D8DEE6 solid 1px; padding: 0 0 10px;}
 	.tit_msn span{color: #D8DEE6; font-size:15px; text-align: right; float: right; margin:0 0 0 16px; cursor: pointer;}
