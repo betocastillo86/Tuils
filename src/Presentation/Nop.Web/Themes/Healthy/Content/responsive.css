@@ -938,6 +938,11 @@ html.oldie .container { width: 940px; }
 
     /*mis datos*/
     .inputs_date{height: 71px;}
+    /*ventas compras*/
+    .table-header{font-size: 14px;}
+        .table-header div{overflow: hidden; white-space:nowrap; text-overflow: ellipsis;}
+    .td-cal{width:95px;}
+    .td-vend{width:calc(40% - 98px);}
     /*perfil*/
     .coverPerfil{height: 200px;}
     .conte_perfil{height: 40px; margin: 0 15px 7px 0;}
@@ -1005,7 +1010,12 @@ html.oldie .container { width: 940px; }
     .conte_check{ text-align: left;}
         .conte_check input[type="checkbox"]{margin:0;}
         .conte_check label{margin:0 30px 0 5px;}
-
+    /*ventas compras*/
+    .td-img, .td-pdt, .td-vend, .td-cal, .td-prec{font-size: 12px;}
+    .td-pdt{width: calc(50% - 143px);}
+    .td-vend{width: calc(50% - 143px);}
+        .td-vend span{font-size: 10px;}
+    .td-cal{width: 130px;}
     /*mail*/
     .mail_content li{height: 90px; position: relative; padding: 0 0 0 10px;}
         .mail-usuer{width: 80%; padding:10px 0 0; float: none;}
@@ -1039,7 +1049,15 @@ html.oldie .container { width: 940px; }
     .txt-terminos{font-size: 12px;}
     /*mis datos*/
     .conte_check label{margin:10px 0 10px 5px; width:calc(100% - 20px); display:inline-block;}
-    
+    /*ventas compras*/
+    .conte_sale{overflow-x:auto; padding: 0 0 15px; height: auto;}
+        .conte_sale li{width: 710px; min-height: 72px;}
+        .table-header{width: 710px; font-size: 16px;}
+        .table-header .td-img{background:#fb7055; border: none;}
+        .td-img{position:absolute; background: #FFF; border-right:1px solid #e5e5e5;}
+            .td-img:before{content: ""; border-left: 5px #395983 solid; border-bottom: 5px transparent solid; border-top: 5px transparent solid; position: absolute; top:30; right:-5px;}
+        .td-pdt{margin: 0 0 0 70px; width:calc(50% - 148px);}
+        .td-vend{width:calc(50% - 148px);}
 }
 @media screen and (max-width:480px) {
     .wizard-step div, .wizard-current div{display: none;}

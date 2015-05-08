@@ -16,10 +16,6 @@ input,select{vertical-align:middle;}
 br{clear: both;}
 /* END RESET CSS (html5doctor.com) */
 
-
-
-
-
 /* OTHER RESET STYLESHEET (HTML GENERAL) */
 body{text-align:center;font-family: 'Ubuntu', sans-serif;font-size:14px;background:none repeat scroll 0 0 #F6F6F4;color:#5C5B5B;line-height:normal; font-weight: 400;}
 body.popup-window{background:none;}
@@ -1495,8 +1491,8 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 		.conte_sale li{transition:ease all 0.4s; border-bottom:solid 1px #E5E5E5;}
 		.conte_sale li:hover{background:#F9FAFB;}
 		.table-header{background:#FB7055; color: #FFF; font-size: 16px; padding: 5px 0;}
-		.table-header div{padding: 0 5px !important;}
-			.table-header div{float: left;}
+			.table-header div{padding: 0 5px !important; float: left;}
+			.table-header .td-prec{color: #FFF; font-weight: 400;}
 		.td-img, .td-pdt, .td-vend, .td-cal, .td-prec{float: left; padding: 10px 5px; box-sizing:border-box;}
 		.td-img{width:60px; color: transparent;}
 			.td-img img{width: 100%;}
@@ -1506,7 +1502,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 			.td-vend span{display: block; font-size: 12px;}
 		.td-cal{width:150px;}
 			.td-cal a{color: #F94C2A; text-decoration: underline;}
-		.td-prec{width:95px;}
+		.td-prec{width:95px; color:#F94C2A; font-weight: 500;}
 
 	.items-ctl{margin:0; list-style: none; color: #395983;}
 	.items-ctl li{float: left; margin: 0 20px 0 0;}
