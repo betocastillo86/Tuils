@@ -44,11 +44,8 @@
                 this.model.getAddress(id);
             },
             loadMap: function () {
-                //var that = this;
-                //require(['tuils/views/utilities/selectPointMapView'], function (MapView) {
-                    this.viewMap = new MapView({ el: "#canvasMapAddress" });
-                    this.viewMap.on('set-position', this.setMapPosition, this);
-                //});
+                this.viewMap = new MapView({ el: "#canvasMapAddress" });
+                this.viewMap.on('set-position', this.setMapPosition, this);
             },
             newAddress : function()
             {

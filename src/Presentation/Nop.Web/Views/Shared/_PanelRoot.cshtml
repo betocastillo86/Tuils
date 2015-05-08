@@ -1,0 +1,86 @@
+﻿@{
+    Layout = "~/Views/Shared/_Root.Head.cshtml";
+    //added
+    var browser = Request.Browser;
+    //added
+}
+@Html.Widget("body_start_html_tag_after")
+@Html.Partial("_Notifications")
+@Html.Action("AdminHeaderLinks", "Common")
+@*added*@
+@if ((browser.Browser == "IE" && browser.MajorVersion > 8) || browser.Browser != "IE")
+{
+    <header class="row" role="banner">
+        <div class="header-links-wrapper">
+            <div class="container hd">
+                @Html.Action("HeaderLinks", "Common")
+            </div>
+        </div>
+        <div class="container hd">
+           @* @Html.Partial("Header")*@
+        </div>
+        @*<div class="header-menu">@Html.Widget("content_before")</div>*@
+    </header>
+}
+
+    @*@added*@
+    <div class="master-wrapper-page container hd">
+        @Html.Action("JavaScriptDisabledWarning", "Common")
+        <div class="master-wrapper-content">
+
+            @if (browser.Browser == "IE" && browser.MajorVersion < 9)
+            {
+                @Html.Partial("Header")
+                @Html.Widget("content_before")
+            }
+
+                @if (IsSectionDefined("ContentSliderSection"))
+                {
+                    @RenderSection("ContentSliderSection")
+                }
+
+
+                    <div class="master-wrapper-main">
+                        @RenderBody()
+                    </div>
+
+                    @Html.Widget("content_after")
+                </div>
+                @if (browser.Browser == "IE" && browser.MajorVersion < 9)
+                {
+                    @Html.Action("Footer", "Common")
+                }
+
+                </div>
+
+                @Html.Action("EuCookieLaw", "Common")
+                @*added*@
+                @if ((browser.Browser == "IE" && browser.MajorVersion > 8) || browser.Browser != "IE")
+                {
+                    <footer class="row" role="banner">
+                        <div class="container hd">
+                            @Html.Action("Footer", "Common")
+                        </div>
+                        <div class="footer_down">
+                            @*@added*@
+                            <div class="footer-poweredby">
+                                Powered by <a href="http://www.nopcommerce.com/">nopCommerce</a>
+                                @*Would you like to remove the "Powered by nopCommerce" link in the bottom of the footer?
+                                    Find more info here http://www.nopcommerce.com/copyrightremoval.aspx*@
+                                @*added*@
+                                Designed by <a title="nopCommerce themes" href="http://www.n-theme.com/">N-Theme</a>
+                                @*@added*@
+                            </div>
+                            <div class="footer-disclaimer">
+                                @*@T("Content.CopyrightNotice", DateTime.Now.Year.ToString(), @Model.StoreName)*@
+                                @T("Content.CopyrightNotice", DateTime.Now.Year.ToString(), "tuils")
+                            </div>
+                            <div class="footer-store-theme">
+                                @Html.Action("StoreThemeSelector", "Common")
+                            </div>
+                            @Html.Widget("footer")
+                        </div>
+                    </footer>
+                }
+                @*added*@
+                @Html.Widget("body_end_html_tag_before")

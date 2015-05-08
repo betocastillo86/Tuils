@@ -17,6 +17,8 @@ using Nop.Core.Domain.Customers;
 using Nop.Services.Authentication;
 using Nop.Core.Domain.Catalog;
 using Nop.Services.Messages;
+using Nop.Services.ControlPanel;
+using Nop.Core.Domain.ControlPanel;
 
 namespace Nop.Web.Controllers
 {
@@ -34,6 +36,7 @@ namespace Nop.Web.Controllers
         private readonly IGenericAttributeService _genericAttributeService;
         private readonly INewsLetterSubscriptionService _newsLetterSubscriptionService;
         private readonly IStoreContext _storeContext;
+        private readonly IControlPanelService _controlPanelService;
         #endregion
 
         #region Ctor
@@ -46,7 +49,8 @@ namespace Nop.Web.Controllers
             IAuthenticationService authenticationService,
             IGenericAttributeService genericAttributeService,
             INewsLetterSubscriptionService newsLetterSubscriptionService,
-            IStoreContext storeContext)
+            IStoreContext storeContext,
+            IControlPanelService controlPanelService)
         {
             this._customerService = customerService;
             this._workContext = workContext;
@@ -58,6 +62,7 @@ namespace Nop.Web.Controllers
             this._genericAttributeService = genericAttributeService;
             this._newsLetterSubscriptionService = newsLetterSubscriptionService;
             this._storeContext = storeContext;
+            this._controlPanelService = controlPanelService;
         }
         #endregion
         public ActionResult Index()
@@ -92,6 +97,10 @@ namespace Nop.Web.Controllers
                         _customerRegistrationService.SetEmail(customer, model.Email.Trim());
                         _authenticationService.SignIn(customer, true);
                     }
+                    
+                    //Actualiza el valor del genero
+                    model.Gender = model.Gender == null ? "M" : "F";
+
                     //Guarda los atributos
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.Gender, model.Gender); 
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.FirstName, model.FirstName);
@@ -113,9 +122,6 @@ namespace Nop.Web.Controllers
             {
                 ModelState.AddModelError("", exc.Message);
             }
-
-
-            
 
             model = GetModelMyAccount(model);
 
@@ -145,6 +151,55 @@ namespace Nop.Web.Controllers
             model.VendorId = _workContext.CurrentVendor.Id;
             return View(model);
         }
+        #endregion
+
+        
+        #region Menu
+        [ChildActionOnly]
+        public ActionResult Menu() 
+        {
+            var model = new MenuModel();
+            model.Modules = this._controlPanelService.GetModulesActiveUser();
+
+            //Busca cual es el modulo actual
+            string parentModule = string.Empty;
+            model.SelectedModule = GetCurrentModule(model.Modules, ref parentModule);
+            model.SelectedParentModule = parentModule;
+
+            return PartialView("_Menu", model);
+        }
+
+        /// <summary>
+        /// Retorna el modulo seleccionado actualmente, por referencia envia el modulo padre seleccionado
+        /// </summary>
+        /// <param name="modules"></param>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        private string GetCurrentModule(List<ControlPanelModule> modules, ref string parent)
+        {
+            string currentAction = ControllerContext.ParentActionViewContext.RouteData.Values["action"].ToString();
+            string currentController = ControllerContext.ParentActionViewContext.RouteData.Values["controller"].ToString();
+            foreach (var module in modules)
+            {
+                parent = module.Name;
+                if (module.Action.Equals(currentAction) && module.Controller.Equals(currentController))
+                    return module.Name;
+                else
+                {
+                    //Si no es de tipo padre recorre los submodulos
+                    foreach (var sm in module.SubModules)
+                    {
+                        if (sm.Action.Equals(currentAction) && sm.Controller.Equals(currentController))
+                            return module.Name;
+                    }
+                }
+
+            }
+            return string.Empty;
+        }
+
+
+        
         #endregion
     }
 }

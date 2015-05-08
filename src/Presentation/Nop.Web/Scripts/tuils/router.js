@@ -6,6 +6,7 @@
 
             //listado de vistas comunes
             viewHeader: undefined,
+            viewLeftMenu : undefined,
 
             //el por defecto para las vistas
             defaultEl: "#divMainSection",
@@ -49,15 +50,19 @@
                 require(['tuils/views/panel/myAccount'], function (MyAccountView) {
                     that.currentView = new MyAccountView({ el: that.defaultEl });
                 });
+                this.loadSubViewsPanel();
             },
             myOffices: function () {
                 var that = this;
                 require(['tuils/views/panel/offices'], function (OfficesView) {
                     that.currentView = new OfficesView({ el: that.defaultEl });
                 });
+                this.loadSubViewsPanel();
             },
             vendor : function(query)
             {
+                $(".master-wrapper-main").removeClass("master-wrapper-main");
+                $(".master-wrapper-page").removeClass("master-wrapper-page").removeClass("container").removeClass("hd");
                 var that = this;
                 require(['tuils/views/vendor/vendorDetailView'], function (VendorDetailView) {
                     that.currentView = new VendorDetailView({ el: that.defaultEl });
@@ -72,6 +77,12 @@
                     that.currentView.on('unauthorized', that.viewHeader.showLogin, that.viewHeader);
                     //atacha a la vista actual al evento cuando el usuario se autenticó
                     that.viewHeader.on('user-authenticated', that.currentView.userAuthenticated, that.currentView);
+                });
+            },
+            loadSubViewsPanel: function () {
+                var that = this;
+                require(['tuils/views/panel/menu'], function (MenuPanelView) {
+                    that.viewLeftMenu = new MenuPanelView({ el : ".menu-panel" });
                 });
             }
         });

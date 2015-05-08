@@ -2,7 +2,8 @@
     var MyAccountView = BaseView.extend({
 
         events : {
-            "change #BikeBrandId" : "loadReferences"
+            "change #BikeBrandId": "loadReferences",
+            'click #divDateOfBirth .datepickerButton': 'showDatepicker'
         },
 
         ddlBikeBrand: undefined,
@@ -29,6 +30,9 @@
                 this.ddlBikeReference.empty();
             }
             
+        },
+        showDatepicker: function () {
+            this.$("#DateOfBirth").datepicker('show');
         },
         showReferences: function (category) {
             TuilsUtilities.loadDropDown(this.ddlBikeReference, category.toJSON().ChildrenCategories);

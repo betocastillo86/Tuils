@@ -102,6 +102,7 @@
     <Compile Include="Domain\Common\SearchTermReportLine.cs" />
     <Compile Include="Domain\Common\SearchTerm.cs" />
     <Compile Include="Domain\Common\TuilsSettings.cs" />
+    <Compile Include="Domain\ControlPanel\ControlPanelModule.cs" />
     <Compile Include="Domain\Customers\CustomerAttribute.cs" />
     <Compile Include="Domain\Customers\CustomerAttributeValue.cs" />
     <Compile Include="Domain\Customers\CustomerLoginResults.cs" />

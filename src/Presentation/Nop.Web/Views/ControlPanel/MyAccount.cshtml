@@ -2,159 +2,124 @@
 @using Nop.Web.Models.Customer;
 @using Nop.Core;
 @{
-    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+    Layout = "~/Views/Shared/_PanelLayoutOne.cshtml";
     Html.AddTitleParts(T("PageTitle.Account").Text);
 }
 
 <script data-main="/scripts/tuils/main" src="~/Scripts/require.js"></script>
 
-<div id="divMainSection" class="page account-page customer-info-page">
-    <div class="page-title">
-        <h1>@T("Account.MyAccount") - @T("Account.CustomerInfo")</h1>
-    </div>
-    <div class="page-body">
-        @using (Html.BeginForm())
-        {
+
+<div id="divMainSection" class="panel-control">
+    <h2 class="tit_sec">@T("Account.MyAccount") - @T("Account.CustomerInfo")</h2>
+    <p>@T("Account.DescriptionSection")</p>
+
+    @using (Html.BeginForm())
+    {
 
 
-            @Html.AntiForgeryToken()
-            <div class="message-error">
-                @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+        <div class="message-error">
+            @Html.ValidationSummary(true)
+        </div>
+
+
+        <div class="title">@T("Account.YourPersonalDetails")</div>
+        <div class="form-public">
+            <div class="inputs">
+                @Html.LabelFor(model => model.FirstName, new { }, ":")
+                @Html.EditorFor(model => model.FirstName)
+                @Html.RequiredHint()
+                @Html.ValidationMessageFor(model => model.FirstName)
             </div>
-            <div class="fieldset">
-                <div class="title">
-                    <strong>@T("Account.YourPersonalDetails")</strong>
-                </div>
-                <div class="form-fields">
+        </div>
+        <div class="inputs">
+            @Html.LabelFor(model => model.LastName, new { }, ":")
+            @Html.EditorFor(model => model.LastName)
+            @Html.RequiredHint()
+            @Html.ValidationMessageFor(model => model.LastName)
+        </div>
 
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.FirstName, new { }, ":")
-                        @Html.EditorFor(model => model.FirstName)
-                        @Html.RequiredHint()
-                        @Html.ValidationMessageFor(model => model.FirstName)
-                    </div>
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.LastName, new { }, ":")
-                        @Html.EditorFor(model => model.LastName)
-                        @Html.RequiredHint()
-                        @Html.ValidationMessageFor(model => model.LastName)
-                    </div>
+        <div class="inputs">
+            @Html.LabelFor(model => model.Email, new { }, ":")
+            @Html.EditorFor(model => model.Email)
+            @Html.RequiredHint()
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+        <div class="inputs">
+            @Html.LabelFor(model => model.StateProvinceId, new { }, ":")
+            @Html.DropDownListFor(model => model.StateProvinceId, new SelectList(Model.States, "Id", "Name", Model.StateProvinceId), "-")
+            @Html.RequiredHint()
+            @Html.ValidationMessageFor(model => model.StateProvinceId)
+        </div>
+        <div class="inputs">
+            @Html.LabelFor(model => model.Phone, new { }, ":")
+            @Html.EditorFor(model => model.Phone, new { tuils_val = "int" })
+            @Html.ValidationMessageFor(model => model.Phone)
+        </div>
+        <div class="inputs">
+            @Html.LabelFor(model => model.Newsletter, new { }, ":")
+            @Html.EditorFor(model => model.Newsletter)
+            @Html.ValidationMessageFor(model => model.Newsletter)
+        </div>
 
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.Email, new { }, ":")
-                        @Html.EditorFor(model => model.Email)
-                        @Html.RequiredHint()
-                        @Html.ValidationMessageFor(model => model.Email)
-                    </div>
-
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.StateProvinceId, new { }, ":")
-                        @Html.DropDownListFor(model => model.StateProvinceId, new SelectList(Model.States, "Id", "Name", Model.StateProvinceId), "-")
-                        @Html.RequiredHint()
-                        @Html.ValidationMessageFor(model => model.StateProvinceId)
-                    </div>
-
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.DateOfBirth, new { }, ":")
-                        @Html.TextBoxFor(model => model.DateOfBirth, "{0:MM/dd/yyyy}", new { tuils_val = "none" })
-                        @Html.RequiredHint()
-                        @Html.ValidationMessageFor(model => model.DateOfBirth)
-                    </div>
-                    
-                    <div class="inputs">
-                        <label>@T("Account.Fields.Gender"):</label>
-                        <div class="gender">
-                            @Html.RadioButton("Gender", "M", (Model.Gender == "M"), new { id = "gender-male" })
-                            <label class="forcheckbox" for="gender-male">@T("Account.Fields.Gender.Male")</label>
-                        </div>
-                        <div class="gender">
-                            @Html.RadioButton("Gender", "F", (Model.Gender == "F"), new { id = "gender-female" })
-                            <label class="forcheckbox" for="gender-female">@T("Account.Fields.Gender.Female")</label>
-                        </div>
-                    </div>
-                    <div class="clear"></div>
-                    <div>
-                        @Html.ActionLink(T("account.changepassword").Text, "ChangePassword", "Customer", new{},  new { @class = "button-1" })
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="fieldset">
-                <div class="title">
-                    <strong>@T("Account.YourContactInformation")</strong>
-                </div>
-                <div class="form-fields">
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.Phone, new { }, ":")
-                        @Html.EditorFor(model => model.Phone, new { tuils_val = "int" })
-                        @Html.ValidationMessageFor(model => model.Phone)
-                    </div>
-                </div>
-            </div>
-
-            <div class="fieldset">
-                <div class="title">
-                    <strong>@T("Account.Options")</strong>
-                </div>
-                <div class="form-fields">
-
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.Newsletter, new { }, ":")
-                        @Html.EditorFor(model => model.Newsletter)
-                        @Html.ValidationMessageFor(model => model.Newsletter)
-                    </div>
-
-                </div>
-            </div>
-            
-            
-            <div class="fieldset">
-                <div class="title">
-                    <strong>@T("Account.MyBike")</strong>
-                </div>
-                <div class="form-fields">
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.BikeBrandId, new { }, ":")
-                        @Html.DropDownListFor(model => model.BikeBrandId, new SelectList(Model.BikeBrands, "Id", "Name"), "-")
-                        
-                    </div>
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.BikeReferenceId, new { }, ":")
-                        @Html.DropDownListFor(model => model.BikeReferenceId, new SelectList(Model.BikeReferences, "Id", "Name"), "-")
-                    </div>
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.BikeYear, new { }, ":")
-                        @Html.DropDownNumbersFor(model => model.BikeYear,DateTime.Now.Year, 1980, "-")
-                    </div>
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.BikeCarriagePlate, new { }, ":")
-                        @Html.TextBoxFor(model => model.BikeCarriagePlate, new { maxLength = 7 })
-                        @Html.ValidationMessageFor(model => model.BikeCarriagePlate)
-                    </div>
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.NewsletterBrand, new { }, ":")
-                        @Html.EditorFor(model => model.NewsletterBrand)
-                    </div>
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.NewsletterReference, new { }, ":")
-                        @Html.EditorFor(model => model.NewsletterReference)
-                    </div>
-                </div>
-            </div>
-            
-            
-            <div class="buttons">
-                <input type="submit" value="@T("Common.Save")" name="save-info-button" class="button-1 save-customer-info-button" />
-            </div>
-
-
-        }
-
-
+    <div class="inputs" id="divDateOfBirth">
+        @Html.LabelFor(model => model.DateOfBirth, new { }, ":")
+        <div class="date">
+            @Html.TextBoxFor(model => model.DateOfBirth, "{0:MM/dd/yyyy}", new { tuils_val = "none" })
+            <span class="icon-mail datepickerButton"></span>
+        </div>
+        @Html.RequiredHint()
+        @Html.ValidationMessageFor(model => model.DateOfBirth)
     </div>
 
+        <div class="inputs_date">
+            <label class="label">@T("Account.Fields.Gender")</label>
+            <div class="onoffswitch">
+                <input type="checkbox" id="Gender" class="onoffswitch-checkbox" name="Gender" @(Model.Gender.Equals("F") ? "checked" : string.Empty)>
+                <label for="Gender" class="onoffswitch-label">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+        </div>
 
+        @Html.ActionLink(T("account.changepassword").Text, "ChangePassword", "Customer", new { }, new { @class = "btn_password" })
+        <br>
+
+
+
+        <div class="title">@T("Account.MyBike")</div>
+
+        <div class="form-public">
+            <div class="inputs">
+                @Html.LabelFor(model => model.BikeBrandId, new { }, ":")
+                @Html.DropDownListFor(model => model.BikeBrandId, new SelectList(Model.BikeBrands, "Id", "Name"), "-")
+
+            </div>
+            <div class="inputs">
+                @Html.LabelFor(model => model.BikeReferenceId, new { }, ":")
+                @Html.DropDownListFor(model => model.BikeReferenceId, new SelectList(Model.BikeReferences, "Id", "Name"), "-")
+            </div>
+            <div class="inputs">
+                @Html.LabelFor(model => model.BikeYear, new { }, ":")
+                @Html.DropDownNumbersFor(model => model.BikeYear, DateTime.Now.Year, 1980, "-")
+            </div>
+            <div class="inputs_mid">
+                @Html.LabelFor(model => model.BikeCarriagePlate, new { }, ":")
+                @Html.TextBoxFor(model => model.BikeCarriagePlate, new { maxLength = 7 })
+                @Html.ValidationMessageFor(model => model.BikeCarriagePlate)
+            </div>
+            <br>
+        </div>
+        <div class="conte_check">
+            @Html.EditorFor(model => model.NewsletterBrand) @Html.LabelFor(model => model.NewsletterBrand, new { }, ":")
+            @Html.EditorFor(model => model.NewsletterReference) @Html.LabelFor(model => model.NewsletterReference, new { }, ":")
+        </div>
+
+
+        <input type="submit" value="@T("Common.Save")" name="save-info-button" class="btn_2 button-1 right" />
+
+    }
 
 </div>
 

@@ -322,6 +322,7 @@
     <Compile Include="Models\Common\StoreThemeModel.cs" />
     <Compile Include="Models\Common\LanguageSelectorModel.cs" />
     <Compile Include="Models\Common\SitemapModel.cs" />
+    <Compile Include="Models\ControlPanel\MenuModel.cs" />
     <Compile Include="Models\ControlPanel\MyAccountModel.cs" />
     <Compile Include="Models\ControlPanel\OfficesModel.cs" />
     <Compile Include="Models\Customer\CustomerAttributeModel.cs" />
@@ -1002,8 +1003,6 @@
     <Content Include="Scripts\handlebars.runtime.amd.min.js" />
     <Content Include="Scripts\handlebars.runtime.js" />
     <Content Include="Scripts\handlebars.runtime.min.js" />
-    <Content Include="Scripts\jquery.imagedrag.js" />
-    <Content Include="Scripts\jquery.imagedrag.min.js" />
     <Content Include="Scripts\tuils\collections\addresses.js" />
     <Content Include="Scripts\tuils\collections\categories.js" />
     <Content Include="Scripts\tuils\collections\files.js" />
@@ -1030,6 +1029,7 @@
     <Content Include="Scripts\tuils\views\login\createUser.js" />
     <Content Include="Scripts\tuils\views\login\login.js" />
     <Content Include="Scripts\tuils\views\panel\addAddressView.js" />
+    <Content Include="Scripts\tuils\views\panel\menu.js" />
     <Content Include="Scripts\tuils\views\panel\myAccount.js" />
     <Content Include="Scripts\tuils\views\panel\offices.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
@@ -2384,6 +2384,9 @@
     <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Header.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Offices.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Reviews.cshtml" />
+    <Content Include="Views\Shared\_PanelLayoutOne.cshtml" />
+    <Content Include="Views\Shared\_PanelRoot.cshtml" />
+    <Content Include="Views\ControlPanel\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
