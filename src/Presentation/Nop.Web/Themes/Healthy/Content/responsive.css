@@ -901,6 +901,9 @@ html.oldie .container { width: 940px; }
     .master-wrapper-page .center-2.columns.ten .inputs label{width: 120px;}
     .master-wrapper-page .center-2.columns.ten .field-validation-error{margin: 0 12px 0 0;}
 
+    /*panel de contrlo*/
+    .panel-items li{height: 155px;}
+
     .nav-category li{height: 248px;}
     .nav-category li span{bottom: 34px; right: 40px; font-size: 23px;}
     .category-container{width: 600px;}
@@ -915,6 +918,7 @@ html.oldie .container { width: 940px; }
     /*mis datos*/
     .inputs_mid input[type="text"], .inputs_mid input[type="password"], .inputs_mid select{width: auto;}
     .inputs_mid label{width: 120px; padding: 0 8px 0 0; position: relative; display:inline-block; text-align: right;}
+    /*fin panel de control*/
 }
 @media screen and (max-width:960px) {
     input[type="text"],input[type="password"], select{width:300px;}
@@ -925,6 +929,8 @@ html.oldie .container { width: 940px; }
     .master-wrapper-page .center-2.columns.ten input[type="text"], .master-wrapper-page .center-2.columns.ten select{width: 235px;}
     .master-wrapper-page .center-2.columns.ten .field-validation-error{margin: 0 20px 0 0;}
 
+    /*panel de contrlo*/
+    .panel-items li{width: calc(25% - 25px);}
     .wizard-breadcrumb li{padding:6px; box-sizing:border-box;}
     .wizard-current{font-size: 13px;}
         .wizard-step:before{border-bottom: 28px solid #F6F9FD;}
@@ -963,13 +969,15 @@ html.oldie .container { width: 940px; }
         .col-producto .product-grid .item-box{width: 25%;}
         .col-producto .title{padding: 10px 10px 10px 0;}
         .search-pdt{width: calc(70% - 14px)}
+    /*fin panel de control*/
 }
 @media screen and (max-width:768px) {
     input[type="text"],input[type="password"], select{width:calc(100% - 20px);}
     .field-validation-error{margin:0 20px 0 0;}
     .master-wrapper-page .center-2.columns.ten input[type="text"], .master-wrapper-page .center-2.columns.ten select{width:calc(100% - 20px);}
 
-
+    /*panel de contrlo*/
+    .panel-items li{ font-size: 18px; height: 150px;}
     .category-view{display: none;}
     .category-container{width: 100%; padding-left: 0;}
     .category-column{width: calc(33.3% - 15px)}
@@ -990,11 +998,13 @@ html.oldie .container { width: 940px; }
     .tit-perfil{margin:0 0 0 160px;}
     .pr-perfil{margin: 0 0 0 160px;}
         .pr-perfil textarea{width: 100%;}
+    /*fin panel de contrlo*/
 }
 @media screen and (max-width:640px) {
     input[type="text"],input[type="password"], select{width:calc(100% - 10px);}
     .inputs{width: 100%; margin: 0 0 5px;}
 
+    /*panel de contrlo*/
     .product-grid .item-box{width: 50%;}
     .nav-category li{height: 162px;}
     .nav-category li span{bottom: 20px; right: 27px; font-size: 16px;}
@@ -1041,12 +1051,17 @@ html.oldie .container { width: 940px; }
             .pr-perfil p{color:#525259; height: auto;}
             .pr-perfil textarea{background: #FFF;}
     .col-producto .product-grid .item-box{width: 33.3%;}
+    /*fin panel de control*/
 }
 @media screen and (max-width:600px) {
     .nav-category li{height: 152px; }
 
     .picture-uploader{font-size: 12px;}
     .txt-terminos{font-size: 12px;}
+
+    /*panel de contrlo*/
+    .panel-items li{float: none; width: 100%; margin:0 0 15px; text-align: left; height: auto; padding: 15px;}
+        .panel-items li span{font-size: 30px; width: 30px; float:left; text-align:center; margin: 0 10px 0 0;}
     /*mis datos*/
     .conte_check label{margin:10px 0 10px 5px; width:calc(100% - 20px); display:inline-block;}
     /*ventas compras*/
@@ -1058,6 +1073,7 @@ html.oldie .container { width: 940px; }
             .td-img:before{content: ""; border-left: 5px #395983 solid; border-bottom: 5px transparent solid; border-top: 5px transparent solid; position: absolute; top:30; right:-5px;}
         .td-pdt{margin: 0 0 0 70px; width:calc(50% - 148px);}
         .td-vend{width:calc(50% - 148px);}
+    /*fin panel de contrlo*/
 }
 @media screen and (max-width:480px) {
     .wizard-step div, .wizard-current div{display: none;}
