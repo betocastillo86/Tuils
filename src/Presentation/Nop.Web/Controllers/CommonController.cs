@@ -38,6 +38,7 @@ using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Common;
 using Nop.Web.Models.Topics;
+using Nop.Core.Domain.Vendors;
 
 namespace Nop.Web.Controllers
 {
@@ -829,6 +830,10 @@ namespace Nop.Web.Controllers
                     },
                     specialCategories = new {
                         bikeBrand = (int) SpecialCategoryProductType.BikeBrand
+                    },
+                    specialCategoriesVendor = new {
+                        bikeBrand = (int)SpecialCategoryVendorType.BikeBrand,
+                        specializedCategory = (int)SpecialCategoryVendorType.SpecializedCategory
                     },
                     maxFileUploadSize = _tuilsSettings.maxFileUploadSize
                 }

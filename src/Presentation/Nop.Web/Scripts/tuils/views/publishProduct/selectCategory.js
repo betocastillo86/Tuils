@@ -57,8 +57,9 @@
             loadChildrenCategories: function (parentId) {
                 var category = new CategoryModel();
                 category.on("sync", this.showCategories, this);
-                category.get(this.currentCategory);
+                category.getCategory(this.currentCategory);
                 this.showLoading(category, true);
+                
             },
             loadDefaultCategories: function () {
                 this.currentCategory = this.productType;

@@ -92,5 +92,7 @@ namespace Nop.Services.Vendors
         /// <param name="vendorId"></param>
         /// <returns></returns>
         IList<ProductReview> GetReviewsByVendorId(int vendorId);
+
+        bool InsertUpdateVendorSpecialCategories(int vendorId, IList<SpecialCategoryVendor> specialCategories);
     }
 }

@@ -237,6 +237,7 @@
     <Compile Include="Extensions\AttributeParserHelper.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
+    <Compile Include="Extensions\ListExtenstions.cs" />
     <Compile Include="Extensions\MappingExtensions.cs" />
     <Compile Include="Extensions\MvcHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -325,6 +326,7 @@
     <Compile Include="Models\ControlPanel\MenuModel.cs" />
     <Compile Include="Models\ControlPanel\MyAccountModel.cs" />
     <Compile Include="Models\ControlPanel\OfficesModel.cs" />
+    <Compile Include="Models\ControlPanel\VendorServicesModel.cs" />
     <Compile Include="Models\Customer\CustomerAttributeModel.cs" />
     <Compile Include="Models\Catalog\CustomerBackInStockSubscriptionsModel.cs" />
     <Compile Include="Models\Boards\CustomerForumSubscriptionsModel.cs" />
@@ -1032,6 +1034,7 @@
     <Content Include="Scripts\tuils\views\panel\menu.js" />
     <Content Include="Scripts\tuils\views\panel\myAccount.js" />
     <Content Include="Scripts\tuils\views\panel\offices.js" />
+    <Content Include="Scripts\tuils\views\panel\vendorServices.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
     <Content Include="Scripts\tuils\views\utilities\imagesSelectorView.js" />
@@ -2387,6 +2390,7 @@
     <Content Include="Views\Shared\_PanelLayoutOne.cshtml" />
     <Content Include="Views\Shared\_PanelRoot.cshtml" />
     <Content Include="Views\ControlPanel\_Menu.cshtml" />
+    <Content Include="Views\ControlPanel\VendorServices.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

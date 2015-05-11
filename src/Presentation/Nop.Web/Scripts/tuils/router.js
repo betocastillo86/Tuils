@@ -16,8 +16,10 @@
                 "quiero-vender/moto": "sellBike",
                 "quiero-vender/servicio-especializado": "sellService",
                 "datos-basicos": "myAccount",
-                "ControlPanel/Offices" : "myOffices",
+                "ControlPanel/Offices": "myOffices",
+                "ControlPanel/VendorServices": "vendorServices",
                 "v/:query" : "vendor"
+
             },
 
             sellProduct: function () {
@@ -58,6 +60,12 @@
                     that.currentView = new OfficesView({ el: that.defaultEl });
                 });
                 this.loadSubViewsPanel();
+            },
+            vendorServices: function () {
+                var that = this;
+                require(['tuils/views/panel/vendorServices'], function (VendorServicesView) {
+                    that.currentView = new VendorServicesView({ el: that.defaultEl });
+                });
             },
             vendor : function(query)
             {

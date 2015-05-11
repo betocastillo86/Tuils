@@ -118,7 +118,16 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="productCategory">>Product category mapping</param>
         void UpdateProductCategory(ProductCategory productCategory);
-
+        /// <summary>
+        /// Retorna todas las referencias de motocicletas existentes en el sistema como categorias
+        /// </summary>
+        /// <param name="categoryBrandId"></param>
+        /// <returns></returns>
         IList<Category> GetAllBikeReferences(int? categoryBrandId);
+        /// <summary>
+        /// Retorna todos los servicios existentes en el sistema
+        /// </summary>
+        /// <returns></returns>
+        IList<Category> GetAllServices();
     }
 }

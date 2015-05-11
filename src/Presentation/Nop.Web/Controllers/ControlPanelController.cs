@@ -19,6 +19,9 @@ using Nop.Core.Domain.Catalog;
 using Nop.Services.Messages;
 using Nop.Services.ControlPanel;
 using Nop.Core.Domain.ControlPanel;
+using Nop.Services.Vendors;
+using Nop.Web.Extensions;
+using Nop.Core.Domain.Vendors;
 
 namespace Nop.Web.Controllers
 {
@@ -37,6 +40,7 @@ namespace Nop.Web.Controllers
         private readonly INewsLetterSubscriptionService _newsLetterSubscriptionService;
         private readonly IStoreContext _storeContext;
         private readonly IControlPanelService _controlPanelService;
+        private readonly IVendorService _vendorService;
         #endregion
 
         #region Ctor
@@ -50,7 +54,8 @@ namespace Nop.Web.Controllers
             IGenericAttributeService genericAttributeService,
             INewsLetterSubscriptionService newsLetterSubscriptionService,
             IStoreContext storeContext,
-            IControlPanelService controlPanelService)
+            IControlPanelService controlPanelService,
+            IVendorService vendorService)
         {
             this._customerService = customerService;
             this._workContext = workContext;
@@ -63,6 +68,7 @@ namespace Nop.Web.Controllers
             this._newsLetterSubscriptionService = newsLetterSubscriptionService;
             this._storeContext = storeContext;
             this._controlPanelService = controlPanelService;
+            this._vendorService = vendorService;
         }
         #endregion
         public ActionResult Index()
@@ -153,7 +159,60 @@ namespace Nop.Web.Controllers
         }
         #endregion
 
-        
+        #region Verdor Services
+        public ActionResult VendorServices()
+        {
+            if (_workContext.CurrentVendor != null)
+            {
+                int vendorId = _workContext.CurrentVendor.Id;
+                var model = new VendorServicesModel();
+                var specialCategories = _vendorService.GetSpecialCategoriesByVendorId(vendorId);
+                model.SpecializedCategories = specialCategories.Where(c => c.SpecialType == Core.Domain.Vendors.SpecialCategoryVendorType.SpecializedCategory)
+                    .Select(c => c.CategoryId)
+                    .ToList();
+                model.BikeReferences = specialCategories.Where(c => c.SpecialType == Core.Domain.Vendors.SpecialCategoryVendorType.BikeBrand)
+                    .Select(c => c.CategoryId)
+                    .ToList();
+                model.SpecializedCategoriesString = model.SpecializedCategories.ToStringSeparatedBy();
+                model.BikeReferencesString = model.BikeReferences.ToStringSeparatedBy();
+
+                return View(model);
+            }
+            else
+                return HttpNotFound();
+        }
+
+        [HttpPost]
+        public ActionResult VendorServices(VendorServicesModel model)
+        {
+            
+            if(_workContext.CurrentVendor != null)
+            {
+                //Toma la cadena separada por comas y crea una lista de categorias relacinoadas
+                var bikeReferences = model.BikeReferencesString
+                .Split(new char[]{ ',' })
+                .ToList()
+                .Select(c => new SpecialCategoryVendor() { CategoryId = Convert.ToInt32(c), VendorId = _workContext.CurrentVendor.Id, SpecialType = SpecialCategoryVendorType.BikeBrand  });
+
+                var specializedCategories = model.SpecializedCategoriesString
+                .Split(new char[]{ ',' })
+                .ToList()
+                .Select(c => new SpecialCategoryVendor() { CategoryId = Convert.ToInt32(c), VendorId = _workContext.CurrentVendor.Id, SpecialType = SpecialCategoryVendorType.SpecializedCategory  });
+
+                //Concatena las dos listas anteriores y las envía a ser actualizadas
+                _vendorService.InsertUpdateVendorSpecialCategories(_workContext.CurrentVendor.Id, bikeReferences.Concat(specializedCategories).ToList());
+
+                return View(model);
+            }
+            else
+            {
+                return this.HttpNotFound();
+            }
+
+        }
+        #endregion
+
+
         #region Menu
         [ChildActionOnly]
         public ActionResult Menu() 

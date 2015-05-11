@@ -300,6 +300,69 @@ namespace Nop.Services.Vendors
 
             return query.ToList();
         }
+
+        /// <summary>
+        /// Inserta o actualiza todas las categorias especiales relacionadas con un vendedor
+        /// </summary>
+        /// <param name="specialCategories"></param>
+        /// <returns></returns>
+        public bool InsertUpdateVendorSpecialCategories(int vendorId, IList<SpecialCategoryVendor> specialCategories)
+        {
+            //Consulta las categorias anteriores y debe realizar una comparación de cuales son nuevas y eliminadas
+            var oldSpecialCategories = GetSpecialCategoriesByVendorId(vendorId);
+
+            try
+            {
+                //Recorre todas las nuevas categorias y las va insertando
+                foreach (var newCategory in specialCategories)
+                {
+                    //busca la categoria nueva en las anteriores
+                    var oldCategory = oldSpecialCategories.FirstOrDefault(c => c.SpecialType == newCategory.SpecialType && c.CategoryId == newCategory.Id);
+                    //Si la categoria no existe la crea
+                    if (oldCategory == null)
+                    {
+                        InsertSpecialCategoryVendor(newCategory);
+                    }
+
+                    //Va removiendo las categorias que va revisando
+                    oldSpecialCategories.Remove(oldCategory);
+                }
+
+                foreach (var oldCategory in oldSpecialCategories)
+                {
+                    _specialCategoryVendorRepository.Delete(oldCategory);
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e.ToString(), e);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Inserta una categoria especial relacionada con el vendedor
+        /// </summary>
+        /// <param name="vendorId"></param>
+        /// <param name="categoryId"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public bool InsertSpecialCategoryVendor(SpecialCategoryVendor specialCategory)
+        {
+            try
+            {
+                _specialCategoryVendorRepository.Insert(specialCategory);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e.ToString(), e);
+                return false;
+            }
+            
+        }
         #endregion
 
         #region Reviews
@@ -321,5 +384,8 @@ namespace Nop.Services.Vendors
         #endregion
 
 
+
+
+        
     }
 }

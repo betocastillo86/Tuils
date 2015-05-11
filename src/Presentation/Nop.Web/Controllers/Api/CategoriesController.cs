@@ -81,24 +81,44 @@ namespace Nop.Web.Controllers.Api
         {
             var references = this._categoryService.GetAllBikeReferences(null).ToBaseModels();
 
-            //Ya que son muchas referencias se retorna un objeto con el minimo de información posible
-            var minReferences = new List<object>();
+            if (references != null)
+                return Ok(GetMinifiedCategories(references));
+            else
+                return NotFound();
+        }
 
-            foreach (var reference in references)
-	        {
-                minReferences.Add(
-                    new { 
-                        Id = reference.Id, 
+        /// <summary>
+        /// Retorna todas las categorias de tipo servicio existentes
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/categories/services")]
+        public IHttpActionResult GetAllServices()
+        {
+            var services = this._categoryService.GetAllServices().ToBaseModels();
+
+            if (services != null)
+                return Ok(services);
+            else
+                return NotFound();
+        }
+
+        private List<object> GetMinifiedCategories(List<CategoryBaseModel> list)
+        {
+            //Ya que son muchas referencias se retorna un objeto con el minimo de información posible
+            var minlist = new List<object>();
+
+            foreach (var reference in list)
+            {
+                minlist.Add(
+                    new
+                    {
+                        Id = reference.Id,
                         Name = reference.Name,
                         ChildrenCategories = reference.ChildrenCategories.Select(r => new { Id = r.Id, Name = r.Name })
                     });
-                
-	        }
 
-            if (references != null)
-                return Ok(minReferences);
-            else
-                return NotFound();
+            }
+            return minlist;
         }
     }
 }
