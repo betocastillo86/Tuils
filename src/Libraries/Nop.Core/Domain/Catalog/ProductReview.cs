@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Nop.Core.Domain.Customers;
+using Nop.Core.Domain.Orders;
 
 namespace Nop.Core.Domain.Catalog
 {
@@ -37,6 +38,11 @@ namespace Nop.Core.Domain.Catalog
         public string ReviewText { get; set; }
 
         /// <summary>
+        /// Se vincula el order item 
+        /// </summary>
+        public int OrderItemId { get; set; }
+
+        /// <summary>
         /// Review rating
         /// </summary>
         public int Rating { get; set; }
@@ -65,6 +71,12 @@ namespace Nop.Core.Domain.Catalog
         /// Gets the product
         /// </summary>
         public virtual Product Product { get; set; }
+
+        /// <summary>
+        /// Gets the order item
+        /// </summary>
+        public virtual OrderItem OrderItem { get; set; }
+
 
         /// <summary>
         /// Gets the entries of product review helpfulness

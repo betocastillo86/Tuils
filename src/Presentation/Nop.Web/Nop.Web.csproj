@@ -199,6 +199,7 @@
     <Compile Include="Controllers\Api\CategoriesController.cs" />
     <Compile Include="Controllers\Api\FilesController.cs" />
     <Compile Include="Controllers\Api\ManufacturersController.cs" />
+    <Compile Include="Controllers\Api\OderItemController.cs" />
     <Compile Include="Controllers\Api\ProductsController.cs" />
     <Compile Include="Controllers\Api\SpecificationAttributeController.cs" />
     <Compile Include="Controllers\Api\VendorsController.cs" />
@@ -257,6 +258,7 @@
     <Compile Include="Models\Api\AddressModel.cs" />
     <Compile Include="Models\Api\AddressPictureModel.cs" />
     <Compile Include="Models\Api\BaseApiModel.cs" />
+    <Compile Include="Models\Api\LinkableModel.cs" />
     <Compile Include="Models\Api\MinifiedJson.cs" />
     <Compile Include="Models\Api\ProductBaseModel.cs" />
     <Compile Include="Models\Api\ProductReviewModel.cs" />
@@ -325,7 +327,9 @@
     <Compile Include="Models\Common\SitemapModel.cs" />
     <Compile Include="Models\ControlPanel\MenuModel.cs" />
     <Compile Include="Models\ControlPanel\MyAccountModel.cs" />
+    <Compile Include="Models\ControlPanel\MyOrdersModel.cs" />
     <Compile Include="Models\ControlPanel\OfficesModel.cs" />
+    <Compile Include="Models\ControlPanel\OrderItemModel.cs" />
     <Compile Include="Models\ControlPanel\VendorServicesModel.cs" />
     <Compile Include="Models\Customer\CustomerAttributeModel.cs" />
     <Compile Include="Models\Catalog\CustomerBackInStockSubscriptionsModel.cs" />
@@ -2391,6 +2395,7 @@
     <Content Include="Views\Shared\_PanelRoot.cshtml" />
     <Content Include="Views\ControlPanel\_Menu.cshtml" />
     <Content Include="Views\ControlPanel\VendorServices.cshtml" />
+    <Content Include="Views\ControlPanel\MyOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

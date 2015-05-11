@@ -265,6 +265,23 @@ namespace Nop.Web.Extensions
             return cachedSeName;
         }
 
+        /// <summary>
+        /// Retorna el HTML de un control de estrellas solo de lectura
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="rating">Valor que se le da a la calificación</param>
+        /// <param name="link">Vinculo al que lleva la calificación</param>
+        /// <returns></returns>
+        public static MvcHtmlString RatingControl(this HtmlHelper html, double rating, string link = "#")
+        { 
+            var strHtml = new StringBuilder();
+            strHtml.Append("<div class=\"rating no-margin\">");
+            strHtml.AppendFormat("<div style=\"width: {0}%\">", rating * 20);
+            strHtml.AppendFormat("<a href=\"{0}\"></a>", link);
+            strHtml.Append("</div></div>");
+            return new MvcHtmlString(strHtml.ToString());
+        }
+
         
         
 

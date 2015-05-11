@@ -147,9 +147,9 @@ namespace Nop.Services.ControlPanel
             //Compras
             modules.Add(new ControlPanelModule()
             {
-                Name = "Bought",
+                Name = "MyOrders",
                 Controller = "ControlPanel",
-                Action = "Bought",
+                Action = "MyOrders",
                 IconMini = "icon-mail",
                 IconBig = "icon-mail"
             });

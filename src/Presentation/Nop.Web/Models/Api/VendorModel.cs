@@ -5,9 +5,8 @@ using System.Web;
 
 namespace Nop.Web.Models.Api
 {
-    public class VendorModel
+    public class VendorModel : LinkableModel
     {
-        public int Id { get; set; }
 
         public string Name { get; set; }
 

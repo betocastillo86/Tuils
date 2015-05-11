@@ -20,6 +20,8 @@ namespace Nop.Web.Models.Catalog
         public string MetaTitle { get; set; }
         public string SeName { get; set; }
 
+        public string Email { get; set; }
+
         public double AvgRating { get; set; }
 
         public int TotalActiveProducts { get; set; }

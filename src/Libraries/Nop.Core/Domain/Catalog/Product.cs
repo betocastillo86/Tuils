@@ -703,6 +703,9 @@ namespace Nop.Core.Domain.Catalog
             set { _tempFiles = value; }
         }
 
+        public virtual Nop.Core.Domain.Vendors.Vendor Vendor { get; set; }
+
+
         /// <summary>
         /// Ciudad relacionada
         /// </summary>

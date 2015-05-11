@@ -18,6 +18,7 @@
                 "datos-basicos": "myAccount",
                 "ControlPanel/Offices": "myOffices",
                 "ControlPanel/VendorServices": "vendorServices",
+                "ControlPanel/MyOrders": "myOrders",
                 "v/:query" : "vendor"
 
             },
@@ -59,6 +60,9 @@
                 require(['tuils/views/panel/offices'], function (OfficesView) {
                     that.currentView = new OfficesView({ el: that.defaultEl });
                 });
+                this.loadSubViewsPanel();
+            },
+            myOrders: function () {
                 this.loadSubViewsPanel();
             },
             vendorServices: function () {

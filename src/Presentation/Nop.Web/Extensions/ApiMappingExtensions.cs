@@ -2,6 +2,7 @@
 using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Media;
+using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Vendors;
 using Nop.Core.Infrastructure;
 using Nop.Web.Models.Api;
@@ -9,6 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Nop.Services.Seo;
+using Nop.Services.Helpers;
+using Nop.Services.Directory;
+using Nop.Services.Catalog;
 
 namespace Nop.Web.Extensions.Api
 {
@@ -242,6 +247,55 @@ namespace Nop.Web.Extensions.Api
                 EnableCreditCardPayment = model.EnableCreditCardPayment
             };
         }
+        #endregion
+
+        #region Order
+
+        //public static OrderItemModel ToModel(this Order entity)
+        //{
+        //    var orderModel = new OrderItemModel
+        //    {
+        //        Id = entity.Id,
+        //        CreatedOn = EngineContext.Current.Resolve<IDateTimeHelper>().ConvertToUserTime(entity.CreatedOnUtc, DateTimeKind.Utc)
+        //    };
+
+        //    var orderTotalInCustomerCurrency = EngineContext.Current.Resolve<ICurrencyService>().ConvertCurrency(entity.OrderTotal, entity.CurrencyRate);
+        //    orderModel.Price = EngineContext.Current.Resolve<IPriceFormatter>().FormatPrice(orderTotalInCustomerCurrency, true, entity.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
+
+        //    if (entity.OrderItems.Count > 0)
+        //    {
+        //        var item = entity.OrderItems.FirstOrDefault();
+        //        orderModel.Rating = item.Rating;
+        //        orderModel.Product = new ProductBaseModel()
+        //        {
+        //            Id = item.Product.Id,
+        //            Name = item.Product.Name,
+        //            Link = item.Product.GetSeName()
+        //        };
+
+        //        orderModel.Vendor = new VendorModel()
+        //        {
+        //            Id = item.Product.VendorId,
+        //            Name = item.Product.Vendor.Name,
+        //            Link = Action. item.Product.Vendor.GetSeName()
+        //        };
+        //    }
+        //    else
+        //    {
+        //        throw new NopException("La orden no tiene productos asociados");
+        //    }
+        //}
+
+        //public static List<OrderItemModel> ToModels(this List<Order> orders)
+        //{
+        //    foreach (var order in orders)
+        //    {
+                
+
+        //        model.Orders.Add(orderModel);
+        //    }
+        //}
+
         #endregion
 
         #region ProductReviewModel

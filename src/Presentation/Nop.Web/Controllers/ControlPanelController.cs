@@ -22,6 +22,17 @@ using Nop.Core.Domain.ControlPanel;
 using Nop.Services.Vendors;
 using Nop.Web.Extensions;
 using Nop.Core.Domain.Vendors;
+using Nop.Services.Orders;
+using Nop.Web.Models.Order;
+using Nop.Services.Helpers;
+using Nop.Services.Seo;
+using Nop.Core.Domain.Media;
+using Nop.Web.Infrastructure.Cache;
+using Nop.Core.Caching;
+using Nop.Services.Media;
+using Nop.Web.Models.Media;
+using Nop.Services.Localization;
+using Nop.Web.Models.Catalog;
 
 namespace Nop.Web.Controllers
 {
@@ -41,6 +52,18 @@ namespace Nop.Web.Controllers
         private readonly IStoreContext _storeContext;
         private readonly IControlPanelService _controlPanelService;
         private readonly IVendorService _vendorService;
+        private readonly IOrderService _orderService;
+        private readonly IDateTimeHelper _dateTimeHelper;
+        private readonly ICurrencyService _currencyService;
+        private readonly IPriceFormatter _priceFormatter;
+        private readonly IWebHelper _webHelper;
+        private readonly ICacheManager _cacheManager;
+        private readonly IPictureService _pictureService;
+        private readonly ILocalizationService _localizationService;
+        private readonly MediaSettings _mediaSettings;
+        private readonly ControlPanelSettings _controlPanelSettings;
+
+        
         #endregion
 
         #region Ctor
@@ -55,7 +78,17 @@ namespace Nop.Web.Controllers
             INewsLetterSubscriptionService newsLetterSubscriptionService,
             IStoreContext storeContext,
             IControlPanelService controlPanelService,
-            IVendorService vendorService)
+            IVendorService vendorService,
+            IOrderService orderService,
+            IDateTimeHelper dateTimeHelper,
+            ICurrencyService currencyService,
+            IPriceFormatter priceFormatter,
+            MediaSettings mediaSettings,
+            IWebHelper webHelper,
+            ICacheManager cacheManager,
+            IPictureService pictureService,
+            ILocalizationService localizationService,
+            ControlPanelSettings controlPanelSettings)
         {
             this._customerService = customerService;
             this._workContext = workContext;
@@ -69,6 +102,16 @@ namespace Nop.Web.Controllers
             this._storeContext = storeContext;
             this._controlPanelService = controlPanelService;
             this._vendorService = vendorService;
+            this._orderService = orderService;
+            this._dateTimeHelper = dateTimeHelper;
+            this._currencyService = currencyService;
+            this._priceFormatter = priceFormatter;
+            this._mediaSettings = mediaSettings;
+            this._webHelper = webHelper;
+            this._cacheManager = cacheManager;
+            this._localizationService = localizationService;
+            this._pictureService = pictureService;
+            this._controlPanelSettings = controlPanelSettings;
         }
         #endregion
         public ActionResult Index()
@@ -212,6 +255,103 @@ namespace Nop.Web.Controllers
         }
         #endregion
 
+        #region MyOrders
+
+        public ActionResult MyOrders(CatalogPagingFilteringModel command)
+        {
+            var model = PrepareMyOrdersModel(command);
+            return View(model);
+        }
+
+        [NonAction]
+        protected virtual MyOrdersModel PrepareMyOrdersModel(CatalogPagingFilteringModel command)
+        {
+            var model = new MyOrdersModel();
+
+            //configura el paginador
+            PreparePageSizeOptions(model.PagingFilteringContext, command);
+
+            var orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
+                customerId: _workContext.CurrentCustomer.Id, pageIndex:command.PageIndex, pageSize: command.PageSize);
+
+            
+
+            foreach (var order in orders)
+            {
+                var orderModel = new OrderItemModel
+                {
+                    Id = order.Id,
+                    CreatedOn = _dateTimeHelper.ConvertToUserTime(order.CreatedOnUtc, DateTimeKind.Utc),
+                };
+
+                var orderTotalInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderTotal, order.CurrencyRate);
+                orderModel.Price = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
+
+                if (order.OrderItems.Count > 0)
+                {
+                    var item = order.OrderItems.FirstOrDefault();
+                    orderModel.Rating = item.Rating;
+                    orderModel.Product = new Models.Catalog.ProductOverviewModel() { 
+                         Id = item.Product.Id,
+                         Name = item.Product.Name,
+                         SeName = item.Product.GetSeName()
+                    };
+
+                    #region DefaultPictureModel
+                    int pictureSize = _mediaSettings.ProductThumbPictureSize;
+                    //prepare picture model
+                    var defaultProductPictureCacheKey = string.Format(ModelCacheEventConsumer.PRODUCT_DEFAULTPICTURE_MODEL_KEY, orderModel.Product.Id, pictureSize, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), 1);
+                    orderModel.Product.DefaultPictureModel = _cacheManager.Get(defaultProductPictureCacheKey, () =>
+                    {
+                        var picture = _pictureService.GetPicturesByProductId(orderModel.Product.Id, 1).FirstOrDefault();
+                        var pictureModel = new PictureModel
+                        {
+                            ImageUrl = _pictureService.GetPictureUrl(picture, pictureSize),
+                            FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
+                            Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), orderModel.Product.Name),
+                            AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), orderModel.Product.Name)
+                        };
+                        return pictureModel;
+                    });
+                    #endregion
+
+                    orderModel.Vendor = new Models.Catalog.VendorModel() { 
+                        Id = item.Product.VendorId,
+                        Name = item.Product.Vendor.Name,
+                        SeName = item.Product.Vendor.GetSeName()
+                    };
+                }
+                else
+                {
+                    throw new NopException("La orden no tiene productos asociados");
+                }
+
+                model.Orders.Add(orderModel);
+            }
+
+            model.PagingFilteringContext.LoadPagedList(orders);
+
+            return model;
+        }
+
+        [NonAction]
+        protected virtual void PreparePageSizeOptions(CatalogPagingFilteringModel pagingFilteringModel, CatalogPagingFilteringModel command)
+        {
+            if (pagingFilteringModel == null)
+                throw new ArgumentNullException("pagingFilteringModel");
+
+            if (command == null)
+                throw new ArgumentNullException("command");
+
+            if (command.PageNumber <= 0)
+            {
+                command.PageNumber = 1;
+            }
+
+            command.PageSize = _controlPanelSettings.defaultPageSize;
+        }
+
+        #endregion
 
         #region Menu
         [ChildActionOnly]

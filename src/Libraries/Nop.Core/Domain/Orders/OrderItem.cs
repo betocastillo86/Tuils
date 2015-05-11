@@ -118,6 +118,11 @@ namespace Nop.Core.Domain.Orders
         public virtual Product Product { get; set; }
 
         /// <summary>
+        /// Calificacion recibida por los usuarios
+        /// </summary>
+        public Nullable<double> Rating { get; set; }
+
+        /// <summary>
         /// Gets or sets the associated gift card
         /// </summary>
         public virtual ICollection<GiftCard> AssociatedGiftCards

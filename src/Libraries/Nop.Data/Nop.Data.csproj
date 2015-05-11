@@ -110,6 +110,10 @@
     <Compile Include="Migrations\201504302351276_AddColumnVendor_BackgroundPosition.Designer.cs">
       <DependentUpon>201504302351276_AddColumnVendor_BackgroundPosition.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505111853484_AddColumnRating_Order_OrderItemId_ProductReview.cs" />
+    <Compile Include="Migrations\201505111853484_AddColumnRating_Order_OrderItemId_ProductReview.Designer.cs">
+      <DependentUpon>201505111853484_AddColumnRating_Order_OrderItemId_ProductReview.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -264,6 +268,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504302351276_AddColumnVendor_BackgroundPosition.resx">
       <DependentUpon>201504302351276_AddColumnVendor_BackgroundPosition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505111853484_AddColumnRating_Order_OrderItemId_ProductReview.resx">
+      <DependentUpon>201505111853484_AddColumnRating_Order_OrderItemId_ProductReview.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

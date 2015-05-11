@@ -16,6 +16,7 @@ namespace Nop.Data.Mapping.Catalog
             this.HasRequired(pr => pr.Customer)
                 .WithMany()
                 .HasForeignKey(pr => pr.CustomerId);
+
         }
     }
 }
