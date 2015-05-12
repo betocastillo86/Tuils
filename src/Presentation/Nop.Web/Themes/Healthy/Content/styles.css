@@ -1550,8 +1550,20 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 		.pr-perfil{margin: 0 0 0 270px;}
 			.pr-perfil p{color:#EBEDF2; text-align: justify; height: 55px; margin: 0 0 17px;}
 			.pr-perfil textarea{width:910px; resize:none; height: 55px; background: #f3f5f7; border-radius: 2px; margin:0 0 17px; padding: 9px 10px; box-sizing: border-box; color:#53525A; font-family: 'Ubuntu', sans-serif;}
-			.pr-perfil .items-ctl{float: left; margin: 16px 0; background:none; padding: 0;}
+			.conte_perfil .items-ctl, .conte_perfil2 .items-ctl{float: left; margin: 16px 0; background:none; padding: 0;}
 			.btn_perfil{float: right; margin: 10px 0 10px 20px !important; padding: 7px 10px; text-align: center;}
+	
+	.conte_perfil2{background:#F3F5F7; height:auto; margin: 0 0 20px; text-align: left; padding:20px 20px 0;}
+		.img_user{background:url(images/img_user.jpg) center no-repeat #EBEEF2; position:relative; float: left; width: 140px; height: 140px;}
+		.tit-user{color: #fff; margin: 0 0 0 20px; float: left;}
+			.tit-user input{padding:6px 10px; display: block;}
+			.tit-user h2{font-size: 25px; font-weight: 500; color:#292733;}
+			.tit-user h2 span{cursor: pointer;}
+			.tit-user .product-review-box{margin: 0;}
+		.pr-user{margin: 0 0 0 20px; float: left; width:calc(100% - 160px);}
+			.pr-user p{text-align: justify; padding: 8px 0;}
+			.pr-user textarea{width:100%; resize:none; height: 55px; background: #fff; border-radius: 2px; margin:0 0 17px; padding: 9px 10px; box-sizing: border-box; color:#53525A; font-family: 'Ubuntu', sans-serif;}
+
 	.col-sedes{float: left;}
 	.conte-sede{width: 427px; height: 460px; background:#292732; position: relative;}
 		.mapa{background:#FB7055; width: 100%; height: 210px;}

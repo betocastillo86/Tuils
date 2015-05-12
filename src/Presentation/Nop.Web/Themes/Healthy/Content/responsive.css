@@ -960,7 +960,7 @@ html.oldie .container { width: 940px; }
     .pr-perfil{margin: 0 0 0 190px;}
         .pr-perfil p{height:80px; margin: 0 0 7px; font-size: 13px;}
         .pr-perfil textarea{width: 568px; height:80px; margin: 0 0 7px; font-size: 13px;}
-        .pr-perfil .items-ctl{margin:6px 0;}
+        .conte_perfil .items-ctl, .conte_perfil2 .items-ctl{margin:6px 0;}
         .btn_perfil{margin:5px 0 5px 20px !important; font-size: 16px; padding: 5px 10px;}
     .col-sedes{float: none;}
         .conte-sede{float:left; width:calc(50% - 10px);}
@@ -1035,8 +1035,7 @@ html.oldie .container { width: 940px; }
         .mail-date{position: absolute; top: 10px; font-size: 12px; padding: 0; width:auto; right: 10px; float: none;}
         .delete-mail{float:none; position: absolute; top: 45px; right: 10px; padding: 3px 5px; background:#627B9C;}
     .caja-mj h3 .fecha{float: none; display: block; font-size: 12px;}
-    /*fin mail*/
-
+    /*perfiles*/
     .coverPerfil{height: 80px;}
         .grad_cv{display: none;}
     .conte_perfil{height: 200px; margin: 0; padding: 0 10px 0 0;}
@@ -1051,6 +1050,10 @@ html.oldie .container { width: 940px; }
             .pr-perfil p{color:#525259; height: auto;}
             .pr-perfil textarea{background: #FFF;}
     .col-producto .product-grid .item-box{width: 33.3%;}
+    .img_user{width: 70px; height: 70px; background-size:100% auto;}
+    .tit-user{width: calc(100% - 90px)}
+        .tit-user h2{font-size: 20px;}
+    .pr-user{margin: 0; float: none; width: 100%; clear: both;}
     /*fin panel de control*/
 }
 @media screen and (max-width:600px) {
@@ -1094,7 +1097,7 @@ html.oldie .container { width: 940px; }
         .ctl-tarjetas{position: relative; top: 0; width: 270px; margin: 0 auto;}
         .ctl-switch{position: relative; top: 0; width: 290px; margin: 0 auto;}
             .ctl-switch .txt_switch{color: #525259; text-shadow:none;}
-        .pr-perfil .items-ctl{margin: 30px auto; float: none; width: 240px;}
+        .conte_perfil .items-ctl, .conte_perfil2 .items-ctl{margin: 30px auto; float: none; width: 240px;}
         .pr-perfil p{margin: 0 0 30px; font-size: 14px;}
         .pr-perfil textarea{margin: 0 0 30px;}
         .btpfl{clear: both; width:280px; margin:30px auto 0;}
@@ -1103,6 +1106,7 @@ html.oldie .container { width: 940px; }
         .mapa{height: 150px;}
     .conte-spc{width: 100%; margin:25px 0 0; float: none; height: auto;}
     .col-producto .product-grid .item-box{width: 49%;}
+    .conte_perfil2{padding: 20px;}
 }
 @media screen and (max-width:360px) {
     .input_check{width: 100%;}
