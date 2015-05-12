@@ -969,6 +969,10 @@ html.oldie .container { width: 940px; }
         .col-producto .product-grid .item-box{width: 25%;}
         .col-producto .title{padding: 10px 10px 10px 0;}
         .search-pdt{width: calc(70% - 14px)}
+    /*Mis productos*/
+    .product-dtl-img{width: 100px; height: 100px;}
+    .product-dtl-txt{width: calc(100% - 335px);}
+        .product-dtl-txt ul li{float: none; width:100%;}
     /*fin panel de control*/
 }
 @media screen and (max-width:768px) {
@@ -1076,6 +1080,11 @@ html.oldie .container { width: 940px; }
             .td-img:before{content: ""; border-left: 5px #395983 solid; border-bottom: 5px transparent solid; border-top: 5px transparent solid; position: absolute; top:30; right:-5px;}
         .td-pdt{margin: 0 0 0 70px; width:calc(50% - 148px);}
         .td-vend{width:calc(50% - 148px);}
+    /*Mis productos*/
+    .product-dtl-txt{width:calc(100% - 120px);}
+    .product-dtl-date{float:left; text-align: left; width: auto; margin:15px;}
+        .product-dtl-date .conte_btn{float:left;}
+        .product-dtl-date .conte_btn a{margin: 0 10px 0 0;}
     /*fin panel de contrlo*/
 }
 @media screen and (max-width:480px) {
