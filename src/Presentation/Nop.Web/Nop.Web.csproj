@@ -258,7 +258,6 @@
     <Compile Include="Models\Api\AddressModel.cs" />
     <Compile Include="Models\Api\AddressPictureModel.cs" />
     <Compile Include="Models\Api\BaseApiModel.cs" />
-    <Compile Include="Models\Api\LinkableModel.cs" />
     <Compile Include="Models\Api\MinifiedJson.cs" />
     <Compile Include="Models\Api\ProductBaseModel.cs" />
     <Compile Include="Models\Api\ProductReviewModel.cs" />
@@ -325,9 +324,11 @@
     <Compile Include="Models\Common\StoreThemeModel.cs" />
     <Compile Include="Models\Common\LanguageSelectorModel.cs" />
     <Compile Include="Models\Common\SitemapModel.cs" />
+    <Compile Include="Models\ControlPanel\ControlPanelModel.cs" />
     <Compile Include="Models\ControlPanel\MenuModel.cs" />
     <Compile Include="Models\ControlPanel\MyAccountModel.cs" />
     <Compile Include="Models\ControlPanel\MyOrdersModel.cs" />
+    <Compile Include="Models\ControlPanel\MyOrdersPagingFilteringModel.cs" />
     <Compile Include="Models\ControlPanel\OfficesModel.cs" />
     <Compile Include="Models\ControlPanel\OrderItemModel.cs" />
     <Compile Include="Models\ControlPanel\VendorServicesModel.cs" />
@@ -2391,11 +2392,13 @@
     <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Header.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Offices.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Reviews.cshtml" />
-    <Content Include="Views\Shared\_PanelLayoutOne.cshtml" />
+    <Content Include="Views\Shared\_PanelLayoutTwo.cshtml" />
     <Content Include="Views\Shared\_PanelRoot.cshtml" />
     <Content Include="Views\ControlPanel\_Menu.cshtml" />
     <Content Include="Views\ControlPanel\VendorServices.cshtml" />
     <Content Include="Views\ControlPanel\MyOrders.cshtml" />
+    <Content Include="Views\ControlPanel\MySales.cshtml" />
+    <Content Include="Views\Shared\_PanelLayoutOne.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

@@ -1,7 +1,7 @@
 ﻿@model Nop.Web.Models.ControlPanel.MenuModel
 <div class="side-2 columns two">
     <nav class="block block-category-navigation">
-        <div class="title">@T("controlpanel.menutitle")</div>
+        <div class="title">@Html.ActionLink(@T("controlpanel.menutitle").Text, "Index", "ControlPanel") </div>
         <div class="listbox">
             <ul class="menu-panel">
 

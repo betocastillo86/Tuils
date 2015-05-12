@@ -1,16 +1,16 @@
 ﻿@model Nop.Web.Models.ControlPanel.MyOrdersModel
 @{
-    Html.AddTitleParts(T("PageTitle.MyOrders").Text);
+    Html.AddTitleParts(T("PageTitle.MySales").Text);
     Layout = "~/Views/Shared/_PanelLayoutTwo.cshtml";
 }
 
-<h2 class="tit_sec">@T("MyOrders.Title")</h2>
-<p>@T("MyOrders.Description")</p>
+<h2 class="tit_sec">@T("MySales.Title")</h2>
+<p>@T("MySales.Description")</p>
 <div class="conte_sale">
     <div class="table-header">
         <div class="td-img">img</div>
         <div class="td-pdt">@T("MyOrders.Product")</div>
-        <div class="td-vend">@T("MyOrders.Vendor")</div>
+        <div class="td-vend">@T("MySales.Customer")</div>
         <div class="td-cal">@T("MyOrders.Rating") / @T("MyOrders.Date")</div>
         <div class="td-prec">@T("MyOrders.Price")</div>
         <br />
@@ -30,9 +30,10 @@
                 <span></span>
             </div>
             <div class="td-vend">
-                <p>@Html.ActionLink(item.Vendor.Name, "Vendor", "Catalog", new { seName = item.Vendor.SeName }, new { })</p>
-                <span>@item.Vendor.Email</span>
-                @*<span>@item.Vendor.num</span>*@
+
+                <p>@item.Customer.FullName</p>
+                <span>@item.Customer.Email</span>
+                <span>@item.Customer.Phone</span>
             </div>
             <div class="td-cal">
                 @if (item.Rating.HasValue)
@@ -41,7 +42,7 @@
                 }
                 else
                 { 
-                    <a href="javascript:;">Calificar</a>
+                    @T("MySales.NoRating")
                 }
                 <p>
                     @item.CreatedOn.ToShortDateString()

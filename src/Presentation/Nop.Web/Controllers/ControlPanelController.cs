@@ -33,6 +33,7 @@ using Nop.Services.Media;
 using Nop.Web.Models.Media;
 using Nop.Services.Localization;
 using Nop.Web.Models.Catalog;
+using Nop.Core.Domain.Orders;
 
 namespace Nop.Web.Controllers
 {
@@ -60,6 +61,7 @@ namespace Nop.Web.Controllers
         private readonly ICacheManager _cacheManager;
         private readonly IPictureService _pictureService;
         private readonly ILocalizationService _localizationService;
+        private readonly IProductService _productService;
         private readonly MediaSettings _mediaSettings;
         private readonly ControlPanelSettings _controlPanelSettings;
 
@@ -88,7 +90,8 @@ namespace Nop.Web.Controllers
             ICacheManager cacheManager,
             IPictureService pictureService,
             ILocalizationService localizationService,
-            ControlPanelSettings controlPanelSettings)
+            ControlPanelSettings controlPanelSettings,
+            IProductService productService)
         {
             this._customerService = customerService;
             this._workContext = workContext;
@@ -112,12 +115,47 @@ namespace Nop.Web.Controllers
             this._localizationService = localizationService;
             this._pictureService = pictureService;
             this._controlPanelSettings = controlPanelSettings;
+            this._productService = productService;
         }
         #endregion
+
+        #region ControlPanel
         public ActionResult Index()
         {
-            return View();
+            return View(PrepareControlPanelModel());
         }
+        
+        /// <summary>
+        /// Carga las variables del modelo del panel de control
+        /// </summary>
+        /// <returns></returns>
+        private ControlPanelModel PrepareControlPanelModel()
+        {
+            var model = new ControlPanelModel();
+            model.Modules = this._controlPanelService.GetModulesActiveUser();
+            model.Customer = _workContext.CurrentCustomer.ToMyAccountModel();
+
+            if (_workContext.CurrentVendor != null)
+            {
+                model.AvgRating = _workContext.CurrentVendor.AvgRating ?? 0;
+                model.NumRatings = _workContext.CurrentVendor.NumRatings;
+
+                //trae todos los productos del vendedor y los cuenta
+                var vendorProducts =  _productService.SearchProducts(vendorId: _workContext.CurrentVendor.Id);
+                model.PublishedProducts = vendorProducts.Count;
+
+                //Consulta todas las ventas del vendedor
+                var vendorSellings = _orderService.SearchOrders(vendorId:_workContext.CurrentVendor.Id);
+                model.SoldProducts = vendorSellings.Count;
+
+            }
+
+            return model;
+
+        }
+        #endregion
+        
+
 
         #region MyAccount
 
@@ -192,6 +230,16 @@ namespace Nop.Web.Controllers
 
         #endregion
 
+        #region MySales
+
+        public ActionResult MySales(MyOrdersPagingFilteringModel command)
+        {
+            var model = PrepareMyOrdersModel(command, false);
+            return View(model);
+        }
+
+        #endregion
+
         #region Offices
         public ActionResult Offices()
         {
@@ -257,24 +305,55 @@ namespace Nop.Web.Controllers
 
         #region MyOrders
 
-        public ActionResult MyOrders(CatalogPagingFilteringModel command)
+        public ActionResult MyOrders(MyOrdersPagingFilteringModel command)
         {
-            var model = PrepareMyOrdersModel(command);
+            var model = PrepareMyOrdersModel(command, true);
             return View(model);
         }
 
+        /// <summary>
+        /// Llena los modelos para retornar en las secciones de mis ventas y mis compras
+        /// </summary>
+        /// <param name="command">Variables de filtro</param>
+        /// <param name="isMyOrders">True: Consulta las compras del usuario en sesión. False: Consulta las ventas</param>
+        /// <returns>Modelo lleno</returns>
         [NonAction]
-        protected virtual MyOrdersModel PrepareMyOrdersModel(CatalogPagingFilteringModel command)
+        protected virtual MyOrdersModel PrepareMyOrdersModel(MyOrdersPagingFilteringModel command, bool isMyOrders)
         {
             var model = new MyOrdersModel();
 
             //configura el paginador
             PreparePageSizeOptions(model.PagingFilteringContext, command);
 
-            var orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
-                customerId: _workContext.CurrentCustomer.Id, pageIndex:command.PageIndex, pageSize: command.PageSize);
+            bool? publishedProducts = null;
+            bool? withRating = null;
 
-            
+            switch (command.Filter)
+            {
+                case "rating":
+                    withRating = true;
+                    break;
+                case "norating":
+                    withRating = false;
+                    break;
+                case "active":
+                    publishedProducts = true;
+                    break;
+                default:
+                    break;
+            }
+
+
+            IPagedList<Order> orders = null;
+            if (isMyOrders)
+                orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
+                    customerId: _workContext.CurrentCustomer.Id, pageIndex: command.PageIndex, pageSize: command.PageSize,
+                    publishedProducts: publishedProducts, withRating: withRating);
+            else
+                orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id, 
+                    vendorId: _workContext.CurrentVendor.Id, pageIndex: command.PageIndex, pageSize: command.PageSize,
+                    publishedProducts: publishedProducts, withRating: withRating);
+
 
             foreach (var order in orders)
             {
@@ -315,11 +394,23 @@ namespace Nop.Web.Controllers
                     });
                     #endregion
 
-                    orderModel.Vendor = new Models.Catalog.VendorModel() { 
-                        Id = item.Product.VendorId,
-                        Name = item.Product.Vendor.Name,
-                        SeName = item.Product.Vendor.GetSeName()
-                    };
+                    if (isMyOrders)
+                        orderModel.Vendor = new Models.Catalog.VendorModel()
+                        {
+                            Id = item.Product.VendorId,
+                            Name = item.Product.Vendor.Name,
+                            SeName = item.Product.Vendor.GetSeName()
+                        };
+                    else
+                    {
+                         orderModel.Customer = new CustomerInfoModel() { 
+                            FirstName = order.Customer.GetAttribute<string>("FirstName"),
+                            LastName = order.Customer.GetAttribute<string>("LastName"),
+                            Phone = order.Customer.GetAttribute<string>("Phone"),
+                            Email = order.Customer.Email
+                        };
+                    }
+                       
                 }
                 else
                 {
@@ -335,7 +426,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        protected virtual void PreparePageSizeOptions(CatalogPagingFilteringModel pagingFilteringModel, CatalogPagingFilteringModel command)
+        protected virtual void PreparePageSizeOptions(CatalogPagingFilteringModel pagingFilteringModel, MyOrdersPagingFilteringModel command)
         {
             if (pagingFilteringModel == null)
                 throw new ArgumentNullException("pagingFilteringModel");

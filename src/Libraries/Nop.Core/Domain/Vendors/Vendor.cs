@@ -109,6 +109,10 @@ namespace Nop.Core.Domain.Vendors
 
         public virtual Picture BackgroundPicture { get; set; }
 
+        /// <summary>
+        /// Numero de veces que ha sido calificado un producto vendido por el usuario
+        /// </summary>
+        public int NumRatings { get; set; }
 
         /// <summary>
         /// Direcciones del vendedor

@@ -18,7 +18,8 @@
                 "datos-basicos": "myAccount",
                 "ControlPanel/Offices": "myOffices",
                 "ControlPanel/VendorServices": "vendorServices",
-                "ControlPanel/MyOrders": "myOrders",
+                "ControlPanel/MyOrders(/:query)": "myOrders",
+                "ControlPanel/MySales(/:query)": "myOrders",
                 "v/:query" : "vendor"
 
             },

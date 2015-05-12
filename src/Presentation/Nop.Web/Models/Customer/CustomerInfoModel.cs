@@ -42,6 +42,8 @@ namespace Nop.Web.Models.Customer
         [AllowHtml]
         public string LastName { get; set; }
 
+        public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }
+
 
         public bool DateOfBirthEnabled { get; set; }
         [NopResourceDisplayName("Account.Fields.DateOfBirth")]

@@ -127,12 +127,51 @@ namespace Nop.Services.ControlPanel
             //Ventas
             modules.Add(new ControlPanelModule()
             {
-                Name = "Sold",
+                Name = "MySales",
                 Controller = "ControlPanel",
-                Action = "Sold",
+                Action = "MySales",
                 IconMini = "icon-mail",
-                IconBig = "icon-mail"
+                IconBig = "icon-mail",
+                SubModules = new List<ControlPanelModule>() { 
+                    new ControlPanelModule()
+                    {
+                        Name = "AllOrders",
+                        Controller = "ControlPanel",
+                        Action = "MySales",
+                        IconMini = "icon-mail",
+                        IconBig = "icon-mail"
+                    },
+                    new ControlPanelModule()
+                    {
+                        Name = "MySalesNoRating",
+                        Controller = "ControlPanel",
+                        Action = "MySales",
+                        IconMini = "icon-mail",
+                        IconBig = "icon-mail",
+                        Parameters = new { filter = "norating" }
+                    },
+                    new ControlPanelModule()
+                    {
+                        Name = "MySalesRating",
+                        Controller = "ControlPanel",
+                        Action = "MySales",
+                        IconMini = "icon-mail",
+                        IconBig = "icon-mail",
+                        Parameters = new { filter = "rating" }
+                    },
+                    new ControlPanelModule()
+                    {
+                        Name = "MySalesActiveProducts",
+                        Controller = "ControlPanel",
+                        Action = "MySales",
+                        IconMini = "icon-mail",
+                        IconBig = "icon-mail",
+                        Parameters = new { filter = "active" }
+                    }
+                }
             });
+
+            
 
             //Mis productos
             modules.Add(new ControlPanelModule()
@@ -142,6 +181,7 @@ namespace Nop.Services.ControlPanel
                 Action = "MyProducts",
                 IconMini = "icon-mail",
                 IconBig = "icon-mail"
+                
             });
 
             //Compras
@@ -151,7 +191,35 @@ namespace Nop.Services.ControlPanel
                 Controller = "ControlPanel",
                 Action = "MyOrders",
                 IconMini = "icon-mail",
-                IconBig = "icon-mail"
+                IconBig = "icon-mail",
+                SubModules = new List<ControlPanelModule>() { 
+                    new ControlPanelModule()
+                    {
+                        Name = "AllOrders",
+                        Controller = "ControlPanel",
+                        Action = "MyOrders",
+                        IconMini = "icon-mail",
+                        IconBig = "icon-mail"
+                    },
+                   new ControlPanelModule()
+                    {
+                        Name = "MySalesNoRating",
+                        Controller = "ControlPanel",
+                        Action = "MyOrders",
+                        IconMini = "icon-mail",
+                        IconBig = "icon-mail",
+                        Parameters = new { filter = "norating" }
+                    },
+                    new ControlPanelModule()
+                    {
+                        Name = "MySalesRating",
+                        Controller = "ControlPanel",
+                        Action = "MyOrders",
+                        IconMini = "icon-mail",
+                        IconBig = "icon-mail",
+                        Parameters = new { filter = "rating" }
+                    }
+                }
             });
 
             //Mensajes

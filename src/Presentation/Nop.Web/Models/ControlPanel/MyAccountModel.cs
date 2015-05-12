@@ -41,6 +41,8 @@ namespace Nop.Web.Models.ControlPanel
         [Required]
         public string LastName { get; set; }
 
+        public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }
+
         [Required]
         [NopResourceDisplayName("Account.Fields.StateProvince")]
         public int StateProvinceId { get; set; }

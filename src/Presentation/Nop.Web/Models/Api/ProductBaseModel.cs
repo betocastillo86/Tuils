@@ -11,7 +11,7 @@ namespace Nop.Web.Models.Api
     /// <summary>
     /// Modelo de Producto usado para trabajarcon API
     /// </summary>
-    public class ProductBaseModel : LinkableModel
+    public class ProductBaseModel : BaseNopEntityModel
     {
         [Required]
         public string Name { get; set; }
