@@ -1125,6 +1125,8 @@ html.oldie .container { width: 940px; }
 
     .picture-uploader li, .picture-uploader li.picture_principal{width: 96px; height: 96px; margin:7px;}
     .picture-uploader li span, .picture-uploader li.picture_principal span{font-size: 45px; margin: 24px 24px 0; width: 45px; height: 45px;}
+    .conte_pgt p{width: 100%; float: none; padding: 10px 0 0;}
+    .date_pgt{float: none; padding: 0 0 10px; margin: 0;}
 }
 @media screen and (max-width:320px) {
     .nav-category li{height: 232px; }
