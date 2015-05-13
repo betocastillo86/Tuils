@@ -20,5 +20,33 @@ namespace Nop.Utilities
 
             return fileContent;
         }
+
+        /// <summary>
+        /// Retorna la extensión de un archivo de acuerdo a su tipo de contenido
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <returns></returns>
+        public static string GetExtensionByContentType(string contentType)
+        {
+            string extension = string.Empty;
+            switch (contentType)
+            {
+                case "image/bmp":
+                    extension = ".bmp";
+                    break;
+                case "image/gif":
+                    extension = ".gif";
+                    break;
+                case "image/jpeg":
+                    extension = ".jpg";
+                    break;
+                case "image/png":
+                    extension = ".png";
+                    break;
+                default:
+                    break;
+            }
+            return extension;
+        }
     }
 }

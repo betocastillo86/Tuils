@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'backbone', 'baseView', 'manufacturerModel', 'manufacturerCollection', 'storage', 'util', 'htmlEditorView', 'configuration', 'specificationAttributeModel','tagit', 'validations', 'stickit'],
-    function ($, _, Backbone, BaseView, ManufacturerModel, ManufacturerCollection, TuilsStorage, TuilsUtil, HtmlEditorView, TuilsConfiguration, SpecificationAttributeModel) {
+﻿define(['underscore', 'backbone', 'baseView', 'manufacturerModel', 'manufacturerCollection', 'storage', 'util', 'htmlEditorView', 'configuration', 'specificationAttributeModel','tagit', 'validations', 'stickit'],
+    function ( _, Backbone, BaseView, ManufacturerModel, ManufacturerCollection, TuilsStorage, TuilsUtil, HtmlEditorView, TuilsConfiguration, SpecificationAttributeModel) {
     "use strict"
     var ProductDetailView = BaseView.extend({
 
@@ -155,7 +155,7 @@
         },
         loadHtmlEditor: function () {
             //el HTML no está habilitado para las motos
-            if (this.productType != TuilsConfiguration.productBaseTypes.bike && !this.isMobile())
+            if (this.productType != TuilsConfiguration.productBaseTypes.bike)
                 this.viewHtmlEditor = new HtmlEditorView({ el: this.el, prefix: 'productHtml' });
         },
         loadManufacturersByCategory: function () {

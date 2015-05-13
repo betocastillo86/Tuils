@@ -1,10 +1,56 @@
-﻿
+﻿@model Nop.Web.Models.ControlPanel.ControlPanelModel
 @{
-    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+    Layout = "~/Views/Shared/_PanelLayoutOne.cshtml";
+    Html.AddTitleParts(T("PageTitle.ControlPanel").Text);
 }
 
-<ul>
-    <li>Publicar</li>
-    <li>@Html.ActionLink("Mis Datos","MyAccount")</li>
-    <li>Mis Productos</li>
-</ul>
+
+<div class="panel-control">
+    <h2 class="tit_sec tit_name">@T("controlpanelindex.greeting", Model.Customer.FullName)</h2>
+    <div class="cant_art">
+        @T("controlpanelindex.publishedproducts") <span><i>@Model.PublishedProducts</i></span>
+    </div>
+    <br />
+    @T("controlpanelindex.description")
+
+    <ul class="items-ctl">
+        
+        <li>@T("controlpanelindex.SoldProducts")<span><b>@Model.SoldProducts</b></span></li>
+        <li>@T("controlpanelindex.NumRatings")<span><b>@Model.NumRatings</b></span></li>
+        <li>@T("controlpanelindex.AvgRating")<span><b>@Model.AvgRating</b></span></li>
+        <li>@T("controlpanelindex.NewMessages")<span><b>@Model.NewMessages</b></span></li>
+        <li>@T("controlpanelindex.PendingMessages")<span><b>@Model.PendingMessages</b></span></li>
+        <br>
+    </ul>
+
+
+
+    <ul class="panel-items">
+
+        @foreach (var option in Model.Modules)
+        {
+            <li>
+                <a href="@Url.Action(option.Action, option.Controller, option.Parameters)"><span class="icon-mail"></span>@T(string.Format("controlpanel.{0}", option.Name)) </a>
+            </li>
+        }
+    </ul>
+
+
+
+
+</div>
+@*<ul class="panel-items">
+        <li><span class="icon-mail"></span>Publicar</li>
+        <li><span class="icon-mail"></span>Mi tienda</li>
+        <li><span class="icon-mail"></span>Mis ventas</li>
+        <li><span class="icon-mail"></span>Mis productos</li>
+        <li><span class="icon-mail"></span>Mis Datos</li>
+        <li><span class="icon-mail"></span>Mis compras</li>
+        <li><span class="icon-mail"></span>Favoritos</li>
+        <li><span class="icon-mail"></span>Cotizar</li>
+        <li><span class="icon-mail"></span>Buzón de mensajes</li>
+        <li><span class="icon-mail"></span>Mis cotizaciones</li>
+        <li><span class="icon-mail"></span>Mi taller</li>
+        <li><span class="icon-mail"></span>Mis servicios</li>
+    </ul>*@
+

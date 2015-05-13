@@ -11,4 +11,11 @@
 		debugger;
 		return str;
 	});
+
+	Handlebars.registerHelper('stars', function (value) {
+	    var ret = '<div class="rating no-margin">';
+	    ret += '<div style="width:' + parseInt(value) * 20 + '%">';
+	    ret += '</div></div>';
+	    return new Handlebars.SafeString(ret);
+	});
 });

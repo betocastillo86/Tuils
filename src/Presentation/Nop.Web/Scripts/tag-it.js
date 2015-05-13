@@ -112,6 +112,7 @@
 
         _create: function () {
             // for handling static scoping inside callbacks
+
             var that = this;
 
             // There are 2 kinds of DOM nodes this widget can be instantiated on:
@@ -203,6 +204,16 @@
                     var tags = node.val().split(this.options.singleFieldDelimiter);
                     node.val('');
                     $.each(tags, function (index, tag) {
+
+                        //Busca en los tags por el campo value
+                        $.each(that.options.availableTags, function (index, element) {
+                            if (element['value'] && element.value == tag)
+                            {
+                                tag = element;
+                                return;
+                            }
+                        });
+
                         that.createTag(tag, null, true);
                         addedExistingFromSingleFieldNode = true;
                     });
@@ -359,6 +370,15 @@
             }
         },
 
+        tagValue: function (tag) {
+            // Returns the tag's string label.
+            if (this.options.singleField) {
+                return $(tag).find('.tagit-label:first').attr('data-value');
+            } else {
+                return $(tag).find('input:first').attr('data-value');
+            }
+        },
+
         _showAutocomplete: function () {
             this.tagInput.autocomplete('search', '');
         },
@@ -442,7 +462,7 @@
                 return false;
             }
 
-            var label = $(this.options.onTagClicked ? '<a class="tagit-label"></a>' : '<span class="tagit-label"></span>').text(value);
+            var label = $(this.options.onTagClicked ? '<a class="tagit-label" data-value="' + internalValue + '"></a>' : '<span class="tagit-label" data-value="' + internalValue + '"></span>').text(value);
 
             // Create tag.
             var tag = $('<li></li>')
@@ -520,7 +540,8 @@
 
             if (this.options.singleField) {
                 var tags = this.assignedTags();
-                var removedTagLabel = this.tagLabel(tag);
+                //var removedTagLabel = this.tagLabel(tag);
+                var removedTagLabel = this.tagValue(tag);
                 tags = $.grep(tags, function (el) {
                     return el != removedTagLabel;
                 });

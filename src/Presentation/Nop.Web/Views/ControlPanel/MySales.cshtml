@@ -1,0 +1,63 @@
+﻿@model Nop.Web.Models.ControlPanel.MyOrdersModel
+@{
+    Html.AddTitleParts(T("PageTitle.MySales").Text);
+    Layout = "~/Views/Shared/_PanelLayoutTwo.cshtml";
+}
+
+<h2 class="tit_sec">@T("MySales.Title")</h2>
+<p>@T("MySales.Description")</p>
+<div class="conte_sale">
+    <div class="table-header">
+        <div class="td-img">img</div>
+        <div class="td-pdt">@T("MyOrders.Product")</div>
+        <div class="td-vend">@T("MySales.Customer")</div>
+        <div class="td-cal">@T("MyOrders.Rating") / @T("MyOrders.Date")</div>
+        <div class="td-prec">@T("MyOrders.Price")</div>
+        <br />
+    </div>
+
+    
+    @foreach (var item in Model.Orders)
+    {
+        <li>
+            <div class="td-img">
+            <a href="@Url.Action("ProductDetails", "Product", new { seName = item.Product.SeName })">
+                <img title="@T("myorders.titleimgproduct", item.Product.Name)" src="@item.Product.DefaultPictureModel.ImageUrl" alt="@item.Product.Name">
+            </a>
+            </div>
+            <div class="td-pdt">
+                <p><a href="@Url.Action("ProductDetails", "Product", new { seName = item.Product.SeName })">@item.Product.Name</a> </p>
+                <span></span>
+            </div>
+            <div class="td-vend">
+
+                <p>@item.Customer.FullName</p>
+                <span>@item.Customer.Email</span>
+                <span>@item.Customer.Phone</span>
+            </div>
+            <div class="td-cal">
+                @if (item.Rating.HasValue)
+                { 
+                    @Html.RatingControl(item.Rating.Value)
+                }
+                else
+                { 
+                    @T("MySales.NoRating")
+                }
+                <p>
+                    @item.CreatedOn.ToShortDateString()
+                </p>
+            </div>
+            <div class="td-prec">@item.Price</div>
+            <br />
+        </li>
+
+    }
+
+    <div class="pager">
+        @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
+    </div>
+ 
+</div>
+
+

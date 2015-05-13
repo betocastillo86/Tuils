@@ -1,8 +1,9 @@
-﻿define(['jquery', 'underscore', 'backbone',  'categoryModel', 'util', 'baseView', 'jqueryui'], function ($, _, Backbone, CategoryModel, TuilsUtilities, BaseView) {
+﻿define(['underscore', 'backbone',  'categoryModel', 'util', 'baseView', 'jqueryui'], function (_, Backbone, CategoryModel, TuilsUtilities, BaseView) {
     var MyAccountView = BaseView.extend({
 
         events : {
-            "change #BikeBrandId" : "loadReferences"
+            "change #BikeBrandId": "loadReferences",
+            'click #divDateOfBirth .datepickerButton': 'showDatepicker'
         },
 
         ddlBikeBrand: undefined,
@@ -23,12 +24,15 @@
             if (this.ddlBikeBrand.val()) {
                 var brand = new CategoryModel();
                 brand.on("sync", this.showReferences, this);
-                brand.get(this.ddlBikeBrand.val());
+                brand.getCategory(this.ddlBikeBrand.val());
             }
             else {
                 this.ddlBikeReference.empty();
             }
             
+        },
+        showDatepicker: function () {
+            this.$("#DateOfBirth").datepicker('show');
         },
         showReferences: function (category) {
             TuilsUtilities.loadDropDown(this.ddlBikeReference, category.toJSON().ChildrenCategories);

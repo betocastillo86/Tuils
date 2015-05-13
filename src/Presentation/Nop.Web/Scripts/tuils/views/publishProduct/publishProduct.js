@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'storage', 'configuration'],
-    function ($, _, BaseView, ProductModel, TuilsStorage, TuilsConfiguration) {
+﻿define(['underscore', 'baseView', 'productModel', 'storage', 'configuration'],
+    function (_, BaseView, ProductModel, TuilsStorage, TuilsConfiguration) {
 
     var PublishProductView = BaseView.extend({
 

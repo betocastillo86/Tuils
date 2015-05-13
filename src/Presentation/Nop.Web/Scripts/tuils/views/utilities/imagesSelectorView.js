@@ -1,4 +1,4 @@
-﻿define(['jquery', 'underscore', 'backbone', 'fileModel', 'fileCollection', 'resize'], function ($, _, Backbone, FileModel, FileCollection) {
+﻿define(['underscore', 'backbone', 'fileModel', 'fileCollection', 'resize'], function ( _, Backbone, FileModel, FileCollection) {
     var ImagesSelectorView = Backbone.View.extend({
         events: {
             "click .addImageGalery": "addImage",
@@ -14,6 +14,8 @@
 
         collection: undefined,
 
+        urlSave : undefined,
+
         resizer: undefined,
 
         onBackRemoveImages: false,
@@ -22,6 +24,9 @@
             this.loadControls();
             if (args.onBackRemoveImages)
                 this.onBackRemoveImages = args.onBackRemoveImages;
+
+            if (args.urlSave)
+                this.urlSave = args.urlSave;
         },
         render: function () {
             return this;
@@ -75,7 +80,7 @@
                     that.resizer.photo(resizedFile, 400, 'dataURL', function (thumbnail) {
                         that.switchImage(thumbnail);
                         fileModel.set({ src: thumbnail, file: resizedFile });
-                        fileModel.upload();
+                        fileModel.upload({saveUrl : that.urlSave });
                     });
                 });
 

@@ -52,6 +52,7 @@ using Nop.Services.Vendors;
 using Nop.Web.Framework.Mvc.Routes;
 using Nop.Web.Framework.Themes;
 using Nop.Web.Framework.UI;
+using Nop.Services.ControlPanel;
 
 namespace Nop.Web.Framework
 {
@@ -159,6 +160,7 @@ namespace Nop.Web.Framework
             builder.RegisterType<GenericAttributeService>().As<IGenericAttributeService>().InstancePerLifetimeScope();
             builder.RegisterType<FulltextService>().As<IFulltextService>().InstancePerLifetimeScope();
             builder.RegisterType<MaintenanceService>().As<IMaintenanceService>().InstancePerLifetimeScope();
+            builder.RegisterType<ControlPanelService>().As<IControlPanelService>().InstancePerLifetimeScope();
 
 
             builder.RegisterType<CustomerAttributeParser>().As<ICustomerAttributeParser>().InstancePerLifetimeScope();
@@ -311,6 +313,8 @@ namespace Nop.Web.Framework
             }
             builder.RegisterType<EventPublisher>().As<IEventPublisher>().SingleInstance();
             builder.RegisterType<SubscriptionService>().As<ISubscriptionService>().SingleInstance();
+
+            
 
         }
 

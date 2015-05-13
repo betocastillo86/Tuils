@@ -1,4 +1,4 @@
-﻿define(['jquery', 'underscore', 'backbone', 'text!/Customer/CreateUser', 'handlebars', 'jqueryui', 'baseView', 'tuils/models/userRegister', 'validations', 'stickit'],
+﻿define(['underscore', 'backbone', 'text!/Customer/CreateUser', 'handlebars', 'jqueryui', 'baseView', 'tuils/models/userRegister', 'validations', 'stickit'],
     function ($, _, Backbone, template, Handlebars, jqueryui, BaseView, UserRegisterModel) {
     var CreateUserView = BaseView.extend({
 

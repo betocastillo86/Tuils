@@ -161,7 +161,7 @@ namespace Nop.Services.Orders
             DateTime? createdFromUtc = null, DateTime? createdToUtc = null,
             OrderStatus? os = null, PaymentStatus? ps = null, ShippingStatus? ss = null,
             string billingEmail  = null, string orderGuid = null,
-            int pageIndex = 0, int pageSize = int.MaxValue)
+            int pageIndex = 0, int pageSize = int.MaxValue, bool? withRating = null, bool? publishedProducts = null)
         {
             int? orderStatusId = null;
             if (os.HasValue)
@@ -192,6 +192,30 @@ namespace Nop.Services.Orders
                     .Where(o => o.OrderItems
                     .Any(orderItem => orderItem.Product.Id == productId));
             }
+
+            //Filtra las que han sido o las que no han sido calificadas
+            if (withRating.HasValue)
+            { 
+                if(withRating.Value)
+                    query = query
+                           .Where(o => o.OrderItems
+                               .Any(i => i.Rating != null));
+                else
+                    query = query
+                           .Where(o => o.OrderItems
+                               .Any(i => i.Rating == null));
+            }
+
+            //Valida si muestra solo los productos publicados o no
+            if (publishedProducts.HasValue)
+            {
+                    query = query
+                           .Where(o => o.OrderItems
+                               .Any(i => i.Product.Published == publishedProducts.Value));
+            }
+
+                
+
             if (warehouseId > 0)
             {
                 var manageStockInventoryMethodId = (int)ManageInventoryMethod.ManageStock;
@@ -225,6 +249,7 @@ namespace Nop.Services.Orders
                 query = query.Where(o => shippingStatusId.Value == o.ShippingStatusId);
             if (!String.IsNullOrEmpty(billingEmail))
                 query = query.Where(o => o.BillingAddress != null && !String.IsNullOrEmpty(o.BillingAddress.Email) && o.BillingAddress.Email.Contains(billingEmail));
+
             query = query.Where(o => !o.Deleted);
             query = query.OrderByDescending(o => o.CreatedOnUtc);
 

@@ -14,7 +14,7 @@
         <div class="header-links-wrapper">
             <div class="container hd">
                 @Html.Action("HeaderLinks", "Common")
-                @Html.Action("FlyoutShoppingCart", "ShoppingCart")
+                @*@Html.Action("FlyoutShoppingCart", "ShoppingCart")*@
             </div>
         </div>
         <div class="container hd">
@@ -29,9 +29,9 @@
     <div class="master-wrapper-page container hd">
         @Html.Action("JavaScriptDisabledWarning", "Common")
         <div class="master-wrapper-content">
-            <script type="text/javascript">
+            @*<script type="text/javascript">
                 AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart');
-            </script>
+            </script>*@
             @*edited*@
             @if (browser.Browser == "IE" && browser.MajorVersion < 9)
             {

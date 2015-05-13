@@ -1,0 +1,33 @@
+﻿@model Nop.Web.Models.ControlPanel.MenuModel
+<div class="side-2 columns two">
+    <nav class="block block-category-navigation">
+        <div class="title">@Html.ActionLink(@T("controlpanel.menutitle").Text, "Index", "ControlPanel") </div>
+        <div class="listbox">
+            <ul class="menu-panel">
+
+
+                @foreach (var option in Model.Modules)
+                {
+                    bool hasSubMenu = option.SubModules.Count > 0;
+                    
+                    <li>
+                        <a class="nav-item-panel @(hasSubMenu ? "nav-with-sub" : string.Empty)"  href="@(hasSubMenu ? "#" : Url.Action(option.Action, option.Controller, option.Parameters))"><span class="icon-mail"></span>@T(string.Format("controlpanel.{0}", option.Name)) </a>
+
+                        @if (hasSubMenu)
+                        { 
+                            <ul class="sub-menu-panel" style="display:@(Model.SelectedParentModule == option.Name ? "block" : "none")">
+                                @foreach (var subMenu in option.SubModules)
+                                {
+                                    <li>
+                                        <a class="nav-item-panel" href="@Url.Action(subMenu.Action, subMenu.Controller, subMenu.Parameters)" class="sub-item-panel">@T(string.Format("controlpanel.{0}", subMenu.Name)) </a>
+                                    </li>
+                                }
+                            </ul>
+                        }
+
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+</div>

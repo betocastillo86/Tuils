@@ -1,6 +1,6 @@
 ﻿
-define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars', 'extensionNumbers'],
-    function ($, _, Backbone, TuilsConfiguration, TuilsUtil, Handlebars) {
+define(['underscore', 'backbone', 'configuration', 'util', 'handlebars', 'extensionNumbers'],
+    function ( _, Backbone, TuilsConfiguration, TuilsUtil, Handlebars) {
 
         var SummaryView = Backbone.View.extend({
             events: {

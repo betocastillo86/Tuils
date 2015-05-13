@@ -1,0 +1,95 @@
+﻿@model Nop.Web.Models.ControlPanel.OfficesModel
+@{
+    Html.AddTitleParts(T("PageTitle.Account").Text);
+    Layout = "~/Views/Shared/_PanelLayoutTwo.cshtml";
+}
+
+<div id="divMainSection">
+    @Html.HiddenFor(m => m.VendorId)
+    <div>
+        <input id="btnNew" value="Nuevo" type="button" />
+    </div>
+    <div id="officesAccordion">
+        <h3>@T("Offices.List")</h3>
+        <div id="divListOffices">
+
+        </div>
+        <h3>@T("Offices.Detail")</h3>
+        <div id="divOfficeDetail" style="display:none">
+            
+        </div>
+    </div>
+
+    <style type="text/css">
+        #canvasMapAddress {
+            height: 400px;
+            width: 400px;
+        }
+    </style>
+
+    <script id="templateListOffices" type="text/x-handlebars-template">
+        <table width="100%" style="border:1px solid;">
+            <tr>
+                <td>@T("Offices.Name")</td>
+                <td>@T("Offices.PhoneNumber")</td>
+                <td></td>
+            </tr>
+        </table>
+        {{#each this}}
+        <div class="headerAccordion" tuils-id="{{Id}}">
+            {{Name}} -
+            {{PhoneNumber}} -
+            <input id="btnEditAddress" value="Editar" tuils-id="{{Id}}" type="button">
+            <input id="btnDeleteAddress" value="Eliminar" tuils-id="{{Id}}" type="button">
+        </div>
+        <div>
+            <div class="footerAccordion" id="divDetail{{Id}}" style="min-height:350px">
+
+            </div>
+        </div>
+        {{/each}}
+        <div class="headerAccordion" >
+            Nuevo
+        </div>
+        <div id="divNewOffice" style="display:none">
+
+        </div>
+
+    </script>
+
+    <script id="templateOfficeDetail" type="text/x-handlebars-template">
+        <div class="inputs">
+            @Html.TextBoxRequired("Name", labelResource: "Offices.Name", value: "Prueba")
+        </div>
+        <div class="inputs">
+            @Html.TextBoxRequired("Email", labelResource: "Offices.Email", required: false)
+        </div>
+        <div class="inputs">
+            @Html.TextBoxRequired("PhoneNumber", labelResource: "Offices.PhoneNumber")
+        </div>
+        <div class="inputs">
+            @Html.TextBoxRequired("FaxNumber", labelResource: "Offices.FaxNumber", required: false)
+        </div>
+        <div class="inputs">
+            @Html.DropDownRequired("StateProvinceId", new SelectList(Model.States, "Id", "Name"), labelResource: "Offices.StateProvinceId")
+        </div>
+        <div class="inputs">
+            @Html.TextBoxRequired("Address", labelResource: "Offices.Address1")
+        </div>
+        <div class="inputs">
+            @Html.TextBoxRequired("Schedule", labelResource: "Offices.Schedule")
+        </div>
+        <div id="canvasMapAddress">
+
+        </div>
+
+        <span tuils-val-for="Latitude"></span>
+        <br />
+        <span tuils-val-for="Longitude"></span>
+        <input id="btnSaveAddress" type="button" value="@T("Common.Save")" class="button-1 save-customer-info-button" />
+        <input id="btnSaveBack" type="button" value="@T("Common.Cancel")" class="button-1 save-customer-info-button" />
+        
+    </script>
+    
+
+</div>

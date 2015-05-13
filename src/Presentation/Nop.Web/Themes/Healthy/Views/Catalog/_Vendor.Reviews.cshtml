@@ -1,0 +1,17 @@
+﻿@model Nop.Web.Models.Catalog.VendorModel
+<h3>Comentarios</h3>
+<div id="divReviews">
+
+</div>
+<div class="button-2" id="btnMore">@T("vendor.moreReviews")</div>
+<script type="text/x-handlebars-template" id="templateReview">
+    {{#each this}}
+    <div class="caja-comment">
+        <h4>{{Title}}<span class="fecha">{{CreatedOnUtc}}</span></h4>
+        <div class="product-review-box">
+            {{stars Rating}}
+        </div>
+        <p>{{ReviewText}}</p>
+    </div>
+    {{/each}}
+</script>

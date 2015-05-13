@@ -194,12 +194,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Api\AddressesController.cs" />
     <Compile Include="Controllers\Api\AuthenticationController.cs" />
     <Compile Include="Controllers\Api\CategoriesController.cs" />
     <Compile Include="Controllers\Api\FilesController.cs" />
     <Compile Include="Controllers\Api\ManufacturersController.cs" />
+    <Compile Include="Controllers\Api\OderItemController.cs" />
     <Compile Include="Controllers\Api\ProductsController.cs" />
     <Compile Include="Controllers\Api\SpecificationAttributeController.cs" />
+    <Compile Include="Controllers\Api\VendorsController.cs" />
     <Compile Include="Controllers\BasePublicController.cs" />
     <Compile Include="Controllers\BoardsController.cs" />
     <Compile Include="Controllers\BackInStockSubscriptionController.cs" />
@@ -235,6 +238,7 @@
     <Compile Include="Extensions\AttributeParserHelper.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
+    <Compile Include="Extensions\ListExtenstions.cs" />
     <Compile Include="Extensions\MappingExtensions.cs" />
     <Compile Include="Extensions\MvcHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -242,21 +246,24 @@
     </Compile>
     <Compile Include="Infrastructure\BundleConfig.cs" />
     <Compile Include="Infrastructure\Cache\ModelCacheEventConsumer.cs" />
-    <Compile Include="Infrastructure\BackwardCompatibility2XRouteProvider.cs" />
     <Compile Include="Infrastructure\GenericUrlRouteProvider.cs" />
     <Compile Include="Infrastructure\InMemoryMultipartFormDataStreamProvider.cs" />
     <Compile Include="Infrastructure\Installation\IInstallationLocalizationService.cs" />
     <Compile Include="Infrastructure\Installation\InstallationLanguage.cs" />
     <Compile Include="Infrastructure\Installation\InstallationLocalizationService.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
-    <Compile Include="Infrastructure\BackwardCompatibility1XRouteProvider.cs" />
     <Compile Include="Infrastructure\JavascriptConfiguration.cs" />
     <Compile Include="Infrastructure\RouteApiProvider.cs" />
     <Compile Include="Infrastructure\RouteProvider.cs" />
+    <Compile Include="Models\Api\AddressModel.cs" />
+    <Compile Include="Models\Api\AddressPictureModel.cs" />
+    <Compile Include="Models\Api\BaseApiModel.cs" />
     <Compile Include="Models\Api\MinifiedJson.cs" />
     <Compile Include="Models\Api\ProductBaseModel.cs" />
+    <Compile Include="Models\Api\ProductReviewModel.cs" />
     <Compile Include="Models\Api\SpecificationAttributeModel.cs" />
     <Compile Include="Models\Api\CustomerBaseModel.cs" />
+    <Compile Include="Models\Api\VendorModel.cs" />
     <Compile Include="Models\Blogs\BlogPostListModel.cs" />
     <Compile Include="Models\Blogs\BlogPagingFilteringModel.cs" />
     <Compile Include="Models\Blogs\BlogPostTagModel.cs" />
@@ -317,7 +324,14 @@
     <Compile Include="Models\Common\StoreThemeModel.cs" />
     <Compile Include="Models\Common\LanguageSelectorModel.cs" />
     <Compile Include="Models\Common\SitemapModel.cs" />
+    <Compile Include="Models\ControlPanel\ControlPanelModel.cs" />
+    <Compile Include="Models\ControlPanel\MenuModel.cs" />
     <Compile Include="Models\ControlPanel\MyAccountModel.cs" />
+    <Compile Include="Models\ControlPanel\MyOrdersModel.cs" />
+    <Compile Include="Models\ControlPanel\MyOrdersPagingFilteringModel.cs" />
+    <Compile Include="Models\ControlPanel\OfficesModel.cs" />
+    <Compile Include="Models\ControlPanel\OrderItemModel.cs" />
+    <Compile Include="Models\ControlPanel\VendorServicesModel.cs" />
     <Compile Include="Models\Customer\CustomerAttributeModel.cs" />
     <Compile Include="Models\Catalog\CustomerBackInStockSubscriptionsModel.cs" />
     <Compile Include="Models\Boards\CustomerForumSubscriptionsModel.cs" />
@@ -981,6 +995,7 @@
     <Content Include="Content\tinymce\skins\lightgray\skin.min.css" />
     <Content Include="Content\tinymce\themes\modern\theme.min.js" />
     <Content Include="Content\tinymce\tinymce.min.js" />
+    <Content Include="Scripts\async.js" />
     <Content Include="Scripts\backbone-validation.js" />
     <Content Include="Scripts\backbone-validation.min.js" />
     <Content Include="Scripts\backbone.js" />
@@ -995,14 +1010,19 @@
     <Content Include="Scripts\handlebars.runtime.amd.min.js" />
     <Content Include="Scripts\handlebars.runtime.js" />
     <Content Include="Scripts\handlebars.runtime.min.js" />
+    <Content Include="Scripts\tuils\collections\addresses.js" />
     <Content Include="Scripts\tuils\collections\categories.js" />
     <Content Include="Scripts\tuils\collections\files.js" />
     <Content Include="Scripts\tuils\collections\manufacturers.js" />
     <Content Include="Scripts\tuils\collections\products.js" />
+    <Content Include="Scripts\tuils\collections\reviews.js" />
     <Content Include="Scripts\tuils\collections\specificationAttribute.js" />
     <Content Include="Scripts\tuils\extensions\numbers.js" />
+    <Content Include="Scripts\tuils\models\address.js" />
     <Content Include="Scripts\tuils\models\specificationAttribute.js" />
     <Content Include="Scripts\tuils\models\userRegister.js" />
+    <Content Include="Scripts\tuils\models\vendor.js" />
+    <Content Include="Scripts\tuils\models\vendor\vendorHeader.js" />
     <Content Include="Scripts\tuils\models\_authentication.js" />
     <Content Include="Scripts\tuils\models\category.js" />
     <Content Include="Scripts\tuils\models\manufacturer.js" />
@@ -1015,7 +1035,11 @@
     <Content Include="Scripts\tuils\views\common\header.js" />
     <Content Include="Scripts\tuils\views\login\createUser.js" />
     <Content Include="Scripts\tuils\views\login\login.js" />
+    <Content Include="Scripts\tuils\views\panel\addAddressView.js" />
+    <Content Include="Scripts\tuils\views\panel\menu.js" />
     <Content Include="Scripts\tuils\views\panel\myAccount.js" />
+    <Content Include="Scripts\tuils\views\panel\offices.js" />
+    <Content Include="Scripts\tuils\views\panel\vendorServices.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
     <Content Include="Scripts\tuils\views\utilities\imagesSelectorView.js" />
@@ -1598,6 +1622,12 @@
     <Content Include="Scripts\kendo\2014.1.318\kendo.autocomplete.min.js.map" />
     <Content Include="Scripts\kendo\2014.1.318\jquery.min.map" />
     <Content Include="Scripts\tuils\main.js" />
+    <Content Include="Scripts\tuils\views\utilities\selectPointMapView.js" />
+    <Content Include="Scripts\tuils\views\utilities\singleMapView.js" />
+    <Content Include="Scripts\tuils\views\vendor\vendorOfficesView.js" />
+    <Content Include="Scripts\tuils\views\vendor\vendorDetailView.js" />
+    <Content Include="Scripts\tuils\views\vendor\vendorHeaderView.js" />
+    <Content Include="Scripts\tuils\views\vendor\vendorReviewsView.js" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore-min.js" />
     <Content Include="Scripts\underscore-min.map" />
@@ -2357,11 +2387,21 @@
     <Content Include="Views\Customer\_Login.cshtml" />
     <Content Include="Views\ControlPanel\Index.cshtml" />
     <Content Include="Views\ControlPanel\MyAccount.cshtml" />
+    <Content Include="Views\ControlPanel\MyShop.cshtml" />
+    <Content Include="Views\ControlPanel\Offices.cshtml" />
+    <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Header.cshtml" />
+    <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Offices.cshtml" />
+    <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Reviews.cshtml" />
+    <Content Include="Views\Shared\_PanelLayoutTwo.cshtml" />
+    <Content Include="Views\Shared\_PanelRoot.cshtml" />
+    <Content Include="Views\ControlPanel\_Menu.cshtml" />
+    <Content Include="Views\ControlPanel\VendorServices.cshtml" />
+    <Content Include="Views\ControlPanel\MyOrders.cshtml" />
+    <Content Include="Views\ControlPanel\MySales.cshtml" />
+    <Content Include="Views\Shared\_PanelLayoutOne.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
-    <Folder Include="Views\Picture\" />
-    <Folder Include="Views\Templates\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Nop.Core\Nop.Core.csproj">

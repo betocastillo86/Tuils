@@ -5,6 +5,9 @@ using Nop.Core.Data;
 using Nop.Core.Domain.Common;
 using Nop.Services.Directory;
 using Nop.Services.Events;
+using System.Collections.Generic;
+using Nop.Core.Domain.Directory;
+using Nop.Core.Domain.Media;
 
 namespace Nop.Services.Common
 {
@@ -31,8 +34,12 @@ namespace Nop.Services.Common
         #region Fields
 
         private readonly IRepository<Address> _addressRepository;
+        private readonly IRepository<Picture> _pictureRepository;
+        private readonly IRepository<AddressPicture> _addressPictureRepository;
+        private readonly IRepository<StateProvince> _stateProvinceRepository;
         private readonly ICountryService _countryService;
         private readonly IStateProvinceService _stateProvinceService;
+        
         private readonly IAddressAttributeService _addressAttributeService;
         private readonly IEventPublisher _eventPublisher;
         private readonly AddressSettings _addressSettings;
@@ -58,7 +65,10 @@ namespace Nop.Services.Common
             IStateProvinceService stateProvinceService,
             IAddressAttributeService addressAttributeService,
             IEventPublisher eventPublisher, 
-            AddressSettings addressSettings)
+            AddressSettings addressSettings,
+            IRepository<StateProvince> stateProvinceRepository,
+            IRepository<AddressPicture> addressPictureRepository,
+            IRepository<Picture> pictureRepository)
         {
             this._cacheManager = cacheManager;
             this._addressRepository = addressRepository;
@@ -67,6 +77,9 @@ namespace Nop.Services.Common
             this._addressAttributeService = addressAttributeService;
             this._eventPublisher = eventPublisher;
             this._addressSettings = addressSettings;
+            this._stateProvinceRepository = stateProvinceRepository;
+            this._addressPictureRepository = addressPictureRepository;
+            this._pictureRepository = pictureRepository;
         }
 
         #endregion
@@ -167,7 +180,7 @@ namespace Nop.Services.Common
         /// Updates the address
         /// </summary>
         /// <param name="address">Address</param>
-        public virtual void UpdateAddress(Address address)
+        public virtual bool UpdateAddress(Address address)
         {
             if (address == null)
                 throw new ArgumentNullException("address");
@@ -178,14 +191,17 @@ namespace Nop.Services.Common
             if (address.StateProvinceId == 0)
                 address.StateProvinceId = null;
 
-            _addressRepository.Update(address);
+            int modified = _addressRepository.Update(address) ;
 
             //cache
             _cacheManager.RemoveByPattern(ADDRESSES_PATTERN_KEY);
 
             //event notification
             _eventPublisher.EntityUpdated(address);
+
+            return modified > 0;
         }
+
         
         /// <summary>
         /// Gets a value indicating whether address is valid (can be saved)
@@ -272,7 +288,46 @@ namespace Nop.Services.Common
 
             return true;
         }
+
+        /// <summary>
+        /// Consulta las direcciones de un vendedor especifico
+        /// </summary>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        public IList<Address> GetAddressesByVendorId(int vendorId)
+        {
+            if (vendorId <= 0)
+                return new List<Address>();
+
+            var query = from a in _addressRepository.Table
+                        where a.VendorId == vendorId
+                        join v in _stateProvinceRepository.Table on a.StateProvinceId equals v.Id
+                        select a;
+
+
+            return query.ToList();
+        }
         
+        #endregion
+
+
+        #region Pictures
+        /// <summary>
+        /// Retorna todas las fotos de una dirección
+        /// </summary>
+        /// <param name="addressId">id de la direccion</param>
+        /// <returns></returns>
+        public IList<Picture> GetPicturesByAddressId(int addressId)
+        {
+            if(addressId == 0)
+                return new List<Picture>();
+            var query = from a in _addressPictureRepository.Table
+                        where a.AddressId == addressId
+                        join p in _pictureRepository.Table on a.PictureId equals p.Id
+                        select p;
+
+            return query.ToList();
+        }
         #endregion
     }
 }

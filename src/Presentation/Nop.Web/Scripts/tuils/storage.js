@@ -5,19 +5,23 @@ define(['categoryCollection'], function (CategoryCollection) {
         bikeReferences: undefined,
 
         //Carga las referencias de las motocicletas en la propiedad 
-        loadBikeReferences: function () {
+        loadBikeReferences: function (callback, ctx) {
             var key = 'tuils-bikeReferences';
             if (!localStorage.getItem(key)) {
                 var categories = new CategoryCollection();
                 categories.on("sync", function (response) {
                     localStorage.setItem(key, JSON.stringify(response.toJSON()))
                     TuilsStorage.bikeReferences = response.toJSON();
+                    if(callback)
+                        callback();
                 }, this);
 
                 categories.getBikeReferences();
             }
             else {
-                this.bikeReferences = JSON.parse(localStorage.getItem(key));
+                TuilsStorage.bikeReferences = JSON.parse(localStorage.getItem(key));
+                if (callback)
+                    callback();
             }
         },
 

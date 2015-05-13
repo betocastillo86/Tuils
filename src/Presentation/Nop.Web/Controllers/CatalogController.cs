@@ -287,6 +287,8 @@ namespace Nop.Web.Controllers
             {
                 command.PageSize = fixedPageSize;
             }
+
+            pagingFilteringModel.q = command.q;
         }
 
         [NonAction]
@@ -960,7 +962,8 @@ namespace Nop.Web.Controllers
         [NopHttpsRequirement(SslRequirement.No)]
         public ActionResult Vendor(int vendorId, CatalogPagingFilteringModel command)
         {
-            var vendor = _vendorService.GetVendorById(vendorId);
+            
+            var vendor = _vendorService.GetVendorById(vendorId, true);
             if (vendor == null || vendor.Deleted || !vendor.Active)
                 return InvokeHttp404();
 
@@ -968,24 +971,16 @@ namespace Nop.Web.Controllers
             if (!vendor.Active)
                 return InvokeHttp404();
 
+            #region Codigo Eliminado
             //'Continue shopping' URL
-            _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
-                SystemCustomerAttributeNames.LastContinueShoppingPage,
-                _webHelper.GetThisPageUrl(false),
-                _storeContext.CurrentStore.Id);
-            
-            var model = new VendorModel
-            {
-                Id = vendor.Id,
-                Name = vendor.GetLocalized(x => x.Name),
-                Description = vendor.GetLocalized(x => x.Description),
-                MetaKeywords = vendor.GetLocalized(x => x.MetaKeywords),
-                MetaDescription = vendor.GetLocalized(x => x.MetaDescription),
-                MetaTitle = vendor.GetLocalized(x => x.MetaTitle),
-                SeName = vendor.GetSeName(),
-            };
+            //_genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
+            //    SystemCustomerAttributeNames.LastContinueShoppingPage,
+            //    _webHelper.GetThisPageUrl(false),
+            //    _storeContext.CurrentStore.Id);
+            #endregion
 
 
+            var model = PrepareVendorModel(vendor);
 
             //sorting
             PrepareSortingOptions(model.PagingFilteringContext, command);
@@ -1005,13 +1000,66 @@ namespace Nop.Web.Controllers
                 visibleIndividuallyOnly: true,
                 orderBy: (ProductSortingEnum)command.OrderBy,
                 pageIndex: command.PageNumber - 1,
-                pageSize: command.PageSize);
+                pageSize: command.PageSize,
+                keywords: string.IsNullOrWhiteSpace(command.q) ? null : command.q);
             model.Products = PrepareProductOverviewModels(products).ToList();
+
+
+
+            model.TotalActiveProducts = products.TotalCount;
+            
+            //TODO:
+            model.TotalSoldProducts = -11;
+            
 
             model.PagingFilteringContext.LoadPagedList(products);
 
             return View(model);
         }
+
+        public VendorModel PrepareVendorModel(Vendor vendor)
+        { 
+            var model = new VendorModel
+            {
+                Id = vendor.Id,
+                Name = vendor.GetLocalized(x => x.Name),
+                Description = vendor.GetLocalized(x => x.Description),
+                MetaKeywords = vendor.GetLocalized(x => x.MetaKeywords),
+                MetaDescription = vendor.GetLocalized(x => x.MetaDescription),
+                MetaTitle = vendor.GetLocalized(x => x.MetaTitle),
+                SeName = vendor.GetSeName(),
+                AvgRating = vendor.AvgRating ?? 0,
+                EnableCreditCardPayment = vendor.EnableCreditCardPayment ?? false,
+                EnableShipping = vendor.EnableShipping ?? false,
+                AllowEdit = _workContext.CurrentVendor != null && _workContext.CurrentVendor.Id == vendor.Id,
+                BackgroundPosition = vendor.BackgroundPosition
+            };
+            //Cargan las imagenes
+
+            var pictureModel = new PictureModel
+            {
+                ImageUrl = _pictureService.GetPictureUrl(vendor.Picture, _mediaSettings.VendorMainThumbPictureSize),
+                FullSizeImageUrl = _pictureService.GetPictureUrl(vendor.Picture),
+                Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), model.Name),
+                AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), model.Name)
+            };
+            model.Picture = pictureModel;
+
+            var backgroundPictureModel = new PictureModel
+            {
+                ImageUrl = _pictureService.GetPictureUrl(vendor.BackgroundPicture, _mediaSettings.VendorBackgroundThumbPictureSize),
+                FullSizeImageUrl = _pictureService.GetPictureUrl(vendor.BackgroundPicture),
+                Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), model.Name),
+                AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), model.Name)
+            };
+            model.BackgroundPicture = backgroundPictureModel;
+
+            //Carga las categorias especiales
+            model.SpecialCategories = _vendorService.GetSpecialCategoriesByVendorId(vendor.Id).ToList();
+
+            return model;
+        }
+
 
         [NopHttpsRequirement(SslRequirement.No)]
         public ActionResult VendorAll()
@@ -1072,6 +1120,8 @@ namespace Nop.Web.Controllers
             
             return PartialView(cacheModel);
         }
+
+ 
 
         #endregion
 

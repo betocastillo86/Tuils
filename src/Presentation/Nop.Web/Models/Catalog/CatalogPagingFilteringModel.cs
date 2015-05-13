@@ -58,6 +58,8 @@ namespace Nop.Web.Models.Catalog
         /// Product sorting
         /// </summary>
         public string ViewMode { get; set; }
+
+        public string q { get; set; }
         
 
         #endregion

@@ -9,6 +9,16 @@ namespace Nop.Web.Infrastructure
     {
         public void RegisterRoutes(RouteCollection routes)
         {
+            routes.MapGenericPathRoute("ProductGenericUrl",
+                                     "p/{generic_se_name}",
+                                     new { controller = "Product", action = "ProductDetails" },
+                                     new[] { "Nop.Web.Controllers" });
+
+            routes.MapGenericPathRoute("VendorGenericUrl",
+                         "v/{generic_se_name}",
+                         new { controller = "Catalog", action = "Vendor" },
+                         new[] { "Nop.Web.Controllers" });
+            
             //generic URLs
             routes.MapGenericPathRoute("GenericUrl",
                                        "{generic_se_name}",
@@ -17,7 +27,7 @@ namespace Nop.Web.Infrastructure
 
             //define this routes to use in UI views (in case if you want to customize some of them later)
             routes.MapLocalizedRoute("Product",
-                                     "{SeName}",
+                                     "p/{SeName}",
                                      new { controller = "Product", action = "ProductDetails" },
                                      new[] {"Nop.Web.Controllers"});
 
@@ -32,7 +42,7 @@ namespace Nop.Web.Infrastructure
                             new[] { "Nop.Web.Controllers" });
 
             routes.MapLocalizedRoute("Vendor",
-                            "{SeName}",
+                            "v/{SeName}",
                             new { controller = "Catalog", action = "Vendor" },
                             new[] { "Nop.Web.Controllers" });
             

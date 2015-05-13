@@ -5,6 +5,7 @@ using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Seo;
 using Nop.Core.Domain.Stores;
+using Nop.Core.Domain.Vendors;
 
 namespace Nop.Core.Domain.Catalog
 {
@@ -15,6 +16,7 @@ namespace Nop.Core.Domain.Catalog
     {
         private ICollection<Discount> _appliedDiscounts;
         private ICollection<SpecialCategoryProduct> _specialCategoriesByProduct;
+        private ICollection<SpecialCategoryVendor> _specialCategoriesByVendor;
         private ICollection<Category> _subCategories;
         private ICollection<ManufacturerCategory> _manufacturers;
         
@@ -163,5 +165,16 @@ namespace Nop.Core.Domain.Catalog
             get { return _specialCategoriesByProduct ?? (_specialCategoriesByProduct = new List<SpecialCategoryProduct>()); }
             protected set { _specialCategoriesByProduct = value; }
         }
+
+
+        public virtual ICollection<SpecialCategoryVendor> SpecialCategoriesByVendor
+        {
+            get { return _specialCategoriesByVendor ?? (_specialCategoriesByVendor = new List<SpecialCategoryVendor>()); }
+            protected set { _specialCategoriesByVendor = value; }
+        }
+
+
+
+        
     }
 }

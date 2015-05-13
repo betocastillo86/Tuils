@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'backbone', 'handlebars'], function ($, _, Backbone, Handlebars) {
-    var HtmlEditorView = Backbone.View.extend({
+﻿define([ 'underscore', 'backbone', 'handlebars', 'baseView'], function ( _, Backbone, Handlebars, BaseView) {
+    var HtmlEditorView = BaseView.extend({
 
 
         prefix: '',
@@ -13,10 +13,19 @@
             if (args.prefix)
                 this.prefix = args.prefix;
 
-            this.template = Handlebars.compile($("#templateHtmlEditor").html());
             this.divContainerHtml = this.$(".divContainerHtml");
 
-            this.loadEditor();
+            if (this.isMobile())
+            {
+                this.template = Handlebars.compile($("#templateHtmlEditorMobile").html());
+                this.divContainerHtml.html(this.template());
+            }
+            else
+            {
+                this.template = Handlebars.compile($("#templateHtmlEditor").html());
+                this.loadEditor();
+            }
+                
             this.render();
         },
         render: function () {

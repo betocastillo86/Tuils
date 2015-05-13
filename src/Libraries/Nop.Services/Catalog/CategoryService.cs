@@ -287,7 +287,7 @@ namespace Nop.Services.Catalog
                 //Si se incluyen las subcategorias hace llamado así mismo para cargarlas en las ya existentes
                 if (includeSubcategories)
                     categories
-                        .ForEach(c => c.SubCategories = GetAllCategoriesByParentCategoryId(c.Id, showHidden, false));
+                        .ForEach(c => c.SubCategories = GetAllCategoriesByParentCategoryId(c.Id, showHidden, includeSubcategories));
 
                 return categories;
             });
@@ -619,6 +619,14 @@ namespace Nop.Services.Catalog
         }
 
         #endregion
+        /// <summary>
+        /// Retorna todos los productos de tipo servicio existentes
+        /// </summary>
+        /// <returns></returns>
+        public IList<Category> GetAllServices()
+        {
+            return GetAllCategoriesByParentCategoryId(_tuilsSettings.productBaseTypes_service, includeSubcategories: true, showHidden: true);
+        }
 
 
 

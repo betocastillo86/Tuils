@@ -1,6 +1,8 @@
 
 
 using Nop.Core.Domain.Common;
+using Nop.Core.Domain.Media;
+using System.Collections.Generic;
 
 namespace Nop.Services.Common
 {
@@ -46,7 +48,7 @@ namespace Nop.Services.Common
         /// Updates the address
         /// </summary>
         /// <param name="address">Address</param>
-        void UpdateAddress(Address address);
+        bool UpdateAddress(Address address);
 
         /// <summary>
         /// Gets a value indicating whether address is valid (can be saved)
@@ -54,5 +56,10 @@ namespace Nop.Services.Common
         /// <param name="address">Address to validate</param>
         /// <returns>Result</returns>
         bool IsAddressValid(Address address);
+
+
+        IList<Address> GetAddressesByVendorId(int vendorId);
+
+        IList<Picture> GetPicturesByAddressId(int addressId);
     }
 }
