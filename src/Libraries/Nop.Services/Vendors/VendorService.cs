@@ -259,7 +259,8 @@ namespace Nop.Services.Vendors
                 if (pictureId.HasValue)
                 {
                     picture = _pictureService.UpdatePicture(pictureId.Value, dataFile, mimeType, seoName, true);
-                    return picture.Id > 0;
+                    if(picture.Id == 0)
+                        return false;
                 }
                 else
                 {
@@ -269,10 +270,12 @@ namespace Nop.Services.Vendors
                         vendor.PictureId = picture.Id;
                     else
                         vendor.BackgroundPictureId = picture.Id;
-
-                    //Actualiza el vendor con los datos de la nueva foto
-                    return UpdateVendor(vendor);
+                    
                 }
+
+                //Actualiza el vendor con los datos de la nueva foto
+                vendor.BackgroundPosition = 0;
+                return UpdateVendor(vendor);
                     
             }
             catch (Exception e)
