@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no">
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700,500italic,700italic,400italic,300italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../../../src/Presentation/Nop.Web/Themes/Healthy/Content/styles.css" />
+    <link rel="stylesheet" type="text/css" href="../../../src/Presentation/Nop.Web/Themes/Healthy/Content/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../src/Presentation/Nop.Web/Themes/Healthy/Content/responsive.css" />
+</head>
+<body>
+    <div class="master-wrapper-page container hd">
+        <div class="master-wrapper-content">
+            <div class="master-wrapper-main">
+                <div class="side-2 columns two">
+                    <nav class="block block-category-navigation">
+                        <div class="title">PANEL DE CONTROL</div>
+                        <div class="listbox">
+                            <ul class="menu-panel">
+                                <li><a class="nav-item-panel" href="javascript:;"><span class="icon-mail"></span>Públicar</a>
+                                </li>
+                                <li><a class="nav-item-panel" href="javascript:;"><span class="icon-mail"></span>Mis datos</a></li>
+                                <li><a class="nav-item-panel active" href="javascript:;"><span class="icon-mail"></span>Mi tienda</a>
+                                    <ul class="sub-menu-panel">
+                                        <li><a href="javascript:;" class="sub-item-panel">Editar sedes</a></li>
+                                        <li><a href="javascript:;" class="sub-item-panel">Editar servicios</a></li>
+                                    </ul>
+                                </li>
+                                <li><a class="nav-item-panel" href="javascript:;"><span class="icon-mail"></span>Mis ventas</a></li>
+                                <li><a class="nav-item-panel" href="javascript:;"><span class="icon-mail"></span>Mis productos</a></li>
+                                <li><a class="nav-item-panel" href="javascript:;"><span class="icon-mail"></span>Mis compras</a></li>
+                                <li><a class="nav-item-panel" href="javascript:;"><span class="icon-mail"></span>Buzón de mensajes</a></li>
+                                <li><a class="nav-item-panel" href="javascript:;"><span class="icon-mail"></span>Favoritos</a></li>
+                                <li><a class="nav-item-panel" href="javascript:;"><span class="icon-mail"></span>Cotizar</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <div class="center-2 columns ten">
+                    <div class="panel-control">
+                        <h2 class="tit_sec">Editar sedes</h2>
+                        <div class="conte-edit-sede">
+                            <div class="table-header">
+                                <div class="td-sede">Nombre</div>
+                                <div class="td-mail">Email</div>
+                                <div class="td-tel">Teléfono</div>
+                                <div class="td-opc">Opciones</div>
+                                <br/>
+                            </div>
+                            <ul class="list-table">
+                                <li>
+                                    <div class="td-sede"><span class="icon-mail"></span>Calle 57 # 12-45 Local: 208 Bogotá</div>
+                                    <div class="td-mail">calle 56@repuestos.com</div>
+                                    <div class="td-tel">324 5699</div>
+                                    <div class="td-opc">
+                                        <a href="javascript:;" class="btn-azul"><span class="icon-mail"></span><i>Editar</i></a>
+                                        <a href="javascript:;" class="btn-naranja"><span class="icon-mail no-margin"></span></a>
+                                    </div>
+                                    <br/>
+                                </li>
+                                <div class="sede-edited">
+                                    <form class="form-sedes">
+                                        <div class="title">Detalles</div>
+                                        <div class="inputs">
+                                            <label>Nombre sucursal</label>
+                                            <input type="text">
+                                        </div>
+                                        <div class="inputs">
+                                            <label>Email</label>
+                                            <input type="text" class="input-validation-error">
+                                            <span class="required">*</span>
+                                            <span class="field-validation-error">Completa este dato.</span>
+                                        </div>
+                                        <div class="inputs">
+                                            <label>Teléfono</label>
+                                            <input type="text">
+                                        </div>
+                                        <div class="inputs">
+                                            <label>Fax</label>
+                                            <input type="text">
+                                        </div>
+                                        <div class="inputs">
+                                            <label>Departamento</label>
+                                            <select>
+                                                <option>Selecciona</option>
+                                                <option>2</option>
+                                            </select>
+                                        </div>
+                                        <div class="inputs">
+                                            <label>Ciudad</label>
+                                            <select>
+                                                <option>Selecciona</option>
+                                                <option>2</option>
+                                            </select>
+                                        </div>
+                                        <div class="inputs">
+                                            <label>Dirección</label>
+                                            <input type="text">
+                                        </div>
+                                        <div class="inputs">
+                                            <label>Horarios de atención</label>
+                                            <select>
+                                                <option>Selecciona</option>
+                                                <option>2</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                    <div class="caja_edtsedes">
+                                        <div class="title">Mapa</div>
+                                        <div class="mapa"></div>
+                                        <div class="title">Imagenes de la sede</div>
+                                        <ul class="picture-uploader">
+                                            <li>
+                                                <span class="icon-foto"></span>
+                                            </li>
+                                            <li>
+                                                <span class="icon-foto"></span>
+                                            </li>
+                                            <li>
+                                                <span class="icon-foto"></span>
+                                            </li>
+                                            <li>
+                                                <span class="icon-foto"></span>
+                                            </li>
+                                            <li>
+                                                <span class="icon-foto"></span>
+                                            </li>
+                                            <li>
+                                                <span class="icon-foto"></span>
+                                            </li>
+                                            <br>
+                                        </ul>
+                                    </div>
+                                    <hr/>
+                                    <a href="javascript:;" class="btn_continue button-1">Guardar</a>
+                                    <div class="clear"></div>
+                                </div>
+                                <li>
+                                    <div class="td-sede"><span class="icon-mail"></span>Calle 57 # 12-45 Local: 208 Bogotá</div>
+                                    <div class="td-mail">calle 56@repuestos.com</div>
+                                    <div class="td-tel">324 5699</div>
+                                    <div class="td-opc">
+                                        <a href="javascript:;" class="btn-azul"><span class="icon-mail"></span><i>Editar</i></a>
+                                        <a href="javascript:;" class="btn-naranja"><span class="icon-mail no-margin"></span></a>
+                                    </div>
+                                    <br/>
+                                </li>
+                                <li>
+                                    <div class="td-sede"><span class="icon-mail"></span>Calle 57 # 12-45 Local: 208 Bogotá</div>
+                                    <div class="td-mail">calle 56@repuestos.com</div>
+                                    <div class="td-tel">324 5699</div>
+                                    <div class="td-opc">
+                                        <a href="javascript:;" class="btn-azul"><span class="icon-mail"></span><i>Editar</i></a>
+                                        <a href="javascript:;" class="btn-naranja"><span class="icon-mail no-margin"></span></a>
+                                    </div>
+                                    <br/>
+                                </li>
+                                <li>
+                                    <div class="td-sede"><span class="icon-mail"></span>Calle 57 # 12-45 Local: 208 Bogotá</div>
+                                    <div class="td-mail">calle 56@repuestos.com</div>
+                                    <div class="td-tel">324 5699</div>
+                                    <div class="td-opc">
+                                        <a href="javascript:;" class="btn-azul"><span class="icon-mail"></span><i>Editar</i></a>
+                                        <a href="javascript:;" class="btn-naranja"><span class="icon-mail no-margin"></span></a>
+                                    </div>
+                                    <br/>
+                                </li>
+                                <li>
+                                    <div class="td-sede"><span class="icon-mail"></span>Calle 57 # 12-45 Local: 208 Bogotá</div>
+                                    <div class="td-mail">calle 56@repuestos.com</div>
+                                    <div class="td-tel">324 5699</div>
+                                    <div class="td-opc">
+                                        <a href="javascript:;" class="btn-azul"><span class="icon-mail"></span><i>Editar</i></a>
+                                        <a href="javascript:;" class="btn-naranja"><span class="icon-mail no-margin"></span></a>
+                                    </div>
+                                    <br/>
+                                </li>
+                                <li>
+                                    <div class="td-sede"><span class="icon-mail"></span>Calle 57 # 12-45 Local: 208 Bogotá</div>
+                                    <div class="td-mail">calle 56@repuestos.com</div>
+                                    <div class="td-tel">324 5699</div>
+                                    <div class="td-opc">
+                                        <a href="javascript:;" class="btn-azul"><span class="icon-mail"></span><i>Editar</i></a>
+                                        <a href="javascript:;" class="btn-naranja"><span class="icon-mail no-margin"></span></a>
+                                    </div>
+                                    <br/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
