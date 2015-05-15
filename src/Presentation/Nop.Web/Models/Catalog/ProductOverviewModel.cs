@@ -29,6 +29,22 @@ namespace Nop.Web.Models.Catalog
         //price
         public ProductReviewOverviewModel ReviewOverviewModel { get; set; }
 
+
+        public int Visits { get; set; }
+
+        public int TotalSales { get; set; }
+
+        public int UnansweredQuestions { get; set; }
+
+        public int ApprovedTotalReviews { get; set; }
+
+        public DateTime AvailableStartDate { get; set; }
+
+        public DateTime AvailableEndDate { get; set; }
+
+        public bool Published { get; set; }
+
+
 		#region Nested Classes
 
         public partial class ProductPriceModel : BaseNopModel

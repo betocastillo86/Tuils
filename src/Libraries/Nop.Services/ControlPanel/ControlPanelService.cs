@@ -93,6 +93,7 @@ namespace Nop.Services.ControlPanel
                     Action = "Vendor",
                     IconMini = "icon-mail",
                     IconBig = "icon-mail",
+                    Parameters = new { seName = vendor.GetSeName() },
                     SubModules = new List<ControlPanelModule>() { 
                         new ControlPanelModule()
                         {
@@ -180,7 +181,28 @@ namespace Nop.Services.ControlPanel
                 Controller = "ControlPanel",
                 Action = "MyProducts",
                 IconMini = "icon-mail",
-                IconBig = "icon-mail"
+                IconBig = "icon-mail",
+                Parameters = new { p = true },
+                SubModules = new List<ControlPanelModule>() { 
+                    new ControlPanelModule()
+                    {
+                        Name = "MyProductsPublished",
+                        Controller = "ControlPanel",
+                        Action = "MyProducts",
+                        IconMini = "icon-mail",
+                        IconBig = "icon-mail",
+                        Parameters = new { p = true }
+                    },
+                    new ControlPanelModule()
+                    {
+                        Name = "MyProductsUnpublished",
+                        Controller = "ControlPanel",
+                        Action = "MyProducts",
+                        IconMini = "icon-mail",
+                        IconBig = "icon-mail",
+                        Parameters = new { p = false }
+                    }
+                }
                 
             });
 

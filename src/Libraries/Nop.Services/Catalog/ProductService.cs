@@ -377,7 +377,8 @@ namespace Nop.Services.Catalog
             int languageId = 0,
             IList<int> filteredSpecs = null,
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
-            bool showHidden = false)
+            bool showHidden = false,
+            bool? published = null)
         {
             IList<int> filterableSpecificationAttributeOptionIds;
             return SearchProducts(out filterableSpecificationAttributeOptionIds, false,
@@ -385,7 +386,7 @@ namespace Nop.Services.Catalog
                 storeId, vendorId, warehouseId,
                 parentGroupedProductId, productType, visibleIndividuallyOnly, featuredProducts,
                 priceMin, priceMax, productTagId, keywords, searchDescriptions, searchSku,
-                searchProductTags, languageId, filteredSpecs, orderBy, showHidden);
+                searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published);
         }
 
         /// <summary>
@@ -415,6 +416,7 @@ namespace Nop.Services.Catalog
         /// <param name="filteredSpecs">Filtered product specification identifiers</param>
         /// <param name="orderBy">Order by</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="published">Si viene null no filtra por el campo Published. Si no viene null si filtra por el campo dependiendo de su valor</param>
         /// <returns>Products</returns>
         public virtual IPagedList<Product> SearchProducts(
             out IList<int> filterableSpecificationAttributeOptionIds,
@@ -440,7 +442,8 @@ namespace Nop.Services.Catalog
             int languageId = 0,
             IList<int> filteredSpecs = null,
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
-            bool showHidden = false)
+            bool showHidden = false,
+            bool? published = null)
         {
             filterableSpecificationAttributeOptionIds = new List<int>();
 
@@ -646,11 +649,18 @@ namespace Nop.Services.Catalog
                 pShowHidden.ParameterName = "ShowHidden";
                 pShowHidden.Value = showHidden;
                 pShowHidden.DbType = DbType.Boolean;
+
+                var pPublished = _dataProvider.GetParameter();
+                pPublished.ParameterName = "Published";
+                pPublished.Value = published != null ? (object)published : DBNull.Value;
+                pPublished.DbType = DbType.Boolean;
                 
                 var pLoadFilterableSpecificationAttributeOptionIds = _dataProvider.GetParameter();
                 pLoadFilterableSpecificationAttributeOptionIds.ParameterName = "LoadFilterableSpecificationAttributeOptionIds";
                 pLoadFilterableSpecificationAttributeOptionIds.Value = loadFilterableSpecificationAttributeOptionIds;
                 pLoadFilterableSpecificationAttributeOptionIds.DbType = DbType.Boolean;
+
+               
                 
                 var pFilterableSpecificationAttributeOptionIds = _dataProvider.GetParameter();
                 pFilterableSpecificationAttributeOptionIds.ParameterName = "FilterableSpecificationAttributeOptionIds";
@@ -662,6 +672,9 @@ namespace Nop.Services.Catalog
                 pTotalRecords.ParameterName = "TotalRecords";
                 pTotalRecords.Direction = ParameterDirection.Output;
                 pTotalRecords.DbType = DbType.Int32;
+
+
+                
 
                 //invoke stored procedure
                 var products = _dbContext.ExecuteStoredProcedureList<Product>(
@@ -691,6 +704,7 @@ namespace Nop.Services.Catalog
                     pPageIndex,
                     pPageSize,
                     pShowHidden,
+                    pPublished,
                     pLoadFilterableSpecificationAttributeOptionIds,
                     pFilterableSpecificationAttributeOptionIds,
                     pTotalRecords);
@@ -1895,7 +1909,6 @@ namespace Nop.Services.Catalog
         #endregion
 
         #endregion
-
 
 
     }

@@ -9,5 +9,15 @@ namespace Nop.Web.Models.ControlPanel
     public class MyOrdersPagingFilteringModel : BasePageableModel
     {
         public string Filter { get; set; }
+
+        /// <summary>
+        /// Solo productos publicados
+        /// </summary>
+        public bool p { get; set; }
+
+        /// <summary>
+        /// Valor de la consulta por texto
+        /// </summary>
+        public string q { get; set; }
     }
 }

@@ -20,6 +20,7 @@
                 "ControlPanel/VendorServices": "vendorServices",
                 "ControlPanel/MyOrders(/:query)": "myOrders",
                 "ControlPanel/MySales(/:query)": "myOrders",
+                "ControlPanel/MyProducts(/:query)": "myProducts",
                 "v/:query" : "vendor"
 
             },
@@ -64,6 +65,14 @@
                 this.loadSubViewsPanel();
             },
             myOrders: function () {
+                this.loadSubViewsPanel();
+            },
+            myProducts : function()
+            {
+                var that = this;
+                require(['tuils/views/panel/myProductsView'], function (MyProductsView) {
+                    that.currentView = new MyProductsView({ el: that.defaultEl });
+                });
                 this.loadSubViewsPanel();
             },
             vendorServices: function () {

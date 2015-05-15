@@ -118,6 +118,10 @@
     <Compile Include="Migrations\201505122329494_AddColumnNumRatins_Vendor.Designer.cs">
       <DependentUpon>201505122329494_AddColumnNumRatins_Vendor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505132130087_AddColumns_Product_VistitsTotalSalesUnansweredQuestions.cs" />
+    <Compile Include="Migrations\201505132130087_AddColumns_Product_VistitsTotalSalesUnansweredQuestions.Designer.cs">
+      <DependentUpon>201505132130087_AddColumns_Product_VistitsTotalSalesUnansweredQuestions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -278,6 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505122329494_AddColumnNumRatins_Vendor.resx">
       <DependentUpon>201505122329494_AddColumnNumRatins_Vendor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505132130087_AddColumns_Product_VistitsTotalSalesUnansweredQuestions.resx">
+      <DependentUpon>201505132130087_AddColumns_Product_VistitsTotalSalesUnansweredQuestions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

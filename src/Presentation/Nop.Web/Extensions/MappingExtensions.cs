@@ -16,6 +16,12 @@ using Nop.Web.Models.Common;
 using Nop.Web.Models.Customer;
 using Nop.Web.Models.ControlPanel;
 using Nop.Services.Messages;
+using Nop.Web.Models.Media;
+using Nop.Core.Infrastructure;
+using Nop.Core.Caching;
+using Nop.Services.Media;
+using Nop.Core;
+using Nop.Core.Domain.Media;
 
 namespace Nop.Web.Extensions
 {
@@ -42,7 +48,7 @@ namespace Nop.Web.Extensions
             model.Email = entity.Email;
 
             if (getNewsletter)
-            {   
+            {
                 var newsletterService = Nop.Core.Infrastructure.EngineContext.Current.Resolve<INewsLetterSubscriptionService>();
                 model.NewsletterBrand = newsletterService.IsEmailSubscribed(model.Email, Core.Domain.Messages.NewsLetterSuscriptionType.MyBrand);
                 model.Newsletter = newsletterService.IsEmailSubscribed(model.Email, Core.Domain.Messages.NewsLetterSuscriptionType.General);
@@ -96,7 +102,7 @@ namespace Nop.Web.Extensions
         public static List<CategoryModel> ToModels(this IList<Category> entities)
         {
             var models = new List<CategoryModel>();
-            
+
             foreach (var entity in entities)
             {
                 models.Add(entity.ToModel());
@@ -177,7 +183,7 @@ namespace Nop.Web.Extensions
         /// <param name="prePopulateWithCustomerFields">A value indicating whether to pre-populate an address with customer fields entered during registration. It's used only when "address" parameter is set to "null"</param>
         /// <param name="customer">Customer record which will be used to pre-populate address. Used only when "prePopulateWithCustomerFields" is "true".</param>
         public static void PrepareModel(this AddressModel model,
-            Address address, bool excludeProperties, 
+            Address address, bool excludeProperties,
             AddressSettings addressSettings,
             ILocalizationService localizationService = null,
             IStateProvinceService stateProvinceService = null,
@@ -202,11 +208,11 @@ namespace Nop.Web.Extensions
                 model.Email = address.Email;
                 model.Company = address.Company;
                 model.CountryId = address.CountryId;
-                model.CountryName = address.Country != null 
-                    ? address.Country.GetLocalized(x => x.Name) 
+                model.CountryName = address.Country != null
+                    ? address.Country.GetLocalized(x => x.Name)
                     : null;
                 model.StateProvinceId = address.StateProvinceId;
-                model.StateProvinceName = address.StateProvince != null 
+                model.StateProvinceName = address.StateProvince != null
                     ? address.StateProvince.GetLocalized(x => x.Name)
                     : null;
                 model.City = address.City;
@@ -271,7 +277,7 @@ namespace Nop.Web.Extensions
                             model.AvailableStates.Add(new SelectListItem
                             {
                                 Text = s.GetLocalized(x => x.Name),
-                                Value = s.Id.ToString(), 
+                                Value = s.Id.ToString(),
                                 Selected = (s.Id == model.StateProvinceId)
                             });
                         }
@@ -316,7 +322,7 @@ namespace Nop.Web.Extensions
                 model.FormattedCustomAddressAttributes = addressAttributeFormatter.FormatAttributes(address.CustomAttributes);
             }
         }
-        private static void PrepareCustomAddressAttributes(this AddressModel model, 
+        private static void PrepareCustomAddressAttributes(this AddressModel model,
             Address address,
             IAddressAttributeService addressAttributeService,
             IAddressAttributeParser addressAttributeParser)
@@ -456,6 +462,60 @@ namespace Nop.Web.Extensions
             destination.FaxNumber = model.FaxNumber;
 
             return destination;
+        }
+
+        /// <summary>
+        /// Retorna la imagen por defecto de un producto en un objeto de tipo PictureModel
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="pictureSize"></param>
+        /// <param name="_mediaSettings"></param>
+        /// <param name="_cacheManager"></param>
+        /// <param name="_pictureService"></param>
+        /// <param name="_workContext"></param>
+        /// <param name="_webHelper"></param>
+        /// <param name="_localizationService"></param>
+        /// <returns></returns>
+        public static PictureModel GetDefaultPicture(this Product product, int? pictureSize = null,
+            MediaSettings _mediaSettings= null,
+            ICacheManager _cacheManager = null,
+            IPictureService _pictureService = null,
+            IWorkContext _workContext = null,
+            IWebHelper _webHelper = null,
+            ILocalizationService _localizationService = null)
+        {
+            if (!pictureSize.HasValue)
+                pictureSize = _mediaSettings.ProductThumbPictureSize;
+
+            if (_cacheManager == null)
+                _cacheManager = EngineContext.Current.Resolve<ICacheManager>();
+
+            if (_pictureService == null)
+                _pictureService = EngineContext.Current.Resolve<IPictureService>();
+
+            if (_workContext == null)
+                _workContext = EngineContext.Current.Resolve<IWorkContext>();
+
+            if (_webHelper == null)
+                _webHelper = EngineContext.Current.Resolve<IWebHelper>();
+
+            if (_localizationService == null)
+                _localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+
+
+            var defaultProductPictureCacheKey = string.Format(Nop.Web.Infrastructure.Cache.ModelCacheEventConsumer.PRODUCT_DEFAULTPICTURE_MODEL_KEY, product.Id, pictureSize, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), 1);
+            return _cacheManager.Get(defaultProductPictureCacheKey, () =>
+             {
+                 var picture = _pictureService.GetPicturesByProductId(product.Id, 1).FirstOrDefault();
+                 var pictureModel = new PictureModel
+                 {
+                     ImageUrl = _pictureService.GetPictureUrl(picture, pictureSize.Value),
+                     FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
+                     Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), product.Name),
+                     AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), product.Name)
+                 };
+                 return pictureModel;
+             });
         }
     }
 }

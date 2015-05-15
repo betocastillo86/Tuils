@@ -329,6 +329,7 @@
     <Compile Include="Models\ControlPanel\MyAccountModel.cs" />
     <Compile Include="Models\ControlPanel\MyOrdersModel.cs" />
     <Compile Include="Models\ControlPanel\MyOrdersPagingFilteringModel.cs" />
+    <Compile Include="Models\ControlPanel\MyProductsModel.cs" />
     <Compile Include="Models\ControlPanel\OfficesModel.cs" />
     <Compile Include="Models\ControlPanel\OrderItemModel.cs" />
     <Compile Include="Models\ControlPanel\VendorServicesModel.cs" />
@@ -1038,6 +1039,7 @@
     <Content Include="Scripts\tuils\views\panel\addAddressView.js" />
     <Content Include="Scripts\tuils\views\panel\menu.js" />
     <Content Include="Scripts\tuils\views\panel\myAccount.js" />
+    <Content Include="Scripts\tuils\views\panel\myProductsView.js" />
     <Content Include="Scripts\tuils\views\panel\offices.js" />
     <Content Include="Scripts\tuils\views\panel\vendorServices.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
@@ -2399,6 +2401,7 @@
     <Content Include="Views\ControlPanel\MyOrders.cshtml" />
     <Content Include="Views\ControlPanel\MySales.cshtml" />
     <Content Include="Views\Shared\_PanelLayoutOne.cshtml" />
+    <Content Include="Views\ControlPanel\MyProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

@@ -108,7 +108,8 @@ namespace Nop.Services.Catalog
             int languageId = 0,
             IList<int> filteredSpecs = null,
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
-            bool showHidden = false);
+            bool showHidden = false,
+            bool? published = null);
 
         /// <summary>
         /// Search products
@@ -162,7 +163,8 @@ namespace Nop.Services.Catalog
             int languageId = 0,
             IList<int> filteredSpecs = null, 
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
-            bool showHidden = false);
+            bool showHidden = false,
+            bool? published = null);
 
 
         /// <summary>

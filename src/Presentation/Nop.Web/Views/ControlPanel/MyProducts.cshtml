@@ -1,0 +1,65 @@
+﻿@model Nop.Web.Models.ControlPanel.MyProductsModel
+@{
+    Html.AddTitleParts(T("PageTitle.MyProducts").Text);
+    Layout = "~/Views/Shared/_PanelLayoutTwo.cshtml";
+}
+
+
+
+<div class="panel-control">
+    <h2 class="tit_sec">@T("MyProducts.Title")</h2>
+    <div>
+        @Html.ActionLink("Publicar Producto", "Index", "Sales", new { }, new { @class = "btn-naranja" })
+    </div>
+    <div class="search-pdt">
+        <input type="text" class="searchinput" value="@Model.PagingFilteringContext.q" />
+        <a class="btn_search"><span class="icon-mail"></span></a>
+    </div>
+    <ul class="product_list">
+
+        @foreach (var product in Model.Products)
+        {
+            <li class="product-detail">
+            <div class="product-dtl-img"><img title="@product.Name" src="@product.DefaultPictureModel.ImageUrl" alt="@product.Name"></div>
+            <div class="product-dtl-txt">
+                <h3>@product.Name</h3>
+                <ul>
+                    <li>@T("myproducts.visits"): @product.Visits</li>
+                    <li>@T("myproducts.totalsales"): @product.TotalSales</li>
+                    <li>@T("myproducts.ApprovedTotalReviews"): @product.ApprovedTotalReviews</li>
+                    @if (product.Published)
+                    { 
+                        if (product.UnansweredQuestions > 0)
+                        { 
+                            <li><a href="javascript:;">@T("myproducts.UnansweredQuestions"): @product.UnansweredQuestions</a></li>
+                        }
+                        else
+                        { 
+                            <li>@T("myproducts.noPendingQuestions")</li>
+                        }
+                    }
+                </ul>
+            </div>
+            <div class="product-dtl-date">
+                <h3>@(product.Published ? T("myproducts.publised") : T("myproducts.nopublised"))</h3>
+                <p>@T("myproducts.AvailableStartDate"): @product.AvailableStartDate.ToShortDateString()</p>
+                <p>@T("myproducts.AvailableEndDate"): @product.AvailableEndDate.ToShortDateString()</p>
+
+                @if (product.Published)
+                { 
+                    <div class="conte_btn">
+                        @*<a class="btn-azul" href="javascript:;"><span class="icon-mail"></span>Editar</a>*@
+                        <a class="btn-naranja" href="@Url.Action("ProductDetails", "Product", new { seName = product.SeName })">@T("myproducts.viewOnline")</a>
+                    </div>
+                }
+            </div>
+            <br />
+        </li>
+        }
+
+    </ul>
+
+    <div class="pager">
+        @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
+    </div>
+</div>
