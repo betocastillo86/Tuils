@@ -31,7 +31,7 @@
                     { 
                         if (product.UnansweredQuestions > 0)
                         { 
-                            <li><a href="javascript:;">@T("myproducts.UnansweredQuestions"): @product.UnansweredQuestions</a></li>
+                            <li><a href="@Url.Action("Questions", "ControlPanel", new { p = product.Id })">@T("myproducts.UnansweredQuestions"): @product.UnansweredQuestions</a></li>
                         }
                         else
                         { 

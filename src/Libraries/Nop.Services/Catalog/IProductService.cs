@@ -447,5 +447,37 @@ namespace Nop.Services.Catalog
         void PublishProduct(Product product);
         #endregion
 
+        #region ProductQuestions
+        /// <summary>
+        /// Retorna el listado de preguntas de acuerdo al filtro
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="vendorId"></param>
+        /// <param name="status"></param>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        List<ProductQuestion> GetProductQuestions(int? productId = null,
+            int? vendorId = null,
+            QuestionStatus? status = null,
+            int? customerId = null);
+
+        /// <summary>
+        /// Retorna una pregunta por el Id
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
+        ProductQuestion GetProductQuestionById(int questionId);
+
+        /// <summary>
+        /// Actualiza los datos de una pregunta
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns></returns>
+        bool UpdateProductQuestion(ProductQuestion question);
+
+
+        bool AnswerQuestion(ProductQuestion question);
+        #endregion
+
     }
 }

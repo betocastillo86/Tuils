@@ -201,6 +201,7 @@
     <Compile Include="Controllers\Api\ManufacturersController.cs" />
     <Compile Include="Controllers\Api\OderItemController.cs" />
     <Compile Include="Controllers\Api\ProductsController.cs" />
+    <Compile Include="Controllers\Api\QuestionsController.cs" />
     <Compile Include="Controllers\Api\SpecificationAttributeController.cs" />
     <Compile Include="Controllers\Api\VendorsController.cs" />
     <Compile Include="Controllers\BasePublicController.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="Models\Api\BaseApiModel.cs" />
     <Compile Include="Models\Api\MinifiedJson.cs" />
     <Compile Include="Models\Api\ProductBaseModel.cs" />
+    <Compile Include="Models\Api\ProductQuestionModel.cs" />
     <Compile Include="Models\Api\ProductReviewModel.cs" />
     <Compile Include="Models\Api\SpecificationAttributeModel.cs" />
     <Compile Include="Models\Api\CustomerBaseModel.cs" />
@@ -332,6 +334,8 @@
     <Compile Include="Models\ControlPanel\MyProductsModel.cs" />
     <Compile Include="Models\ControlPanel\OfficesModel.cs" />
     <Compile Include="Models\ControlPanel\OrderItemModel.cs" />
+    <Compile Include="Models\ControlPanel\QuestionsModel.cs" />
+    <Compile Include="Models\ControlPanel\QuestionsPaginFilteringModel.cs" />
     <Compile Include="Models\ControlPanel\VendorServicesModel.cs" />
     <Compile Include="Models\Customer\CustomerAttributeModel.cs" />
     <Compile Include="Models\Catalog\CustomerBackInStockSubscriptionsModel.cs" />
@@ -1020,6 +1024,7 @@
     <Content Include="Scripts\tuils\collections\specificationAttribute.js" />
     <Content Include="Scripts\tuils\extensions\numbers.js" />
     <Content Include="Scripts\tuils\models\address.js" />
+    <Content Include="Scripts\tuils\models\panel\responseQuestion.js" />
     <Content Include="Scripts\tuils\models\specificationAttribute.js" />
     <Content Include="Scripts\tuils\models\userRegister.js" />
     <Content Include="Scripts\tuils\models\vendor.js" />
@@ -1041,6 +1046,8 @@
     <Content Include="Scripts\tuils\views\panel\myAccount.js" />
     <Content Include="Scripts\tuils\views\panel\myProductsView.js" />
     <Content Include="Scripts\tuils\views\panel\offices.js" />
+    <Content Include="Scripts\tuils\views\panel\questionsView.js" />
+    <Content Include="Scripts\tuils\views\panel\responseQuestionView.js" />
     <Content Include="Scripts\tuils\views\panel\vendorServices.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
@@ -2402,6 +2409,7 @@
     <Content Include="Views\ControlPanel\MySales.cshtml" />
     <Content Include="Views\Shared\_PanelLayoutOne.cshtml" />
     <Content Include="Views\ControlPanel\MyProducts.cshtml" />
+    <Content Include="Views\ControlPanel\Questions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

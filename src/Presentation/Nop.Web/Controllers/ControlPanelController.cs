@@ -491,6 +491,34 @@ namespace Nop.Web.Controllers
         }
         #endregion
 
+        #region Questions
+        public ActionResult Questions(QuestionsPaginFilteringModel command)
+        {
+            //Valida que exista un vendedor en sesion
+            if (_workContext.CurrentVendor != null && command.p > 0)
+            {
+                var product = _productService.GetProductById(command.p);
+
+                //Valida que el vendedor en sesion sea el correspondiente al producto
+                if (product.VendorId == _workContext.CurrentVendor.Id)
+                {
+                    var model = new QuestionsModel();
+                    model.Questions = _productService.GetProductQuestions(productId: command.p, status: QuestionStatus.Created);
+                    model.Product.SeName = product.GetSeName();
+                    return View(model);
+                }
+                else
+                {
+                    return InvokeHttp404();
+                }
+            }
+            else
+            {
+                return InvokeHttp404();
+            }
+        }
+        #endregion
+
         #region Menu
         [ChildActionOnly]
         public ActionResult Menu() 
@@ -548,12 +576,16 @@ namespace Nop.Web.Controllers
                     return module.Name;
                 else
                 {
+
+                    string subModuleName = string.Empty;
                     //Si no es de tipo padre recorre los submodulos
                     foreach (var sm in module.SubModules)
                     {
                         if (sm.Action.Equals(currentAction) && sm.Controller.Equals(currentController) && validateQueryString(queryStringParent, sm.Parameters))
-                            return sm.Name;
+                            subModuleName = sm.Name;
                     }
+                    //Si algún submodulo fue encontrado lo retorna
+                    if(!string.IsNullOrEmpty(subModuleName)) return subModuleName;
                 }
 
                 

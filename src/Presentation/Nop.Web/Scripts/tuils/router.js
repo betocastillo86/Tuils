@@ -21,6 +21,7 @@
                 "ControlPanel/MyOrders(/:query)": "myOrders",
                 "ControlPanel/MySales(/:query)": "myOrders",
                 "ControlPanel/MyProducts(/:query)": "myProducts",
+                "ControlPanel/Questions(/:query)": "questions",
                 "v/:query" : "vendor"
 
             },
@@ -72,6 +73,13 @@
                 var that = this;
                 require(['tuils/views/panel/myProductsView'], function (MyProductsView) {
                     that.currentView = new MyProductsView({ el: that.defaultEl });
+                });
+                this.loadSubViewsPanel();
+            },
+            questions: function () {
+                var that = this;
+                require(['tuils/views/panel/questionsView'], function (QuestionsView) {
+                    that.currentView = new QuestionsView({ el: that.defaultEl });
                 });
                 this.loadSubViewsPanel();
             },

@@ -55,6 +55,7 @@ namespace Nop.Services.Catalog
         private readonly IRepository<ProductSpecificationAttribute> _productSpecificationAttributeRepository;
         private readonly IRepository<ProductReview> _productReviewRepository;
         private readonly IRepository<ProductWarehouseInventory> _productWarehouseInventoryRepository;
+        private readonly IRepository<ProductQuestion> _productQuestionRepository;
         private readonly IProductAttributeService _productAttributeService;
         private readonly IProductAttributeParser _productAttributeParser;
         private readonly ILanguageService _languageService;
@@ -72,6 +73,7 @@ namespace Nop.Services.Catalog
         private readonly IStoreMappingService _storeMappingService;
         private readonly IPictureService _pictureService;
         private readonly IVendorService _vendorService;
+        
 
 
         #endregion
@@ -133,7 +135,8 @@ namespace Nop.Services.Catalog
             IEventPublisher eventPublisher,
             IAclService aclService,
             IStoreMappingService storeMappingService,
-            IPictureService pictureService)
+            IPictureService pictureService,
+            IRepository<ProductQuestion> productQuestionRepository)
         {
             this._cacheManager = cacheManager;
             this._productRepository = productRepository;
@@ -162,6 +165,7 @@ namespace Nop.Services.Catalog
             this._aclService = aclService;
             this._storeMappingService = storeMappingService;
             this._pictureService = pictureService;
+            this._productQuestionRepository = productQuestionRepository;
         }
 
         #endregion
@@ -1905,6 +1909,95 @@ namespace Nop.Services.Catalog
                 throw e;
             }
             
+        }
+        #endregion
+
+        #region Questions
+
+        /// <summary>
+        /// Retorna el listado de preguntas de acuerdo al filtro enviado
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="vendorId"></param>
+        /// <param name="status"></param>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public List<ProductQuestion> GetProductQuestions(int? productId = null, 
+            int? vendorId = null, 
+            QuestionStatus? status = null,
+            int? customerId = null)
+        {
+            var query = _productQuestionRepository.Table;
+
+            if (productId.HasValue)
+                query = query.Where(p => p.ProductId == productId.Value);
+
+            if (vendorId.HasValue)
+                query = query.Where(p => p.Product.VendorId == vendorId.Value);
+
+            if (status.HasValue)
+                query = query.Where(p=> p.StatusId == (int)status.Value);
+
+            if (customerId.HasValue)
+                query = query.Where(p => p.CustomerId == customerId.Value);
+
+            return query.ToList();
+        }
+
+        /// <summary>
+        /// Retorna un producto por el ID
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
+        public ProductQuestion GetProductQuestionById(int questionId)
+        {
+            
+            if (questionId > 0)
+            {
+                return _productQuestionRepository.GetById(questionId);    
+            }
+
+            return new ProductQuestion();
+
+        }
+
+        /// <summary>
+        /// Actualiza los datos de una pregunta
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns></returns>
+        public bool UpdateProductQuestion(ProductQuestion question)
+        {
+            return _productQuestionRepository.Update(question) > 0;
+        }
+
+        /// <summary>
+        /// Actualiza una respuesta como respondida y actualiza el acumulado del producto
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns></returns>
+        public bool AnswerQuestion(ProductQuestion question)
+        {
+
+            if (string.IsNullOrEmpty(question.AnswerText))
+                throw new ArgumentNullException("AnswerText");
+
+            question.Status = QuestionStatus.Answered;
+            question.AnsweredOnUtc = DateTime.Now;
+            question.CustomerAnswerId = _workContext.CurrentCustomer.Id;
+
+            if (UpdateProductQuestion(question))
+            {
+                //consulta las preguntas sin respuesta
+                var questions = GetProductQuestions(productId:question.ProductId, status:QuestionStatus.Created);
+                var product = GetProductById(question.ProductId);
+                product.UnansweredQuestions = questions.Count;
+                //Actualiza el número de pregundas pendientes
+                UpdateProduct(product);
+                return true;
+            }
+            else
+                return false;
         }
         #endregion
 

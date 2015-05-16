@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mapping\Catalog\ManufacturerCategoryMap.cs" />
+    <Compile Include="Mapping\Catalog\ProductQuestionMap.cs" />
     <Compile Include="Mapping\Catalog\SpecialCategoryProductMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeValueMap.cs" />
@@ -121,6 +122,14 @@
     <Compile Include="Migrations\201505132130087_AddColumns_Product_VistitsTotalSalesUnansweredQuestions.cs" />
     <Compile Include="Migrations\201505132130087_AddColumns_Product_VistitsTotalSalesUnansweredQuestions.Designer.cs">
       <DependentUpon>201505132130087_AddColumns_Product_VistitsTotalSalesUnansweredQuestions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505160018426_CreateTable_ProductQuestion.cs" />
+    <Compile Include="Migrations\201505160018426_CreateTable_ProductQuestion.Designer.cs">
+      <DependentUpon>201505160018426_CreateTable_ProductQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505160116133_CreateTable_ProductQuestion1.cs" />
+    <Compile Include="Migrations\201505160116133_CreateTable_ProductQuestion1.Designer.cs">
+      <DependentUpon>201505160116133_CreateTable_ProductQuestion1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
@@ -285,6 +294,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505132130087_AddColumns_Product_VistitsTotalSalesUnansweredQuestions.resx">
       <DependentUpon>201505132130087_AddColumns_Product_VistitsTotalSalesUnansweredQuestions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505160018426_CreateTable_ProductQuestion.resx">
+      <DependentUpon>201505160018426_CreateTable_ProductQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505160116133_CreateTable_ProductQuestion1.resx">
+      <DependentUpon>201505160116133_CreateTable_ProductQuestion1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
