@@ -719,6 +719,27 @@ td.fieldname{font-size:12px;}
 
 
 /* REGISTRATION */
+.registration-modal{width:325px; color:#525259;}
+	.registration-modal .title{ color: #395983; font-size: 16px; margin:0 0 10px;}
+		.registration-modal a{color:#F84C2A;}
+	.tipe-register{margin: 0 0 10px; padding: 0; list-style: none; width: 323px;}
+	.tipe-register li{display: inline-block; text-align: center; margin: 0 14px 0 0;}
+	.tipe-register li a{color: #D8DEE6; text-align: center; display: block; transition:ease all 0.4s;}
+	.tipe-register a span{font-size: 60px; padding:18px; display: block; width: 60px; height: 60px;}
+	.tipe-register a:hover span{background:#F5F6F8; border-radius: 2px;}
+	.tipe-register a.active span{background:#EBEEF2; color:#FB7055;}
+	.tipe-register a p{color:#D8DEE6; font-size: 20px;}
+	.tipe-register a:hover p{color:#395983;}
+	.tipe-register a.active p{color:#395983;}
+	.registration-modal .inputs{float: none; width: 100%; margin: 0; height: 54px;}
+	.registration-modal .inputs input[type="text"], .registration-modal .inputs input[type="password"], .registration-modal .inputs select{width:100%;}
+	.registration-modal .field-validation-error{margin: 0; text-align: left;}
+		.btn_register{ width: 100% !important;}
+		.terminos{text-align: left; width: 100%; margin: 0 0 20px;}
+		.terminos a:hover{text-decoration: underline;}
+	.rgt-login{margin: 10px 0 0; display: block;}
+	.rgt-login:hover{text-decoration:underline;}
+
 .registration-page{}
 .registration-page .page-title{}
 .registration-page .page-body{margin:0;padding:0;color:#555;background-color:inherit;}
@@ -1644,3 +1665,9 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
         .caja-comment h4{font-weight: 500; padding:6px 0 0;}
         .caja-comment h4 .fecha{float: right;}
         .caja-comment p{text-align: justify; padding: 8px 0;}
+/*MODAL*/
+.modal_bkg{background: rgba(60, 90, 135, 0.8); position: fixed; top: 0; height: 100%; width: 100%;}
+.modal{background: #FFF; border-radius: 2px; padding: 20px; position: relative; margin: 0 auto;}
+.modal-btn-close{background:#FB7055; color:#FFF !important; display: block; transition:ease all 0.4s; position: absolute; top: 10px; right: 10px; color:#FFF; padding:3px;}
+.modal-btn-close:hover{background:#3b5a83; color: #FFF;}
+
