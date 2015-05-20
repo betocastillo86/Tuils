@@ -12,6 +12,12 @@ using Nop.Core;
 using Nop.Services.Media;
 using Nop.Core.Domain.Media;
 using Nop.Services.Localization;
+using System.Threading.Tasks;
+using Nop.Web.Infrastructure;
+using Nop.Core.Domain.Common;
+using Nop.Services.Vendors;
+using Nop.Utilities;
+using Nop.Services.Seo;
 
 namespace Nop.Web.Controllers.Api
 {
@@ -24,7 +30,9 @@ namespace Nop.Web.Controllers.Api
         private readonly ILogger _logger;
         private readonly IPictureService _pictureService;
         private readonly MediaSettings _mediaSettings;
+        private readonly TuilsSettings _tuilsSettings;
         private readonly ILocalizationService _localizationService;
+        private readonly IVendorService _vendorService;
         #endregion
 
         #region ctor
@@ -33,7 +41,9 @@ namespace Nop.Web.Controllers.Api
             ILogger logger,
             IPictureService pictureService,
             MediaSettings mediaSettings,
-            ILocalizationService localizationService)
+            ILocalizationService localizationService,
+            TuilsSettings tuilsSettings,
+            IVendorService vendorService)
         {
             this._addressService = addressService;
             this._logger = logger;
@@ -41,6 +51,8 @@ namespace Nop.Web.Controllers.Api
             this._pictureService = pictureService;
             this._mediaSettings = mediaSettings;
             this._localizationService = localizationService;
+            this._tuilsSettings = tuilsSettings;
+            this._vendorService = vendorService;
         }
         #endregion
 
@@ -64,7 +76,7 @@ namespace Nop.Web.Controllers.Api
             }
         }
 
-
+        #region Insert
         [Authorize]
         [Route("api/addresses")]
         [HttpPost]
@@ -97,7 +109,9 @@ namespace Nop.Web.Controllers.Api
                 return BadRequest();
             }
         }
+        #endregion
 
+        #region Update
         [Authorize]
         [Route("api/addresses")]
         [HttpPut]
@@ -145,7 +159,95 @@ namespace Nop.Web.Controllers.Api
 
         }
 
-       
+        #endregion
+
+        #region Save Pictures
+
+        [Authorize]
+        [Route("api/addresses/{id}/picture/{pictureId?}")]
+        [HttpPost]
+        public async Task<IHttpActionResult> SavePicture(int id, int? pictureId = null)
+        {
+            //Valida que venga un archivo
+            if (id > 0 && 
+                Request.Content.IsMimeMultipartContent() &&
+                _workContext.CurrentVendor != null)
+            {
+                //Consulta la dirección y valida que el usuario auteticado pertenezca a esa sede
+                var address = _addressService.GetAddressById(id);
+
+                if (address != null &&
+                   address.VendorId.HasValue &&
+                    address.VendorId == _workContext.CurrentVendor.Id)
+                {
+                    try
+                    {
+                        var provider = await Request.Content.ReadAsMultipartAsync<InMemoryMultipartFormDataStreamProvider>(new InMemoryMultipartFormDataStreamProvider());
+
+                        System.Web.Mvc.FormCollection formData = provider.FormData;
+
+                        IList<HttpContent> fileContentList = provider.Files;
+
+                        var fileDataList = provider.GetFiles();
+
+                        var files = await fileDataList;
+                        var fileToUpload = files.FirstOrDefault();
+
+                        //Valida que el tamaño del archivo sea valido
+                        if (fileToUpload.Size < _tuilsSettings.maxFileUploadSize)
+                        {
+                            string extension = Files.GetExtensionByContentType(fileToUpload.ContentType);
+
+                            string fileName = string.Empty;
+
+                            //Si viene id de la foto actualiza los datos, sino inserta una nueva
+                            if (pictureId.HasValue)
+                            {
+                                //Valida que esa direccion tenga asociada la imagen que se intenta modificar
+                                if(_addressService.AddressHasPicture(id, pictureId.Value))
+                                {
+                                    _pictureService.UpdatePicture(pictureId.Value, fileToUpload.Data, _pictureService.GetContentTypeFromExtension(extension), address.Vendor.GetSeName(), true);
+                                    return Ok(new { id = pictureId });
+                                }
+                                else
+                                    return InternalServerError();
+                            }
+                            else
+                            {
+                                //Inserta la imagen y la asocia
+                                pictureId = _addressService.InsertPicture(id, fileToUpload.Data, extension).PictureId;
+                                if(pictureId.Value > 0)
+                                    return Ok(new { id = pictureId });
+                                else
+                                    return InternalServerError();
+                            }
+                        }
+                        else
+                        {
+                            return InternalServerError(new Nop.Core.NopException("El tamaño exede el permitido {0}", fileToUpload.Size));
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return InternalServerError(e);
+                    }
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
+        #endregion
+
+        #region Delete
+
         [Authorize]
         [Route("api/addresses/{id}")]
         [HttpDelete]
@@ -181,8 +283,12 @@ namespace Nop.Web.Controllers.Api
             }
 
         }
+        #endregion
 
-        #region Pictures
+
+
+
+        #region Get Pictures
 
         [HttpGet]
         [Route("api/addresses/{id}/pictures")]
@@ -190,7 +296,7 @@ namespace Nop.Web.Controllers.Api
         {
             if (id > 0)
             {
-                int size = _mediaSettings.ProductThumbPictureSizeOnProductDetailsPage;
+                int size = _mediaSettings.OfficeThumbPictureSizeOnControlPanel;
                 return Ok(_addressService.GetPicturesByAddressId(id).ToModels(string.Empty, size, _pictureService, _localizationService));
             }
             else

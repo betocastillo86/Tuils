@@ -1,22 +1,22 @@
-﻿define(['underscore', 'backbone'], function (_, Backbone) {
+﻿define(['underscore', 'backbone'], function (_, Backbone, FileModel) {
     var AddressModel = Backbone.Model.extend({
 
-        idAttribute : "Id",
+        idAttribute: "Id",
 
         baseUrl: "/api/addresses",
 
         url: "/api/addresses",
 
-        validation :{
+        validation: {
             Name: {
-                required : true
+                required: true
             },
             Email: {
-                required:  false,
+                required: false,
                 pattern: 'email'
             },
             PhoneNumber: {
-                pattern : 'number',
+                pattern: 'number',
                 required: true
             },
             FaxNumber: {
@@ -51,20 +51,42 @@
             Latitude: 'Latitud',
             Longitude: 'Longitud'
         },
-        validateLnLg : function(value)
-        {
+        validateLnLg: function (value) {
             return value != undefined && value != 0;
         },
         getAddress: function (id) {
-            this.url = this.baseUrl + '/' +  id;
+            this.url = this.baseUrl + '/' + id;
             this.fetch();
         },
         insert: function (id) {
             this.url = this.baseUrl;
             this.save();
         },
-        deleteById: function (id)
-        {
+        saveImage: function (file, pictureId, sizeMini, sizeBig) {
+            var that = this;
+            require(['fileModel', 'resize'], function (FileModel) {
+
+                that.fileModel = new FileModel();
+                that.fileModel.on("file-saved", that.fileUploaded, that);
+                that.fileModel.on("file-error", that.fileErrorUpload, that);
+
+                var resizer = new window.resize();
+                resizer.init();
+                resizer.photo(file, sizeBig, 'file', function (resizedFile) {
+                    resizer.photo(resizedFile, sizeMini, 'dataURL', function (thumbnail) {
+                        that.fileModel.set({ src: thumbnail, file: resizedFile });
+                        that.fileModel.upload({ saveUrl: '/api/addresses/' + that.get('Id') + '/picture' + (pictureId > 0 ? '/' + pictureId : '') });
+                    });
+                });
+            });
+        },
+        fileUploaded: function (file) {
+            this.trigger("file-saved", file);
+        },
+        fileErrorUpload: function () {
+            this.trigger("file-error");
+        },
+        deleteById: function (id) {
             this.url = this.baseUrl + '/' + id;
             this.set('Id', id);
             this.destroy();
