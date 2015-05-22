@@ -339,6 +339,23 @@ namespace Nop.Services.Catalog
             return category;
         }
 
+
+        /// <summary>
+        /// Trae las categorias por las que se está consultando
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public IList<Category> GetCategoriesByIds(int[] ids)
+        {
+            var categories = new List<Category>();
+            foreach (var id in ids)
+            {
+                categories.Add(GetCategoryById(id));
+            }
+            return categories;
+        }
+
+
         /// <summary>
         /// Inserts category
         /// </summary>

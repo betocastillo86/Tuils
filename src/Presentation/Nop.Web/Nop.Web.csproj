@@ -2413,6 +2413,7 @@
     <Content Include="Views\Shared\_PanelLayoutOne.cshtml" />
     <Content Include="Views\ControlPanel\MyProducts.cshtml" />
     <Content Include="Views\ControlPanel\Questions.cshtml" />
+    <Content Include="Views\Catalog\_FilterCategoryBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

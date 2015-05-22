@@ -1,8 +1,6 @@
-﻿@model CatalogPagingFilteringModel.SpecificationFilterModel
+﻿@model CatalogPagingFilteringModel.CategoryFilterModel
 @using Nop.Web.Models.Catalog;
-@{
-    var notFilteredItemsGroups = Model.NotFilteredItems.GroupBy(x => x.SpecificationAttributeName);
-}
+
 @if (Model.Enabled)
 {
     <div class="product-filters product-spec-filter">
@@ -13,22 +11,14 @@
             @if (Model.NotFilteredItems.Count > 0)
             {
                 <div class="available-items">
-                    @foreach (var group in notFilteredItemsGroups)
+                    @foreach (var category in Model.NotFilteredItems)
                     {
-                        var groupList = group.ToList();
-                        
+
                         <ul class="group">
                             <li class="title">
-                                <strong>@groupList[0].SpecificationAttributeName</strong>
+                                <strong>@category.CategoryName (<a href="@category.FilterUrl">@category.NumOfProducts</a>     )</strong>
                             </li>
-
-                            @foreach (var spec in groupList)
-                            {
-                                <li class="item">
-                                    <a href="@spec.FilterUrl">@spec.SpecificationAttributeOptionName   (@spec.NumOfProducts)</a>
-                                </li>
-                            }
-                        </ul> 
+                        </ul>
                     }
                 </div>
             }
@@ -41,7 +31,7 @@
                     @foreach (var item in Model.AlreadyFilteredItems)
                     {
                         <div class="item">
-                            <strong>@(item.SpecificationAttributeName):</strong> @item.SpecificationAttributeOptionName
+                            <strong>@(item.CategoryName)</strong>
                         </div>
                     }
                 </div>

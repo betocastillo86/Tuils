@@ -50,6 +50,13 @@ namespace Nop.Services.Catalog
         Category GetCategoryById(int categoryId, bool includeSubcategories = false);
 
         /// <summary>
+        /// Retorna las categorias por los ids dados
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        IList<Category> GetCategoriesByIds(int[] ids);
+
+        /// <summary>
         /// Inserts category
         /// </summary>
         /// <param name="category">Category</param>

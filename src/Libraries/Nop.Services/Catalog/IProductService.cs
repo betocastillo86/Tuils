@@ -114,7 +114,7 @@ namespace Nop.Services.Catalog
         /// <summary>
         /// Search products
         /// </summary>
-        /// <param name="filterableSpecificationAttributeOptionIds">The specification attribute option identifiers applied to loaded products (all pages)</param>
+        /// <param name="filterableSpecificationAttributeOptionIds">Retorna el conteo de cada una de las especificaciones según el filtro</param>
         /// <param name="loadFilterableSpecificationAttributeOptionIds">A value indicating whether we should load the specification attribute option identifiers applied to loaded products (all pages)</param>
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
@@ -140,8 +140,10 @@ namespace Nop.Services.Catalog
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Products</returns>
         IPagedList<Product> SearchProducts(
-            out IList<int> filterableSpecificationAttributeOptionIds,
+            out Dictionary<int, int> filterableSpecificationAttributeOptionCount,
+            out Dictionary<int, int> filterableCategoryCount,
             bool loadFilterableSpecificationAttributeOptionIds = false,
+            bool loadFilterableCategoryIds = false,
             int pageIndex = 0,
             int pageSize = int.MaxValue,
             IList<int> categoryIds = null,

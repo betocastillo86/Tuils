@@ -579,9 +579,10 @@ namespace Nop.Web.Controllers
                 categoryIds.AddRange(GetChildCategoryIds(category.Id));
             }
             //products
-            IList<int> alreadyFilteredSpecOptionIds = model.PagingFilteringContext.SpecificationFilter.GetAlreadyFilteredSpecOptionIds(_webHelper);
-            IList<int> filterableSpecificationAttributeOptionIds;
-            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, true,
+            IList<int> alreadyFilteredSpecOptionIds = model.PagingFilteringContext.SpecificationFilter.GetAlreadyFilteredIds(_webHelper);
+            Dictionary<int, int> filterableCategoryOptionIds;
+            Dictionary<int, int> filterableSpecificationAttributeOptionIds;
+            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, out filterableCategoryOptionIds, true, true,
                 categoryIds: categoryIds,
                 storeId: _storeContext.CurrentStore.Id,
                 visibleIndividuallyOnly: true,
@@ -852,8 +853,10 @@ namespace Nop.Web.Controllers
 
 
             //products
-            IList<int> filterableSpecificationAttributeOptionIds;
-            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, true,
+            Dictionary<int, int> filterableSpecificationAttributeOptionIds;
+            Dictionary<int, int> filterableCategoryOptionIds;
+            
+            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, out filterableCategoryOptionIds, true, true,
                 manufacturerId: manufacturer.Id,
                 storeId: _storeContext.CurrentStore.Id,
                 visibleIndividuallyOnly: true,
@@ -993,8 +996,9 @@ namespace Nop.Web.Controllers
                 vendor.PageSize);
 
             //products
-            IList<int> filterableSpecificationAttributeOptionIds;
-            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, true,
+            Dictionary<int, int> filterableSpecificationAttributeOptionIds;
+            Dictionary<int, int> filterableCategoryOptionIds;
+            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, out filterableCategoryOptionIds, true, true,
                 vendorId: vendor.Id,
                 storeId: _storeContext.CurrentStore.Id,
                 visibleIndividuallyOnly: true,
@@ -1346,6 +1350,8 @@ namespace Nop.Web.Controllers
                     decimal? minPriceConverted = null;
                     decimal? maxPriceConverted = null;
                     bool searchInDescriptions = false;
+
+                    
                     if (model.As)
                     {
                         //advanced search
@@ -1384,8 +1390,16 @@ namespace Nop.Web.Controllers
                     //var searchInProductTags = false;
                     var searchInProductTags = searchInDescriptions;
 
+                    //Se agrega filtro por especificaicones
+                    Dictionary<int, int> filterableSpecificationAttributeOptionIds;
+                    Dictionary<int, int> filterableCategoryIds;
+                    IList<int> alreadyFilteredSpecOptionIds = model.PagingFilteringContext.SpecificationFilter.GetAlreadyFilteredIds(_webHelper);
+                    IList<int> alreadyFilteredCategoryIds = model.PagingFilteringContext.CategoryFilter.GetAlreadyFilteredIds(_webHelper);
+                    
                     //products
                     products = _productService.SearchProducts(
+                        out filterableSpecificationAttributeOptionIds,
+                        out filterableCategoryIds, true, true,
                         categoryIds: categoryIds,
                         manufacturerId: manufacturerId,
                         storeId: _storeContext.CurrentStore.Id,
@@ -1398,9 +1412,24 @@ namespace Nop.Web.Controllers
                         searchProductTags: searchInProductTags,
                         languageId: _workContext.WorkingLanguage.Id,
                         orderBy: (ProductSortingEnum)command.OrderBy,
+                        filteredSpecs: alreadyFilteredSpecOptionIds,
                         pageIndex: command.PageNumber - 1,
                         pageSize: command.PageSize);
                     model.Products = PrepareProductOverviewModels(products).ToList();
+
+
+                    
+                    //specs
+                    model.PagingFilteringContext.SpecificationFilter.PrepareSpecsFilters(alreadyFilteredSpecOptionIds,
+                filterableSpecificationAttributeOptionIds,
+                _specificationAttributeService, _webHelper, _workContext);
+
+                    //categories
+                    model.PagingFilteringContext.CategoryFilter.PrepareCategoriesFilters(alreadyFilteredCategoryIds,
+                filterableCategoryIds,
+                _categoryService, _webHelper, _workContext);
+
+
 
                     model.NoResults = !model.Products.Any();
 

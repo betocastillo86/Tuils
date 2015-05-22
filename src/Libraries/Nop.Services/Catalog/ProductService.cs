@@ -384,14 +384,16 @@ namespace Nop.Services.Catalog
             bool showHidden = false,
             bool? published = null)
         {
-            IList<int> filterableSpecificationAttributeOptionIds;
-            return SearchProducts(out filterableSpecificationAttributeOptionIds, false,
+            Dictionary<int, int> filterableSpecificationAttributeOptionCount;
+            Dictionary<int, int> filterableCategoryCount;
+            return SearchProducts(out filterableSpecificationAttributeOptionCount, out filterableCategoryCount, false, false,
                 pageIndex, pageSize, categoryIds, manufacturerId,
                 storeId, vendorId, warehouseId,
                 parentGroupedProductId, productType, visibleIndividuallyOnly, featuredProducts,
                 priceMin, priceMax, productTagId, keywords, searchDescriptions, searchSku,
                 searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published);
         }
+
 
         /// <summary>
         /// Search products
@@ -423,8 +425,10 @@ namespace Nop.Services.Catalog
         /// <param name="published">Si viene null no filtra por el campo Published. Si no viene null si filtra por el campo dependiendo de su valor</param>
         /// <returns>Products</returns>
         public virtual IPagedList<Product> SearchProducts(
-            out IList<int> filterableSpecificationAttributeOptionIds,
+            out Dictionary<int, int> filterableSpecificationAttributeOptionCount,
+            out Dictionary<int, int> filterableCategoryCount,
             bool loadFilterableSpecificationAttributeOptionIds = false,
+            bool loadFilterableCategoryIds = false,
             int pageIndex = 0,
             int pageSize = 2147483647,  //Int32.MaxValue
             IList<int> categoryIds = null,
@@ -449,7 +453,8 @@ namespace Nop.Services.Catalog
             bool showHidden = false,
             bool? published = null)
         {
-            filterableSpecificationAttributeOptionIds = new List<int>();
+            filterableSpecificationAttributeOptionCount = new Dictionary<int, int>();
+            filterableCategoryCount = new Dictionary<int, int>();
 
             //search by keyword
             bool searchLocalizedValue = false;
@@ -658,6 +663,13 @@ namespace Nop.Services.Catalog
                 pPublished.ParameterName = "Published";
                 pPublished.Value = published != null ? (object)published : DBNull.Value;
                 pPublished.DbType = DbType.Boolean;
+
+
+                var pLoadFilterableCategoryIds = _dataProvider.GetParameter();
+                pLoadFilterableCategoryIds.ParameterName = "LoadFilterableCategoryIds";
+                pLoadFilterableCategoryIds.Value = loadFilterableCategoryIds;
+                pLoadFilterableCategoryIds.DbType = DbType.Boolean;
+                
                 
                 var pLoadFilterableSpecificationAttributeOptionIds = _dataProvider.GetParameter();
                 pLoadFilterableSpecificationAttributeOptionIds.ParameterName = "LoadFilterableSpecificationAttributeOptionIds";
@@ -671,6 +683,12 @@ namespace Nop.Services.Catalog
                 pFilterableSpecificationAttributeOptionIds.Direction = ParameterDirection.Output;
                 pFilterableSpecificationAttributeOptionIds.Size = int.MaxValue - 1;
                 pFilterableSpecificationAttributeOptionIds.DbType = DbType.String;
+
+                var pFilterableCategoryIds = _dataProvider.GetParameter();
+                pFilterableCategoryIds.ParameterName = "FilterableCategoryIds";
+                pFilterableCategoryIds.Direction = ParameterDirection.Output;
+                pFilterableCategoryIds.Size = int.MaxValue - 1;
+                pFilterableCategoryIds.DbType = DbType.String;
 
                 var pTotalRecords = _dataProvider.GetParameter();
                 pTotalRecords.ParameterName = "TotalRecords";
@@ -710,18 +728,49 @@ namespace Nop.Services.Catalog
                     pShowHidden,
                     pPublished,
                     pLoadFilterableSpecificationAttributeOptionIds,
+                    pLoadFilterableCategoryIds,
+                    pFilterableCategoryIds,
                     pFilterableSpecificationAttributeOptionIds,
                     pTotalRecords);
+
                 //get filterable specification attribute option identifier
                 string filterableSpecificationAttributeOptionIdsStr = (pFilterableSpecificationAttributeOptionIds.Value != DBNull.Value) ? (string)pFilterableSpecificationAttributeOptionIds.Value : "";
                 if (loadFilterableSpecificationAttributeOptionIds &&
                     !string.IsNullOrWhiteSpace(filterableSpecificationAttributeOptionIdsStr))
                 {
-                     filterableSpecificationAttributeOptionIds = filterableSpecificationAttributeOptionIdsStr
-                        .Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
-                        .Select(x => Convert.ToInt32(x.Trim()))
-                        .ToList();
+                    //Separa todas las especificaciones
+                    var countSpecifications = filterableSpecificationAttributeOptionIdsStr
+                        .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    //Recorre las especificaciones para obtener la cantidad de productos encontrados por cada uno
+                    foreach (var spec in countSpecifications)
+                    {
+                        var specVsCount = spec.Split(new char[] { '-' });
+                        //Posición 0 es el id de la especificacion, posicion 2 es la cantidad de productos
+                        filterableSpecificationAttributeOptionCount.Add(Convert.ToInt32(specVsCount[0]), Convert.ToInt32(specVsCount[1]));
+                    }
                 }
+
+                //Recorre las categorias para realizar el mismo proceso
+                string filterableCategoryIdsStr = (pFilterableCategoryIds.Value != DBNull.Value) ? (string)pFilterableCategoryIds.Value : "";
+                if (loadFilterableCategoryIds &&
+                    !string.IsNullOrWhiteSpace(filterableCategoryIdsStr))
+                {
+                    //Separa todas las categorias
+                    var countCategories = filterableCategoryIdsStr
+                        .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    //Recorre las categorias para obtener la cantidad de productos encontrados por cada uno
+                    foreach (var category in countCategories)
+                    {
+                        var catVsCount = category.Split(new char[] { '-' });
+                        //Posición 0 es el id de la categoria, posicion 2 es la cantidad de productos
+                        filterableCategoryCount.Add(Convert.ToInt32(catVsCount[0]), Convert.ToInt32(catVsCount[1]));
+                    }
+                }
+
+
+
+
+
                 //return products
                 int totalRecords = (pTotalRecords.Value != DBNull.Value) ? Convert.ToInt32(pTotalRecords.Value) : 0;
                 return new PagedList<Product>(products, pageIndex, pageSize, totalRecords);
@@ -983,17 +1032,18 @@ namespace Nop.Services.Catalog
                 var products = new PagedList<Product>(query, pageIndex, pageSize);
 
                 //get filterable specification attribute option identifier
-                if (loadFilterableSpecificationAttributeOptionIds)
-                {
-                    var querySpecs = from p in query
-                                     join psa in _productSpecificationAttributeRepository.Table on p.Id equals psa.ProductId
-                                     where psa.AllowFiltering
-                                     select psa.SpecificationAttributeOptionId;
-                    //only distinct attributes
-                    filterableSpecificationAttributeOptionIds = querySpecs
-                        .Distinct()
-                        .ToList();
-                }
+                //Se comenta ya que es codigo LINQ que no va ir
+                //if (loadFilterableSpecificationAttributeOptionIds)
+                //{
+                //    var querySpecs = from p in query
+                //                     join psa in _productSpecificationAttributeRepository.Table on p.Id equals psa.ProductId
+                //                     where psa.AllowFiltering
+                //                     select psa.SpecificationAttributeOptionId;
+                //    //only distinct attributes
+                //    filterableSpecificationAttributeOptionIds = querySpecs
+                //        .Distinct()
+                //        .ToList();
+                //}
 
                 //return products
                 return products;

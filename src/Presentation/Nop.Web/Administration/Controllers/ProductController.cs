@@ -2550,7 +2550,7 @@ namespace Nop.Admin.Controllers
                         OrderStatus = x.OrderStatus.GetLocalizedEnum(_localizationService, _workContext),
                         PaymentStatus = x.PaymentStatus.GetLocalizedEnum(_localizationService, _workContext),
                         ShippingStatus = x.ShippingStatus.GetLocalizedEnum(_localizationService, _workContext),
-                        CustomerEmail = x.BillingAddress.Email,
+                        //CustomerEmail = x.BillingAddress.Email,
                         CreatedOn = _dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc)
                     };
                 }),
