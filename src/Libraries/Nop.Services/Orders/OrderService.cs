@@ -27,6 +27,9 @@ namespace Nop.Services.Orders
         private readonly IRepository<Customer> _customerRepository;
         private readonly IRepository<ReturnRequest> _returnRequestRepository;
         private readonly IEventPublisher _eventPublisher;
+        private readonly IStoreContext _storeContext;
+        private readonly IWorkContext _workContext;
+        private readonly OrderSettings _orderSettings;
 
         #endregion
 
@@ -50,7 +53,10 @@ namespace Nop.Services.Orders
             IRepository<RecurringPayment> recurringPaymentRepository,
             IRepository<Customer> customerRepository, 
             IRepository<ReturnRequest> returnRequestRepository,
-            IEventPublisher eventPublisher)
+            IEventPublisher eventPublisher,
+            OrderSettings orderSettings,
+            IStoreContext storeContext,
+            IWorkContext workContext)
         {
             this._orderRepository = orderRepository;
             this._orderItemRepository = orderItemRepository;
@@ -60,6 +66,9 @@ namespace Nop.Services.Orders
             this._customerRepository = customerRepository;
             this._returnRequestRepository = returnRequestRepository;
             this._eventPublisher = eventPublisher;
+            this._orderSettings = orderSettings;
+            this._storeContext = storeContext;
+            this._workContext = workContext;
         }
 
         #endregion
@@ -321,6 +330,36 @@ namespace Nop.Services.Orders
         #endregion
         
         #region Orders items
+
+
+        /// <summary>
+        /// Valida si un usuario ya compró un producto anteriormente
+        /// </summary>
+        /// <param name="customerId">id del usuario</param>
+        /// <param name="productId">id del producto a consultar</param>
+        /// <returns>true: El usuario ya compró previamente el producto False: No lo ha comprado</returns>
+        public bool CustomerBoughtProduct(int customerId, int productId)
+        {
+            //Consulta las ordenes del usuario
+            List<int> userOrders = _orderRepository.Table
+                .Where(o => o.CustomerId == customerId)
+                .Select(o => o.Id)
+                .ToList();
+            
+            if(userOrders.Count > 0)
+            {
+                var query = from item in _orderItemRepository.Table
+                            where userOrders.Contains(item.OrderId) && item.ProductId == productId
+                            select item.OrderId;
+                return query.ToList().Count > 0;
+            }
+            else
+                return false;
+
+
+            
+
+        }
 
         /// <summary>
         /// Gets an order item
@@ -614,6 +653,24 @@ namespace Nop.Services.Orders
         }
 
         #endregion
+
+        public bool IsMinimumOrderPlacementIntervalValid(Customer customer)
+        {
+            //prevent 2 orders being placed within an X seconds time frame
+            if (_orderSettings.MinimumOrderPlacementInterval == 0)
+                return true;
+
+            var lastOrder = SearchOrders(storeId: _storeContext.CurrentStore.Id,
+                customerId: _workContext.CurrentCustomer.Id, pageSize: 1)
+                .FirstOrDefault();
+            if (lastOrder == null)
+                return true;
+
+            var interval = DateTime.UtcNow - lastOrder.CreatedOnUtc;
+            return interval.TotalSeconds > _orderSettings.MinimumOrderPlacementInterval;
+        }
+
+       
         
         #endregion
     }

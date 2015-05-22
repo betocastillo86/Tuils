@@ -80,6 +80,7 @@ namespace Nop.Web.Controllers
         private readonly CaptchaSettings _captchaSettings;
         private readonly SeoSettings _seoSettings;
         private readonly ICacheManager _cacheManager;
+        private readonly IOrderService _orderService;
         
         #endregion
 
@@ -121,7 +122,8 @@ namespace Nop.Web.Controllers
             CustomerSettings customerSettings, 
             CaptchaSettings captchaSettings,
             SeoSettings seoSettings,
-            ICacheManager cacheManager)
+            ICacheManager cacheManager,
+            IOrderService orderService)
         {
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
@@ -160,6 +162,7 @@ namespace Nop.Web.Controllers
             this._captchaSettings = captchaSettings;
             this._seoSettings = seoSettings;
             this._cacheManager = cacheManager;
+            this._orderService = orderService;
         }
 
         #endregion
@@ -250,6 +253,12 @@ namespace Nop.Web.Controllers
             //vendor
             if (_vendorSettings.ShowVendorOnProductDetailsPage)
             {
+                //_orderService.getorder
+
+                if (!_workContext.CurrentCustomer.IsGuest())
+                    model.ProductAlreadyBought = _orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, product.Id);
+
+                
                 var vendor = _vendorService.GetVendorById(product.VendorId);
                 if (vendor != null && !vendor.Deleted && vendor.Active)
                 {

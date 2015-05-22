@@ -809,39 +809,28 @@ namespace Nop.Web.Controllers
             return null;
         }
 
-
         /// <summary>
-        /// Retorna un Json con la configuración algunas variables de la aplicación
+        /// Genera el javascript de los recursos.
+        /// Este no se deja en la clas JavascriptConfiguration ya que necesita el request para saber cual es el idioma del usuario
         /// </summary>
-        /// <returns>Objeto json con la información de la configuración</returns>
-        public  JavaScriptResult JsConfiguration()
+        /// <returns></returns>
+        public JavaScriptResult JsResources()
         {
-            var config = new
+            var Resources = new
             {
-
-                configuration = new
+                account = new
                 {
-                    //Configuración de las categorias base
-                    productBaseTypes = new
-                    {
-                        product = _tuilsSettings.productBaseTypes_product,
-                        service = _tuilsSettings.productBaseTypes_service,
-                        bike = _tuilsSettings.productBaseTypes_bike
-                    },
-                    specialCategories = new {
-                        bikeBrand = (int) SpecialCategoryProductType.BikeBrand
-                    },
-                    specialCategoriesVendor = new {
-                        bikeBrand = (int)SpecialCategoryVendorType.BikeBrand,
-                        specializedCategory = (int)SpecialCategoryVendorType.SpecializedCategory
-                    },
-                    maxFileUploadSize = _tuilsSettings.maxFileUploadSize
+                    login = _localizationService.GetResource("account.login"),
+                    newCustomer = _localizationService.GetResource("account.login.newcustomer")
+                },
+                products = new {
+                    confirmBuy = _localizationService.GetResource("products.confirmBuy")
                 }
             };
 
             //Convierte el valor del json a un string
-            var jsonString = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(config);
-            return JavaScript(string.Format("$.extend(TuilsApp, {0})", jsonString));
+            var jsonString = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Resources);
+            return JavaScript("define([], function(){var TuilsResources = {0}; return TuilsResources; });".Replace("{0}", jsonString));
         }
 
         public ActionResult GenericUrl()

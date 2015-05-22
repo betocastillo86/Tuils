@@ -18,6 +18,7 @@ using Nop.Core.Domain.Common;
 using Nop.Services.Vendors;
 using Nop.Utilities;
 using Nop.Services.Seo;
+using Nop.Web.Framework.Mvc.Api;
 
 namespace Nop.Web.Controllers.Api
 {
@@ -77,7 +78,7 @@ namespace Nop.Web.Controllers.Api
         }
 
         #region Insert
-        [Authorize]
+        [AuthorizeApi]
         [Route("api/addresses")]
         [HttpPost]
         public IHttpActionResult Insert(AddressModel model)
@@ -112,7 +113,7 @@ namespace Nop.Web.Controllers.Api
         #endregion
 
         #region Update
-        [Authorize]
+        [AuthorizeApi]
         [Route("api/addresses")]
         [HttpPut]
         public IHttpActionResult Update(AddressModel model)
@@ -163,7 +164,7 @@ namespace Nop.Web.Controllers.Api
 
         #region Save Pictures
 
-        [Authorize]
+        [AuthorizeApi]
         [Route("api/addresses/{id}/picture/{pictureId?}")]
         [HttpPost]
         public async Task<IHttpActionResult> SavePicture(int id, int? pictureId = null)
@@ -248,7 +249,7 @@ namespace Nop.Web.Controllers.Api
 
         #region Delete
 
-        [Authorize]
+        [AuthorizeApi]
         [Route("api/addresses/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)

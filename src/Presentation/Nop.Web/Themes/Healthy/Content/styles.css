@@ -733,8 +733,8 @@ td.fieldname{font-size:12px;}
 /* REGISTRATION */
 .registration-modal{width:325px; color:#525259;}
 	.registration-modal .title{ color: #395983; font-size: 16px; margin:0 0 10px;}
-		.registration-modal a{color:#F84C2A;}
-	.tipe-register{margin: 0 0 10px; padding: 0; list-style: none; width: 323px;}
+		.registration-modal a{color:#F84C2A !important;}
+	.tipe-register{margin: 0 0 10px; padding: 0; list-style: none; width: 326px;}
 	.tipe-register li{display: inline-block; text-align: center; margin: 0 14px 0 0;}
 	.tipe-register li a{color: #D8DEE6; text-align: center; display: block; transition:ease all 0.4s;}
 	.tipe-register a span{font-size: 60px; padding:18px; display: block; width: 60px; height: 60px;}

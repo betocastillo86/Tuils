@@ -22,7 +22,8 @@
                 "ControlPanel/MySales(/:query)": "myOrders",
                 "ControlPanel/MyProducts(/:query)": "myProducts",
                 "ControlPanel/Questions(/:query)": "questions",
-                "v/:query" : "vendor"
+                "v/:query" : "vendor",
+                "p/:query": "product"
 
             },
 
@@ -98,7 +99,14 @@
                     that.currentView = new VendorDetailView({ el: that.defaultEl });
                 });
             },
-
+            product: function () {
+                var that = this;
+                require(['tuils/views/product/productDetailView'], function (ProductDetailView) {
+                    that.currentView = new ProductDetailView({ el: that.defaultEl });
+                    that.loadSubViews();
+                });
+                
+            },
             loadSubViews: function () {
                 var that = this;
                 require(['tuils/views/common/header'], function (HeaderView) {

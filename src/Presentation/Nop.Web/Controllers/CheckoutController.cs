@@ -416,18 +416,7 @@ namespace Nop.Web.Controllers
         [NonAction]
         protected virtual bool IsMinimumOrderPlacementIntervalValid(Customer customer)
         {
-            //prevent 2 orders being placed within an X seconds time frame
-            if (_orderSettings.MinimumOrderPlacementInterval == 0)
-                return true;
-
-            var lastOrder = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
-                customerId: _workContext.CurrentCustomer.Id, pageSize: 1)
-                .FirstOrDefault();
-            if (lastOrder == null)
-                return true;
-
-            var interval = DateTime.UtcNow - lastOrder.CreatedOnUtc;
-            return interval.TotalSeconds > _orderSettings.MinimumOrderPlacementInterval;
+            return _orderService.IsMinimumOrderPlacementIntervalValid(customer);
         }
 
         #endregion

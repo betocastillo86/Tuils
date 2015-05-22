@@ -539,54 +539,59 @@ namespace Nop.Services.Messages
         {
             tokens.Add(new Token("Order.OrderNumber", order.Id.ToString()));
 
-            tokens.Add(new Token("Order.CustomerFullName", string.Format("{0} {1}", order.BillingAddress.FirstName, order.BillingAddress.LastName)));
-            tokens.Add(new Token("Order.CustomerEmail", order.BillingAddress.Email));
+            
 
+            #region Codigo Eliminado
+            //tokens.Add(new Token("Order.CustomerFullName", string.Format("{0} {1}", order.BillingAddress.FirstName, order.BillingAddress.LastName)));
+            //tokens.Add(new Token("Order.CustomerEmail", order.BillingAddress.Email));
+            //tokens.Add(new Token("Order.BillingFirstName", order.BillingAddress.FirstName));
+            //tokens.Add(new Token("Order.BillingLastName", order.BillingAddress.LastName));
+            //tokens.Add(new Token("Order.BillingPhoneNumber", order.BillingAddress.PhoneNumber));
+            //tokens.Add(new Token("Order.BillingEmail", order.BillingAddress.Email));
+            //tokens.Add(new Token("Order.BillingFaxNumber", order.BillingAddress.FaxNumber));
+            //tokens.Add(new Token("Order.BillingCompany", order.BillingAddress.Company));
+            //tokens.Add(new Token("Order.BillingAddress1", order.BillingAddress.Address1));
+            //tokens.Add(new Token("Order.BillingAddress2", order.BillingAddress.Address2));
+            //tokens.Add(new Token("Order.BillingCity", order.BillingAddress.City));
+            //tokens.Add(new Token("Order.BillingStateProvince", order.BillingAddress.StateProvince != null ? order.BillingAddress.StateProvince.GetLocalized(x => x.Name) : ""));
+            //tokens.Add(new Token("Order.BillingZipPostalCode", order.BillingAddress.ZipPostalCode));
+            //tokens.Add(new Token("Order.BillingCountry", order.BillingAddress.Country != null ? order.BillingAddress.Country.GetLocalized(x => x.Name) : ""));
+            //tokens.Add(new Token("Order.BillingCustomAttributes", _addressAttributeFormatter.FormatAttributes(order.BillingAddress.CustomAttributes), true));
 
-            tokens.Add(new Token("Order.BillingFirstName", order.BillingAddress.FirstName));
-            tokens.Add(new Token("Order.BillingLastName", order.BillingAddress.LastName));
-            tokens.Add(new Token("Order.BillingPhoneNumber", order.BillingAddress.PhoneNumber));
-            tokens.Add(new Token("Order.BillingEmail", order.BillingAddress.Email));
-            tokens.Add(new Token("Order.BillingFaxNumber", order.BillingAddress.FaxNumber));
-            tokens.Add(new Token("Order.BillingCompany", order.BillingAddress.Company));
-            tokens.Add(new Token("Order.BillingAddress1", order.BillingAddress.Address1));
-            tokens.Add(new Token("Order.BillingAddress2", order.BillingAddress.Address2));
-            tokens.Add(new Token("Order.BillingCity", order.BillingAddress.City));
-            tokens.Add(new Token("Order.BillingStateProvince", order.BillingAddress.StateProvince != null ? order.BillingAddress.StateProvince.GetLocalized(x => x.Name) : ""));
-            tokens.Add(new Token("Order.BillingZipPostalCode", order.BillingAddress.ZipPostalCode));
-            tokens.Add(new Token("Order.BillingCountry", order.BillingAddress.Country != null ? order.BillingAddress.Country.GetLocalized(x => x.Name) : ""));
-            tokens.Add(new Token("Order.BillingCustomAttributes", _addressAttributeFormatter.FormatAttributes(order.BillingAddress.CustomAttributes), true));
+            //tokens.Add(new Token("Order.ShippingMethod", order.ShippingMethod));
+            //tokens.Add(new Token("Order.ShippingFirstName", order.ShippingAddress != null ? order.ShippingAddress.FirstName : ""));
+            //tokens.Add(new Token("Order.ShippingLastName", order.ShippingAddress != null ? order.ShippingAddress.LastName : ""));
+            //tokens.Add(new Token("Order.ShippingPhoneNumber", order.ShippingAddress != null ? order.ShippingAddress.PhoneNumber : ""));
+            //tokens.Add(new Token("Order.ShippingEmail", order.ShippingAddress != null ? order.ShippingAddress.Email : ""));
+            //tokens.Add(new Token("Order.ShippingFaxNumber", order.ShippingAddress != null ? order.ShippingAddress.FaxNumber : ""));
+            //tokens.Add(new Token("Order.ShippingCompany", order.ShippingAddress != null ? order.ShippingAddress.Company : ""));
+            //tokens.Add(new Token("Order.ShippingAddress1", order.ShippingAddress != null ? order.ShippingAddress.Address1 : ""));
+            //tokens.Add(new Token("Order.ShippingAddress2", order.ShippingAddress != null ? order.ShippingAddress.Address2 : ""));
+            //tokens.Add(new Token("Order.ShippingCity", order.ShippingAddress != null ? order.ShippingAddress.City : ""));
+            //tokens.Add(new Token("Order.ShippingStateProvince", order.ShippingAddress != null && order.ShippingAddress.StateProvince != null ? order.ShippingAddress.StateProvince.GetLocalized(x => x.Name) : ""));
+            //tokens.Add(new Token("Order.ShippingZipPostalCode", order.ShippingAddress != null ? order.ShippingAddress.ZipPostalCode : ""));
+            //tokens.Add(new Token("Order.ShippingCountry", order.ShippingAddress != null && order.ShippingAddress.Country != null ? order.ShippingAddress.Country.GetLocalized(x => x.Name) : ""));
+            //tokens.Add(new Token("Order.ShippingCustomAttributes", _addressAttributeFormatter.FormatAttributes(order.ShippingAddress != null ? order.ShippingAddress.CustomAttributes : ""), true));
 
-            tokens.Add(new Token("Order.ShippingMethod", order.ShippingMethod));
-            tokens.Add(new Token("Order.ShippingFirstName", order.ShippingAddress != null ? order.ShippingAddress.FirstName : ""));
-            tokens.Add(new Token("Order.ShippingLastName", order.ShippingAddress != null ? order.ShippingAddress.LastName : ""));
-            tokens.Add(new Token("Order.ShippingPhoneNumber", order.ShippingAddress != null ? order.ShippingAddress.PhoneNumber : ""));
-            tokens.Add(new Token("Order.ShippingEmail", order.ShippingAddress != null ? order.ShippingAddress.Email : ""));
-            tokens.Add(new Token("Order.ShippingFaxNumber", order.ShippingAddress != null ? order.ShippingAddress.FaxNumber : ""));
-            tokens.Add(new Token("Order.ShippingCompany", order.ShippingAddress != null ? order.ShippingAddress.Company : ""));
-            tokens.Add(new Token("Order.ShippingAddress1", order.ShippingAddress != null ? order.ShippingAddress.Address1 : ""));
-            tokens.Add(new Token("Order.ShippingAddress2", order.ShippingAddress != null ? order.ShippingAddress.Address2 : ""));
-            tokens.Add(new Token("Order.ShippingCity", order.ShippingAddress != null ? order.ShippingAddress.City : ""));
-            tokens.Add(new Token("Order.ShippingStateProvince", order.ShippingAddress != null && order.ShippingAddress.StateProvince != null ? order.ShippingAddress.StateProvince.GetLocalized(x => x.Name) : ""));
-            tokens.Add(new Token("Order.ShippingZipPostalCode", order.ShippingAddress != null ? order.ShippingAddress.ZipPostalCode : ""));
-            tokens.Add(new Token("Order.ShippingCountry", order.ShippingAddress != null && order.ShippingAddress.Country != null ? order.ShippingAddress.Country.GetLocalized(x => x.Name) : ""));
-            tokens.Add(new Token("Order.ShippingCustomAttributes", _addressAttributeFormatter.FormatAttributes(order.ShippingAddress != null ? order.ShippingAddress.CustomAttributes : ""), true));
+            //var paymentMethod = _paymentService.LoadPaymentMethodBySystemName(order.PaymentMethodSystemName);
+            //var paymentMethodName = paymentMethod != null ? paymentMethod.GetLocalizedFriendlyName(_localizationService, _workContext.WorkingLanguage.Id) : order.PaymentMethodSystemName;
+            //tokens.Add(new Token("Order.PaymentMethod", paymentMethodName));
+            //tokens.Add(new Token("Order.VatNumber", order.VatNumber));
+            //var sbCustomValues = new StringBuilder();
+            //var customValues = order.DeserializeCustomValues();
+            //if (customValues != null)
+            //{
+            //    foreach (var item in customValues)
+            //    {
+            //        sbCustomValues.AppendFormat("{0}: {1}", HttpUtility.HtmlEncode(item.Key), HttpUtility.HtmlEncode(item.Value != null ? item.Value.ToString() : ""));
+            //        sbCustomValues.Append("<br />");
+            //    }
+            //}
+            //tokens.Add(new Token("Order.CustomValues", sbCustomValues.ToString(), true));
+            #endregion
+            
 
-            var paymentMethod = _paymentService.LoadPaymentMethodBySystemName(order.PaymentMethodSystemName);
-            var paymentMethodName = paymentMethod != null ? paymentMethod.GetLocalizedFriendlyName(_localizationService, _workContext.WorkingLanguage.Id) : order.PaymentMethodSystemName;
-            tokens.Add(new Token("Order.PaymentMethod", paymentMethodName));
-            tokens.Add(new Token("Order.VatNumber", order.VatNumber));
-            var sbCustomValues = new StringBuilder();
-            var customValues = order.DeserializeCustomValues();
-            if (customValues != null)
-            {
-                foreach (var item in customValues)
-                {
-                    sbCustomValues.AppendFormat("{0}: {1}", HttpUtility.HtmlEncode(item.Key), HttpUtility.HtmlEncode(item.Value != null ? item.Value.ToString() : ""));
-                    sbCustomValues.Append("<br />");
-                }
-            }
-            tokens.Add(new Token("Order.CustomValues", sbCustomValues.ToString(), true));
+           
             
 
 

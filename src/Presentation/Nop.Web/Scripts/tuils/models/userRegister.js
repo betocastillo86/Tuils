@@ -14,11 +14,6 @@
                     return computed.IsRegister;
                 }
             },
-            LastName: {
-                required: function (val, attr, computed) {
-                    return computed.IsRegister;
-                }
-            },
             Email: {
                 required: true,
                 pattern : 'email'
@@ -31,15 +26,18 @@
                 required: function (val, attr, computed) {
                     return computed.VendorType != 0 && computed.IsRegister;
                 }
+            },
+            TermsOfUse: {
+                acceptance: true
             }
 
         },
         labels: {
             Name: "Nombres",
-            LastName: "Apellidos",
             Email: "Correo electrónico",
             Password: "Clave",
-            CompanyName : "Nombre establecimiento"
+            CompanyName : "Nombre establecimiento",
+            TermsOfUse: "Terminos y condiciones"
         },
         login: function () {
             this.url = this.baseUrl;

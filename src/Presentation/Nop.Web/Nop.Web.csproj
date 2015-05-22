@@ -199,7 +199,7 @@
     <Compile Include="Controllers\Api\CategoriesController.cs" />
     <Compile Include="Controllers\Api\FilesController.cs" />
     <Compile Include="Controllers\Api\ManufacturersController.cs" />
-    <Compile Include="Controllers\Api\OderItemController.cs" />
+    <Compile Include="Controllers\Api\OrdersController.cs" />
     <Compile Include="Controllers\Api\ProductsController.cs" />
     <Compile Include="Controllers\Api\QuestionsController.cs" />
     <Compile Include="Controllers\Api\SpecificationAttributeController.cs" />
@@ -260,6 +260,7 @@
     <Compile Include="Models\Api\AddressPictureModel.cs" />
     <Compile Include="Models\Api\BaseApiModel.cs" />
     <Compile Include="Models\Api\MinifiedJson.cs" />
+    <Compile Include="Models\Api\OrderModel.cs" />
     <Compile Include="Models\Api\ProductBaseModel.cs" />
     <Compile Include="Models\Api\ProductQuestionModel.cs" />
     <Compile Include="Models\Api\ProductReviewModel.cs" />
@@ -1024,6 +1025,7 @@
     <Content Include="Scripts\tuils\collections\specificationAttribute.js" />
     <Content Include="Scripts\tuils\extensions\numbers.js" />
     <Content Include="Scripts\tuils\models\address.js" />
+    <Content Include="Scripts\tuils\models\order.js" />
     <Content Include="Scripts\tuils\models\panel\responseQuestion.js" />
     <Content Include="Scripts\tuils\models\specificationAttribute.js" />
     <Content Include="Scripts\tuils\models\userRegister.js" />
@@ -1049,6 +1051,7 @@
     <Content Include="Scripts\tuils\views\panel\questionsView.js" />
     <Content Include="Scripts\tuils\views\panel\responseQuestionView.js" />
     <Content Include="Scripts\tuils\views\panel\vendorServices.js" />
+    <Content Include="Scripts\tuils\views\product\productDetailView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
     <Content Include="Scripts\tuils\views\utilities\imagesSelectorView.js" />

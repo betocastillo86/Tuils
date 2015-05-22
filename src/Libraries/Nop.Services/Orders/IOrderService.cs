@@ -4,6 +4,7 @@ using Nop.Core;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
 using Nop.Core.Domain.Shipping;
+using Nop.Core.Domain.Customers;
 
 namespace Nop.Services.Orders
 {
@@ -91,7 +92,18 @@ namespace Nop.Services.Orders
         #endregion
 
         #region Orders items
-        
+
+
+        /// <summary>
+        /// Valida si un usuario ya compró un producto anteriormente
+        /// </summary>
+        /// <param name="customerId">id del usuario</param>
+        /// <param name="productId">id del producto a consultar</param>
+        /// <returns>true: El usuario ya compró previamente el producto False: No lo ha comprado</returns>
+        bool CustomerBoughtProduct(int customerId, int productId);
+
+
+
         /// <summary>
         /// Gets an order item
         /// </summary>
@@ -221,5 +233,7 @@ namespace Nop.Services.Orders
             int orderItemId, ReturnRequestStatus? rs, int pageIndex, int pageSize);
         
         #endregion
+
+        bool IsMinimumOrderPlacementIntervalValid(Customer customer);
     }
 }

@@ -994,12 +994,14 @@ namespace Nop.Services.Orders
         /// <param name="rentalEndDate">Rental end date</param>
         /// <param name="quantity">Quantity</param>
         /// <param name="automaticallyAddRequiredProductsIfEnabled">Automatically add required products if enabled</param>
+        /// <param name="validateCartDisabled">True: Debe validar si la tienda tiene activo el carrito</param>
         /// <returns>Warnings</returns>
         public virtual IList<string> AddToCart(Customer customer, Product product,
             ShoppingCartType shoppingCartType, int storeId, string attributesXml = null,
             decimal customerEnteredPrice = decimal.Zero,
             DateTime? rentalStartDate = null, DateTime? rentalEndDate = null,
-            int quantity = 1, bool automaticallyAddRequiredProductsIfEnabled = true)
+            int quantity = 1, bool automaticallyAddRequiredProductsIfEnabled = true,
+            bool validateCartDisabled = true)
         {
             if (customer == null)
                 throw new ArgumentNullException("customer");
@@ -1008,7 +1010,7 @@ namespace Nop.Services.Orders
                 throw new ArgumentNullException("product");
 
             var warnings = new List<string>();
-            if (shoppingCartType == ShoppingCartType.ShoppingCart && !_permissionService.Authorize(StandardPermissionProvider.EnableShoppingCart, customer))
+            if (validateCartDisabled && shoppingCartType == ShoppingCartType.ShoppingCart && !_permissionService.Authorize(StandardPermissionProvider.EnableShoppingCart, customer))
             {
                 warnings.Add("Shopping cart is disabled");
                 return warnings;

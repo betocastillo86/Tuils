@@ -15,6 +15,7 @@ using Nop.Web.Infrastructure;
 using Nop.Core.Domain.Common;
 using Nop.Utilities;
 using Nop.Core.Domain.Vendors;
+using Nop.Web.Framework.Mvc.Api;
 
 namespace Nop.Web.Controllers.Api
 {
@@ -54,7 +55,7 @@ namespace Nop.Web.Controllers.Api
             return Ok(_addressService.GetAddressesByVendorId(id).ToModels());
         }
 #region Header
-		  [Authorize]
+          [AuthorizeApi]
         [HttpPut]
         [Route("api/vendors/header")]
         public IHttpActionResult UpdateVendorHeader(VendorModel model)
@@ -81,7 +82,7 @@ namespace Nop.Web.Controllers.Api
                 return NotFound();
         }
 
-        [Authorize]
+        [AuthorizeApi]
         [HttpPut]
         [Route("api/vendors/{id}/header/background")]
         public IHttpActionResult UpdateBackgroundPosition(int id, VendorModel model)
@@ -111,7 +112,7 @@ namespace Nop.Web.Controllers.Api
        
         #region Files
 
-        [Authorize]
+        [AuthorizeApi]
         [Route("api/vendors/{id}/{type}")]
         [HttpPost]
         public async Task<IHttpActionResult> SaveBackground(int id, string type)

@@ -1,5 +1,6 @@
 ﻿using Nop.Core;
 using Nop.Services.Catalog;
+using Nop.Web.Framework.Mvc.Api;
 using Nop.Web.Models.Api;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace Nop.Web.Controllers.Api
         #endregion
 
         [HttpPut]
-        [Authorize]
+        [AuthorizeApi]
         [Route("api/questions")]
         public IHttpActionResult SaveAnswer(ProductQuestionModel model)
         {
