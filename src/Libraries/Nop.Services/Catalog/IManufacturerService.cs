@@ -35,6 +35,14 @@ namespace Nop.Services.Catalog
         /// <returns>Manufacturer</returns>
         Manufacturer GetManufacturerById(int manufacturerId);
 
+
+        /// <summary>
+        /// retorna las marcas por los Ids enviados
+        /// </summary>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <returns>Manufacturer</returns>
+        IList<Manufacturer> GetManufacturersByIds(int[] manufacturerIds);
+
         /// <summary>
         /// Inserts a manufacturer
         /// </summary>

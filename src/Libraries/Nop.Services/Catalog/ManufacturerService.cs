@@ -220,6 +220,22 @@ namespace Nop.Services.Catalog
         }
 
         /// <summary>
+        /// retorna las marcas por los Ids enviados
+        /// </summary>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <returns>Manufacturer</returns>
+        public IList<Manufacturer> GetManufacturersByIds(int[] manufacturerIds)
+        {
+            if (manufacturerIds == null || manufacturerIds.Length == 0)
+                return new List<Manufacturer>();
+
+            var query = _manufacturerRepository.Table
+                .Where(m => manufacturerIds.Contains(m.Id));
+
+            return query.ToList();
+        }
+
+        /// <summary>
         /// Inserts a manufacturer
         /// </summary>
         /// <param name="manufacturer">Manufacturer</param>
@@ -585,6 +601,9 @@ namespace Nop.Services.Catalog
         #endregion
 
         #endregion
+
+
+
 
 
 

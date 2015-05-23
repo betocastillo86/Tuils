@@ -2414,6 +2414,8 @@
     <Content Include="Views\ControlPanel\MyProducts.cshtml" />
     <Content Include="Views\ControlPanel\Questions.cshtml" />
     <Content Include="Views\Catalog\_FilterCategoryBox.cshtml" />
+    <Content Include="Views\Catalog\_FilterStateProvinceBox.cshtml" />
+    <Content Include="Views\Catalog\_FilterManufacturerBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

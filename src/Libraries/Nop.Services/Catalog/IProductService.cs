@@ -109,13 +109,53 @@ namespace Nop.Services.Catalog
             IList<int> filteredSpecs = null,
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
             bool showHidden = false,
-            bool? published = null);
+            bool? published = null,
+           int? stateProvinceId = null);
+
+
+
+
+        IPagedList<Product> SearchProducts(
+            out Dictionary<int, int> filterableSpecificationAttributeOptionCount,
+            bool loadFilterableSpecificationAttributeOptionIds = false,
+            int pageIndex = 0,
+            int pageSize = int.MaxValue,
+            IList<int> categoryIds = null,
+            int manufacturerId = 0,
+            int storeId = 0,
+            int vendorId = 0,
+            int warehouseId = 0,
+            int parentGroupedProductId = 0,
+            ProductType? productType = null,
+            bool visibleIndividuallyOnly = false,
+            bool? featuredProducts = null,
+            decimal? priceMin = null,
+            decimal? priceMax = null,
+            int productTagId = 0,
+            string keywords = null,
+            bool searchDescriptions = false,
+            bool searchSku = true,
+            bool searchProductTags = false,
+            int languageId = 0,
+            IList<int> filteredSpecs = null,
+            ProductSortingEnum orderBy = ProductSortingEnum.Position,
+            bool showHidden = false,
+            bool? published = null,
+           int? stateProvinceId = null);
 
         /// <summary>
         /// Search products
         /// </summary>
-        /// <param name="filterableSpecificationAttributeOptionIds">Retorna el conteo de cada una de las especificaciones según el filtro</param>
+        /// <param name="filterableSpecificationAttributeOptionIds">The specification attribute option identifiers applied to loaded products (all pages)</param>
         /// <param name="loadFilterableSpecificationAttributeOptionIds">A value indicating whether we should load the specification attribute option identifiers applied to loaded products (all pages)</param>
+        /// <param name="filterableCategoryCount">Listado de categorias que se encontraron en el filtro con el numero de productos por cada una</param>
+        /// <param name="filterableSpecificationAttributeOptionCount">Especificaciones que se econtraron según el filtro y el conteo respectivo de cada una</param>
+        /// <param name="filterableStateProvinceCount">Ciudades que se encontraron en el filtro y el conteo respectivo de cada una de los prodcutos segpun el filtro</param>
+        /// <param name="loadFilterableCategoryIds">True: contar categorias</param>
+        /// <param name="loadFilterableStateProvinceIds">True: Contar ciudades</param>
+        /// <param name="loadPriceRange">True: Carga el menor y el mayor precio del filtro</param>
+        /// <param name="minMaxPrice">Tupple con el menor (obj0) y el mayor(obj1) precio</param>
+        /// <param name="stateProvinceId">filtro de ciudad</param>
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="categoryIds">Category identifiers</param>
@@ -138,14 +178,20 @@ namespace Nop.Services.Catalog
         /// <param name="filteredSpecs">Filtered product specification identifiers</param>
         /// <param name="orderBy">Order by</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="published">Si viene null no filtra por el campo Published. Si no viene null si filtra por el campo dependiendo de su valor</param>
         /// <returns>Products</returns>
         IPagedList<Product> SearchProducts(
             out Dictionary<int, int> filterableSpecificationAttributeOptionCount,
             out Dictionary<int, int> filterableCategoryCount,
+            out Dictionary<int, int> filterableStateProvinceCount,
+            out Dictionary<int, int> filterableManufacturerCount,
+            out Tuple<int, int> minMaxPrice,
             bool loadFilterableSpecificationAttributeOptionIds = false,
             bool loadFilterableCategoryIds = false,
+            bool loadFilterableStateProvinceIds = false,
+            bool loadFilterableManufacturerIds = false,
             int pageIndex = 0,
-            int pageSize = int.MaxValue,
+            int pageSize = 2147483647,  //Int32.MaxValue
             IList<int> categoryIds = null,
             int manufacturerId = 0,
             int storeId = 0,
@@ -161,12 +207,14 @@ namespace Nop.Services.Catalog
             string keywords = null,
             bool searchDescriptions = false,
             bool searchSku = true,
-            bool searchProductTags = false, 
+            bool searchProductTags = false,
             int languageId = 0,
-            IList<int> filteredSpecs = null, 
+            IList<int> filteredSpecs = null,
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
             bool showHidden = false,
-            bool? published = null);
+            bool? published = null,
+            int? stateProvinceId = null,
+            bool? loadPriceRange = false);
 
 
         /// <summary>

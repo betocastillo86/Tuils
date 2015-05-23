@@ -35,7 +35,7 @@ namespace Nop.Web.Controllers
 {
     public partial class CatalogController : BasePublicController
     {
-		#region Fields
+        #region Fields
 
         private readonly ICategoryService _categoryService;
         private readonly IManufacturerService _manufacturerService;
@@ -68,32 +68,33 @@ namespace Nop.Web.Controllers
         private readonly BlogSettings _blogSettings;
         private readonly ForumSettings _forumSettings;
         private readonly ICacheManager _cacheManager;
-        
+        private readonly IStateProvinceService _stateProvinceService;
+
         #endregion
 
-		#region Constructors
+        #region Constructors
 
-        public CatalogController(ICategoryService categoryService, 
+        public CatalogController(ICategoryService categoryService,
             IManufacturerService manufacturerService,
-            IProductService productService, 
+            IProductService productService,
             IVendorService vendorService,
             ICategoryTemplateService categoryTemplateService,
             IManufacturerTemplateService manufacturerTemplateService,
-            IWorkContext workContext, 
+            IWorkContext workContext,
             IStoreContext storeContext,
-            ITaxService taxService, 
+            ITaxService taxService,
             ICurrencyService currencyService,
-            IPictureService pictureService, 
+            IPictureService pictureService,
             ILocalizationService localizationService,
             IPriceCalculationService priceCalculationService,
             IPriceFormatter priceFormatter,
-            IWebHelper webHelper, 
+            IWebHelper webHelper,
             ISpecificationAttributeService specificationAttributeService,
             IProductTagService productTagService,
             IGenericAttributeService genericAttributeService,
             IAclService aclService,
             IStoreMappingService storeMappingService,
-            IPermissionService permissionService, 
+            IPermissionService permissionService,
             ICustomerActivityService customerActivityService,
             ITopicService topicService,
             IEventPublisher eventPublisher,
@@ -102,8 +103,9 @@ namespace Nop.Web.Controllers
             CatalogSettings catalogSettings,
             VendorSettings vendorSettings,
             BlogSettings blogSettings,
-            ForumSettings  forumSettings,
-            ICacheManager cacheManager)
+            ForumSettings forumSettings,
+            ICacheManager cacheManager,
+            IStateProvinceService stateProvinceService)
         {
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
@@ -136,6 +138,7 @@ namespace Nop.Web.Controllers
             this._blogSettings = blogSettings;
             this._forumSettings = forumSettings;
             this._cacheManager = cacheManager;
+            this._stateProvinceService = stateProvinceService;
         }
 
         #endregion
@@ -223,7 +226,7 @@ namespace Nop.Web.Controllers
             pagingFilteringModel.AllowCustomersToSelectPageSize = false;
             if (allowCustomersToSelectPageSize && pageSizeOptions != null)
             {
-                var pageSizes = pageSizeOptions.Split(new [] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                var pageSizes = pageSizeOptions.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (pageSizes.Any())
                 {
@@ -410,7 +413,7 @@ namespace Nop.Web.Controllers
         #endregion
 
         #region Categories
-        
+
         [NopHttpsRequirement(SslRequirement.No)]
         public ActionResult Category(int categoryId, CatalogPagingFilteringModel command)
         {
@@ -430,15 +433,15 @@ namespace Nop.Web.Controllers
             //Store mapping
             if (!_storeMappingService.Authorize(category))
                 return InvokeHttp404();
-            
+
             //'Continue shopping' URL
-            _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, 
-                SystemCustomerAttributeNames.LastContinueShoppingPage, 
+            _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
+                SystemCustomerAttributeNames.LastContinueShoppingPage,
                 _webHelper.GetThisPageUrl(false),
                 _storeContext.CurrentStore.Id);
 
-            var model =  category.ToModel();
-            
+            var model = category.ToModel();
+
 
 
 
@@ -448,8 +451,8 @@ namespace Nop.Web.Controllers
             PrepareViewModes(model.PagingFilteringContext, command);
             //page size
             PreparePageSizeOptions(model.PagingFilteringContext, command,
-                category.AllowCustomersToSelectPageSize, 
-                category.PageSizeOptions, 
+                category.AllowCustomersToSelectPageSize,
+                category.PageSizeOptions,
                 category.PageSize);
 
             //price ranges
@@ -580,15 +583,14 @@ namespace Nop.Web.Controllers
             }
             //products
             IList<int> alreadyFilteredSpecOptionIds = model.PagingFilteringContext.SpecificationFilter.GetAlreadyFilteredIds(_webHelper);
-            Dictionary<int, int> filterableCategoryOptionIds;
             Dictionary<int, int> filterableSpecificationAttributeOptionIds;
-            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, out filterableCategoryOptionIds, true, true,
+            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, true,
                 categoryIds: categoryIds,
                 storeId: _storeContext.CurrentStore.Id,
                 visibleIndividuallyOnly: true,
-                featuredProducts:_catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
-                priceMin:minPriceConverted, 
-                priceMax:maxPriceConverted,
+                featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
+                priceMin: minPriceConverted,
+                priceMax: maxPriceConverted,
                 filteredSpecs: alreadyFilteredSpecOptionIds,
                 orderBy: (ProductSortingEnum)command.OrderBy,
                 pageIndex: command.PageNumber - 1,
@@ -599,9 +601,9 @@ namespace Nop.Web.Controllers
 
             //specs
             model.PagingFilteringContext.SpecificationFilter.PrepareSpecsFilters(alreadyFilteredSpecOptionIds,
-                filterableSpecificationAttributeOptionIds, 
+                filterableSpecificationAttributeOptionIds,
                 _specificationAttributeService, _webHelper, _workContext);
-            
+
 
             //template
             var templateCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_TEMPLATE_MODEL_KEY, category.CategoryTemplateId);
@@ -651,7 +653,7 @@ namespace Nop.Web.Controllers
                 }
 
                 var activeCategory = _categoryService.GetCategoryById(activeCategoryId);
-                var breadCrumb = activeCategory != null 
+                var breadCrumb = activeCategory != null
                     ? activeCategory.GetCategoryBreadCrumb(_categoryService, _aclService, _storeMappingService).Select(x => x.Id).ToList()
                     : new List<int>();
                 return PrepareCategorySimpleModels(0, breadCrumb, 0, int.MaxValue, false).ToList();
@@ -703,7 +705,7 @@ namespace Nop.Web.Controllers
             //};
             return PartialView(new TopMenuModel());
         }
-        
+
         [ChildActionOnly]
         public ActionResult HomepageCategories()
         {
@@ -711,9 +713,9 @@ namespace Nop.Web.Controllers
                 .Where(cr => cr.Active).Select(cr => cr.Id).ToList();
 
             string categoriesCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_HOMEPAGE_KEY,
-                string.Join(",", customerRolesIds), 
+                string.Join(",", customerRolesIds),
                 _storeContext.CurrentStore.Id,
-                _workContext.WorkingLanguage.Id, 
+                _workContext.WorkingLanguage.Id,
                 _webHelper.IsCurrentConnectionSecured());
 
             var model = _cacheManager.Get(categoriesCacheKey, () =>
@@ -772,13 +774,13 @@ namespace Nop.Web.Controllers
             //Store mapping
             if (!_storeMappingService.Authorize(manufacturer))
                 return InvokeHttp404();
-            
+
             //'Continue shopping' URL
-            _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, 
-                SystemCustomerAttributeNames.LastContinueShoppingPage, 
+            _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
+                SystemCustomerAttributeNames.LastContinueShoppingPage,
                 _webHelper.GetThisPageUrl(false),
                 _storeContext.CurrentStore.Id);
-            
+
             var model = manufacturer.ToModel();
 
 
@@ -854,14 +856,13 @@ namespace Nop.Web.Controllers
 
             //products
             Dictionary<int, int> filterableSpecificationAttributeOptionIds;
-            Dictionary<int, int> filterableCategoryOptionIds;
-            
-            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, out filterableCategoryOptionIds, true, true,
+
+            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, false,
                 manufacturerId: manufacturer.Id,
                 storeId: _storeContext.CurrentStore.Id,
                 visibleIndividuallyOnly: true,
                 featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
-                priceMin: minPriceConverted, 
+                priceMin: minPriceConverted,
                 priceMax: maxPriceConverted,
                 orderBy: (ProductSortingEnum)command.OrderBy,
                 pageIndex: command.PageNumber - 1,
@@ -897,7 +898,7 @@ namespace Nop.Web.Controllers
             foreach (var manufacturer in manufacturers)
             {
                 var modelMan = manufacturer.ToModel();
-                
+
                 //prepare picture model
                 int pictureSize = _mediaSettings.ManufacturerThumbPictureSize;
                 var manufacturerPictureCacheKey = string.Format(ModelCacheEventConsumer.MANUFACTURER_PICTURE_MODEL_KEY, manufacturer.Id, pictureSize, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
@@ -954,7 +955,7 @@ namespace Nop.Web.Controllers
 
             if (cacheModel.Manufacturers.Count == 0)
                 return Content("");
-            
+
             return PartialView(cacheModel);
         }
 
@@ -965,7 +966,7 @@ namespace Nop.Web.Controllers
         [NopHttpsRequirement(SslRequirement.No)]
         public ActionResult Vendor(int vendorId, CatalogPagingFilteringModel command)
         {
-            
+
             var vendor = _vendorService.GetVendorById(vendorId, true);
             if (vendor == null || vendor.Deleted || !vendor.Active)
                 return InvokeHttp404();
@@ -997,8 +998,7 @@ namespace Nop.Web.Controllers
 
             //products
             Dictionary<int, int> filterableSpecificationAttributeOptionIds;
-            Dictionary<int, int> filterableCategoryOptionIds;
-            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, out filterableCategoryOptionIds, true, true,
+            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, false,
                 vendorId: vendor.Id,
                 storeId: _storeContext.CurrentStore.Id,
                 visibleIndividuallyOnly: true,
@@ -1011,10 +1011,10 @@ namespace Nop.Web.Controllers
 
 
             model.TotalActiveProducts = products.TotalCount;
-            
+
             //TODO:
             model.TotalSoldProducts = -11;
-            
+
 
             model.PagingFilteringContext.LoadPagedList(products);
 
@@ -1022,7 +1022,7 @@ namespace Nop.Web.Controllers
         }
 
         public VendorModel PrepareVendorModel(Vendor vendor)
-        { 
+        {
             var model = new VendorModel
             {
                 Id = vendor.Id,
@@ -1121,16 +1121,16 @@ namespace Nop.Web.Controllers
 
             if (cacheModel.Vendors.Count == 0)
                 return Content("");
-            
+
             return PartialView(cacheModel);
         }
 
- 
+
 
         #endregion
 
         #region Product tags
-        
+
         [ChildActionOnly]
         public ActionResult PopularProductTags()
         {
@@ -1155,7 +1155,7 @@ namespace Nop.Web.Controllers
                 tags = tags.OrderBy(x => x.GetLocalized(y => y.Name)).ToList();
 
                 model.TotalTags = allTags.Count;
-                
+
                 foreach (var tag in tags)
                     model.Tags.Add(new ProductTagModel
                     {
@@ -1169,7 +1169,7 @@ namespace Nop.Web.Controllers
 
             if (cacheModel.Tags.Count == 0)
                 return Content("");
-            
+
             return PartialView(cacheModel);
         }
 
@@ -1274,7 +1274,7 @@ namespace Nop.Web.Controllers
 
             var customerRolesIds = _workContext.CurrentCustomer.CustomerRoles
                 .Where(cr => cr.Active).Select(cr => cr.Id).ToList();
-            string cacheKey = string.Format(ModelCacheEventConsumer.SEARCH_CATEGORIES_MODEL_KEY, _workContext.WorkingLanguage.Id, string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id); 
+            string cacheKey = string.Format(ModelCacheEventConsumer.SEARCH_CATEGORIES_MODEL_KEY, _workContext.WorkingLanguage.Id, string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id);
             var categories = _cacheManager.Get(cacheKey, () =>
             {
                 var categoriesModel = new List<SearchModel.CategoryModel>();
@@ -1282,7 +1282,7 @@ namespace Nop.Web.Controllers
                 foreach (var c in _categoryService.GetAllCategories())
                 {
                     //generate full category name (breadcrumb)
-                    string categoryBreadcrumb= "";
+                    string categoryBreadcrumb = "";
                     var breadcrumb = c.GetCategoryBreadCrumb(_categoryService, _aclService, _storeMappingService);
                     for (int i = 0; i <= breadcrumb.Count - 1; i++)
                     {
@@ -1303,8 +1303,8 @@ namespace Nop.Web.Controllers
                 //first empty entry
                 model.AvailableCategories.Add(new SelectListItem
                     {
-                         Value = "0",
-                         Text = _localizationService.GetResource("Common.All")
+                        Value = "0",
+                        Text = _localizationService.GetResource("Common.All")
                     });
                 //all other categories
                 foreach (var c in categories)
@@ -1346,67 +1346,71 @@ namespace Nop.Web.Controllers
                 else
                 {
                     var categoryIds = new List<int>();
-                    int manufacturerId = 0;
-                    decimal? minPriceConverted = null;
-                    decimal? maxPriceConverted = null;
+                    
+                    
                     bool searchInDescriptions = false;
 
-                    
-                    if (model.As)
+                    //advanced search
+                    var categoryId = model.Cid;
+                    if (categoryId > 0)
                     {
-                        //advanced search
-                        var categoryId = model.Cid;
-                        if (categoryId > 0)
+                        categoryIds.Add(categoryId);
+                        if (model.Isc)
                         {
-                            categoryIds.Add(categoryId);
-                            if (model.Isc)
-                            {
-                                //include subcategories
-                                categoryIds.AddRange(GetChildCategoryIds(categoryId));
-                            }
+                            //include subcategories
+                            categoryIds.AddRange(GetChildCategoryIds(categoryId));
                         }
-
-
-                        manufacturerId = model.Mid;
-
-                        //min price
-                        if (!string.IsNullOrEmpty(model.Pf))
-                        {
-                            decimal minPrice;
-                            if (decimal.TryParse(model.Pf, out minPrice))
-                                minPriceConverted = _currencyService.ConvertToPrimaryStoreCurrency(minPrice, _workContext.WorkingCurrency);
-                        }
-                        //max price
-                        if (!string.IsNullOrEmpty(model.Pt))
-                        {
-                            decimal maxPrice;
-                            if (decimal.TryParse(model.Pt, out maxPrice))
-                                maxPriceConverted = _currencyService.ConvertToPrimaryStoreCurrency(maxPrice, _workContext.WorkingCurrency);
-                        }
-
-                        searchInDescriptions = model.Sid;
                     }
-                    
+
+                    searchInDescriptions = model.Sid;
+
+                    decimal? minPriceConverted = null;
+                    decimal? maxPriceConverted = null;
+                    //Valida el rango de precios
+                    var priceFilter = command.PriceRangeFilter.GetSelectedPriceRange(_webHelper, null);
+                    if (priceFilter != null)
+                    {
+                        minPriceConverted = priceFilter.From;
+                        maxPriceConverted = priceFilter.To;
+                    }
+                    //especificaciones seleccionadas
+                    IList<int> alreadyFilteredSpecOptionIds = model.PagingFilteringContext.SpecificationFilter.GetAlreadyFilteredIds(_webHelper);
+                    //Categorias seleccionadas
+                    IList<int> alreadyFilteredCategoryIds = model.PagingFilteringContext.CategoryFilter.GetAlreadyFilteredIds(_webHelper);
+                    //Ciudad seleccionada
+                    int? stateProvinceId = model.PagingFilteringContext.StateProvinceFilter.GetAlreadyFilteredId(_webHelper);
+                    //Marca seleccionada
+                    int? manufacturerId = model.PagingFilteringContext.ManufacturerFilter.GetAlreadyFilteredId(_webHelper);
+
                     //var searchInProductTags = false;
                     var searchInProductTags = searchInDescriptions;
 
                     //Se agrega filtro por especificaicones
                     Dictionary<int, int> filterableSpecificationAttributeOptionIds;
                     Dictionary<int, int> filterableCategoryIds;
-                    IList<int> alreadyFilteredSpecOptionIds = model.PagingFilteringContext.SpecificationFilter.GetAlreadyFilteredIds(_webHelper);
-                    IList<int> alreadyFilteredCategoryIds = model.PagingFilteringContext.CategoryFilter.GetAlreadyFilteredIds(_webHelper);
-                    
+                    Dictionary<int, int> filterableStateProvinceIds;
+                    Dictionary<int, int> filterableManufacturerIds;
+                    Tuple<int, int> minMaxPrice;
+
                     //products
                     products = _productService.SearchProducts(
                         out filterableSpecificationAttributeOptionIds,
-                        out filterableCategoryIds, true, true,
+                        out filterableCategoryIds,
+                        out filterableStateProvinceIds,
+                        out filterableManufacturerIds,
+                        out minMaxPrice,
+                        true,
+                        loadFilterableCategoryIds: categoryIds.Count == 0,  //Solo realiza conteo de categorias si no está filtrando por categoria
+                        loadFilterableStateProvinceIds: !stateProvinceId.HasValue, //Solo realiza conteo de ciudaddes si no está filtrando por ciudad,
+                        loadPriceRange: !minPriceConverted.HasValue && !maxPriceConverted.HasValue, //Solo realiza conteo de precios si no está filtrando por precio
+                        loadFilterableManufacturerIds: !manufacturerId.HasValue, //Solo realiza conteo de marcas si no está filtrando por marca
                         categoryIds: categoryIds,
-                        manufacturerId: manufacturerId,
+                        manufacturerId: manufacturerId ?? 0,
                         storeId: _storeContext.CurrentStore.Id,
                         visibleIndividuallyOnly: true,
                         priceMin: minPriceConverted,
                         priceMax: maxPriceConverted,
-                        keywords:model.Q,
+                        keywords: model.Q,
                         searchDescriptions: searchInDescriptions,
                         searchSku: searchInDescriptions,
                         searchProductTags: searchInProductTags,
@@ -1414,11 +1418,13 @@ namespace Nop.Web.Controllers
                         orderBy: (ProductSortingEnum)command.OrderBy,
                         filteredSpecs: alreadyFilteredSpecOptionIds,
                         pageIndex: command.PageNumber - 1,
-                        pageSize: command.PageSize);
+                        pageSize: command.PageSize,
+                        stateProvinceId: stateProvinceId);
                     model.Products = PrepareProductOverviewModels(products).ToList();
 
+                    //Price
+                    model.PagingFilteringContext.PriceRangeFilter.LoadPriceRangeFilters(minMaxPrice.Item1, minMaxPrice.Item2, _webHelper, _priceFormatter);
 
-                    
                     //specs
                     model.PagingFilteringContext.SpecificationFilter.PrepareSpecsFilters(alreadyFilteredSpecOptionIds,
                 filterableSpecificationAttributeOptionIds,
@@ -1429,7 +1435,15 @@ namespace Nop.Web.Controllers
                 filterableCategoryIds,
                 _categoryService, _webHelper, _workContext);
 
+                    //state provinces
+                    model.PagingFilteringContext.StateProvinceFilter.PrepareStateProvinceFilters(stateProvinceId,
+                filterableStateProvinceIds,
+                _stateProvinceService, _webHelper, _workContext);
 
+                    //manufacturer
+                    model.PagingFilteringContext.ManufacturerFilter.PrepareFilters(manufacturerId ,
+                filterableManufacturerIds,
+                _manufacturerService, _webHelper, _workContext);
 
                     model.NoResults = !model.Products.Any();
 
@@ -1460,7 +1474,7 @@ namespace Nop.Web.Controllers
                         SearchTerm = model.Q,
                         SearchInDescriptions = searchInDescriptions,
                         CategoryIds = categoryIds,
-                        ManufacturerId = manufacturerId,
+                        ManufacturerId = manufacturerId ?? 0,
                         WorkingLanguageId = _workContext.WorkingLanguage.Id
                     });
                 }
@@ -1499,7 +1513,7 @@ namespace Nop.Web.Controllers
                 visibleIndividuallyOnly: true,
                 pageSize: productNumber);
 
-            var models =  PrepareProductOverviewModels(products, false, _catalogSettings.ShowProductImagesInSearchAutoComplete, _mediaSettings.AutoCompleteSearchThumbPictureSize).ToList();
+            var models = PrepareProductOverviewModels(products, false, _catalogSettings.ShowProductImagesInSearchAutoComplete, _mediaSettings.AutoCompleteSearchThumbPictureSize).ToList();
             var result = (from p in models
                           select new
                           {

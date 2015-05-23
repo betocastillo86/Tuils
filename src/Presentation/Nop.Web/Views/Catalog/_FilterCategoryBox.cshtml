@@ -5,7 +5,7 @@
 {
     <div class="product-filters product-spec-filter">
         <div class="filter-title">
-            <strong>@T("Filtering.SpecificationFilter")</strong>
+            <strong>@T("Filtering.CategoryFilter")</strong>
         </div>
         <div class="filter-content">
             @if (Model.NotFilteredItems.Count > 0)
@@ -16,7 +16,7 @@
 
                         <ul class="group">
                             <li class="title">
-                                <strong>@category.CategoryName (<a href="@category.FilterUrl">@category.NumOfProducts</a>     )</strong>
+                                @category.Name (<a href="@category.FilterUrl">@category.NumOfProducts</a>)
                             </li>
                         </ul>
                     }
@@ -26,12 +26,12 @@
             {
                 <div class="already-filtered-items">
                     <div class="filter-title">
-                        @T("Filtering.SpecificationFilter.CurrentlyFilteredBy")
+                        @T("Filtering.CategoryFilter.CurrentlyFilteredBy")
                     </div>
                     @foreach (var item in Model.AlreadyFilteredItems)
                     {
                         <div class="item">
-                            <strong>@(item.CategoryName)</strong>
+                            <strong>@(item.Name)</strong>
                         </div>
                     }
                 </div>
