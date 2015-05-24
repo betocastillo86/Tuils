@@ -59,59 +59,6 @@
         <h1>@T("Search")</h1>
     </div>
     <div class="page-body">
-        <div class="search-input">
-            @using (Html.BeginRouteForm("ProductSearch", FormMethod.Get))
-            {
-                <div class="basic-search">
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.Q, new { }, ":")
-                        @Html.TextBoxFor(model => model.Q, new { @class = "search-text" })
-                    </div>
-                    @Html.Widget("productsearch_page_basic")
-                    <div class="inputs reversed">
-                        @Html.CheckBoxFor(model => model.As)
-                        @Html.LabelFor(model => model.As)
-                    </div>
-                </div>
-                <div class="advanced-search" id="advanced-search-block">
-                    @if (Model.AvailableCategories.Count > 0)
-                    {
-                        <div class="inputs">
-                            @Html.LabelFor(model => model.Cid, new { }, ":")
-                            @Html.DropDownListFor(model => model.Cid, Model.AvailableCategories)
-                        </div>
-                        <div class="inputs reversed">
-                            @Html.CheckBoxFor(model => model.Isc)
-                            @Html.LabelFor(model => model.Isc)
-                        </div>
-                    }
-                    @if (Model.AvailableManufacturers.Count > 0)
-                    {
-                        <div class="inputs">
-                            @Html.LabelFor(model => model.Mid, new { }, ":")
-                            @Html.DropDownListFor(model => model.Mid, Model.AvailableManufacturers)
-                        </div>
-                    }
-                    <div class="inputs">
-                        <label>@T("Search.PriceRange"):</label>
-                        <span class="price-range">
-                            @T("Search.PriceRange.From")
-                            @Html.TextBoxFor(model => model.Pf, new { @class = "price-from" })
-                            @T("Search.PriceRange.To")
-                            @Html.TextBoxFor(model => model.Pt, new { @class = "price-to" })
-                        </span>
-                    </div>
-                    <div class="inputs reversed">
-                        @Html.CheckBoxFor(model => model.Sid)
-                        @Html.LabelFor(model => model.Sid)
-                    </div>
-                    @Html.Widget("productsearch_page_advanced")
-                </div>
-                <div class="buttons">
-                    <input type="submit" class="button-1 search-button" value="@T("Search")" />
-                </div>
-            }
-        </div>
         <div class="product-selectors">
             @*view mode*@
             @if (Model.PagingFilteringContext.AllowProductViewModeChanging && Model.Products.Count > 0)

@@ -1259,8 +1259,6 @@ namespace Nop.Web.Controllers
                 model.Q = "";
             model.Q = model.Q.Trim();
 
-
-
             //sorting
             PrepareSortingOptions(model.PagingFilteringContext, command);
             //view mode
@@ -1271,69 +1269,70 @@ namespace Nop.Web.Controllers
                 _catalogSettings.SearchPagePageSizeOptions,
                 _catalogSettings.SearchPageProductsPerPage);
 
+            #region CodigoEliminado
+            //var customerRolesIds = _workContext.CurrentCustomer.CustomerRoles
+            //    .Where(cr => cr.Active).Select(cr => cr.Id).ToList();
+            //string cacheKey = string.Format(ModelCacheEventConsumer.SEARCH_CATEGORIES_MODEL_KEY, _workContext.WorkingLanguage.Id, string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id);
+            //var categories = _cacheManager.Get(cacheKey, () =>
+            //{
+            //    var categoriesModel = new List<SearchModel.CategoryModel>();
+            //    //all categories
+            //    foreach (var c in _categoryService.GetAllCategories())
+            //    {
+            //        //generate full category name (breadcrumb)
+            //        string categoryBreadcrumb = "";
+            //        var breadcrumb = c.GetCategoryBreadCrumb(_categoryService, _aclService, _storeMappingService);
+            //        for (int i = 0; i <= breadcrumb.Count - 1; i++)
+            //        {
+            //            categoryBreadcrumb += breadcrumb[i].GetLocalized(x => x.Name);
+            //            if (i != breadcrumb.Count - 1)
+            //                categoryBreadcrumb += " >> ";
+            //        }
+            //        categoriesModel.Add(new SearchModel.CategoryModel
+            //        {
+            //            Id = c.Id,
+            //            Breadcrumb = categoryBreadcrumb
+            //        });
+            //    }
+            //    return categoriesModel;
+            //});
+            //if (categories.Count > 0)
+            //{
+            //    //first empty entry
+            //    model.AvailableCategories.Add(new SelectListItem
+            //        {
+            //            Value = "0",
+            //            Text = _localizationService.GetResource("Common.All")
+            //        });
+            //    //all other categories
+            //    foreach (var c in categories)
+            //    {
+            //        model.AvailableCategories.Add(new SelectListItem
+            //        {
+            //            Value = c.Id.ToString(),
+            //            Text = c.Breadcrumb,
+            //            Selected = model.Cid == c.Id
+            //        });
+            //    }
+            //}
 
-            var customerRolesIds = _workContext.CurrentCustomer.CustomerRoles
-                .Where(cr => cr.Active).Select(cr => cr.Id).ToList();
-            string cacheKey = string.Format(ModelCacheEventConsumer.SEARCH_CATEGORIES_MODEL_KEY, _workContext.WorkingLanguage.Id, string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id);
-            var categories = _cacheManager.Get(cacheKey, () =>
-            {
-                var categoriesModel = new List<SearchModel.CategoryModel>();
-                //all categories
-                foreach (var c in _categoryService.GetAllCategories())
-                {
-                    //generate full category name (breadcrumb)
-                    string categoryBreadcrumb = "";
-                    var breadcrumb = c.GetCategoryBreadCrumb(_categoryService, _aclService, _storeMappingService);
-                    for (int i = 0; i <= breadcrumb.Count - 1; i++)
-                    {
-                        categoryBreadcrumb += breadcrumb[i].GetLocalized(x => x.Name);
-                        if (i != breadcrumb.Count - 1)
-                            categoryBreadcrumb += " >> ";
-                    }
-                    categoriesModel.Add(new SearchModel.CategoryModel
-                    {
-                        Id = c.Id,
-                        Breadcrumb = categoryBreadcrumb
-                    });
-                }
-                return categoriesModel;
-            });
-            if (categories.Count > 0)
-            {
-                //first empty entry
-                model.AvailableCategories.Add(new SelectListItem
-                    {
-                        Value = "0",
-                        Text = _localizationService.GetResource("Common.All")
-                    });
-                //all other categories
-                foreach (var c in categories)
-                {
-                    model.AvailableCategories.Add(new SelectListItem
-                    {
-                        Value = c.Id.ToString(),
-                        Text = c.Breadcrumb,
-                        Selected = model.Cid == c.Id
-                    });
-                }
-            }
-
-            var manufacturers = _manufacturerService.GetAllManufacturers();
-            if (manufacturers.Count > 0)
-            {
-                model.AvailableManufacturers.Add(new SelectListItem
-                {
-                    Value = "0",
-                    Text = _localizationService.GetResource("Common.All")
-                });
-                foreach (var m in manufacturers)
-                    model.AvailableManufacturers.Add(new SelectListItem
-                    {
-                        Value = m.Id.ToString(),
-                        Text = m.GetLocalized(x => x.Name),
-                        Selected = model.Mid == m.Id
-                    });
-            }
+            //var manufacturers = _manufacturerService.GetAllManufacturers();
+            //if (manufacturers.Count > 0)
+            //{
+            //    model.AvailableManufacturers.Add(new SelectListItem
+            //    {
+            //        Value = "0",
+            //        Text = _localizationService.GetResource("Common.All")
+            //    });
+            //    foreach (var m in manufacturers)
+            //        model.AvailableManufacturers.Add(new SelectListItem
+            //        {
+            //            Value = m.Id.ToString(),
+            //            Text = m.GetLocalized(x => x.Name),
+            //            Selected = model.Mid == m.Id
+            //        });
+            //}
+            #endregion
 
             IPagedList<Product> products = new PagedList<Product>(new List<Product>(), 0, 1);
             // only search if query string search keyword is set (used to avoid searching or displaying search term min length error message on /search page load)
@@ -1346,8 +1345,8 @@ namespace Nop.Web.Controllers
                 else
                 {
                     var categoryIds = new List<int>();
-                    
-                    
+
+
                     bool searchInDescriptions = false;
 
                     //advanced search
@@ -1441,7 +1440,7 @@ namespace Nop.Web.Controllers
                 _stateProvinceService, _webHelper, _workContext);
 
                     //manufacturer
-                    model.PagingFilteringContext.ManufacturerFilter.PrepareFilters(manufacturerId ,
+                    model.PagingFilteringContext.ManufacturerFilter.PrepareFilters(manufacturerId,
                 filterableManufacturerIds,
                 _manufacturerService, _webHelper, _workContext);
 

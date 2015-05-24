@@ -743,7 +743,7 @@ namespace Nop.Web.Models.Catalog
 
 
 
-            public virtual void PrepareFilters(int? manufactuterId,
+            public virtual void PrepareFilters(int? manufactutrerId,
                 Dictionary<int, int> filterableManufacturerIds,
                 IManufacturerService manufacturerService,
                 IWebHelper webHelper,
@@ -751,7 +751,7 @@ namespace Nop.Web.Models.Catalog
             {
                 List<Manufacturer> options = null;
 
-                if (!manufactuterId.HasValue)
+                if (!manufactutrerId.HasValue)
                 {
                     options = manufacturerService
                      .GetManufacturersByIds(filterableManufacturerIds != null ?
@@ -763,13 +763,13 @@ namespace Nop.Web.Models.Catalog
 
 
                 //prepare the model properties
-                if (manufactuterId.HasValue || options.Count > 1)
+                if (manufactutrerId.HasValue || options.Count > 1)
                 {
                     this.Enabled = true;
 
-                    if (manufactuterId.HasValue)
+                    if (manufactutrerId.HasValue)
                     {
-                        this.FilteredItem = new FilterBaseItem() { Name = manufacturerService.GetManufacturerById(manufactuterId.Value).Name };
+                        this.FilteredItem = new FilterBaseItem() { Name = manufacturerService.GetManufacturerById(manufactutrerId.Value).Name };
                     }
                     else
                     {
