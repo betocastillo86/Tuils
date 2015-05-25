@@ -302,14 +302,28 @@ namespace Nop.Web.Controllers
             string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_CHILD_IDENTIFIERS_MODEL_KEY, parentCategoryId, string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id);
             return _cacheManager.Get(cacheKey, () =>
             {
+                #region Codigo eliminado
+                //YA NO LO TOMA DE IR VARIAS VECES A BASE DE DATOS, SINO QUE BUSCA EN EL CAMPO CHILDRENCATEGORIESSTR
+                //var categoriesIds = new List<int>();
+                //var categories = _categoryService.GetAllCategoriesByParentCategoryId(parentCategoryId);
+                //foreach (var category in categories)
+                //{
+                //    categoriesIds.Add(category.Id);
+                //    categoriesIds.AddRange(GetChildCategoryIds(category.Id));
+                //}
+                //return categoriesIds;
+                #endregion
+                
                 var categoriesIds = new List<int>();
-                var categories = _categoryService.GetAllCategoriesByParentCategoryId(parentCategoryId);
-                foreach (var category in categories)
-                {
-                    categoriesIds.Add(category.Id);
-                    categoriesIds.AddRange(GetChildCategoryIds(category.Id));
-                }
+                var category = _categoryService.GetCategoryById(parentCategoryId);
+                if(category != null && !string.IsNullOrEmpty(category.ChildrenCategoriesStr))
+                    categoriesIds = category.ChildrenCategoriesStr
+                        .Split(new []{','}, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(c => Convert.ToInt32(c))
+                        .ToList();
+
                 return categoriesIds;
+
             });
         }
 

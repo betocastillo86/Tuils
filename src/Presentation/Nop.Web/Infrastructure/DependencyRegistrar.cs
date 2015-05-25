@@ -4,6 +4,7 @@ using Nop.Core.Caching;
 using Nop.Core.Infrastructure;
 using Nop.Core.Infrastructure.DependencyManagement;
 using Nop.Web.Controllers;
+using Nop.Web.Controllers.Api;
 using Nop.Web.Infrastructure.Installation;
 
 namespace Nop.Web.Infrastructure
@@ -33,6 +34,12 @@ namespace Nop.Web.Infrastructure
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"));
             builder.RegisterType<WidgetController>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"));
+
+
+            //Se registra controladores de API para cache
+            builder.RegisterType<CategoriesController>()
+               .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"));
+
             
             //installation localization service
             builder.RegisterType<InstallationLocalizationService>().As<IInstallationLocalizationService>().InstancePerLifetimeScope();

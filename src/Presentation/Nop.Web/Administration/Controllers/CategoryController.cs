@@ -317,6 +317,18 @@ namespace Nop.Admin.Controllers
             };
             return Json(gridModel);
         }
+
+        [HttpPost]
+        public ActionResult UpdateChildrenCategories()
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
+                return AccessDeniedView();
+
+            //Actualiza todas las categorias hijas
+            _categoryService.UpdateChildrenCategoriesByParentCategoryId();
+            
+            return Json(new { ok = true });
+        }
         
         public ActionResult Tree()
         {

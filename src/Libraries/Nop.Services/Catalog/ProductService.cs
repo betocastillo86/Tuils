@@ -68,6 +68,7 @@ namespace Nop.Services.Catalog
         private readonly LocalizationSettings _localizationSettings;
         private readonly CommonSettings _commonSettings;
         private readonly CatalogSettings _catalogSettings;
+        private readonly TuilsSettings _tuilsSettings;
         private readonly IEventPublisher _eventPublisher;
         private readonly IAclService _aclService;
         private readonly IStoreMappingService _storeMappingService;
@@ -136,7 +137,8 @@ namespace Nop.Services.Catalog
             IAclService aclService,
             IStoreMappingService storeMappingService,
             IPictureService pictureService,
-            IRepository<ProductQuestion> productQuestionRepository)
+            IRepository<ProductQuestion> productQuestionRepository,
+            TuilsSettings tuilsSettings)
         {
             this._cacheManager = cacheManager;
             this._productRepository = productRepository;
@@ -166,6 +168,7 @@ namespace Nop.Services.Catalog
             this._storeMappingService = storeMappingService;
             this._pictureService = pictureService;
             this._productQuestionRepository = productQuestionRepository;
+            this._tuilsSettings = tuilsSettings;
         }
 
         #endregion
@@ -2072,6 +2075,9 @@ namespace Nop.Services.Catalog
             product.ShowOnHomePage = false;
             product.AllowCustomerReviews = true;
             product.CreatedOnUtc = product.UpdatedOnUtc = DateTime.Now;
+            product.OrderMaximumQuantity = 1;
+            product.OrderMaximumQuantity = 1;
+            product.StockQuantity = _tuilsSettings.defaultStockQuantity;
 
             try
             {

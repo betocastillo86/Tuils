@@ -89,6 +89,7 @@
                 require(['tuils/views/panel/vendorServices'], function (VendorServicesView) {
                     that.currentView = new VendorServicesView({ el: that.defaultEl });
                 });
+                this.loadSubViewsPanel();
             },
             vendor : function(query)
             {

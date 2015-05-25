@@ -36,6 +36,13 @@ namespace Nop.Services.Catalog
             bool showHidden = false, bool includeSubcategories = false);
 
         /// <summary>
+        /// Actualiza la columna ChildrenCategories de una categoria especifica, o de todas
+        /// </summary>
+        /// <param name="parentCategoryId">categoria padre por la que se desea actualizar. Si viene nulo actualiza todas las categorias</param>
+        /// <returns></returns>
+        void UpdateChildrenCategoriesByParentCategoryId(int? parentCategoryId = null);
+
+        /// <summary>
         /// Gets all categories displayed on the home page
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>

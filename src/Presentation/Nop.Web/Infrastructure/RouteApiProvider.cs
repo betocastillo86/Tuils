@@ -28,7 +28,7 @@ namespace Nop.Web.Infrastructure
             //);
 
             var builder = new ContainerBuilder();
-            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            //builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             //builder.RegisterType<Nop.Web.Controllers.Api.CategoryController>().InstancePerRequest();
             builder.Update(EngineContext.Current.ContainerManager.Container);
             //var container = builder.Build();

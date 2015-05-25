@@ -13,6 +13,7 @@
     </div>
     <div class="options">
         <a href="@Url.Action("Create")" class="k-button">@T("Admin.Common.AddNew")</a> <a href="@Url.Action("ExportXml")" class="k-button">@T("Admin.Common.ExportToXml")</a>
+        <input id="btnUpdateChildrenCategories" type="button" value="Actualizar categorias" />
     </div>
 </div>
 <table width="100%">
@@ -113,6 +114,25 @@
                             return false;
                         }
                     });
+
+                    $("#btnUpdateChildrenCategories").on("click", function(){
+                        $.ajax({
+                            method : 'POST',
+                            url : "@Url.Action("UpdateChildrenCategories")",
+                            success : function(){
+                                alert("Actualizado correctamente");
+                            },
+                            error : function(){
+                                alert("Ocurrio un error");
+                            },
+                            timeout : function()
+                            {
+                                alert("Se agotó el tiempo");
+                            }
+                        });
+                    });
+
+
                 });
 
                 function additionalData() {

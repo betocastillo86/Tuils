@@ -9,6 +9,8 @@ using Nop.Web.Extensions;
 using Nop.Web.Extensions.Api;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Framework.Controllers;
+using Nop.Web.Infrastructure.Cache;
+using Nop.Core.Caching;
 
 
 namespace Nop.Web.Controllers.Api
@@ -19,18 +21,21 @@ namespace Nop.Web.Controllers.Api
         #region Fields
         private readonly ICategoryService _categoryService;
         private readonly IManufacturerService _manufacturerService;
+        private readonly ICacheManager _cacheManager;
         #endregion
 
         #region Ctors
         public CategoriesController(ICategoryService categoryService,
-            IManufacturerService manufacturerService)
+            IManufacturerService manufacturerService,
+            ICacheManager cacheManager)
         {
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
+            this._cacheManager = cacheManager;
         }
         #endregion
 
-        
+
         /// <summary>
         /// Retorna la información de una categoria incluyendo las subcategorias en la propiedad ChildrenCategories
         /// </summary>
@@ -39,9 +44,14 @@ namespace Nop.Web.Controllers.Api
         [HttpGet]
         [Route("api/categories/{id:int}")]
         public IHttpActionResult Get(int id)
-        {   
-            var category = this._categoryService.GetCategoryById(id, true).ToModel();
-            if(category != null)
+        {
+            string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORIES_API_CATEGORY_MODEL_KEY, id);
+
+            var category = _cacheManager.Get(cacheKey, () => {
+                return _categoryService.GetCategoryById(id, true).ToModel();
+            }); 
+
+            if (category != null)
                 return Ok(category);
             else
                 return NotFound();
@@ -55,17 +65,15 @@ namespace Nop.Web.Controllers.Api
         [Route("api/categories/{id}/manufacturers")]
         public IHttpActionResult GetManufacturesByCategoryId(int id)
         {
-            
-            
             var manufacturers = this._manufacturerService.GetManufacturersByCategoryId(id).ToModels();
-            
+
             if (manufacturers != null)
             {
                 //si es minificado retorna la lista de los minificados
                 if (this.MustMinifyModel())
-                   return Ok(manufacturers.ToMinifiedListModel());
+                    return Ok(manufacturers.ToMinifiedListModel());
                 else
-                   return Ok(manufacturers);
+                    return Ok(manufacturers);
             }
             else
                 return NotFound();
@@ -79,12 +87,12 @@ namespace Nop.Web.Controllers.Api
         [Route("api/categories/bikereferences")]
         public IHttpActionResult GetAllBikeReferences()
         {
-            var references = this._categoryService.GetAllBikeReferences(null).ToBaseModels();
-
-            if (references != null)
-                return Ok(GetMinifiedCategories(references));
-            else
-                return NotFound();
+            string cacheKey = ModelCacheEventConsumer.CATEGORIES_API_ALL_BIKEREFERENCES;
+            return Ok(_cacheManager.Get(cacheKey, () =>
+            {
+                var references = this._categoryService.GetAllBikeReferences(null).ToBaseModels();
+                return GetMinifiedCategories(references);
+            }));
         }
 
         /// <summary>

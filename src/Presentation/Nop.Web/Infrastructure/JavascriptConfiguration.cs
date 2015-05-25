@@ -26,8 +26,7 @@ namespace Nop.Web.Infrastructure
             var config = new
             {
 
-                configuration = new
-                {
+                
                     //Configuración de las categorias base
                     productBaseTypes = new
                     {
@@ -45,7 +44,7 @@ namespace Nop.Web.Infrastructure
                         specializedCategory = (int)SpecialCategoryVendorType.SpecializedCategory
                     },
                     maxFileUploadSize = tuilsSettings.maxFileUploadSize
-                }
+                
             };
 
             //Convierte el valor del json a un string

@@ -8,6 +8,7 @@ using Autofac;
 using Autofac.Builder;
 using Autofac.Core;
 using Autofac.Integration.Mvc;
+using Autofac.Integration.WebApi;
 using Nop.Core;
 using Nop.Core.Caching;
 using Nop.Core.Configuration;
@@ -86,9 +87,11 @@ namespace Nop.Web.Framework
             //user agent helper
             builder.RegisterType<UserAgentHelper>().As<IUserAgentHelper>().InstancePerLifetimeScope();
 
-            
+            //api controllers
+            builder.RegisterApiControllers(typeFinder.GetAssemblies().ToArray());
             //controllers
             builder.RegisterControllers(typeFinder.GetAssemblies().ToArray());
+            //builder.registerapiControllers
 
             //data layer
             var dataSettingsManager = new DataSettingsManager();

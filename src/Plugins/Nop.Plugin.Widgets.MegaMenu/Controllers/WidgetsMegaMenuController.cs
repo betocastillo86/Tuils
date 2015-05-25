@@ -57,45 +57,45 @@ namespace Nop.Plugin.Widgets.MegaMenu.Controllers
         protected IList<PublicInfoModel.CategoryModel> PrepareCategoryNavigationModel(IPagedList<Category> categories, int catId = 0)
         {
             var result = new List<PublicInfoModel.CategoryModel>();
-            if (categories != null)
-            {
-                var megaMenuSettings = _settingService.LoadSetting<MegaMenuSettings>(_storeContext.CurrentStore.Id);
-                foreach (var category in categories.Where(c => c.ParentCategoryId == catId))
-                {
-                    if (category.IncludeInTopMenu)
-                    {
-                        var categoryModel = new PublicInfoModel.CategoryModel()
-                        {
-                            Id = category.Id,
-                            Name = category.GetLocalized(x => x.Name),
-                            SeName = category.GetSeName()
-                        };
+            //if (categories != null)
+            //{
+            //    var megaMenuSettings = _settingService.LoadSetting<MegaMenuSettings>(_storeContext.CurrentStore.Id);
+            //    foreach (var category in categories.Where(c => c.ParentCategoryId == catId))
+            //    {
+            //        if (category.IncludeInTopMenu)
+            //        {
+            //            var categoryModel = new PublicInfoModel.CategoryModel()
+            //            {
+            //                Id = category.Id,
+            //                Name = category.GetLocalized(x => x.Name),
+            //                SeName = category.GetSeName()
+            //            };
 
-                        #region product number for each category
-                        //product number for each category
-                        //if (_catalogSettings.ShowCategoryProductNumber)
-                        //{
-                        //    var categoryIds = new List<int>();
-                        //    categoryIds.Add(category.Id);
-                        //    //include subcategories
-                        //    if (_catalogSettings.ShowCategoryProductNumberIncludingSubcategories)
-                        //        categoryIds.AddRange(GetChildCategoryIds(category.Id));
-                        //    IList<int> filterableSpecificationAttributeOptionIds = null;
-                        //    categoryModel.NumberOfProducts = _productService.SearchProducts(categoryIds,
-                        //        0, null, null, null, 0, string.Empty, false, false, 0, null,
-                        //        ProductSortingEnum.Position, 0, 1,
-                        //        false, out filterableSpecificationAttributeOptionIds).TotalCount;
-                        //}
-                        #endregion
+            //            #region product number for each category
+            //            //product number for each category
+            //            //if (_catalogSettings.ShowCategoryProductNumber)
+            //            //{
+            //            //    var categoryIds = new List<int>();
+            //            //    categoryIds.Add(category.Id);
+            //            //    //include subcategories
+            //            //    if (_catalogSettings.ShowCategoryProductNumberIncludingSubcategories)
+            //            //        categoryIds.AddRange(GetChildCategoryIds(category.Id));
+            //            //    IList<int> filterableSpecificationAttributeOptionIds = null;
+            //            //    categoryModel.NumberOfProducts = _productService.SearchProducts(categoryIds,
+            //            //        0, null, null, null, 0, string.Empty, false, false, 0, null,
+            //            //        ProductSortingEnum.Position, 0, 1,
+            //            //        false, out filterableSpecificationAttributeOptionIds).TotalCount;
+            //            //}
+            //            #endregion
 
-                        //subcategories
-                        if (megaMenuSettings.DisplaySubcategories)
-                            categoryModel.SubCategories.AddRange(PrepareCategoryNavigationModel(categories, category.Id));
+            //            //subcategories
+            //            if (megaMenuSettings.DisplaySubcategories)
+            //                categoryModel.SubCategories.AddRange(PrepareCategoryNavigationModel(categories, category.Id));
 
-                        result.Add(categoryModel);
-                    }
-                }
-            }
+            //            result.Add(categoryModel);
+            //        }
+            //    }
+            //}
             return result;
         }
         //protected IList<PublicInfoModel.CategoryModel> PrepareCategoryNavigationModel(IPagedList<Category> categories, int catId = 0)
