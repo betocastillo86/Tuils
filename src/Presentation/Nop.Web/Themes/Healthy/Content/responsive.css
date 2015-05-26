@@ -486,7 +486,7 @@
     .header-selectors-wrapper { float: right; }
     .flyout-cart { top: 20px; }
 
-    .header .search-box { display: inline-block; float: right; text-align: left; padding: 7px 0 5px; width:calc(100% - 350px); }
+    .header .search-box { display: inline-block; float: left; text-align: left; padding: 7px 0 5px; width:calc(100% - 350px); }
     .header .search-box input[type="text"]{box-sizing:inherit;}
     .search-box .search-box-text { width: 300px; }
 
