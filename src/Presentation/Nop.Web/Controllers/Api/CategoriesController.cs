@@ -11,6 +11,11 @@ using Nop.Web.Models.Catalog;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Core.Caching;
+using Nop.Web.Models.Media;
+using Nop.Services.Media;
+using Nop.Services.Localization;
+using Nop.Core.Domain.Media;
+using Nop.Services.Seo;
 
 
 namespace Nop.Web.Controllers.Api
@@ -22,16 +27,25 @@ namespace Nop.Web.Controllers.Api
         private readonly ICategoryService _categoryService;
         private readonly IManufacturerService _manufacturerService;
         private readonly ICacheManager _cacheManager;
+        private readonly IPictureService _pictureService;
+        private readonly ILocalizationService _localizationService;
+        private readonly MediaSettings _mediaSettings;
         #endregion
 
         #region Ctors
         public CategoriesController(ICategoryService categoryService,
             IManufacturerService manufacturerService,
-            ICacheManager cacheManager)
+            ICacheManager cacheManager,
+            IPictureService pictureService,
+            ILocalizationService localizationService,
+            MediaSettings mediaSettings)
         {
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
             this._cacheManager = cacheManager;
+            this._pictureService = pictureService;
+            this._localizationService = localizationService;
+            this._mediaSettings = mediaSettings;
         }
         #endregion
 
@@ -45,10 +59,25 @@ namespace Nop.Web.Controllers.Api
         [Route("api/categories/{id:int}")]
         public IHttpActionResult Get(int id)
         {
-            string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORIES_API_CATEGORY_MODEL_KEY, id);
+            
+            //Consulta si debe traer la imagen por medio de los headers
+            bool showImage = this.GetHeaderBoolean("image");
+
+            string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORIES_API_CATEGORY_MODEL_KEY, id, showImage);
 
             var category = _cacheManager.Get(cacheKey, () => {
-                return _categoryService.GetCategoryById(id, true).ToModel();
+                
+                var entityCategory =  _categoryService.GetCategoryById(id, true);
+                var model = entityCategory.ToModel();
+                
+                //Si debe retornar la imagen la carga en el modelo
+                if (showImage)
+                {
+                    model.PictureModel = entityCategory.GetPicture(_localizationService, _mediaSettings, _pictureService);
+                }
+
+                return model;
+
             }); 
 
             if (category != null)

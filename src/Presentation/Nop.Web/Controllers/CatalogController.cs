@@ -313,17 +313,8 @@ namespace Nop.Web.Controllers
                 //}
                 //return categoriesIds;
                 #endregion
-                
-                var categoriesIds = new List<int>();
-                var category = _categoryService.GetCategoryById(parentCategoryId);
-                if(category != null && !string.IsNullOrEmpty(category.ChildrenCategoriesStr))
-                    categoriesIds = category.ChildrenCategoriesStr
-                        .Split(new []{','}, StringSplitOptions.RemoveEmptyEntries)
-                        .Select(c => Convert.ToInt32(c))
-                        .ToList();
 
-                return categoriesIds;
-
+                return _categoryService.GetChildCategoryIds(parentCategoryId);
             });
         }
 

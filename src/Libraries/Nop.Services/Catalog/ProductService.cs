@@ -20,6 +20,7 @@ using Nop.Services.Security;
 using Nop.Services.Stores;
 using Nop.Services.Media;
 using Nop.Services.Vendors;
+using Nop.Services.Orders;
 
 namespace Nop.Services.Catalog
 {
@@ -74,8 +75,7 @@ namespace Nop.Services.Catalog
         private readonly IStoreMappingService _storeMappingService;
         private readonly IPictureService _pictureService;
         private readonly IVendorService _vendorService;
-        
-
+        private readonly IOrderService _orderService;
 
         #endregion
 
@@ -138,7 +138,8 @@ namespace Nop.Services.Catalog
             IStoreMappingService storeMappingService,
             IPictureService pictureService,
             IRepository<ProductQuestion> productQuestionRepository,
-            TuilsSettings tuilsSettings)
+            TuilsSettings tuilsSettings,
+            IOrderService orderService)
         {
             this._cacheManager = cacheManager;
             this._productRepository = productRepository;
@@ -169,6 +170,7 @@ namespace Nop.Services.Catalog
             this._pictureService = pictureService;
             this._productQuestionRepository = productQuestionRepository;
             this._tuilsSettings = tuilsSettings;
+            this._orderService = orderService;
         }
 
         #endregion
@@ -2173,6 +2175,10 @@ namespace Nop.Services.Catalog
                 product.UnansweredQuestions = questions.Count;
                 //Actualiza el número de pregundas pendientes
                 UpdateProduct(product);
+
+                //Envia la notificacion de que fue respondida la pregunta
+                _workflowMessageService.SendQuestionAnsweredNotificationMessage(question, _workContext.WorkingLanguage.Id);
+
                 return true;
             }
             else
@@ -2180,8 +2186,35 @@ namespace Nop.Services.Catalog
         }
         #endregion
 
+        #region Orders
+        /// <summary>
+        /// Actualiza el número de ventas de un prodcuto
+        /// </summary>
+        /// <param name="productId"></param>
+        public void UpdateTotalSalesByProductId(int productId)
+        {
+            if (productId <= 0)
+                return;
+
+            var product = GetProductById(productId);
+
+            if (product != null)
+            {
+                //Cuenta el numero de ordenes que hay del producto y actualiza el valor
+                var countOrders = _orderService.GetAllOrderItems(productId: productId, orderStatus: OrderStatus.Complete).Count;
+                product.TotalSales = countOrders;
+                UpdateProduct(product);
+            }
+        }
+        #endregion
+
+        
+
         #endregion
 
 
+
+
+        
     }
 }

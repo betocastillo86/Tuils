@@ -16,6 +16,19 @@ namespace Nop.Web.Models.ControlPanel
 
         public List<ProductOverviewModel> Products { get; set; }
 
+        public LinkFilter UrlFilterByServices { get; set; }
+
+        public LinkFilter UrlFilterByProducts { get; set; }
+
+        public LinkFilter UrlFilterByBikes { get; set; }
+
         public CatalogPagingFilteringModel PagingFilteringContext { get; set; }
+
+        public class LinkFilter
+        {
+            public string Url { get; set; }
+
+            public bool Active { get; set; }
+        }
     }
 }

@@ -19,5 +19,10 @@ namespace Nop.Web.Models.ControlPanel
         /// Valor de la consulta por texto
         /// </summary>
         public string q { get; set; }
+        
+        /// <summary>
+        /// Filtro por tipo de producto
+        /// </summary>
+        public int? pt { get; set; }
     }
 }

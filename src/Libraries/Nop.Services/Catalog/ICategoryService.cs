@@ -57,6 +57,14 @@ namespace Nop.Services.Catalog
         Category GetCategoryById(int categoryId, bool includeSubcategories = false);
 
         /// <summary>
+        /// Retorna el listado de Ids de una categoria
+        /// </summary>
+        /// <param name="parentCategoryId">id de la categoria padre</param>
+        /// <returns></returns>
+        List<int> GetChildCategoryIds(int parentCategoryId);
+
+
+        /// <summary>
         /// Retorna las categorias por los ids dados
         /// </summary>
         /// <param name="ids"></param>

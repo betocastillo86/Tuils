@@ -825,6 +825,14 @@ namespace Nop.Services.Messages
             _eventPublisher.EntityTokensAdded(privateMessage, tokens);
         }
 
+        public void AddQuestionTokens(IList<Token> tokens, ProductQuestion question)
+        {
+            tokens.Add(new Token("Question.Answer", question.AnswerText, true));
+
+            //event notification
+            _eventPublisher.EntityTokensAdded(question, tokens);
+        }
+
         public virtual void AddBackInStockTokens(IList<Token> tokens, BackInStockSubscription subscription)
         {
             tokens.Add(new Token("BackInStockSubscription.ProductName", subscription.Product.Name));
@@ -857,6 +865,9 @@ namespace Nop.Services.Messages
             };
             return allowedTokens.ToArray();
         }
+
+
+        
 
         public virtual string[] GetListOfAllowedTokens()
         {
@@ -959,6 +970,7 @@ namespace Nop.Services.Messages
                 "%AttributeCombination.StockQuantity%",
                 "%PrivateMessage.Subject%", 
                 "%PrivateMessage.Text%",
+                "%Question.Answer%",
                 "%BackInStockSubscription.ProductName%",
                 "%BackInStockSubscription.ProductUrl%",
             };
@@ -966,5 +978,8 @@ namespace Nop.Services.Messages
         }
         
         #endregion
+
+
+        
     }
 }

@@ -249,7 +249,14 @@ namespace Nop.Web.Infrastructure.Cache
 
 
         public const string CATEGORIES_API_ALL_BIKEREFERENCES = "Nop.category.api.allbikebrands";
-        public const string CATEGORIES_API_CATEGORY_MODEL_KEY = "Nop.category.api.category-{0}"; 
+        /// <summary>
+        /// Llave que tiene los modelos que van por el API en cache
+        /// </summary>
+        /// <remarks>
+        /// {0} : id de la categoria
+        /// {1} : true: contiene imagen  false: no
+        /// </remarks>
+        public const string CATEGORIES_API_CATEGORY_MODEL_KEY = "Nop.category.api.category-{0}-{1}"; 
 
 
         /// <summary>

@@ -130,10 +130,10 @@ namespace Nop.Services.Orders
         /// <param name="ss">Order shipment status; null to load all records</param>
         /// <param name="loadDownloableProductsOnly">Value indicating whether to load downloadable products only</param>
         /// <returns>Order items</returns>
-        IList<OrderItem> GetAllOrderItems(int? orderId,
-           int? customerId, DateTime? createdFromUtc, DateTime? createdToUtc, 
-           OrderStatus? os, PaymentStatus? ps, ShippingStatus? ss,
-           bool loadDownloableProductsOnly = false);
+        IList<OrderItem> GetAllOrderItems(int? orderId = null,
+            int? customerId = null, DateTime? createdFromUtc = null, DateTime? createdToUtc = null,
+            OrderStatus? orderStatus = null, PaymentStatus? paymentStatus = null, ShippingStatus? shippingStatus = null,
+            bool loadDownloableProductsOnly = false, int? productId = null);
 
         /// <summary>
         /// Delete an order item

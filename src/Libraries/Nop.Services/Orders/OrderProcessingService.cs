@@ -414,6 +414,13 @@ namespace Nop.Services.Orders
                 //TODO add "order paid email sent" order note
             }
 
+            //Actualiza el número de ventas hechas del producto después de confirmar la orden como pagada
+            foreach (var orderItem in order.OrderItems)
+            {
+                _productService.UpdateTotalSalesByProductId(orderItem.ProductId);
+            }
+
+
             //customer roles with "purchased with product" specified
             ProcessCustomerRolesWithPurchasedProductSpecified(order, true);
         }
@@ -1207,36 +1214,43 @@ namespace Nop.Services.Orders
                                 order.OrderItems.Add(orderItem);
                                 _orderService.UpdateOrder(order);
 
+                                
+
+
+
+                                #region Codigo eliminado
+                                //No hay tarjetas de regalo
                                 //gift cards
-                                if (sc.Product.IsGiftCard)
-                                {
-                                    string giftCardRecipientName, giftCardRecipientEmail,
-                                        giftCardSenderName, giftCardSenderEmail, giftCardMessage;
-                                    _productAttributeParser.GetGiftCardAttribute(sc.AttributesXml,
-                                        out giftCardRecipientName, out giftCardRecipientEmail,
-                                        out giftCardSenderName, out giftCardSenderEmail, out giftCardMessage);
+                                //if (sc.Product.IsGiftCard)
+                                //{
+                                //    string giftCardRecipientName, giftCardRecipientEmail,
+                                //        giftCardSenderName, giftCardSenderEmail, giftCardMessage;
+                                //    _productAttributeParser.GetGiftCardAttribute(sc.AttributesXml,
+                                //        out giftCardRecipientName, out giftCardRecipientEmail,
+                                //        out giftCardSenderName, out giftCardSenderEmail, out giftCardMessage);
 
-                                    for (int i = 0; i < sc.Quantity; i++)
-                                    {
-                                        var gc = new GiftCard
-                                        {
-                                            GiftCardType = sc.Product.GiftCardType,
-                                            PurchasedWithOrderItem = orderItem,
-                                            Amount = scUnitPriceExclTax,
-                                            IsGiftCardActivated = false,
-                                            GiftCardCouponCode = _giftCardService.GenerateGiftCardCode(),
-                                            RecipientName = giftCardRecipientName,
-                                            RecipientEmail = giftCardRecipientEmail,
-                                            SenderName = giftCardSenderName,
-                                            SenderEmail = giftCardSenderEmail,
-                                            Message = giftCardMessage,
-                                            IsRecipientNotified = false,
-                                            CreatedOnUtc = DateTime.UtcNow
-                                        };
-                                        _giftCardService.InsertGiftCard(gc);
-                                    }
-                                }
-
+                                //    for (int i = 0; i < sc.Quantity; i++)
+                                //    {
+                                //        var gc = new GiftCard
+                                //        {
+                                //            GiftCardType = sc.Product.GiftCardType,
+                                //            PurchasedWithOrderItem = orderItem,
+                                //            Amount = scUnitPriceExclTax,
+                                //            IsGiftCardActivated = false,
+                                //            GiftCardCouponCode = _giftCardService.GenerateGiftCardCode(),
+                                //            RecipientName = giftCardRecipientName,
+                                //            RecipientEmail = giftCardRecipientEmail,
+                                //            SenderName = giftCardSenderName,
+                                //            SenderEmail = giftCardSenderEmail,
+                                //            Message = giftCardMessage,
+                                //            IsRecipientNotified = false,
+                                //            CreatedOnUtc = DateTime.UtcNow
+                                //        };
+                                //        _giftCardService.InsertGiftCard(gc);
+                                //    }
+                                //}
+                                #endregion
+                                
                                 //inventory
                                 _productService.AdjustInventory(sc.Product, -sc.Quantity, sc.AttributesXml);
                             }
@@ -1244,72 +1258,77 @@ namespace Nop.Services.Orders
                             //clear shopping cart
                             cart.ToList().ForEach(sci => _shoppingCartService.DeleteShoppingCartItem(sci, false));
                         }
-                        else
-                        {
-                            //recurring payment
-                            var initialOrderItems = initialOrder.OrderItems;
-                            foreach (var orderItem in initialOrderItems)
-                            {
-                                //save item
-                                var newOrderItem = new OrderItem
-                                {
-                                    OrderItemGuid = Guid.NewGuid(),
-                                    Order = order,
-                                    ProductId = orderItem.ProductId,
-                                    UnitPriceInclTax = orderItem.UnitPriceInclTax,
-                                    UnitPriceExclTax = orderItem.UnitPriceExclTax,
-                                    PriceInclTax = orderItem.PriceInclTax,
-                                    PriceExclTax = orderItem.PriceExclTax,
-                                    OriginalProductCost = orderItem.OriginalProductCost,
-                                    AttributeDescription = orderItem.AttributeDescription,
-                                    AttributesXml = orderItem.AttributesXml,
-                                    Quantity = orderItem.Quantity,
-                                    DiscountAmountInclTax = orderItem.DiscountAmountInclTax,
-                                    DiscountAmountExclTax = orderItem.DiscountAmountExclTax,
-                                    DownloadCount = 0,
-                                    IsDownloadActivated = false,
-                                    LicenseDownloadId = 0,
-                                    ItemWeight = orderItem.ItemWeight,
-                                    RentalStartDateUtc = orderItem.RentalStartDateUtc,
-                                    RentalEndDateUtc = orderItem.RentalEndDateUtc
-                                };
-                                order.OrderItems.Add(newOrderItem);
-                                _orderService.UpdateOrder(order);
 
-                                //gift cards
-                                if (orderItem.Product.IsGiftCard)
-                                {
-                                    string giftCardRecipientName, giftCardRecipientEmail,
-                                        giftCardSenderName, giftCardSenderEmail, giftCardMessage;
-                                    _productAttributeParser.GetGiftCardAttribute(orderItem.AttributesXml,
-                                        out giftCardRecipientName, out giftCardRecipientEmail,
-                                        out giftCardSenderName, out giftCardSenderEmail, out giftCardMessage);
+                        #region Codigo eliminado
+                        //Ninguno es pago recurrente
+                        //else
+                        //{
+                        //    //recurring payment
+                        //    var initialOrderItems = initialOrder.OrderItems;
+                        //    foreach (var orderItem in initialOrderItems)
+                        //    {
+                        //        //save item
+                        //        var newOrderItem = new OrderItem
+                        //        {
+                        //            OrderItemGuid = Guid.NewGuid(),
+                        //            Order = order,
+                        //            ProductId = orderItem.ProductId,
+                        //            UnitPriceInclTax = orderItem.UnitPriceInclTax,
+                        //            UnitPriceExclTax = orderItem.UnitPriceExclTax,
+                        //            PriceInclTax = orderItem.PriceInclTax,
+                        //            PriceExclTax = orderItem.PriceExclTax,
+                        //            OriginalProductCost = orderItem.OriginalProductCost,
+                        //            AttributeDescription = orderItem.AttributeDescription,
+                        //            AttributesXml = orderItem.AttributesXml,
+                        //            Quantity = orderItem.Quantity,
+                        //            DiscountAmountInclTax = orderItem.DiscountAmountInclTax,
+                        //            DiscountAmountExclTax = orderItem.DiscountAmountExclTax,
+                        //            DownloadCount = 0,
+                        //            IsDownloadActivated = false,
+                        //            LicenseDownloadId = 0,
+                        //            ItemWeight = orderItem.ItemWeight,
+                        //            RentalStartDateUtc = orderItem.RentalStartDateUtc,
+                        //            RentalEndDateUtc = orderItem.RentalEndDateUtc
+                        //        };
+                        //        order.OrderItems.Add(newOrderItem);
+                        //        _orderService.UpdateOrder(order);
 
-                                    for (int i = 0; i < orderItem.Quantity; i++)
-                                    {
-                                        var gc = new GiftCard
-                                        {
-                                            GiftCardType = orderItem.Product.GiftCardType,
-                                            PurchasedWithOrderItem = newOrderItem,
-                                            Amount = orderItem.UnitPriceExclTax,
-                                            IsGiftCardActivated = false,
-                                            GiftCardCouponCode = _giftCardService.GenerateGiftCardCode(),
-                                            RecipientName = giftCardRecipientName,
-                                            RecipientEmail = giftCardRecipientEmail,
-                                            SenderName = giftCardSenderName,
-                                            SenderEmail = giftCardSenderEmail,
-                                            Message = giftCardMessage,
-                                            IsRecipientNotified = false,
-                                            CreatedOnUtc = DateTime.UtcNow
-                                        };
-                                        _giftCardService.InsertGiftCard(gc);
-                                    }
-                                }
+                        //        //gift cards
+                        //        if (orderItem.Product.IsGiftCard)
+                        //        {
+                        //            string giftCardRecipientName, giftCardRecipientEmail,
+                        //                giftCardSenderName, giftCardSenderEmail, giftCardMessage;
+                        //            _productAttributeParser.GetGiftCardAttribute(orderItem.AttributesXml,
+                        //                out giftCardRecipientName, out giftCardRecipientEmail,
+                        //                out giftCardSenderName, out giftCardSenderEmail, out giftCardMessage);
 
-                                //inventory
-                                _productService.AdjustInventory(orderItem.Product, -orderItem.Quantity, orderItem.AttributesXml);
-                            }
-                        }
+                        //            for (int i = 0; i < orderItem.Quantity; i++)
+                        //            {
+                        //                var gc = new GiftCard
+                        //                {
+                        //                    GiftCardType = orderItem.Product.GiftCardType,
+                        //                    PurchasedWithOrderItem = newOrderItem,
+                        //                    Amount = orderItem.UnitPriceExclTax,
+                        //                    IsGiftCardActivated = false,
+                        //                    GiftCardCouponCode = _giftCardService.GenerateGiftCardCode(),
+                        //                    RecipientName = giftCardRecipientName,
+                        //                    RecipientEmail = giftCardRecipientEmail,
+                        //                    SenderName = giftCardSenderName,
+                        //                    SenderEmail = giftCardSenderEmail,
+                        //                    Message = giftCardMessage,
+                        //                    IsRecipientNotified = false,
+                        //                    CreatedOnUtc = DateTime.UtcNow
+                        //                };
+                        //                _giftCardService.InsertGiftCard(gc);
+                        //            }
+                        //        }
+
+                        //        //inventory
+                        //        _productService.AdjustInventory(orderItem.Product, -orderItem.Quantity, orderItem.AttributesXml);
+                        //    }
+                        //}
+                        #endregion
+                        
 
                         //discount usage history
                         if (!processPaymentRequest.IsRecurringPayment)
@@ -1351,53 +1370,56 @@ namespace Nop.Services.Orders
                             _customerService.UpdateCustomer(customer);
                         }
 
-                        //recurring orders
-                        if (!processPaymentRequest.IsRecurringPayment && isRecurringShoppingCart)
-                        {
-                            //create recurring payment (the first payment)
-                            var rp = new RecurringPayment
-                            {
-                                CycleLength = processPaymentRequest.RecurringCycleLength,
-                                CyclePeriod = processPaymentRequest.RecurringCyclePeriod,
-                                TotalCycles = processPaymentRequest.RecurringTotalCycles,
-                                StartDateUtc = DateTime.UtcNow,
-                                IsActive = true,
-                                CreatedOnUtc = DateTime.UtcNow,
-                                InitialOrder = order,
-                            };
-                            _orderService.InsertRecurringPayment(rp);
+                        #region Codigo eliminado
+                        //No hay carrito recurrente
+                        ////recurring orders
+                        //if (!processPaymentRequest.IsRecurringPayment && isRecurringShoppingCart)
+                        //{
+                        //    //create recurring payment (the first payment)
+                        //    var rp = new RecurringPayment
+                        //    {
+                        //        CycleLength = processPaymentRequest.RecurringCycleLength,
+                        //        CyclePeriod = processPaymentRequest.RecurringCyclePeriod,
+                        //        TotalCycles = processPaymentRequest.RecurringTotalCycles,
+                        //        StartDateUtc = DateTime.UtcNow,
+                        //        IsActive = true,
+                        //        CreatedOnUtc = DateTime.UtcNow,
+                        //        InitialOrder = order,
+                        //    };
+                        //    _orderService.InsertRecurringPayment(rp);
 
 
-                            var recurringPaymentType = _paymentService.GetRecurringPaymentType(processPaymentRequest.PaymentMethodSystemName);
-                            switch (recurringPaymentType)
-                            {
-                                case RecurringPaymentType.NotSupported:
-                                    {
-                                        //not supported
-                                    }
-                                    break;
-                                case RecurringPaymentType.Manual:
-                                    {
-                                        //first payment
-                                        var rph = new RecurringPaymentHistory
-                                        {
-                                            RecurringPayment = rp,
-                                            CreatedOnUtc = DateTime.UtcNow,
-                                            OrderId = order.Id,
-                                        };
-                                        rp.RecurringPaymentHistory.Add(rph);
-                                        _orderService.UpdateRecurringPayment(rp);
-                                    }
-                                    break;
-                                case RecurringPaymentType.Automatic:
-                                    {
-                                        //will be created later (process is automated)
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
+                        //    var recurringPaymentType = _paymentService.GetRecurringPaymentType(processPaymentRequest.PaymentMethodSystemName);
+                        //    switch (recurringPaymentType)
+                        //    {
+                        //        case RecurringPaymentType.NotSupported:
+                        //            {
+                        //                //not supported
+                        //            }
+                        //            break;
+                        //        case RecurringPaymentType.Manual:
+                        //            {
+                        //                //first payment
+                        //                var rph = new RecurringPaymentHistory
+                        //                {
+                        //                    RecurringPayment = rp,
+                        //                    CreatedOnUtc = DateTime.UtcNow,
+                        //                    OrderId = order.Id,
+                        //                };
+                        //                rp.RecurringPaymentHistory.Add(rph);
+                        //                _orderService.UpdateRecurringPayment(rp);
+                        //            }
+                        //            break;
+                        //        case RecurringPaymentType.Automatic:
+                        //            {
+                        //                //will be created later (process is automated)
+                        //            }
+                        //            break;
+                        //        default:
+                        //            break;
+                        //    }
+                        //}
+                        #endregion
 
                         #endregion
 

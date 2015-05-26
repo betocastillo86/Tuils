@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 
 namespace Nop.Web.Extensions.Api
 {
@@ -68,6 +69,47 @@ namespace Nop.Web.Extensions.Api
             }
 
             return isMinify;
+        }
+
+        /// <summary>
+        /// Retorna el valor de un header de un request por APi
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="controller"></param>
+        /// <param name="headerName"></param>
+        /// <returns>valor del header, si no existe retorna false</returns>
+        public static object GetHeader<T>(this T controller, string headerName) where T : ApiController
+        {
+            var headers = controller.Request.Headers;
+            IEnumerable<string> values;
+
+            object headerValue = null;
+
+            //Valida que tenga el header
+            if (headers != null && headers.TryGetValues(headerName, out values))
+            {
+                //Obtiene el valor del header
+                headerValue = headers.GetValues(headerName).FirstOrDefault();
+            }
+
+            return headerValue;
+        }
+
+        /// <summary>
+        /// Retorna el valor de un header booleano
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="controller"></param>
+        /// <param name="headerName">Nombre del header que se desea consultar</param>
+        /// <param name="defaultValue">Valor por defecto que debería retornar si no existe el header</param>
+        /// <returns></returns>
+        public static bool GetHeaderBoolean<T>(this T controller, string headerName, bool defaultValue = false) where T : ApiController
+        {
+            bool headerValue = defaultValue;
+            if (controller.GetHeader(headerName) != null)
+                bool.TryParse(controller.GetHeader(headerName).ToString(), out headerValue);
+
+            return headerValue;
         }
 
 

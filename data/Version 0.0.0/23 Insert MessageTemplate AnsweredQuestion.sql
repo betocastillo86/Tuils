@@ -1,0 +1,1 @@
+insert into messageTemplate values ('Product.QuestionAnswered', null, '%Store.Name%. Te han respondido la pregunta de %Product.Name%', null, 1,0,1,0)

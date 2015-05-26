@@ -529,5 +529,10 @@ namespace Nop.Services.Catalog
         bool AnswerQuestion(ProductQuestion question);
         #endregion
 
+        /// <summary>
+        /// Actualiza el número de ventas que se ha hecho de un producto
+        /// </summary>
+        /// <param name="productId"></param>
+        void UpdateTotalSalesByProductId(int productId);
     }
 }

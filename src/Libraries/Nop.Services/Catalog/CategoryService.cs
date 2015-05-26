@@ -684,7 +684,22 @@ namespace Nop.Services.Catalog
             return GetAllCategoriesByParentCategoryId(_tuilsSettings.productBaseTypes_service, includeSubcategories: true, showHidden: true);
         }
 
+        /// <summary>
+        /// Retorna la lista de Ids de categorias hijas
+        /// </summary>
+        /// <param name="parentCategoryId"></param>
+        /// <returns></returns>
+        public List<int> GetChildCategoryIds(int parentCategoryId)
+        {
+            var categoriesIds = new List<int>();
+            var category = GetCategoryById(parentCategoryId);
+            if (category != null && !string.IsNullOrEmpty(category.ChildrenCategoriesStr))
+                categoriesIds = category.ChildrenCategoriesStr
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(c => Convert.ToInt32(c))
+                    .ToList();
 
-
+            return categoriesIds;
+        }
     }
 }

@@ -398,27 +398,27 @@ namespace Nop.Services.Orders
         /// <param name="customerId">Customer identifier; null to load all records</param>
         /// <param name="createdFromUtc">Order created date from (UTC); null to load all records</param>
         /// <param name="createdToUtc">Order created date to (UTC); null to load all records</param>
-        /// <param name="os">Order status; null to load all records</param>
-        /// <param name="ps">Order payment status; null to load all records</param>
-        /// <param name="ss">Order shipment status; null to load all records</param>
+        /// <param name="orderStatus">Order status; null to load all records</param>
+        /// <param name="paymentStatus">Order payment status; null to load all records</param>
+        /// <param name="shippingStatus">Order shipment status; null to load all records</param>
         /// <param name="loadDownloableProductsOnly">Value indicating whether to load downloadable products only</param>
         /// <returns>Order collection</returns>
-        public virtual IList<OrderItem> GetAllOrderItems(int? orderId,
-            int? customerId, DateTime? createdFromUtc, DateTime? createdToUtc, 
-            OrderStatus? os, PaymentStatus? ps, ShippingStatus? ss,
-            bool loadDownloableProductsOnly)
+        public virtual IList<OrderItem> GetAllOrderItems(int? orderId = null,
+            int? customerId = null, DateTime? createdFromUtc = null, DateTime? createdToUtc = null, 
+            OrderStatus? orderStatus = null, PaymentStatus? paymentStatus = null, ShippingStatus? shippingStatus = null,
+            bool loadDownloableProductsOnly = false, int? productId = null)
         {
             int? orderStatusId = null;
-            if (os.HasValue)
-                orderStatusId = (int)os.Value;
+            if (orderStatus.HasValue)
+                orderStatusId = (int)orderStatus.Value;
 
             int? paymentStatusId = null;
-            if (ps.HasValue)
-                paymentStatusId = (int)ps.Value;
+            if (paymentStatus.HasValue)
+                paymentStatusId = (int)paymentStatus.Value;
 
             int? shippingStatusId = null;
-            if (ss.HasValue)
-                shippingStatusId = (int)ss.Value;
+            if (shippingStatus.HasValue)
+                shippingStatusId = (int)shippingStatus.Value;
 
 
             var query = from orderItem in _orderItemRepository.Table
@@ -435,6 +435,9 @@ namespace Nop.Services.Orders
                         !o.Deleted
                         orderby o.CreatedOnUtc descending, orderItem.Id
                         select orderItem;
+
+            if (productId.HasValue)
+                query = query.Where(oi => oi.ProductId == productId);
 
             var orderItems = query.ToList();
             return orderItems;
