@@ -127,10 +127,6 @@
     <Compile Include="Migrations\201505160018426_CreateTable_ProductQuestion.Designer.cs">
       <DependentUpon>201505160018426_CreateTable_ProductQuestion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201505160116133_CreateTable_ProductQuestion1.cs" />
-    <Compile Include="Migrations\201505160116133_CreateTable_ProductQuestion1.Designer.cs">
-      <DependentUpon>201505160116133_CreateTable_ProductQuestion1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201505202123015_Order_RemoveRequired_BillingAddress.cs" />
     <Compile Include="Migrations\201505202123015_Order_RemoveRequired_BillingAddress.Designer.cs">
       <DependentUpon>201505202123015_Order_RemoveRequired_BillingAddress.cs</DependentUpon>
@@ -309,9 +305,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505160018426_CreateTable_ProductQuestion.resx">
       <DependentUpon>201505160018426_CreateTable_ProductQuestion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505160116133_CreateTable_ProductQuestion1.resx">
-      <DependentUpon>201505160116133_CreateTable_ProductQuestion1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505202123015_Order_RemoveRequired_BillingAddress.resx">
       <DependentUpon>201505202123015_Order_RemoveRequired_BillingAddress.cs</DependentUpon>
