@@ -80,7 +80,26 @@ namespace Nop.Services.ControlPanel
                 Controller = "ControlPanel",
                 Action = "MyAccount",
                 IconMini = "icon-mail",
-                IconBig = "icon-mail"
+                IconBig = "icon-mail",
+                SubModules = new List<ControlPanelModule>() { 
+                         new ControlPanelModule()
+                        {
+                             Name = "MyAccount",
+                            Controller = "ControlPanel",
+                            Action = "MyAccount",
+                            IconMini = "icon-mail",
+                            IconBig = "icon-mail"
+                        },
+                        new ControlPanelModule()
+                        {
+                            Name = "ChangePassword",
+                            Controller = "Customer",
+                            Action = "ChangePassword",
+                            IconMini = "icon-mail",
+                            IconBig = "icon-mail"
+                        }
+                    }
+
             });
 
             //Tienda

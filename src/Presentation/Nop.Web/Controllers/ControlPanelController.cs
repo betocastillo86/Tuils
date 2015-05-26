@@ -285,15 +285,36 @@ namespace Nop.Web.Controllers
             if(_workContext.CurrentVendor != null)
             {
                 //Toma la cadena separada por comas y crea una lista de categorias relacinoadas
-                var bikeReferences = model.BikeReferencesString
-                .Split(new char[]{ ',' })
-                .ToList()
-                .Select(c => new SpecialCategoryVendor() { CategoryId = Convert.ToInt32(c), VendorId = _workContext.CurrentVendor.Id, SpecialType = SpecialCategoryVendorType.BikeBrand  });
+                List<SpecialCategoryVendor> bikeReferences;
+                if (!string.IsNullOrEmpty(model.BikeReferencesString))
+                {
+                    bikeReferences = model.BikeReferencesString
+                    .Split(new char[] { ',' })
+                    .Select(c => new SpecialCategoryVendor() 
+                    { 
+                        CategoryId = Convert.ToInt32(c), 
+                        VendorId = _workContext.CurrentVendor.Id, 
+                        SpecialType = SpecialCategoryVendorType.BikeBrand 
+                    })
+                    .ToList();
+                }
+                else
+                {
+                    bikeReferences = new List<SpecialCategoryVendor>();
+                }
 
-                var specializedCategories = model.SpecializedCategoriesString
-                .Split(new char[]{ ',' })
-                .ToList()
-                .Select(c => new SpecialCategoryVendor() { CategoryId = Convert.ToInt32(c), VendorId = _workContext.CurrentVendor.Id, SpecialType = SpecialCategoryVendorType.SpecializedCategory  });
+                List<SpecialCategoryVendor> specializedCategories;
+                if (!string.IsNullOrEmpty(model.SpecializedCategoriesString))
+                {
+                    specializedCategories = model.SpecializedCategoriesString
+                    .Split(new char[] { ',' })
+                    .Select(c => new SpecialCategoryVendor() { CategoryId = Convert.ToInt32(c), VendorId = _workContext.CurrentVendor.Id, SpecialType = SpecialCategoryVendorType.SpecializedCategory })
+                    .ToList();
+                }
+                else
+                {
+                    specializedCategories = new List<SpecialCategoryVendor>();
+                }
 
                 //Concatena las dos listas anteriores y las envía a ser actualizadas
                 _vendorService.InsertUpdateVendorSpecialCategories(_workContext.CurrentVendor.Id, bikeReferences.Concat(specializedCategories).ToList());

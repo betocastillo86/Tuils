@@ -22,6 +22,7 @@
                 "ControlPanel/MySales(/:query)": "myOrders",
                 "ControlPanel/MyProducts(/:query)": "myProducts",
                 "ControlPanel/Questions(/:query)": "questions",
+                "customer/changepassword" : "changePassword",
                 "v/:query" : "vendor",
                 "p/:query": "product"
 
@@ -67,6 +68,10 @@
                 this.loadSubViewsPanel();
             },
             myOrders: function () {
+                this.loadSubViewsPanel();
+            },
+            changePassword : function()
+            {
                 this.loadSubViewsPanel();
             },
             myProducts : function()

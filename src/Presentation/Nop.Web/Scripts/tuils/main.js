@@ -24,7 +24,7 @@
         //Externas
         //jquery: 'jquery-1.10.2',
         underscore: 'underscore-min',
-        backbone: 'backbone-min',
+        backbone: 'backbone',
         stickit: 'backbone.stickit.min',
         jqueryui: 'jquery-ui-1.10.3.custom.min',
         validations: 'backbone-validation.min',
