@@ -9,6 +9,9 @@ using Nop.Services.Catalog;
 using Nop.Services.Localization;
 using Nop.Web.Framework.Mvc;
 using Nop.Web.Framework.UI.Paging;
+using Nop.Services.Directory;
+using Nop.Core.Domain.Directory;
+using System.Text;
 
 namespace Nop.Web.Models.Catalog
 {
@@ -24,6 +27,9 @@ namespace Nop.Web.Models.Catalog
 
             this.PriceRangeFilter = new PriceRangeFilterModel();
             this.SpecificationFilter = new SpecificationFilterModel();
+            this.CategoryFilter = new CategoryFilterModel();
+            this.StateProvinceFilter = new StateProvinceFilterModel();
+            this.ManufacturerFilter = new ManufacturerFilterModel();
         }
 
         #endregion
@@ -39,6 +45,22 @@ namespace Nop.Web.Models.Catalog
         /// Specification filter model
         /// </summary>
         public SpecificationFilterModel SpecificationFilter { get; set; }
+
+        /// <summary>
+        /// state province filter
+        /// </summary>
+        public StateProvinceFilterModel StateProvinceFilter { get; set; }
+
+        /// <summary>
+        /// filtro por marca
+        /// </summary>
+        public ManufacturerFilterModel ManufacturerFilter { get; set; }
+
+
+        /// <summary>
+        /// Category filter model
+        /// </summary>
+        public CategoryFilterModel CategoryFilter { get; set; }
 
         public bool AllowProductSorting { get; set; }
         public IList<SelectListItem> AvailableSortOptions { get; set; }
@@ -60,23 +82,112 @@ namespace Nop.Web.Models.Catalog
         public string ViewMode { get; set; }
 
         public string q { get; set; }
-        
+
 
         #endregion
 
         #region Nested classes
 
-        public partial class PriceRangeFilterModel : BaseNopModel
+
+        #region SuperClass
+
+        public class FilterBaseModel : BaseNopModel
+        {
+            protected string QUERYSTRINGPARAM { get; private set; }
+
+            public FilterBaseModel(string queryString)
+            {
+                this.QUERYSTRINGPARAM = queryString;
+            }
+
+            protected virtual string ExcludeQueryStringParams(string url, IWebHelper webHelper)
+            {
+                var excludedQueryStringParams = "pagenumber"; //remove page filtering
+                if (!String.IsNullOrEmpty(excludedQueryStringParams))
+                {
+                    string[] excludedQueryStringParamsSplitted = excludedQueryStringParams.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string exclude in excludedQueryStringParamsSplitted)
+                    {
+                        url = webHelper.RemoveQueryString(url, exclude);
+                    }
+                }
+
+                return url;
+            }
+
+            protected virtual string GenerateFilteredQueryParam(IList<int> optionIds)
+            {
+                string result = "";
+
+                if (optionIds == null || optionIds.Count == 0)
+                    return result;
+
+                for (int i = 0; i < optionIds.Count; i++)
+                {
+                    result += optionIds[i];
+                    if (i != optionIds.Count - 1)
+                        result += ",";
+                }
+                return result;
+            }
+
+            public virtual List<int> GetAlreadyFilteredIds(IWebHelper webHelper)
+            {
+                var result = new List<int>();
+
+                var alreadyFilteredSpecsStr = webHelper.QueryString<string>(QUERYSTRINGPARAM);
+                if (String.IsNullOrWhiteSpace(alreadyFilteredSpecsStr))
+                    return result;
+
+                foreach (var spec in alreadyFilteredSpecsStr.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    int specId;
+                    int.TryParse(spec.Trim(), out specId);
+                    if (!result.Contains(specId))
+                        result.Add(specId);
+                }
+                return result;
+            }
+
+            public virtual int? GetAlreadyFilteredId(IWebHelper webHelper)
+            {
+                var alreadyFilteredStr = webHelper.QueryString<string>(QUERYSTRINGPARAM);
+                if (String.IsNullOrWhiteSpace(alreadyFilteredStr))
+                    return null;
+
+                int id = 0;
+
+                if (int.TryParse(alreadyFilteredStr, out id))
+                    return id;
+                else
+                    return null;
+            }
+
+
+        }
+
+        public class FilterBaseItem : BaseNopModel
+        {
+            public string Name { get; set; }
+            public int NumOfProducts { get; set; }
+            public string FilterUrl { get; set; }
+        }
+
+        #endregion
+
+        #region PriceRange
+        public partial class PriceRangeFilterModel : FilterBaseModel
         {
             #region Const
 
-            private const string QUERYSTRINGPARAM = "price";
+            private const string _QUERYSTRINGPARAM = "price";
 
-            #endregion 
+            #endregion
 
             #region Ctor
 
             public PriceRangeFilterModel()
+                : base(_QUERYSTRINGPARAM)
             {
                 this.Items = new List<PriceRangeFilterItem>();
             }
@@ -93,10 +204,10 @@ namespace Nop.Web.Models.Catalog
                 var priceRanges = new List<PriceRange>();
                 if (string.IsNullOrWhiteSpace(priceRangesStr))
                     return priceRanges;
-                string[] rangeArray = priceRangesStr.Split(new [] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] rangeArray = priceRangesStr.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string str1 in rangeArray)
                 {
-                    string[] fromTo = str1.Trim().Split(new [] { '-' });
+                    string[] fromTo = str1.Trim().Split(new[] { '-' });
 
                     decimal? from = null;
                     if (!String.IsNullOrEmpty(fromTo[0]) && !String.IsNullOrEmpty(fromTo[0].Trim()))
@@ -111,18 +222,7 @@ namespace Nop.Web.Models.Catalog
                 return priceRanges;
             }
 
-            protected virtual string ExcludeQueryStringParams(string url, IWebHelper webHelper)
-            {
-                var excludedQueryStringParams = "pagenumber"; //remove page filtering
-                if (!String.IsNullOrEmpty(excludedQueryStringParams))
-                {
-                    string[] excludedQueryStringParamsSplitted = excludedQueryStringParams.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    foreach (string exclude in excludedQueryStringParamsSplitted)
-                        url = webHelper.RemoveQueryString(url, exclude);
-                }
 
-                return url;
-            }
 
             #endregion
 
@@ -133,7 +233,7 @@ namespace Nop.Web.Models.Catalog
                 var range = webHelper.QueryString<string>(QUERYSTRINGPARAM);
                 if (String.IsNullOrEmpty(range))
                     return null;
-                string[] fromTo = range.Trim().Split(new [] { '-' });
+                string[] fromTo = range.Trim().Split(new[] { '-' });
                 if (fromTo.Length == 2)
                 {
                     decimal? from = null;
@@ -143,14 +243,78 @@ namespace Nop.Web.Models.Catalog
                     if (!String.IsNullOrEmpty(fromTo[1]) && !String.IsNullOrEmpty(fromTo[1].Trim()))
                         to = decimal.Parse(fromTo[1].Trim(), new CultureInfo("en-US"));
 
-                    var priceRangeList = GetPriceRangeList(priceRangesStr);
-                    foreach (var pr in priceRangeList)
+                    if (string.IsNullOrEmpty(priceRangesStr))
                     {
-                        if (pr.From == from && pr.To == to)
-                            return pr;
+                        return new PriceRange() { From = from, To = to };
+                    }
+                    else
+                    {
+                        var priceRangeList = GetPriceRangeList(priceRangesStr);
+                        foreach (var pr in priceRangeList)
+                        {
+                            if (pr.From == from && pr.To == to)
+                                return pr;
+                        }
                     }
                 }
                 return null;
+            }
+
+            /// <summary>
+            /// Calcula los rangos de precio dependiendo del más barato y el más caro
+            /// </summary>
+            /// <param name="minPrice"></param>
+            /// <param name="maxPrice"></param>
+            /// <param name="webHelper"></param>
+            /// <param name="priceFormatter"></param>
+            public virtual void LoadPriceRangeFilters(int minPrice, int maxPrice, IWebHelper webHelper, IPriceFormatter priceFormatter)
+            {
+
+                var diferencePrices = (double)(maxPrice - minPrice);
+                //Si la diferencia de precios es menor a 50000 no debe mostrar el filtro
+                if (diferencePrices < 50000)
+                {
+                    //Valida si se ha seleccionado un precio anteriormente
+                    var selectedPrice = this.GetSelectedPriceRange(webHelper, null);
+                    this.Enabled = selectedPrice != null;
+
+                    //Si hay precio seleccionado carga los valores
+                    if (selectedPrice != null)
+                    {
+                        var priceItem = new PriceRangeFilterItem() { Selected = true };
+                        if (selectedPrice.From.HasValue)
+                            priceItem.From = priceFormatter.FormatPrice(selectedPrice.From.Value, true, false);
+
+                        if (selectedPrice.To.HasValue)
+                            priceItem.To = priceFormatter.FormatPrice(selectedPrice.To.Value, true, false);
+
+                        this.Items.Add(priceItem);
+
+                        string url = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+                        url = ExcludeQueryStringParams(url, webHelper);
+                        this.RemoveFilterUrl = url;
+                    }
+                }
+                else
+                {
+                    var priceRangeStr = new StringBuilder();
+
+                    //Muestra 4 rangos de precios
+                    double prevMin = Math.Round(minPrice / 100d, 0) * 1000d;
+                    double prevMax = minPrice;
+                    for (int i = 4; i > 0; i--)
+                    {
+                        //Toma el primer rango y lo suma a la lista aproximandolo a miles de pesos
+                        double rangePriceDiference = Math.Ceiling(diferencePrices / i);
+                        //Toma el menor precio y le suma el total del rango
+                        prevMax = Math.Round((minPrice + rangePriceDiference) / 1000d, 0) * 1000d;
+                        //Carga el menor precio menos 1 y el mayor precio del rango
+                        priceRangeStr.AppendFormat("{0}-{1};", prevMin, i > 1 ? (prevMax).ToString() : string.Empty);
+                        prevMin = prevMax;
+                    }
+
+                    LoadPriceRangeFilters(priceRangeStr.ToString(), webHelper, priceFormatter);
+                }
             }
 
             public virtual void LoadPriceRangeFilters(string priceRangeStr, IWebHelper webHelper, IPriceFormatter priceFormatter)
@@ -205,7 +369,7 @@ namespace Nop.Web.Models.Catalog
                     this.Enabled = false;
                 }
             }
-            
+
             #endregion
 
             #region Properties
@@ -224,17 +388,21 @@ namespace Nop.Web.Models.Catalog
             public bool Selected { get; set; }
         }
 
-        public partial class SpecificationFilterModel : BaseNopModel
+        #endregion
+
+        #region SpecificationAttribute
+        public partial class SpecificationFilterModel : FilterBaseModel
         {
             #region Const
 
-            private const string QUERYSTRINGPARAM = "specs";
+            private const string _QUERYSTRINGPARAM = "specs";
 
             #endregion
 
             #region Ctor
 
             public SpecificationFilterModel()
+                : base(_QUERYSTRINGPARAM)
             {
                 this.AlreadyFilteredItems = new List<SpecificationFilterItem>();
                 this.NotFilteredItems = new List<SpecificationFilterItem>();
@@ -242,71 +410,20 @@ namespace Nop.Web.Models.Catalog
 
             #endregion
 
-            #region Utilities
-
-            protected virtual string ExcludeQueryStringParams(string url, IWebHelper webHelper)
-            {
-                var excludedQueryStringParams = "pagenumber"; //remove page filtering
-                if (!String.IsNullOrEmpty(excludedQueryStringParams))
-                {
-                    string[] excludedQueryStringParamsSplitted = excludedQueryStringParams.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    foreach (string exclude in excludedQueryStringParamsSplitted)
-                    {
-                        url = webHelper.RemoveQueryString(url, exclude);
-                    }
-                }
-
-                return url;
-            }
-            
-            protected virtual string GenerateFilteredSpecQueryParam(IList<int> optionIds)
-            {
-                string result = "";
-
-                if (optionIds == null || optionIds.Count == 0)
-                    return result;
-
-                for (int i = 0; i < optionIds.Count; i++)
-                {
-                    result += optionIds[i];
-                    if (i != optionIds.Count - 1)
-                        result += ",";
-                }
-                return result;
-            }
-
-            #endregion
-
             #region Methods
 
-            public virtual List<int> GetAlreadyFilteredSpecOptionIds(IWebHelper webHelper)
-            {
-                var result = new List<int>();
 
-                var alreadyFilteredSpecsStr = webHelper.QueryString<string>(QUERYSTRINGPARAM);
-                if (String.IsNullOrWhiteSpace(alreadyFilteredSpecsStr))
-                    return result;
-
-                foreach (var spec in alreadyFilteredSpecsStr.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    int specId;
-                    int.TryParse(spec.Trim(), out specId);
-                    if (!result.Contains(specId))
-                        result.Add(specId);
-                }
-                return result;
-            }
 
             public virtual void PrepareSpecsFilters(IList<int> alreadyFilteredSpecOptionIds,
-                IList<int> filterableSpecificationAttributeOptionIds,
-                ISpecificationAttributeService specificationAttributeService, 
+                Dictionary<int, int> filterableSpecificationAttributeOptionIds,
+                ISpecificationAttributeService specificationAttributeService,
                 IWebHelper webHelper,
                 IWorkContext workContext)
             {
                 var allFilters = new List<SpecificationAttributeOptionFilter>();
                 var specificationAttributeOptions = specificationAttributeService
                     .GetSpecificationAttributeOptionsByIds(filterableSpecificationAttributeOptionIds != null ?
-                    filterableSpecificationAttributeOptionIds.ToArray() : null);
+                    filterableSpecificationAttributeOptionIds.Keys.ToArray() : null);
                 foreach (var sao in specificationAttributeOptions)
                 {
                     var sa = sao.SpecificationAttribute;
@@ -329,7 +446,7 @@ namespace Nop.Web.Models.Catalog
                     .ThenBy(saof => saof.SpecificationAttributeName)
                     .ThenBy(saof => saof.SpecificationAttributeOptionDisplayOrder)
                     .ThenBy(saof => saof.SpecificationAttributeOptionName).ToList();
-                
+
                 //get already filtered specification options
                 var alreadyFilteredOptions = allFilters
                     .Where(x => alreadyFilteredSpecOptionIds.Contains(x.SpecificationAttributeOptionId))
@@ -352,11 +469,11 @@ namespace Nop.Web.Models.Catalog
                 if (alreadyFilteredOptions.Count > 0 || notFilteredOptions.Count > 0)
                 {
                     this.Enabled = true;
-                    
+
                     this.AlreadyFilteredItems = alreadyFilteredOptions.ToList().Select(x =>
                     {
                         var item = new SpecificationFilterItem();
-                        item.SpecificationAttributeName = x.SpecificationAttributeName;
+                        item.Name = x.SpecificationAttributeName;
                         item.SpecificationAttributeOptionName = x.SpecificationAttributeOptionName;
 
                         return item;
@@ -365,18 +482,19 @@ namespace Nop.Web.Models.Catalog
                     this.NotFilteredItems = notFilteredOptions.ToList().Select(x =>
                     {
                         var item = new SpecificationFilterItem();
-                        item.SpecificationAttributeName = x.SpecificationAttributeName;
+                        item.Name = x.SpecificationAttributeName;
                         item.SpecificationAttributeOptionName = x.SpecificationAttributeOptionName;
+                        item.NumOfProducts = filterableSpecificationAttributeOptionIds.FirstOrDefault(s => s.Key == x.SpecificationAttributeOptionId).Value;
 
                         //filter URL
-                        var alreadyFilteredOptionIds = GetAlreadyFilteredSpecOptionIds(webHelper);
+                        var alreadyFilteredOptionIds = GetAlreadyFilteredIds(webHelper);
                         if (!alreadyFilteredOptionIds.Contains(x.SpecificationAttributeOptionId))
                             alreadyFilteredOptionIds.Add(x.SpecificationAttributeOptionId);
-                        string newQueryParam = GenerateFilteredSpecQueryParam(alreadyFilteredOptionIds);
+                        string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredOptionIds);
                         string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + newQueryParam, null);
                         filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
                         item.FilterUrl = filterUrl;
-                        
+
                         return item;
                     }).ToList();
 
@@ -403,11 +521,304 @@ namespace Nop.Web.Models.Catalog
             #endregion
         }
 
-        public partial class SpecificationFilterItem : BaseNopModel
+        public partial class SpecificationFilterItem : FilterBaseItem
         {
-            public string SpecificationAttributeName { get; set; }
             public string SpecificationAttributeOptionName { get; set; }
-            public string FilterUrl { get; set; }
+        }
+
+        #endregion
+
+
+        public partial class CategoryFilterModel : FilterBaseModel
+        {
+            #region Const
+
+            private const string _QUERYSTRINGPARAM = "Cid";
+
+            #endregion
+
+            #region Ctor
+
+            public CategoryFilterModel()
+                : base(_QUERYSTRINGPARAM)
+            {
+                this.AlreadyFilteredItems = new List<FilterBaseItem>();
+                this.NotFilteredItems = new List<FilterBaseItem>();
+            }
+
+            #endregion
+
+            #region Methods
+
+
+
+            public virtual void PrepareCategoriesFilters(IList<int> alreadyCategoryIds,
+                Dictionary<int, int> filterableCategoryIds,
+                ICategoryService categoryService,
+                IWebHelper webHelper,
+                IWorkContext workContext)
+            {
+                this.Enabled = true;
+
+                if (alreadyCategoryIds.Count > 0)
+                {
+                    var selectedCategory = categoryService.GetCategoryById(alreadyCategoryIds.FirstOrDefault());
+                    this.AlreadyFilteredItems.Add(new FilterBaseItem()
+                    {
+                        Name = selectedCategory != null ? selectedCategory.Name : string.Empty
+                    });
+
+                    //remove filter URL
+                    string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+                    removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
+                    this.RemoveFilterUrl = removeFilterUrl;
+                }
+                else if (filterableCategoryIds.Count > 1)
+                {
+                    //Carga las categorias
+                    var options = categoryService
+                        .GetCategoriesByIds(filterableCategoryIds != null ?
+                        filterableCategoryIds.Keys.ToArray() : new int[] { });
+
+                    this.NotFilteredItems = options.ToList().Select(x =>
+                       {
+                           var item = new FilterBaseItem();
+                           item.Name = x.Name;
+                           item.NumOfProducts = filterableCategoryIds.FirstOrDefault(s => s.Key == x.Id).Value;
+
+                           //filter URL
+                           var alreadyFilteredCategoryIds = GetAlreadyFilteredIds(webHelper);
+                           if (!alreadyFilteredCategoryIds.Contains(x.Id))
+                               alreadyFilteredCategoryIds.Add(x.Id);
+                           string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredCategoryIds);
+                           string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + newQueryParam, null);
+                           filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
+                           item.FilterUrl = filterUrl;
+
+                           return item;
+                       }).ToList();
+
+                }
+                else
+                {
+                    this.Enabled = false;
+                }
+
+            }
+
+            #endregion
+
+            #region Properties
+            public bool Enabled { get; set; }
+            public IList<FilterBaseItem> AlreadyFilteredItems { get; set; }
+            public IList<FilterBaseItem> NotFilteredItems { get; set; }
+            public string RemoveFilterUrl { get; set; }
+
+            #endregion
+        }
+
+
+        #endregion
+        #region StateProvince
+
+        public partial class StateProvinceFilterModel : FilterBaseModel
+        {
+            #region Const
+
+            private const string _QUERYSTRINGPARAM = "sp";
+
+            #endregion
+
+            #region Ctor
+
+            public StateProvinceFilterModel()
+                : base(_QUERYSTRINGPARAM)
+            {
+            }
+
+            #endregion
+
+            #region Methods
+
+
+
+            public virtual void PrepareStateProvinceFilters(int? selectedProvinceId,
+                Dictionary<int, int> filterableStateProvinceIds,
+                IStateProvinceService stateProvinceService,
+                IWebHelper webHelper,
+                IWorkContext workContext)
+            {
+                List<StateProvince> statesOptions = null;
+
+                if (!selectedProvinceId.HasValue)
+                {
+                    statesOptions = stateProvinceService
+                     .GetStatesProvincesByIds(filterableStateProvinceIds != null ?
+                     filterableStateProvinceIds.Keys.ToArray() : new int[] { })
+                     .OrderBy(c => c.DisplayOrder)
+                     .ThenBy(saof => saof.Name)
+                     .ToList();
+                }
+
+
+                //prepare the model properties
+                if (selectedProvinceId.HasValue || statesOptions.Count > 1)
+                {
+                    this.Enabled = true;
+
+
+                    if (selectedProvinceId.HasValue)
+                    {
+                        this.FilteredItem = new FilterBaseItem() { Name = stateProvinceService.GetStateProvinceById(selectedProvinceId.Value).Name };
+                    }
+                    else
+                    {
+                        this.NotFilteredItems = statesOptions.Select(x =>
+                        {
+                            var item = new FilterBaseItem();
+                            item.Name = x.Name;
+                            item.NumOfProducts = filterableStateProvinceIds.FirstOrDefault(s => s.Key == x.Id).Value;
+
+                            //filter URL
+                            var alreadyFilteredCategoryIds = GetAlreadyFilteredIds(webHelper);
+                            if (!alreadyFilteredCategoryIds.Contains(x.Id))
+                                alreadyFilteredCategoryIds.Add(x.Id);
+                            string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredCategoryIds);
+                            string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + newQueryParam, null);
+                            filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
+                            item.FilterUrl = filterUrl;
+
+                            return item;
+                        }).ToList();
+                    }
+
+                    //remove filter URL
+                    string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+                    removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
+                    this.RemoveFilterUrl = removeFilterUrl;
+
+                }
+                else
+                {
+                    this.Enabled = false;
+                }
+            }
+
+            #endregion
+
+            #region Properties
+            public bool Enabled { get; set; }
+
+            public IList<FilterBaseItem> NotFilteredItems { get; set; }
+
+            public FilterBaseItem FilteredItem { get; set; }
+
+            public string RemoveFilterUrl { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
+        #region Manufacturer
+
+        public partial class ManufacturerFilterModel : FilterBaseModel
+        {
+            #region Const
+
+            private const string _QUERYSTRINGPARAM = "mid";
+
+            #endregion
+
+            #region Ctor
+
+            public ManufacturerFilterModel()
+                : base(_QUERYSTRINGPARAM)
+            {
+            }
+
+            #endregion
+
+            #region Methods
+
+
+
+            public virtual void PrepareFilters(int? manufactutrerId,
+                Dictionary<int, int> filterableManufacturerIds,
+                IManufacturerService manufacturerService,
+                IWebHelper webHelper,
+                IWorkContext workContext)
+            {
+                List<Manufacturer> options = null;
+
+                if (!manufactutrerId.HasValue)
+                {
+                    options = manufacturerService
+                     .GetManufacturersByIds(filterableManufacturerIds != null ?
+                     filterableManufacturerIds.Keys.ToArray() : new int[] { })
+                     .OrderBy(c => c.DisplayOrder)
+                     .ThenBy(saof => saof.Name)
+                     .ToList();
+                }
+
+
+                //prepare the model properties
+                if (manufactutrerId.HasValue || options.Count > 1)
+                {
+                    this.Enabled = true;
+
+                    if (manufactutrerId.HasValue)
+                    {
+                        this.FilteredItem = new FilterBaseItem() { Name = manufacturerService.GetManufacturerById(manufactutrerId.Value).Name };
+                    }
+                    else
+                    {
+                        this.NotFilteredItems = options.Select(x =>
+                        {
+                            var item = new FilterBaseItem();
+                            item.Name = x.Name;
+                            item.NumOfProducts = filterableManufacturerIds.FirstOrDefault(s => s.Key == x.Id).Value;
+
+                            //filter URL
+                            var alreadyFilteredCategoryIds = GetAlreadyFilteredIds(webHelper);
+                            if (!alreadyFilteredCategoryIds.Contains(x.Id))
+                                alreadyFilteredCategoryIds.Add(x.Id);
+                            string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredCategoryIds);
+                            string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + newQueryParam, null);
+                            filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
+                            item.FilterUrl = filterUrl;
+
+                            return item;
+                        }).ToList();
+                    }
+
+
+
+
+                    //remove filter URL
+                    string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+                    removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
+                    this.RemoveFilterUrl = removeFilterUrl;
+
+                }
+                else
+                {
+                    this.Enabled = false;
+                }
+            }
+
+            #endregion
+
+            #region Properties
+            public bool Enabled { get; set; }
+
+            public IList<FilterBaseItem> NotFilteredItems { get; set; }
+
+            public FilterBaseItem FilteredItem { get; set; }
+
+            public string RemoveFilterUrl { get; set; }
+
+            #endregion
         }
 
         #endregion

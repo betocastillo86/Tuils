@@ -33,6 +33,7 @@
                 require(['tuils/views/login/createUser'], function (CreateUserView) {
                     that.viewRegister = new CreateUserView({ $el: that.$('#divRegisterUser') });
                     that.viewRegister.on("user-authenticated", that.showUserAuthenticated, that);
+                    that.viewRegister.on("login", that.showLogin, that);
                 });
             }
             else {

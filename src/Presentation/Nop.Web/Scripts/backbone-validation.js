@@ -466,7 +466,7 @@ Backbone.Validation = (function (_) {
     // {x} gets swapped out with arguments form the validator.
     var defaultMessages = Validation.messages = {
         required: '{0} es obligatorio',
-        acceptance: '{0} must be accepted',
+        acceptance: '{0} deben ser aceptados',
         min: '{0} debe ser mayor o igual a {1}',
         max: '{0} debe ser menor o igual a {1}',
         range: '{0} de ser entre {1} y {2}',

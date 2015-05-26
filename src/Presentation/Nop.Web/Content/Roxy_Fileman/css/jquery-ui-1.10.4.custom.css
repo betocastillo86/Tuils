@@ -295,7 +295,7 @@ button.ui-button::-moz-focus-inner {
 .ui-dialog .ui-dialog-content {
 	position: relative;
 	border: 0;
-	padding: .5em 1em;
+	/*padding: .5em 1em;*/
 	background: none;
 	overflow: auto;
 }
@@ -360,10 +360,13 @@ body .ui-tooltip {
 	color: #222222;
 }
 .ui-widget-header {
-	border: 1px solid #aaaaaa;
+	/*border: 1px solid #aaaaaa;
 	background: #cccccc url(images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
 	color: #222222;
-	font-weight: bold;
+	font-weight: bold;*/
+    color: #395983;
+    font-size: 16px;
+    margin: 0 0 10px;
 }
 .ui-widget-header a {
 	color: #222222;

@@ -78,7 +78,13 @@ namespace Nop.Core.Domain.Common
         public int specificationAttributeSupplies { get; set; }
         #endregion
 
+        #region Productos
 
-        
+        public int defaultStockQuantity { get; set; }
+
+        #endregion
+
+
+
     }
 }

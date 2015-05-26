@@ -8,6 +8,9 @@ using Nop.Services.Events;
 using System.Collections.Generic;
 using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Media;
+using Nop.Services.Media;
+using Nop.Services.Seo;
+using Nop.Services.Logging;
 
 namespace Nop.Services.Common
 {
@@ -38,7 +41,9 @@ namespace Nop.Services.Common
         private readonly IRepository<AddressPicture> _addressPictureRepository;
         private readonly IRepository<StateProvince> _stateProvinceRepository;
         private readonly ICountryService _countryService;
+        private readonly IPictureService _pictureService;
         private readonly IStateProvinceService _stateProvinceService;
+        private readonly ILogger _logger;
         
         private readonly IAddressAttributeService _addressAttributeService;
         private readonly IEventPublisher _eventPublisher;
@@ -68,7 +73,9 @@ namespace Nop.Services.Common
             AddressSettings addressSettings,
             IRepository<StateProvince> stateProvinceRepository,
             IRepository<AddressPicture> addressPictureRepository,
-            IRepository<Picture> pictureRepository)
+            IRepository<Picture> pictureRepository,
+            IPictureService pictureService,
+            ILogger logger)
         {
             this._cacheManager = cacheManager;
             this._addressRepository = addressRepository;
@@ -80,6 +87,8 @@ namespace Nop.Services.Common
             this._stateProvinceRepository = stateProvinceRepository;
             this._addressPictureRepository = addressPictureRepository;
             this._pictureRepository = pictureRepository;
+            this._pictureService = pictureService;
+            this._logger = logger;
         }
 
         #endregion
@@ -328,6 +337,63 @@ namespace Nop.Services.Common
 
             return query.ToList();
         }
+
+        /// <summary>
+        /// Asocia una nueva imagen a una dirección
+        /// </summary>
+        /// <param name="addressId">id de la direccion</param>
+        /// <param name="file">contenido del archivo</param>
+        /// <param name="extension">extension del archivo</param>
+        /// <param name="seoName">Nombre con el que se va guargar la imagen. Es opcional, sino se tiene toma el nombre del vendor</param>
+        /// <returns>Retorna la relación entre la dirección y la imagen</returns>
+        public AddressPicture InsertPicture(int addressId, byte[] file, string extension, string seoName = null)
+        {
+            
+            try
+            {
+               
+                string mimeType = _pictureService.GetContentTypeFromExtension(extension);
+               //Si el seo viene nulo lo iguala al seoName del vendor 
+                if (seoName == null)
+                {
+                    var address = GetAddressById(addressId);
+                    seoName = address.Vendor.GetSeName();
+                }
+
+                //inserta en la tabla de imagenes
+                var picture = _pictureService.InsertPicture(file, mimeType, seoName, true);
+
+                //inserta la relacion
+                var addressPicture = new AddressPicture()
+                {
+                    AddressId = addressId,
+                    PictureId = picture.Id,
+                    DisplayOrder = 0
+                };
+                _addressPictureRepository.Insert(addressPicture);
+
+                return addressPicture;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e.ToString(), e);
+                return new AddressPicture();
+            }
+        }
+
+        /// <summary>
+        /// Valida si una imagen está asociada a la dirección
+        /// </summary>
+        /// <param name="addressId">direccion</param>
+        /// <param name="pictureId">id de la imagen a evaluar</param>
+        /// <returns>True: La imagen estpá asociada False: La imagen no está asociada</returns>
+        public bool AddressHasPicture(int addressId, int pictureId) {
+            return _addressPictureRepository.Table.FirstOrDefault(a => a.PictureId == pictureId && a.AddressId == addressId) != null;
+        }
+
         #endregion
+
+
+        
     }
 }

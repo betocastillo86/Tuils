@@ -131,6 +131,18 @@
     <Compile Include="Migrations\201505160116133_CreateTable_ProductQuestion1.Designer.cs">
       <DependentUpon>201505160116133_CreateTable_ProductQuestion1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505202123015_Order_RemoveRequired_BillingAddress.cs" />
+    <Compile Include="Migrations\201505202123015_Order_RemoveRequired_BillingAddress.Designer.cs">
+      <DependentUpon>201505202123015_Order_RemoveRequired_BillingAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505241501251_AddColumn_ChildrenCategoriesStr_Category.cs" />
+    <Compile Include="Migrations\201505241501251_AddColumn_ChildrenCategoriesStr_Category.Designer.cs">
+      <DependentUpon>201505241501251_AddColumn_ChildrenCategoriesStr_Category.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505251435431_Category_MaxLength_ChildrenCategoriesStr.cs" />
+    <Compile Include="Migrations\201505251435431_Category_MaxLength_ChildrenCategoriesStr.Designer.cs">
+      <DependentUpon>201505251435431_Category_MaxLength_ChildrenCategoriesStr.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -300,6 +312,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505160116133_CreateTable_ProductQuestion1.resx">
       <DependentUpon>201505160116133_CreateTable_ProductQuestion1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505202123015_Order_RemoveRequired_BillingAddress.resx">
+      <DependentUpon>201505202123015_Order_RemoveRequired_BillingAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505241501251_AddColumn_ChildrenCategoriesStr_Category.resx">
+      <DependentUpon>201505241501251_AddColumn_ChildrenCategoriesStr_Category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505251435431_Category_MaxLength_ChildrenCategoriesStr.resx">
+      <DependentUpon>201505251435431_Category_MaxLength_ChildrenCategoriesStr.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

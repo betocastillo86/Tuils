@@ -4,92 +4,114 @@
     Layout = "~/Views/Shared/_PanelLayoutTwo.cshtml";
 }
 
-<div >
+<div class="panel-control">
+    <h2 class="tit_sec">@T("Offices.Title")</h2>
     @Html.HiddenFor(m => m.VendorId)
-    <div>
-        <input id="btnNew" value="Nuevo" type="button" />
+    <div id="divListOffices">
+
     </div>
-    <div id="officesAccordion">
-        <h3>@T("Offices.List")</h3>
-        <div id="divListOffices">
-
-        </div>
-        <h3>@T("Offices.Detail")</h3>
-        <div id="divOfficeDetail" style="display:none">
-            
-        </div>
-    </div>
-
-    <style type="text/css">
-        #canvasMapAddress {
-            height: 400px;
-            width: 400px;
-        }
-    </style>
-
-    <script id="templateListOffices" type="text/x-handlebars-template">
-        <table width="100%" style="border:1px solid;">
-            <tr>
-                <td>@T("Offices.Name")</td>
-                <td>@T("Offices.PhoneNumber")</td>
-                <td></td>
-            </tr>
-        </table>
-        {{#each this}}
-        <div class="headerAccordion" tuils-id="{{Id}}">
-            {{Name}} -
-            {{PhoneNumber}} -
-            <input id="btnEditAddress" value="Editar" tuils-id="{{Id}}" type="button">
-            <input id="btnDeleteAddress" value="Eliminar" tuils-id="{{Id}}" type="button">
-        </div>
-        <div>
-            <div class="footerAccordion" id="divDetail{{Id}}" style="min-height:350px">
-
-            </div>
-        </div>
-        {{/each}}
-        <div class="headerAccordion" >
-            Nuevo
-        </div>
-        <div id="divNewOffice" style="display:none">
-
-        </div>
-
-    </script>
-
-    <script id="templateOfficeDetail" type="text/x-handlebars-template">
-        <div class="inputs">
-            @Html.TextBoxRequired("Name", labelResource: "Offices.Name", value: "Prueba")
-        </div>
-        <div class="inputs">
-            @Html.TextBoxRequired("Email", labelResource: "Offices.Email", required: false)
-        </div>
-        <div class="inputs">
-            @Html.TextBoxRequired("PhoneNumber", labelResource: "Offices.PhoneNumber")
-        </div>
-        <div class="inputs">
-            @Html.TextBoxRequired("FaxNumber", labelResource: "Offices.FaxNumber", required: false)
-        </div>
-        <div class="inputs">
-            @Html.DropDownRequired("StateProvinceId", new SelectList(Model.States, "Id", "Name"), labelResource: "Offices.StateProvinceId")
-        </div>
-        <div class="inputs">
-            @Html.TextBoxRequired("Address", labelResource: "Offices.Address1")
-        </div>
-        <div class="inputs">
-            @Html.TextBoxRequired("Schedule", labelResource: "Offices.Schedule")
-        </div>
-        <div id="canvasMapAddress">
-
-        </div>
-
-        <span tuils-val-for="Latitude"></span>
-        <br />
-        <span tuils-val-for="Longitude"></span>
-        <input id="btnSaveAddress" type="button" value="@T("Common.Save")" class="button-1 save-customer-info-button" />
-        <input id="btnSaveBack" type="button" value="@T("Common.Cancel")" class="button-1 save-customer-info-button" />
-        
-    </script>
-    
-
 </div>
+
+<script id="templateListOffices" type="text/x-handlebars-template">
+
+    <div class="conte-edit-sede">
+        <div class="table-header">
+            <div class="td-sede">@T("Offices.Name")</div>
+            <div class="td-mail">@T("Offices.Email")</div>
+            <div class="td-tel">@T("Offices.PhoneNumber")</div>
+            <div class="td-opc">@T("common.options")</div>
+            <br />
+        </div>
+        <ul class="list-table">
+            {{#each this}}
+
+
+            <li class="headerAccordion" tuils-id="{{Id}}">
+                <div class="td-sede"><span class="icon-mail"></span>{{Name}}</div>
+                <div class="td-mail">{{Email}}</div>
+                <div class="td-tel">{{PhoneNumber}}</div>
+                <div class="td-opc">
+                    <a id="btnEditAddress" href="javascript:void(0);" class="btn-azul" tuils-id="{{Id}}"><span class="icon-mail"></span><i>@T("Offices.Edit")</i></a>
+                    <a id="btnDeleteAddress" href="javascript:void(0)" class="btn-naranja" tuils-id="{{Id}}"><span class="icon-mail no-margin"></span></a>
+                </div>
+                <br />
+            </li>
+            <div style="min-height:350px">
+                <div id="divDetail{{Id}}"></div>
+            </div>
+            {{/each}}
+        </ul>
+
+    </div>
+    <li class="headerAccordion">
+        <div class="td-sede"><span class="icon-mail"></span>Nueva sede</div>
+    </li>
+    <div>
+        <div id="divNewOffice" class="sede-edited" style="display:none">
+
+        </div>
+    </div>
+
+</script>
+
+<script id="templateOfficeDetail" type="text/x-handlebars-template">
+
+    <div class="sede-edited" id="" >
+        <form class="form-sedes">
+            <div class="title">Detalles</div>
+            <div class="inputs">
+                @Html.TextBoxRequired("Name", labelResource: "Offices.Name")
+            </div>
+            <div class="inputs">
+                @Html.TextBoxRequired("Email", labelResource: "Offices.Email", required: false)
+            </div>
+            <div class="inputs">
+                @Html.TextBoxRequired("PhoneNumber", labelResource: "Offices.PhoneNumber")
+            </div>
+            <div class="inputs">
+                @Html.TextBoxRequired("FaxNumber", labelResource: "Offices.FaxNumber", required: false)
+            </div>
+            <div class="inputs">
+                @Html.DropDownRequired("StateProvinceId", new SelectList(Model.States, "Id", "Name"), labelResource: "Offices.StateProvinceId")
+            </div>
+            <div class="inputs">
+                @Html.TextBoxRequired("Address", labelResource: "Offices.Address1")
+            </div>
+            <div class="inputs">
+                @Html.TextBoxRequired("Schedule", labelResource: "Offices.Schedule")
+            </div>
+            <input type="file" style="display:none" />
+        </form>
+        <div class="caja_edtsedes">
+            <div class="title">Mapa</div>
+            <div id="canvasMapAddress" class="mapa"></div>
+            <span tuils-val-for="Latitude"></span>
+            <span tuils-val-for="Longitude"></span>
+            <div class="title">Imagenes de la sede</div>
+            <div id="divPictures"></div>
+        </div>
+        <hr />
+
+        <input id="btnSaveAddress" type="button" value="@T("Common.Save")" class="btn_continue button-1" />
+        <input id="btnSaveBack" type="button" value="@T("Common.Cancel")" class="button-1 save-customer-info-button" />
+
+        <div class="clear"></div>
+    </div>
+
+
+</script>
+<script type="text/x-handlebars-template" id="templatePictures">
+    <ul class="picture-uploader">
+        {{#each pictures}}
+        <li data-id="{{Id}}">
+            <img src="{{ImageUrl}}?r={{random}}" title="{{Title}}" alt="{{AlternateText}}" />
+        </li>
+        {{/each}}
+        {{#if allowMoreImages }}
+        <li>
+            <span class="icon-foto" data-id="0" title="@T("offices.newimagehelp")"></span>
+        </li>
+        {{/if}}
+        <br>
+    </ul>
+</script>

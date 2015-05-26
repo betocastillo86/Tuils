@@ -247,6 +247,11 @@ namespace Nop.Web.Infrastructure.Cache
         public const string CATEGORY_CHILD_IDENTIFIERS_MODEL_KEY = "Nop.pres.category.childidentifiers-{0}-{1}-{2}";
         public const string CATEGORY_CHILD_IDENTIFIERS_PATTERN_KEY = "Nop.pres.category.childidentifiers";
 
+
+        public const string CATEGORIES_API_ALL_BIKEREFERENCES = "Nop.category.api.allbikebrands";
+        public const string CATEGORIES_API_CATEGORY_MODEL_KEY = "Nop.category.api.category-{0}"; 
+
+
         /// <summary>
         /// Key for ProductBreadcrumbModel caching
         /// </summary>
@@ -740,6 +745,9 @@ namespace Nop.Web.Infrastructure.Cache
              _cacheManager.RemoveByPattern(CATEGORY_SUBCATEGORIES_PATTERN_KEY);
              _cacheManager.RemoveByPattern(CATEGORY_HOMEPAGE_PATTERN_KEY);
              _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
+             _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_BIKEREFERENCES);
+             _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);
+             
         }
         public void HandleEvent(EntityUpdated<Category> eventMessage)
         {
@@ -751,6 +759,8 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(CATEGORY_SUBCATEGORIES_PATTERN_KEY);
             _cacheManager.RemoveByPattern(CATEGORY_HOMEPAGE_PATTERN_KEY);
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_BIKEREFERENCES);
+            _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);   
         }
         public void HandleEvent(EntityDeleted<Category> eventMessage)
         {
@@ -762,6 +772,8 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(CATEGORY_SUBCATEGORIES_PATTERN_KEY);
             _cacheManager.RemoveByPattern(CATEGORY_HOMEPAGE_PATTERN_KEY);
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_BIKEREFERENCES);
+            _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);
         }
 
         //product categories

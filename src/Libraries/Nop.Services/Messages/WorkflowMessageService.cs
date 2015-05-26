@@ -540,8 +540,8 @@ namespace Nop.Services.Messages
             //event notification
             _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
 
-            var toEmail = order.BillingAddress.Email;
-            var toName = string.Format("{0} {1}", order.BillingAddress.FirstName, order.BillingAddress.LastName);
+            var toEmail = order.Customer.Email;
+            var toName = order.Customer.GetFullName();
             return SendNotification(messageTemplate, emailAccount,
                 languageId, tokens,
                 toEmail, toName,
@@ -666,8 +666,10 @@ namespace Nop.Services.Messages
             //event notification
             _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
 
-            var toEmail = order.BillingAddress.Email;
-            var toName = string.Format("{0} {1}", order.BillingAddress.FirstName, order.BillingAddress.LastName);
+            //var toEmail = order.BillingAddress.Email;
+            //var toName = string.Format("{0} {1}", order.BillingAddress.FirstName, order.BillingAddress.LastName);
+            var toEmail = order.Customer.Email;
+            var toName = order.Customer.GetFullName();
             return SendNotification(messageTemplate, emailAccount,
                 languageId, tokens,
                 toEmail, toName,

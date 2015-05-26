@@ -7,9 +7,13 @@
 		debugger;
 	});
 
+	Handlebars.registerHelper('random', function () {
+	    return Math.random();
+	});
+
 	Handlebars.registerHelper('get', function (str) {
-		debugger;
-		return str;
+	    debugger;
+	    return str;
 	});
 
 	Handlebars.registerHelper('stars', function (value) {

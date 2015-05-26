@@ -20,7 +20,6 @@ namespace Nop.Web.Models.Api
         [Required]
         public string Name { get; set; }
 
-        [Required]
         public string LastName { get; set; }
 
         [Required]

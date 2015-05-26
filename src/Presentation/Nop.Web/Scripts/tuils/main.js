@@ -30,10 +30,11 @@
         validations: 'backbone-validation.min',
         handlebars: 'handlebars.min',
         handlebarsh: 'handelbars.helpers',
-        maps : 'http://maps.google.com/maps/api/js?sensor=false',
+        maps: 'http://maps.google.com/maps/api/js?sensor=false',
         //Basic Tuils
         router: 'tuils/router',
         configuration: 'tuils/configuration',
+        resources: 'tuils/resources?noext=1',
         storage: 'tuils/storage',
         util: 'tuils/utilities',
         //Modelos

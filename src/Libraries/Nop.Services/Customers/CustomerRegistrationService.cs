@@ -12,6 +12,7 @@ using Nop.Services.Logging;
 using Nop.Core.Domain.Vendors;
 using Nop.Services.Vendors;
 using System.Net.Mail;
+using Nop.Services.Seo;
 
 namespace Nop.Services.Customers
 {
@@ -34,6 +35,9 @@ namespace Nop.Services.Customers
         private readonly IWorkflowMessageService _workflowMessageService;
         private readonly IWorkContext _workContext;
         private readonly IVendorService _vendorService;
+        private readonly IUrlRecordService _urlRecordService;
+        private readonly ILanguageService _languageService;
+        private readonly ILocalizedEntityService _localizedEntityService;
 
         #endregion
 
@@ -60,7 +64,10 @@ namespace Nop.Services.Customers
             ILogger logger,
             IWorkflowMessageService workflowMessageService,
             IWorkContext workContext,
-            IVendorService vendorService)
+            IVendorService vendorService,
+            IUrlRecordService urlRecordService,
+            ILanguageService languageService,
+            ILocalizedEntityService localizedEntityService)
         {
             this._customerService = customerService;
             this._encryptionService = encryptionService;
@@ -74,6 +81,9 @@ namespace Nop.Services.Customers
             this._workflowMessageService = workflowMessageService;
             this._workContext = workContext;
             this._vendorService = vendorService;
+            this._urlRecordService = urlRecordService;
+            this._languageService = languageService;
+            this._localizedEntityService = localizedEntityService;
         }
 
         #endregion
@@ -436,6 +446,43 @@ namespace Nop.Services.Customers
                             vendor.Active = true;
                             vendor.VendorTypeId = (int)vendorType;
                             _vendorService.InsertVendor(vendor);
+
+                            //search engine name
+                            var seName = vendor.ValidateSeName(null, vendor.Name, true);
+                            _urlRecordService.SaveSlug(vendor, seName, 0);
+
+                            //Actualiza los lenguajes
+
+                            //foreach (var language in _languageService.GetAllLanguages(true))
+                            //{
+                            //    _localizedEntityService.SaveLocalizedValue(vendor,
+                            //                                   x => x.Name,
+
+                            //                                   language.Id);
+
+                            //    _localizedEntityService.SaveLocalizedValue(vendor,
+                            //                                               x => x.Description,
+                            //                                               language.Id);
+
+                            //    _localizedEntityService.SaveLocalizedValue(vendor,
+                            //                                               x => x.MetaKeywords,
+                            //                                               language.Id);
+
+                            //    _localizedEntityService.SaveLocalizedValue(vendor,
+                            //                                               x => x.MetaDescription,
+                            //                                               language.Id);
+
+                            //    _localizedEntityService.SaveLocalizedValue(vendor,
+                            //                                               x => x.MetaTitle,
+                            //                                               language.Id);
+
+                            //    //search engine name
+                            //    var seName = vendor.ValidateSeName(localized.SeName, localized.Name, false);
+                            //    _urlRecordService.SaveSlug(vendor, seName, localized.LanguageId);
+                            //}
+
+                            
+
                             customer.VendorId = vendor.Id;
                         }
                         catch (Exception)

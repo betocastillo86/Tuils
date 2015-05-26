@@ -1,5 +1,5 @@
-﻿define([ 'underscore', 'backbone', 'text!/Customer/FastLogin', 'handlebars', 'tuils/models/userRegister', 'baseView', 'jqueryui' ],
-    function (_, Backbone, template, Handlebars, UserRegisterModel, BaseView) {
+﻿define(['underscore', 'backbone', 'text!/Customer/FastLogin', 'handlebars', 'tuils/models/userRegister', 'baseView', 'resources'],
+    function (_, Backbone, template, Handlebars, UserRegisterModel, BaseView, Resources) {
     var LoginView = BaseView.extend({
 
         viewCreateUser: undefined,
@@ -17,7 +17,7 @@
         template : Handlebars.compile(template),
 
         initialize: function (args) {
-            this.model = new UserRegisterModel();
+            this.model = new UserRegisterModel({TermsOfUse : true});
             this.model.on("sync", this.userAuthenticated, this);
             this.model.on("error", this.errorAuthenticated, this);
             this.render();
@@ -41,7 +41,11 @@
             alert(error.responseJSON.Message);
         },
         show: function () {
-            this.$el.dialog();
+            this.$el.dialog({
+                width: 365,
+                title : Resources.account.login,
+                modal : true
+            });
         },
         close : function(){
             this.$el.dialog('close');

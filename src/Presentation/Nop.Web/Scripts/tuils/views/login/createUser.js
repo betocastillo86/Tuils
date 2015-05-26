@@ -1,35 +1,42 @@
-﻿define(['underscore', 'backbone', 'text!/Customer/CreateUser', 'handlebars', 'jqueryui', 'baseView', 'tuils/models/userRegister', 'validations', 'stickit'],
-    function ($, _, Backbone, template, Handlebars, jqueryui, BaseView, UserRegisterModel) {
+﻿define(['underscore', 'backbone', 'text!/Customer/CreateUser', 'handlebars', 'baseView', 'tuils/models/userRegister', 'resources'],
+    function ( _, Backbone, template, Handlebars, BaseView, UserRegisterModel, Resources) {
     var CreateUserView = BaseView.extend({
 
         userType : undefined,
 
         events : {
-            "click #step1 div": "selectType",
+            "click #step1 a": "selectType",
             "click #btnCreateUser": "createUser",
             "click #btnBack": "back"
         },
 
         bindings: {
             "#txtName": "Name",
-            "#txtLastName": "LastName",
             "#txtCompanyName": "CompanyName",
             "#txtEmail": "Email",
-            "#txtPassword" : "Password"
+            "#txtPassword": "Password",
+            "#chkTerms": "TermsOfUse"
         },
 
         template : Handlebars.compile(template),
 
         initialize: function (args) {
+            this.loadModel();
+            
+            this.render();
+        },
+        loadModel: function () {
             this.model = new UserRegisterModel();
             this.model.on("error", this.errorCreating, this);
             this.model.on("sync", this.userCreated, this);
             this.model.set('IsRegister', true);
-            
-            this.render();
+            this.model.set('VendorType', 0);
         },
         selectType: function (obj) {
-            obj = $(obj.target);
+            
+            obj = $(obj.currentTarget);
+            this.$("#step1 a").removeClass('active');
+            obj.addClass('active');
             this.userType = obj.attr("tuils-action");
             this.showForm();
         },
@@ -49,8 +56,6 @@
             alert(exception.responseJSON.Message);
         },
         showForm : function(){
-            this.$("#step1").hide();
-            this.$("#step2").show();
 
             this.model.set('VendorType', parseInt(this.userType));
 
@@ -63,11 +68,15 @@
             }
         },
         back: function () {
-            this.$("#step2").hide();
-            this.$("#step1").show();
+            this.close();
+            this.trigger("login");
         },
         show: function () {
-            this.$el.dialog();
+            this.$el.dialog({
+                width: 365,
+                title: Resources.account.newCustomer,
+                modal:true
+            });
         },
         close: function () {
             this.$el.dialog('close');

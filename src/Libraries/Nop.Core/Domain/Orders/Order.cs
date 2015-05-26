@@ -82,7 +82,7 @@ namespace Nop.Core.Domain.Orders
         /// <summary>
         /// Gets or sets the billing address identifier
         /// </summary>
-        public int BillingAddressId { get; set; }
+        public int? BillingAddressId { get; set; }
 
         /// <summary>
         /// Gets or sets the shipping address identifier

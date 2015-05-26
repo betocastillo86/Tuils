@@ -61,5 +61,15 @@ namespace Nop.Services.Common
         IList<Address> GetAddressesByVendorId(int vendorId);
 
         IList<Picture> GetPicturesByAddressId(int addressId);
+
+        AddressPicture InsertPicture(int addressId, byte[] file, string extension, string seoName = null);
+
+        /// <summary>
+        /// Valida si una imagen está asociada a la dirección
+        /// </summary>
+        /// <param name="addressId">direccion</param>
+        /// <param name="pictureId">id de la imagen a evaluar</param>
+        /// <returns>True: La imagen estpá asociada False: La imagen no está asociada</returns>
+        bool AddressHasPicture(int addressId, int pictureId);
     }
 }
