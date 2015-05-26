@@ -124,7 +124,9 @@
                     {
                         if (TuilsUtilities.isValidExtension(obj.target, 'image')) {
                             if (this.imageType == 'back')
+                            {
                                 this.model.saveBackground(file);
+                            }
                             else if (this.imageType == 'main')
                                 this.model.saveLogo(file);
                         }
@@ -144,7 +146,10 @@
                 if (this.imageType == 'main')
                     this.$(".img_perfil img").attr("src", image.toJSON().src);
                 else
-                    this.$(".coverPerfil").css("background-image","url("+ image.toJSON().src+")");
+                {
+                    this.restartCoverPosition();
+                    this.$(".coverPerfil").css("background-image", "url(" + image.toJSON().src + ")");
+                }
             },
             enableMoveCover: function () {
                 
@@ -168,6 +173,11 @@
                     }
 
                 });
+            },
+            restartCoverPosition : function()
+            {
+                this.initPositionBackground = 0;
+                this.$('.coverPerfil').css("background-position", 'center 0%');
             },
             saveCoverPosition : function()
             {

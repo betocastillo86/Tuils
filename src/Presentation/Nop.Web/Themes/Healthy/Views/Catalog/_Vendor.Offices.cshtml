@@ -8,6 +8,10 @@
         <a id="btnBack"><span class="icon-mail"></span></a>
         <a id="btnNext"><span class="icon-mail"></span></a>
     </div>
+    @if (Model.AllowEdit)
+    {
+        @Html.ActionLink("Editar Sedes", "Offices", "ControlPanel", new { }, new { @class = "button-1" })
+    }
 </div>
 <script id="templateSelectedOffice" type="text/x-handlebars-template">
     <h3>{{Name}} - {{Address}}</h3> 
@@ -16,10 +20,5 @@
     <p><span class="icon-mail"></span>{{Email}}</p>
     <a id="btnViewGallery" class="button-1">Ver galeria</a>
     <div id="divGallery"></div>
-    
-    @if (Model.AllowEdit)
-    { 
-        @Html.ActionLink("Editar Sedes", "Offices", "ControlPanel", new { }, new { @class = "button-1" })
-    }
-    
+
 </script>

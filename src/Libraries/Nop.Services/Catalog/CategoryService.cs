@@ -25,8 +25,9 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <remarks>
         /// {0} : category ID
+        /// {1} : include subcategories
         /// </remarks>
-        private const string CATEGORIES_BY_ID_KEY = "Nop.category.id-{0}";
+        private const string CATEGORIES_BY_ID_KEY = "Nop.category.id-{0}-{1}";
         /// <summary>
         /// Key for caching
         /// </summary>
@@ -68,10 +69,6 @@ namespace Nop.Services.Catalog
         /// </summary>
         private const string PRODUCTCATEGORIES_PATTERN_KEY = "Nop.productcategory.";
 
-        /// <summary>
-        /// Todas las marcas registradas en la app
-        /// </summary>
-        private const string CATEGORIES_ALL_BIKEREFERENCES = "Nop.category.allbikebrands"; 
 
         #endregion
 
@@ -293,6 +290,52 @@ namespace Nop.Services.Catalog
             });
 
         }
+
+        /// <summary>
+        /// Actualiza la columna ChildrenCategoriesStr de una categoria especifica, o de todas si el parametro parentCategoryId viene nulo
+        /// </summary>
+        /// <param name="parentCategoryId">categoria padre por la que se desea actualizar. Si viene nulo actualiza todas las categorias</param>
+        /// <returns></returns>
+        public virtual void UpdateChildrenCategoriesByParentCategoryId(int? parentCategoryId = null)
+        {
+            //Si viene parentCategory actualiza solo los hijos de esa categoria padre
+            if (parentCategoryId.HasValue)
+            {
+                var category = GetCategoryById(parentCategoryId.Value);
+                GetAndUpdateChildrenCategoriesIds(category);
+            }
+            else
+            {
+                //Si no viene parent category actualiza todo
+                var categories = GetAllCategoriesByParentCategoryId(0);
+                foreach (var category in categories)
+                {
+                    GetAndUpdateChildrenCategoriesIds(category);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Busca todas las categorias hijas anidadas de una categoria y actualiza su valor en Base de datos
+        /// </summary>
+        /// <param name="parentCategory"></param>
+        /// <returns></returns>
+        private List<int> GetAndUpdateChildrenCategoriesIds(Category parentCategory)
+        {
+            var categoriesIds = new List<int>();
+            var categories = GetAllCategoriesByParentCategoryId(parentCategory.Id);
+            foreach (var category in categories)
+            {
+                categoriesIds.Add(category.Id);
+                categoriesIds.AddRange(GetAndUpdateChildrenCategoriesIds(category));
+            }
+
+            //Actualiza el valor de la categoria en Base de datos
+            parentCategory.ChildrenCategoriesStr = categoriesIds.Count > 0 ? string.Join(",", categoriesIds) : null;
+            _categoryRepository.Update(parentCategory);
+
+            return categoriesIds;
+        }
         
         /// <summary>
         /// Gets all categories displayed on the home page
@@ -330,14 +373,31 @@ namespace Nop.Services.Catalog
             if (categoryId == 0)
                 return null;
             
-            string key = string.Format(CATEGORIES_BY_ID_KEY, categoryId);
-            var category = _cacheManager.Get(key, () => _categoryRepository.GetById(categoryId));
-            
-            if(category != null && includeSubCategories)
-                category.SubCategories = GetAllCategoriesByParentCategoryId(categoryId, false);
-
-            return category;
+            string key = string.Format(CATEGORIES_BY_ID_KEY, categoryId, includeSubCategories);
+            return _cacheManager.Get(key, () => {
+                var category = _categoryRepository.GetById(categoryId);
+                if (category != null && includeSubCategories)
+                    category.SubCategories = GetAllCategoriesByParentCategoryId(categoryId, false);
+                return category;
+            });
         }
+
+
+        /// <summary>
+        /// Trae las categorias por las que se está consultando
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public IList<Category> GetCategoriesByIds(int[] ids)
+        {
+            var categories = new List<Category>();
+            foreach (var id in ids)
+            {
+                categories.Add(GetCategoryById(id));
+            }
+            return categories;
+        }
+
 
         /// <summary>
         /// Inserts category
@@ -610,11 +670,7 @@ namespace Nop.Services.Catalog
                 return GetCategoryById(categoryBrandId.Value, true).SubCategories.ToList();
             else
             {
-                string key = CATEGORIES_ALL_BIKEREFERENCES;
-
-                return _cacheManager.Get(key, () => {
-                    return GetAllCategoriesByParentCategoryId(_tuilsSettings.productBaseTypes_bike, includeSubcategories:true, showHidden:true);
-                });
+                return GetAllCategoriesByParentCategoryId(_tuilsSettings.productBaseTypes_bike, includeSubcategories: true, showHidden: true);
             }
         }
 

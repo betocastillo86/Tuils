@@ -87,6 +87,8 @@
   <ItemGroup>
     <Compile Include="ComponentModel\WriteLockDisposable.cs" />
     <Compile Include="Domain\Catalog\ManufacturerCategory.cs" />
+    <Compile Include="Domain\Catalog\ProductQuestion.cs" />
+    <Compile Include="Domain\Catalog\QuestionStatus.cs" />
     <Compile Include="Domain\Catalog\RentalPricePeriod.cs" />
     <Compile Include="Domain\Catalog\SpecialCategoryProduct.cs">
       <SubType>Code</SubType>

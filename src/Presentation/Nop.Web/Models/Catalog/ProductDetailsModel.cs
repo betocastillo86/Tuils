@@ -74,6 +74,11 @@ namespace Nop.Web.Models.Catalog
 
         public bool EmailAFriendEnabled { get; set; }
         public bool CompareProductsEnabled { get; set; }
+        
+        /// <summary>
+        /// Valida si el usuario autenticado ya compró este producto previamente
+        /// </summary>
+        public bool ProductAlreadyBought { get; set; }
 
         public string PageShareCode { get; set; }
 

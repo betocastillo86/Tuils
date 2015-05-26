@@ -463,6 +463,7 @@ namespace Nop.Core.Domain.Catalog
 
 
 
+
         /// <summary>
         /// Gets or sets the product type
         /// </summary>
@@ -726,5 +727,24 @@ namespace Nop.Core.Domain.Catalog
         /// Costo de los insumos
         /// </summary>
         public int SuppliesValue { get; set; }
+
+        /// <summary>
+        /// Visitas que ha tenido el producto
+        /// </summary>
+        [System.ComponentModel.DefaultValue(0)]
+        public int Visits { get; set; }
+
+        /// <summary>
+        /// Número de veces que se ha vendido
+        /// </summary>
+        [System.ComponentModel.DefaultValue(0)]
+        public int TotalSales { get; set; }
+
+        /// <summary>
+        /// Número de preguntas que no han sido respondidas aún
+        /// </summary>
+        [System.ComponentModel.DefaultValue(0)]
+        public int UnansweredQuestions { get; set; }
+
     }
 }

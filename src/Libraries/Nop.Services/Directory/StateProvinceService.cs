@@ -88,6 +88,22 @@ namespace Nop.Services.Directory
         }
 
         /// <summary>
+        /// Retorna todos los ids de la lista
+        /// </summary>
+        /// <param name="stateProvinceIds"></param>
+        /// <returns></returns>
+        public IList<StateProvince> GetStatesProvincesByIds(int[] stateProvinceIds)
+        {
+            if (stateProvinceIds == null || stateProvinceIds.Length == 0)
+                return new List<StateProvince>();
+
+            var query = _stateProvinceRepository.Table
+                .Where(s => stateProvinceIds.Contains(s.Id));
+
+            return query.ToList();
+        }
+
+        /// <summary>
         /// Gets a state/province 
         /// </summary>
         /// <param name="abbreviation">The state/province abbreviation</param>
@@ -172,5 +188,8 @@ namespace Nop.Services.Directory
         }
 
         #endregion
+
+
+       
     }
 }

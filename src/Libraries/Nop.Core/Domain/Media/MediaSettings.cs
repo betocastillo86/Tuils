@@ -37,5 +37,7 @@ namespace Nop.Core.Domain.Media
         public int VendorMainThumbPictureSize { get; set; }
 
         public int VendorBackgroundThumbPictureSize { get; set; }
+
+        public int OfficeThumbPictureSizeOnControlPanel { get; set; }
     }
 }

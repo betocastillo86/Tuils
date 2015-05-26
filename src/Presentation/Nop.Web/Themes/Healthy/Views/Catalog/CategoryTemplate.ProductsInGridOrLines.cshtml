@@ -167,6 +167,15 @@
             {
                 @Html.Partial("_FilterSpecsBox", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
             }
+            
+            @if (Model.PagingFilteringContext.CategoryFilter.Enabled)
+            {
+                @Html.Partial("_FilterCategoryBox", Model.PagingFilteringContext.CategoryFilter, new ViewDataDictionary())
+            }
+            @if (Model.PagingFilteringContext.StateProvinceFilter.Enabled)
+            {
+                @Html.Partial("_FilterStateProvinceBox", Model.PagingFilteringContext.StateProvinceFilter, new ViewDataDictionary())
+            }
         </div>
     }
         @Html.Widget("categorydetails_before_product_list", Model.Id)

@@ -75,7 +75,7 @@ namespace Nop.Web.Controllers.Api
             }
             else
             {
-                return Conflict();
+                return BadRequest();
             }
         }
 

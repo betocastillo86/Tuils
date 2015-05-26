@@ -510,7 +510,7 @@
             // DEPRECATED.
             this._trigger('onTagAdded', null, tag);
 
-            this.tagInput.val('');
+            //this.tagInput.val('');
 
             // Insert tag.
             this.tagInput.parent().before(tag);

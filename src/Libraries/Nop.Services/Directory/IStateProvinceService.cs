@@ -22,6 +22,13 @@ namespace Nop.Services.Directory
         StateProvince GetStateProvinceById(int stateProvinceId);
 
         /// <summary>
+        /// Retorna un listado de ciudades por los ids
+        /// </summary>
+        /// <param name="stateProvinceIds"></param>
+        /// <returns></returns>
+        IList<StateProvince> GetStatesProvincesByIds(int[] stateProvinceIds);
+
+        /// <summary>
         /// Gets a state/province 
         /// </summary>
         /// <param name="abbreviation">The state/province abbreviation</param>

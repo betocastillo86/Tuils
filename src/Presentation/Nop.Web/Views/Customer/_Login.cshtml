@@ -2,12 +2,17 @@
     Layout = null;
 }
 
-<div>
-    @Html.TextBoxRequired("Email", labelResource: "Login.Email")
+<div class="modal registration-modal">
+    <form>
+        <div class="inputs">
+            <input id="txtEmail" type="text" placeholder="@T("Login.Email")">
+            <span class="field-validation-error" tuils-val-for="Email"></span>
+        </div>
+        <div class="inputs">
+            <input id="txtPassword" type="password" placeholder="@T("Login.Password")">
+            <span class="field-validation-error" tuils-val-for="Password"></span>
+        </div>
+        <input id="btnLogin" type="button" value="@T("Login.ButtonLogin")" class="button-1 btn_register" />
+    </form>
+    <a id="btnRegister" class="rgt-login" href="javascript:;">@T("Login.RegisterButton")</a>
 </div>
-<div>
-    @Html.PasswordRequired("Password", labelResource: "Login.Password")
-</div>
-
-<input id="btnLogin" type="button" value="@T("Login.ButtonLogin")" />
-<input id="btnRegister" type="button" value="@T("Login.RegisterButton")" />

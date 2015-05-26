@@ -43,8 +43,16 @@
 @*Vendor*@
 @if (Model.ShowVendor)
 {
-    <div class="product-vendor">
-        <span class="label">@T("Products.Vendor"): </span><span class="value"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">@Model.VendorModel.Name</a></span>
-    </div>
+    //Si el usuario ya compró el producto se muestra el link al vendedor
+    if (Model.ProductAlreadyBought)
+    {
+        <div class="product-vendor">
+            <span class="label">@T("Products.Vendor"): </span><span class="value"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">@Model.VendorModel.Name</a></span>
+        </div>
+    }
+    else
+    {
+        <input type="button" value="@T("Products.SeeVendor")" id="btnShowVendor" data-productid="@Model.Id" data-vendorUrl="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">
+    }
 }
 

@@ -1,4 +1,5 @@
 --CONSULTA select 'if (select count(0) from Setting where name = '''+name+''') = 0  insert into Setting (name, value, StoreId) values ('''+name+''', '''+value+''', 0)' from setting where name like '%tuilssett%'
+--CONSULTA INSERT Resources select 'insert into [LocaleStringResource] values (2,'''+resourceName+''', '''+resourcevalue+''')' from [LocaleStringResource] where id > 11992
 if (select count(0) from Setting where name = 'tuilssettings.productbasetypes_bike') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.productbasetypes_bike', '135', 0)
 if (select count(0) from Setting where name = 'tuilssettings.productbasetypes_service') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.productbasetypes_service', '103', 0)
 if (select count(0) from Setting where name = 'tuilssettings.productbasetypes_product') = 0  insert into Setting (name, value, StoreId) values ('tuilssettings.productbasetypes_product', '10', 0)

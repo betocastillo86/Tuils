@@ -9,17 +9,19 @@
                 @foreach (var option in Model.Modules)
                 {
                     bool hasSubMenu = option.SubModules.Count > 0;
+                    bool selected = Model.SelectedParentModule == option.Name;
                     
                     <li>
-                        <a class="nav-item-panel @(hasSubMenu ? "nav-with-sub" : string.Empty)"  href="@(hasSubMenu ? "#" : Url.Action(option.Action, option.Controller, option.Parameters))"><span class="icon-mail"></span>@T(string.Format("controlpanel.{0}", option.Name)) </a>
+                        <a class="nav-item-panel @(hasSubMenu ? "nav-with-sub" : string.Empty) @(selected ? "active" : string.Empty)" href="@(hasSubMenu ? "#" : Url.Action(option.Action, option.Controller, option.Parameters))"><span class="icon-mail"></span>@T(string.Format("controlpanel.{0}", option.Name)) </a>
 
                         @if (hasSubMenu)
                         { 
                             <ul class="sub-menu-panel" style="display:@(Model.SelectedParentModule == option.Name ? "block" : "none")">
                                 @foreach (var subMenu in option.SubModules)
                                 {
+                                    selected = subMenu.Name.Equals(Model.SelectedModule);
                                     <li>
-                                        <a class="nav-item-panel" href="@Url.Action(subMenu.Action, subMenu.Controller, subMenu.Parameters)" class="sub-item-panel">@T(string.Format("controlpanel.{0}", subMenu.Name)) </a>
+                                        <a href="@Url.Action(subMenu.Action, subMenu.Controller, subMenu.Parameters)" class="sub-item-panel @(selected ? "active" : string.Empty)">@T(string.Format("controlpanel.{0}", subMenu.Name)) </a>
                                     </li>
                                 }
                             </ul>

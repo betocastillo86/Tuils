@@ -38,7 +38,7 @@ using Nop.Core.Domain.Orders;
 namespace Nop.Web.Controllers
 {
     [Authorize]
-    public class ControlPanelController : Controller
+    public class ControlPanelController : BasePublicController
     {
         #region Fields
         private readonly ICustomerService _customerService;
@@ -243,10 +243,15 @@ namespace Nop.Web.Controllers
         #region Offices
         public ActionResult Offices()
         {
-            var model = new OfficesModel();
-            model.States = _stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry);
-            model.VendorId = _workContext.CurrentVendor.Id;
-            return View(model);
+            if (_workContext.CurrentVendor != null && _workContext.CurrentVendor.Id > 0)
+            {
+                var model = new OfficesModel();
+                model.States = _stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry);
+                model.VendorId = _workContext.CurrentVendor.Id;
+                return View(model);
+            }
+            else
+                return InvokeHttp404();
         }
         #endregion
 
@@ -280,15 +285,36 @@ namespace Nop.Web.Controllers
             if(_workContext.CurrentVendor != null)
             {
                 //Toma la cadena separada por comas y crea una lista de categorias relacinoadas
-                var bikeReferences = model.BikeReferencesString
-                .Split(new char[]{ ',' })
-                .ToList()
-                .Select(c => new SpecialCategoryVendor() { CategoryId = Convert.ToInt32(c), VendorId = _workContext.CurrentVendor.Id, SpecialType = SpecialCategoryVendorType.BikeBrand  });
+                List<SpecialCategoryVendor> bikeReferences;
+                if (!string.IsNullOrEmpty(model.BikeReferencesString))
+                {
+                    bikeReferences = model.BikeReferencesString
+                    .Split(new char[] { ',' })
+                    .Select(c => new SpecialCategoryVendor() 
+                    { 
+                        CategoryId = Convert.ToInt32(c), 
+                        VendorId = _workContext.CurrentVendor.Id, 
+                        SpecialType = SpecialCategoryVendorType.BikeBrand 
+                    })
+                    .ToList();
+                }
+                else
+                {
+                    bikeReferences = new List<SpecialCategoryVendor>();
+                }
 
-                var specializedCategories = model.SpecializedCategoriesString
-                .Split(new char[]{ ',' })
-                .ToList()
-                .Select(c => new SpecialCategoryVendor() { CategoryId = Convert.ToInt32(c), VendorId = _workContext.CurrentVendor.Id, SpecialType = SpecialCategoryVendorType.SpecializedCategory  });
+                List<SpecialCategoryVendor> specializedCategories;
+                if (!string.IsNullOrEmpty(model.SpecializedCategoriesString))
+                {
+                    specializedCategories = model.SpecializedCategoriesString
+                    .Split(new char[] { ',' })
+                    .Select(c => new SpecialCategoryVendor() { CategoryId = Convert.ToInt32(c), VendorId = _workContext.CurrentVendor.Id, SpecialType = SpecialCategoryVendorType.SpecializedCategory })
+                    .ToList();
+                }
+                else
+                {
+                    specializedCategories = new List<SpecialCategoryVendor>();
+                }
 
                 //Concatena las dos listas anteriores y las envía a ser actualizadas
                 _vendorService.InsertUpdateVendorSpecialCategories(_workContext.CurrentVendor.Id, bikeReferences.Concat(specializedCategories).ToList());
@@ -375,7 +401,7 @@ namespace Nop.Web.Controllers
                          Name = item.Product.Name,
                          SeName = item.Product.GetSeName()
                     };
-
+                    
                     #region DefaultPictureModel
                     int pictureSize = _mediaSettings.ProductThumbPictureSize;
                     //prepare picture model
@@ -444,6 +470,76 @@ namespace Nop.Web.Controllers
 
         #endregion
 
+        #region MyProducts
+        public ActionResult MyProducts(MyOrdersPagingFilteringModel command)
+        {
+            if (_workContext.CurrentVendor != null)
+            {
+                var model = new MyProductsModel();
+                //Carga los tamaños de la paginación
+                PreparePageSizeOptions(model.PagingFilteringContext, command);
+                
+                string keywordsSearch = !string.IsNullOrWhiteSpace(command.q) ? command.q : null;
+                
+
+
+                var products = _productService.SearchProducts(showHidden:true, vendorId:_workContext.CurrentVendor.Id,
+                    pageSize: command.PageSize, pageIndex:command.PageIndex, keywords:keywordsSearch,
+                    orderBy: ProductSortingEnum.UpdatedOn, published:command.p);
+
+                model.Products = products.Select(p => new ProductOverviewModel()
+                {
+                    Id = p.Id,
+                    Visits = p.Visits,
+                    Name = p.Name,
+                    SeName = p.GetSeName(),
+                    UnansweredQuestions = p.UnansweredQuestions,
+                    ApprovedTotalReviews = p.ApprovedTotalReviews,
+                    TotalSales = p.TotalSales,
+                    AvailableStartDate = p.AvailableStartDateTimeUtc ?? DateTime.Now,
+                    AvailableEndDate = p.AvailableEndDateTimeUtc ?? DateTime.Now,
+                    Published = p.Published,
+                    DefaultPictureModel = p.GetDefaultPicture(null,_mediaSettings, _cacheManager, _pictureService, _workContext, _webHelper, _localizationService)
+                }).ToList();
+
+                model.PagingFilteringContext.q = command.q;
+                model.PagingFilteringContext.LoadPagedList(products);
+
+                return View(model);
+            }
+            else
+                return InvokeHttp404();
+        }
+        #endregion
+
+        #region Questions
+        public ActionResult Questions(QuestionsPaginFilteringModel command)
+        {
+            //Valida que exista un vendedor en sesion
+            if (_workContext.CurrentVendor != null && command.p > 0)
+            {
+                var product = _productService.GetProductById(command.p);
+
+                //Valida que el vendedor en sesion sea el correspondiente al producto
+                if (product.VendorId == _workContext.CurrentVendor.Id)
+                {
+                    var model = new QuestionsModel();
+                    model.Questions = _productService.GetProductQuestions(productId: command.p, status: QuestionStatus.Created);
+                    model.Product.SeName = product.GetSeName();
+                    return View(model);
+                }
+                else
+                {
+                    return InvokeHttp404();
+                }
+            }
+            else
+            {
+                return InvokeHttp404();
+            }
+        }
+        #endregion
+
         #region Menu
         [ChildActionOnly]
         public ActionResult Menu() 
@@ -471,18 +567,49 @@ namespace Nop.Web.Controllers
             string currentController = ControllerContext.ParentActionViewContext.RouteData.Values["controller"].ToString();
             foreach (var module in modules)
             {
+                //Valida que todas las llaves del módulo sean iguales al querystring
+                Func<System.Collections.Specialized.NameValueCollection, object, bool> validateQueryString = delegate(System.Collections.Specialized.NameValueCollection queryString, object routeValuesModule)
+                {
+                    if (routeValuesModule == null)
+                        return true;
+                    
+                    //Recorre todas las llaves que tiene el modulo
+                    foreach (var property in routeValuesModule.GetType().GetProperties())
+                    {
+                        var valueParam = property.GetValue(routeValuesModule).ToString().ToLower();
+                        //Si la variable de querystring es nula o es diferente al valor que debe tener esa propiedad retorna false
+                        if (queryString[property.Name] == null || !queryString[property.Name].ToLower().Equals(valueParam))
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                };
+                
                 parent = module.Name;
-                if (module.Action.Equals(currentAction) && module.Controller.Equals(currentController))
+                //Valida que no tenga submodulos activos, que corresponda a la misma acción y que los parametros adicionales coincidan todos
+                var queryStringParent = ControllerContext.ParentActionViewContext.RequestContext.HttpContext.Request.QueryString;
+                if (module.SubModules.Count == 0
+                    && module.Action.Equals(currentAction) 
+                    && module.Controller.Equals(currentController) 
+                    && validateQueryString(queryStringParent, module.Parameters) )
                     return module.Name;
                 else
                 {
+
+                    string subModuleName = string.Empty;
                     //Si no es de tipo padre recorre los submodulos
                     foreach (var sm in module.SubModules)
                     {
-                        if (sm.Action.Equals(currentAction) && sm.Controller.Equals(currentController))
-                            return module.Name;
+                        if (sm.Action.Equals(currentAction) && sm.Controller.Equals(currentController) && validateQueryString(queryStringParent, sm.Parameters))
+                            subModuleName = sm.Name;
                     }
+                    //Si algún submodulo fue encontrado lo retorna
+                    if(!string.IsNullOrEmpty(subModuleName)) return subModuleName;
                 }
+
+                
 
             }
             return string.Empty;

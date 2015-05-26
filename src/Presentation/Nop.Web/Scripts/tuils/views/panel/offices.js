@@ -3,9 +3,8 @@
     var OfficesView = BaseView.extend({
 
         events: {
-            'click #btnEditAddress': 'loadAddress',
-            'click #btnDeleteAddress': 'removeAddress',
-            'click #btnNew': 'loadAddress'
+            'click .headerAccordion' : 'loadAddress',
+            'click #btnDeleteAddress': 'removeAddress'
         },
 
         vendorId: 0,
@@ -16,8 +15,9 @@
 
         viewImages : undefined,
 
-        accordion : undefined,
+        accordion: undefined,
 
+        viewAddressesCollection : undefined,
 
         initialize: function (args)
         {
@@ -28,6 +28,7 @@
         {
             this.loadOffices();
             this.accordion = this.$("#divListOffices");
+            this.viewAddressesCollection = new Array();
         },
         loadOffices : function()
         {
@@ -37,18 +38,23 @@
         },
         loadAddress : function(obj)
         {
-            var id = parseInt($(obj.target).attr('tuils-id'));
+            var id = parseInt($(obj.currentTarget).attr('tuils-id'));
             
             if (this.viewAddAddress)
             {
                 this.viewAddAddress.undelegateEvents();
-                this.viewAddAddress.remove();
+                //this.viewAddAddress.remove();
             }
 
-            this.viewAddAddress = new AddressView({ el: isNaN(id) ? "#divNewOffice" : "#divDetail"+id, VendorId: this.vendorId });
+            //this.viewAddressesCollection.push({ id: id, view : this.viewAddAddress });
+
+            this.viewAddAddress = new AddressView({ el: isNaN(id) ? "#divNewOffice" : "#divDetail" + id , VendorId: this.vendorId });
             this.viewAddAddress.on("saved", this.loadOffices, this);
             this.viewAddAddress.on("back", this.closeAccordion, this);
-            this.$('#divNewOffice').css('display', isNaN(id) ? 'block': 'none');
+
+
+
+            this.$('#divNewOffice').css('display', isNaN(id) ? 'block' : 'none');
 
             if (!isNaN(id) && id > 0)
                 this.viewAddAddress.loadAddress(id);
@@ -63,7 +69,7 @@
         {
             if (confirm("¿Seguro deseas eliminar esta sede?"))
             {
-                var id = parseInt($(obj.target).attr('tuils-id'));
+                var id = parseInt($(obj.currentTarget).attr('tuils-id'));
                 this.viewAddAddress.deleteById(id);
             }
         },
@@ -77,16 +83,16 @@
                     heightStyle: 'content',
                     collapsible: true,
                     active: false,
-                    beforeActivate: function (event, ui) {
-                        //Solo en el caso de darle editar puede abrir puede abrir
-                        if (event.originalEvent)
-                            return event.originalEvent.target.id == "btnEditAddress";
-                        else
-                            return true;
+                    icons:false,
+                    activate: function (event, ui)
+                    {
+                        ui.newPanel.attr('class', '');
                     }
                 });
 
             this.accordion.accordion('refresh');
+            //Remueve los estilos por defecto de 
+            this.accordion.attr("class", '');
         },
         closeAccordion: function () {
             this.accordion.accordion({ active: false })

@@ -35,7 +35,7 @@ namespace Nop.Web.Controllers.Api
         #endregion
         
         [Route("api/products")]
-        [Authorize]
+        [AuthorizeApi]
         [HttpGet]
         public IHttpActionResult PublisProduct()
         {

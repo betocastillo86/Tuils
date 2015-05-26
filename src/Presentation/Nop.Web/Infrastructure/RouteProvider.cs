@@ -676,10 +676,10 @@ namespace Nop.Web.Infrastructure
 
 
             /************NUEVAS RUTAS TUILS ******/
-            //Javascript de configuraciones
-            routes.MapLocalizedRoute("JsConfiguration",
-               "Scripts/configuration",
-               new { controller = "Common", action = "JsConfiguration" },
+            //Javascript de recursos
+            routes.MapLocalizedRoute("JsResources",
+               "Scripts/tuils/resources",
+               new { controller = "Common", action = "JsResources" },
                new[] { "Nop.Web.Controllers" }
                );
 

@@ -918,6 +918,12 @@ html.oldie .container { width: 940px; }
     /*mis datos*/
     .inputs_mid input[type="text"], .inputs_mid input[type="password"], .inputs_mid select{width: auto;}
     .inputs_mid label{width: 120px; padding: 0 8px 0 0; position: relative; display:inline-block; text-align: right;}
+    /*edita sedes*/
+        .form-sedes .inputs{width: 100%; height:71px;}
+        .form-sedes .inputs label{text-align: left; width: 80% !important;}
+        .form-sedes .inputs input[type="text"],.form-sedes .inputs select{width:calc(100% - 20px) !important;}
+            .caja_edtsedes .picture-uploader li{width:93px; height: 93px;}
+            .caja_edtsedes .picture-uploader li span{margin:17px 17px 0;}
     /*fin panel de control*/
 }
 @media screen and (max-width:960px) {
@@ -949,6 +955,11 @@ html.oldie .container { width: 940px; }
         .table-header div{overflow: hidden; white-space:nowrap; text-overflow: ellipsis;}
     .td-cal{width:95px;}
     .td-vend{width:calc(40% - 98px);}
+    /*edita sedes*/
+        .td-sede{width: calc(100% - 355px);}
+        .td-mail{width:130px;}
+        .td-tel{width: 85px; text-overflow:ellipsis; white-space:nowrap; overflow: hidden;}
+            .caja_edtsedes .picture-uploader li{width:102px; height: 102px;}
     /*perfil*/
     .coverPerfil{height: 200px;}
     .conte_perfil{height: 40px; margin: 0 15px 7px 0;}
@@ -987,10 +998,11 @@ html.oldie .container { width: 940px; }
     .category-column{width: calc(33.3% - 15px)}
     .category-column ul{font-size: 14px;}
 
-    .picture-uploader{width: 100%;}
-    .picture-uploader li{margin:10px 20px 10px 0;}
-    .picture-uploader li.picture_principal{width: 120px; height: 120px; margin:10px 20px 10px 0;}
-    .picture-uploader li.picture_principal span{font-size: 60px; margin: 30px 30px 0; height: 60px; width: 60px;}
+    /*edita sedes*/
+        .td-sede{width:calc(100% - 435px);}
+        .td-mail{width:210px;}
+        .td-tel{width: 85px; text-overflow:ellipsis; white-space:nowrap; overflow: hidden;}
+        .caja_edtsedes .picture-uploader li{width:93px; height: 93px;}
 
     .cover-editor{background: #3a5985;}
     .cover-editor span{font-size: 20px; padding: 5px;}
@@ -1003,6 +1015,11 @@ html.oldie .container { width: 940px; }
     .pr-perfil{margin: 0 0 0 160px;}
         .pr-perfil textarea{width: 100%;}
     /*fin panel de contrlo*/
+
+    .picture-uploader{width: 100%;}
+    .picture-uploader li{margin:10px 20px 10px 0;}
+    .picture-uploader li.picture_principal{width: 120px; height: 120px; margin:10px 20px 10px 0;}
+    .picture-uploader li.picture_principal span{font-size: 60px; margin: 30px 30px 0; height: 60px; width: 60px;}
 }
 @media screen and (max-width:640px) {
     input[type="text"],input[type="password"], select{width:calc(100% - 10px);}
@@ -1030,6 +1047,7 @@ html.oldie .container { width: 940px; }
     .td-vend{width: calc(50% - 143px);}
         .td-vend span{font-size: 10px;}
     .td-cal{width: 130px;}
+    .td-sede, .td-mail, .td-tel, .td-opc{font-size: 12px;}
     /*mail*/
     .mail_content li{height: 90px; position: relative; padding: 0 0 0 10px;}
         .mail-usuer{width: 80%; padding:10px 0 0; float: none;}
@@ -1074,12 +1092,24 @@ html.oldie .container { width: 940px; }
     /*ventas compras*/
     .conte_sale{overflow-x:auto; padding: 0 0 15px; height: auto;}
         .conte_sale li{width: 710px; min-height: 72px;}
-        .table-header{width: 710px; font-size: 16px;}
+        .conte_sale .table-header{width: 710px; font-size: 16px;}
         .table-header .td-img{background:#fb7055; border: none;}
         .td-img{position:absolute; background: #FFF; border-right:1px solid #e5e5e5;}
             .td-img:before{content: ""; border-left: 5px #395983 solid; border-bottom: 5px transparent solid; border-top: 5px transparent solid; position: absolute; top:30; right:-5px;}
         .td-pdt{margin: 0 0 0 70px; width:calc(50% - 148px);}
         .td-vend{width:calc(50% - 148px);}
+    /*edita sedes*/
+    .conte-edit-sede{overflow-x:auto; padding: 0 0 15px; height: auto;}
+    .list-table li{height: auto; min-height:40px; width:640px;}
+    .conte-edit-sede .table-header{width: 640px; font-size: 16px;}
+        .table-header .td-opc{background:#FB7055;}
+        .td-sede{width: 250px;}
+        .td-opc{width: 95px; position:absolute; right: 15px; background:inherit;}
+            .td-opc a span{margin: 0;}
+            .td-opc a i{display: none;}
+        .form-sedes{width:calc(100% + 20px);}
+        .caja_edtsedes{width: 100%;}
+            .caja_edtsedes .picture-uploader li{width:82px; height: 82px; margin: 7px;}
     /*Mis productos*/
     .product-dtl-txt{width:calc(100% - 120px);}
     .product-dtl-date{float:left; text-align: left; width: auto; margin:15px;}
@@ -1125,6 +1155,8 @@ html.oldie .container { width: 940px; }
 
     .picture-uploader li, .picture-uploader li.picture_principal{width: 96px; height: 96px; margin:7px;}
     .picture-uploader li span, .picture-uploader li.picture_principal span{font-size: 45px; margin: 24px 24px 0; width: 45px; height: 45px;}
+    .conte_pgt p{width: 100%; float: none; padding: 10px 0 0;}
+    .date_pgt{float: none; padding: 0 0 10px; margin: 0;}
 }
 @media screen and (max-width:320px) {
     .nav-category li{height: 232px; }

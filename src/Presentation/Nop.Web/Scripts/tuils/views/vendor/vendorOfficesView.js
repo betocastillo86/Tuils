@@ -43,7 +43,10 @@
             showOffices: function (resp) {
                 this.officeCollection = resp.toJSON();
                 this.showMap();
-                this.changeOffice(this.officeCollection[0].Id);
+
+                if (this.officeCollection.length > 0)
+                    this.changeOffice(this.officeCollection[0].Id);
+
                 this.$('.btn-sedes').css('display', this.officeCollection.length > 1 ? "block" : "none");
                 return this;
             },

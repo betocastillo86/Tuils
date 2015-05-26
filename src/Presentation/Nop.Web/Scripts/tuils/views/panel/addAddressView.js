@@ -1,19 +1,31 @@
-﻿define(['underscore', 'util', 'baseView', 'tuils/models/address', 'handlebars', 'tuils/views/utilities/selectPointMapView'],
-    function (_, TuilsUtilities, BaseView, AddressModel, Handlebars, MapView) {
+﻿define(['underscore', 'util', 'baseView', 'tuils/models/address', 'handlebars', 'tuils/views/utilities/selectPointMapView', 'tuils/collections/addresses', 'handlebarsh'],
+    function (_, TuilsUtilities, BaseView, AddressModel, Handlebars, MapView, AddressCollection) {
 
         var AddAddressView = BaseView.extend({
             events: {
                 "click #btnSaveAddress": "save",
-                'click #btnSaveBack' : 'back'
+                'click #btnSaveBack': 'back',
+                'click .picture-uploader li': 'changeImage',
+                "change input[type='file']": "saveImage",
             },
             
             vendorId: 0,
+
+            id : 0,
 
             btnSave: undefined,
 
             viewMap: undefined,
 
-            template : Handlebars.compile($("#templateOfficeDetail").html()),
+            fileUpload: undefined,
+
+            selectedPictureId : 0,
+
+            pictureCollection : undefined,
+
+            template: Handlebars.compile($("#templateOfficeDetail").html()),
+
+            templatePictures: Handlebars.compile($("#templatePictures").html()),
 
             bindings: {
                 "#txtName": "Name",
@@ -29,16 +41,24 @@
                 this.vendorId = args.VendorId;
                 this.model = new AddressModel({ 'VendorId': args.VendorId });
                 this.model.on('error', this.errorSaving, this);
+                this.model.on('file-saved', this.loadPictures, this);
+
+
+                this.pictureCollection = new AddressCollection();
+                this.pictureCollection.on('sync', this.showPictures, this);
+
                 this.render();
                 this.loadControls();
             },
             loadControls : function()
             {
                 this.btnSave = this.$("#btnSaveAddress");
+                this.fileUpload = this.$("input[type='file']");
                 this.loadMap();
             },
             loadAddress : function(id)
             {
+                this.id = id;
                 this.removeErrors();
                 this.model.once('sync', this.showAddress, this);
                 this.model.getAddress(id);
@@ -65,6 +85,17 @@
             {
                 this.$("#ddlStateProvinceId").val(this.model.get('StateProvinceId'));
                 this.viewMap.loadMap({ lat: this.model.get('Latitude'), lon: this.model.get('Longitude') });
+                this.loadPictures();
+            },
+            loadPictures : function(){
+                this.pictureCollection.getPictures(this.id);
+            },
+            showPictures: function () {
+                this.$("#divPictures").html(this.templatePictures(
+                    {
+                        pictures: this.pictureCollection.toJSON(),
+                        allowMoreImages: this.pictureCollection.toJSON().length < 6
+                    }));
             },
             setMapPosition : function(args)
             {
@@ -92,6 +123,27 @@
             {
                 this.trigger("saved", this.model);
                 this.btnSave.attr('disabled', false);
+            },
+            changeImage: function (obj) {
+                this.fileUpload.click();
+                this.selectedPictureId = $(obj.currentTarget).attr('data-id');
+            },
+            saveImage: function (obj) {
+                var file = obj.target.files[0];
+                if (file) {
+                    if (TuilsUtilities.isValidSize(obj.target)) {
+                        if (TuilsUtilities.isValidExtension(obj.target, 'image')) {
+                            this.model.saveImage(file, this.selectedPictureId);
+                        }
+                        else {
+                            alert("La extensión del archivo no es valida");
+                        }
+
+                    }
+                    else {
+                        alert("El tamaño excede el limite");
+                    }
+                }
             },
             errorSaving: function (error)
             {

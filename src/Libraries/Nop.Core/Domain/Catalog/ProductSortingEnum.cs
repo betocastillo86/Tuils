@@ -29,5 +29,9 @@
         /// Product creation date
         /// </summary>
         CreatedOn = 15,
+        /// <summary>
+        /// Product modification date
+        /// </summary>
+        UpdatedOn = 16
     }
 }

@@ -20,7 +20,11 @@
                 "ControlPanel/VendorServices": "vendorServices",
                 "ControlPanel/MyOrders(/:query)": "myOrders",
                 "ControlPanel/MySales(/:query)": "myOrders",
-                "v/:query" : "vendor"
+                "ControlPanel/MyProducts(/:query)": "myProducts",
+                "ControlPanel/Questions(/:query)": "questions",
+                "customer/changepassword" : "changePassword",
+                "v/:query" : "vendor",
+                "p/:query": "product"
 
             },
 
@@ -66,11 +70,31 @@
             myOrders: function () {
                 this.loadSubViewsPanel();
             },
+            changePassword : function()
+            {
+                this.loadSubViewsPanel();
+            },
+            myProducts : function()
+            {
+                var that = this;
+                require(['tuils/views/panel/myProductsView'], function (MyProductsView) {
+                    that.currentView = new MyProductsView({ el: that.defaultEl });
+                });
+                this.loadSubViewsPanel();
+            },
+            questions: function () {
+                var that = this;
+                require(['tuils/views/panel/questionsView'], function (QuestionsView) {
+                    that.currentView = new QuestionsView({ el: that.defaultEl });
+                });
+                this.loadSubViewsPanel();
+            },
             vendorServices: function () {
                 var that = this;
                 require(['tuils/views/panel/vendorServices'], function (VendorServicesView) {
                     that.currentView = new VendorServicesView({ el: that.defaultEl });
                 });
+                this.loadSubViewsPanel();
             },
             vendor : function(query)
             {
@@ -81,7 +105,14 @@
                     that.currentView = new VendorDetailView({ el: that.defaultEl });
                 });
             },
-
+            product: function () {
+                var that = this;
+                require(['tuils/views/product/productDetailView'], function (ProductDetailView) {
+                    that.currentView = new ProductDetailView({ el: that.defaultEl });
+                    that.loadSubViews();
+                });
+                
+            },
             loadSubViews: function () {
                 var that = this;
                 require(['tuils/views/common/header'], function (HeaderView) {

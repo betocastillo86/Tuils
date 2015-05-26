@@ -1,4 +1,4 @@
-﻿define(['underscore', 'configuration'], function ( _, TuilsConfiguration) {
+﻿define(['underscore', 'configuration'], function (_, TuilsConfiguration) {
     var TuilsUtilities = {
         //Carga un dropdownlist con los datos pasados en una lista
         //ddl: Objeto tipo select a cargar
@@ -34,7 +34,7 @@
         },
         //Convierte una coleccion a el formato de los tags disponibles
         //se le envian las propiedades que son el label y el valor, por defecto toma name y id
-        tagitAvailableTags : function(list, labelField, valueField){
+        tagitAvailableTags: function (list, labelField, valueField) {
             if (!labelField) labelField = 'Name';
             if (!valueField) valueField = 'Id';
             var tagReferences = [];
@@ -83,7 +83,7 @@
             obj = $(obj);
 
             var validExtensions;
-            if(typeFile == 'image')
+            if (typeFile == 'image')
                 validExtensions = /(jpg|JPG|jpeg|JPEG|gif|GIF|png|PNG)/
 
             if (!validExtensions.test(obj.val())) {
@@ -96,11 +96,22 @@
         },
         //Convierte los ticks de .NET a ticks en JS
         //ticks are recorded from 1/1/1; get microtime difference from 1/1/1/ to 1/1/1970
-        ticksToJs : function(ticks){
+        ticksToJs: function (ticks) {
             ticks = ticks / 1000;
             return ticks - 2208988800000;
-        } 
-        
+        },
+        //tomado de http://stackoverflow.com/questions/5999118/add-or-update-query-string-parameter
+        updateQueryStringParameter: function (uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            }
+            else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+
     };
 
     return TuilsUtilities;

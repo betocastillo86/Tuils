@@ -38,7 +38,7 @@
             TuilsUtilities.loadDropDown(this.ddlBikeReference, category.toJSON().ChildrenCategories);
         },
         loadDateOfBirth: function () {
-            this.$("#DateOfBirth").datepicker({ maxDate: '-15y' });
+            this.$("#DateOfBirth").datepicker({ maxDate: '-15y', changeYear : true, yearRange: 'c-50:c' });
         },
         render: function () {
             this.basicValidations();

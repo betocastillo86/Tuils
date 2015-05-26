@@ -64,8 +64,8 @@
       <HintPath>..\..\packages\Autofac.Mvc5.3.3.3\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -124,9 +124,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.Net.Http.2.2.28\lib\net45\System.Net.Http.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.Primitives, Version=4.2.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -150,13 +150,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -199,8 +199,9 @@
     <Compile Include="Controllers\Api\CategoriesController.cs" />
     <Compile Include="Controllers\Api\FilesController.cs" />
     <Compile Include="Controllers\Api\ManufacturersController.cs" />
-    <Compile Include="Controllers\Api\OderItemController.cs" />
+    <Compile Include="Controllers\Api\OrdersController.cs" />
     <Compile Include="Controllers\Api\ProductsController.cs" />
+    <Compile Include="Controllers\Api\QuestionsController.cs" />
     <Compile Include="Controllers\Api\SpecificationAttributeController.cs" />
     <Compile Include="Controllers\Api\VendorsController.cs" />
     <Compile Include="Controllers\BasePublicController.cs" />
@@ -259,7 +260,9 @@
     <Compile Include="Models\Api\AddressPictureModel.cs" />
     <Compile Include="Models\Api\BaseApiModel.cs" />
     <Compile Include="Models\Api\MinifiedJson.cs" />
+    <Compile Include="Models\Api\OrderModel.cs" />
     <Compile Include="Models\Api\ProductBaseModel.cs" />
+    <Compile Include="Models\Api\ProductQuestionModel.cs" />
     <Compile Include="Models\Api\ProductReviewModel.cs" />
     <Compile Include="Models\Api\SpecificationAttributeModel.cs" />
     <Compile Include="Models\Api\CustomerBaseModel.cs" />
@@ -329,8 +332,11 @@
     <Compile Include="Models\ControlPanel\MyAccountModel.cs" />
     <Compile Include="Models\ControlPanel\MyOrdersModel.cs" />
     <Compile Include="Models\ControlPanel\MyOrdersPagingFilteringModel.cs" />
+    <Compile Include="Models\ControlPanel\MyProductsModel.cs" />
     <Compile Include="Models\ControlPanel\OfficesModel.cs" />
     <Compile Include="Models\ControlPanel\OrderItemModel.cs" />
+    <Compile Include="Models\ControlPanel\QuestionsModel.cs" />
+    <Compile Include="Models\ControlPanel\QuestionsPaginFilteringModel.cs" />
     <Compile Include="Models\ControlPanel\VendorServicesModel.cs" />
     <Compile Include="Models\Customer\CustomerAttributeModel.cs" />
     <Compile Include="Models\Catalog\CustomerBackInStockSubscriptionsModel.cs" />
@@ -1019,6 +1025,8 @@
     <Content Include="Scripts\tuils\collections\specificationAttribute.js" />
     <Content Include="Scripts\tuils\extensions\numbers.js" />
     <Content Include="Scripts\tuils\models\address.js" />
+    <Content Include="Scripts\tuils\models\order.js" />
+    <Content Include="Scripts\tuils\models\panel\responseQuestion.js" />
     <Content Include="Scripts\tuils\models\specificationAttribute.js" />
     <Content Include="Scripts\tuils\models\userRegister.js" />
     <Content Include="Scripts\tuils\models\vendor.js" />
@@ -1038,8 +1046,12 @@
     <Content Include="Scripts\tuils\views\panel\addAddressView.js" />
     <Content Include="Scripts\tuils\views\panel\menu.js" />
     <Content Include="Scripts\tuils\views\panel\myAccount.js" />
+    <Content Include="Scripts\tuils\views\panel\myProductsView.js" />
     <Content Include="Scripts\tuils\views\panel\offices.js" />
+    <Content Include="Scripts\tuils\views\panel\questionsView.js" />
+    <Content Include="Scripts\tuils\views\panel\responseQuestionView.js" />
     <Content Include="Scripts\tuils\views\panel\vendorServices.js" />
+    <Content Include="Scripts\tuils\views\product\productDetailView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
     <Content Include="Scripts\tuils\views\utilities\imagesSelectorView.js" />
@@ -2399,6 +2411,11 @@
     <Content Include="Views\ControlPanel\MyOrders.cshtml" />
     <Content Include="Views\ControlPanel\MySales.cshtml" />
     <Content Include="Views\Shared\_PanelLayoutOne.cshtml" />
+    <Content Include="Views\ControlPanel\MyProducts.cshtml" />
+    <Content Include="Views\ControlPanel\Questions.cshtml" />
+    <Content Include="Views\Catalog\_FilterCategoryBox.cshtml" />
+    <Content Include="Views\Catalog\_FilterStateProvinceBox.cshtml" />
+    <Content Include="Views\Catalog\_FilterManufacturerBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

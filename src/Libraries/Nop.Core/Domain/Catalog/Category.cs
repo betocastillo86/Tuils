@@ -135,6 +135,12 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public DateTime UpdatedOnUtc { get; set; }
 
+
+        /// <summary>
+        /// Categorias hijas separadas por comas
+        /// </summary>
+        public string ChildrenCategoriesStr { get; set; }
+
         /// <summary>
         /// Subcategorias con las que cuenta la principal
         /// </summary>

@@ -160,12 +160,14 @@ namespace Nop.Services.Orders
         /// <param name="rentalEndDate">Rental end date</param>
         /// <param name="quantity">Quantity</param>
         /// <param name="automaticallyAddRequiredProductsIfEnabled">Automatically add required products if enabled</param>
+        /// <param name="validateCartDisabled">True: Debe validar si la tienda tiene activo el carrito</param>
         /// <returns>Warnings</returns>
         IList<string> AddToCart(Customer customer, Product product,
             ShoppingCartType shoppingCartType, int storeId, string attributesXml = null,
             decimal customerEnteredPrice = decimal.Zero, 
             DateTime? rentalStartDate = null, DateTime? rentalEndDate = null,
-            int quantity = 1, bool automaticallyAddRequiredProductsIfEnabled = true);
+            int quantity = 1, bool automaticallyAddRequiredProductsIfEnabled = true,
+            bool validateCartDisabled = true);
         
         /// <summary>
         /// Updates the shopping cart item

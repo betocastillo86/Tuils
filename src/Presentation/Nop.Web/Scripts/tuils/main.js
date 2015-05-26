@@ -24,16 +24,17 @@
         //Externas
         //jquery: 'jquery-1.10.2',
         underscore: 'underscore-min',
-        backbone: 'backbone-min',
+        backbone: 'backbone',
         stickit: 'backbone.stickit.min',
         jqueryui: 'jquery-ui-1.10.3.custom.min',
         validations: 'backbone-validation.min',
         handlebars: 'handlebars.min',
         handlebarsh: 'handelbars.helpers',
-        maps : 'http://maps.google.com/maps/api/js?sensor=false',
+        maps: 'http://maps.google.com/maps/api/js?sensor=false',
         //Basic Tuils
         router: 'tuils/router',
         configuration: 'tuils/configuration',
+        resources: 'tuils/resources?noext=1',
         storage: 'tuils/storage',
         util: 'tuils/utilities',
         //Modelos

@@ -1,0 +1,28 @@
+﻿@model Nop.Web.Models.ControlPanel.QuestionsModel
+@{
+    Html.AddTitleParts(T("PageTitle.Questions").Text);
+    Layout = "~/Views/Shared/_PanelLayoutTwo.cshtml";
+}
+
+
+
+<h2 class="tit_sec">@T("Questions.Title")</h2>
+
+<div class="preguntas-pdt">
+
+    @foreach (var question in Model.Questions)
+{
+    <div id="divQuestion@(question.Id)" class="divQuestion" data-id="@question.Id">
+        <h3>@question.Product.Name</h3>
+        <div class="conte_pgt">
+            <p>@question.QuestionText</p>
+            <div class="date_pgt">@question.CreatedOnUtc.ToString()</div>
+            <textarea maxlength="400" name="AnswerText"></textarea>
+            <a href="javascript:void(0)">@T("Questions.ButtonAnswer")</a>
+            <br />
+        </div>
+    </div>
+}
+
+    @Html.ActionLink(T("Questions.BacktoProduct").Text, "MyProducts", new { p = true });
+</div>
