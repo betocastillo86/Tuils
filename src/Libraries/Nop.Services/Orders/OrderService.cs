@@ -208,11 +208,11 @@ namespace Nop.Services.Orders
                 if(withRating.Value)
                     query = query
                            .Where(o => o.OrderItems
-                               .Any(i => i.Rating != null));
+                               .Any(i => i.AlreadyRated));
                 else
                     query = query
                            .Where(o => o.OrderItems
-                               .Any(i => i.Rating == null));
+                               .Any(i => i.AlreadyRated));
             }
 
             //Valida si muestra solo los productos publicados o no
@@ -402,11 +402,12 @@ namespace Nop.Services.Orders
         /// <param name="paymentStatus">Order payment status; null to load all records</param>
         /// <param name="shippingStatus">Order shipment status; null to load all records</param>
         /// <param name="loadDownloableProductsOnly">Value indicating whether to load downloadable products only</param>
+        /// <param name="rated">Solo trae las que tienen votación</param>
         /// <returns>Order collection</returns>
         public virtual IList<OrderItem> GetAllOrderItems(int? orderId = null,
             int? customerId = null, DateTime? createdFromUtc = null, DateTime? createdToUtc = null, 
             OrderStatus? orderStatus = null, PaymentStatus? paymentStatus = null, ShippingStatus? shippingStatus = null,
-            bool loadDownloableProductsOnly = false, int? productId = null)
+            bool loadDownloableProductsOnly = false, int? productId = null, bool? rated = null)
         {
             int? orderStatusId = null;
             if (orderStatus.HasValue)
@@ -457,6 +458,25 @@ namespace Nop.Services.Orders
             //event notification
             _eventPublisher.EntityDeleted(orderItem);
         }
+
+        /// <summary>
+        /// Marca el orderItem como rankeador
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="rated"></param>
+        public virtual void MarkOrderItemAsRated(int orderItemId, bool rated = true)
+        {
+            if (orderItemId <= 0)
+                throw new NullReferenceException("orderItemId");
+
+            var orderItem = GetOrderItemById(orderItemId);
+            if (orderItem != null)
+            {
+                orderItem.AlreadyRated = rated;
+                _orderItemRepository.Update(orderItem);
+            }
+        }
+
 
         #endregion
 

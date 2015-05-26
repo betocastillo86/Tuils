@@ -139,6 +139,14 @@
     <Compile Include="Migrations\201505251435431_Category_MaxLength_ChildrenCategoriesStr.Designer.cs">
       <DependentUpon>201505251435431_Category_MaxLength_ChildrenCategoriesStr.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505262059083_DeleteColumnRating_OrderItem.cs" />
+    <Compile Include="Migrations\201505262059083_DeleteColumnRating_OrderItem.Designer.cs">
+      <DependentUpon>201505262059083_DeleteColumnRating_OrderItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505262138006_AddColumnAlreadyRated_OrderItem.cs" />
+    <Compile Include="Migrations\201505262138006_AddColumnAlreadyRated_OrderItem.Designer.cs">
+      <DependentUpon>201505262138006_AddColumnAlreadyRated_OrderItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -314,6 +322,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505251435431_Category_MaxLength_ChildrenCategoriesStr.resx">
       <DependentUpon>201505251435431_Category_MaxLength_ChildrenCategoriesStr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505262059083_DeleteColumnRating_OrderItem.resx">
+      <DependentUpon>201505262059083_DeleteColumnRating_OrderItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505262138006_AddColumnAlreadyRated_OrderItem.resx">
+      <DependentUpon>201505262138006_AddColumnAlreadyRated_OrderItem.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

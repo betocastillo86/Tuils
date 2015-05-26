@@ -234,6 +234,15 @@ namespace Nop.Services.Catalog
         void UpdateProductReviewTotals(Product product);
 
         /// <summary>
+        /// Valida si un usuario tiene un review pendiente en un producto especifico consultado las ordenes existentes
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="productId"></param>
+        /// <param name="orderItemId">Retorna el id de la orden pendiente de calificar, si no hay pendiente simplemente devuelve 0</param>
+        /// <returns></returns>
+        bool CustomerHasPendingReviewByProductId(int customerId, int productId, out int orderItemId);
+
+        /// <summary>
         /// Get low stock products
         /// </summary>
         /// <param name="vendorId">Vendor identifier; 0 to load all records</param>
@@ -463,10 +472,11 @@ namespace Nop.Services.Catalog
         /// <param name="fromUtc">Item creation from; null to load all records</param>
         /// <param name="toUtc">Item item creation to; null to load all records</param>
         /// <param name="message">Search title or review text; null to load all records</param>
+        /// <param name="orderItemId">Filtra por orden a las calificaciones de un producto</param>
         /// <returns>Reviews</returns>
-        IList<ProductReview> GetAllProductReviews(int customerId, bool? approved,
+        IList<ProductReview> GetAllProductReviews(int? customerId= null, bool? approved = null,
             DateTime? fromUtc = null, DateTime? toUtc = null,
-            string message = null);
+            string message = null, int? orderItemId = null);
 
         /// <summary>
         /// Gets product review

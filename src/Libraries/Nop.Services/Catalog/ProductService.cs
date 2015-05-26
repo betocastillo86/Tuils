@@ -1261,6 +1261,40 @@ namespace Nop.Services.Catalog
         }
 
         /// <summary>
+        /// Valida si un cliente tiene pendiente realizar un review sobre un producto
+        /// </summary>
+        /// <param name="customerId">cliente</param>
+        /// <param name="productId">producto</param>
+        /// <param name="orderItemId">Retorna el id de la orden pendiente de calificar, si no hay pendiente simplemente devuelve 0</param>
+        /// <returns>True: Tiene pendiente review. False: No tiene review Pendiente</returns>
+        public virtual bool CustomerHasPendingReviewByProductId(int customerId, int productId, out int orderItemId)
+        {
+            orderItemId = 0;
+
+            //trae todas las ordenes del usuario sobre ese proyecto
+            var orderItem = _orderService.GetAllOrderItems(productId: productId, 
+                customerId: customerId, 
+                orderStatus: OrderStatus.Complete)
+                .FirstOrDefault();
+
+            //Valida que tenga la orden y que tenga un review asociado
+            if(orderItem != null)
+            {
+                //consulta los reviews existentes para esa orden
+                var review = GetAllProductReviews(orderItemId: orderItem.Id).FirstOrDefault();
+
+                if (review == null)
+                    orderItemId = orderItem.Id;
+
+                return review == null;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Get low stock products
         /// </summary>
         /// <param name="vendorId">Vendor identifier; 0 to load all records</param>
@@ -1982,9 +2016,9 @@ namespace Nop.Services.Catalog
         /// <param name="toUtc">Item item creation to; null to load all records</param>
         /// <param name="message">Search title or review text; null to load all records</param>
         /// <returns>Reviews</returns>
-        public virtual IList<ProductReview> GetAllProductReviews(int customerId, bool? approved,
+        public virtual IList<ProductReview> GetAllProductReviews(int? customerId = null, bool? approved = null,
             DateTime? fromUtc = null, DateTime? toUtc = null,
-            string message = null)
+            string message = null, int? orderItemId = null)
         {
             var query = _productReviewRepository.Table;
             if (approved.HasValue)
@@ -1997,6 +2031,8 @@ namespace Nop.Services.Catalog
                 query = query.Where(c => toUtc.Value >= c.CreatedOnUtc);
             if (!String.IsNullOrEmpty(message))
                 query = query.Where(c => c.Title.Contains(message) || c.ReviewText.Contains(message));
+            if (orderItemId.HasValue)
+                query = query.Where(c => c.OrderItemId == orderItemId.Value);
 
             query = query.OrderBy(c => c.CreatedOnUtc);
             var content = query.ToList();

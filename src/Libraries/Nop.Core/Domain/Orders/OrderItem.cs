@@ -118,9 +118,9 @@ namespace Nop.Core.Domain.Orders
         public virtual Product Product { get; set; }
 
         /// <summary>
-        /// Calificacion recibida por los usuarios
+        /// Valida si ya fue calificado o no 
         /// </summary>
-        public Nullable<double> Rating { get; set; }
+        public bool AlreadyRated { get; set; }
 
         /// <summary>
         /// Gets or sets the associated gift card

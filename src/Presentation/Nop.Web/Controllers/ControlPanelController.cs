@@ -407,7 +407,12 @@ namespace Nop.Web.Controllers
                 if (order.OrderItems.Count > 0)
                 {
                     var item = order.OrderItems.FirstOrDefault();
-                    orderModel.Rating = item.Rating;
+
+                    //Consulta el review de una orden
+                    var review = _productService.GetAllProductReviews(orderItemId:item.Id, approved:true).FirstOrDefault();
+                    if(review != null)
+                        orderModel.Rating = review.Rating;
+
                     orderModel.Product = new Models.Catalog.ProductOverviewModel() { 
                          Id = item.Product.Id,
                          Name = item.Product.Name,
