@@ -30,6 +30,7 @@ using Nop.Web.Framework.Security;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Media;
+using Nop.Services.Orders;
 
 namespace Nop.Web.Controllers
 {
@@ -69,6 +70,7 @@ namespace Nop.Web.Controllers
         private readonly ForumSettings _forumSettings;
         private readonly ICacheManager _cacheManager;
         private readonly IStateProvinceService _stateProvinceService;
+        private readonly IOrderService _orderService;
 
         #endregion
 
@@ -105,7 +107,8 @@ namespace Nop.Web.Controllers
             BlogSettings blogSettings,
             ForumSettings forumSettings,
             ICacheManager cacheManager,
-            IStateProvinceService stateProvinceService)
+            IStateProvinceService stateProvinceService,
+            IOrderService orderService)
         {
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
@@ -139,6 +142,7 @@ namespace Nop.Web.Controllers
             this._forumSettings = forumSettings;
             this._cacheManager = cacheManager;
             this._stateProvinceService = stateProvinceService;
+            this._orderService = orderService;
         }
 
         #endregion
@@ -973,7 +977,7 @@ namespace Nop.Web.Controllers
         {
 
             var vendor = _vendorService.GetVendorById(vendorId, true);
-            if (vendor == null || vendor.Deleted || !vendor.Active)
+            if (vendor == null || vendor.Deleted || !vendor.Active || vendor.VendorType == VendorType.User)
                 return InvokeHttp404();
 
             //Vendor is active?
@@ -1013,12 +1017,11 @@ namespace Nop.Web.Controllers
                 keywords: string.IsNullOrWhiteSpace(command.q) ? null : command.q);
             model.Products = PrepareProductOverviewModels(products).ToList();
 
+            model.TotalActiveProducts = _productService.CountActiveProductsByVendorId(vendor.Id);
 
-
-            model.TotalActiveProducts = products.TotalCount;
-
-            //TODO:
-            model.TotalSoldProducts = -11;
+            //Consulta todas las ventas del vendedor
+            var vendorSellings = _orderService.SearchOrders(vendorId: vendorId,os :Nop.Core.Domain.Orders.OrderStatus.Complete);
+            model.TotalSoldProducts = vendorSellings.Count;
 
 
             model.PagingFilteringContext.LoadPagedList(products);

@@ -94,5 +94,11 @@ namespace Nop.Services.Vendors
         IList<ProductReview> GetReviewsByVendorId(int vendorId);
 
         bool InsertUpdateVendorSpecialCategories(int vendorId, IList<SpecialCategoryVendor> specialCategories);
+
+        /// <summary>
+        /// Actualiza los valores de AvgRating y NumRating del vendor dependiendo de los reviews recibidos
+        /// </summary>
+        /// <param name="vendorId">Vendedor a ser actualziado</param>
+        void UpdateRatings(int vendorId);
     }
 }

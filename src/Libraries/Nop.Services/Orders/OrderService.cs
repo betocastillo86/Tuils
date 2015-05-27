@@ -205,14 +205,9 @@ namespace Nop.Services.Orders
             //Filtra las que han sido o las que no han sido calificadas
             if (withRating.HasValue)
             { 
-                if(withRating.Value)
                     query = query
                            .Where(o => o.OrderItems
-                               .Any(i => i.AlreadyRated));
-                else
-                    query = query
-                           .Where(o => o.OrderItems
-                               .Any(i => i.AlreadyRated));
+                               .Any(i => i.AlreadyRated == withRating.Value));
             }
 
             //Valida si muestra solo los productos publicados o no

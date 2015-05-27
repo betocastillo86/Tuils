@@ -31,59 +31,84 @@
     <div id="divHeaderVendor">
         @Html.Partial("_Vendor.Header", Model)
     </div>
-    
+    <div class="master-wrapper-page container hd">
+        <div class="master-wrapper-content">
+            <div class="master-wrapper-main">
 
                 <div class="col-sedes">
                     <div id="divOffices">
                         @Html.Partial("_Vendor.Offices", Model)
                     </div>
                     <ul class="conte-spc">
-                        <h3>@T("Vendor.SpecialCategoriesServices") <span class="icon-mail"></span></h3>
-                        @foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.SpecializedCategory))
+                        <h3>
+                            @T("Vendor.SpecialCategoriesServices") <span class="icon-mail"></span>
+
+                        @if (Model.AllowEdit)
                         {
-                            <li>@special.Category.Name</li>
+                            @Html.ActionLink("Editar", "VendorServices", "ControlPanel")
                         }
-                        <h3>@T("Vendor.SpecialCategoriesBikes") <span class="icon-mail"></span></h3>
-                        @foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.BikeBrand))
-                        {
-                            <li>@special.Category.Name</li>
-                        }
-                    </ul>
+
+                    </h3>
+                    @foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.SpecializedCategory))
+                    {
+                        <li>@special.Category.Name</li>
+                    }
+                    <h3>
+                        @T("Vendor.SpecialCategoriesBikes") <span class="icon-mail"></span>
+
+                    @if (Model.AllowEdit)
+                    {
+                        @Html.ActionLink("Editar", "VendorServices", "ControlPanel")
+                    }
+                </h3>
+                @foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.BikeBrand))
+                {
+                    <li>@special.Category.Name</li>
+                }
+            </ul>
+        </div>
+        <div class="col-producto">
+            <div class="product-grid home-page-product-grid">
+                <div class="title"> <strong>Productos</strong> </div>
+                <div class="search-pdt">
+                    <input type="text" class="searchinput" value="@Model.PagingFilteringContext.q" />
+                    <a class="btn_search"><span class="icon-mail"></span></a>
                 </div>
-                <div class="col-producto">
-                    <div class="product-grid home-page-product-grid">
-                        <div class="title"> <strong>Productos</strong> </div>
-                        <div class="search-pdt">
-                            <input type="text" class="searchinput" value="@Model.PagingFilteringContext.q" />
-                            <a class="btn_search"><span class="icon-mail"></span></a>
-                        </div>
 
 
-                        @if (Model.Products.Count > 0)
+                @if (Model.Products.Count > 0)
+                {
+                    @*grid mode*@
+                    <div class="product-grid">
+                        @foreach (var product in Model.Products)
                         {
-                            @*grid mode*@
-                            <div class="product-grid">
-                                @foreach (var product in Model.Products)
-                                {
-                                    <div class="item-box">
-                                        @Html.Partial("_ProductBox", product)
-                                    </div>
-                                }
+                            <div class="item-box">
+                                @Html.Partial("_ProductBox", product)
                             </div>
                         }
-
-                        <div class="pager">
-                            @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
-                        </div>
-
-
                     </div>
+                }
+
+                <div class="pager">
+                    @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
                 </div>
-                <br />
-                <div class="conte-comment">
-                    @Html.Partial("_Vendor.Reviews")
-                </div>
+
+
             </div>
+        </div>
+        <br />
+        <div class="conte-comment">
+            @Html.Partial("_Vendor.Reviews")
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+</div>
 
 
 

@@ -2244,13 +2244,33 @@ namespace Nop.Services.Catalog
         }
         #endregion
 
-        
+        #region Vendor
+         /// <summary>
+        /// Cuenta cuantos productos activos tiene un vendor
+        /// </summary>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        public int CountActiveProductsByVendorId(int vendorId)
+        {
+            if (vendorId <= 0)
+                return 0;
+
+            var query = _productRepository.Table
+                .Where(p => p.VendorId == vendorId)
+                .GroupBy(p=> p.VendorId)
+                .Select(group => group.Count());
+
+            return query.FirstOrDefault();
+        }
+        #endregion
 
         #endregion
 
 
 
 
-        
+
+
+
     }
 }

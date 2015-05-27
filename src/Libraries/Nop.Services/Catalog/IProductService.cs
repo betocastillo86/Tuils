@@ -144,6 +144,13 @@ namespace Nop.Services.Catalog
            int? stateProvinceId = null);
 
         /// <summary>
+        /// Realiza un conteo de los productos activos de un vendedor
+        /// </summary>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        int CountActiveProductsByVendorId(int vendorId);
+
+        /// <summary>
         /// Search products
         /// </summary>
         /// <param name="filterableSpecificationAttributeOptionIds">The specification attribute option identifiers applied to loaded products (all pages)</param>

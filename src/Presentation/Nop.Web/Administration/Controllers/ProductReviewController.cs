@@ -13,6 +13,7 @@ using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
 using Nop.Services.Orders;
+using Nop.Services.Vendors;
 
 namespace Nop.Admin.Controllers
 {
@@ -25,6 +26,7 @@ namespace Nop.Admin.Controllers
         private readonly ILocalizationService _localizationService;
         private readonly IPermissionService _permissionService;
         private readonly IOrderService _orderService;
+        private readonly IVendorService _vendorService;
 
         #endregion Fields
 
@@ -32,13 +34,14 @@ namespace Nop.Admin.Controllers
 
         public ProductReviewController(IProductService productService, IDateTimeHelper dateTimeHelper,
             ILocalizationService localizationService, IPermissionService permissionService,
-            IOrderService orderService)
+            IOrderService orderService, IVendorService vendorService)
         {
             this._productService = productService;
             this._dateTimeHelper = dateTimeHelper;
             this._localizationService = localizationService;
             this._permissionService = permissionService;
             this._orderService = orderService;
+            this._vendorService = vendorService;
         }
 
         #endregion
@@ -159,8 +162,12 @@ namespace Nop.Admin.Controllers
                 _productService.UpdateProductReviewTotals(productReview.Product);
 
                 //Marca como hecha la calificacion
-                if(model.IsApproved)
+                if (model.IsApproved)
+                {
                     _orderService.MarkOrderItemAsRated(productReview.OrderItemId);
+                    _vendorService.UpdateRatings(productReview.Product.VendorId);
+                }
+                    
 
                 SuccessNotification(_localizationService.GetResource("Admin.Catalog.ProductReviews.Updated"));
                 return continueEditing ? RedirectToAction("Edit", productReview.Id) : RedirectToAction("List");
