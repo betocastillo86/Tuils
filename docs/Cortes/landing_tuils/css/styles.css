@@ -79,6 +79,7 @@ h3{
 	font-weight: 500;
 	font-style: italic;
 	color:#3c5b82;
+	text-shadow:1px 1px 8px #e4fafe, 1px 1px 8px #e4fafe, 1px 1px 8px #e4fafe, 1px 1px 8px #e4fafe;
 }
 h3 b{
 	font-weight: 700;
@@ -165,8 +166,8 @@ button:hover, button:active{
 }
 .ganador{
 	background: url(../images/img_1.png) no-repeat center / 100%;
-	width: 751px;
-	height:493px;
+	width: 805px;
+	height:560px;
 	position: fixed;
 	bottom: 20px;
 	right:20%;
@@ -186,26 +187,38 @@ button:hover, button:active{
 	}
 	.ganador{
 		right:2%;
+		width: 60%;
+		height:438px;
+	}
+}
+@media screen and (max-width:1300px) {
+	header{
+		height:90px;
+		background-position: bottom right;
+	}
+	.content{
+		padding:90px 0;
+	}
+	.logo{
+		width:200px;
+		height: 115px;
+	}
+	.ganador{
+		right:-2%;
+		width: 50%;
+		bottom: 10px;
 	}
 }
 @media screen and (max-width:1200px) {
-	header{
-		background-size: auto;
-	}
 	.ganador{
 		position: fixed;
 		right: 2%;
-		width: 60%;
 	}
 	.tira{
 		width:515px;
 	}
 }
 @media screen and (max-width:940px) {
-	header{
-		height:90px;
-		background-position: bottom right;
-	}
 	.content, .content-h{
 		width:auto;
 		margin:0 20px;
@@ -217,6 +230,16 @@ button:hover, button:active{
 	.logo{
 		width: 170px;
 		height: 105px;
+	}
+	.tit_landing{
+		width: 270px;
+		margin: 0 0 80px;
+	}
+	.logofest{
+		width: 230px;
+		height:100px;
+		bottom:-60px;
+		right:-100px;
 	}
 }
 @media screen and (max-width:768px) {
@@ -232,15 +255,10 @@ button:hover, button:active{
 	.tira{
 		left:-60px;
 	}
-	.tit_landing{
-		width: 270px;
-		margin: 0 0 80px;
-	}
-	.logofest{
-		width: 230px;
-		height:100px;
-		bottom:-60px;
-		right:-100px;
+}
+@media screen and (max-width:640px){
+	footer{
+		height:60px;
 	}
 }
 @media screen and (max-width:480px){
@@ -256,22 +274,12 @@ button:hover, button:active{
 	}
 	h3{
 		font-size:18px;
-		text-shadow:1px 1px 8px #e4fafe, 1px 1px 8px #e4fafe, 1px 1px 8px #e4fafe, 1px 1px 8px #e4fafe;
 	}
 	.tira{
 		width: 100%;
 		left: 0;
 		height: 60px;
 	}
-	input{
-		font-size: 14px;
-	}
-	button{
-		font-size: 16px;
-	}
-
-}
-@media screen and (max-width:360px){
 	.tit_landing{
 		width: 210px;
 		height:75px;
@@ -280,5 +288,19 @@ button:hover, button:active{
 		width:170px;
 		right:-75px;
 		bottom:-70px;
+	}
+	input{
+		font-size: 14px;
+	}
+	button{
+		font-size: 16px;
+	}
+}
+@media screen and (max-width:360px){
+
+}
+@media screen and (max-width:340px){
+	.tit_landing{
+		width:190px;
 	}
 }
