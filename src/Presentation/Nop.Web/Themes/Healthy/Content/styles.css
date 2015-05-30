@@ -155,7 +155,9 @@ ul.language-list li:hover{cursor:pointer;}
 .header-menu .top-menu-triangle{background:url(images/top-menu-triangle.png) no-repeat;margin-top:-9px;margin-left:10px;width:10px;height:5px;position:absolute;z-index:10;display:none;}
 .header-menu .top-menu-triangle.active{display:block;}
 
-.btn_anuncia{display: block; float: left; padding: 10px 0; color:#FFF; font-size: 16px; font-style: italic; font-weight:700; box-sizing:border-box; background: rgb(59,90,131); background: -moz-linear-gradient(top, rgba(59,90,131,1) 0%, rgba(59,68,69,1) 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(59,90,131,1)), color-stop(100%,rgba(59,68,69,1))); background: -webkit-linear-gradient(top, rgba(59,90,131,1) 0%,rgba(59,68,69,1) 100%); background: -o-linear-gradient(top, rgba(59,90,131,1) 0%,rgba(59,68,69,1) 100%); background: -ms-linear-gradient(top, rgba(59,90,131,1) 0%,rgba(59,68,69,1) 100%); background: linear-gradient(to bottom, rgba(59,90,131,1) 0%,rgba(59,68,69,1) 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3b5a83', endColorstr='#3b4445',GradientType=0 );}
+.btn_anuncia{display: block; position: relative; float: left; padding: 10px 10px 10px 15px; margin: 0 0 0 20px; color:#FFF; font-size: 16px; font-style: italic; font-weight:700; box-sizing:border-box; transition:ease all 0.4s; background: rgb(59,90,131); background: -moz-linear-gradient(top, rgba(59,90,131,1) 0%, rgba(59,68,69,1) 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(59,90,131,1)), color-stop(100%,rgba(59,68,69,1))); background: -webkit-linear-gradient(top, rgba(59,90,131,1) 0%,rgba(59,68,69,1) 100%); background: -o-linear-gradient(top, rgba(59,90,131,1) 0%,rgba(59,68,69,1) 100%); background: -ms-linear-gradient(top, rgba(59,90,131,1) 0%,rgba(59,68,69,1) 100%); background: linear-gradient(to bottom, rgba(59,90,131,1) 0%,rgba(59,68,69,1) 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3b5a83', endColorstr='#3b4445',GradientType=0 );}
+	.btn_anuncia:hover, .btn_anuncia:active{color:#DFE2EA; text-shadow:2px 2px 1px #292732; background: rgb(59,90,131); background: -moz-linear-gradient(top,  rgba(59,90,131,1) 0%, rgba(155,84,77,1) 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(59,90,131,1)), color-stop(100%,rgba(155,84,77,1))); background: -webkit-linear-gradient(top,  rgba(59,90,131,1) 0%,rgba(155,84,77,1) 100%); background: -o-linear-gradient(top,  rgba(59,90,131,1) 0%,rgba(155,84,77,1) 100%); background: -ms-linear-gradient(top,  rgba(59,90,131,1) 0%,rgba(155,84,77,1) 100%); background: linear-gradient(to bottom,  rgba(59,90,131,1) 0%,rgba(155,84,77,1) 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3b5a83', endColorstr='#9b544d',GradientType=0 );}
+	.btn_anuncia:before{border-top: 40px solid #FA4C2A; border-right: 10px solid transparent; position:absolute; top: 0; left:0; content: "";}
 /* mobile top menu*/
 #mob-menu-button {display:none;}
 .mob-top-menu{display:none;}
@@ -164,8 +166,8 @@ ul.language-list li:hover{cursor:pointer;}
 .search-box{background:none repeat scroll 0 0 #F6F6F4;float:right;clear:right;width:auto;display:inline;padding:7px 7px 5px;-o-border-radius:3px;-icab-border-radius:3px;-khtml-border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
 .search-box ul{margin:0;padding:0;float:right;}
 .search-box ul li{list-style:none outside none;float:left;margin:0;padding:0;}
-.search-box-text{background:none repeat scroll 0 0 #FFF;width:300px;border:1px solid #E3E3E3;padding:4px 5px;vertical-align:top;font-size:12px;}
-.search-box-button{padding:4px 5px;background:none repeat scroll 0 0 #F6F6F4;border:1px solid #D3D3D3;border-radius:2px 2px 2px 2px;color:#353434;cursor:pointer;font-size:12px;margin-bottom:2px;width:70px;}
+.search-box-text{background:none repeat scroll 0 0 #FFF;width:300px;border:none !important;padding:4px 5px;vertical-align:top;font-size:12px;}
+.search-box-button{padding:4px 5px;background:none repeat scroll 0 0 #F6F6F4;border:none; border-radius:2px ;color:#353434;cursor:pointer;margin-bottom:2px;width:70px;}
 /* override some jQuery UI style */
 .search-box .ui-autocomplete-loading{background:white url('images/ajax_loader_small.gif') right center no-repeat;}
 .ui-autocomplete{z-index:10 !important;} /*ensure that z-index is more than .nivoSlider a.nivo-imageLink used on the home page*/
@@ -1672,7 +1674,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
         .col-producto .product-grid .item-box{width: 33.3%;}
         .search-pdt{display: inline-block; position: relative; width:69%;}
             .search-pdt input{width: 90% !important;}
-            .btn_search{background: url(images/btn-search.png) no-repeat center / auto 100%; display: inline-block; height:35px; width: 79px; position: absolute; top: 0; right: 0; cursor: pointer;}
+            .btn_search{background: url(images/btn-search.png) no-repeat center / auto 100%; display: inline-block; height:35px; width:80px; position: absolute; top: 0; right: 0; cursor: pointer;}
                 .btn_search span{color: #FFF; font-size: 22px; margin:6px 14px 6px 33px; text-align: center; display: block;}
     .conte-comment{width: 100%; margin: 30px 0 0;}
     .conte-comment h3{color:#F84C2A; font-size: 16px;}

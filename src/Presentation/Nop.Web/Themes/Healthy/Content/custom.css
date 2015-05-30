@@ -20,10 +20,6 @@ a.logo { background: url("images/logo.png") no-repeat scroll 0 0 transparent; di
 .top-menu a {
     font-size: 1.2em;
 }
-.search-box-text { background: none repeat scroll 0 0 #FDFDFC; border: 1px solid #F3F2F2; height: 19px; line-height: 19px; margin: 0 1px 0 0; padding: 6px; width: 259px; }
-.search-box-button { background: #D61323; height: 32px; width: 59px; color: #fff; font-family: 400 'Ubuntu', sans-serif; text-transform: uppercase; border: 0; text-shadow: none; }
-.search-box-button:hover { color: #fff; box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none; border: 0; }
-.search-box { background: none; padding: 7px 0 5px; }
 .tax-display-type-selector, .currency-selector, .language-selector {margin-left: 5px;}
 
 .header-links a.account { color: #666; }
@@ -275,7 +271,6 @@ ul.top-menu { margin: 0;}
 #thumblist { margin: 0; }
 .search-box { padding: 0; }
 .search-box-button {margin-left: -4px;border-radius:0 2px 2px 0;-webkit-border-radius: 0 2px 2px 0; -moz-border-radius: 0 2px 2px 0; -o-border-radius:0 2px 2px 0;-icab-border-radius:0 2px 2px 0;-khtml-border-radius:0 2px 2px 0;}
-.search-box-text {border: 1px solid #DCDCDC !important;border-right:0 !important }
 .footer-menu {margin-left: 80px;}
 .header .ico-cart span, .header .ico-wishlist span { padding-left: 5px; }
 .header .ico-cart:hover *,.header .ico-wishlist:hover *{text-decoration:none;cursor:pointer;}
