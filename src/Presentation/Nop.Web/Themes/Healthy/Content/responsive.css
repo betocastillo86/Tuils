@@ -6,7 +6,7 @@
     .master-wrapper-page { box-shadow: none; }
     .master-wrapper-content, .master-wrapper-main .center-1, .master-wrapper-main .side-2 { float: none; }
     .master-wrapper-page, .master-wrapper-main, .master-wrapper-main .center-1,
-    .master-wrapper-main .center-2, .master-wrapper-main .side-2, .header, .master-wrapper-content, .header-menu,
+    .master-wrapper-main .center-2, .master-wrapper-main .side-2, .master-wrapper-content, .header-menu,
     .product-details-page, .order-summary-content .cart-collaterals, .login-page .new-wrapper, .login-page .returning-wrapper, .master-wrapper-main .center-product-2 { width: auto; margin: 0; padding: 0; }
     .master-wrapper-main { padding: 10px 5px; }
     .side-2.columns.two { margin-left: 0; }
@@ -20,12 +20,9 @@
     .page-title { overflow: inherit; width: auto; }
 
     /*Header*/
-    .header { /*padding:0 10px;*/ height: 240px; }
     .admin-header-links { margin: 5px; padding: 5px; }
-    .header-links ul li { float: none; display: inline-block; padding:11px 5px; vertical-align: top; }
     .header-links li a { /*font-size:95%;*/ float: none; }
     a.logo { display: inline-block; }
-    .header-logo { float: none; text-align: center; }
     .header-top-topmenu { margin: 10px 5px 0; }
     .header-selectors-wrapper { /*margin-right: 5px; margin-top: 5px;*/ width: auto; float: right; }
 
@@ -34,8 +31,6 @@
     .top-menu { display: inline-block; float: none; }
         .top-menu a { font-size: 1em; }
 
-    .header .search-box { float: none; width: auto; display: block; }
-        .header .search-box form {width: auto; position: relative; }
     .button-1.search-box-button { position: absolute; width: 5em; float: right; height: 34px; top: 0; right: 0; }
     #small-searchterms { /*float: left;*/ width: 95%; margin: 0; font-size: 20px; }
 
@@ -313,7 +308,6 @@
 /*MEDIAS*/
 
 @media screen and (min-width:360px) {
-    .header { height: 215px; }
     /*3.30*/
     .email-a-friend-page .inputs-right { float: none; }
     .button-2.email-a-friend-wishlist-button { margin-top: 0; }
@@ -331,12 +325,10 @@
     .button-2.email-a-friend-wishlist-button { margin-top: 0; }
     .button-2.apply-discount-coupon-code-button, .order-summary-content .apply-discount-coupon-code-button, .order-summary-content .apply-gift-card-coupon-code-button { width: auto; }
     .search-button { width: auto; }
-    #small-searchterms { width: 97%; }
 
     /*Header*/
     .search-box .search-box-text { width: 370px; }
     /*.search-box {width: 450px; }*/
-    .header { height: 220px; }
     .top-menu a { font-size: 1.2em; }
 
     .home-page-category-grid, .sub-category-grid, .product-grid { text-align: center; }
@@ -465,7 +457,6 @@
 }
 
 @media screen and (min-width:768px) {
-    .header { padding: 0; }
     /*.header, .header-menu {padding:0 10px;}*/
     body { background: url("images/bg_body.png") repeat scroll 0 center rgba(0, 0, 0, 0); }
     .master-wrapper-page { box-shadow: none; display: table; }
@@ -479,13 +470,8 @@
     .master-wrapper-main .side-2.columns.two { width: 200px; display: block; float: left; }
 
     /*Header*/
-    .header { height: 120px; padding-top: 10px; }
-    .header-logo { float: left; text-align: left; }
     .header-selectors-wrapper { float: right; }
     .flyout-cart { top: 20px; }
-
-    .header .search-box { display: inline-block; float: left; text-align: left; width:calc(100% - 370px); }
-    .header .search-box input[type="text"]{box-sizing:inherit;}
     .search-box .search-box-text { width: 300px; }
 
 
@@ -925,6 +911,9 @@ html.oldie .container { width: 940px; }
     /*fin panel de control*/
 }
 @media screen and (max-width:960px) {
+    /*Header*/
+    #small-searchterms{width: 90%;}
+
     input[type="text"],input[type="password"], select{width:300px;}
     .inputs{height: 71px;}
     .inputs label, .inputs_mid label{text-align: left; width: 90%;}
@@ -985,6 +974,11 @@ html.oldie .container { width: 940px; }
     /*fin panel de control*/
 }
 @media screen and (max-width:768px) {
+    /*Header*/
+    .header .search-box{width:calc(100% - 160px);}
+    .btn_anuncia{border-radius:2px; padding: 10px 15px; margin:10px 0 0; float: right;}
+        .btn_anuncia::before{display: none;}
+
     input[type="text"],input[type="password"], select{width:calc(100% - 20px);}
     .field-validation-error{margin:0 20px 0 0;}
     .master-wrapper-page .center-2.columns.ten input[type="text"], .master-wrapper-page .center-2.columns.ten select{width:calc(100% - 20px);}
@@ -1020,6 +1014,9 @@ html.oldie .container { width: 940px; }
     .picture-uploader li.picture_principal span{font-size: 60px; margin: 30px 30px 0; height: 60px; width: 60px;}
 }
 @media screen and (max-width:640px) {
+    /*header*/
+    .top-menu, .header-links-wrapper{display: none;}
+
     input[type="text"],input[type="password"], select{width:calc(100% - 10px);}
     .inputs{width: 100%; margin: 0 0 5px;}
 
@@ -1116,6 +1113,11 @@ html.oldie .container { width: 940px; }
     /*fin panel de contrlo*/
 }
 @media screen and (max-width:480px) {
+    /*Header*/
+    .header-logo{float:none; margin: 10px 0 0;}
+    .header .search-box{margin: 10px 0; width: 100%;}
+    .btn_anuncia{position: absolute; top:28px; margin: 0; right: 0;}
+
     .wizard-step div, .wizard-current div{display: none;}
         .wizard-step b, .wizard-current b{display: block;}
     .category-view{display:block;}
@@ -1146,6 +1148,10 @@ html.oldie .container { width: 940px; }
     .conte_perfil2{padding: 20px;}
 }
 @media screen and (max-width:360px) {
+    /*Header*/
+    .header-logo{width:100px;}
+    .btn_anuncia{top:15px;}
+
     .input_check{width: 100%;}
 
     .nav-category li{height: 264px; }
@@ -1157,7 +1163,7 @@ html.oldie .container { width: 940px; }
     .date_pgt{float: none; padding: 0 0 10px; margin: 0;}
 }
 @media screen and (max-width:320px) {
-    .nav-category li{height: 232px; }
+    .nav-category li{height: 232px;}
     .nav-category li span{bottom: 32px; right: 36px; font-size: 23px;}
     .picture-uploader li, .picture-uploader li.picture_principal{width: 82px; height: 82px; margin:7px;}
     .picture-uploader li span, .picture-uploader li.picture_principal span{font-size: 45px; margin:17px 17px 0; width: 45px; height: 45px;}    

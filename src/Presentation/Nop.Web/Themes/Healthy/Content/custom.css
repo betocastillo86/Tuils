@@ -154,7 +154,6 @@ sitemap-page .topic-box .item, .sitemap-page .manufacturer-box .item, .sitemap-p
 
 /*version 3.0*/
 .top-header-links { margin: 0 auto; width: 930px; }
-.header { background: none repeat scroll 0 0 transparent; }
 .search-box { background: none; border-bottom: none; -moz-box-shadow: 0 0 10px #CFCFCF inset; /* Firefox */ -webkit-box-shadow: 0 0 10px #CFCFCF inset; /* Safari, Chrome */ box-shadow: 0 0 10px #CFCFCF inset; /* CSS3 */ }
 .search-box ul li .search-box-button{text-transform: uppercase; font: 700 12px Helvetica,Arial,sans-serif; padding: 4px 0;margin-left: -3px;}
 /*@Header*/
@@ -250,7 +249,6 @@ input, select { vertical-align: middle; }
 .tab a:hover { text-decoration: none; }
 .product-specs-box .title, .product-specs-box .data-table { margin: 5px 0;padding:0; }
 .product-details-page .full-description { border: 0;padding:0 }
-.top-menu, .header-links-wrapper { z-index: 100; }
 .order-progress { border: 0; }
 .checkout-data .order-completed a { text-decoration: underline; color: #5C5B5B; }
 .checkout-data .order-completed a:hover { text-decoration: none; }
@@ -262,11 +260,6 @@ input, select { vertical-align: middle; }
 #thumblist {clear: both;}
 .product-details-page .gallery{margin:0 0 15px;width:300px}
 
-.header { height: 115px;margin: 0; }
-.header-links ul li { padding-right: 0;margin-left: 0; }
-.header-links ul li span.wishlist-qty, .header-links ul li span.cart-qty {position:relative; padding:8px 3px; margin: 0 0 0 10px; display: inline-block; background:#3B5A83; color: #FA7054; font-size: 20px; font-style: italic;}
-.header-links ul li span.wishlist-qty:before, .header-links ul li span.cart-qty:before{content: ""; position: absolute; top: 0; left: -10px; border-left: 10px solid transparent; border-bottom: 40px solid #3B5A83;}
-.header-links ul li span.wishlist-qty:after, .header-links ul li span.cart-qty:after{content: ""; position: absolute; top: 0; right: -10px; border-right: 10px solid transparent; border-top: 40px solid #3B5A83;}
 ul.top-menu { margin: 0;}
 #thumblist { margin: 0; }
 .search-box { padding: 0; }

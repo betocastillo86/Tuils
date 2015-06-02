@@ -5,7 +5,7 @@
 @{
     //logo path
     var currentThemeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
-    var logoPath = "~/Themes/" + currentThemeName + "/Content/images/logo.png";
+    var logoPath = "~/Themes/" + currentThemeName + "/Content/images/logo.svg";
 
     //store name
     var storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
@@ -40,4 +40,5 @@
         </div>
         @Html.Widget("header_selectors")
     </div>*@
+    <br/>
 </div>
