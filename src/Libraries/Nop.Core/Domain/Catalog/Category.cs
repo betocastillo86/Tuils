@@ -142,6 +142,13 @@ namespace Nop.Core.Domain.Catalog
         public string ChildrenCategoriesStr { get; set; }
 
         /// <summary>
+        /// SpecificacionAttributeOption Relacionado a la categoría
+        /// </summary>
+        public Nullable<int> SpecificationAttributeOptionId { get; set; }
+
+        public virtual SpecificationAttributeOption SpecificationAttributeOption { get; set; }
+
+        /// <summary>
         /// Subcategorias con las que cuenta la principal
         /// </summary>
         public virtual ICollection<Category> SubCategories {

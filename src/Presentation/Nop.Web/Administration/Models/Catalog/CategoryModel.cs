@@ -116,6 +116,22 @@ namespace Nop.Admin.Models.Catalog
         public List<DiscountModel> AvailableDiscounts { get; set; }
         public int[] SelectedDiscountIds { get; set; }
 
+        /// <summary>
+        /// Valida si muestra o no la relacion entre el atributo y la categoria
+        /// Unicamente aplica para marcas de motos
+        /// </summary>
+        public bool ShowSpecificationAttribute { get; set; }
+
+        /// <summary>
+        /// Listado de los atributos
+        /// </summary>
+        public List<SpecificationAttributeOptionModel> SpecificationAttributeOptions { get; set; }
+
+        /// <summary>
+        /// Id del atributo de tipo motocicleta relacionada con la Categoría
+        /// </summary>
+        [NopResourceDisplayName("Admin.Catalog.Categories.Fields.SpecificationAttributeOptionId")]
+        public int? SpecificationAttributeOptionId { get; set; }
 
         #region Nested classes
 
@@ -201,5 +217,7 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Categories.Fields.SeName")]
         [AllowHtml]
         public string SeName { get; set; }
+
+
     }
 }

@@ -46,6 +46,10 @@
         register: function () {
             this.url = this.baseUrl + '/register';
             this.save();
+        },
+        isSessionActive: function () {
+            this.url = this.baseUrl + '/verify'
+            this.save();
         }
     });
 

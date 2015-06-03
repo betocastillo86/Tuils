@@ -20,7 +20,7 @@ namespace Nop.Web.Extensions.Api
     public static class ApiMappingExtensions
     {
         #region ProductBaseModel
-        public static Product ToEntity(this ProductBaseModel model)
+        public static Product ToEntity(this ProductBaseModel model, ICategoryService categoryService)
         {
             var entity = new Product();
             entity.Name = model.Name;
@@ -40,7 +40,24 @@ namespace Nop.Web.Extensions.Api
             //Agrega las categorias especiales
             if (model.SpecialCategories != null)
             {
-                model.SpecialCategories.ForEach(sc => entity.SpecialCategories.Add(sc));
+                foreach (var specialCategory in model.SpecialCategories)
+                {
+                    //valida que la categoria exista
+                    var category = categoryService.GetCategoryById(specialCategory.CategoryId);
+                    if (category != null)
+                    {
+                        entity.SpecialCategories.Add(specialCategory);
+                        //Si la categoria tiene atributos relacionados (usualmente referencias de motos) la agrega
+                        if (category.SpecificationAttributeOptionId.HasValue && entity.ProductSpecificationAttributes.FirstOrDefault(sa => sa.SpecificationAttributeOptionId == category.SpecificationAttributeOptionId.Value) == null)
+                        {
+                            entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute()
+                            {
+                                SpecificationAttributeOptionId = category.SpecificationAttributeOptionId.Value,
+                                AllowFiltering = true
+                            });
+                        }
+                    }
+                }
             }
 
             entity.TempFiles = model.TempFiles;
@@ -120,10 +137,6 @@ namespace Nop.Web.Extensions.Api
 
             #endregion
 
-            
-
-            
-            
 
             return entity;
         }

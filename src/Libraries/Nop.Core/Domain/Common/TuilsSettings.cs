@@ -76,6 +76,11 @@ namespace Nop.Core.Domain.Common
         /// Atributo de insumos
         /// </summary>
         public int specificationAttributeSupplies { get; set; }
+
+        /// <summary>
+        /// Atributo correspondiente al tipo de motocicleta
+        /// </summary>
+        public int specificationAttributeBikeType { get; set; }
         #endregion
 
         #region Productos
@@ -83,6 +88,8 @@ namespace Nop.Core.Domain.Common
         public int defaultStockQuantity { get; set; }
 
         #endregion
+
+
 
 
 

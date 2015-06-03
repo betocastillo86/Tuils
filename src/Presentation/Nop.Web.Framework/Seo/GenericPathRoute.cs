@@ -166,6 +166,18 @@ namespace Nop.Web.Framework.Seo
                             data.Values["action"] = "Category";
                             data.Values["categoryid"] = urlRecord.EntityId;
                             data.Values["SeName"] = urlRecord.Slug;
+
+                            //if (data.Values["specsFilter"] != null
+                            //    && !string.IsNullOrEmpty(data.Values["specsFilter"].ToString())
+                            //    && httpContext.Request.QueryString["specs"] == null)
+                            //{
+                            //    var slugSpecification = urlRecordService.GetBySlugCached(data.Values["specsFilter"].ToString());
+                            //    if (slugSpecification != null)
+                            //    {
+                            //        data.Values.Add("specFilterId", slugSpecification.EntityId);
+                            //    }
+                            //}
+
                         }
                         break;
                     case "manufacturer":

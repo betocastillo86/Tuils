@@ -147,6 +147,10 @@
     <Compile Include="Migrations\201505262138006_AddColumnAlreadyRated_OrderItem.Designer.cs">
       <DependentUpon>201505262138006_AddColumnAlreadyRated_OrderItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506011909422_AddColumn_SpecificationAttributeOptionId_Category.cs" />
+    <Compile Include="Migrations\201506011909422_AddColumn_SpecificationAttributeOptionId_Category.Designer.cs">
+      <DependentUpon>201506011909422_AddColumn_SpecificationAttributeOptionId_Category.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -328,6 +332,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505262138006_AddColumnAlreadyRated_OrderItem.resx">
       <DependentUpon>201505262138006_AddColumnAlreadyRated_OrderItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506011909422_AddColumn_SpecificationAttributeOptionId_Category.resx">
+      <DependentUpon>201506011909422_AddColumn_SpecificationAttributeOptionId_Category.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

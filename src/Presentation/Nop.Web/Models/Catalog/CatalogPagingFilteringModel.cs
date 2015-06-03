@@ -412,7 +412,17 @@ namespace Nop.Web.Models.Catalog
 
             #region Methods
 
-
+            public virtual void Add(int specId, ISpecificationAttributeService specificationAttributeService, IWorkContext workContext)
+            {
+                var sao = specificationAttributeService.GetSpecificationAttributeOptionById(specId);
+                this.AlreadyFilteredItems.Add(
+                    new SpecificationFilterItem()
+                    {
+                        Name = sao.SpecificationAttribute.Name,
+                        SpecificationAttributeOptionName = sao.Name
+                    }
+                );
+            }
 
             public virtual void PrepareSpecsFilters(IList<int> alreadyFilteredSpecOptionIds,
                 Dictionary<int, int> filterableSpecificationAttributeOptionIds,

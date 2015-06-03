@@ -362,6 +362,11 @@ namespace Nop.Web.Infrastructure.Cache
         public const string TOPIC_PATTERN_KEY = "Nop.pres.topic";
 
         /// <summary>
+        /// Llave que contiene los atributos que van relacionados a las categorias para hacer el filtro 
+        /// </summary>
+        public const string TOPIC_TOP_MENU_ATTRIBUTES_KEY = "Nop.pres.topic.topmenu.specificationAttributes";
+
+        /// <summary>
         /// Key for CategoryTemplate caching
         /// </summary>
         /// <remarks>

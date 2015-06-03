@@ -10,5 +10,14 @@ namespace Nop.Web.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// Vista que unicamente cierra la ventana, usada para autenticaciones externas con ajax
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Close()
+        {
+            return View();
+        }
     }
 }

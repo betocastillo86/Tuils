@@ -14,12 +14,20 @@ namespace Nop.Web.Models.Catalog
         public IList<CategorySimpleModel> Categories { get; set; }
         public IList<TopMenuTopicModel> Topics { get; set; }
 
+        public IList<SpecificationAttributeOptionModel> SpecificationAttributesFilter { get; set; }
+
         public bool BlogEnabled { get; set; }
         public bool RecentlyAddedProductsEnabled { get; set; }
         public bool ForumEnabled { get; set; }
 
         #region Nested classes
         public class TopMenuTopicModel : BaseNopEntityModel
+        {
+            public string Name { get; set; }
+            public string SeName { get; set; }
+        }
+
+        public class SpecificationAttributeOptionModel : BaseNopEntityModel
         {
             public string Name { get; set; }
             public string SeName { get; set; }

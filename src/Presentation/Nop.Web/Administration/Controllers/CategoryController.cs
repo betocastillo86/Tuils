@@ -21,6 +21,7 @@ using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Mvc;
+using Nop.Core.Domain.Common;
 
 namespace Nop.Admin.Controllers
 {
@@ -46,7 +47,11 @@ namespace Nop.Admin.Controllers
         private readonly IExportManager _exportManager;
         private readonly ICustomerActivityService _customerActivityService;
         private readonly IVendorService _vendorService;
+        private readonly ISpecificationAttributeService _specificationAttributeService;
         private readonly CatalogSettings _catalogSettings;
+        private readonly TuilsSettings _tuilsSettings;
+
+
 
         #endregion
         
@@ -68,7 +73,9 @@ namespace Nop.Admin.Controllers
             IExportManager exportManager, 
             IVendorService vendorService, 
             ICustomerActivityService customerActivityService,
-            CatalogSettings catalogSettings)
+            CatalogSettings catalogSettings,
+            TuilsSettings tuilsSettings,
+            ISpecificationAttributeService specificationAttributeService)
         {
             this._categoryService = categoryService;
             this._categoryTemplateService = categoryTemplateService;
@@ -89,6 +96,8 @@ namespace Nop.Admin.Controllers
             this._exportManager = exportManager;
             this._customerActivityService = customerActivityService;
             this._catalogSettings = catalogSettings;
+            this._tuilsSettings = tuilsSettings;
+            this._specificationAttributeService = specificationAttributeService;
         }
 
         #endregion
@@ -365,6 +374,7 @@ namespace Nop.Admin.Controllers
             var model = new CategoryModel();
             //locales
             AddLocales(_languageService, model.Locales);
+
             //templates
             PrepareTemplatesModel(model);
             //categories
@@ -461,6 +471,9 @@ namespace Nop.Admin.Controllers
                 locale.MetaTitle = category.GetLocalized(x => x.MetaTitle, languageId, false, false);
                 locale.SeName = category.GetSeName(languageId, false, false);
             });
+
+            //Agrega los attributos
+            PrepareSpecificationAttributeModel(model);
             //templates
             PrepareTemplatesModel(model);
             //categories
@@ -473,6 +486,39 @@ namespace Nop.Admin.Controllers
             PrepareStoresMappingModel(model, category, false);
 
             return View(model);
+        }
+
+        private void PrepareSpecificationAttributeModel(CategoryModel model)
+        {
+            //Consulta la categoria paadre para motocicletas
+            var categoryBikes = _categoryService.GetCategoryById(_tuilsSettings.productBaseTypes_bike);
+            
+            //Valida que tenga categorias hijas
+            if (!string.IsNullOrEmpty(categoryBikes.ChildrenCategoriesStr))
+            {
+                var childrenIds = categoryBikes.ChildrenCategoriesStr.Split(new char[] { ',' })
+                    .Select(c => Convert.ToInt32(c))
+                    .ToList();
+                
+                //Si la categoria actual es hija de la categoria de motos muestra el listado
+                if (childrenIds.Contains(model.Id))
+                {
+                    model.ShowSpecificationAttribute = true;
+                    model.SpecificationAttributeOptions = new List<SpecificationAttributeOptionModel>();
+
+                    foreach (var item in _specificationAttributeService.GetSpecificationAttributeOptionsBySpecificationAttribute(_tuilsSettings.specificationAttributeBikeType))
+                    {
+                        var modelOption = new SpecificationAttributeOptionModel();
+                        modelOption.SpecificationAttributeId = item.SpecificationAttributeId;
+                        modelOption.Name = item.Name;
+                        modelOption.Id = item.Id;
+                        //locales
+                        AddLocales(_languageService, modelOption.Locales);
+                        model.SpecificationAttributeOptions.Add(modelOption);
+                    };
+                }
+                
+            }
         }
 
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
@@ -547,6 +593,8 @@ namespace Nop.Admin.Controllers
 
 
             //If we got this far, something failed, redisplay form
+            //Agrega los attributos
+            PrepareSpecificationAttributeModel(model);
             //templates
             PrepareTemplatesModel(model);
             //categories
