@@ -58,7 +58,7 @@
     .banner_1, .banner_2, .banner_3 { text-align: left; }
     .promo_1, .promo_2 { right: 10px; text-align: left; top: 10px; width: 140px; }
     .iview-container #banners { float: none; margin: 0 auto; max-width: 100%; text-align: center; }
-    .iview-container { clear: left; min-height: 180px; margin-top: 10px; }
+    .iview-container { clear: left; min-height: 180px;}
 
     /*.product-review-box .rating { background: none; }*/
     .home-page-category-grid .item-box, .sub-category-grid .item-box, .product-grid .item-box { float: none; }
@@ -1114,7 +1114,7 @@ html.oldie .container { width: 940px; }
 }
 @media screen and (max-width:480px) {
     /*Header*/
-    .header-logo{float:none; margin: 10px 0 0;}
+    .header-logo{float:none; padding: 10px 0 0; margin: 0;}
     .header .search-box{margin: 10px 0; width: 100%;}
     .btn_anuncia{position: absolute; top:28px; margin: 0; right: 0;}
 
