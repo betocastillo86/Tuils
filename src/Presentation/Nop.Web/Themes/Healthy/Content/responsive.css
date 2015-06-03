@@ -8,7 +8,7 @@
     .master-wrapper-page, .master-wrapper-main, .master-wrapper-main .center-1,
     .master-wrapper-main .center-2, .master-wrapper-main .side-2, .master-wrapper-content, .header-menu,
     .product-details-page, .order-summary-content .cart-collaterals, .login-page .new-wrapper, .login-page .returning-wrapper, .master-wrapper-main .center-product-2 { width: auto; margin: 0; padding: 0; }
-    .master-wrapper-main { padding: 10px 5px; }
+    .master-wrapper-main { padding:0; }
     .side-2.columns.two { margin-left: 0; }
     .center-2.columns.ten { width: auto; float: none; }
     .master-wrapper-main .center-product-2 { margin: 0; }
@@ -93,7 +93,7 @@
     .inputs { margin: 2px 0; width: 50%; float: left; font-size: 14px; height: 54px; margin:0 0 12px;}
     .inputs label{width: 150px; padding: 0 8px 0 0; position: relative; display:inline-block; text-align: right;}
     .input_check { margin: 2px 0; width: 50%; float: left; font-size: 14px; height:auto; margin:0 0 12px;}
-    .page { clear: both; margin-bottom: 70px; padding: 0 5px; }
+    .page { clear: both; margin-bottom: 70px; padding: 0; }
     .blog-page .blog-posts .post .post-date { display: block; }
     .blog-page .blog-posts { margin: 0; padding: 0; }
     .blogpost-page .new-comment .comment-text { min-width: 280px; width: auto; }
