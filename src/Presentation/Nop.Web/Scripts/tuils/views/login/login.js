@@ -1,4 +1,4 @@
-﻿define(['underscore', 'backbone', 'text!/Customer/FastLogin', 'handlebars', 'tuils/models/userRegister', 'baseView', 'resources'],
+﻿define(['underscore', 'backbone', 'text!/Customer/FastLogin', 'handlebars', 'tuils/models/userRegister', 'baseView', 'resources', 'css!/Plugins/ExternalAuth.Facebook/Content/facebookstyles'],
     function (_, Backbone, template, Handlebars, UserRegisterModel, BaseView, Resources) {
     var LoginView = BaseView.extend({
 
@@ -6,7 +6,8 @@
 
         events: {
             'click #btnLogin' : 'login',
-            'click #btnRegister': 'register'
+            'click #btnRegister': 'register',
+            'click .facebook-login-block a' : 'externalAuthentication'
         },
 
         bindings: {
@@ -49,6 +50,28 @@
         },
         close : function(){
             this.$el.dialog('close');
+        },
+        intervalAuthentication :undefined,
+        externalAuthentication : function()
+        {
+            var that = this;
+            var modelValidation = new UserRegisterModel();
+            modelValidation.on("sync", that.validateActiveSession, that);
+            //Realiza la validacion de sesion cada N segundos cuando la autenticación es externa
+            this.intervalAuthentication = setInterval(function () {
+                modelValidation.isSessionActive();
+            }, 2000);
+        },
+        validateActiveSession : function(model)
+        {
+            model = model.toJSON();
+            if (model.Active)
+            {
+                if (this.intervalAuthentication)
+                    clearInterval(this.intervalAuthentication);
+
+                this.userAuthenticated();
+            }
         },
         render: function () {
             this.$el.html(this.template());

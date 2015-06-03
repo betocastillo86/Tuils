@@ -1,0 +1,68 @@
+﻿@model TopMenuModel
+@using Nop.Core.Domain
+@using Nop.Core.Infrastructure
+@using Nop.Web.Models.Catalog;
+@using System
+@using Nop.Web;
+@using Nop.Web.Framework.UI;
+@using Nop.Web.Framework;
+@{
+    Layout = "";
+    Html.AddCssFileParts("~/Plugins/Widgets.MegaMenu/Content/dcmegamenu.css");
+}
+
+
+
+@helper RenderCategoryLine(CategorySimpleModel category, TopMenuModel.SpecificationAttributeOptionModel attribute)
+{
+    <li>
+        <a title="@category.Name" href="@Url.RouteUrl("Category", new { SeName = category.SeName, specsFilter = attribute.SeName, specs = attribute.Id })">@category.Name</a>
+        @{
+            if (category.SubCategories.Count > 0)
+            {
+                <ul>
+                    @foreach (var subCategory in category.SubCategories)
+                    {
+                        @RenderCategoryLine(subCategory, attribute)
+                    }
+                </ul>
+            }
+        }
+    </li>
+}
+@if (Model.Categories.Count > 0)
+{
+    <div class="container hd">
+        <nav>
+            <ul id="mega-menu" class="mega-menu">
+
+                <li><a class="home" href="@Url.RouteUrl("HomePage")">@T("HomePage")</a></li>
+
+                @foreach (var attribute in Model.SpecificationAttributesFilter)
+                {
+                    <span class="mainOption" data-id="@attribute.Id">@attribute.Name</span>
+                    <div class="secondLevelMenu" id="secondLevel_@attribute.Id" style="display:none">
+                        @foreach (var category in Model.Categories)
+                        {
+                        @RenderCategoryLine(category, attribute)
+                        }
+                    </div>
+                }
+            </ul>
+        </nav>
+    </div>
+}
+
+<script>
+
+    $(document).on("ready", function () {
+        $(".mega-menu .mainOption").click(function (obj) {
+            obj = $(obj.target);
+            var id = obj.attr("data-id");
+            $(".secondLevelMenu").hide();
+            $("#secondLevel_" + id).show();
+        });
+    });
+
+</script>
+

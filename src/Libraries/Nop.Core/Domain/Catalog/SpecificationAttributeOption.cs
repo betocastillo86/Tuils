@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using Nop.Core.Domain.Localization;
+using Nop.Core.Domain.Seo;
 
 namespace Nop.Core.Domain.Catalog
 {
     /// <summary>
     /// Represents a specification attribute option
     /// </summary>
-    public partial class SpecificationAttributeOption : BaseEntity, ILocalizedEntity
+    public partial class SpecificationAttributeOption : BaseEntity, ILocalizedEntity, ISlugSupported
     {
         private ICollection<ProductSpecificationAttribute> _productSpecificationAttributes;
 
