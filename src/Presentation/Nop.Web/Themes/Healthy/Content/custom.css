@@ -333,7 +333,7 @@ ul#thumblist { margin: 0; }
 /*3.25*/
 h2, h3 { font-size: 14px; }
 .owl-theme .owl-controls { position: absolute; right: 10px; text-align: right; top: -25px; }
-.top-menu, .header-links-wrapper { z-index: 2; }
+.top-menu, .header-links-wrapper { /*z-index: 2;*/ }
 .product-details-page h1 {font:400 28px/30px 'Ubuntu', sans-serif; }
 .product-viewmode { margin: -5px 0 0; }
 .footer-menu h3, .footer-menu-1 h3 {font-size: 1.3em; }
