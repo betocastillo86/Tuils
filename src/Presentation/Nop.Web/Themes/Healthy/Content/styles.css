@@ -611,7 +611,9 @@ td.fieldname{font-size:12px;}
 .bestsellers{margin-left:auto;margin-right:auto;width:auto;}
 .bestsellers .title{padding:10px 10px 10px 0;margin:0 0 0 10px;font-weight:700;text-transform:uppercase;font-size:1.1em;color:#3a3a3a;text-align:center;}
 
-
+/*MARCAS*/
+.conte_marcas{list-style: none; margin: 0; padding: 0;}
+	.conte_marcas li{float: left; border-left:solid 1px #E5E5E5;}
 /* PRODUCTS IN GRID - TEMPLATE */
 .product-grid{margin-bottom:15px;margin-left:auto;margin-right:auto;width:auto;text-align:center;zoom:1;}
 .product-grid:after{content:".";display:block;clear:both;height:0;font-size:0;line-height:0;visibility:hidden;}
