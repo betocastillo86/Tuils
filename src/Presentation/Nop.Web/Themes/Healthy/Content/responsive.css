@@ -6,7 +6,7 @@
     .master-wrapper-page { box-shadow: none; }
     .master-wrapper-content, .master-wrapper-main .center-1, .master-wrapper-main .side-2 { float: none; }
     .master-wrapper-page, .master-wrapper-main, .master-wrapper-main .center-1,
-    .master-wrapper-main .center-2, .master-wrapper-main .side-2, .master-wrapper-content, .header-menu,
+    .master-wrapper-main .center-2, .master-wrapper-main .side-2, .master-wrapper-content,
     .product-details-page, .order-summary-content .cart-collaterals, .login-page .new-wrapper, .login-page .returning-wrapper, .master-wrapper-main .center-product-2 { width: auto; margin: 0; padding: 0; }
     .master-wrapper-main { padding:0; }
     .side-2.columns.two { margin-left: 0; }
@@ -35,11 +35,6 @@
     #small-searchterms { /*float: left;*/ width: 95%; margin: 0; font-size: 20px; }
 
     /*Menu*/
-    .header-menu { background: #DFE2EA; }
-        .header-menu, .header-menu #mega-menu { height: 54px; }
-            .header-menu a { font-size: 14px; }
-            .header-menu.mean-container { height: 40px; }
-                .header-menu.mean-container .mean-bar { min-height: 40px; }
     #mega-menu li a.home { text-indent: 0; width: auto; }
 
     nav #mega-menu li .sub-container.non-mega li a { padding: 7px 5px 7px 5%; }
@@ -115,7 +110,7 @@
     .product-grid .product-item .prices { text-align: center; }
         .product-grid .product-item .prices .price { display: inline; font-size: 25px; }
     .home-page-category-grid .category-item .title, .sub-category-grid .sub-category-item .title { font-size: 15px; padding: 10px 0 15px; }
-    .master-wrapper-page, .master-wrapper-main, .master-wrapper-main .center-1, .master-wrapper-main .center-2, .master-wrapper-main .side-2, .header, .master-wrapper-content, .header-menu, .product-details-page, .order-summary-content .cart-collaterals, .login-page .new-wrapper, .login-page .returning-wrapper { width: auto; }
+    .master-wrapper-page, .master-wrapper-main, .master-wrapper-main .center-1, .master-wrapper-main .center-2, .master-wrapper-main .side-2, .header, .master-wrapper-content, .product-details-page, .order-summary-content .cart-collaterals, .login-page .new-wrapper, .login-page .returning-wrapper { width: auto; }
 
     /*Customer*/
     .login-page .new-wrapper, .login-page .returning-wrapper { float: none; margin: 15px 0; padding: 5px; }
@@ -457,7 +452,6 @@
 }
 
 @media screen and (min-width:768px) {
-    /*.header, .header-menu {padding:0 10px;}*/
     body { background: url("images/bg_body.png") repeat scroll 0 center rgba(0, 0, 0, 0); }
     .master-wrapper-page { box-shadow: none; display: table; }
 

@@ -22,13 +22,6 @@ a.logo { background: url("images/logo.png") no-repeat scroll 0 0 transparent; di
 }
 .tax-display-type-selector, .currency-selector, .language-selector {margin-left: 5px;}
 
-.header-links a.account { color: #666; }
-.header-menu {height: 54px; background: none repeat scroll 0 0 #D3D7E7; /* Old browsers */ background: -moz-linear-gradient(top, #1B1B1B 0%, #2F2F2F 100%); /* FF3.6+ */ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1B1B1B), color-stop(100%,#2F2F2F)); /* Chrome,Safari4+ */ background: -webkit-linear-gradient(top, #1B1B1B 0%,#2F2F2F 100%); /* Chrome10+,Safari5.1+ */ background: -o-linear-gradient(top, #1B1B1B 0%,#2F2F2F 100%); /* Opera 11.10+ */ background: -ms-linear-gradient(top, #1B1B1B 0%,#2F2F2F 100%); /* IE10+ */ background: linear-gradient(top, #1B1B1B 0%,#2F2F2F 100%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1B1B1B', endColorstr='#2F2F2F',GradientType=0 ); /* IE6-9 */ border-radius:0;-webkit-border-radius: 0; -moz-border-radius: 0; -o-border-radius:0;-icab-border-radius:0;-khtml-border-radius:0; padding: 0; }
-.header-menu li { color: #FFFFFF; font: 18px/30px 'Ubuntu', sans-serif; text-decoration: none; text-transform: uppercase; border-left: 1px solid #ADB9CB; margin-right: 0 !important; padding: 11px 15px 7px; }
-.header-menu li:first-child{border-left: 0; padding-left: 0;}
-
-.header-menu li:hover { background: none; }
-.header-menu li a:hover { color: #686868; }
 .menu { clear: both; }
 .top-menu { float: left; clear: both; margin: 0 0 10px; }
 .top-menu li { float: left; list-style: none; margin-right: 15px; }
@@ -62,12 +55,7 @@ nav #mega-menu .sub li.mega-hdr li a:hover {background: none;color: #fff; }
 nav #mega-menu li .sub li.mega-hdr a.mega-hdr-a {
     margin-bottom: 0;font-weight:400 !important;
 }
-.header-menu.mean-container .mean-nav ul li li a {
-    background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-    opacity: 1;
-    padding: 1em 5%;
-}
+
 /*nav #mega-menu li.mega-hover a, nav #mega-menu li a:hover {
     background: #95BC17;
 }*/
@@ -283,7 +271,6 @@ ul.top-menu { margin: 0;}
 .footer_down:before{content:url(images/brillo_footer.png); width: 100%; height: 29px; position: absolute; top:-28px; left: 0; overflow: hidden;}
 .footer-poweredby, .footer-disclaimer { margin: 0 10px;}
 .product-grid .product-item .picture img { margin: 15px; }
-.header-menu {margin:0;width:100% }
 .ca-icon { height: auto; width: auto; }
 .sub-category-grid .sub-category-item, .manufacturer-grid .manufacturer-item { height: 240px; width: 180px; }
 .product-details-page .add-to-cart .qty-input { height: 27px; text-align: center; }
@@ -393,7 +380,6 @@ h2, h3 { font-size: 14px; }
 .lt-ie8 .etabs li.tab {margin-right:3px }
 .lt-ie8 .block-newsletter #newsletter-email { width: 260px;}
 .lt-ie8 .product-details-page .attributes ul.color-squares .selected-value .color-container {background: #FF0099;}
-.lt-ie8 .header-menu { position:relative;z-index:9999}
 .lt-ie8 .header-links-wrapper{z-index:99999;}*/
 
 .lt-ie9 .picture img, .lt-ie9 .picture-thumbs img, .lt-ie9 .a-center > img {height: auto;max-width: 100%;}
