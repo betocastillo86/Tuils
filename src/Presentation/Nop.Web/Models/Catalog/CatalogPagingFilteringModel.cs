@@ -30,6 +30,7 @@ namespace Nop.Web.Models.Catalog
             this.CategoryFilter = new CategoryFilterModel();
             this.StateProvinceFilter = new StateProvinceFilterModel();
             this.ManufacturerFilter = new ManufacturerFilterModel();
+            this.BikeReferenceFilter = new BikeReferenceFilterModel();
         }
 
         #endregion
@@ -55,6 +56,9 @@ namespace Nop.Web.Models.Catalog
         /// filtro por marca
         /// </summary>
         public ManufacturerFilterModel ManufacturerFilter { get; set; }
+
+
+        public BikeReferenceFilterModel BikeReferenceFilter { get; set; }
 
 
         /// <summary>
@@ -412,7 +416,17 @@ namespace Nop.Web.Models.Catalog
 
             #region Methods
 
-
+            public virtual void Add(int specId, ISpecificationAttributeService specificationAttributeService, IWorkContext workContext)
+            {
+                var sao = specificationAttributeService.GetSpecificationAttributeOptionById(specId);
+                this.AlreadyFilteredItems.Add(
+                    new SpecificationFilterItem()
+                    {
+                        Name = sao.SpecificationAttribute.Name,
+                        SpecificationAttributeOptionName = sao.Name
+                    }
+                );
+            }
 
             public virtual void PrepareSpecsFilters(IList<int> alreadyFilteredSpecOptionIds,
                 Dictionary<int, int> filterableSpecificationAttributeOptionIds,
@@ -800,6 +814,105 @@ namespace Nop.Web.Models.Catalog
                     removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
                     this.RemoveFilterUrl = removeFilterUrl;
 
+                }
+                else
+                {
+                    this.Enabled = false;
+                }
+            }
+
+            #endregion
+
+            #region Properties
+            public bool Enabled { get; set; }
+
+            public IList<FilterBaseItem> NotFilteredItems { get; set; }
+
+            public FilterBaseItem FilteredItem { get; set; }
+
+            public string RemoveFilterUrl { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
+        #region BikeReference
+
+        public partial class BikeReferenceFilterModel : FilterBaseModel
+        {
+            #region Const
+
+            private const string _QUERYSTRINGPARAM = "br";
+
+            #endregion
+
+            #region Ctor
+
+            public BikeReferenceFilterModel()
+                : base(_QUERYSTRINGPARAM)
+            {
+            }
+
+            #endregion
+
+            #region Methods
+
+
+
+            public virtual void PrepareFilters(int? specialCategoryId,
+                Dictionary<int, int> filterableSpecialCategoryIds,
+                ICategoryService categoryService,
+                IWebHelper webHelper,
+                IWorkContext workContext)
+            {
+                List<Category> options = null;
+
+                if (!specialCategoryId.HasValue)
+                {
+                    options = categoryService
+                     .GetCategoriesByIds(filterableSpecialCategoryIds != null ?
+                     filterableSpecialCategoryIds.Keys.ToArray() : new int[] { })
+                     .OrderBy(c => c.DisplayOrder)
+                     .ThenBy(saof => saof.Name)
+                     .ToList();
+                }
+
+
+                //prepare the model properties
+                if (specialCategoryId.HasValue || options.Count > 1)
+                {
+                    this.Enabled = true;
+
+                    if (specialCategoryId.HasValue)
+                    {
+                        this.FilteredItem = new FilterBaseItem() { Name = categoryService.GetCategoryById(specialCategoryId.Value).Name };
+                    }
+                    else
+                    {
+                        this.NotFilteredItems = options.Select(x =>
+                        {
+                            var item = new FilterBaseItem();
+                            item.Name = x.Name;
+                            item.NumOfProducts = filterableSpecialCategoryIds.FirstOrDefault(s => s.Key == x.Id).Value;
+
+                            //filter URL
+                            var alreadyFilteredCategoryIds = GetAlreadyFilteredIds(webHelper);
+                            if (!alreadyFilteredCategoryIds.Contains(x.Id))
+                                alreadyFilteredCategoryIds.Add(x.Id);
+                            string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredCategoryIds);
+                            string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + newQueryParam, null);
+                            filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
+                            item.FilterUrl = filterUrl;
+
+                            return item;
+                        }).ToList();
+                    }
+
+                    //remove filter URL
+                    string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+                    removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
+                    this.RemoveFilterUrl = removeFilterUrl;
                 }
                 else
                 {

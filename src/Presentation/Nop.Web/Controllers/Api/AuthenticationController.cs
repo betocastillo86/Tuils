@@ -120,5 +120,12 @@ namespace Nop.Web.Controllers.Api
             }
 
         }
+
+        [HttpPost]
+        [Route("api/auth/verify")]
+        public IHttpActionResult IsSessionActive()
+        {
+            return Ok(new { Active = _workContext.CurrentCustomer != null && !_workContext.CurrentCustomer.IsGuest()});
+        }
     }
 }

@@ -28,13 +28,13 @@
         }
         @if (Model.ShoppingCartEnabled)
         {
-            <li id="topcartlink" style="padding:0 5px;">
+            @*<li id="topcartlink" style="padding:0 5px;">
                 <a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">
                     <span class="icon-car"></span>
                     <span class="cart-label">@T("ShoppingCart")</span>
                     <span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
                 </a>
-            </li>
+            </li>*@
         }
         @if (Model.WishlistEnabled)
         {
@@ -42,7 +42,7 @@
                 <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">
                     <span class="icon-corazon"></span>
                     <span class="wishlist-label">@T("Wishlist")</span>
-                    <span class="wishlist-qty">@T("Wishlist.HeaderQuantity", Model.WishlistItems)</span>
+                    <span class="wishlist-qty"><i>@T("Wishlist.HeaderQuantity", Model.WishlistItems)</i></span>
                 </a>
             </li>
         }
@@ -76,4 +76,40 @@
             });
         </script>
     }
+    
+    <script id="templateLinksResponsiveMenu" type="text/x-handlebars-template">
+        
+            <div>   
+                @Html.ActionLink(T("header.publishproduct").Text, "Index", "Sales", new { }, new { @class = "btn_anuncia" })
+            </div>
+            
+            @if (Model.IsAuthenticated)
+            {
+                <div><a href="@Url.RouteUrl("ControlPanel")" class="account">@Model.CustomerEmailUsername</a></div>
+            }
+            else
+            {
+                <div><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></div>
+                <div><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></div>
+            }
+
+            @if (Model.WishlistEnabled)
+            {
+                <div style="padding:0 5px;">
+                    <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">
+                        <span class="icon-corazon"></span>
+                        <span class="wishlist-label">@T("Wishlist")</span>
+                        <span class="wishlist-qty"><i>@T("Wishlist.HeaderQuantity", Model.WishlistItems)</i></span>
+                    </a>
+                </div>
+            }
+       
+    </script>
+
+    <script id="templateLogoutResponsiveMenu" type="text/x-handlebars">
+        @if (Model.IsAuthenticated)
+        { 
+            <div><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></div>
+        }
+    </script>
 </div>

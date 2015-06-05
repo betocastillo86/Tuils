@@ -4,6 +4,7 @@ namespace Nop.Web.Models.Media
 {
     public partial class PictureModel : BaseNopModel
     {
+
         public string ImageUrl { get; set; }
 
         public string FullSizeImageUrl { get; set; }

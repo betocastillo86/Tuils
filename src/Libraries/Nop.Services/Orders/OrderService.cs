@@ -205,14 +205,9 @@ namespace Nop.Services.Orders
             //Filtra las que han sido o las que no han sido calificadas
             if (withRating.HasValue)
             { 
-                if(withRating.Value)
                     query = query
                            .Where(o => o.OrderItems
-                               .Any(i => i.Rating != null));
-                else
-                    query = query
-                           .Where(o => o.OrderItems
-                               .Any(i => i.Rating == null));
+                               .Any(i => i.AlreadyRated == withRating.Value));
             }
 
             //Valida si muestra solo los productos publicados o no
@@ -398,27 +393,28 @@ namespace Nop.Services.Orders
         /// <param name="customerId">Customer identifier; null to load all records</param>
         /// <param name="createdFromUtc">Order created date from (UTC); null to load all records</param>
         /// <param name="createdToUtc">Order created date to (UTC); null to load all records</param>
-        /// <param name="os">Order status; null to load all records</param>
-        /// <param name="ps">Order payment status; null to load all records</param>
-        /// <param name="ss">Order shipment status; null to load all records</param>
+        /// <param name="orderStatus">Order status; null to load all records</param>
+        /// <param name="paymentStatus">Order payment status; null to load all records</param>
+        /// <param name="shippingStatus">Order shipment status; null to load all records</param>
         /// <param name="loadDownloableProductsOnly">Value indicating whether to load downloadable products only</param>
+        /// <param name="rated">Solo trae las que tienen votación</param>
         /// <returns>Order collection</returns>
-        public virtual IList<OrderItem> GetAllOrderItems(int? orderId,
-            int? customerId, DateTime? createdFromUtc, DateTime? createdToUtc, 
-            OrderStatus? os, PaymentStatus? ps, ShippingStatus? ss,
-            bool loadDownloableProductsOnly)
+        public virtual IList<OrderItem> GetAllOrderItems(int? orderId = null,
+            int? customerId = null, DateTime? createdFromUtc = null, DateTime? createdToUtc = null, 
+            OrderStatus? orderStatus = null, PaymentStatus? paymentStatus = null, ShippingStatus? shippingStatus = null,
+            bool loadDownloableProductsOnly = false, int? productId = null, bool? rated = null)
         {
             int? orderStatusId = null;
-            if (os.HasValue)
-                orderStatusId = (int)os.Value;
+            if (orderStatus.HasValue)
+                orderStatusId = (int)orderStatus.Value;
 
             int? paymentStatusId = null;
-            if (ps.HasValue)
-                paymentStatusId = (int)ps.Value;
+            if (paymentStatus.HasValue)
+                paymentStatusId = (int)paymentStatus.Value;
 
             int? shippingStatusId = null;
-            if (ss.HasValue)
-                shippingStatusId = (int)ss.Value;
+            if (shippingStatus.HasValue)
+                shippingStatusId = (int)shippingStatus.Value;
 
 
             var query = from orderItem in _orderItemRepository.Table
@@ -435,6 +431,9 @@ namespace Nop.Services.Orders
                         !o.Deleted
                         orderby o.CreatedOnUtc descending, orderItem.Id
                         select orderItem;
+
+            if (productId.HasValue)
+                query = query.Where(oi => oi.ProductId == productId);
 
             var orderItems = query.ToList();
             return orderItems;
@@ -454,6 +453,25 @@ namespace Nop.Services.Orders
             //event notification
             _eventPublisher.EntityDeleted(orderItem);
         }
+
+        /// <summary>
+        /// Marca el orderItem como rankeador
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="rated"></param>
+        public virtual void MarkOrderItemAsRated(int orderItemId, bool rated = true)
+        {
+            if (orderItemId <= 0)
+                throw new NullReferenceException("orderItemId");
+
+            var orderItem = GetOrderItemById(orderItemId);
+            if (orderItem != null)
+            {
+                orderItem.AlreadyRated = rated;
+                _orderItemRepository.Update(orderItem);
+            }
+        }
+
 
         #endregion
 

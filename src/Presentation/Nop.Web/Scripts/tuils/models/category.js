@@ -1,13 +1,18 @@
-﻿define(['underscore', 'backbone'], function (_, Backbone) {
+﻿define(['underscore', 'backbone', 'tuils/app'], function (_, Backbone, TuilsApp) {
     var CategoryModel = Backbone.Model.extend({
 
         baseUrl: "/api/categories/",
 
         url: "/api/categories/",
 
-        getCategory: function (id) {
+        getCategory: function (id, showImage) {
             this.url = this.baseUrl + id;
-            this.fetch();
+
+            if (showImage)
+                this.fetch({ beforeSend: function (xhr) { xhr.setRequestHeader('image', true) } });
+            else
+                this.fetch();
+
             return this;
         },
         getManufacturers: function (id) {
@@ -17,7 +22,7 @@
         }
     });
 
- 
+
     return CategoryModel;
 });
 

@@ -11,6 +11,7 @@ using Nop.Services.Security;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Mvc;
+using Nop.Services.Seo;
 
 namespace Nop.Admin.Controllers
 {
@@ -24,6 +25,7 @@ namespace Nop.Admin.Controllers
         private readonly ILocalizationService _localizationService;
         private readonly ICustomerActivityService _customerActivityService;
         private readonly IPermissionService _permissionService;
+        private readonly IUrlRecordService _urlRecordService;
 
         #endregion Fields
 
@@ -34,7 +36,8 @@ namespace Nop.Admin.Controllers
             ILocalizedEntityService localizedEntityService,
             ILocalizationService localizationService, 
             ICustomerActivityService customerActivityService,
-            IPermissionService permissionService)
+            IPermissionService permissionService,
+            IUrlRecordService urlRecordService)
         {
             this._specificationAttributeService = specificationAttributeService;
             this._languageService = languageService;
@@ -42,6 +45,7 @@ namespace Nop.Admin.Controllers
             this._localizationService = localizationService;
             this._customerActivityService = customerActivityService;
             this._permissionService = permissionService;
+            this._urlRecordService = urlRecordService;
         }
 
         #endregion
@@ -69,6 +73,11 @@ namespace Nop.Admin.Controllers
                                                                x => x.Name,
                                                                localized.Name,
                                                                localized.LanguageId);
+
+                var name = localized.Name ?? model.Name;
+                //search engine name
+                var seName = specificationAttributeOption.ValidateSeName(name, name, false);
+                _urlRecordService.SaveSlug(specificationAttributeOption, seName, localized.LanguageId);
             }
         }
 
@@ -333,11 +342,14 @@ namespace Nop.Admin.Controllers
 
                 UpdateOptionLocales(sao, model);
 
+
                 ViewBag.RefreshPage = true;
                 ViewBag.btnId = btnId;
                 ViewBag.formId = formId;
                 return View(model);
             }
+
+
 
             //If we got this far, something failed, redisplay form
             return View(model);

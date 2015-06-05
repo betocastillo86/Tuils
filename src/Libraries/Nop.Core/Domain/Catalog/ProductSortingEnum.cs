@@ -32,6 +32,10 @@
         /// <summary>
         /// Product modification date
         /// </summary>
-        UpdatedOn = 16
+        UpdatedOn = 16,
+        /// <summary>
+        /// Organiza por una categoria especial especifica
+        /// </summary>
+        SpecialCategory = 20
     }
 }

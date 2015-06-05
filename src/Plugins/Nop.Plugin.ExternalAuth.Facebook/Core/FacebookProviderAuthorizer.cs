@@ -51,7 +51,7 @@ namespace Nop.Plugin.ExternalAuth.Facebook.Core
 
         private AuthorizeState VerifyAuthentication(string returnUrl)
         {
-            var authResult = this.FacebookApplication.VerifyAuthentication(_httpContext, GenerateLocalCallbackUri());
+            var authResult = this.FacebookApplication.VerifyAuthentication(_httpContext, GenerateLocalCallbackUri(returnUrl));
 
             if (authResult.IsSuccessful)
             {
@@ -110,15 +110,19 @@ namespace Nop.Plugin.ExternalAuth.Facebook.Core
             parameters.AddClaim(claims);
         }
 
-        private AuthorizeState RequestAuthentication()
+        private AuthorizeState RequestAuthentication(string returnUrl)
         {
-            var authUrl = GenerateServiceLoginUrl().AbsoluteUri;
+            var authUrl = GenerateServiceLoginUrl(returnUrl).AbsoluteUri;
             return new AuthorizeState("", OpenAuthenticationStatus.RequiresRedirect) { Result = new RedirectResult(authUrl) };
         }
 
-        private Uri GenerateLocalCallbackUri()
+        private Uri GenerateLocalCallbackUri(string returnUrl)
         {
             string url = string.Format("{0}plugins/externalauthFacebook/logincallback/", _webHelper.GetStoreLocation());
+
+            //if (!string.IsNullOrEmpty(returnUrl))
+            //    url = _webHelper.ModifyQueryString(url, "ReturnUrl=" + returnUrl, null);
+
             return new Uri(url);
             //var builder = new UriBuilder(_httpContext.Request.Url.GetLeftPart(UriPartial.Authority));
             //var path = _httpContext.Request.ApplicationPath + "/Plugins/ExternalAuthFacebook/LoginCallback/";
@@ -126,14 +130,16 @@ namespace Nop.Plugin.ExternalAuth.Facebook.Core
             //return builder.Uri;
         }
 
-        private Uri GenerateServiceLoginUrl()
+        private Uri GenerateServiceLoginUrl(string returnUrl)
         {
             //code copied from DotNetOpenAuth.AspNet.Clients.FacebookClient file
             var builder = new UriBuilder("https://www.facebook.com/dialog/oauth");
             var args = new Dictionary<string, string>();
             args.Add("client_id", _facebookExternalAuthSettings.ClientKeyIdentifier);
-            args.Add("redirect_uri", GenerateLocalCallbackUri().AbsoluteUri);
+            args.Add("redirect_uri", GenerateLocalCallbackUri(returnUrl).AbsoluteUri);
             args.Add("scope", "email");
+
+
             AppendQueryArgs(builder, args);
             return builder.Uri;
 
@@ -203,7 +209,7 @@ namespace Nop.Plugin.ExternalAuth.Facebook.Core
             if (verifyResponse.Value)
                 return VerifyAuthentication(returnUrl);
             
-            return RequestAuthentication();
+            return RequestAuthentication(returnUrl);
         }
 
         #endregion

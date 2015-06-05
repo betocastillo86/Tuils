@@ -334,5 +334,9 @@ namespace Nop.Services.Messages
         int SendBackInStockNotification(BackInStockSubscription subscription, int languageId);
 
         #endregion
+
+        #region Products
+        int SendQuestionAnsweredNotificationMessage(ProductQuestion productQuestion, int languageId);
+        #endregion
     }
 }

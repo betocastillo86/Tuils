@@ -1,6 +1,6 @@
 ﻿@{
     //edited
-    Layout = "~/Views/Shared/_ColumnsThree.cshtml";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
     //Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 }
 @*added*@
@@ -10,7 +10,6 @@
 @*@added*@
 <div class="page home-page">
     <div class="page-body">
-        Mensaje de prueba para Github
         @Html.Widget("home_page_top")
         @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
         @Html.Action("HomepageCategories", "Catalog")

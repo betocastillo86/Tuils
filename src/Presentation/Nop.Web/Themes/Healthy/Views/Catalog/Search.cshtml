@@ -51,6 +51,10 @@
         {
             @Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
         }
+        @if (Model.PagingFilteringContext.BikeReferenceFilter.Enabled)
+        {
+            @Html.Partial("_FilterBikeReferenceBox", Model.PagingFilteringContext.BikeReferenceFilter, new ViewDataDictionary())
+        }
         
     </div>
 }

@@ -40,7 +40,7 @@ namespace Nop.Web.Extensions
             model.DateOfBirth = entity.GetAttribute<DateTime?>(SystemCustomerAttributeNames.DateOfBirth);
             model.StateProvinceId = entity.GetAttribute<int>(SystemCustomerAttributeNames.StateProvinceId);
             model.StateProvinceChildId = entity.GetAttribute<int>(SystemCustomerAttributeNames.StateProvinceChildId);
-            model.BikeBrandId = entity.GetAttribute<int?>(SystemCustomerAttributeNames.BikeBrandId);
+            model.BikeBrand.CategoryId = entity.GetAttribute<int?>(SystemCustomerAttributeNames.BikeBrandId);
             model.BikeReferenceId = entity.GetAttribute<int?>(SystemCustomerAttributeNames.BikeReferenceId);
             model.BikeYear = entity.GetAttribute<int?>(SystemCustomerAttributeNames.BikeYear);
             model.BikeCarriagePlate = entity.GetAttribute<string>(SystemCustomerAttributeNames.BikeCarriagePlate);
@@ -464,58 +464,5 @@ namespace Nop.Web.Extensions
             return destination;
         }
 
-        /// <summary>
-        /// Retorna la imagen por defecto de un producto en un objeto de tipo PictureModel
-        /// </summary>
-        /// <param name="product"></param>
-        /// <param name="pictureSize"></param>
-        /// <param name="_mediaSettings"></param>
-        /// <param name="_cacheManager"></param>
-        /// <param name="_pictureService"></param>
-        /// <param name="_workContext"></param>
-        /// <param name="_webHelper"></param>
-        /// <param name="_localizationService"></param>
-        /// <returns></returns>
-        public static PictureModel GetDefaultPicture(this Product product, int? pictureSize = null,
-            MediaSettings _mediaSettings= null,
-            ICacheManager _cacheManager = null,
-            IPictureService _pictureService = null,
-            IWorkContext _workContext = null,
-            IWebHelper _webHelper = null,
-            ILocalizationService _localizationService = null)
-        {
-            if (!pictureSize.HasValue)
-                pictureSize = _mediaSettings.ProductThumbPictureSize;
-
-            if (_cacheManager == null)
-                _cacheManager = EngineContext.Current.Resolve<ICacheManager>();
-
-            if (_pictureService == null)
-                _pictureService = EngineContext.Current.Resolve<IPictureService>();
-
-            if (_workContext == null)
-                _workContext = EngineContext.Current.Resolve<IWorkContext>();
-
-            if (_webHelper == null)
-                _webHelper = EngineContext.Current.Resolve<IWebHelper>();
-
-            if (_localizationService == null)
-                _localizationService = EngineContext.Current.Resolve<ILocalizationService>();
-
-
-            var defaultProductPictureCacheKey = string.Format(Nop.Web.Infrastructure.Cache.ModelCacheEventConsumer.PRODUCT_DEFAULTPICTURE_MODEL_KEY, product.Id, pictureSize, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), 1);
-            return _cacheManager.Get(defaultProductPictureCacheKey, () =>
-             {
-                 var picture = _pictureService.GetPicturesByProductId(product.Id, 1).FirstOrDefault();
-                 var pictureModel = new PictureModel
-                 {
-                     ImageUrl = _pictureService.GetPictureUrl(picture, pictureSize.Value),
-                     FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
-                     Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), product.Name),
-                     AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), product.Name)
-                 };
-                 return pictureModel;
-             });
-        }
     }
 }

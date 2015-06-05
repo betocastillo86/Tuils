@@ -44,8 +44,8 @@
                     @Html.RatingControl(item.Rating.Value)
                 }
                 else
-                { 
-                    <a href="javascript:;">Calificar</a>
+                {
+                    <a href="@Url.Action("ProductDetails", "Product", new { seName = item.Product.SeName })#product-reviews-page">Calificar</a>
                 }
                 <p>
                     @item.CreatedOn.ToShortDateString()

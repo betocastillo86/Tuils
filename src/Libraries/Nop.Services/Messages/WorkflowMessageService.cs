@@ -1222,6 +1222,45 @@ namespace Nop.Services.Messages
                 toEmail, toName);
         }
 
+
+        /// <summary>
+        /// Envia la notificacion de que un correo ha sido respondido
+        /// </summary>
+        /// <param name="productQuestion">datos de la pregunta</param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        public virtual int SendQuestionAnsweredNotificationMessage(ProductQuestion productQuestion, int languageId)
+        {
+            if (productQuestion == null)
+                throw new ArgumentNullException("productQuestion");
+
+            var store = _storeContext.CurrentStore;
+            languageId = EnsureLanguageIsActive(languageId, store.Id);
+
+            var messageTemplate = GetActiveMessageTemplate("Product.QuestionAnswered", store.Id);
+            if (messageTemplate == null)
+                return 0;
+
+            //email account
+            var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);
+
+            //tokens
+            var tokens = new List<Token>();
+            _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
+            _messageTokenProvider.AddProductTokens(tokens, productQuestion.Product, languageId);
+            _messageTokenProvider.AddCustomerTokens(tokens, productQuestion.Customer);
+            _messageTokenProvider.AddQuestionTokens(tokens, productQuestion);
+
+            //event notification
+            _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
+
+            var toEmail = productQuestion.Customer.Email;
+            var toName = productQuestion.Customer.GetFullName();
+            return SendNotification(messageTemplate, emailAccount,
+                languageId, tokens,
+                toEmail, toName);
+        }
+
         /// <summary>
         /// Sends a "quantity below" notification to a store owner
         /// </summary>

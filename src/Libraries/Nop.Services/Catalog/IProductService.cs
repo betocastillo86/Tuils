@@ -83,6 +83,7 @@ namespace Nop.Services.Catalog
         /// <param name="searchProductTags">A value indicating whether to search by a specified "keyword" in product tags</param>
         /// <param name="languageId">Language identifier (search for text searching)</param>
         /// <param name="filteredSpecs">Filtered product specification identifiers</param>
+        /// <param name="orderBySpecialCategoryId">Organiza los resultados por los que pertenecen a una categoria especial enviada (Usualmente la marca de moto del usuario en sesion)</param>
         /// <param name="orderBy">Order by</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Products</returns>
@@ -110,6 +111,8 @@ namespace Nop.Services.Catalog
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
             bool showHidden = false,
             bool? published = null,
+            int? specialCategoryId = null,
+            int? orderBySpecialCategoryId = null,
            int? stateProvinceId = null);
 
 
@@ -141,7 +144,16 @@ namespace Nop.Services.Catalog
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
             bool showHidden = false,
             bool? published = null,
+            int? specialCategoryId = null,
+            int? orderBySpecialCategoryId = null,
            int? stateProvinceId = null);
+
+        /// <summary>
+        /// Realiza un conteo de los productos activos de un vendedor
+        /// </summary>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        int CountActiveProductsByVendorId(int vendorId);
 
         /// <summary>
         /// Search products
@@ -176,6 +188,7 @@ namespace Nop.Services.Catalog
         /// <param name="searchProductTags">A value indicating whether to search by a specified "keyword" in product tags</param>
         /// <param name="languageId">Language identifier (search for text searching)</param>
         /// <param name="filteredSpecs">Filtered product specification identifiers</param>
+        /// <param name="orderBySpecialCategoryId">Organiza los resultados por los que pertenecen a una categoria especial enviada (Usualmente la marca de moto del usuario en sesion)</param>
         /// <param name="orderBy">Order by</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <param name="published">Si viene null no filtra por el campo Published. Si no viene null si filtra por el campo dependiendo de su valor</param>
@@ -185,11 +198,13 @@ namespace Nop.Services.Catalog
             out Dictionary<int, int> filterableCategoryCount,
             out Dictionary<int, int> filterableStateProvinceCount,
             out Dictionary<int, int> filterableManufacturerCount,
+            out Dictionary<int, int> filterableSpecialCategoryCount,
             out Tuple<int, int> minMaxPrice,
             bool loadFilterableSpecificationAttributeOptionIds = false,
             bool loadFilterableCategoryIds = false,
             bool loadFilterableStateProvinceIds = false,
             bool loadFilterableManufacturerIds = false,
+            bool loadFilterableSpecialCategoryIds = false,
             int pageIndex = 0,
             int pageSize = 2147483647,  //Int32.MaxValue
             IList<int> categoryIds = null,
@@ -214,6 +229,8 @@ namespace Nop.Services.Catalog
             bool showHidden = false,
             bool? published = null,
             int? stateProvinceId = null,
+            int? specialCategoryId = null,
+            int? orderBySpecialCategoryId = null,
             bool? loadPriceRange = false);
 
 
@@ -232,6 +249,15 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="product">Product</param>
         void UpdateProductReviewTotals(Product product);
+
+        /// <summary>
+        /// Valida si un usuario tiene un review pendiente en un producto especifico consultado las ordenes existentes
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="productId"></param>
+        /// <param name="orderItemId">Retorna el id de la orden pendiente de calificar, si no hay pendiente simplemente devuelve 0</param>
+        /// <returns></returns>
+        bool CustomerHasPendingReviewByProductId(int customerId, int productId, out int orderItemId);
 
         /// <summary>
         /// Get low stock products
@@ -463,10 +489,11 @@ namespace Nop.Services.Catalog
         /// <param name="fromUtc">Item creation from; null to load all records</param>
         /// <param name="toUtc">Item item creation to; null to load all records</param>
         /// <param name="message">Search title or review text; null to load all records</param>
+        /// <param name="orderItemId">Filtra por orden a las calificaciones de un producto</param>
         /// <returns>Reviews</returns>
-        IList<ProductReview> GetAllProductReviews(int customerId, bool? approved,
+        IList<ProductReview> GetAllProductReviews(int? customerId= null, bool? approved = null,
             DateTime? fromUtc = null, DateTime? toUtc = null,
-            string message = null);
+            string message = null, int? orderItemId = null);
 
         /// <summary>
         /// Gets product review
@@ -529,5 +556,10 @@ namespace Nop.Services.Catalog
         bool AnswerQuestion(ProductQuestion question);
         #endregion
 
+        /// <summary>
+        /// Actualiza el número de ventas que se ha hecho de un producto
+        /// </summary>
+        /// <param name="productId"></param>
+        void UpdateTotalSalesByProductId(int productId);
     }
 }

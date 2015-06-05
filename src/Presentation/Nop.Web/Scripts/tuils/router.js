@@ -15,7 +15,7 @@
                 "quiero-vender/producto": "sellProduct",
                 "quiero-vender/moto": "sellBike",
                 "quiero-vender/servicio-especializado": "sellService",
-                "datos-basicos": "myAccount",
+                "mi-cuenta/datos-basicos": "myAccount",
                 "ControlPanel/Offices": "myOffices",
                 "ControlPanel/VendorServices": "vendorServices",
                 "ControlPanel/MyOrders(/:query)": "myOrders",
@@ -98,8 +98,8 @@
             },
             vendor : function(query)
             {
-                $(".master-wrapper-main").removeClass("master-wrapper-main");
-                $(".master-wrapper-page").removeClass("master-wrapper-page").removeClass("container").removeClass("hd");
+                $(".master-wrapper-main").first().removeClass("master-wrapper-main");
+                $(".master-wrapper-page").first().removeClass("master-wrapper-page").removeClass("container").removeClass("hd");
                 var that = this;
                 require(['tuils/views/vendor/vendorDetailView'], function (VendorDetailView) {
                     that.currentView = new VendorDetailView({ el: that.defaultEl });

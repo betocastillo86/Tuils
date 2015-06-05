@@ -5,7 +5,7 @@
 @{
     //logo path
     var currentThemeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
-    var logoPath = "~/Themes/" + currentThemeName + "/Content/images/logo.png";
+    var logoPath = "~/Themes/" + currentThemeName + "/Content/images/logo.svg";
 
     //store name
     var storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
@@ -17,16 +17,15 @@
         <a href="@Url.RouteUrl("HomePage")">
             <img title="" alt="@storeName" src="@Url.Content(logoPath)">
         </a>
-        @*added*@
-        <div class="menu">
+        @*<div class="menu">
             @Html.Action("TopMenu", "Catalog")
-        </div>
-        @*added*@
+        </div>*@
     </div>
     <div class="search-box">
         @Html.Action("SearchBox", "Catalog")
     </div>
-    <div class="header-selectors-wrapper">
+    @Html.ActionLink(T("header.publishproduct").Text, "Index", "Sales", new { }, new { @class = "btn_anuncia" })
+    @*<div class="header-selectors-wrapper">
         <div class="tax-display-type-selector">
             @Html.Action("TaxTypeSelector", "Common")
         </div>
@@ -36,11 +35,10 @@
         <div class="language-selector">
             @Html.Action("LanguageSelector", "Common")
         </div>
-        @*added*@
         <div class="fontawesome-phone">
             @T("Custom.CallUs"): <a href="tel:@T("Custom.PhoneNumber")">@T("Custom.PhoneNumber")</a>
         </div>
-        @*added*@
         @Html.Widget("header_selectors")
-    </div>
+    </div>*@
+    <br/>
 </div>

@@ -22,9 +22,12 @@ namespace Nop.Services.Catalog
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="includeInTopMenu">True: filtra las que se muestran en el menu principal, False: Trae las que no se muestran en el menu principal, Null: No filtra por el campo</param>
+        /// <param name="parentCategoryId">Filtra por la categoria padre</param>
         /// <returns>Categories</returns>
         IPagedList<Category> GetAllCategories(string categoryName = "",
-            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false);
+            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false, bool? includeInTopMenu = null,
+            int? parentCategoryId= null);
 
         /// <summary>
         /// Gets all categories filtered by parent category identifier
@@ -55,6 +58,14 @@ namespace Nop.Services.Catalog
         /// <param name="categoryId">Category identifier</param>
         /// <returns>Category</returns>
         Category GetCategoryById(int categoryId, bool includeSubcategories = false);
+
+        /// <summary>
+        /// Retorna el listado de Ids de una categoria
+        /// </summary>
+        /// <param name="parentCategoryId">id de la categoria padre</param>
+        /// <returns></returns>
+        List<int> GetChildCategoryIds(int parentCategoryId);
+
 
         /// <summary>
         /// Retorna las categorias por los ids dados

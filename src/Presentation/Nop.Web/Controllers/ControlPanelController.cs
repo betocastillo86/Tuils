@@ -140,13 +140,16 @@ namespace Nop.Web.Controllers
                 model.AvgRating = _workContext.CurrentVendor.AvgRating ?? 0;
                 model.NumRatings = _workContext.CurrentVendor.NumRatings;
 
-                //trae todos los productos del vendedor y los cuenta
+                //trae todos los productos del vendedor y los cuenta Activos
                 var vendorProducts =  _productService.SearchProducts(vendorId: _workContext.CurrentVendor.Id);
                 model.PublishedProducts = vendorProducts.Count;
 
                 //Consulta todas las ventas del vendedor
                 var vendorSellings = _orderService.SearchOrders(vendorId:_workContext.CurrentVendor.Id);
                 model.SoldProducts = vendorSellings.Count;
+
+                //Suma el numero de preguntas sin responder
+                model.UnansweredQuestions = vendorProducts.Sum(p => p.UnansweredQuestions);
 
             }
 
@@ -194,7 +197,7 @@ namespace Nop.Web.Controllers
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.LastName, model.LastName);
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.StateProvinceId, model.StateProvinceId);
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.Phone, model.Phone);
-                    _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.BikeBrandId, model.BikeBrandId);
+                    _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.BikeBrandId, model.BikeBrand.CategoryId);
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.BikeReferenceId, model.BikeReferenceId);
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.DateOfBirth, model.DateOfBirth);
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.BikeYear, model.BikeYear);
@@ -203,6 +206,7 @@ namespace Nop.Web.Controllers
                     _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.Newsletter, Core.Domain.Messages.NewsLetterSuscriptionType.General);
                     _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.NewsletterBrand, Core.Domain.Messages.NewsLetterSuscriptionType.MyBrand);
                     _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.NewsletterReference, Core.Domain.Messages.NewsLetterSuscriptionType.MyReference);
+
                 }
             }
             catch (Exception exc)
@@ -217,14 +221,22 @@ namespace Nop.Web.Controllers
 
         private MyAccountModel GetModelMyAccount(MyAccountModel model)
         {
-            
             if(model == null)
                 model = _workContext.CurrentCustomer.ToMyAccountModel();
 
-            model.BikeReferences = model.BikeBrandId.HasValue ? _categoryService.GetAllCategoriesByParentCategoryId(model.BikeBrandId.Value) : new List<Category>();
+            model.BikeReferences = model.BikeBrand.CategoryId.HasValue ? _categoryService.GetAllCategoriesByParentCategoryId(model.BikeBrand.CategoryId.Value) : new List<Category>();
 
             model.States = _stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry);
             model.BikeBrands = _categoryService.GetAllCategoriesByParentCategoryId(_tuilsSettings.productBaseTypes_bike);
+
+            //Intenta cargar la imagen de la marca solo si tiene seleccionada una
+            if (model.BikeBrand.CategoryId.HasValue)
+            {
+                var categoryBrand = _categoryService.GetCategoryById(model.BikeBrand.CategoryId.Value);
+                if (categoryBrand != null)
+                    model.BikeBrand.Picture = categoryBrand.GetPicture(_localizationService, _mediaSettings, _pictureService);
+            }
+
             return model;
         }
 
@@ -395,7 +407,12 @@ namespace Nop.Web.Controllers
                 if (order.OrderItems.Count > 0)
                 {
                     var item = order.OrderItems.FirstOrDefault();
-                    orderModel.Rating = item.Rating;
+
+                    //Consulta el review de una orden
+                    var review = _productService.GetAllProductReviews(orderItemId:item.Id, approved:true).FirstOrDefault();
+                    if(review != null)
+                        orderModel.Rating = review.Rating;
+
                     orderModel.Product = new Models.Catalog.ProductOverviewModel() { 
                          Id = item.Product.Id,
                          Name = item.Product.Name,
@@ -481,9 +498,11 @@ namespace Nop.Web.Controllers
                 
                 string keywordsSearch = !string.IsNullOrWhiteSpace(command.q) ? command.q : null;
                 
+                IList<int> categoriesIds = null;
+                if (command.pt.HasValue)
+                    categoriesIds = GetChildCategoryIds(command.pt.Value);
 
-
-                var products = _productService.SearchProducts(showHidden:true, vendorId:_workContext.CurrentVendor.Id,
+                var products = _productService.SearchProducts(showHidden:true, categoryIds: categoriesIds, vendorId:_workContext.CurrentVendor.Id,
                     pageSize: command.PageSize, pageIndex:command.PageIndex, keywords:keywordsSearch,
                     orderBy: ProductSortingEnum.UpdatedOn, published:command.p);
 
@@ -499,16 +518,46 @@ namespace Nop.Web.Controllers
                     AvailableStartDate = p.AvailableStartDateTimeUtc ?? DateTime.Now,
                     AvailableEndDate = p.AvailableEndDateTimeUtc ?? DateTime.Now,
                     Published = p.Published,
-                    DefaultPictureModel = p.GetDefaultPicture(null,_mediaSettings, _cacheManager, _pictureService, _workContext, _webHelper, _localizationService)
+                    DefaultPictureModel = p.GetPicture(_localizationService, _mediaSettings, _pictureService)
                 }).ToList();
 
                 model.PagingFilteringContext.q = command.q;
                 model.PagingFilteringContext.LoadPagedList(products);
 
+                string url = _webHelper.GetThisPageUrl(true);
+                model.UrlFilterByServices = new MyProductsModel.LinkFilter()
+                {
+                    Url = _webHelper.ModifyQueryString(url, "pt=" + _tuilsSettings.productBaseTypes_service, null),
+                    Active = command.pt.HasValue && command.pt.Value == _tuilsSettings.productBaseTypes_service
+                };
+                model.UrlFilterByBikes = new MyProductsModel.LinkFilter()
+                {
+                    Url = _webHelper.ModifyQueryString(url, "pt=" + _tuilsSettings.productBaseTypes_bike, null),
+                    Active = command.pt.HasValue && command.pt.Value == _tuilsSettings.productBaseTypes_bike
+                };
+                model.UrlFilterByProducts = new MyProductsModel.LinkFilter()
+                {
+                    Url = _webHelper.ModifyQueryString(url, "pt=" + _tuilsSettings.productBaseTypes_product, null),
+                    Active = command.pt.HasValue && command.pt.Value == _tuilsSettings.productBaseTypes_product
+                };
+ 
                 return View(model);
             }
             else
                 return InvokeHttp404();
+        }
+
+
+        [NonAction]
+        protected virtual List<int> GetChildCategoryIds(int parentCategoryId)
+        {
+            var customerRolesIds = _workContext.CurrentCustomer.CustomerRoles
+               .Where(cr => cr.Active).Select(cr => cr.Id).ToList();
+            string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_CHILD_IDENTIFIERS_MODEL_KEY, parentCategoryId, string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id);
+            return _cacheManager.Get(cacheKey, () =>
+            {
+                return _categoryService.GetChildCategoryIds(parentCategoryId);
+            });
         }
         #endregion
 
@@ -563,8 +612,8 @@ namespace Nop.Web.Controllers
         /// <returns></returns>
         private string GetCurrentModule(List<ControlPanelModule> modules, ref string parent)
         {
-            string currentAction = ControllerContext.ParentActionViewContext.RouteData.Values["action"].ToString();
-            string currentController = ControllerContext.ParentActionViewContext.RouteData.Values["controller"].ToString();
+            string currentAction = ControllerContext.ParentActionViewContext.RouteData.Values["action"].ToString().ToLower();
+            string currentController = ControllerContext.ParentActionViewContext.RouteData.Values["controller"].ToString().ToLower();
             foreach (var module in modules)
             {
                 //Valida que todas las llaves del módulo sean iguales al querystring
@@ -602,7 +651,7 @@ namespace Nop.Web.Controllers
                     //Si no es de tipo padre recorre los submodulos
                     foreach (var sm in module.SubModules)
                     {
-                        if (sm.Action.Equals(currentAction) && sm.Controller.Equals(currentController) && validateQueryString(queryStringParent, sm.Parameters))
+                        if (sm.Action.ToLower().Equals(currentAction) && sm.Controller.ToLower().Equals(currentController) && validateQueryString(queryStringParent, sm.Parameters))
                             subModuleName = sm.Name;
                     }
                     //Si algún submodulo fue encontrado lo retorna

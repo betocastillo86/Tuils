@@ -21,7 +21,7 @@ namespace Nop.Web.Models.ControlPanel
 
         public int NewMessages { get; set; }
 
-        public int PendingMessages { get; set; }
+        public int UnansweredQuestions { get; set; }
 
 
         public MyAccountModel    Customer { get; set; }

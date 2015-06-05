@@ -170,9 +170,11 @@ namespace Nop.Services.Catalog
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="includeInTopMenu">True: filtra las que se muestran en el menu principal, False: Trae las que no se muestran en el menu principal, Null: No filtra por el campo</param>
+        /// <param name="parentCategoryId">Filtra por la categoria padre</param>
         /// <returns>Categories</returns>
         public virtual IPagedList<Category> GetAllCategories(string categoryName = "", 
-            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false)
+            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false, bool? includeInTopMenu = null, int? parentCategoryId= null)
         {
             var query = _categoryRepository.Table;
             if (!showHidden)
@@ -181,6 +183,12 @@ namespace Nop.Services.Catalog
                 query = query.Where(c => c.Name.Contains(categoryName));
             query = query.Where(c => !c.Deleted);
             query = query.OrderBy(c => c.ParentCategoryId).ThenBy(c => c.DisplayOrder);
+
+            if (includeInTopMenu.HasValue)
+                query = query.Where(c => c.IncludeInTopMenu == includeInTopMenu.Value);
+
+            if (parentCategoryId.HasValue)
+                query = query.Where(c => c.ParentCategoryId == parentCategoryId.Value);
             
             if (!showHidden && (!_catalogSettings.IgnoreAcl || !_catalogSettings.IgnoreStoreLimitations))
             {
@@ -684,7 +692,22 @@ namespace Nop.Services.Catalog
             return GetAllCategoriesByParentCategoryId(_tuilsSettings.productBaseTypes_service, includeSubcategories: true, showHidden: true);
         }
 
+        /// <summary>
+        /// Retorna la lista de Ids de categorias hijas
+        /// </summary>
+        /// <param name="parentCategoryId"></param>
+        /// <returns></returns>
+        public List<int> GetChildCategoryIds(int parentCategoryId)
+        {
+            var categoriesIds = new List<int>();
+            var category = GetCategoryById(parentCategoryId);
+            if (category != null && !string.IsNullOrEmpty(category.ChildrenCategoriesStr))
+                categoriesIds = category.ChildrenCategoriesStr
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(c => Convert.ToInt32(c))
+                    .ToList();
 
-
+            return categoriesIds;
+        }
     }
 }

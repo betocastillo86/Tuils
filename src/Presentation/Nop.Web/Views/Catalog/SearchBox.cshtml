@@ -7,7 +7,7 @@
 {
     <input type="text" class="search-box-text" id="small-searchterms" autocomplete="off" value="@searchTooltip" name="q" />
     @Html.Widget("searchbox_before_search_button")
-    <input type="submit" class="button-1 search-box-button" value="@T("Search")" />
+    <a href="javascript:;" type="submit" class="btn_search" value="@T("Search")"><span class="icon-lupa"></span></a>
     <script type="text/javascript">
         $(document).ready(function() {
             $("#small-searchterms").focus(function() {

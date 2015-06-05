@@ -21,27 +21,21 @@ namespace Nop.Web.Controllers.Api
         private readonly IProductService _productService;
         private readonly IWorkContext _workContext;
         private readonly IVendorService _vendorService;
+        private readonly ICategoryService _categoryService;
         #endregion
 
         #region Ctor
         public ProductsController(IProductService productService, 
             IWorkContext workContext,
-            IVendorService vendorService)
+            IVendorService vendorService,
+            ICategoryService categoryService)
         {
             this._productService = productService;
             this._workContext = workContext;
             this._vendorService = vendorService;
+            this._categoryService = categoryService;
         }
         #endregion
-        
-        [Route("api/products")]
-        [AuthorizeApi]
-        [HttpGet]
-        public IHttpActionResult PublisProduct()
-        {
-            return Ok();
-        }
-
         [Route("api/products")]
         [HttpPost]
         [AuthorizeApi]
@@ -49,7 +43,7 @@ namespace Nop.Web.Controllers.Api
         {
             if (ModelState.IsValid && model.Validate())
             {
-                var product = model.ToEntity();
+                var product = model.ToEntity(_categoryService);
 
                 //Si el vendor no existe, es necesario crearlo con base en el usuario
                 if (_workContext.CurrentVendor == null || _workContext.CurrentVendor.Id == 0)

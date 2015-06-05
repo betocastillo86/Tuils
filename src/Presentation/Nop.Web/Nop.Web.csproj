@@ -242,6 +242,7 @@
     <Compile Include="Extensions\ListExtenstions.cs" />
     <Compile Include="Extensions\MappingExtensions.cs" />
     <Compile Include="Extensions\MvcHelperExtensions.cs" />
+    <Compile Include="Extensions\PictureModelExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1008,6 +1009,7 @@
     <Content Include="Scripts\backbone-min.js" />
     <Content Include="Scripts\backbone.stickit.js" />
     <Content Include="Scripts\backbone.stickit.min.js" />
+    <Content Include="Scripts\css.js" />
     <Content Include="Scripts\handlebars.amd.js" />
     <Content Include="Scripts\handlebars.amd.min.js" />
     <Content Include="Scripts\handlebars.js" />
@@ -1016,6 +1018,56 @@
     <Content Include="Scripts\handlebars.runtime.amd.min.js" />
     <Content Include="Scripts\handlebars.runtime.js" />
     <Content Include="Scripts\handlebars.runtime.min.js" />
+    <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.autoheight.css" />
+    <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.counters.css" />
+    <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.dividers.css" />
+    <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.dragopen.css" />
+    <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.navbars.css" />
+    <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.offcanvas.css" />
+    <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.searchfield.css" />
+    <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.sectionindexer.css" />
+    <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.toggles.css" />
+    <Content Include="Scripts\mmenu\css\extensions\jquery.mmenu.borderstyle.css" />
+    <Content Include="Scripts\mmenu\css\extensions\jquery.mmenu.effects.css" />
+    <Content Include="Scripts\mmenu\css\extensions\jquery.mmenu.fullscreen.css" />
+    <Content Include="Scripts\mmenu\css\extensions\jquery.mmenu.iconbar.css" />
+    <Content Include="Scripts\mmenu\css\extensions\jquery.mmenu.multiline.css" />
+    <Content Include="Scripts\mmenu\css\extensions\jquery.mmenu.pageshadow.css" />
+    <Content Include="Scripts\mmenu\css\extensions\jquery.mmenu.positioning.css" />
+    <Content Include="Scripts\mmenu\css\extensions\jquery.mmenu.themes.css" />
+    <Content Include="Scripts\mmenu\css\extensions\jquery.mmenu.widescreen.css" />
+    <Content Include="Scripts\mmenu\css\jquery.mmenu.all.css" />
+    <Content Include="Scripts\mmenu\css\jquery.mmenu.css" />
+    <Content Include="Scripts\mmenu\css\jquery.mmenu.oncanvas.css" />
+    <Content Include="Scripts\mmenu\js\addons\jquery.mmenu.autoheight.min.js" />
+    <Content Include="Scripts\mmenu\js\addons\jquery.mmenu.backbutton.min.js" />
+    <Content Include="Scripts\mmenu\js\addons\jquery.mmenu.counters.min.js" />
+    <Content Include="Scripts\mmenu\js\addons\jquery.mmenu.dividers.min.js" />
+    <Content Include="Scripts\mmenu\js\addons\jquery.mmenu.dragopen.min.js" />
+    <Content Include="Scripts\mmenu\js\addons\jquery.mmenu.fixedelements.min.js" />
+    <Content Include="Scripts\mmenu\js\addons\jquery.mmenu.navbars.min.js" />
+    <Content Include="Scripts\mmenu\js\addons\jquery.mmenu.offcanvas.min.js" />
+    <Content Include="Scripts\mmenu\js\addons\jquery.mmenu.searchfield.min.js" />
+    <Content Include="Scripts\mmenu\js\addons\jquery.mmenu.sectionindexer.min.js" />
+    <Content Include="Scripts\mmenu\js\addons\jquery.mmenu.toggles.min.js" />
+    <Content Include="Scripts\mmenu\js\jquery.mmenu.min.all.js" />
+    <Content Include="Scripts\mmenu\js\jquery.mmenu.min.js" />
+    <Content Include="Scripts\mmenu\js\jquery.mmenu.oncanvas.min.js" />
+    <Content Include="Scripts\mmenu\js_umd\addons\jquery.mmenu.autoheight.umd.js" />
+    <Content Include="Scripts\mmenu\js_umd\addons\jquery.mmenu.backbutton.umd.js" />
+    <Content Include="Scripts\mmenu\js_umd\addons\jquery.mmenu.counters.umd.js" />
+    <Content Include="Scripts\mmenu\js_umd\addons\jquery.mmenu.dividers.umd.js" />
+    <Content Include="Scripts\mmenu\js_umd\addons\jquery.mmenu.dragopen.umd.js" />
+    <Content Include="Scripts\mmenu\js_umd\addons\jquery.mmenu.fixedelements.umd.js" />
+    <Content Include="Scripts\mmenu\js_umd\addons\jquery.mmenu.navbars.umd.js" />
+    <Content Include="Scripts\mmenu\js_umd\addons\jquery.mmenu.offcanvas.umd.js" />
+    <Content Include="Scripts\mmenu\js_umd\addons\jquery.mmenu.searchfield.umd.js" />
+    <Content Include="Scripts\mmenu\js_umd\addons\jquery.mmenu.toggles.umd.js" />
+    <Content Include="Scripts\mmenu\js_umd\jquery.mmenu.oncanvas.umd.js" />
+    <Content Include="Scripts\mmenu\js_umd\jquery.mmenu.umd.all.js" />
+    <Content Include="Scripts\mmenu\js_umd\jquery.mmenu.umd.js" />
+    <Content Include="Scripts\mmenu\js_umd\_inc\affix.js" />
+    <Content Include="Scripts\mmenu\js_umd\_inc\prefix.js" />
     <Content Include="Scripts\tuils\collections\addresses.js" />
     <Content Include="Scripts\tuils\collections\categories.js" />
     <Content Include="Scripts\tuils\collections\files.js" />
@@ -1127,6 +1179,7 @@
     <Content Include="App_Readme\Handlebarsjs_README.md" />
     <Content Include="App_Readme\Handlebarsjs_LICENSE" />
     <Content Include="Scripts\handelbars.helpers.js" />
+    <None Include="Properties\PublishProfiles\SmarterAspNet-Release.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />
@@ -2416,6 +2469,9 @@
     <Content Include="Views\Catalog\_FilterCategoryBox.cshtml" />
     <Content Include="Views\Catalog\_FilterStateProvinceBox.cshtml" />
     <Content Include="Views\Catalog\_FilterManufacturerBox.cshtml" />
+    <Content Include="Views\Home\Close.cshtml" />
+    <Content Include="Themes\Healthy\Views\Catalog\TopMenuNavigation.cshtml" />
+    <Content Include="Views\Catalog\_FilterBikeReferenceBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

@@ -12,6 +12,7 @@ using Nop.Services.Logging;
 using System.Collections.Generic;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Customers;
+using Nop.Services.Catalog;
 
 namespace Nop.Services.Vendors
 {
@@ -256,6 +257,8 @@ namespace Nop.Services.Vendors
 
                 //Si la foto ya está asignada la actualiza, sino la crea
                 Picture picture = null;
+                bool pictureExisted = pictureId.HasValue;
+
                 if (pictureId.HasValue)
                 {
                     picture = _pictureService.UpdatePicture(pictureId.Value, dataFile, mimeType, seoName, true);
@@ -273,9 +276,16 @@ namespace Nop.Services.Vendors
                     
                 }
 
-                //Actualiza el vendor con los datos de la nueva foto
-                vendor.BackgroundPosition = 0;
-                return UpdateVendor(vendor);
+                //Si la imagen es nueva actualiza el vendor
+                //Si la actualiza la imagen y el fondo no ha sido movido previamente NO actualiza el vendor ya que devolverá error
+                if (!pictureExisted || (pictureExisted && vendor.BackgroundPosition != 0))
+                {
+                    //Actualiza el vendor con los datos de la nueva foto
+                    vendor.BackgroundPosition = 0;
+                    return UpdateVendor(vendor);
+                }
+                else
+                    return true;
                     
             }
             catch (Exception e)
@@ -384,11 +394,34 @@ namespace Nop.Services.Vendors
 
             return query.ToList();
         }
+
+        /// <summary>
+        /// Actualiza los valores de AvgRating y NumRating del vendor dependiendo de los reviews recibidos
+        /// </summary>
+        /// <param name="vendorId">Vendedor a ser actualziado</param>
+        public void UpdateRatings(int vendorId)
+        {
+            if (vendorId <= 0)
+                return;
+
+            var vendor = GetVendorById(vendorId);
+            if (vendor != null)
+            {
+                var reviews = GetReviewsByVendorId(vendorId);
+
+                vendor.NumRatings = reviews.Count;
+                vendor.AvgRating = reviews.Average(r => r.Rating);
+                UpdateVendor(vendor);
+            }
+        }
         #endregion
 
 
 
 
-        
+
+
+
+       
     }
 }

@@ -129,11 +129,12 @@ namespace Nop.Services.Orders
         /// <param name="ps">Order payment status; null to load all records</param>
         /// <param name="ss">Order shipment status; null to load all records</param>
         /// <param name="loadDownloableProductsOnly">Value indicating whether to load downloadable products only</param>
+        /// <param name="rated">Solo trae las que tienen votación</param>
         /// <returns>Order items</returns>
-        IList<OrderItem> GetAllOrderItems(int? orderId,
-           int? customerId, DateTime? createdFromUtc, DateTime? createdToUtc, 
-           OrderStatus? os, PaymentStatus? ps, ShippingStatus? ss,
-           bool loadDownloableProductsOnly = false);
+        IList<OrderItem> GetAllOrderItems(int? orderId = null,
+            int? customerId = null, DateTime? createdFromUtc = null, DateTime? createdToUtc = null,
+            OrderStatus? orderStatus = null, PaymentStatus? paymentStatus = null, ShippingStatus? shippingStatus = null,
+            bool loadDownloableProductsOnly = false, int? productId = null, bool? rated = null);
 
         /// <summary>
         /// Delete an order item
@@ -235,5 +236,12 @@ namespace Nop.Services.Orders
         #endregion
 
         bool IsMinimumOrderPlacementIntervalValid(Customer customer);
+
+        /// <summary>
+        /// Marca una order item como calificada
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="rated"></param>
+        void MarkOrderItemAsRated(int orderItemId, bool rated = true);
     }
 }

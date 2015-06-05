@@ -29,6 +29,8 @@ namespace Nop.Services.Messages
 
         void AddCustomerTokens(IList<Token> tokens, Customer customer);
 
+        void AddQuestionTokens(IList<Token> tokens, ProductQuestion question);
+
         void AddNewsLetterSubscriptionTokens(IList<Token> tokens, NewsLetterSubscription subscription);
 
         void AddProductReviewTokens(IList<Token> tokens, ProductReview productReview);

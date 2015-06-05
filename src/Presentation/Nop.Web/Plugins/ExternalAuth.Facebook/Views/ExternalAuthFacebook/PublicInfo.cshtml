@@ -1,4 +1,5 @@
 ﻿@using Nop.Web.Framework.UI
+@model Nop.Plugin.ExternalAuth.Facebook.Models.LoginFacebookOptionsModel
 @{
     Layout = "";
 
@@ -6,6 +7,6 @@
 }
 <fieldset class="facebook-login-block">
     <legend>@T("Plugins.ExternalAuth.Facebook.Login")</legend>
-    <a href="@Url.RouteUrl("Plugin.ExternalAuth.Facebook.Login", new { ReturnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"] })" class="facebook-btn">
+    <a href="@Url.RouteUrl("Plugin.ExternalAuth.Facebook.Login", new { ReturnUrl = Model.ReturnUrl })" class="facebook-btn" target="@(Model.BlankWindow ? "_blank" : "_self")" >
         &nbsp;</a>
 </fieldset>

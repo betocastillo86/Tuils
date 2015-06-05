@@ -34,6 +34,8 @@ namespace Nop.Web.Infrastructure
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"));
             builder.RegisterType<WidgetController>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"));
+            builder.RegisterType<ControlPanelController>()
+                .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"));
 
 
             //Se registra controladores de API para cache

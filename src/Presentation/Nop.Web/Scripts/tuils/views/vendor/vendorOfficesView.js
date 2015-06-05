@@ -93,7 +93,7 @@
             showGallery : function()
             {
                 var show = this.galleryCollection.toJSON().length > 0;
-                this.$('#btnViewGallery').css('display', show ? 'inline' : 'none');
+                this.$('#btnViewGallery').css('display', show ? '' : 'none');
                 if (show)
                 {
                     var pictures = new Array();

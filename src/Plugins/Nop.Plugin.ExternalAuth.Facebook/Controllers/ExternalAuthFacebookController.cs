@@ -26,6 +26,7 @@ namespace Nop.Plugin.ExternalAuth.Facebook.Controllers
         private readonly IWorkContext _workContext;
         private readonly IPluginFinder _pluginFinder;
         private readonly ILocalizationService _localizationService;
+        private readonly IWebHelper _webHelper;
 
         public ExternalAuthFacebookController(ISettingService settingService,
             IOAuthProviderFacebookAuthorizer oAuthProviderFacebookAuthorizer,
@@ -36,7 +37,8 @@ namespace Nop.Plugin.ExternalAuth.Facebook.Controllers
             IStoreService storeService,
             IWorkContext workContext,
             IPluginFinder pluginFinder,
-            ILocalizationService localizationService)
+            ILocalizationService localizationService,
+            IWebHelper webHelper)
         {
             this._settingService = settingService;
             this._oAuthProviderFacebookAuthorizer = oAuthProviderFacebookAuthorizer;
@@ -48,6 +50,7 @@ namespace Nop.Plugin.ExternalAuth.Facebook.Controllers
             this._workContext = workContext;
             this._pluginFinder = pluginFinder;
             this._localizationService = localizationService;
+            this._webHelper = webHelper;
         }
         
         [AdminAuthorize]
@@ -116,9 +119,14 @@ namespace Nop.Plugin.ExternalAuth.Facebook.Controllers
         }
 
         [ChildActionOnly]
-        public ActionResult PublicInfo()
+        public ActionResult PublicInfo(LoginFacebookOptionsModel model)
         {
-            return View("~/Plugins/ExternalAuth.Facebook/Views/ExternalAuthFacebook/PublicInfo.cshtml");
+            model = model ?? new LoginFacebookOptionsModel();
+
+            if (string.IsNullOrEmpty(model.ReturnUrl))
+                model.ReturnUrl = Request.QueryString["ReturnUrl"];
+            
+            return View("~/Plugins/ExternalAuth.Facebook/Views/ExternalAuthFacebook/PublicInfo.cshtml", model);
         }
 
         [NonAction]
@@ -160,7 +168,32 @@ namespace Nop.Plugin.ExternalAuth.Facebook.Controllers
                     }
                 case OpenAuthenticationStatus.AutoRegisteredStandard:
                     {
+
+                        if (Session["RedirectExternalLoginUrl"] != null && !string.IsNullOrEmpty(Session["RedirectExternalLoginUrl"].ToString()))
+                        {
+                            returnUrl = Session["RedirectExternalLoginUrl"].ToString();
+                            Session.Remove("RedirectExternalLoginUrl");
+                            return Redirect(returnUrl);
+                        }
+                        
                         return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.Standard });
+                    }
+                case OpenAuthenticationStatus.RequiresRedirect:
+                    {
+                        if (!string.IsNullOrEmpty(returnUrl))
+                            Session.Add("RedirectExternalLoginUrl", returnUrl);
+                        break;
+                    }
+                case OpenAuthenticationStatus.Authenticated:
+                    {
+                        if (Session["RedirectExternalLoginUrl"] != null && !string.IsNullOrEmpty(Session["RedirectExternalLoginUrl"].ToString()))
+                        {
+                            returnUrl = Session["RedirectExternalLoginUrl"].ToString();
+                            Session.Remove("RedirectExternalLoginUrl");
+                            return Redirect(returnUrl);
+                        }
+                            
+                        break;
                     }
                 default:
                     break;

@@ -4,6 +4,7 @@ using Nop.Core.Domain.Directory;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Mvc;
 using Nop.Web.Models.Customer;
+using Nop.Web.Models.Media;
 using Nop.Web.Validators.Customer;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Nop.Web.Models.ControlPanel
         public MyAccountModel()
         {
             this.States = new List<StateProvince>();
+            this.BikeBrand = new BikeBrandCategory();
         }
 
         [NopResourceDisplayName("Account.Fields.Email")]
@@ -65,8 +67,8 @@ namespace Nop.Web.Models.ControlPanel
         public IList<StateProvince> States { get; set; }
 
 
-        [NopResourceDisplayName("Account.Fields.BikeBrand")]
-        public int? BikeBrandId { get; set; }
+
+        public BikeBrandCategory BikeBrand { get; set; }
         public IList<Category> BikeBrands { get; set; }
 
 
@@ -87,8 +89,14 @@ namespace Nop.Web.Models.ControlPanel
         [NopResourceDisplayName("Account.Fields.ReferenceNewsletter")]
         public bool NewsletterReference { get; set; }
 
+        public class BikeBrandCategory
+        {
+            [NopResourceDisplayName("Account.Fields.BikeBrand")]
+            public int? CategoryId { get; set; }
 
+            public PictureModel Picture { get; set; }
 
+        }
         
     }
 }

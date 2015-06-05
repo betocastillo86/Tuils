@@ -249,7 +249,14 @@ namespace Nop.Web.Infrastructure.Cache
 
 
         public const string CATEGORIES_API_ALL_BIKEREFERENCES = "Nop.category.api.allbikebrands";
-        public const string CATEGORIES_API_CATEGORY_MODEL_KEY = "Nop.category.api.category-{0}"; 
+        /// <summary>
+        /// Llave que tiene los modelos que van por el API en cache
+        /// </summary>
+        /// <remarks>
+        /// {0} : id de la categoria
+        /// {1} : true: contiene imagen  false: no
+        /// </remarks>
+        public const string CATEGORIES_API_CATEGORY_MODEL_KEY = "Nop.category.api.category-{0}-{1}"; 
 
 
         /// <summary>
@@ -353,6 +360,11 @@ namespace Nop.Web.Infrastructure.Cache
         /// </remarks>
         public const string TOPIC_TOP_MENU_MODEL_KEY = "Nop.pres.topic.topmenu-{0}-{1}";
         public const string TOPIC_PATTERN_KEY = "Nop.pres.topic";
+
+        /// <summary>
+        /// Llave que contiene los atributos que van relacionados a las categorias para hacer el filtro 
+        /// </summary>
+        public const string TOPIC_TOP_MENU_ATTRIBUTES_KEY = "Nop.pres.topic.topmenu.specificationAttributes";
 
         /// <summary>
         /// Key for CategoryTemplate caching

@@ -858,7 +858,15 @@ namespace Nop.Web.Controllers
                 });
             }
 
-            model.AddProductReview.CanCurrentCustomerLeaveReview = _catalogSettings.AllowAnonymousUsersToReviewProduct || !_workContext.CurrentCustomer.IsGuest();
+            //model.AddProductReview.CanCurrentCustomerLeaveReview = _catalogSettings.AllowAnonymousUsersToReviewProduct || !_workContext.CurrentCustomer.IsGuest();
+            int orderItemId = 0;
+            //Solo pueden dejar comentarios los usuarios que compraron el producto y tienen un review pendiente
+            if (_workContext.CurrentCustomer != null && !_workContext.CurrentCustomer.IsGuest())
+                model.AddProductReview.CanCurrentCustomerLeaveReview = _productService.CustomerHasPendingReviewByProductId(_workContext.CurrentCustomer.Id, product.Id, out orderItemId);
+            else
+                model.AddProductReview.CanCurrentCustomerLeaveReview = false;
+
+            
             model.AddProductReview.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnProductReviewPage;
         }
 
@@ -1211,7 +1219,11 @@ namespace Nop.Web.Controllers
                 ModelState.AddModelError("", _localizationService.GetResource("Reviews.OnlyRegisteredUsersCanWriteReviews"));
             }
 
-            if (ModelState.IsValid)
+            //orden que se va calificar
+            int orderItemId = 0;
+
+            //Valida que el usuario autenticado tenga reviews pendientes
+            if (ModelState.IsValid && _productService.CustomerHasPendingReviewByProductId(_workContext.CurrentCustomer.Id, productId, out orderItemId))
             {
                 //save review
                 int rating = model.AddProductReview.Rating;
@@ -1230,9 +1242,13 @@ namespace Nop.Web.Controllers
                     HelpfulNoTotal = 0,
                     IsApproved = isApproved,
                     CreatedOnUtc = DateTime.UtcNow,
+                    OrderItemId = orderItemId
                 };
                 product.ProductReviews.Add(productReview);
                 _productService.UpdateProduct(product);
+
+
+                //_orderService.MarkOrderItemAsRated(orderItemId);
 
                 //update product totals
                 _productService.UpdateProductReviewTotals(product);
