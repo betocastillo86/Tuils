@@ -311,5 +311,16 @@ namespace Nop.Core.Domain.Catalog
         /// Gets or sets a value indicating whether to display information about shipping and tax on order details page (used in Germany)
         /// </summary>
         public bool DisplayTaxShippingInfoOrderDetailsPage { get; set; }
+
+        /// <summary>
+        /// Muestra o no las marcas en el home 
+        /// </summary>
+        public bool ShowManufacturersHomePage { get; set; }
+
+
+        /// <summary>
+        /// Número de registros que debe mostrar en el home
+        /// </summary>
+        public int NumberManufacturersOnHome { get; set; }
     }
 }

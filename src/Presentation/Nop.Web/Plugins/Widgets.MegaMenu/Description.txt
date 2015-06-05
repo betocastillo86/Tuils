@@ -1,4 +1,4 @@
-﻿Group: Widgets
+Group: Widgets
 FriendlyName: Mega Menu
 SystemName: Widgets.MegaMenu
 Version: 2.10

@@ -1,5 +1,8 @@
 namespace Nop.Data.Migrations
 {
+    using Nop.Core.Data;
+    using Nop.Core.Domain.Configuration;
+    using Nop.Core.Infrastructure;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -7,6 +10,7 @@ namespace Nop.Data.Migrations
 
     internal sealed class Configuration : DbMigrationsConfiguration<Nop.Data.NopObjectContext>
     {
+
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;

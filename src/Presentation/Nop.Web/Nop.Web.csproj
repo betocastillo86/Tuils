@@ -293,6 +293,7 @@
     <Compile Include="Models\Catalog\BackInStockSubscribeModel.cs" />
     <Compile Include="Models\Catalog\CategorySimpleModel.cs" />
     <Compile Include="Models\Catalog\CompareProductsModel.cs" />
+    <Compile Include="Models\Catalog\ManufacturerHomePageModel.cs" />
     <Compile Include="Models\Catalog\VendorModel.cs" />
     <Compile Include="Models\Catalog\VendorNavigationModel.cs" />
     <Compile Include="Models\Catalog\ProductOverviewModel.cs" />
@@ -2472,6 +2473,7 @@
     <Content Include="Views\Home\Close.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\TopMenuNavigation.cshtml" />
     <Content Include="Views\Catalog\_FilterBikeReferenceBox.cshtml" />
+    <Content Include="Views\Catalog\ManufacturerHomePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

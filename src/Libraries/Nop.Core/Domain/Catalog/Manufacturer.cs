@@ -105,6 +105,11 @@ namespace Nop.Core.Domain.Catalog
         public DateTime UpdatedOnUtc { get; set; }
 
         /// <summary>
+        /// Se muestra en la pagina principal
+        /// </summary>
+        public bool ShowOnHomePage { get; set; }
+
+        /// <summary>
         /// Categorias que aplican para la marca
         /// </summary>
         public virtual ICollection<ManufacturerCategory> Categories {

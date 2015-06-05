@@ -789,6 +789,34 @@ namespace Nop.Web.Controllers
 
             return PartialView(model);
         }
+        
+        
+        [ChildActionOnly]
+        public ActionResult ManufacturerHomePage()
+        {
+            if (!_catalogSettings.ShowManufacturersHomePage)
+                return Content(string.Empty);
+
+            var model = new ManufacturerHomePageModel();
+            model.Enable = true;
+
+            //Consulta las marcas que van en el home
+            string cacheKey = string.Format(ModelCacheEventConsumer.MANUFACTURER_ON_HOMEPAGE);
+            var cachedManufacturers = _cacheManager.Get(cacheKey, () =>
+            {
+                return _manufacturerService
+                    .GetManufacturersOnHomePage()
+                    .ToModels(true, _localizationService, _mediaSettings, _pictureService);
+            });
+
+            //Toma aleatoreamente un número de registros para ser mostrados
+            model.Manufacturers = cachedManufacturers
+                .OrderBy(elem => Guid.NewGuid())
+                .Take(_catalogSettings.NumberManufacturersOnHome)
+                .ToList();
+
+            return View(model);
+        }
 
         [ChildActionOnly]
         public ActionResult HomepageCategories()
