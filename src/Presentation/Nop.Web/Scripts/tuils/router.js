@@ -15,7 +15,7 @@
                 "quiero-vender/producto": "sellProduct",
                 "quiero-vender/moto": "sellBike",
                 "quiero-vender/servicio-especializado": "sellService",
-                "datos-basicos": "myAccount",
+                "mi-cuenta/datos-basicos": "myAccount",
                 "ControlPanel/Offices": "myOffices",
                 "ControlPanel/VendorServices": "vendorServices",
                 "ControlPanel/MyOrders(/:query)": "myOrders",

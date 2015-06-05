@@ -83,6 +83,7 @@ namespace Nop.Services.Catalog
         /// <param name="searchProductTags">A value indicating whether to search by a specified "keyword" in product tags</param>
         /// <param name="languageId">Language identifier (search for text searching)</param>
         /// <param name="filteredSpecs">Filtered product specification identifiers</param>
+        /// <param name="orderBySpecialCategoryId">Organiza los resultados por los que pertenecen a una categoria especial enviada (Usualmente la marca de moto del usuario en sesion)</param>
         /// <param name="orderBy">Order by</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Products</returns>
@@ -110,6 +111,8 @@ namespace Nop.Services.Catalog
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
             bool showHidden = false,
             bool? published = null,
+            int? specialCategoryId = null,
+            int? orderBySpecialCategoryId = null,
            int? stateProvinceId = null);
 
 
@@ -141,6 +144,8 @@ namespace Nop.Services.Catalog
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
             bool showHidden = false,
             bool? published = null,
+            int? specialCategoryId = null,
+            int? orderBySpecialCategoryId = null,
            int? stateProvinceId = null);
 
         /// <summary>
@@ -183,6 +188,7 @@ namespace Nop.Services.Catalog
         /// <param name="searchProductTags">A value indicating whether to search by a specified "keyword" in product tags</param>
         /// <param name="languageId">Language identifier (search for text searching)</param>
         /// <param name="filteredSpecs">Filtered product specification identifiers</param>
+        /// <param name="orderBySpecialCategoryId">Organiza los resultados por los que pertenecen a una categoria especial enviada (Usualmente la marca de moto del usuario en sesion)</param>
         /// <param name="orderBy">Order by</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <param name="published">Si viene null no filtra por el campo Published. Si no viene null si filtra por el campo dependiendo de su valor</param>
@@ -192,11 +198,13 @@ namespace Nop.Services.Catalog
             out Dictionary<int, int> filterableCategoryCount,
             out Dictionary<int, int> filterableStateProvinceCount,
             out Dictionary<int, int> filterableManufacturerCount,
+            out Dictionary<int, int> filterableSpecialCategoryCount,
             out Tuple<int, int> minMaxPrice,
             bool loadFilterableSpecificationAttributeOptionIds = false,
             bool loadFilterableCategoryIds = false,
             bool loadFilterableStateProvinceIds = false,
             bool loadFilterableManufacturerIds = false,
+            bool loadFilterableSpecialCategoryIds = false,
             int pageIndex = 0,
             int pageSize = 2147483647,  //Int32.MaxValue
             IList<int> categoryIds = null,
@@ -221,6 +229,8 @@ namespace Nop.Services.Catalog
             bool showHidden = false,
             bool? published = null,
             int? stateProvinceId = null,
+            int? specialCategoryId = null,
+            int? orderBySpecialCategoryId = null,
             bool? loadPriceRange = false);
 
 

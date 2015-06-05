@@ -1463,6 +1463,13 @@ namespace Nop.Web.Controllers
                     int? stateProvinceId = model.PagingFilteringContext.StateProvinceFilter.GetAlreadyFilteredId(_webHelper);
                     //Marca seleccionada
                     int? manufacturerId = model.PagingFilteringContext.ManufacturerFilter.GetAlreadyFilteredId(_webHelper);
+                    //Categoria especial seleccionada (Marca de la moto)
+                    int? specialCategoryId = model.PagingFilteringContext.BikeReferenceFilter.GetAlreadyFilteredId(_webHelper);
+
+                    //categoria especial por la que debería ordenar que solo se activa si el usuario cuenta con esta registrada como moto
+                    //Además si viene filtro por categoría especial NO debe ordenar por categoría especial
+                    //Si viene algún orden seleccionado NO debe ordenar por categoria especial
+                    int? orderBySpecialCategoryId = !specialCategoryId.HasValue && command.OrderBy == 0  ? _workContext.CurrentCustomer.GetAttribute<int?>(SystemCustomerAttributeNames.BikeReferenceId) : null;
 
                     //var searchInProductTags = false;
                     var searchInProductTags = searchInDescriptions;
@@ -1472,6 +1479,7 @@ namespace Nop.Web.Controllers
                     Dictionary<int, int> filterableCategoryIds;
                     Dictionary<int, int> filterableStateProvinceIds;
                     Dictionary<int, int> filterableManufacturerIds;
+                    Dictionary<int, int> filterableSpecialCategoryIds;
                     Tuple<int, int> minMaxPrice;
 
                     //products
@@ -1480,12 +1488,14 @@ namespace Nop.Web.Controllers
                         out filterableCategoryIds,
                         out filterableStateProvinceIds,
                         out filterableManufacturerIds,
+                        out filterableSpecialCategoryIds,
                         out minMaxPrice,
                         true,
                         loadFilterableCategoryIds: categoryIds.Count == 0,  //Solo realiza conteo de categorias si no está filtrando por categoria
                         loadFilterableStateProvinceIds: !stateProvinceId.HasValue, //Solo realiza conteo de ciudaddes si no está filtrando por ciudad,
                         loadPriceRange: !minPriceConverted.HasValue && !maxPriceConverted.HasValue, //Solo realiza conteo de precios si no está filtrando por precio
                         loadFilterableManufacturerIds: !manufacturerId.HasValue, //Solo realiza conteo de marcas si no está filtrando por marca
+                        loadFilterableSpecialCategoryIds: !specialCategoryId.HasValue,//Solo realiza connteo de categorias especiales si no está filtrado por referencia
                         categoryIds: categoryIds,
                         manufacturerId: manufacturerId ?? 0,
                         storeId: _storeContext.CurrentStore.Id,
@@ -1501,7 +1511,9 @@ namespace Nop.Web.Controllers
                         filteredSpecs: alreadyFilteredSpecOptionIds,
                         pageIndex: command.PageNumber - 1,
                         pageSize: command.PageSize,
-                        stateProvinceId: stateProvinceId);
+                        stateProvinceId: stateProvinceId,
+                        specialCategoryId:specialCategoryId,
+                        orderBySpecialCategoryId: orderBySpecialCategoryId);
                     model.Products = PrepareProductOverviewModels(products).ToList();
 
                     //Price
@@ -1526,6 +1538,12 @@ namespace Nop.Web.Controllers
                     model.PagingFilteringContext.ManufacturerFilter.PrepareFilters(manufacturerId,
                 filterableManufacturerIds,
                 _manufacturerService, _webHelper, _workContext);
+
+
+                    //bike references
+                    model.PagingFilteringContext.BikeReferenceFilter.PrepareFilters(specialCategoryId,
+                filterableSpecialCategoryIds,
+                _categoryService, _webHelper, _workContext);
 
                     model.NoResults = !model.Products.Any();
 

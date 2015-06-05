@@ -1,0 +1,41 @@
+﻿@model CatalogPagingFilteringModel.BikeReferenceFilterModel
+@using Nop.Web.Models.Catalog;
+
+@if (Model.Enabled)
+{
+    <div class="product-filters product-spec-filter">
+        <div class="filter-title">
+            <strong>@T("Filtering.BikeReferenceFilter")</strong>
+        </div>
+        <div class="filter-content">
+            @if (Model.NotFilteredItems != null && Model.NotFilteredItems.Count > 0)
+            {
+                <div class="available-items">
+                    @foreach (var state in Model.NotFilteredItems)
+                    {
+
+                        <ul class="group">
+                            <li class="title">
+                                @state.Name (<a href="@state.FilterUrl">@state.NumOfProducts</a>)
+                            </li>
+                        </ul>
+                    }
+                </div>
+            }
+            @if (Model.FilteredItem != null)
+            {
+                <div class="already-filtered-items">
+                    <div class="filter-title">
+                        @T("Filtering.BikeReference.CurrentlyFilteredBy")
+                    </div>
+                    <div class="item">
+                        <strong>@(Model.FilteredItem.Name)</strong>
+                    </div>
+                </div>
+                <div class="remove-filter">
+                    <a href="@Model.RemoveFilterUrl">@T("Filtering.BikeReference.Remove")</a>
+                </div>
+            }
+        </div>
+    </div>
+}

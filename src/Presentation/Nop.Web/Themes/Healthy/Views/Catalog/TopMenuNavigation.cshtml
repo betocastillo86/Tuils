@@ -13,9 +13,6 @@
 
 }
 
-<link type="text/css" rel="stylesheet" href="http://mmenu.frebsite.nl/mmenu/css/jquery.mmenu.all.css?v=5.1.2" />
-<script type="text/javascript" src="http://mmenu.frebsite.nl/mmenu/js/jquery.mmenu.min.all.js?v=5.1.2"></script>
-
 @helper RenderCategoryLine(CategorySimpleModel category, TopMenuModel.SpecificationAttributeOptionModel attribute)
 {
     <li>
@@ -33,7 +30,7 @@
         }
     </li>
 }
-@if (Model.Categories.Count > 0)
+@if (false && Model.Categories.Count > 0)
 {
     <div class="headerButtonMenuResponsive">
         <a href="#mainMenu"></a>
