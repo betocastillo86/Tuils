@@ -30,28 +30,30 @@
         }
     </li>
 }
-@if (false && Model.Categories.Count > 0)
+@if ( Model.Categories.Count > 0)
 {
     <div class="headerButtonMenuResponsive">
         <a href="#mainMenu"></a>
     </div>
-    <div class="nav-menu container hd">
+    <div class="nav-menu">
         <nav id="mainMenu" class="mm-menu">
             <ul>
 
                 @foreach (var attribute in Model.SpecificationAttributesFilter)
                 {
                     <li data-id="@attribute.Id">
-                        <a> @attribute.Name</a>
+                        <a><span class="icon-moto2"></span><span class="tooltip-menu">@attribute.Name</span></a>
                         <ul>
                             @foreach (var category in Model.Categories)
                             {
                                 @RenderCategoryLine(category, attribute)
                             }
+                            <br/>
                         </ul>
 
                     </li>
                 }
+                <br/>
             </ul>
         </nav>
     </div>

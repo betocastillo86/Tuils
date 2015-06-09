@@ -904,6 +904,9 @@ html.oldie .container { width: 940px; }
             .caja_edtsedes .picture-uploader li span{margin:17px 17px 0;}
     /*fin panel de control*/
 }
+@media screen and (max-width:1024px){
+    .headerButtonMenuResponsive{display:block;}
+}
 @media screen and (max-width:960px) {
     /*Header*/
     #small-searchterms{width: 90%;}
