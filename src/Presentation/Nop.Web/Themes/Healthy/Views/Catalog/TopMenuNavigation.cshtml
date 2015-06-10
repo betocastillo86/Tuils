@@ -42,13 +42,13 @@
                 @foreach (var attribute in Model.SpecificationAttributesFilter)
                 {
                     <li data-id="@attribute.Id">
-                        <a><span class="icon-moto2"></span><span class="tooltip-menu">@attribute.Name</span></a>
-                        <ul>
+                        <a class="aFirstLevel"><span class="icon-@attribute.SeName"></span><span class="tooltip-menu">@attribute.Name</span></a>
+                        <ul class="childrenOptions" style="display:none">
                             @foreach (var category in Model.Categories)
                             {
                                 @RenderCategoryLine(category, attribute)
                             }
-                            <br/>
+                            <br />
                         </ul>
 
                     </li>
@@ -99,6 +99,15 @@
                 $("#mainMenu").data("mmenu").close();
             }
         });
+
+
+        //Muestra y oculta menu
+        $("#mainMenu .childrenOptions").first().show();
+        $(".aFirstLevel").click(function () {
+            $("#mainMenu .childrenOptions").hide();
+            $(this.parentElement).find("ul").show();
+        });
+
     });
 
 </script>
