@@ -94,12 +94,12 @@ input[type="text"]:disabled{background:none repeat scroll 0 0 #FFF;}
 .icon-tel:before { content: "\e601";}
 .icon-fb:before { content: "\e602";}
 .icon-twt:before { content: "\e603";}
-.icon-moto1:before { content: "\e604";}
-.icon-moto2:before { content: "\e605";}
-.icon-moto3:before { content: "\e606";}
-.icon-moto4:before { content: "\e607";}
-.icon-moto5:before { content: "\e608";}
-.icon-moto6:before { content: "\e609";}
+.icon-scooter:before { content: "\e604";}
+.icon-de_calle:before { content: "\e605";}
+.icon-enduro:before { content: "\e606";}
+.icon-deportiva:before { content: "\e607";}
+.icon-chopper:before { content: "\e608";}
+.icon-turismo:before { content: "\e609";}
 
 /* HEADER AND MENU */
 .header{padding:0 0 10px; height:auto; position: relative;}

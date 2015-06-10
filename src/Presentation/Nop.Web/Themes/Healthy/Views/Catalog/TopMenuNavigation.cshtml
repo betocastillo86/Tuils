@@ -42,7 +42,7 @@
                 @foreach (var attribute in Model.SpecificationAttributesFilter)
                 {
                     <li data-id="@attribute.Id">
-                        <a class="aFirstLevel"><span class="icon-@attribute.SeName"></span><span class="tooltip-menu">@attribute.Name</span></a>
+                        <a class="aFirstLevel"><span class="icon-@attribute.SeName.Replace("-", "_")"></span><span class="tooltip-menu">@attribute.Name</span></a>
                         <ul class="childrenOptions" style="display:none">
                             @foreach (var category in Model.Categories)
                             {
@@ -50,7 +50,6 @@
                             }
                             <br />
                         </ul>
-
                     </li>
                 }
                 <br/>
