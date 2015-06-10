@@ -256,7 +256,7 @@ ul.top-menu { margin: 0;}
 .header .ico-cart span, .header .ico-wishlist span { padding-left: 5px; }
 .header .ico-cart:hover *,.header .ico-wishlist:hover *{text-decoration:none;cursor:pointer;}
 .block li { background: none; }
-.product-price .price, .product-grid .product-item .prices .actual-price, .product-list .product-item .prices .actual-price { font-family: Arial,Helvetica,sans-serif; font-size: 18px; line-height: 20px; }
+.product-price .price, .product-grid .product-item .prices .actual-price, .product-list .product-item .prices .actual-price {font-size: 18px; line-height: 20px; }
 .breadcrumb .current-item { font-size: 15px; }
 .product-grid .product-item .prices .old-price, .product-list .product-item .prices .old-price, .old-product-price span {font-size:1.2em; }
 .sub-category-grid a, .manufacturer-grid a { font-weight: 400; }

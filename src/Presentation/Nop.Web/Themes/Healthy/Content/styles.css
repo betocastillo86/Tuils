@@ -150,7 +150,8 @@ ul.language-list li:hover{cursor:pointer;}
 	.nav-menu .mm-menu{background:transparent; max-width: 100%; position: relative;}
 	.nav-menu .mm-menu ul{margin:0;}
 	.nav-menu .mm-menu ul li{padding:0; float:left; position:relative;}
-		.tooltip-menu{background:url(images/bkg_tooltip.png) repeat-x center; height: 24px; position: absolute; top: 0; left: 0; width: auto; font-size: 16px; font-weight: 600; font-style: italic; color:#FFF; text-transform: uppercase; padding:0 3px;}
+		.tooltip-menu{visibility: hidden; background:url(images/bkg_tooltip.png) repeat-x center; height: 24px; position: absolute; top: 0; left: 0; width: auto; font-size: 16px; font-weight: 600; font-style: italic; color:#FFF; text-transform: uppercase; padding:0 3px;}
+		li:hover .tooltip-menu{visibility: visible;}
 		.tooltip-menu:after{background:url(images/bkg_tooltip_af.png) no-repeat; height: 24px; width:15px; position: absolute; content: ""; top: 0; right:-15px;}
 		.tooltip-menu:before{background:url(images/bkg_tooltip_be.png) no-repeat; height: 24px; width:7px; position: absolute; content: ""; top: 0; left: -7px;}
 	.nav-menu .mm-menu a{cursor: pointer;}
@@ -620,7 +621,7 @@ td.fieldname{font-size:12px;}
 .product-grid .item-box:hover{background:#F8F8F9; border-bottom:3px solid #FDB7AA; height: 347px;}
 .product-grid .product-item{text-align:left;margin:0;padding:0;width:155px;}
 .product-grid .product-item .product-title{font-weight:normal;font-size:18px;padding:0; color:#292732;}
-.product-grid .product-item .product-title a{display:block;height:auto;line-height:1.3em;overflow:hidden;padding:4px 10px 8px 0; color:#292732; font-weight: 500;}
+.product-grid .product-item .product-title a{display:block;height:auto;line-height:1.3em;overflow:hidden; white-space: nowrap; text-overflow:ellipsis; padding:4px 0 8px; color:#292732; font-weight: 500; max-height: 50px;}
 .product-grid .product-item .details{margin: 0 15px;}
 .product-grid .product-item .product-rating-box{}
 .product-grid .product-item .picture{background:none repeat scroll 0 0 #FFFFFF;text-align:center;border-bottom:1px solid #E5E5E5;height:140px;overflow:hidden;}
