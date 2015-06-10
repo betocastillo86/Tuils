@@ -94,12 +94,12 @@ input[type="text"]:disabled{background:none repeat scroll 0 0 #FFF;}
 .icon-tel:before { content: "\e601";}
 .icon-fb:before { content: "\e602";}
 .icon-twt:before { content: "\e603";}
-.icon-moto1:before { content: "\e604";}
-.icon-moto2:before { content: "\e605";}
-.icon-moto3:before { content: "\e606";}
-.icon-moto4:before { content: "\e607";}
-.icon-moto5:before { content: "\e608";}
-.icon-moto6:before { content: "\e609";}
+.icon-scooter:before { content: "\e604";}
+.icon-de-calle:before { content: "\e605";}
+.icon-enduro:before { content: "\e606";}
+.icon-deportiva:before { content: "\e607";}
+.icon-chopper:before { content: "\e608";}
+.icon-turismo:before { content: "\e609";}
 
 /* HEADER AND MENU */
 .header{padding:0 0 10px; height:auto; position: relative;}
@@ -147,19 +147,25 @@ ul.language-list li:hover{cursor:pointer;}
 
 /* top menu */
 .nav-menu{}
-	.nav-menu .mm-menu{background:transparent; max-width: 100%; position: relative;}
-	.nav-menu .mm-menu ul{margin:0;}
-	.nav-menu .mm-menu ul li{padding:0; float:left; position:relative;}
-		.tooltip-menu{visibility: hidden; background:url(images/bkg_tooltip.png) repeat-x center; height: 24px; position: absolute; top: 0; left: 0; width: auto; font-size: 16px; font-weight: 600; font-style: italic; color:#FFF; text-transform: uppercase; padding:0 3px;}
+	.nav-menu .mm-menu{background:transparent; max-width: 100%; width: auto; position: relative;}
+	.nav-menu .mm-menu ul{width:100%; margin: 0 auto; transition:ease height 0.2s;}
+	.nav-menu .mm-menu ul:hover{height:90px;}
+	.nav-menu .mm-menu ul li{padding:0; float:left; width:60px; margin: 0 12px;}
+	.nav-menu .mm-menu ul li:hover{background:#DFE2EA;}
+		.tooltip-menu{visibility: hidden; background:url(images/bkg_tooltip.png) repeat-x center; height: 24px; position: absolute; top:10px; right:60px; width: auto; font-size: 16px; font-weight: 600; font-style: italic; color:#FFF; text-transform: uppercase; padding:0 3px;}
 		li:hover .tooltip-menu{visibility: visible;}
 		.tooltip-menu:after{background:url(images/bkg_tooltip_af.png) no-repeat; height: 24px; width:15px; position: absolute; content: ""; top: 0; right:-15px;}
 		.tooltip-menu:before{background:url(images/bkg_tooltip_be.png) no-repeat; height: 24px; width:7px; position: absolute; content: ""; top: 0; left: -7px;}
-	.nav-menu .mm-menu a{cursor: pointer;}
+	.nav-menu .mm-menu ul li:hover a:before{border-bottom: 50px solid #DFE2EA; border-left: 12px solid transparent; position:absolute; top: 0; left:-12px; content: "";}
+		.nav-menu .mm-menu ul li:hover a:after{border-top: 50px solid #DFE2EA; border-right: 12px solid transparent; position:absolute; top: 0; right:-12px; content: "";}
+	.nav-menu .mm-menu ul li a{cursor: pointer; position: relative; display: block;}
 	.nav-menu .mm-menu ul li a [class^="icon-"]{font-size: 50px; color:#292732; text-align: center;}
-	.nav-menu .mm-menu ul li ul{background:#DFE2EA;}
-		.nav-menu .mm-menu ul li ul li{border-left: 1px solid #C6CDDB;}
+	/*segundo nivel*/
+	.nav-menu .mm-menu ul li ul{background:#DFE2EA; position: absolute; width: 100%; left: 0;}
+		.nav-menu .mm-menu ul li ul li{border-left: 1px solid #C6CDDB; margin: 0; width: auto;}
+		.nav-menu .mm-menu ul li ul li a:after{display: none;} .nav-menu .mm-menu ul li ul li a:before{display: none;}
 		.nav-menu .mm-menu ul li ul li:first-child{ border: none;}
-			.nav-menu .mm-menu ul li ul li a{color:#3B5A83; font-size: 14px; font-weight: 500; text-transform: uppercase; padding: 15px; display: block; transition:ease all 0.4s;}
+			.nav-menu .mm-menu ul li ul li a{color:#3B5A83; font-size: 14px; font-weight: 500; text-transform: uppercase; padding: 11px 15px 12px; display: block; transition:ease all 0.4s;}
 				.nav-menu .mm-menu ul li ul li a:hover{background:#3B5A83; color:#D8DEE6;}
 .header-menu{position: relative;}
 .headerButtonMenuResponsive{display:none;}
