@@ -149,17 +149,17 @@ ul.language-list li:hover{cursor:pointer;}
 .nav-menu{}
 	.nav-menu .mm-menu{background:transparent; max-width: 100%; position: relative;}
 	.nav-menu .mm-menu ul{margin:0;}
-	.nav-menu .mm-menu ul li{padding: 0; float: left;position: relative;}
+	.nav-menu .mm-menu ul li{padding:0; float:left; position:relative;}
 		.tooltip-menu{background:url(images/bkg_tooltip.png) repeat-x center; height: 24px; position: absolute; top: 0; left: 0; width: auto; font-size: 16px; font-weight: 600; font-style: italic; color:#FFF; text-transform: uppercase; padding:0 3px;}
 		.tooltip-menu:after{background:url(images/bkg_tooltip_af.png) no-repeat; height: 24px; width:15px; position: absolute; content: ""; top: 0; right:-15px;}
 		.tooltip-menu:before{background:url(images/bkg_tooltip_be.png) no-repeat; height: 24px; width:7px; position: absolute; content: ""; top: 0; left: -7px;}
 	.nav-menu .mm-menu a{cursor: pointer;}
 	.nav-menu .mm-menu ul li a [class^="icon-"]{font-size: 50px; color:#292732; text-align: center;}
 	.nav-menu .mm-menu ul li ul{background:#DFE2EA;}
-	.nav-menu .mm-menu ul li ul li{border-left: 1px solid #C6CDDB;}
+		.nav-menu .mm-menu ul li ul li{border-left: 1px solid #C6CDDB;}
 		.nav-menu .mm-menu ul li ul li:first-child{ border: none;}
-	.nav-menu .mm-menu ul li ul li a{color:#3B5A83; font-size: 14px; font-weight: 500; text-transform: uppercase; padding: 15px; display: block; transition:ease all 0.4s;}
-	.nav-menu .mm-menu ul li ul li a:hover{background:#3B5A83; color:#D8DEE6;}
+			.nav-menu .mm-menu ul li ul li a{color:#3B5A83; font-size: 14px; font-weight: 500; text-transform: uppercase; padding: 15px; display: block; transition:ease all 0.4s;}
+				.nav-menu .mm-menu ul li ul li a:hover{background:#3B5A83; color:#D8DEE6;}
 .header-menu{position: relative;}
 .headerButtonMenuResponsive{display:none;}
 
@@ -610,7 +610,7 @@ td.fieldname{font-size:12px;}
 
 /*MARCAS*/
 .conte_marcas{list-style: none; margin: 0; padding:10px 0; border-bottom: #E5E5E5 solid 1px;}
-	.conte_marcas li{float: left; border-left:solid 1px #E5E5E5; width:calc(16.6% - 1px);}
+	.conte_marcas li{float: left; border-left:solid 1px #E5E5E5; width:calc(16.6% - 1px); cursor:pointer;}
 	.conte_marcas li img{width: 125px; margin: 0 auto; display: block;}
 	.conte_marcas li:first-child{border: none;}
 /* PRODUCTS IN GRID - TEMPLATE */
