@@ -23,11 +23,9 @@ a{color:#5C5B5B;text-decoration:none;}
 a:hover{color:#B80709;text-decoration:underline;}
 h1,h2,h3,h4,h5,h6{font-family: 'Ubuntu', sans-serif;}
 h2,h3{font-size:16px;}
-<<<<<<< HEAD
+
 textarea{width:100%;border:1px solid transparent; background:#F3F5F7; border-radius: 2px; color:#53525A; font-family: 'Ubuntu', sans-serif; font-size: 14px; padding: 9px 10px; box-sizing: border-box; width: 300px; position: relative;}
-=======
-textarea{width:100%;font-family:'Ubuntu', sans-serif;font-size:11px;border:1px solid transparent;background:#F3F5F7;color:#53525A;}
->>>>>>> e88cd671e347586477fe048a64348e3967e3a082
+
 checkbox,input,radio,select,button{}
 fieldset{margin:0px 0px 15px;border:1px solid #c9c9c9;padding:15px;}
 legend{font-weight:bold;line-height:20px;font-size:16px;}
@@ -95,11 +93,9 @@ input[type="text"]:disabled{background:none repeat scroll 0 0 #FFF;}
 .icon-fb:before { content: "\e602";}
 .icon-twt:before { content: "\e603";}
 .icon-scooter:before { content: "\e604";}
-<<<<<<< HEAD
-.icon-de-calle:before { content: "\e605";}
-=======
+
 .icon-de_calle:before { content: "\e605";}
->>>>>>> a769f24ad81874653402b41305af26778f49553a
+
 .icon-enduro:before { content: "\e606";}
 .icon-deportiva:before { content: "\e607";}
 .icon-chopper:before { content: "\e608";}
