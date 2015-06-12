@@ -222,7 +222,7 @@ namespace Nop.Services.ControlPanel
                         Action = "MyProducts",
                         IconMini = "icon-mail",
                         IconBig = "icon-mail",
-                        Parameters = new { p = false }
+                        OptionalParameters = new { p = false }
                     }
                 }
 
@@ -270,24 +270,24 @@ namespace Nop.Services.ControlPanel
             });
 
             //Mensajes
-            modules.Add(new ControlPanelModule()
-            {
-                Name = "Messages",
-                Controller = "ControlPanel",
-                Action = "Messages",
-                IconMini = "icon-mail",
-                IconBig = "icon-mail"
-            });
+            //modules.Add(new ControlPanelModule()
+            //{
+            //    Name = "Messages",
+            //    Controller = "ControlPanel",
+            //    Action = "Messages",
+            //    IconMini = "icon-mail",
+            //    IconBig = "icon-mail"
+            //});
 
-            //Favoritos
-            modules.Add(new ControlPanelModule()
-            {
-                Name = "Favourites",
-                Controller = "ControlPanel",
-                Action = "Favourites",
-                IconMini = "icon-mail",
-                IconBig = "icon-mail"
-            });
+            ////Favoritos
+            //modules.Add(new ControlPanelModule()
+            //{
+            //    Name = "Favourites",
+            //    Controller = "ControlPanel",
+            //    Action = "Favourites",
+            //    IconMini = "icon-mail",
+            //    IconBig = "icon-mail"
+            //});
 
             return modules;
         }

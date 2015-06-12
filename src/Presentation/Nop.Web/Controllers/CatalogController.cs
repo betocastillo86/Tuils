@@ -1619,7 +1619,8 @@ namespace Nop.Web.Controllers
             {
                 AutoCompleteEnabled = _catalogSettings.ProductSearchAutoCompleteEnabled,
                 ShowProductImagesInSearchAutoComplete = _catalogSettings.ShowProductImagesInSearchAutoComplete,
-                SearchTermMinimumLength = _catalogSettings.ProductSearchTermMinimumLength
+                SearchTermMinimumLength = _catalogSettings.ProductSearchTermMinimumLength,
+                SearchWithSearchTerms = _catalogSettings.ProductSearchAutoCompleteWithSearchTerms
             };
             return PartialView(model);
         }
@@ -1631,26 +1632,38 @@ namespace Nop.Web.Controllers
 
             //products
             var productNumber = _catalogSettings.ProductSearchAutoCompleteNumberOfProducts > 0 ?
-                _catalogSettings.ProductSearchAutoCompleteNumberOfProducts : 10;
+            _catalogSettings.ProductSearchAutoCompleteNumberOfProducts : 10;
 
-            var products = _productService.SearchProducts(
-                storeId: _storeContext.CurrentStore.Id,
-                keywords: term,
-                searchSku: false,
-                languageId: _workContext.WorkingLanguage.Id,
-                visibleIndividuallyOnly: true,
-                pageSize: productNumber);
+            //Busca los terminos por el buscador de terminos general
+            if (_catalogSettings.ProductSearchAutoCompleteWithSearchTerms)
+            {
+                var result = _searchTermService.GetTemsByKeyword(term, productNumber)
+                    .Select(s => new { label = s.Keyword });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var products = _productService.SearchProducts(
+                    storeId: _storeContext.CurrentStore.Id,
+                    keywords: term,
+                    searchSku: false,
+                    languageId: _workContext.WorkingLanguage.Id,
+                    visibleIndividuallyOnly: true,
+                    pageSize: productNumber);
 
-            var models = PrepareProductOverviewModels(products, false, _catalogSettings.ShowProductImagesInSearchAutoComplete, _mediaSettings.AutoCompleteSearchThumbPictureSize).ToList();
-            var result = (from p in models
-                          select new
-                          {
-                              label = p.Name,
-                              producturl = Url.RouteUrl("Product", new { SeName = p.SeName }),
-                              productpictureurl = p.DefaultPictureModel.ImageUrl
-                          })
-                          .ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+                var models = PrepareProductOverviewModels(products, false, _catalogSettings.ShowProductImagesInSearchAutoComplete, _mediaSettings.AutoCompleteSearchThumbPictureSize).ToList();
+                var result = (from p in models
+                              select new
+                              {
+                                  label = p.Name,
+                                  producturl = Url.RouteUrl("Product", new { SeName = p.SeName }),
+                                  productpictureurl = p.DefaultPictureModel.ImageUrl
+                              })
+                              .ToList();
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+
+            
         }
 
         #endregion

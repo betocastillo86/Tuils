@@ -28,6 +28,13 @@ namespace Nop.Core.Domain.ControlPanel
 
         public object Parameters { get; set; }
 
+        /// <summary>
+        /// Son los parametros que son opcionales, y que no necesariamente deben venir en el query string.
+        /// Por ejemplo. MyProdcuts con parametro "p" = false trae los productos inactivos
+        ///              Pero MyProducts sin el parametro, debería traerlos también
+        /// </summary>
+        public object OptionalParameters { get; set; }
+
         private List<ControlPanelModule> _subModules { get; set; }
         public List<ControlPanelModule> SubModules 
         {

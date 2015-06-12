@@ -617,22 +617,37 @@ namespace Nop.Web.Controllers
             foreach (var module in modules)
             {
                 //Valida que todas las llaves del módulo sean iguales al querystring
-                Func<System.Collections.Specialized.NameValueCollection, object, bool> validateQueryString = delegate(System.Collections.Specialized.NameValueCollection queryString, object routeValuesModule)
+                Func<System.Collections.Specialized.NameValueCollection, object, object, bool> validateQueryString = delegate(System.Collections.Specialized.NameValueCollection queryString, object routeValuesModule, object routeValuesModuleOptional)
                 {
-                    if (routeValuesModule == null)
-                        return true;
-                    
-                    //Recorre todas las llaves que tiene el modulo
-                    foreach (var property in routeValuesModule.GetType().GetProperties())
+                    if (routeValuesModule != null)
                     {
-                        var valueParam = property.GetValue(routeValuesModule).ToString().ToLower();
-                        //Si la variable de querystring es nula o es diferente al valor que debe tener esa propiedad retorna false
-                        if (queryString[property.Name] == null || !queryString[property.Name].ToLower().Equals(valueParam))
+                        //Recorre todas las llaves que tiene el modulo como parametros OBLIGATORIOS
+                        foreach (var property in routeValuesModule.GetType().GetProperties())
                         {
-                            return false;
-                        }
+                            var valueParam = property.GetValue(routeValuesModule).ToString().ToLower();
+                            //Si la variable de querystring es nula o es diferente al valor que debe tener esa propiedad retorna false
+                            if (queryString[property.Name] == null || !queryString[property.Name].ToLower().Equals(valueParam))
+                            {
+                                return false;
+                            }
+                        } 
                     }
 
+                    if (routeValuesModuleOptional != null)
+                    {
+                        //Recorre todas las llaves que tiene el modulo como parametros OPCIONALES
+                        foreach (var property in routeValuesModuleOptional.GetType().GetProperties())
+                        {
+                            var valueParam = property.GetValue(routeValuesModuleOptional).ToString().ToLower();
+                            //Si la variable de querystring es diferente al valor que debe tener esa propiedad retorna false
+                            //Si la variable llega a ser null no retorna False ya que esta es opcional
+                            if (queryString[property.Name] != null && !queryString[property.Name].ToLower().Equals(valueParam))
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                    
                     return true;
                 };
                 
@@ -642,7 +657,7 @@ namespace Nop.Web.Controllers
                 if (module.SubModules.Count == 0
                     && module.Action.Equals(currentAction) 
                     && module.Controller.Equals(currentController) 
-                    && validateQueryString(queryStringParent, module.Parameters) )
+                    && validateQueryString(queryStringParent, module.Parameters, module.OptionalParameters) )
                     return module.Name;
                 else
                 {
@@ -651,7 +666,7 @@ namespace Nop.Web.Controllers
                     //Si no es de tipo padre recorre los submodulos
                     foreach (var sm in module.SubModules)
                     {
-                        if (sm.Action.ToLower().Equals(currentAction) && sm.Controller.ToLower().Equals(currentController) && validateQueryString(queryStringParent, sm.Parameters))
+                        if (sm.Action.ToLower().Equals(currentAction) && sm.Controller.ToLower().Equals(currentController) && validateQueryString(queryStringParent, sm.Parameters, sm.OptionalParameters))
                             subModuleName = sm.Name;
                     }
                     //Si algún submodulo fue encontrado lo retorna

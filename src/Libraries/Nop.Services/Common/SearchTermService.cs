@@ -4,6 +4,8 @@ using Nop.Core;
 using Nop.Core.Data;
 using Nop.Core.Domain.Common;
 using Nop.Services.Events;
+using System.Collections.Generic;
+using Nop.Data;
 
 namespace Nop.Services.Common
 {
@@ -16,16 +18,19 @@ namespace Nop.Services.Common
 
         private readonly IRepository<SearchTerm> _searchTermRepository;
         private readonly IEventPublisher _eventPublisher;
+        private readonly IDbContext _dbContext;
 
         #endregion
 
         #region Ctor
 
         public SearchTermService(IRepository<SearchTerm> searchTermRepository,
-            IEventPublisher eventPublisher)
+            IEventPublisher eventPublisher,
+            IDbContext dbContext)
         {
             this._searchTermRepository = searchTermRepository;
             this._eventPublisher = eventPublisher;
+            this._dbContext = dbContext;
         }
 
         #endregion
@@ -77,6 +82,35 @@ namespace Nop.Services.Common
                         select st;
             var searchTerm = query.FirstOrDefault();
             return searchTerm;
+        }
+
+        /// <summary>
+        /// Retorna un listado de busquedas más comunes dependiendo de la cadena enviada
+        /// </summary>
+        /// <returns></returns>
+        public virtual IList<SearchTerm> GetTemsByKeyword(string keyword, int top)
+        {
+            //Valida que existan llaves para buscar
+            if(string.IsNullOrWhiteSpace(keyword))
+                return new List<SearchTerm>();
+
+            //reemplaza comillas para evitar errores
+            keyword = keyword.Replace("'", " ").Replace("\"", " ");
+
+            //recoorre las llaves y las arega para la consulta
+            var keywords = new System.Text.StringBuilder();
+            foreach (var item in keyword.Split(new char[]{' '}))
+            {
+                if(keywords.Length > 0)
+                    keywords.Append(" AND ");
+
+                keywords.AppendFormat("\"{0}*\"", item);
+            }
+
+            var query = string.Format("select top {0} Id, Keyword, StoreId, Count from SearchTerm WHERE CONTAINS(Keyword, '{1}') order by count desc", top, keywords); 
+
+            var list = _dbContext.ExecuteStoredProcedureList<SearchTerm>(query, new object[0]);
+            return list;
         }
 
         /// <summary>

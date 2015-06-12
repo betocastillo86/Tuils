@@ -15,8 +15,7 @@ namespace Nop.Web.Models.Catalog
         public IList<CategoryBaseModel> ChildrenCategories { get; set; }
         
         public CategoryBaseModel()
-        {
-
+        { 
         }
     }
 

@@ -335,6 +335,7 @@
     <Compile Include="Models\ControlPanel\MyOrdersModel.cs" />
     <Compile Include="Models\ControlPanel\MyOrdersPagingFilteringModel.cs" />
     <Compile Include="Models\ControlPanel\MyProductsModel.cs" />
+    <Compile Include="Models\ControlPanel\NoRowsModel.cs" />
     <Compile Include="Models\ControlPanel\OfficesModel.cs" />
     <Compile Include="Models\ControlPanel\OrderItemModel.cs" />
     <Compile Include="Models\ControlPanel\QuestionsModel.cs" />
@@ -2115,12 +2116,18 @@
     <Content Include="Themes\Healthy\Content\images\bg_menu.png" />
     <Content Include="Themes\Healthy\Content\images\bg_search.png" />
     <Content Include="Themes\Healthy\Content\images\bg_slider.png" />
+    <Content Include="Themes\Healthy\Content\images\bkg_header.jpg" />
+    <Content Include="Themes\Healthy\Content\images\bkg_tooltip.png" />
+    <Content Include="Themes\Healthy\Content\images\bkg_tooltip_af.png" />
+    <Content Include="Themes\Healthy\Content\images\bkg_tooltip_be.png" />
     <Content Include="Themes\Healthy\Content\images\box-header-left.gif" />
     <Content Include="Themes\Healthy\Content\images\box-header-right.gif" />
     <Content Include="Themes\Healthy\Content\images\browsers.png" />
+    <Content Include="Themes\Healthy\Content\images\btn-search.png" />
     <Content Include="Themes\Healthy\Content\images\btn_download_bg.gif" />
     <Content Include="Themes\Healthy\Content\images\btn_left.gif" />
     <Content Include="Themes\Healthy\Content\images\btn_right.gif" />
+    <Content Include="Themes\Healthy\Content\images\btn_volver.png" />
     <Content Include="Themes\Healthy\Content\images\bullet-left.gif" />
     <Content Include="Themes\Healthy\Content\images\bullet-right.gif" />
     <Content Include="Themes\Healthy\Content\images\bullet.gif" />
@@ -2152,6 +2159,7 @@
     <Content Include="Themes\Healthy\Content\images\free-shipping.png" />
     <Content Include="Themes\Healthy\Content\images\free_shipping.png" />
     <Content Include="Themes\Healthy\Content\images\google_plus.png" />
+    <Content Include="Themes\Healthy\Content\images\grad-cover.png" />
     <Content Include="Themes\Healthy\Content\images\grey-button-bg.gif" />
     <Content Include="Themes\Healthy\Content\images\grey_button_bg.gif" />
     <Content Include="Themes\Healthy\Content\images\grid-bg.gif" />
@@ -2180,9 +2188,14 @@
     <Content Include="Themes\Healthy\Content\images\ico-rss.gif" />
     <Content Include="Themes\Healthy\Content\images\ico-wishlist.gif" />
     <Content Include="Themes\Healthy\Content\images\ImageAttribution.txt" />
+    <Content Include="Themes\Healthy\Content\images\img_categorias.svg" />
+    <Content Include="Themes\Healthy\Content\images\img_categorias_gris.svg" />
+    <Content Include="Themes\Healthy\Content\images\img_prueba.png" />
+    <Content Include="Themes\Healthy\Content\images\img_user.jpg" />
     <Content Include="Themes\Healthy\Content\images\loading.gif" />
     <Content Include="Themes\Healthy\Content\images\logo.gif" />
     <Content Include="Themes\Healthy\Content\images\logo.png" />
+    <Content Include="Themes\Healthy\Content\images\logo.svg" />
     <Content Include="Themes\Healthy\Content\images\logo_260x90_grey.png" />
     <Content Include="Themes\Healthy\Content\images\logo_260x90_white.png" />
     <Content Include="Themes\Healthy\Content\images\logo_320x100_grey.png" />
@@ -2216,8 +2229,11 @@
     <Content Include="Themes\Healthy\Content\images\social_sprite.png" />
     <Content Include="Themes\Healthy\Content\images\star-x-active.gif" />
     <Content Include="Themes\Healthy\Content\images\star-x-active.png" />
+    <Content Include="Themes\Healthy\Content\images\star-x-active2.png" />
     <Content Include="Themes\Healthy\Content\images\star-x-inactive.gif" />
     <Content Include="Themes\Healthy\Content\images\star-x-inactive.png" />
+    <Content Include="Themes\Healthy\Content\images\star-x_active.png" />
+    <Content Include="Themes\Healthy\Content\images\star-x_inactive.png" />
     <Content Include="Themes\Healthy\Content\images\star_x_active.gif" />
     <Content Include="Themes\Healthy\Content\images\star_x_inactive.gif" />
     <Content Include="Themes\Healthy\Content\images\tab-line.png" />
@@ -2228,6 +2244,7 @@
     <Content Include="Themes\Healthy\Content\images\top-menu-list-image-hover.png" />
     <Content Include="Themes\Healthy\Content\images\top-menu-list-image.png" />
     <Content Include="Themes\Healthy\Content\images\top-menu-triangle.png" />
+    <Content Include="Themes\Healthy\Content\images\top_footer.png" />
     <Content Include="Themes\Healthy\Content\images\twitter.png" />
     <Content Include="Themes\Healthy\Content\images\twitter_2.png" />
     <Content Include="Themes\Healthy\Content\images\up-arrow.png" />
@@ -2474,6 +2491,7 @@
     <Content Include="Themes\Healthy\Views\Catalog\TopMenuNavigation.cshtml" />
     <Content Include="Views\Catalog\_FilterBikeReferenceBox.cshtml" />
     <Content Include="Views\Catalog\ManufacturerHomePage.cshtml" />
+    <Content Include="Views\ControlPanel\_NoRows.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

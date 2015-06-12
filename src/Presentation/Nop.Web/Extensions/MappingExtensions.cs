@@ -93,9 +93,12 @@ namespace Nop.Web.Extensions
                 Name = entity.GetLocalized(x => x.Name),
                 Description = entity.GetLocalized(x => x.Description),
                 MetaKeywords = entity.GetLocalized(x => x.MetaKeywords),
-                SeName = entity.GetSeName(),
-                ChildrenCategories = entity.SubCategories.ToList().ToBaseModels()
+                SeName = entity.GetSeName()
             };
+
+            if(entity.SubCategories.Count > 0)
+                model.ChildrenCategories = entity.SubCategories.ToList().ToBaseModels();
+                
             return model;
         }
 

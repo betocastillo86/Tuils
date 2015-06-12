@@ -59,17 +59,18 @@ namespace Nop.Web.Controllers.Api
         [Route("api/categories/{id:int}")]
         public IHttpActionResult Get(int id)
         {
-            
+
             //Consulta si debe traer la imagen por medio de los headers
             bool showImage = this.GetHeaderBoolean("image");
 
             string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORIES_API_CATEGORY_MODEL_KEY, id, showImage);
 
-            var category = _cacheManager.Get(cacheKey, () => {
-                
-                var entityCategory =  _categoryService.GetCategoryById(id, true);
+            var category = _cacheManager.Get(cacheKey, () =>
+            {
+
+                var entityCategory = _categoryService.GetCategoryById(id, true);
                 var model = entityCategory.ToModel();
-                
+
                 //Si debe retornar la imagen la carga en el modelo
                 if (showImage)
                 {
@@ -78,7 +79,7 @@ namespace Nop.Web.Controllers.Api
 
                 return model;
 
-            }); 
+            });
 
             if (category != null)
                 return Ok(category);
@@ -131,12 +132,12 @@ namespace Nop.Web.Controllers.Api
         [Route("api/categories/services")]
         public IHttpActionResult GetAllServices()
         {
-            var services = this._categoryService.GetAllServices().ToBaseModels();
-
-            if (services != null)
-                return Ok(services);
-            else
-                return NotFound();
+            string cacheKey = ModelCacheEventConsumer.CATEGORIES_API_ALL_SERVICES;
+            return Ok(_cacheManager.Get(cacheKey, () =>
+            {
+                var services = this._categoryService.GetAllServices().ToBaseModels();
+                return services;
+            }));
         }
 
         private List<object> GetMinifiedCategories(List<CategoryBaseModel> list)
@@ -146,14 +147,12 @@ namespace Nop.Web.Controllers.Api
 
             foreach (var reference in list)
             {
-                minlist.Add(
-                    new
+                minlist.Add(new
                     {
                         Id = reference.Id,
                         Name = reference.Name,
-                        ChildrenCategories = reference.ChildrenCategories.Select(r => new { Id = r.Id, Name = r.Name })
+                        ChildrenCategories = (reference.ChildrenCategories != null && reference.ChildrenCategories.Count > 0) ? reference.ChildrenCategories.Select(r => new { Id = r.Id, Name = r.Name }) : null
                     });
-
             }
             return minlist;
         }
