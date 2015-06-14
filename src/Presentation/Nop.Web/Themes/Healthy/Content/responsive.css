@@ -384,7 +384,8 @@
     .product-list .product-item .description { max-width: 100%; }
 }
 
-@media screen and (min-width:600px) {
+@media screen and (min-width:601px) {
+
     .master-wrapper-main .side-product { display: none; }
     /*hide this block on 600-800*/
     .header-selectors-wrapper { clear: right; text-align: center; }
@@ -587,6 +588,9 @@
 }
 
 @media screen and (min-width:1024px) {
+    /* top menu */
+    #mm-mainMenu, #my-mobile-menu { display: none !important;}
+
     .master-wrapper-page .center-2.columns.ten { width: 530px; float: right; }
     .master-wrapper-main .side-2.columns.two { }
     .container .master-wrapper-main .columns.twelve { width: auto; float: none; }
@@ -686,7 +690,6 @@
   
     .login-page .new-wrapper, .login-page .returning-wrapper { float: left; width: 47%; }
     .blogpost-page .new-comment .comment-text, .email-a-friend-page .personal-message, .contact-page .enquiry { width: 700px; }
-    .header .search-box { width: 500px; }
     .search-page .search-input .buttons { text-align: left; }
 }
 @media screen and (min-width:1920px) {
@@ -905,7 +908,19 @@ html.oldie .container { width: 940px; }
     /*fin panel de control*/
 }
 @media screen and (max-width:1024px){
-    .headerButtonMenuResponsive{display:block;}
+    /*Header*/
+    .header{padding: 0;}
+    .header .search-box{display: none;}
+    .main-search-box{display: block; z-index: 2;}
+        .top-menu, .header-links-wrapper{display: none;}
+    .header-logo{position:absolute; top: 10px; left: 40px; z-index: 2; margin: 0;}
+    .btn_anuncia{float: right;}
+    /*top menu*/
+    .headerButtonMenuResponsive{display:block; z-index: 2;}
+    .nav-menu{top: -49px;}
+        .nav-menu .mm-menu ul li:first-child{margin-left: 260px;}
+        /*segundo nivel*/
+        .childrenOptions li:first-child{margin-left:220px !important;}
 }
 @media screen and (max-width:960px) {
     /*Header*/
@@ -972,7 +987,6 @@ html.oldie .container { width: 940px; }
 }
 @media screen and (max-width:768px) {
     /*Header*/
-    .header .search-box{width:calc(100% - 160px);}
     .btn_anuncia{border-radius:2px; padding: 10px 15px; margin:10px 0 0; float: right;}
         .btn_anuncia::before{display: none;}
 
@@ -1012,7 +1026,6 @@ html.oldie .container { width: 940px; }
 }
 @media screen and (max-width:640px) {
     /*header*/
-    .top-menu, .header-links-wrapper{display: none;}
 
     input[type="text"],input[type="password"], select{width:calc(100% - 10px);}
     .inputs{width: 100%; margin: 0 0 5px;}
@@ -1071,6 +1084,10 @@ html.oldie .container { width: 940px; }
     /*fin panel de control*/
 }
 @media screen and (max-width:600px) {
+    /*top menu*/
+    #mainMenu {display: none !important;}
+        .header .btn_anuncia {display: none !important;}
+
     .nav-category li{height: 152px; }
 
     .picture-uploader{font-size: 12px;}
@@ -1112,7 +1129,6 @@ html.oldie .container { width: 940px; }
 @media screen and (max-width:480px) {
     /*Header*/
     .header-logo{float:none; padding: 10px 0 0; margin: 0;}
-    .header .search-box{margin: 10px 0; width: 100%;}
     .btn_anuncia{position: absolute; top:28px; margin: 0; right: 0;}
 
     .wizard-step div, .wizard-current div{display: none;}
