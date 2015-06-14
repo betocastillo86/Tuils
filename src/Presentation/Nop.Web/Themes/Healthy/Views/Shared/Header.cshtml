@@ -24,7 +24,11 @@
     <div class="search-box">
         @Html.Action("SearchBox", "Catalog")
     </div>
-    @Html.ActionLink(T("header.publishproduct").Text, "Index", "Sales", new { }, new { @class = "btn_anuncia" })
+    <a href="@Url.Action("Index", "Sales")" class="btn_anuncia">
+        <i>@T("header.publishproduct.widescreen")</i>
+        <b>@T("header.publishproduct.mobile")</b>
+    </a>
+
     @*<div class="header-selectors-wrapper">
         <div class="tax-display-type-selector">
             @Html.Action("TaxTypeSelector", "Common")

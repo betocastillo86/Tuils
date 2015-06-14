@@ -3,6 +3,7 @@ namespace Nop.Data.Migrations
     using Nop.Core.Data;
     using Nop.Core.Domain.Catalog;
     using Nop.Core.Domain.Configuration;
+    using Nop.Core.Domain.Localization;
     using Nop.Core.Infrastructure;
     using System;
     using System.Collections.Generic;
@@ -230,42 +231,34 @@ namespace Nop.Data.Migrations
 
 
             var newLocaleStringResources = new Dictionary<string, string>();
-            ////AddColumn_SocialNetwork_Table_Manufacturer
-            //newLocaleStringResources.Add("Admin.Common.SocialNetwork.Fields.FacebookPage", "Url Página de Facebook");
-            //newLocaleStringResources.Add("Admin.Common.SocialNetwork.Fields.FacebookPage.Hint", "Url Página de Facebook");
-            //newLocaleStringResources.Add("Admin.Common.SocialNetwork.Fields.TwitterAccount", "Usuario de Twitter");
-            //newLocaleStringResources.Add("Admin.Common.SocialNetwork.Fields.TwitterAccount.Hint", "Usuario de Twitter sin el arroba");
-            //newLocaleStringResources.Add("Admin.Common.SocialNetwork.Fields.InstagramAccount", "Usuario de Instagram");
-            //newLocaleStringResources.Add("Admin.Common.SocialNetwork.Fields.InstagramAccount.Hint", "Usuario de Instagram");
-            //newLocaleStringResources.Add("Admin.Common.SocialNetwork.Fields.PinterestAccount", "Usuario de Pinterest");
-            //newLocaleStringResources.Add("Admin.Common.SocialNetwork.Fields.PinterestAccount.Hint", "Usuario de Pinterest");
-            //newLocaleStringResources.Add("Admin.Catalog.Manufacturers.SocialNetwork", "Redes Sociales");
+            //AddColumn_SocialNetwork_Table_Manufacturer
+            newLocaleStringResources.Add("header.publishproduct.widescreen", "Publica tu anuncio");
+            newLocaleStringResources.Add("header.publishproduct.mobile", "Publicar");
 
 
-            ////Recorre todas las llaves que desea adicional
-            //foreach (var resource in newLocaleStringResources)
-            //{
-            //    var resourceDB = context.Set<LocaleStringResource>().FirstOrDefault(s => s.ResourceName.Equals(resource.Key));
-            //    //Valida que estas llaves no existan
-            //    if (resourceDB == null)
-            //    {
-            //        //Agrega en los dos primeros idiomas
-            //        context.Set<LocaleStringResource>().Add(new LocaleStringResource()
-            //        {
-            //            ResourceName = resource.Key,
-            //            ResourceValue = resource.Value,
-            //            LanguageId = 1
-            //        });
+            //Recorre todas las llaves que desea adicional
+            foreach (var resource in newLocaleStringResources)
+            {
+                var resourceDB = context.Set<LocaleStringResource>().FirstOrDefault(s => s.ResourceName.Equals(resource.Key));
+                //Valida que estas llaves no existan
+                if (resourceDB == null)
+                {
+                    //Agrega en los dos primeros idiomas
+                    context.Set<LocaleStringResource>().Add(new LocaleStringResource()
+                    {
+                        ResourceName = resource.Key,
+                        ResourceValue = resource.Value,
+                        LanguageId = 1
+                    });
 
-
-            //        context.Set<LocaleStringResource>().Add(new LocaleStringResource()
-            //        {
-            //            ResourceName = resource.Key,
-            //            ResourceValue = resource.Value,
-            //            LanguageId = 2
-            //        });
-            //    }
-            //}
+                    context.Set<LocaleStringResource>().Add(new LocaleStringResource()
+                    {
+                        ResourceName = resource.Key,
+                        ResourceValue = resource.Value,
+                        LanguageId = 2
+                    });
+                }
+            }
 
             #endregion
 

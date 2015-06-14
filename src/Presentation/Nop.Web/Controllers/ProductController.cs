@@ -258,19 +258,23 @@ namespace Nop.Web.Controllers
                 if (!_workContext.CurrentCustomer.IsGuest())
                     model.ProductAlreadyBought = _orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, product.Id);
 
-                
-                var vendor = _vendorService.GetVendorById(product.VendorId);
-                if (vendor != null && !vendor.Deleted && vendor.Active)
+                //Si el producto ya fue comprado consulta el vendor
+                if (model.ProductAlreadyBought)
                 {
-                    model.ShowVendor = true;
-
-                    model.VendorModel = new VendorBriefInfoModel
+                    var vendor = _vendorService.GetVendorById(product.VendorId);
+                    if (vendor != null && !vendor.Deleted && vendor.Active)
                     {
-                        Id = vendor.Id,
-                        Name = vendor.GetLocalized(x => x.Name),
-                        SeName = vendor.GetSeName(),
-                    };
+                        model.ShowVendor = true;
+
+                        model.VendorModel = new VendorBriefInfoModel
+                        {
+                            Id = vendor.Id,
+                            Name = vendor.GetLocalized(x => x.Name),
+                            SeName = vendor.GetSeName(),
+                        };
+                    }
                 }
+                
             }
 
             #endregion
@@ -341,25 +345,25 @@ namespace Nop.Web.Controllers
             
             #endregion
 
-            #region Product tags
+            #region Product tags CODIGO ELIMINADO
 
-            //do not prepare this model for the associated products. any it's not used
-            if (!isAssociatedProduct)
-            {
-                var productTagsCacheKey = string.Format(ModelCacheEventConsumer.PRODUCTTAG_BY_PRODUCT_MODEL_KEY, product.Id, _workContext.WorkingLanguage.Id, _storeContext.CurrentStore.Id);
-                model.ProductTags = _cacheManager.Get(productTagsCacheKey, () =>
-                    product.ProductTags
-                    //filter by store
-                    .Where(x => _productTagService.GetProductCount(x.Id, _storeContext.CurrentStore.Id) > 0)
-                    .Select(x =>  new ProductTagModel
-                    {
-                        Id = x.Id,
-                        Name = x.GetLocalized(y => y.Name),
-                        SeName = x.GetSeName(),
-                        ProductCount = _productTagService.GetProductCount(x.Id, _storeContext.CurrentStore.Id)
-                    })
-                    .ToList());
-            }
+            ////////do not prepare this model for the associated products. any it's not used
+            //////if (!isAssociatedProduct)
+            //////{
+            //////    var productTagsCacheKey = string.Format(ModelCacheEventConsumer.PRODUCTTAG_BY_PRODUCT_MODEL_KEY, product.Id, _workContext.WorkingLanguage.Id, _storeContext.CurrentStore.Id);
+            //////    model.ProductTags = _cacheManager.Get(productTagsCacheKey, () =>
+            //////        product.ProductTags
+            //////        //filter by store
+            //////        .Where(x => _productTagService.GetProductCount(x.Id, _storeContext.CurrentStore.Id) > 0)
+            //////        .Select(x =>  new ProductTagModel
+            //////        {
+            //////            Id = x.Id,
+            //////            Name = x.GetLocalized(y => y.Name),
+            //////            SeName = x.GetSeName(),
+            //////            ProductCount = _productTagService.GetProductCount(x.Id, _storeContext.CurrentStore.Id)
+            //////        })
+            //////        .ToList());
+            //////}
 
             #endregion
 
