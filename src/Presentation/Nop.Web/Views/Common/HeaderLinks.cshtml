@@ -79,23 +79,25 @@
     
     <script id="templateLinksResponsiveMenu" type="text/x-handlebars-template">
         
-            <div>   
-                @Html.ActionLink(T("header.publishproduct").Text, "Index", "Sales", new { }, new { @class = "btn_anuncia" })
+            <div class="main-anuncia">   
+                @Html.ActionLink(T("header.publishproduct").Text, "Index", "Sales", new { }, new { @class = "main-btn_anuncia" })
             </div>
             
             @if (Model.IsAuthenticated)
             {
-                <div><a href="@Url.RouteUrl("ControlPanel")" class="account">@Model.CustomerEmailUsername</a></div>
+                <div class="main-userName"><a href="@Url.RouteUrl("ControlPanel")" class="account">@Model.CustomerEmailUsername</a></div>
             }
             else
             {
-                <div><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></div>
-                <div><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></div>
+                <div class="main-registro">
+                    <a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a>
+                    <a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a>
+                </div>
             }
 
             @if (Model.WishlistEnabled)
             {
-                <div style="padding:0 5px;">
+                <div class="main-wishlist">
                     <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">
                         <span class="icon-corazon"></span>
                         <span class="wishlist-label">@T("Wishlist")</span>
@@ -103,6 +105,7 @@
                     </a>
                 </div>
             }
+            <br/>
        
     </script>
 
