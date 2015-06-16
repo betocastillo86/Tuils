@@ -43,7 +43,7 @@
                 {
                     <li data-id="@attribute.Id">
                         <a class="aFirstLevel"><span class="icon-@attribute.SeName.Replace("-", "_")"></span><span class="tooltip-menu">@attribute.Name</span></a>
-                        <ul class="childrenOptions" style="display:none">
+                        <ul class="childrenOptions">
                             @foreach (var category in Model.Categories)
                             {
                                 @RenderCategoryLine(category, attribute)
@@ -61,56 +61,87 @@
 
     $(document).on("ready", function () {
 
-        var options = {
-            // options
-            extensions: ["theme-dark"],
-            dividers: {
-                fixed: true
-            },
-            navbars: [
-                {
-                    title: 'mmenu'
+
+        function selectDefaultMenuOption()
+        {
+            var defaultOption = @(Model.SelectedSpecificationAttribute);
+            $(".nav-menu .aFirstLevel").removeClass("active");
+            $(".nav-menu li[data-id='"+defaultOption+"'] .aFirstLevel").addClass("active");
+            $(".nav-menu .childrenOptions").hide();
+            $(".nav-menu li[data-id='"+defaultOption+"'] .childrenOptions").show();
+        }
+
+        function loadResponsiveMenu()
+        {
+            var options = {
+                // options
+                extensions: ["theme-dark"],
+                dividers: {
+                    fixed: true
                 },
-                {
-                    position: 'top',
-                    content: [$("#templateLinksResponsiveMenu").html()]
+                navbar :{
+                    title : ''
                 },
-                {
-                    position: 'bottom',
-                    content: [$("#templateLogoutResponsiveMenu").html()]
+                navbars: [
+                    {
+                        position: 'top',
+                        content: [$("#templateLinksResponsivePublish").html()]
+                    },
+                    {
+                        position: 'top',
+                        content: [$("#templateLinksResponsiveWishList").html()]
+                    },
+                    {
+                        position: 'top',
+                        content: [$("#templateLinksResponsiveMyAccount").html()],
+                        height: 2
+                    },
+                    {
+                        position: 'bottom',
+                        content: [$("#templateLogoutResponsiveMenu").html()]
+                    }
+                ]
+            };
+
+            var $menu = $("#mainMenu").clone();
+            $menu.attr("id", "my-mobile-menu");
+            $menu.mmenu(options);
+
+            $("#mainMenu").mmenu(options, {
+                clone: true
+            });
+        }
+
+        function hoverMenu()
+        {
+            //Funcionalidad de mouse over para ocultar y mostrar los hijos del menú
+            $(".nav-menu nav > ul > li").hover(
+                function () {
+                    $(".nav-menu .childrenOptions").hide();
+                    $(this).find(".childrenOptions").show();
+                },
+                function () {
+                    selectDefaultMenuOption();
                 }
-            ]
-        };
+            );
+        }
 
+        function closeMenuOnResizeWindow()
+        {
+            jQuery(window).resize(function () {
+                currentWidth = window.innerWidth || document.documentElement.clientWidth;
+                // get browser width
+                if (currentWidth > 1024) {
+                    $("#mainMenu").data("mmenu").close();
+                    $("#divSearchText").removeClass("divSearchTextResponsive");
+                }
+            });
+        }
 
-        var $menu = $("#mainMenu").clone();
-        $menu.attr("id", "my-mobile-menu");
-        $menu.mmenu(options);
-
-        $(".mm-menu .aFirstLevel").hover(function () {
-            $(".mm-menu .childrenOptions").hide();
-            $(this.parentElement).find(".childrenOptions").show()
-        });
-
-        $("#mainMenu").mmenu(options, {
-            clone: true
-        });
-
-        jQuery(window).resize(function () {
-            currentWidth = window.innerWidth || document.documentElement.clientWidth;
-            // get browser width
-            if (currentWidth > 1024) {
-                $("#mainMenu").data("mmenu").close();
-            }
-        });
-
-
-        //Muestra y oculta menu
-        $("#mainMenu .childrenOptions").first().show();
-        $(".aFirstLevel").click(function () {
-            $("#mainMenu .childrenOptions").hide();
-            $(this.parentElement).find("ul").show();
-        });
+        loadResponsiveMenu();
+        hoverMenu();
+        selectDefaultMenuOption();
+        closeMenuOnResizeWindow();
 
     });
 

@@ -77,23 +77,27 @@
         </script>
     }
     
-    <script id="templateLinksResponsiveMenu" type="text/x-handlebars-template">
-        
-            <div class="main-anuncia">   
-                @Html.ActionLink(T("header.publishproduct").Text, "Index", "Sales", new { }, new { @class = "main-btn_anuncia" })
+
+    <script id="templateLinksResponsivePublish" type="text/x-handlebars-template">
+        <div class="main-anuncia">
+            @Html.ActionLink(T("header.publishproduct").Text, "Index", "Sales", new { }, new { @class = "main-btn_anuncia" })
+        </div>
+    </script>
+
+    <script id="templateLinksResponsiveMyAccount" type="text/x-handlebars-template">
+        @if (Model.IsAuthenticated)
+        {
+            <div class="main-userName"><a href="@Url.RouteUrl("ControlPanel")" class="account">@Model.CustomerEmailUsername</a></div>
+        }
+        else
+        {
+            <div class="main-registro">
+                <a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a>
+                <a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a>
             </div>
-            
-            @if (Model.IsAuthenticated)
-            {
-                <div class="main-userName"><a href="@Url.RouteUrl("ControlPanel")" class="account">@Model.CustomerEmailUsername</a></div>
-            }
-            else
-            {
-                <div class="main-registro">
-                    <a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a>
-                    <a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a>
-                </div>
-            }
+        }
+    </script>
+        <script id="templateLinksResponsiveWishList" type="text/x-handlebars-template">
 
             @if (Model.WishlistEnabled)
             {
@@ -105,14 +109,12 @@
                     </a>
                 </div>
             }
-            <br/>
-       
-    </script>
+        </script>
 
-    <script id="templateLogoutResponsiveMenu" type="text/x-handlebars">
-        @if (Model.IsAuthenticated)
-        { 
-            <div><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></div>
-        }
-    </script>
+        <script id="templateLogoutResponsiveMenu" type="text/x-handlebars">
+            @if (Model.IsAuthenticated)
+            {
+                <div><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></div>
+            }
+        </script>
 </div>

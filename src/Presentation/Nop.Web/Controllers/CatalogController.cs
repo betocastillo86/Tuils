@@ -779,11 +779,21 @@ namespace Nop.Web.Controllers
                 
             );
 
+            int idSelectedAttribute = 0;
+            //Valida en que categoría se encuentra para así seleccionar el attributo especificado en el menú
+            if (RouteData.Values["specsFilter"] != null)
+            {
+                var attributeSelected = cachedMenuAttributes.FirstOrDefault(a => a.SeName.Equals(RouteData.Values["specsFilter"]));
+                idSelectedAttribute = attributeSelected != null ? attributeSelected.Id : 0;
+            }
+
             var model = new TopMenuModel
             {
                 Categories = cachedCategoriesModel,
                 Topics = new List<TopMenuModel.TopMenuTopicModel>(),
-                SpecificationAttributesFilter = cachedMenuAttributes
+                SpecificationAttributesFilter = cachedMenuAttributes,
+                //Si no viene filtrado por atributo tipo moto, selecciona la primera de la lista
+                SelectedSpecificationAttribute = idSelectedAttribute > 0 ? idSelectedAttribute : cachedMenuAttributes.FirstOrDefault().Id
             };
 
 

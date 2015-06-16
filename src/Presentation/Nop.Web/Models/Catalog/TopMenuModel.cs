@@ -16,6 +16,8 @@ namespace Nop.Web.Models.Catalog
 
         public IList<SpecificationAttributeOptionModel> SpecificationAttributesFilter { get; set; }
 
+        public int SelectedSpecificationAttribute { get; set; }
+
         public bool BlogEnabled { get; set; }
         public bool RecentlyAddedProductsEnabled { get; set; }
         public bool ForumEnabled { get; set; }
