@@ -87,6 +87,11 @@
         $menu.attr("id", "my-mobile-menu");
         $menu.mmenu(options);
 
+        $(".mm-menu .aFirstLevel").hover(function () {
+            $(".mm-menu .childrenOptions").hide();
+            $(this.parentElement).find(".childrenOptions").show()
+        });
+
         $("#mainMenu").mmenu(options, {
             clone: true
         });
