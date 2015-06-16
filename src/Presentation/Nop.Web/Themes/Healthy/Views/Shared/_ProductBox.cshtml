@@ -47,11 +47,11 @@
         </div>
         <div class="add-info">
             <div class="prices">
+                <span class="price actual-price">@Model.ProductPrice.Price</span>
                 @if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice))
                 {
                     <span class="price old-price">@Model.ProductPrice.OldPrice</span>
                 }
-                <span class="price actual-price">@Model.ProductPrice.Price</span>
                 @if (Model.ProductPrice.DisplayTaxShippingInfo)
                 {
                     var inclTax = EngineContext.Current.Resolve<IWorkContext>().TaxDisplayType == TaxDisplayType.IncludingTax;
@@ -73,6 +73,10 @@
             {
                 <input type="button" value="@(Model.ProductPrice.AvailableForPreOrder ? T("ShoppingCart.PreOrder") : T("ShoppingCart.AddToCart"))" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink    ');return false;" />
             }*@
+            </div>
+            <div class="add-to-links">
+                <a href="javascript:;"><span class="icon-corazon"></span> Añadir deseo</a>
+                <a href="javascript:;"><span class="icon-star"></span> Comparar</a>
             </div>
             @Html.Widget("productbox_add_info", Model.Id)
         </div>

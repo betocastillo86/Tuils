@@ -647,12 +647,16 @@ td.fieldname{font-size:12px;}
 .product-grid .product-item .prices{text-align:left;vertical-align:middle;position:static;bottom:15px;right:10px;}
 .product-grid .product-item .prices .price{margin:0px;display:block;}
 .product-grid .product-item .prices .actual-price{color:#F94C2A;}
-.product-grid .product-item .prices .old-price{color:#5C5B5B;text-decoration:line-through;}
+.product-grid .product-item .prices .old-price{color:#5C5B5B; font-size: 18px !important; font-weight: 400; text-decoration:line-through;}
 .product-grid .product-item .prices .tax-shipping-info{font-size:11px;}
 .product-grid .product-item .prices .tax-shipping-info a{text-decoration:underline;}
-.product-grid .product-item .buttons{vertical-align:middle;position:static;margin-top:5px;text-align:left;}
+.product-grid .product-item .buttons{vertical-align:middle;position:static;margin-top:20px;text-align:left;}
 .product-box-add-to-cart-button{padding:3px 7px;cursor:pointer;background:#7DB72F;background:-webkit-gradient(linear,left top,left bottom,from(#7DB72F),to(#4E7D0E));background:-moz-linear-gradient(top,#7DB72F,#4E7D0E);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7DB72F',endColorstr='#4E7D0E');color:#fff;text-shadow:none;border-color:#999;border:0 none;font-weight:700;}
 .product-box-add-to-cart-button:hover{color:#fff;}
+.product-grid .add-to-links{text-align:left; margin: 10px 0 0;}
+.product-grid .add-to-links a{color:#7F7D84; font-size: 12px; margin: 0 10px 0 0;}
+	.product-grid .add-to-links a:hover{color:#F94C2A;}
+.product-grid .add-to-links [class^="icon-"]{color: #FB7055;}
 
 
 /* PRODUCTS IN LINES - TEMPLATE */
