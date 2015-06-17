@@ -910,7 +910,9 @@ html.oldie .container { width: 940px; }
 @media screen and (max-width:1024px){
     /*Header*/
     .header{padding: 0; position: absolute; width: 100%; left: 0; top: 0;}
-    .header .search-box{display: none;}
+        .divSearchTextResponsive{display: block;}
+        #small-searchterms{display: none;}
+        .header .search-box form .btn_search{display: none;}
     .main-search-box{display: block; z-index: 2;}
         .main-search-box:before{border-bottom: 60px solid #3B5A83; border-left: 15px solid transparent; position:absolute; top: 0; left:-15px; content: "";}
 
