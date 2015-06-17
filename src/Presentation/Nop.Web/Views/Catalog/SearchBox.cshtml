@@ -6,7 +6,7 @@
 @using (Html.BeginRouteForm("ProductSearch", FormMethod.Get, new { onsubmit = "return check_small_search_form()" }))
 {
 
-    <style>
+    @*<style>
         .divSearchTextResponsive {
             background-color: black;
             width: 100%;
@@ -16,7 +16,15 @@
             top: 0;
             left: 0;
         }
-    </style>
+
+        @@media screen and (max-width:1024px)
+        {
+            .divSearchTextResponsive
+            {
+                display:block !important;
+            }
+        }
+    </style>*@
     <div id="divSearchText">
         <input type="text" class="search-box-text" id="small-searchterms" autocomplete="off" value="@searchTooltip" name="q" />
     </div>
