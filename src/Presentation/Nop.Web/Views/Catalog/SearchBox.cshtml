@@ -1,35 +1,20 @@
 ﻿@model SearchBoxModel
 @using Nop.Web.Models.Catalog;
-@{
-    var searchTooltip = T("Search.SearchBox.Tooltip");
-}
+
 @using (Html.BeginRouteForm("ProductSearch", FormMethod.Get, new { onsubmit = "return check_small_search_form()" }))
 {
     <div id="divSearchText" class="responsiveSearch">
-        <input type="text" class="search-box-text" id="small-searchterms" autocomplete="off" value="@searchTooltip" name="q" />
+        <input type="text" class="search-box-text" id="small-searchterms" autocomplete="off" name="q" placeholder="@T("Search.SearchBox.Tooltip")" />
         <input type="button" class="closeSearchResponsive" value="x" style="display:none" />
     </div>
 
     @Html.Widget("searchbox_before_search_button")
     <a href="javascript:;" type="submit" class="btn_search responsiveSearch" value="@T("Search")"><span class="icon-lupa"></span></a>
     <script type="text/javascript">
-        $(document).ready(function() {
-            $("#small-searchterms").focus(function() {
-                if (this.value == '@T("Search.SearchBox.Tooltip")') {
-                    this.value = '';
-                }
-            });
-
-            $("#small-searchterms").blur(function() {
-                if (this.value == '') {
-                    this.value = '@searchTooltip';
-                }
-            });
-        });
-
+      
         function check_small_search_form() {
             var search_terms = $("#small-searchterms");
-            if (search_terms.val() == "" || search_terms.val() == "@searchTooltip") {
+            if (search_terms.val() == "") {
                 alert('@Html.Raw(HttpUtility.JavaScriptStringEncode(T("Search.EnterSearchTerms").Text))');
                 search_terms.focus();
                 return false;
@@ -82,8 +67,14 @@
 
                 $(function(){
 
+                    var minSizeResponsive = 1024;
+                    
                     $(".icon-lupa").click(function(){
-                        switchResponsiveSearch(true);
+                        var currentWidth = window.innerWidth || document.documentElement.clientWidth;
+                        if(currentWidth <= minSizeResponsive)
+                            switchResponsiveSearch(true);
+                        else
+                            $(this).closest("form").submit();
                     });
 
                     $(".closeSearchResponsive").click(function(){
@@ -93,9 +84,9 @@
                     function resizeWindowHandler()
                     {
                         jQuery(window).resize(function () {
-                            currentWidth = window.innerWidth || document.documentElement.clientWidth;
+                            var currentWidth = window.innerWidth || document.documentElement.clientWidth;
                             // get browser width
-                            if (currentWidth > 1024) {
+                            if (currentWidth > minSizeResponsive) {
                                 switchResponsiveSearch(false);
                             }
                         });

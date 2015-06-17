@@ -10,7 +10,6 @@
     Layout = "";
     Html.AddCssFileParts("~/Scripts/mmenu/css/jquery.mmenu.all.css");
     Html.AddScriptParts("~/Scripts/mmenu/js/jquery.mmenu.min.all.js");
-
 }
 
 @helper RenderCategoryLine(CategorySimpleModel category, TopMenuModel.SpecificationAttributeOptionModel attribute)
@@ -83,19 +82,6 @@
                     title : ''
                 },
                 navbars: [
-                    //{
-                    //    position: 'top',
-                    //    content: [$("#templateLinksResponsivePublish").html()]
-                    //},
-                    //{
-                    //    position: 'top',
-                    //    content: [$("#templateLinksResponsiveWishList").html()]
-                    //},
-                    //{
-                    //    position: 'top',
-                    //    content: [$("#templateLinksResponsiveMyAccount").html()],
-                    //    height: 2
-                    //},
                     {
                         position: 'bottom',
                         content: [$("#templateLogoutResponsiveMenu").html()]
