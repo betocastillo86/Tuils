@@ -1,120 +1,16 @@
 ﻿@model SearchBoxModel
 @using Nop.Web.Models.Catalog;
 
-@using (Html.BeginRouteForm("ProductSearch", FormMethod.Get, new { onsubmit = "return check_small_search_form()" }))
+@using (Html.BeginRouteForm("ProductSearch", FormMethod.Get))
 {
     <div id="divSearchText" class="responsiveSearch">
-        <input type="text" class="search-box-text" id="small-searchterms" autocomplete="off" name="q" placeholder="@T("Search.SearchBox.Tooltip")" />
+        <input type="text" class="search-box-text" id="small-searchterms" autocomplete="off" name="q" placeholder="@T("Search.SearchBox.Tooltip")" data-url="@(Url.RouteUrl("ProductSearchAutoComplete"))" data-minlength="@(Model.SearchTermMinimumLength.ToString())" />
         <input type="button" class="closeSearchResponsive" value="x" style="display:none" />
     </div>
 
     @Html.Widget("searchbox_before_search_button")
     <a href="javascript:;" type="submit" class="btn_search responsiveSearch" value="@T("Search")"><span class="icon-lupa"></span></a>
-    <script type="text/javascript">
-      
-        function check_small_search_form() {
-            var search_terms = $("#small-searchterms");
-            if (search_terms.val() == "") {
-                alert('@Html.Raw(HttpUtility.JavaScriptStringEncode(T("Search.EnterSearchTerms").Text))');
-                search_terms.focus();
-                return false;
-            }
-            return true;
-        }
-    </script>
+    <input id="Search_EnterSearchTerms" value="@Html.Raw(HttpUtility.JavaScriptStringEncode(T("Search.EnterSearchTerms").Text))" type="hidden" />
 
-    if (Model.AutoCompleteEnabled)
-    {
-        <text>
-            <script type="text/javascript">
-                $(function() {
-                    $('#small-searchterms').autocomplete({
-                        delay: 200,
-                        minLength: @(Model.SearchTermMinimumLength.ToString()),
-                        source: '@(Url.RouteUrl("ProductSearchAutoComplete"))',
-                        select: function(event, ui) {
-
-                            @if (Model.SearchWithSearchTerms)
-                                {
-                                    @:this.form.submit();
-                                                            }
-                                else
-                                {
-                                     @: $("#small-searchterms").val(ui.item.label);
-                                                                @: setLocation(ui.item.producturl);
-                                                                @: return false;
-                                                           }
-
-                        }
-                    })
-                        .data("ui-autocomplete")._renderItem = function(ul, item) {
-                            var t = item.label;
-                            //html encode
-                            t = htmlEncode(t);
-                            return $("<li></li>")
-                                .data("item.autocomplete", item)
-                                @if (Model.SearchWithSearchTerms)
-                    {
-                        @:.append("<a>"+t+"</a>")
-                                }
-                    else
-                    {
-                        @:.append("<a>@(Model.ShowProductImagesInSearchAutoComplete ? Html.Raw("<img src='\" + item.productpictureurl + \"'>") : null)" + t + "</a>")
-                                }
-                                .appendTo(ul);
-                        };
-                });
-
-                $(function(){
-
-                    var minSizeResponsive = 1024;
-                    
-                    $(".icon-lupa").click(function(){
-                        var currentWidth = window.innerWidth || document.documentElement.clientWidth;
-                        if(currentWidth <= minSizeResponsive)
-                            switchResponsiveSearch(true);
-                        else
-                            $(this).closest("form").submit();
-                    });
-
-                    $(".closeSearchResponsive").click(function(){
-                        switchResponsiveSearch(false);
-                    });
-
-                    function resizeWindowHandler()
-                    {
-                        jQuery(window).resize(function () {
-                            var currentWidth = window.innerWidth || document.documentElement.clientWidth;
-                            // get browser width
-                            if (currentWidth > minSizeResponsive) {
-                                switchResponsiveSearch(false);
-                            }
-                        });
-                    }
-
-                    function switchResponsiveSearch(showSearch)
-                    {
-                        if(showSearch)
-                        {
-                            $("#divSearchText").addClass("divSearchTextResponsive");
-                        }
-                        else
-                        {
-                            $("#divSearchText").removeClass("divSearchTextResponsive");
-                            $(".ui-autocomplete").hide();
-                        }
-
-                        $(".header-logo").css('display', !showSearch ? 'block' : 'none');
-                        $("#divSearchText input").css('display', showSearch ? 'block' : '');
-                    }
-
-                    resizeWindowHandler();
-                });
-            </script>
-
-
-
-        </text>
-    }
     @Html.Widget("searchbox")
 }

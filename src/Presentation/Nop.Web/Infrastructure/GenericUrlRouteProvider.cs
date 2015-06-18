@@ -20,6 +20,12 @@ namespace Nop.Web.Infrastructure
                          new { controller = "Catalog", action = "Vendor" },
                          new[] { "Nop.Web.Controllers" });
 
+
+            routes.MapGenericPathRoute("ManufacturerGenericUrl",
+                         "m/{generic_se_name}",
+                         new { controller = "Catalog", action = "Manufacturer" },
+                         new[] { "Nop.Web.Controllers" });
+
             routes.MapGenericPathRoute("CategoryGenericUrl",
                          "c/{generic_se_name}/{specsFilter}",
                          new { controller = "Catalog", action = "Category", specificationFilter = UrlParameter.Optional },
@@ -43,7 +49,7 @@ namespace Nop.Web.Infrastructure
                             new[] { "Nop.Web.Controllers" });
 
             routes.MapLocalizedRoute("Manufacturer",
-                            "{SeName}",
+                            "m/{SeName}",
                             new { controller = "Catalog", action = "Manufacturer" },
                             new[] { "Nop.Web.Controllers" });
 

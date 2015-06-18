@@ -1,4 +1,4 @@
-﻿define(['underscore', 'backbone'], function (_, Backbone) {
+﻿define(['underscore', 'backbone', 'handlebars'], function (_, Backbone, Handlebars) {
     var HeaderView = Backbone.View.extend({
 
         el: ".header-links",
@@ -6,8 +6,11 @@
         viewLogin: undefined,
         viewRegister: undefined,
 
+        templateUserAuthenticated :undefined,
+
         events : {
-        
+            'click #liLogin': 'showLogin',
+            'click #liRegister': 'showRegister'
         },
         initialize: function () {
             
@@ -24,7 +27,6 @@
             else {
                 this.viewLogin.show();
             }
-            
         },
         showRegister : function(){
             var that = this;
@@ -40,8 +42,14 @@
                 this.viewRegister.show();
             }
         },
-        showUserAuthenticated : function(){
-            this.trigger("user-authenticated");
+        showUserAuthenticated: function (model) {
+            this.refreshUserData(model);
+            this.trigger("user-authenticated", model);
+        },
+        refreshUserData: function (model) {
+            this.templateUserAuthenticated = Handlebars.compile(this.$("#templateLoggedUser").html());
+            this.$(".preLogin").hide();
+            this.$("ul").prepend(this.templateUserAuthenticated(model.toJSON()));
         },
         render: function () {
             return this;

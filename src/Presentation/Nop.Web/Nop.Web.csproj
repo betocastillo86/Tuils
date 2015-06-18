@@ -1095,6 +1095,7 @@
     <Content Include="Scripts\tuils\utilities.js" />
     <Content Include="Scripts\tuils\views\baseView.js" />
     <Content Include="Scripts\tuils\views\common\header.js" />
+    <Content Include="Scripts\tuils\views\common\topMenuView.js" />
     <Content Include="Scripts\tuils\views\login\createUser.js" />
     <Content Include="Scripts\tuils\views\login\login.js" />
     <Content Include="Scripts\tuils\views\panel\addAddressView.js" />

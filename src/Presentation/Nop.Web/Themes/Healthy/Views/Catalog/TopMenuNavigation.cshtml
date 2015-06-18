@@ -9,7 +9,7 @@
 @{
     Layout = "";
     Html.AddCssFileParts("~/Scripts/mmenu/css/jquery.mmenu.all.css");
-    Html.AddScriptParts("~/Scripts/mmenu/js/jquery.mmenu.min.all.js");
+    Html.AddScriptParts("~/Scripts/mmenu/js/jquery.mmenu.min.js");
 }
 
 @helper RenderCategoryLine(CategorySimpleModel category, TopMenuModel.SpecificationAttributeOptionModel attribute)
@@ -55,84 +55,8 @@
             </ul>
         </nav>
     </div>
-    
+    @Html.HiddenFor(model => model.SelectedSpecificationAttribute)
     <script>
-
-    $(document).on("ready", function () {
-
-
-        function selectDefaultMenuOption()
-        {
-            var defaultOption = @(Model.SelectedSpecificationAttribute);
-            $(".nav-menu .aFirstLevel").removeClass("active");
-            $(".nav-menu li[data-id='"+defaultOption+"'] .aFirstLevel").addClass("active");
-            $(".nav-menu .childrenOptions").hide();
-            $(".nav-menu li[data-id='"+defaultOption+"'] .childrenOptions").show();
-        }
-
-        function loadResponsiveMenu()
-        {
-            var options = {
-                // options
-                extensions: ["theme-dark"],
-                dividers: {
-                    fixed: true
-                },
-                navbar :{
-                    title : ''
-                },
-                navbars: [
-                    {
-                        position: 'bottom',
-                        content: [$("#templateLogoutResponsiveMenu").html()]
-                    }
-                ]
-            };
-
-            var $menu = $("#mainMenu").clone();
-            $menu.attr("id", "my-mobile-menu");
-            $menu.mmenu(options);
-
-            $("#mainMenu").mmenu(options, {
-                clone: true
-            });
-
-            //agrega las funcionalidades adicionales del menú
-            $(".mm-panel:first").prepend($("#templateLinksResponsiveMenu").html());
-        }
-
-        function hoverMenu()
-        {
-            //Funcionalidad de mouse over para ocultar y mostrar los hijos del menú
-            $(".nav-menu nav > ul > li").hover(
-                function () {
-                    $(".nav-menu .childrenOptions").hide();
-                    $(this).find(".childrenOptions").show();
-                },
-                function () {
-                    selectDefaultMenuOption();
-                }
-            );
-        }
-
-        function closeMenuOnResizeWindow()
-        {
-            jQuery(window).resize(function () {
-                currentWidth = window.innerWidth || document.documentElement.clientWidth;
-                // get browser width
-                if (currentWidth > 1024) {
-                    $("#mainMenu").data("mmenu").close();
-                }
-            });
-        }
-
-        loadResponsiveMenu();
-        hoverMenu();
-        selectDefaultMenuOption();
-        closeMenuOnResizeWindow();
-
-    });
-
 </script>
 
 }
