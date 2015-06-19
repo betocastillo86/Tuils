@@ -8,7 +8,8 @@
             viewHeader: undefined,
             viewLeftMenu: undefined,
             viewTopMenu: undefined,
-            viewSearcher : undefined,
+            viewSearcher: undefined,
+            viewNewsletter: undefined,
 
             //el por defecto para las vistas
             defaultEl: "#divMainSection",
@@ -127,6 +128,7 @@
             },
             search: function () {
                 this.loadSubViews();
+                this.loadNewsletter();
             },
             product: function () {
                 var that = this;
@@ -139,6 +141,12 @@
                 this.loadHeader();
                 this.loadMenu();
                 this.loadSearcher();
+            },
+            loadNewsletter: function () {
+                var that = this;
+                require(['tuils/views/common/newsletterView'], function (NewsletterView) {
+                    that.viewNewsletter = new NewsletterView();
+                });;
             },
             loadSearcher: function () {
                 var that = this;
