@@ -422,8 +422,12 @@ namespace Nop.Web.Controllers
 
             #endregion
 
+            #region WishList
+            model.DisableWishlistButton = product.DisableWishlistButton;
+            #endregion
+
             #region Product price
-            
+
             model.ProductPrice.ProductId = product.Id;
             if (_permissionService.Authorize(StandardPermissionProvider.DisplayPrices))
             {
@@ -489,6 +493,7 @@ namespace Nop.Web.Controllers
             #endregion
 
             #region 'Add to cart' model
+            
 
             model.AddToCart.ProductId = product.Id;
             model.AddToCart.UpdatedShoppingCartItemId = updatecartitem != null ? updatecartitem.Id : 0;

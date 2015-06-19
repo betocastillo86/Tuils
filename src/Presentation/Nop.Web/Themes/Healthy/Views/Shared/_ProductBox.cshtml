@@ -75,10 +75,11 @@
             }*@
             </div>
             <div class="add-to-links">
-                <a href="javascript:;"><span class="icon-corazon"></span> Añadir deseo</a>
-                <a href="javascript:;"><span class="icon-star"></span> Comparar</a>
+                
+                @Html.Partial("_AddToWishlist")
+                @Html.Partial("_CompareProductsButton")
             </div>
-            @Html.Widget("productbox_add_info", Model.Id)
+            @*@Html.Widget("productbox_add_info", Model.Id)*@
         </div>
     </div>
 </div>

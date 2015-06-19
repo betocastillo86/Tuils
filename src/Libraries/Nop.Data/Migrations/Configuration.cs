@@ -238,6 +238,9 @@ namespace Nop.Data.Migrations
             newLocaleStringResources.Add("FeaturedLeftMenu", "Destacados");
             newLocaleStringResources.Add("Admin.Catalog.Products.Fields.LeftFeatured", "Mostrar como destacado izquierdo");
             newLocaleStringResources.Add("Admin.Catalog.Products.Fields.LeftFeatured.Hint", "Muestra el producto en la parte izquierda de las paginas");
+            newLocaleStringResources.Add("ProductBox.AddToWishlist", "Añadir deseo");
+            newLocaleStringResources.Add("ProductBox.Compare", "Comparar");
+
 
             //Recorre todas las llaves que desea adicional
             foreach (var resource in newLocaleStringResources)

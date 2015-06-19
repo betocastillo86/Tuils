@@ -293,6 +293,8 @@
     <Compile Include="Models\Catalog\BackInStockSubscribeModel.cs" />
     <Compile Include="Models\Catalog\CategorySimpleModel.cs" />
     <Compile Include="Models\Catalog\CompareProductsModel.cs" />
+    <Compile Include="Models\Catalog\IComparableModel.cs" />
+    <Compile Include="Models\Catalog\IWishableModel.cs" />
     <Compile Include="Models\Catalog\ManufacturerHomePageModel.cs" />
     <Compile Include="Models\Catalog\VendorModel.cs" />
     <Compile Include="Models\Catalog\VendorNavigationModel.cs" />
@@ -2498,6 +2500,7 @@
     <Content Include="Views\Catalog\ManufacturerHomePage.cshtml" />
     <Content Include="Views\ControlPanel\_NoRows.cshtml" />
     <Content Include="Themes\Healthy\Views\Product\FeaturedLeftMenu.cshtml" />
+    <Content Include="Views\Product\_AddToWishlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

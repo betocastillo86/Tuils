@@ -33,6 +33,7 @@
                 "c/:categoryName/:attribute(/:query)": "category",
                 "m/:query":"manufacturer",
                 "p/:query": "product",
+                'entrar' : 'login',
                 'buscar(/:query)' : 'search'
             },
             home : function()
@@ -129,7 +130,9 @@
             },
             search: function () {
                 this.loadTwoColumns();
-                this.loadNewsletter();
+            },
+            login: function () {
+                this.loadTwoColumns();
             },
             product: function () {
                 var that = this;
@@ -142,6 +145,7 @@
             {
                 this.loadSubViews();
                 this.loadLeftFeaturedProducts();
+                this.loadNewsletter();
             },
             loadSubViews: function () {
                 this.loadHeader();

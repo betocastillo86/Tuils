@@ -27,7 +27,7 @@ namespace Nop.Web.Infrastructure
 
             //login
             routes.MapLocalizedRoute("Login",
-                            "login/",
+                            "entrar/",
                             new { controller = "Customer", action = "Login" },
                             new[] { "Nop.Web.Controllers" });
             //register
