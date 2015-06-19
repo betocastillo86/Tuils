@@ -52,7 +52,7 @@
     }
 }
 
-<script data-main="/scripts/tuils/main" src="~/Scripts/require.js"></script>
+
 
 <!--product breadcrumb-->
 @Html.Partial("_ProductBreadcrumb", Model.Breadcrumb)
@@ -118,9 +118,14 @@
                         dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
                         @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
 
-                        var dataDictAddToCart = new ViewDataDictionary();
+                        @*Se inhabiita la vista de agregar producto->*@
+                        @*var dataDictAddToCart = new ViewDataDictionary();
                         dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
-                        @*Se inhabiita la vista de agregar producto-> @Html.Partial("_AddToCart", Model.AddToCart, dataDictAddToCart)*@
+                        
+                        @Html.Partial("_AddToCart", Model.AddToCart, dataDictAddToCart)*@
+                            
+                        @Html.Partial("_AddToWishlist")
+                            
                         }
                         @Html.Partial("_ProductEmailAFriendButton", Model)
                         @Html.Partial("_CompareProductsButton", Model)

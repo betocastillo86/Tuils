@@ -422,8 +422,12 @@ namespace Nop.Web.Controllers
 
             #endregion
 
+            #region WishList
+            model.DisableWishlistButton = product.DisableWishlistButton;
+            #endregion
+
             #region Product price
-            
+
             model.ProductPrice.ProductId = product.Id;
             if (_permissionService.Authorize(StandardPermissionProvider.DisplayPrices))
             {
@@ -489,6 +493,7 @@ namespace Nop.Web.Controllers
             #endregion
 
             #region 'Add to cart' model
+            
 
             model.AddToCart.ProductId = product.Id;
             model.AddToCart.UpdatedShoppingCartItemId = updatecartitem != null ? updatecartitem.Id : 0;
@@ -1183,6 +1188,37 @@ namespace Nop.Web.Controllers
         }
 
         #endregion
+
+        #region Left featured products
+
+        [ChildActionOnly]
+        public ActionResult FeaturedLeftMenu(int? productThumbPictureSize)
+        {
+            if (!_catalogSettings.ShowBestsellersOnHomepage || _catalogSettings.NumberOfBestsellersOnHomepage == 0)
+                return Content("");
+
+            //load and cache report
+            var products = _cacheManager.Get(string.Format(ModelCacheEventConsumer.HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_PATTERN_KEY, _storeContext.CurrentStore.Id),
+                () =>
+                    _productService.SearchProducts(storeId: _storeContext.CurrentStore.Id, leftFeatured:true).ToList() );
+
+            //toma aleatoriamente un numero de productos
+            products = products
+                .OrderBy(p => Guid.NewGuid())
+                .Take(_catalogSettings.NumberOfBestsellersOnHomepage)
+                .ToList();
+
+            if (products.Count == 0)
+                return Content("");
+
+            //prepare model
+            var model = PrepareProductOverviewModels(products, true, true, productThumbPictureSize).ToList();
+            return PartialView(model);
+        }
+
+        #endregion
+
+
 
         #region Product reviews
 

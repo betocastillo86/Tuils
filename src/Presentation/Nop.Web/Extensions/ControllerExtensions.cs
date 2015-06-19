@@ -101,6 +101,7 @@ namespace Nop.Web.Extensions
                     ShortDescription = product.GetLocalized(x => x.ShortDescription),
                     FullDescription = product.GetLocalized(x => x.FullDescription),
                     SeName = product.GetSeName(),
+                    CompareProductsEnabled = catalogSettings.CompareProductsEnabled
                 };
                 //price
                 if (preparePriceModel)

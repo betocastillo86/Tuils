@@ -408,6 +408,15 @@ namespace Nop.Web.Infrastructure.Cache
         public const string HOMEPAGE_BESTSELLERS_IDS_KEY = "Nop.pres.bestsellers.homepage-{0}";
         public const string HOMEPAGE_BESTSELLERS_IDS_PATTERN_KEY = "Nop.pres.bestsellers.homepage";
 
+
+        /// <summary>
+        /// Key for featured identifiers displayed on the home page
+        /// </summary>
+        /// <remarks>
+        /// {0} : current store ID
+        /// </remarks>
+        public const string HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_PATTERN_KEY = "Nop.pres.leftFeatured.homepage";
+
         /// <summary>
         /// Key for "also purchased" product identifiers displayed on the product details page
         /// </summary>

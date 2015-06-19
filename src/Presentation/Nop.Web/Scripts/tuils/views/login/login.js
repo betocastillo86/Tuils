@@ -34,8 +34,8 @@
                 this.model.login();
             }
         },
-        userAuthenticated : function(){
-            this.trigger("user-authenticated");
+        userAuthenticated : function(model){
+            this.trigger("user-authenticated", model);
             this.$el.dialog('close');
         },
         errorAuthenticated: function (model, error) {

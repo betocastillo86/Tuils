@@ -23,6 +23,8 @@ namespace Nop.Web.Infrastructure
         /// <param name="tuilsSettings"></param>
         public static void CreateJavascriptConfigurationFile(TuilsSettings tuilsSettings)
         {
+            var catalogSettings = EngineContext.Current.Resolve<CatalogSettings>();
+
             var config = new
             {
 
@@ -43,7 +45,9 @@ namespace Nop.Web.Infrastructure
                         bikeBrand = (int)SpecialCategoryVendorType.BikeBrand,
                         specializedCategory = (int)SpecialCategoryVendorType.SpecializedCategory
                     },
-                    maxFileUploadSize = tuilsSettings.maxFileUploadSize
+                    maxFileUploadSize = tuilsSettings.maxFileUploadSize,
+                    searchWithSearchTerms = catalogSettings.ProductSearchAutoCompleteWithSearchTerms
+                    
                 
             };
 

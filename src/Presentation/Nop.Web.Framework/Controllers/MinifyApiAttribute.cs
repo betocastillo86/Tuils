@@ -12,12 +12,12 @@ namespace Nop.Web.Framework.Controllers
     /// </summary>
     public class MinifyApiAttribute : ActionFilterAttribute
     {
-        public void OnActionExecuted(ActionExecutedContext filterContext)
+        public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             
         }
 
-        public void OnActionExecuting(ActionExecutingContext filterContext)
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var headers = filterContext.RequestContext.HttpContext.Request.Headers;
             bool isMinify = false;

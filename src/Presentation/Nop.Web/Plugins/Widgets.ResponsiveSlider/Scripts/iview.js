@@ -408,7 +408,7 @@
 
 			//Add Direction nav
 			if (iv.options.directionNav) {
-				iv.sliderContent.append('<div class="iview-directionNav"><a class="iview-prevNav" title="' + iv.options.previousLabel + '"><i class="icon-prev"></i></a><a class="iview-nextNav " title="' + iv.options.nextLabel + '"><i class="icon-next"></i></a></div>');
+				iv.sliderContent.append('<div class="iview-directionNav"><a class="iview-prevNav" title="' + iv.options.previousLabel + '">' + iv.options.previousLabel + '</a><a class="iview-nextNav" title="' + iv.options.nextLabel + '">' + iv.options.nextLabel + '</a></div>');
 
 				//Animate Direction nav
 				$('.iview-directionNav', iv.sliderContent).css({

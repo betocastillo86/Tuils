@@ -6,12 +6,18 @@
 
             //listado de vistas comunes
             viewHeader: undefined,
-            viewLeftMenu : undefined,
+            viewLeftMenu: undefined,
+            viewTopMenu: undefined,
+            viewSearcher: undefined,
+            viewNewsletter: undefined,
+            viewLeftFeatured : undefined,
 
             //el por defecto para las vistas
             defaultEl: "#divMainSection",
 
             routes: {
+                "": "home",
+                "quiero-vender": "sell",
                 "quiero-vender/producto": "sellProduct",
                 "quiero-vender/moto": "sellBike",
                 "quiero-vender/servicio-especializado": "sellService",
@@ -23,11 +29,21 @@
                 "mi-cuenta/mis-productos(/:query)": "myProducts",
                 "ControlPanel/Questions(/:query)": "questions",
                 "customer/changepassword" : "changePassword",
-                "v/:query" : "vendor",
-                "p/:query": "product"
-
+                "v/:query": "vendor",
+                "c/:categoryName/:attribute(/:query)": "category",
+                "m/:query":"manufacturer",
+                "p/:query": "product",
+                'entrar' : 'login',
+                'buscar(/:query)' : 'search'
             },
-
+            home : function()
+            {
+                this.loadSubViews();
+            },
+            sell : function()
+            {
+                this.loadSubViews();
+            },
             sellProduct: function () {
                 var that = this;
                 require(['publishProductView'], function (PublishProductView) {
@@ -105,24 +121,78 @@
                     that.currentView = new VendorDetailView({ el: that.defaultEl });
                 });
             },
+            category : function(categoryName, specification, query)
+            {
+                this.loadTwoColumns();
+            },
+            manufacturer : function(){
+                this.loadTwoColumns();
+            },
+            search: function () {
+                this.loadTwoColumns();
+            },
+            login: function () {
+                this.loadTwoColumns();
+            },
             product: function () {
                 var that = this;
                 require(['tuils/views/product/productDetailView'], function (ProductDetailView) {
                     that.currentView = new ProductDetailView({ el: that.defaultEl });
                     that.loadSubViews();
                 });
-                
+            },
+            loadTwoColumns : function()
+            {
+                this.loadSubViews();
+                this.loadLeftFeaturedProducts();
+                this.loadNewsletter();
             },
             loadSubViews: function () {
+                this.loadHeader();
+                this.loadMenu();
+                this.loadSearcher();
+            },
+            loadNewsletter: function () {
+                var that = this;
+                require(['tuils/views/common/newsletterView'], function (NewsletterView) {
+                    that.viewNewsletter = new NewsletterView();
+                });;
+            },
+            loadSearcher: function () {
+                var that = this;
+                require(['tuils/views/common/searcherView'], function (SearchView) {
+                    that.viewSearcher = new SearchView({ el: 'header' });
+                });;
+            },
+            loadMenu: function () {
+                var that = this;
+                require(['tuils/views/common/topMenuView'], function (TopMenuView) {
+                    that.viewTopMenu = new TopMenuView({ el: '.header-menu' });
+                });;
+            },
+            loadLeftFeaturedProducts: function () {
+                var that = this;
+                require(['tuils/views/common/leftFeaturedProductsView'], function (LeftFeaturedProductsView) {
+                    that.viewLeftFeatured = new LeftFeaturedProductsView({ el: '.bestsellers' });
+                });;
+            },
+            loadHeader : function()
+            {
                 var that = this;
                 require(['tuils/views/common/header'], function (HeaderView) {
                     that.viewHeader = new HeaderView();
-                    //se atacha al evento de solicitud de ingreso
-                    that.currentView.on('unauthorized', that.viewHeader.showLogin, that.viewHeader);
-                    //atacha a la vista actual al evento cuando el usuario se autenticó
-                    that.viewHeader.on('user-authenticated', that.currentView.userAuthenticated, that.currentView);
+
+                    if (that.currentView != undefined)
+                    {
+                        //se atacha al evento de solicitud de ingreso
+                        that.currentView.on('unauthorized', that.viewHeader.showLogin, that.viewHeader);
+                        //atacha a la vista actual al evento cuando el usuario se autenticó
+                        that.viewHeader.on('user-authenticated', that.currentView.userAuthenticated, that.currentView);
+                    }
+                    
                 });
             },
+            
             loadSubViewsPanel: function () {
                 var that = this;
                 require(['tuils/views/panel/menu'], function (MenuPanelView) {

@@ -293,6 +293,8 @@
     <Compile Include="Models\Catalog\BackInStockSubscribeModel.cs" />
     <Compile Include="Models\Catalog\CategorySimpleModel.cs" />
     <Compile Include="Models\Catalog\CompareProductsModel.cs" />
+    <Compile Include="Models\Catalog\IComparableModel.cs" />
+    <Compile Include="Models\Catalog\IWishableModel.cs" />
     <Compile Include="Models\Catalog\ManufacturerHomePageModel.cs" />
     <Compile Include="Models\Catalog\VendorModel.cs" />
     <Compile Include="Models\Catalog\VendorNavigationModel.cs" />
@@ -1079,6 +1081,7 @@
     <Content Include="Scripts\tuils\collections\specificationAttribute.js" />
     <Content Include="Scripts\tuils\extensions\numbers.js" />
     <Content Include="Scripts\tuils\models\address.js" />
+    <Content Include="Scripts\tuils\models\newsletter.js" />
     <Content Include="Scripts\tuils\models\order.js" />
     <Content Include="Scripts\tuils\models\panel\responseQuestion.js" />
     <Content Include="Scripts\tuils\models\specificationAttribute.js" />
@@ -1095,6 +1098,10 @@
     <Content Include="Scripts\tuils\utilities.js" />
     <Content Include="Scripts\tuils\views\baseView.js" />
     <Content Include="Scripts\tuils\views\common\header.js" />
+    <Content Include="Scripts\tuils\views\common\leftFeaturedProductsView.js" />
+    <Content Include="Scripts\tuils\views\common\newsletterView.js" />
+    <Content Include="Scripts\tuils\views\common\searcherView.js" />
+    <Content Include="Scripts\tuils\views\common\topMenuView.js" />
     <Content Include="Scripts\tuils\views\login\createUser.js" />
     <Content Include="Scripts\tuils\views\login\login.js" />
     <Content Include="Scripts\tuils\views\panel\addAddressView.js" />
@@ -2492,6 +2499,8 @@
     <Content Include="Views\Catalog\_FilterBikeReferenceBox.cshtml" />
     <Content Include="Views\Catalog\ManufacturerHomePage.cshtml" />
     <Content Include="Views\ControlPanel\_NoRows.cshtml" />
+    <Content Include="Themes\Healthy\Views\Product\FeaturedLeftMenu.cshtml" />
+    <Content Include="Views\Product\_AddToWishlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
