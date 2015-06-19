@@ -83,19 +83,19 @@
                     title : ''
                 },
                 navbars: [
-                    {
-                        position: 'top',
-                        content: [$("#templateLinksResponsivePublish").html()]
-                    },
-                    {
-                        position: 'top',
-                        content: [$("#templateLinksResponsiveWishList").html()]
-                    },
-                    {
-                        position: 'top',
-                        content: [$("#templateLinksResponsiveMyAccount").html()],
-                        height: 2
-                    },
+                    //{
+                    //    position: 'top',
+                    //    content: [$("#templateLinksResponsivePublish").html()]
+                    //},
+                    //{
+                    //    position: 'top',
+                    //    content: [$("#templateLinksResponsiveWishList").html()]
+                    //},
+                    //{
+                    //    position: 'top',
+                    //    content: [$("#templateLinksResponsiveMyAccount").html()],
+                    //    height: 2
+                    //},
                     {
                         position: 'bottom',
                         content: [$("#templateLogoutResponsiveMenu").html()]
@@ -110,6 +110,9 @@
             $("#mainMenu").mmenu(options, {
                 clone: true
             });
+
+            //agrega las funcionalidades adicionales del menú
+            $(".mm-panel:first").prepend($("#templateLinksResponsiveMenu").html());
         }
 
         function hoverMenu()
@@ -133,7 +136,6 @@
                 // get browser width
                 if (currentWidth > 1024) {
                     $("#mainMenu").data("mmenu").close();
-                    $("#divSearchText").removeClass("divSearchTextResponsive");
                 }
             });
         }

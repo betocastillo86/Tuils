@@ -193,7 +193,8 @@ nav:not(.mm-menu, .nav-category) {display: none;}
 .search-box ul li{list-style:none outside none;float:left;margin:0;padding:0;}
 .search-box-text{background:none repeat scroll 0 0 #FFF;width:300px;border:none !important;padding:4px 5px;vertical-align:top;font-size:12px;}
 .search-box-button{padding:4px 5px;background:none repeat scroll 0 0 #F6F6F4;border:none; border-radius:2px ;color:#353434;cursor:pointer;margin-bottom:2px;width:70px;}
-.divSearchTextResponsive {background-color:#000; width: 100%; height: 80px; position: fixed; display: none; top: 0; left: 0;}
+.divSearchTextResponsive {background-color:#000; width: 100%; height: 60px; position: fixed; display: none; top: 0; left: 0; z-index:3}
+.closeSearchResponsive { position: fixed; top:0; right:0; z-index:3; display:none }
 /* override some jQuery UI style */
 .search-box .ui-autocomplete-loading{background:white url('images/ajax_loader_small.gif') right center no-repeat;}
 .ui-autocomplete{z-index:10 !important;} /*ensure that z-index is more than .nivoSlider a.nivo-imageLink used on the home page*/
