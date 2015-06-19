@@ -61,7 +61,10 @@
     <div class="page-body">
         @Html.Widget("productdetails_top", Model.Id)
         @*added*@
-        <div class="product-name"><h1 itemprop="name">@Model.Name</h1></div>
+        <div class="product-name">
+            <h1 itemprop="name">@Model.Name</h1>
+            <span class="stock"><b>Disponibilidad:</b> 20 en stock</span>
+        </div>
         @*@added*@
 
         @using (Html.BeginRouteForm("Product", new { SeName = Model.SeName }, FormMethod.Post, new { id = "product-details-form" }))
@@ -78,6 +81,8 @@
                                     @Model.Name
                                 </h1>
                             </div>*@
+
+                        ddd
                         @if (!String.IsNullOrEmpty(Model.ShortDescription))
                         {
                             <div class="short-description">
