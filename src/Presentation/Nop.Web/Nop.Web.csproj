@@ -1096,6 +1096,7 @@
     <Content Include="Scripts\tuils\utilities.js" />
     <Content Include="Scripts\tuils\views\baseView.js" />
     <Content Include="Scripts\tuils\views\common\header.js" />
+    <Content Include="Scripts\tuils\views\common\leftFeaturedProductsView.js" />
     <Content Include="Scripts\tuils\views\common\newsletterView.js" />
     <Content Include="Scripts\tuils\views\common\searcherView.js" />
     <Content Include="Scripts\tuils\views\common\topMenuView.js" />
@@ -2496,6 +2497,7 @@
     <Content Include="Views\Catalog\_FilterBikeReferenceBox.cshtml" />
     <Content Include="Views\Catalog\ManufacturerHomePage.cshtml" />
     <Content Include="Views\ControlPanel\_NoRows.cshtml" />
+    <Content Include="Themes\Healthy\Views\Product\FeaturedLeftMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

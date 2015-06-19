@@ -10,6 +10,7 @@
             viewTopMenu: undefined,
             viewSearcher: undefined,
             viewNewsletter: undefined,
+            viewLeftFeatured : undefined,
 
             //el por defecto para las vistas
             defaultEl: "#divMainSection",
@@ -121,13 +122,13 @@
             },
             category : function(categoryName, specification, query)
             {
-                this.loadSubViews();
+                this.loadTwoColumns();
             },
             manufacturer : function(){
-                this.loadSubViews();
+                this.loadTwoColumns();
             },
             search: function () {
-                this.loadSubViews();
+                this.loadTwoColumns();
                 this.loadNewsletter();
             },
             product: function () {
@@ -136,6 +137,11 @@
                     that.currentView = new ProductDetailView({ el: that.defaultEl });
                     that.loadSubViews();
                 });
+            },
+            loadTwoColumns : function()
+            {
+                this.loadSubViews();
+                this.loadLeftFeaturedProducts();
             },
             loadSubViews: function () {
                 this.loadHeader();
@@ -158,6 +164,12 @@
                 var that = this;
                 require(['tuils/views/common/topMenuView'], function (TopMenuView) {
                     that.viewTopMenu = new TopMenuView({ el: '.header-menu' });
+                });;
+            },
+            loadLeftFeaturedProducts: function () {
+                var that = this;
+                require(['tuils/views/common/leftFeaturedProductsView'], function (LeftFeaturedProductsView) {
+                    that.viewLeftFeatured = new LeftFeaturedProductsView({ el: '.bestsellers' });
                 });;
             },
             loadHeader : function()

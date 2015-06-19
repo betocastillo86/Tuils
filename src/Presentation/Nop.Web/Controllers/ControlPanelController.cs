@@ -20,7 +20,6 @@ using Nop.Services.Messages;
 using Nop.Services.ControlPanel;
 using Nop.Core.Domain.ControlPanel;
 using Nop.Services.Vendors;
-using Nop.Web.Extensions;
 using Nop.Core.Domain.Vendors;
 using Nop.Services.Orders;
 using Nop.Web.Models.Order;

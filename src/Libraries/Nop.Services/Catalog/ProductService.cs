@@ -74,7 +74,6 @@ namespace Nop.Services.Catalog
         private readonly IAclService _aclService;
         private readonly IStoreMappingService _storeMappingService;
         private readonly IPictureService _pictureService;
-        private readonly IVendorService _vendorService;
         private readonly IOrderService _orderService;
 
         #endregion
@@ -390,7 +389,8 @@ namespace Nop.Services.Catalog
             bool? published = null,
             int? specialCategoryId = null,
             int? orderBySpecialCategoryId = null,
-           int? stateProvinceId = null)
+           int? stateProvinceId = null,
+            bool? leftFeatured = null)
         {
             Dictionary<int, int> filterableSpecificationAttributeOptionCount;
             return SearchProducts(
@@ -399,7 +399,8 @@ namespace Nop.Services.Catalog
                 storeId, vendorId, warehouseId,
                 parentGroupedProductId, productType, visibleIndividuallyOnly, featuredProducts,
                 priceMin, priceMax, productTagId, keywords, searchDescriptions, searchSku,
-                searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published, specialCategoryId, orderBySpecialCategoryId, stateProvinceId);
+                searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published, 
+                specialCategoryId, orderBySpecialCategoryId, stateProvinceId, leftFeatured);
         }
 
 
@@ -431,7 +432,8 @@ namespace Nop.Services.Catalog
             bool? published = null,
             int? specialCategoryId = null,
             int? orderBySpecialCategoryId = null,
-           int? stateProvinceId = null)
+           int? stateProvinceId = null,
+            bool? leftFeatured = null)
         {
             Dictionary<int, int> filterableCategoryCount;
             Dictionary<int, int> filterableStateProvinceCount;
@@ -451,7 +453,8 @@ namespace Nop.Services.Catalog
                 storeId, vendorId, warehouseId,
                 parentGroupedProductId, productType, visibleIndividuallyOnly, featuredProducts,
                 priceMin, priceMax, productTagId, keywords, searchDescriptions, searchSku,
-                searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published, stateProvinceId, specialCategoryId, orderBySpecialCategoryId, false);
+                searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published, 
+                stateProvinceId, specialCategoryId, orderBySpecialCategoryId, false,leftFeatured);
         }
 
 
@@ -533,7 +536,8 @@ namespace Nop.Services.Catalog
             int? stateProvinceId = null,
             int? specialCategoryId = null,
             int? orderBySpecialCategoryId = null,
-            bool? loadPriceRange = false)
+            bool? loadPriceRange = false,
+            bool? leftFeatured = null)
         {
             filterableSpecificationAttributeOptionCount = new Dictionary<int, int>();
             filterableCategoryCount = new Dictionary<int, int>();
@@ -800,6 +804,11 @@ namespace Nop.Services.Catalog
             pLoadFilterableSpecialCategoryIds.Value = loadFilterableSpecialCategoryIds;
             pLoadFilterableSpecialCategoryIds.DbType = DbType.Boolean;
 
+            var pLeftFeatured = _dataProvider.GetParameter();
+            pLeftFeatured.ParameterName = "LeftFeatured";
+            pLeftFeatured.Value = leftFeatured.HasValue ? (object)leftFeatured : DBNull.Value;
+            pLeftFeatured.DbType = DbType.Boolean;
+
 
             var pFilterableSpecificationAttributeOptionIds = _dataProvider.GetParameter();
             pFilterableSpecificationAttributeOptionIds.ParameterName = "FilterableSpecificationAttributeOptionIds";
@@ -831,7 +840,6 @@ namespace Nop.Services.Catalog
             pFilterableSpecialCategoryIds.Size = int.MaxValue - 1;
             pFilterableSpecialCategoryIds.DbType = DbType.String;
 
-
             var pMinPrice = _dataProvider.GetParameter();
             pMinPrice.ParameterName = "MinPrice";
             pMinPrice.Direction = ParameterDirection.Output;
@@ -848,8 +856,6 @@ namespace Nop.Services.Catalog
             pTotalRecords.ParameterName = "TotalRecords";
             pTotalRecords.Direction = ParameterDirection.Output;
             pTotalRecords.DbType = DbType.Int32;
-
-
 
 
             //invoke stored procedure
@@ -883,6 +889,7 @@ namespace Nop.Services.Catalog
                 pPublished,
                 pStateProvinceId,
                 pSpecialCategoryId,
+                pLeftFeatured,
                 pLoadPriceRange,
                 pLoadFilterableSpecificationAttributeOptionIds,
                 pLoadFilterableCategoryIds,

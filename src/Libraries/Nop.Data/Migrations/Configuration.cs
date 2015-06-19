@@ -234,7 +234,10 @@ namespace Nop.Data.Migrations
             //AddColumn_SocialNetwork_Table_Manufacturer
             newLocaleStringResources.Add("header.publishproduct.widescreen", "Publica tu anuncio");
             newLocaleStringResources.Add("header.publishproduct.mobile", "Publicar");
-
+            //AddColumn_FeaturedLeftMenu_Table_Product
+            newLocaleStringResources.Add("FeaturedLeftMenu", "Destacados");
+            newLocaleStringResources.Add("Admin.Catalog.Products.Fields.LeftFeatured", "Mostrar como destacado izquierdo");
+            newLocaleStringResources.Add("Admin.Catalog.Products.Fields.LeftFeatured.Hint", "Muestra el producto en la parte izquierda de las paginas");
 
             //Recorre todas las llaves que desea adicional
             foreach (var resource in newLocaleStringResources)
