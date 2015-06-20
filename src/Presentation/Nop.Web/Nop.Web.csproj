@@ -296,6 +296,7 @@
     <Compile Include="Models\Catalog\IComparableModel.cs" />
     <Compile Include="Models\Catalog\IWishableModel.cs" />
     <Compile Include="Models\Catalog\ManufacturerHomePageModel.cs" />
+    <Compile Include="Models\Catalog\SpecialCategoryProductModel.cs" />
     <Compile Include="Models\Catalog\VendorModel.cs" />
     <Compile Include="Models\Catalog\VendorNavigationModel.cs" />
     <Compile Include="Models\Catalog\ProductOverviewModel.cs" />
@@ -2502,6 +2503,9 @@
     <Content Include="Themes\Healthy\Views\Product\FeaturedLeftMenu.cshtml" />
     <Content Include="Views\Shared\_AddToWishlist.cshtml" />
     <Content Include="Views\Product\_ProductVendor.cshtml" />
+    <Content Include="Views\Product\_ProductPrice.cshtml" />
+    <Content Include="Views\Product\_ProductShipping.cshtml" />
+    <Content Include="Views\Product\_ProductSpecialCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
@@ -2583,7 +2587,7 @@
     <Content Include="Views\Product\_ProductSpecifications.cshtml" />
     <Content Include="Views\Product\_ProductTierPrices.cshtml" />
     <Content Include="Views\Product\_GiftCardInfo.cshtml" />
-    <Content Include="Views\Product\_ProductPrice.cshtml" />
+    <Content Include="Views\Product\_ProductPrice.Full.cshtml" />
     <Content Include="Views\Product\_AddToCart.cshtml" />
     <Content Include="Views\Product\_DownloadSample.cshtml" />
     <Content Include="Views\Product\_SKU_Man_Stock.cshtml" />

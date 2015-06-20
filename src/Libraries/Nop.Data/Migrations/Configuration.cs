@@ -243,8 +243,7 @@ namespace Nop.Data.Migrations
             newLocaleStringResources.Add("Products.StateProvinceName", "Ubicación");
             newLocaleStringResources.Add("Products.VendorShippingEnabled", "Envío a acordar con el vendedor");
             newLocaleStringResources.Add("Products.VendorCreditCardEnabled", "Recibimos tarjetas");
-
-            
+            newLocaleStringResources.Add("Product.SpecialCategories", "Producto especial para");
 
             //Recorre todas las llaves que desea adicional
             foreach (var resource in newLocaleStringResources)

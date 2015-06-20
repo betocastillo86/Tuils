@@ -8,8 +8,6 @@
         <div class="product-vendor">
             <span class="label">@T("Products.Vendor"): </span><span class="value"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">@Model.VendorModel.Name</a></span>
         </div>
-    
-
     }
 }
 else
@@ -19,12 +17,6 @@ else
 
 @if (Model.ShowVendor)
 { 
-    
-    if (Model.VendorModel.VendorShippingEnabled)
-    { 
-        <br />
-        <span>@T("Products.VendorShippingEnabled")</span>
-    }
     if (Model.VendorModel.CreditCardEnabled)
     { 
         <br />

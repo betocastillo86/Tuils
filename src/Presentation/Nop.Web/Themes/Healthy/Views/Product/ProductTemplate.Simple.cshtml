@@ -100,11 +100,13 @@
                                 @Html.Raw(Model.FullDescription)
                             </div>
                         }
-                        @Html.Widget("productdetails_overview_top", Model.Id)
+                        @*@Html.Widget("productdetails_overview_top", Model.Id)*@
                         <!--product SKU, manufacturer part number, stock info-->
                         @Html.Partial("_SKU_Man_Stock", Model)
                         <!--vendor info-->
                         @Html.Partial("_ProductVendor", Model)
+                        <!--Información de envío-->
+                        @Html.Partial("_ProductShipping", Model)
                         <!--product SKU, manufacturer part number, stock info-->
                         @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
                         <!--Back in stock subscription-->
@@ -113,20 +115,26 @@
                         @Html.Partial("_ProductManufacturers", Model.ProductManufacturers)
                         <!--product reviews-->
                         @Html.Partial("_ProductReviewOverview", Model.ProductReviewOverview)
-                        <!--sample download-->
-                        @Html.Partial("_DownloadSample", Model)
-                        <!--attributes-->
-                        @{
-                        var dataDictAttributes = new ViewDataDictionary();
-                        dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", Model.Id);
-                        @Html.Partial("_ProductAttributes", Model.ProductAttributes, dataDictAttributes)
-                        }
-                        <!--gift card-->
-                        @{
-                        var dataDictGiftCard = new ViewDataDictionary();
-                        dataDictGiftCard.TemplateInfo.HtmlFieldPrefix = string.Format("giftcard_{0}", Model.Id);
-                        @Html.Partial("_GiftCardInfo", Model.GiftCard, dataDictGiftCard)
-                        }
+                        <!--product manufacturers-->
+                        @Html.Partial("_ProductSpecialCategories", Model)
+                        
+                                                 @*
+             <!--sample download-->
+        @Html.Partial("_DownloadSample", Model)
+            <!--attributes-->
+        @{
+        var dataDictAttributes = new ViewDataDictionary();
+        dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", Model.Id);
+        @Html.Partial("_ProductAttributes", Model.ProductAttributes, dataDictAttributes)
+        }
+
+
+            <!--gift card-->
+            @{
+        var dataDictGiftCard = new ViewDataDictionary();
+        dataDictGiftCard.TemplateInfo.HtmlFieldPrefix = string.Format("giftcard_{0}", Model.Id);
+        @Html.Partial("_GiftCardInfo", Model.GiftCard, dataDictGiftCard)
+        }*@
                         <!--price & add to cart-->
                         @{
                         var dataDictPrice = new ViewDataDictionary();
@@ -142,15 +150,15 @@
                         @Html.Partial("_AddToWishlist")
                             
                         }
-                        @Html.Partial("_ProductEmailAFriendButton", Model)
+                        @*@Html.Partial("_ProductEmailAFriendButton", Model)*@
                         @Html.Partial("_CompareProductsButton", Model)
 
                         @*added*@
-                        @Html.Partial("_ProductTierPrices", Model.TierPrices)
+                        @*@Html.Partial("_ProductTierPrices", Model.TierPrices)*@
                         @*added*@
 
                         @Html.Partial("_ShareButton", Model)
-                        @Html.Widget("productdetails_overview_bottom", Model.Id)
+                        @*@Html.Widget("productdetails_overview_bottom", Model.Id)*@
                     </div>
                     @*@if (!String.IsNullOrEmpty(Model.FullDescription))
                         {
@@ -159,7 +167,7 @@
                             </div>
                         }*@
                 </div>
-                @Html.Widget("productdetails_before_collateral", Model.Id)
+                @*@Html.Widget("productdetails_before_collateral", Model.Id)*@
                 <div class="product-collateral">
                     @*added*@
                     @{

@@ -2331,7 +2331,7 @@ namespace Nop.Services.Catalog
                 return new List<SpecialCategoryProduct>();
 
             return _specialCategoryProductRepository.Table
-                .IncludeProperties(sc => sc.Category)
+                .IncludeProperties(p => p.Category)
                 .Where(sc => sc.ProductId == productId)
                 .ToList();
         }

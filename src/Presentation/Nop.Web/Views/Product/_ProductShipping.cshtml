@@ -1,0 +1,7 @@
+﻿@model ProductDetailsModel
+@using Nop.Web.Models.Catalog;
+@if (Model.IsShipEnabled || Model.VendorModel.VendorShippingEnabled)
+{
+    <br />
+    <span>@T("Products.VendorShippingEnabled")</span>
+}
