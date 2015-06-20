@@ -82,6 +82,11 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.ShowOnHomePage")]
         public bool ShowOnHomePage { get; set; }
 
+
+
+        [NopResourceDisplayName("Admin.Catalog.Products.Fields.LeftFeatured")]
+        public bool LeftFeatured { get; set; }
+
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.MetaKeywords")]
         [AllowHtml]
         public string MetaKeywords { get; set; }
@@ -594,6 +599,7 @@ namespace Nop.Admin.Models.Catalog
             public int SearchStoreId { get; set; }
             [NopResourceDisplayName("Admin.Catalog.Products.List.SearchVendor")]
             public int SearchVendorId { get; set; }
+
             [NopResourceDisplayName("Admin.Catalog.Products.List.SearchProductType")]
             public int SearchProductTypeId { get; set; }
 

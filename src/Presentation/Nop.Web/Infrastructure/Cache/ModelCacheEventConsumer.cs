@@ -165,6 +165,7 @@ namespace Nop.Web.Infrastructure.Cache
         /// </remarks>
         public const string MANUFACTURER_HAS_FEATURED_PRODUCTS_KEY = "Nop.pres.manufacturer.hasfeaturedproducts-{0}-{1}-{2}";
         public const string MANUFACTURER_HAS_FEATURED_PRODUCTS_PATTERN_KEY = "Nop.pres.manufacturer.hasfeaturedproducts";
+        public const string MANUFACTURER_ON_HOMEPAGE = "Nop.pres.manufacturer.onhomepage";
         
         /// <summary>
         /// Key for CategoryNavigationModel caching
@@ -177,6 +178,10 @@ namespace Nop.Web.Infrastructure.Cache
         /// </remarks>
         public const string CATEGORY_NAVIGATION_MODEL_KEY = "Nop.pres.category.navigation-{0}-{1}-{2}-{3}";
         public const string CATEGORY_NAVIGATION_PATTERN_KEY = "Nop.pres.category.navigation";
+
+
+
+        
 
         /// <summary>
         /// Key for TopMenuModel caching
@@ -248,6 +253,7 @@ namespace Nop.Web.Infrastructure.Cache
         public const string CATEGORY_CHILD_IDENTIFIERS_PATTERN_KEY = "Nop.pres.category.childidentifiers";
 
 
+        public const string CATEGORIES_API_ALL_SERVICES = "Nop.category.api.services";
         public const string CATEGORIES_API_ALL_BIKEREFERENCES = "Nop.category.api.allbikebrands";
         /// <summary>
         /// Llave que tiene los modelos que van por el API en cache
@@ -401,6 +407,15 @@ namespace Nop.Web.Infrastructure.Cache
         /// </remarks>
         public const string HOMEPAGE_BESTSELLERS_IDS_KEY = "Nop.pres.bestsellers.homepage-{0}";
         public const string HOMEPAGE_BESTSELLERS_IDS_PATTERN_KEY = "Nop.pres.bestsellers.homepage";
+
+
+        /// <summary>
+        /// Key for featured identifiers displayed on the home page
+        /// </summary>
+        /// <remarks>
+        /// {0} : current store ID
+        /// </remarks>
+        public const string HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_PATTERN_KEY = "Nop.pres.leftFeatured.homepage";
 
         /// <summary>
         /// Key for "also purchased" product identifiers displayed on the product details page
@@ -716,18 +731,21 @@ namespace Nop.Web.Infrastructure.Cache
         {
             _cacheManager.RemoveByPattern(MANUFACTURER_NAVIGATION_PATTERN_KEY);
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(MANUFACTURER_ON_HOMEPAGE);
         }
         public void HandleEvent(EntityUpdated<Manufacturer> eventMessage)
         {
             _cacheManager.RemoveByPattern(MANUFACTURER_NAVIGATION_PATTERN_KEY);
             _cacheManager.RemoveByPattern(PRODUCT_MANUFACTURERS_PATTERN_KEY);
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(MANUFACTURER_ON_HOMEPAGE);
         }
         public void HandleEvent(EntityDeleted<Manufacturer> eventMessage)
         {
             _cacheManager.RemoveByPattern(MANUFACTURER_NAVIGATION_PATTERN_KEY);
             _cacheManager.RemoveByPattern(PRODUCT_MANUFACTURERS_PATTERN_KEY);
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(MANUFACTURER_ON_HOMEPAGE);
         }
 
         //product manufacturers
@@ -758,7 +776,10 @@ namespace Nop.Web.Infrastructure.Cache
              _cacheManager.RemoveByPattern(CATEGORY_HOMEPAGE_PATTERN_KEY);
              _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
              _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_BIKEREFERENCES);
+             _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_SERVICES);
              _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);
+
+
              
         }
         public void HandleEvent(EntityUpdated<Category> eventMessage)
@@ -772,6 +793,7 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(CATEGORY_HOMEPAGE_PATTERN_KEY);
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
             _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_BIKEREFERENCES);
+            _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_SERVICES);
             _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);   
         }
         public void HandleEvent(EntityDeleted<Category> eventMessage)
@@ -785,6 +807,7 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(CATEGORY_HOMEPAGE_PATTERN_KEY);
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
             _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_BIKEREFERENCES);
+            _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_SERVICES);
             _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);
         }
 

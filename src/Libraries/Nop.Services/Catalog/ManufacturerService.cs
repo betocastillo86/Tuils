@@ -598,6 +598,17 @@ namespace Nop.Services.Catalog
             });
         }
 
+        /// <summary>
+        /// Retorna las marcas que deben salir en el homepage
+        /// </summary>
+        /// <returns></returns>
+        public IList<Manufacturer> GetManufacturersOnHomePage()
+        {
+            return _manufacturerRepository.Table
+                .Where(m => m.ShowOnHomePage && !m.Deleted && m.Published)
+                .ToList();
+        }
+
         #endregion
 
         #endregion

@@ -490,6 +490,15 @@
             @Html.ValidationMessageFor(model => model.ShowOnHomePage)
         </td>
     </tr>
+    <tr @(Model.IsLoggedInAsVendor ? Html.Raw("style='display: none;'") : null)>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.LeftFeatured):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.LeftFeatured)
+            @Html.ValidationMessageFor(model => model.LeftFeatured)
+        </td>
+    </tr>
     <tr id="pnlDisplayOrder" @(Model.IsLoggedInAsVendor ? Html.Raw("style='display: none;'") : null)>
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.DisplayOrder):

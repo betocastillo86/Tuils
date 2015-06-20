@@ -27,7 +27,7 @@ namespace Nop.Web.Infrastructure
 
             //login
             routes.MapLocalizedRoute("Login",
-                            "login/",
+                            "entrar/",
                             new { controller = "Customer", action = "Login" },
                             new[] { "Nop.Web.Controllers" });
             //register
@@ -79,7 +79,7 @@ namespace Nop.Web.Infrastructure
 
             //product search
             routes.MapLocalizedRoute("ProductSearch",
-                            "search/{query}",
+                            "buscar/{query}",
                             new { controller = "Catalog", action = "Search", query = UrlParameter.Optional },
                             new[] { "Nop.Web.Controllers" });
 
@@ -730,6 +730,18 @@ namespace Nop.Web.Infrastructure
             routes.MapLocalizedRoute("ControlPanelMyOrders",
               "mi-cuenta/mis-compras",
               new { controller = "ControlPanel", action = "MyOrders" },
+              new[] { "Nop.Web.Controllers" }
+              );
+
+            routes.MapLocalizedRoute("ControlPanelMyProducts",
+              "mi-cuenta/mis-productos",
+              new { controller = "ControlPanel", action = "MyProducts" },
+              new[] { "Nop.Web.Controllers" }
+              );
+
+            routes.MapLocalizedRoute("ControlPanelMySales",
+              "mi-cuenta/mis-ventas",
+              new { controller = "ControlPanel", action = "MySales" },
               new[] { "Nop.Web.Controllers" }
               );
             #endregion

@@ -93,9 +93,12 @@ namespace Nop.Web.Extensions
                 Name = entity.GetLocalized(x => x.Name),
                 Description = entity.GetLocalized(x => x.Description),
                 MetaKeywords = entity.GetLocalized(x => x.MetaKeywords),
-                SeName = entity.GetSeName(),
-                ChildrenCategories = entity.SubCategories.ToList().ToBaseModels()
+                SeName = entity.GetSeName()
             };
+
+            if(entity.SubCategories.Count > 0)
+                model.ChildrenCategories = entity.SubCategories.ToList().ToBaseModels();
+                
             return model;
         }
 
@@ -136,7 +139,12 @@ namespace Nop.Web.Extensions
 
 
         //manufacturer
-        public static ManufacturerModel ToModel(this Manufacturer entity)
+        public static ManufacturerModel ToModel(this Manufacturer entity, 
+            bool loadPictures = false,
+            ILocalizationService localizationService = null,
+            MediaSettings mediaSettings = null,
+            IPictureService pictureService = null,
+            int? pictureSize = null)
         {
             if (entity == null)
                 return null;
@@ -151,16 +159,45 @@ namespace Nop.Web.Extensions
                 MetaTitle = entity.GetLocalized(x => x.MetaTitle),
                 SeName = entity.GetSeName(),
             };
+
+            if (loadPictures)
+            {
+                if (localizationService == null)
+                    localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+                if (mediaSettings == null)
+                    mediaSettings = EngineContext.Current.Resolve<MediaSettings>();
+                if (pictureService == null)
+                    pictureService = EngineContext.Current.Resolve<IPictureService>();
+                
+                model.PictureModel = entity.GetPicture(localizationService, mediaSettings, pictureService, pictureSize);
+            }
+                
+
             return model;
         }
 
-        public static List<ManufacturerModel> ToModels(this IList<Manufacturer> entities)
+        public static List<ManufacturerModel> ToModels(this IList<Manufacturer> entities, 
+            bool loadPictures = false,
+            ILocalizationService localizationService = null,
+            MediaSettings mediaSettings = null,
+            IPictureService pictureService = null,
+            int? pictureSize = null)
         {
             var models = new List<ManufacturerModel>();
 
+            if (loadPictures)
+            {
+                if (localizationService == null)
+                    localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+                if (mediaSettings == null)
+                    mediaSettings = EngineContext.Current.Resolve<MediaSettings>();
+                if (pictureService == null)
+                    pictureService = EngineContext.Current.Resolve<IPictureService>();
+            }
+
             foreach (var entity in entities)
             {
-                models.Add(entity.ToModel());
+                models.Add(entity.ToModel(loadPictures, localizationService, mediaSettings, pictureService, pictureSize));
             }
             return models;
         }

@@ -145,6 +145,15 @@
                 @Html.ValidationMessageFor(model => model.ManufacturerTemplateId)
             </td>
         </tr>
+
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.ShowOnHomePage):
+            </td>
+            <td class="adminData">
+                @Html.CheckBoxFor(model => model.ShowOnHomePage)
+            </td>
+        </tr>
         <tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.PictureId)

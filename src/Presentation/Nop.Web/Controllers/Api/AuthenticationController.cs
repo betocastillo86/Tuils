@@ -66,7 +66,7 @@ namespace Nop.Web.Controllers.Api
                 {
                     //Si el registro es exitoso se autentca
                     _authenticationService.SignIn(entityCustomer, true);
-                    return Ok(customer);
+                    return Ok(new { Email = customer.Email, Name = entityCustomer.GetFullName() });
                 }
                 else
                 {
@@ -100,7 +100,7 @@ namespace Nop.Web.Controllers.Api
                             _authenticationService.SignIn(customer, false);
                             _customerActivityService.InsertActivity("PublicStore.Login", _localizationService.GetResource("ActivityLog.PublicStore.Login"), customer);
 
-                            return Ok(model);
+                            return Ok(new { Email = model.Email, Name = customer.GetFullName() });
                         }
                     //Si hay algún error retorna un BadRequest
                     case CustomerLoginResults.CustomerNotExist:

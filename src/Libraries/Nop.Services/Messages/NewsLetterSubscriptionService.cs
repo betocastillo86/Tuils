@@ -21,11 +21,13 @@ namespace Nop.Services.Messages
 
         public NewsLetterSubscriptionService(IDbContext context,
             IRepository<NewsLetterSubscription> subscriptionRepository,
-            IEventPublisher eventPublisher)
+            IEventPublisher eventPublisher,
+            ILogger logger)
         {
             _context = context;
             _subscriptionRepository = subscriptionRepository;
             _eventPublisher = eventPublisher;
+            _logger = logger;
         }
 
         /// <summary>

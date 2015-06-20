@@ -8,7 +8,7 @@ using Nop.Web.Models.Media;
 
 namespace Nop.Web.Models.Catalog
 {
-    public partial class ProductDetailsModel : BaseNopEntityModel
+    public partial class ProductDetailsModel : BaseNopEntityModel, IComparableModel, IWishableModel
     {
         public ProductDetailsModel()
         {
@@ -104,6 +104,13 @@ namespace Nop.Web.Models.Catalog
 
         //a list of associated products. For example, "Grouped" products could have several child "simple" products
         public IList<ProductDetailsModel> AssociatedProducts { get; set; }
+        
+        /// <summary>
+        /// Nombre de la ciudad donde se vende el producto
+        /// </summary>
+        public string StateProvinceName { get; set; }
+
+        public bool DisableWishlistButton { get; set; }
 
 		#region Nested Classes
 
@@ -282,5 +289,7 @@ namespace Nop.Web.Models.Catalog
         }
 
 		#endregion
+
+        
     }
 }

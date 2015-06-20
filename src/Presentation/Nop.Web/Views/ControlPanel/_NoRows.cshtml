@@ -1,0 +1,9 @@
+﻿@model Nop.Web.Models.ControlPanel.NoRowsModel
+
+@if (Model != null && Model.List.Count == 0)
+{ 
+    <div>
+        @T(Model.ResourceMessage)
+    </div>
+}
+

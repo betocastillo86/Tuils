@@ -52,7 +52,7 @@
     }
 }
 
-<script data-main="/scripts/tuils/main" src="~/Scripts/require.js"></script>
+
 
 <!--product breadcrumb-->
 @Html.Partial("_ProductBreadcrumb", Model.Breadcrumb)
@@ -61,7 +61,15 @@
     <div class="page-body">
         @Html.Widget("productdetails_top", Model.Id)
         @*added*@
-        <div class="product-name"><h1 itemprop="name">@Model.Name</h1></div>
+        <div class="product-name">
+            <h1 itemprop="name">@Model.Name</h1>
+            @if (!String.IsNullOrWhiteSpace(Model.StockAvailability))
+            { 
+                <span class="stock"><b>@T("Products.Availability"):</b> @Model.StockAvailability</span>
+            }
+            
+        </div>
+
         @*@added*@
 
         @using (Html.BeginRouteForm("Product", new { SeName = Model.SeName }, FormMethod.Post, new { id = "product-details-form" }))
@@ -78,15 +86,27 @@
                                     @Model.Name
                                 </h1>
                             </div>*@
+
+                        
                         @if (!String.IsNullOrEmpty(Model.ShortDescription))
                         {
                             <div class="short-description">
                                 @Html.Raw(Model.ShortDescription)
                             </div>
                         }
+                        @if (!String.IsNullOrEmpty(Model.FullDescription))
+                        {
+                            <div class="full-description" itemprop="description">
+                                @Html.Raw(Model.FullDescription)
+                            </div>
+                        }
                         @Html.Widget("productdetails_overview_top", Model.Id)
                         <!--product SKU, manufacturer part number, stock info-->
                         @Html.Partial("_SKU_Man_Stock", Model)
+                        <!--vendor info-->
+                        @Html.Partial("_ProductVendor", Model)
+                        <!--product SKU, manufacturer part number, stock info-->
+                        @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
                         <!--Back in stock subscription-->
                         @Html.Partial("_BackInStockSubscription", Model)
                         <!--product manufacturers-->
@@ -113,9 +133,14 @@
                         dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
                         @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
 
-                        var dataDictAddToCart = new ViewDataDictionary();
+                        @*Se inhabiita la vista de agregar producto->*@
+                        @*var dataDictAddToCart = new ViewDataDictionary();
                         dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
-                        @*Se inhabiita la vista de agregar producto-> @Html.Partial("_AddToCart", Model.AddToCart, dataDictAddToCart)*@
+                        
+                        @Html.Partial("_AddToCart", Model.AddToCart, dataDictAddToCart)*@
+                            
+                        @Html.Partial("_AddToWishlist")
+                            
                         }
                         @Html.Partial("_ProductEmailAFriendButton", Model)
                         @Html.Partial("_CompareProductsButton", Model)
@@ -149,20 +174,13 @@
                         <ul class="etabs">
                             <li class="tab"><a href="#product-details">@T("Custom.Reviews.ProductDetails")</a></li>
                             <li class="tab"><a href="/productreviews/@Model.Id #product-reviews-page" data-target="#product-reviews-page">@T("Custom.Reviews.ProductReviews")</a></li>
-                            <li class="tab"><a href="/t/shippinginfo #ph-topic" data-target="#shipping-info">@T("ShippingReturns")</a></li>
-
-                            <li class="tab"><a href="#price-match">@T("Plugins.RequestQuote.PriceMatch.PriceMatchTabAnchor")</a></li>
+                            @*<li class="tab"><a href="/t/shippinginfo #ph-topic" data-target="#shipping-info">@T("ShippingReturns")</a></li>*@
+                            @*<li class="tab"><a href="#price-match">@T("Plugins.RequestQuote.PriceMatch.PriceMatchTabAnchor")</a></li>*@
                         </ul>
                         <div class="panel-container">
                             <div id="product-details">
                                 <!-- content -->
-                                @if (!String.IsNullOrEmpty(Model.FullDescription))
-                                {
-                                    <div class="full-description" itemprop="description">
-                                        @Html.Raw(Model.FullDescription)
-                                    </div>
-                                }
-                                @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
+                                
                             </div>
                             <div id="product-reviews-page"><!-- content --></div>
                             <div id="shipping-info"><!-- content --></div>

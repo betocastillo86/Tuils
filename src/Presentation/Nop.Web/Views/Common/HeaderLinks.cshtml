@@ -11,11 +11,10 @@
         }
         else
         {
-            
-            <div id="divRegisterUser"></div>
-            <div id="divLoginUser"></div>
-            <li id="liRegister"><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></li>
-            <li id="liLogin"><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></li>
+            @*<li id="liRegister"><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></li>
+            <li id="liLogin"><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></li>*@
+            <li id="liRegister" class="preLogin" >@T("Account.Register")</li>
+            <li id="liLogin" class="preLogin">@T("Account.Login")</li>
         }
         @if (Model.AllowPrivateMessages)
         {
@@ -48,6 +47,18 @@
         }
         @Html.Widget("header_links_after")
     </ul>
+
+
+    @if (!Model.IsAuthenticated)
+    { 
+        <script id="templateLoggedUser" type="text/x-handlebars-template">
+            <li><a href="@Url.RouteUrl("ControlPanel")" class="account">{{Name}}</a></li>
+            <li><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></li>
+        </script>
+        <div id="divRegisterUser"></div>
+        <div id="divLoginUser"></div>
+    }
+
     @if (Model.AllowPrivateMessages && !string.IsNullOrEmpty(Model.AlertMessage))
     {
         //new private message notification
@@ -78,37 +89,40 @@
     }
     
     <script id="templateLinksResponsiveMenu" type="text/x-handlebars-template">
-        
-            <div>   
-                @Html.ActionLink(T("header.publishproduct").Text, "Index", "Sales", new { }, new { @class = "btn_anuncia" })
-            </div>
-            
-            @if (Model.IsAuthenticated)
-            {
-                <div><a href="@Url.RouteUrl("ControlPanel")" class="account">@Model.CustomerEmailUsername</a></div>
-            }
-            else
-            {
-                <div><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></div>
-                <div><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></div>
-            }
 
-            @if (Model.WishlistEnabled)
-            {
-                <div style="padding:0 5px;">
-                    <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">
-                        <span class="icon-corazon"></span>
-                        <span class="wishlist-label">@T("Wishlist")</span>
-                        <span class="wishlist-qty"><i>@T("Wishlist.HeaderQuantity", Model.WishlistItems)</i></span>
-                    </a>
-                </div>
-            }
-       
+        <div class="main-anuncia">
+            @Html.ActionLink(T("header.publishproduct").Text, "Index", "Sales", new { }, new { @class = "main-btn_anuncia" })
+        </div>
+
+        @if (Model.IsAuthenticated)
+        {
+            <div class="main-userName"><a href="@Url.RouteUrl("ControlPanel")" class="account">@Model.CustomerEmailUsername</a></div>
+        }
+        else
+        {
+            <div class="main-registro">
+                <a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a>
+                <a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a>
+            </div>
+        }
+
+        @if (Model.WishlistEnabled)
+        {
+            <div class="main-wishlist">
+                <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">
+                    <span class="icon-corazon"></span>
+                    <span class="wishlist-label">@T("Wishlist")</span>
+                    <span class="wishlist-qty"><i>@T("Wishlist.HeaderQuantity", Model.WishlistItems)</i></span>
+                </a>
+            </div>
+        }
+        <br />
+
     </script>
 
     <script id="templateLogoutResponsiveMenu" type="text/x-handlebars">
         @if (Model.IsAuthenticated)
-        { 
+        {
             <div><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></div>
         }
     </script>

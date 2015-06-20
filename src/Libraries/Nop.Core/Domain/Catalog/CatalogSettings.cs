@@ -135,6 +135,11 @@ namespace Nop.Core.Domain.Catalog
         public bool ProductSearchAutoCompleteEnabled { get; set; }
 
         /// <summary>
+        /// True: Carga el autocompletar basado en los terminos buscados previamente
+        /// </summary>
+        public bool ProductSearchAutoCompleteWithSearchTerms { get; set; }
+
+        /// <summary>
         /// Gets or sets a number of products to return when using "autocomplete" feature
         /// </summary>
         public int ProductSearchAutoCompleteNumberOfProducts { get; set; }
@@ -311,5 +316,17 @@ namespace Nop.Core.Domain.Catalog
         /// Gets or sets a value indicating whether to display information about shipping and tax on order details page (used in Germany)
         /// </summary>
         public bool DisplayTaxShippingInfoOrderDetailsPage { get; set; }
+
+        /// <summary>
+        /// Muestra o no las marcas en el home 
+        /// </summary>
+        public bool ShowManufacturersHomePage { get; set; }
+
+
+        /// <summary>
+        /// Número de registros que debe mostrar en el home
+        /// </summary>
+        public int NumberManufacturersOnHome { get; set; }
+
     }
 }

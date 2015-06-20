@@ -1,4 +1,5 @@
-﻿@model Nop.Web.Models.ControlPanel.MyProductsModel
+﻿@model MyProductsModel
+           @using Nop.Web.Models.ControlPanel
 @{
     Html.AddTitleParts(T("PageTitle.MyProducts").Text);
     Layout = "~/Views/Shared/_PanelLayoutTwo.cshtml";
@@ -68,6 +69,8 @@
         }
 
     </ul>
+
+    @Html.Partial("_NoRows", new NoRowsModel() { List = Model.Products, ResourceMessage = "NoResults" })
 
     <div class="pager">
         @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")

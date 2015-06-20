@@ -141,6 +141,12 @@ namespace Nop.Services.Catalog
         /// <returns></returns>
         ManufacturerCategory GetManufacturerCategoryById(int manufacturerCategoryId);
 
+        /// <summary>
+        /// Retorna todas las marcas que deben salir en el home
+        /// </summary>
+        /// <returns></returns>
+        IList<Manufacturer> GetManufacturersOnHomePage();
+
 
         
     }

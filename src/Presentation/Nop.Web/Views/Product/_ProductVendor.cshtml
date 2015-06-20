@@ -1,0 +1,34 @@
+﻿@model ProductDetailsModel
+@using Nop.Web.Models.Catalog;
+@if (Model.ProductAlreadyBought)
+{
+    //Si el usuario ya compró el producto se muestra el link al vendedor
+    if (Model.ShowVendor)
+    {
+        <div class="product-vendor">
+            <span class="label">@T("Products.Vendor"): </span><span class="value"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">@Model.VendorModel.Name</a></span>
+        </div>
+    
+
+    }
+}
+else
+{
+    <input type="button" value="@T("Products.SeeVendor")" id="btnShowVendor" data-productid="@Model.Id" data-vendorurl="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })" class="button-2">
+}
+
+@if (Model.ShowVendor)
+{ 
+    
+    if (Model.VendorModel.VendorShippingEnabled)
+    { 
+        <br />
+        <span>@T("Products.VendorShippingEnabled")</span>
+    }
+    if (Model.VendorModel.CreditCardEnabled)
+    { 
+        <br />
+        <span>@T("Products.VendorCreditCardEnabled")</span>
+    }
+}
+

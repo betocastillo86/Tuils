@@ -219,6 +219,7 @@ namespace Nop.Web.Controllers
                 Gtin = product.Gtin,
                 StockAvailability = product.FormatStockMessage(_localizationService),
                 HasSampleDownload = product.IsDownload && product.HasSampleDownload,
+                StateProvinceName = product.StateProvince != null ? product.StateProvince.Name : string.Empty
             };
 
             //automatically generate product description?
@@ -258,6 +259,7 @@ namespace Nop.Web.Controllers
                 if (!_workContext.CurrentCustomer.IsGuest())
                     model.ProductAlreadyBought = _orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, product.Id);
 
+                //Si el producto ya fue comprado consulta el vendor
                 
                 var vendor = _vendorService.GetVendorById(product.VendorId);
                 if (vendor != null && !vendor.Deleted && vendor.Active)
@@ -269,8 +271,11 @@ namespace Nop.Web.Controllers
                         Id = vendor.Id,
                         Name = vendor.GetLocalized(x => x.Name),
                         SeName = vendor.GetSeName(),
+                        VendorShippingEnabled = vendor.EnableShipping ?? false,
+                        CreditCardEnabled = vendor.EnableCreditCardPayment ?? false
                     };
                 }
+                
             }
 
             #endregion
@@ -341,25 +346,25 @@ namespace Nop.Web.Controllers
             
             #endregion
 
-            #region Product tags
+            #region Product tags CODIGO ELIMINADO
 
-            //do not prepare this model for the associated products. any it's not used
-            if (!isAssociatedProduct)
-            {
-                var productTagsCacheKey = string.Format(ModelCacheEventConsumer.PRODUCTTAG_BY_PRODUCT_MODEL_KEY, product.Id, _workContext.WorkingLanguage.Id, _storeContext.CurrentStore.Id);
-                model.ProductTags = _cacheManager.Get(productTagsCacheKey, () =>
-                    product.ProductTags
-                    //filter by store
-                    .Where(x => _productTagService.GetProductCount(x.Id, _storeContext.CurrentStore.Id) > 0)
-                    .Select(x =>  new ProductTagModel
-                    {
-                        Id = x.Id,
-                        Name = x.GetLocalized(y => y.Name),
-                        SeName = x.GetSeName(),
-                        ProductCount = _productTagService.GetProductCount(x.Id, _storeContext.CurrentStore.Id)
-                    })
-                    .ToList());
-            }
+            ////////do not prepare this model for the associated products. any it's not used
+            //////if (!isAssociatedProduct)
+            //////{
+            //////    var productTagsCacheKey = string.Format(ModelCacheEventConsumer.PRODUCTTAG_BY_PRODUCT_MODEL_KEY, product.Id, _workContext.WorkingLanguage.Id, _storeContext.CurrentStore.Id);
+            //////    model.ProductTags = _cacheManager.Get(productTagsCacheKey, () =>
+            //////        product.ProductTags
+            //////        //filter by store
+            //////        .Where(x => _productTagService.GetProductCount(x.Id, _storeContext.CurrentStore.Id) > 0)
+            //////        .Select(x =>  new ProductTagModel
+            //////        {
+            //////            Id = x.Id,
+            //////            Name = x.GetLocalized(y => y.Name),
+            //////            SeName = x.GetSeName(),
+            //////            ProductCount = _productTagService.GetProductCount(x.Id, _storeContext.CurrentStore.Id)
+            //////        })
+            //////        .ToList());
+            //////}
 
             #endregion
 
@@ -418,8 +423,12 @@ namespace Nop.Web.Controllers
 
             #endregion
 
+            #region WishList
+            model.DisableWishlistButton = product.DisableWishlistButton;
+            #endregion
+
             #region Product price
-            
+
             model.ProductPrice.ProductId = product.Id;
             if (_permissionService.Authorize(StandardPermissionProvider.DisplayPrices))
             {
@@ -485,6 +494,7 @@ namespace Nop.Web.Controllers
             #endregion
 
             #region 'Add to cart' model
+            
 
             model.AddToCart.ProductId = product.Id;
             model.AddToCart.UpdatedShoppingCartItemId = updatecartitem != null ? updatecartitem.Id : 0;
@@ -1179,6 +1189,37 @@ namespace Nop.Web.Controllers
         }
 
         #endregion
+
+        #region Left featured products
+
+        [ChildActionOnly]
+        public ActionResult FeaturedLeftMenu(int? productThumbPictureSize)
+        {
+            if (!_catalogSettings.ShowBestsellersOnHomepage || _catalogSettings.NumberOfBestsellersOnHomepage == 0)
+                return Content("");
+
+            //load and cache report
+            var products = _cacheManager.Get(string.Format(ModelCacheEventConsumer.HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_PATTERN_KEY, _storeContext.CurrentStore.Id),
+                () =>
+                    _productService.SearchProducts(storeId: _storeContext.CurrentStore.Id, leftFeatured:true).ToList() );
+
+            //toma aleatoriamente un numero de productos
+            products = products
+                .OrderBy(p => Guid.NewGuid())
+                .Take(_catalogSettings.NumberOfBestsellersOnHomepage)
+                .ToList();
+
+            if (products.Count == 0)
+                return Content("");
+
+            //prepare model
+            var model = PrepareProductOverviewModels(products, true, true, productThumbPictureSize).ToList();
+            return PartialView(model);
+        }
+
+        #endregion
+
+
 
         #region Product reviews
 

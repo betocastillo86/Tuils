@@ -1,5 +1,6 @@
 using Nop.Core;
 using Nop.Core.Domain.Common;
+using System.Collections.Generic;
 
 namespace Nop.Services.Common
 {
@@ -28,6 +29,15 @@ namespace Nop.Services.Common
         /// <param name="storeId">Store identifier</param>
         /// <returns>Search term</returns>
         SearchTerm GetSearchTermByKeyword(string keyword, int storeId);
+
+
+        /// <summary>
+        /// Busca todas las coincidencias de la cadena envíada
+        /// </summary>
+        /// <param name="keyword">llaves por las que el usuario busca</param>
+        /// <param name="top">numero maximo de resultados</param>
+        /// <returns></returns>
+        IList<SearchTerm> GetTemsByKeyword(string keyword, int top);
 
         /// <summary>
         /// Gets a search term statistics

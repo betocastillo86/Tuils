@@ -461,8 +461,10 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public int StateProvinceId { get; set; }
 
-
-
+        /// <summary>
+        /// Productos destacados en el menú izquierdo
+        /// </summary>
+        public Nullable<bool> LeftFeatured { get; set; }
 
         /// <summary>
         /// Gets or sets the product type

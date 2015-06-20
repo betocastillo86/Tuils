@@ -779,15 +779,53 @@ namespace Nop.Web.Controllers
                 
             );
 
+            int idSelectedAttribute = 0;
+            //Valida en que categoría se encuentra para así seleccionar el attributo especificado en el menú
+            if (RouteData.Values["specsFilter"] != null)
+            {
+                var attributeSelected = cachedMenuAttributes.FirstOrDefault(a => a.SeName.Equals(RouteData.Values["specsFilter"]));
+                idSelectedAttribute = attributeSelected != null ? attributeSelected.Id : 0;
+            }
+
             var model = new TopMenuModel
             {
                 Categories = cachedCategoriesModel,
                 Topics = new List<TopMenuModel.TopMenuTopicModel>(),
-                SpecificationAttributesFilter = cachedMenuAttributes
+                SpecificationAttributesFilter = cachedMenuAttributes,
+                //Si no viene filtrado por atributo tipo moto, selecciona la primera de la lista
+                SelectedSpecificationAttribute = idSelectedAttribute > 0 ? idSelectedAttribute : cachedMenuAttributes.FirstOrDefault().Id
             };
 
 
             return PartialView(model);
+        }
+        
+        
+        [ChildActionOnly]
+        public ActionResult ManufacturerHomePage()
+        {
+            if (!_catalogSettings.ShowManufacturersHomePage)
+                return Content(string.Empty);
+
+            var model = new ManufacturerHomePageModel();
+            model.Enable = true;
+
+            //Consulta las marcas que van en el home
+            string cacheKey = string.Format(ModelCacheEventConsumer.MANUFACTURER_ON_HOMEPAGE);
+            var cachedManufacturers = _cacheManager.Get(cacheKey, () =>
+            {
+                return _manufacturerService
+                    .GetManufacturersOnHomePage()
+                    .ToModels(true, _localizationService, _mediaSettings, _pictureService);
+            });
+
+            //Toma aleatoreamente un número de registros para ser mostrados
+            model.Manufacturers = cachedManufacturers
+                .OrderBy(elem => Guid.NewGuid())
+                .Take(_catalogSettings.NumberManufacturersOnHome)
+                .ToList();
+
+            return View(model);
         }
 
         [ChildActionOnly]
@@ -1591,7 +1629,8 @@ namespace Nop.Web.Controllers
             {
                 AutoCompleteEnabled = _catalogSettings.ProductSearchAutoCompleteEnabled,
                 ShowProductImagesInSearchAutoComplete = _catalogSettings.ShowProductImagesInSearchAutoComplete,
-                SearchTermMinimumLength = _catalogSettings.ProductSearchTermMinimumLength
+                SearchTermMinimumLength = _catalogSettings.ProductSearchTermMinimumLength,
+                SearchWithSearchTerms = _catalogSettings.ProductSearchAutoCompleteWithSearchTerms
             };
             return PartialView(model);
         }
@@ -1603,26 +1642,38 @@ namespace Nop.Web.Controllers
 
             //products
             var productNumber = _catalogSettings.ProductSearchAutoCompleteNumberOfProducts > 0 ?
-                _catalogSettings.ProductSearchAutoCompleteNumberOfProducts : 10;
+            _catalogSettings.ProductSearchAutoCompleteNumberOfProducts : 10;
 
-            var products = _productService.SearchProducts(
-                storeId: _storeContext.CurrentStore.Id,
-                keywords: term,
-                searchSku: false,
-                languageId: _workContext.WorkingLanguage.Id,
-                visibleIndividuallyOnly: true,
-                pageSize: productNumber);
+            //Busca los terminos por el buscador de terminos general
+            if (_catalogSettings.ProductSearchAutoCompleteWithSearchTerms)
+            {
+                var result = _searchTermService.GetTemsByKeyword(term, productNumber)
+                    .Select(s => new { label = s.Keyword });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var products = _productService.SearchProducts(
+                    storeId: _storeContext.CurrentStore.Id,
+                    keywords: term,
+                    searchSku: false,
+                    languageId: _workContext.WorkingLanguage.Id,
+                    visibleIndividuallyOnly: true,
+                    pageSize: productNumber);
 
-            var models = PrepareProductOverviewModels(products, false, _catalogSettings.ShowProductImagesInSearchAutoComplete, _mediaSettings.AutoCompleteSearchThumbPictureSize).ToList();
-            var result = (from p in models
-                          select new
-                          {
-                              label = p.Name,
-                              producturl = Url.RouteUrl("Product", new { SeName = p.SeName }),
-                              productpictureurl = p.DefaultPictureModel.ImageUrl
-                          })
-                          .ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+                var models = PrepareProductOverviewModels(products, false, _catalogSettings.ShowProductImagesInSearchAutoComplete, _mediaSettings.AutoCompleteSearchThumbPictureSize).ToList();
+                var result = (from p in models
+                              select new
+                              {
+                                  label = p.Name,
+                                  producturl = Url.RouteUrl("Product", new { SeName = p.SeName }),
+                                  productpictureurl = p.DefaultPictureModel.ImageUrl
+                              })
+                              .ToList();
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+
+            
         }
 
         #endregion

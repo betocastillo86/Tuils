@@ -79,6 +79,9 @@ namespace Nop.Admin.Models.Catalog
 
         [NopResourceDisplayName("Admin.Catalog.Manufacturers.Fields.DisplayOrder")]
         public int DisplayOrder { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Manufacturers.Fields.ShowOnHomePage")]
+        public bool ShowOnHomePage { get; set; }
         
         public IList<ManufacturerLocalizedModel> Locales { get; set; }
         

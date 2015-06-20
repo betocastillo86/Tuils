@@ -1,4 +1,5 @@
-﻿@model Nop.Web.Models.ControlPanel.MyOrdersModel
+﻿@model MyOrdersModel
+@using Nop.Web.Models.ControlPanel
 @{
     Html.AddTitleParts(T("PageTitle.MySales").Text);
     Layout = "~/Views/Shared/_PanelLayoutTwo.cshtml";
@@ -7,14 +8,18 @@
 <h2 class="tit_sec">@T("MySales.Title")</h2>
 <p>@T("MySales.Description")</p>
 <div class="conte_sale">
-    <div class="table-header">
-        <div class="td-img">img</div>
-        <div class="td-pdt">@T("MyOrders.Product")</div>
-        <div class="td-vend">@T("MySales.Customer")</div>
-        <div class="td-cal">@T("MyOrders.Rating") / @T("MyOrders.Date")</div>
-        <div class="td-prec">@T("MyOrders.Price")</div>
-        <br />
-    </div>
+
+    @if (Model.Orders.Count > 0)
+    { 
+         <div class="table-header">
+            <div class="td-img">img</div>
+            <div class="td-pdt">@T("MyOrders.Product")</div>
+            <div class="td-vend">@T("MySales.Customer")</div>
+            <div class="td-cal">@T("MyOrders.Rating") / @T("MyOrders.Date")</div>
+            <div class="td-prec">@T("MyOrders.Price")</div>
+            <br />
+        </div>
+    }
 
     
     @foreach (var item in Model.Orders)
@@ -53,6 +58,8 @@
         </li>
 
     }
+
+    @Html.Partial("_NoRows", new NoRowsModel() { List = Model.Orders, ResourceMessage = "NoResults" })
 
     <div class="pager">
         @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")

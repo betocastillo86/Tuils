@@ -151,6 +151,14 @@
     <Compile Include="Migrations\201506011909422_AddColumn_SpecificationAttributeOptionId_Category.Designer.cs">
       <DependentUpon>201506011909422_AddColumn_SpecificationAttributeOptionId_Category.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506051913546_AddColumnShowOnHomePage_Manufacturer.cs" />
+    <Compile Include="Migrations\201506051913546_AddColumnShowOnHomePage_Manufacturer.Designer.cs">
+      <DependentUpon>201506051913546_AddColumnShowOnHomePage_Manufacturer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506191518197_AddColumn_LeftFeatured_Table_Product.cs" />
+    <Compile Include="Migrations\201506191518197_AddColumn_LeftFeatured_Table_Product.Designer.cs">
+      <DependentUpon>201506191518197_AddColumn_LeftFeatured_Table_Product.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -335,6 +343,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506011909422_AddColumn_SpecificationAttributeOptionId_Category.resx">
       <DependentUpon>201506011909422_AddColumn_SpecificationAttributeOptionId_Category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506051913546_AddColumnShowOnHomePage_Manufacturer.resx">
+      <DependentUpon>201506051913546_AddColumnShowOnHomePage_Manufacturer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506191518197_AddColumn_LeftFeatured_Table_Product.resx">
+      <DependentUpon>201506191518197_AddColumn_LeftFeatured_Table_Product.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

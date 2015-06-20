@@ -9,8 +9,7 @@
 @{
     Layout = "";
     Html.AddCssFileParts("~/Scripts/mmenu/css/jquery.mmenu.all.css");
-    Html.AddScriptParts("~/Scripts/mmenu/js/jquery.mmenu.min.all.js");
-
+    Html.AddScriptParts("~/Scripts/mmenu/js/jquery.mmenu.min.js");
 }
 
 @helper RenderCategoryLine(CategorySimpleModel category, TopMenuModel.SpecificationAttributeOptionModel attribute)
@@ -30,145 +29,36 @@
         }
     </li>
 }
-@if (false && Model.Categories.Count > 0)
+@if ( Model.Categories.Count > 0)
 {
     <div class="headerButtonMenuResponsive">
-        <a href="#mainMenu"></a>
+        <a href="#mainMenu" class="icon-menu"></a>
     </div>
-    <div class="nav-menu container hd">
+    <div class="nav-menu">
         <nav id="mainMenu" class="mm-menu">
             <ul>
 
                 @foreach (var attribute in Model.SpecificationAttributesFilter)
                 {
                     <li data-id="@attribute.Id">
-                        <a> @attribute.Name</a>
-                        <ul>
+                        <a class="aFirstLevel"><span class="icon-@attribute.SeName.Replace("-", "_")"></span><span class="tooltip-menu">@attribute.Name</span></a>
+                        <ul class="childrenOptions">
                             @foreach (var category in Model.Categories)
                             {
                                 @RenderCategoryLine(category, attribute)
                             }
+                            <br />
                         </ul>
-
                     </li>
                 }
+                <br/>
             </ul>
         </nav>
     </div>
-    
-    
+    @Html.HiddenFor(model => model.SelectedSpecificationAttribute)
+    <script>
+</script>
 
 }
 
-<script>
 
-    $(document).on("ready", function () {
-
-        var options = {
-            // options
-            extensions: ["theme-dark"],
-            dividers: {
-                fixed: true
-            },
-            navbars: [
-                {
-                    title: 'mmenu'
-                },
-                {
-                    position: 'top',
-                    content: [$("#templateLinksResponsiveMenu").html()]
-                },
-                {
-                    position: 'bottom',
-                    content: [$("#templateLogoutResponsiveMenu").html()]
-                }
-            ]
-        };
-
-
-        var $menu = $("#mainMenu").clone();
-        $menu.attr("id", "my-mobile-menu");
-        $menu.mmenu(options);
-
-        $("#mainMenu").mmenu(options, {
-            clone: true
-        });
-
-        jQuery(window).resize(function () {
-            currentWidth = window.innerWidth || document.documentElement.clientWidth;
-            // get browser width
-            if (currentWidth > 600) {
-                $("#mainMenu").data("mmenu").close();
-            }
-        });
-    });
-
-</script>
-
-
-
-
-<style>
-    @@media (max-width: 600px) {
-        #mainMenu {
-            display: none !important;
-        }
-
-        .header .btn_anuncia {
-            display: none !important;
-        }
-    }
-
-    @@media (min-width: 601px) {
-        #mm-mainMenu,
-        #my-mobile-menu {
-            display: none !important;
-        }
-    }
-
-    nav:not(.mm-menu) {
-        display: none;
-    }
-
-
-    .headerButtonMenuResponsive {
-        text-align: center;
-    }
-
-    .headerButtonMenuResponsive,
-    .footer {
-        background: #777;
-        font-size: 16px;
-        font-weight: bold;
-        color: #fff;
-        line-height: 40px;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        width: 100%;
-        height: 40px;
-        padding: 0 50px;
-    }
-
-        .headerButtonMenuResponsive.fixed {
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-
-        .headerButtonMenuResponsive.fixed {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-        }
-
-        .headerButtonMenuResponsive a {
-            background: center center no-repeat transparent;
-            background-image: url( data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADhJREFUeNpi/P//PwOtARMDHQBdLGFBYtMq3BiHT3DRPU4YR4NrNAmPJuHRJDyahEeT8Ii3BCDAAF0WBj5Er5idAAAAAElFTkSuQmCC );
-            display: block;
-            width: 40px;
-            height: 40px;
-            position: absolute;
-            top: 0;
-            left: 10px;
-        }
-</style>

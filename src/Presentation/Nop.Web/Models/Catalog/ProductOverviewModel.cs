@@ -5,7 +5,7 @@ using Nop.Web.Models.Media;
 
 namespace Nop.Web.Models.Catalog
 {
-    public partial class ProductOverviewModel : BaseNopEntityModel
+    public partial class ProductOverviewModel : BaseNopEntityModel, IComparableModel, IWishableModel
     {
         public ProductOverviewModel()
         {
@@ -29,6 +29,7 @@ namespace Nop.Web.Models.Catalog
         //price
         public ProductReviewOverviewModel ReviewOverviewModel { get; set; }
 
+        public bool DisableWishlistButton { get; set; }
 
         public int Visits { get; set; }
 
@@ -43,6 +44,8 @@ namespace Nop.Web.Models.Catalog
         public DateTime AvailableEndDate { get; set; }
 
         public bool Published { get; set; }
+
+        public bool CompareProductsEnabled { get; set; }
 
 
 		#region Nested Classes
@@ -69,5 +72,8 @@ namespace Nop.Web.Models.Catalog
         }
 
 		#endregion
+
+
+        
     }
 }

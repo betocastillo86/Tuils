@@ -2,7 +2,7 @@
 @using Nop.Web.Models.Catalog;
 @using Nop.Core.Domain.Orders;
 <div class="add-to-cart">
-    @if (Model.UpdatedShoppingCartItemId > 0)
+    @*@if (Model.UpdatedShoppingCartItemId > 0)
     {
         @Html.HiddenFor(x => x.UpdatedShoppingCartItemId)
     }
@@ -11,7 +11,8 @@
         <div class="customer-entered-price">
             <div class="price-input">
                 @Html.LabelFor(model => model.CustomerEnteredPrice, new { @class = "enter-price-label" }, ":")
-                @*round price*@
+                
+
                 @Html.TextBox("CustomerEnteredPrice", Convert.ToInt32(Math.Ceiling(Model.CustomerEnteredPrice)), new { @class = "enter-price-input" })
             </div>
             <div class="price-range">
@@ -73,5 +74,6 @@
             }
         </div>
     }
-    @Html.Widget("productdetails_add_info", Model.ProductId)
+    @Html.Widget("productdetails_add_info", Model.ProductId)*@
+    
 </div>

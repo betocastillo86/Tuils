@@ -46,11 +46,11 @@
             //added
             @Html.Widget("left_side_column_before")
             @RenderSection("left")
-            @Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })
+            @*@Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })*@
             @Html.Widget("left_side_column_after_category_navigation")
-            @Html.Action("ManufacturerNavigation", "Catalog", new { currentManufacturerId = currentManufacturerId })
-            @Html.Action("VendorNavigation", "Catalog")
-            @Html.Action("HomepageBestSellers", "Product")
+            @*@Html.Action("ManufacturerNavigation", "Catalog", new { currentManufacturerId = currentManufacturerId })*@
+            @*@Html.Action("VendorNavigation", "Catalog")*@
+            @Html.Action("FeaturedLeftMenu", "Product")
             @Html.Action("NewsletterBox", "Newsletter")
             @Html.Widget("left_side_column_after")
             //@added
@@ -59,13 +59,13 @@
         else
         {
             @Html.Widget("left_side_column_before")
-            @Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })
+            @*@Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })*@
             @Html.Widget("left_side_column_after_category_navigation")
-            @Html.Action("ManufacturerNavigation", "Catalog", new { currentManufacturerId = currentManufacturerId })
-            @Html.Action("VendorNavigation", "Catalog")
+            @*@Html.Action("ManufacturerNavigation", "Catalog", new { currentManufacturerId = currentManufacturerId })*@
+            @*@Html.Action("VendorNavigation", "Catalog")*@
             @*@Html.Action("PopularProductTags", "Catalog")
                 @Html.Action("PollBlock", "Poll", new { systemKeyword = "LeftColumnPoll" })*@
-            @Html.Action("HomepageBestSellers", "Product")
+            @Html.Action("FeaturedLeftMenu", "Product")
             @Html.Action("NewsletterBox", "Newsletter")
             @Html.Widget("left_side_column_after")
         }
@@ -80,11 +80,11 @@ else
             //added
             @Html.Widget("left_side_column_before")
             @RenderSection("left")
-            @Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })
+            @*@Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })*@
             @Html.Widget("left_side_column_after_category_navigation")
-            @Html.Action("ManufacturerNavigation", "Catalog", new { currentManufacturerId = currentManufacturerId })
-            @Html.Action("VendorNavigation", "Catalog")
-            @Html.Action("HomepageBestSellers", "Product")
+            @*@Html.Action("ManufacturerNavigation", "Catalog", new { currentManufacturerId = currentManufacturerId })*@
+            @*@Html.Action("VendorNavigation", "Catalog")*@
+            @Html.Action("FeaturedLeftMenu", "Product")
             @Html.Action("NewsletterBox", "Newsletter")
             @Html.Widget("left_side_column_after")
             //@added
@@ -93,11 +93,11 @@ else
         else
         {
             @Html.Widget("left_side_column_before")
-            @Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })
+            @*@Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })*@
             @Html.Widget("left_side_column_after_category_navigation")
-            @Html.Action("ManufacturerNavigation", "Catalog", new { currentManufacturerId = currentManufacturerId })
-            @Html.Action("VendorNavigation", "Catalog")
-            @Html.Action("HomepageBestSellers", "Product")
+            @*@Html.Action("ManufacturerNavigation", "Catalog", new { currentManufacturerId = currentManufacturerId })
+            @Html.Action("VendorNavigation", "Catalog")*@
+            @Html.Action("FeaturedLeftMenu", "Product")
             @Html.Action("NewsletterBox", "Newsletter")
             @*@Html.Action("RecentlyViewedProductsBlock", "Catalog", new { productThumbPictureSize = 32 })
                 @Html.Action("PollBlock", "Poll", new { systemKeyword = "RightColumnPoll" })*@

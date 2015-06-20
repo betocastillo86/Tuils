@@ -113,7 +113,8 @@ namespace Nop.Services.Catalog
             bool? published = null,
             int? specialCategoryId = null,
             int? orderBySpecialCategoryId = null,
-           int? stateProvinceId = null);
+           int? stateProvinceId = null,
+            bool? leftFeatured = null);
 
 
 
@@ -146,7 +147,8 @@ namespace Nop.Services.Catalog
             bool? published = null,
             int? specialCategoryId = null,
             int? orderBySpecialCategoryId = null,
-           int? stateProvinceId = null);
+           int? stateProvinceId = null,
+            bool? leftFeatured = null);
 
         /// <summary>
         /// Realiza un conteo de los productos activos de un vendedor
@@ -231,7 +233,8 @@ namespace Nop.Services.Catalog
             int? stateProvinceId = null,
             int? specialCategoryId = null,
             int? orderBySpecialCategoryId = null,
-            bool? loadPriceRange = false);
+            bool? loadPriceRange = false,
+            bool? leftFeatured = null);
 
 
         /// <summary>
