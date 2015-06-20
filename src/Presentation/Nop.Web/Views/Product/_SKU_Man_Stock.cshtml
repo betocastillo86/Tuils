@@ -21,13 +21,7 @@
             <span class="label">@T("Products.GTIN"): </span><span class="value" id="gtin-@Model.Id">@Model.Gtin</span>
         </div>
     }
-    @*Stock availability*@
-    @if (!String.IsNullOrWhiteSpace(Model.StockAvailability))
-    {
-        <div class="stock">
-            <span class="label">@T("Products.Availability"): </span><span class="value">@Model.StockAvailability</span>
-        </div>
-    }
+    
     @*Delivery date*@
     @if (Model.FreeShippingNotificationEnabled && Model.IsFreeShipping)
     {
@@ -40,23 +34,11 @@
             <span class="label">@T("Products.DeliveryDate"): </span><span class="value">@Model.DeliveryDate</span>
         </div>
     }
-    @*Vendor*@
-
-    
-    @if (Model.ProductAlreadyBought)
+     @*State province*@
+    @if (!string.IsNullOrEmpty(Model.StateProvinceName))
     {
-        //Si el usuario ya compró el producto se muestra el link al vendedor
-        if (Model.ShowVendor)
-        {
-            <div class="product-vendor">
-                <span class="label">@T("Products.Vendor"): </span><span class="value"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">@Model.VendorModel.Name</a></span>
-            </div>
-        }
-    }
-    else
-    {
-
-        <input type="button" value="@T("Products.SeeVendor")" id="btnShowVendor" data-productid="@Model.Id" data-vendorurl="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })" class="button-2">
-
+        <div class="manufacturer-part-number">
+            <span class="label">@T("Products.StateProvinceName"): </span><span class="value" >@Model.StateProvinceName</span>
+        </div>
     }
 

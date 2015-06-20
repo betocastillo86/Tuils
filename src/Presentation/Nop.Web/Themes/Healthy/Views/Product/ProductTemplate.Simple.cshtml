@@ -63,8 +63,13 @@
         @*added*@
         <div class="product-name">
             <h1 itemprop="name">@Model.Name</h1>
-            <span class="stock"><b>Disponibilidad:</b> 20 en stock</span>
+            @if (!String.IsNullOrWhiteSpace(Model.StockAvailability))
+            { 
+                <span class="stock"><b>@T("Products.Availability"):</b> @Model.StockAvailability</span>
+            }
+            
         </div>
+
         @*@added*@
 
         @using (Html.BeginRouteForm("Product", new { SeName = Model.SeName }, FormMethod.Post, new { id = "product-details-form" }))
@@ -82,16 +87,26 @@
                                 </h1>
                             </div>*@
 
-                        ddd
+                        
                         @if (!String.IsNullOrEmpty(Model.ShortDescription))
                         {
                             <div class="short-description">
                                 @Html.Raw(Model.ShortDescription)
                             </div>
                         }
+                        @if (!String.IsNullOrEmpty(Model.FullDescription))
+                        {
+                            <div class="full-description" itemprop="description">
+                                @Html.Raw(Model.FullDescription)
+                            </div>
+                        }
                         @Html.Widget("productdetails_overview_top", Model.Id)
                         <!--product SKU, manufacturer part number, stock info-->
                         @Html.Partial("_SKU_Man_Stock", Model)
+                        <!--vendor info-->
+                        @Html.Partial("_ProductVendor", Model)
+                        <!--product SKU, manufacturer part number, stock info-->
+                        @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
                         <!--Back in stock subscription-->
                         @Html.Partial("_BackInStockSubscription", Model)
                         <!--product manufacturers-->
@@ -165,13 +180,7 @@
                         <div class="panel-container">
                             <div id="product-details">
                                 <!-- content -->
-                                @if (!String.IsNullOrEmpty(Model.FullDescription))
-                                {
-                                    <div class="full-description" itemprop="description">
-                                        @Html.Raw(Model.FullDescription)
-                                    </div>
-                                }
-                                @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
+                                
                             </div>
                             <div id="product-reviews-page"><!-- content --></div>
                             <div id="shipping-info"><!-- content --></div>

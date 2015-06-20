@@ -20,5 +20,9 @@ namespace Nop.Web.Models.Catalog
         public string Name { get; set; }
 
         public string SeName { get; set; }
+
+        public bool VendorShippingEnabled { get; set; }
+
+        public bool CreditCardEnabled { get; set; }
     }
 }

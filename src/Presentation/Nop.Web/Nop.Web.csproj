@@ -2500,7 +2500,8 @@
     <Content Include="Views\Catalog\ManufacturerHomePage.cshtml" />
     <Content Include="Views\ControlPanel\_NoRows.cshtml" />
     <Content Include="Themes\Healthy\Views\Product\FeaturedLeftMenu.cshtml" />
-    <Content Include="Views\Product\_AddToWishlist.cshtml" />
+    <Content Include="Views\Shared\_AddToWishlist.cshtml" />
+    <Content Include="Views\Product\_ProductVendor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
@@ -2611,7 +2612,7 @@
     <Content Include="Views\Product\RecentlyViewedProductsBlock.cshtml" />
     <Content Include="Views\Product\RecentlyAddedProducts.cshtml" />
     <Content Include="Views\Product\_ProductReviewHelpfulness.cshtml" />
-    <Content Include="Views\Product\_CompareProductsButton.cshtml" />
+    <Content Include="Views\Shared\_CompareProductsButton.cshtml" />
     <Content Include="Views\Product\CompareProducts.cshtml" />
     <Content Include="Views\Product\_ProductEmailAFriendButton.cshtml" />
     <Content Include="Views\Product\ProductEmailAFriend.cshtml" />

@@ -219,6 +219,7 @@ namespace Nop.Web.Controllers
                 Gtin = product.Gtin,
                 StockAvailability = product.FormatStockMessage(_localizationService),
                 HasSampleDownload = product.IsDownload && product.HasSampleDownload,
+                StateProvinceName = product.StateProvince != null ? product.StateProvince.Name : string.Empty
             };
 
             //automatically generate product description?
@@ -259,20 +260,20 @@ namespace Nop.Web.Controllers
                     model.ProductAlreadyBought = _orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, product.Id);
 
                 //Si el producto ya fue comprado consulta el vendor
-                if (model.ProductAlreadyBought)
+                
+                var vendor = _vendorService.GetVendorById(product.VendorId);
+                if (vendor != null && !vendor.Deleted && vendor.Active)
                 {
-                    var vendor = _vendorService.GetVendorById(product.VendorId);
-                    if (vendor != null && !vendor.Deleted && vendor.Active)
-                    {
-                        model.ShowVendor = true;
+                    model.ShowVendor = true;
 
-                        model.VendorModel = new VendorBriefInfoModel
-                        {
-                            Id = vendor.Id,
-                            Name = vendor.GetLocalized(x => x.Name),
-                            SeName = vendor.GetSeName(),
-                        };
-                    }
+                    model.VendorModel = new VendorBriefInfoModel
+                    {
+                        Id = vendor.Id,
+                        Name = vendor.GetLocalized(x => x.Name),
+                        SeName = vendor.GetSeName(),
+                        VendorShippingEnabled = vendor.EnableShipping ?? false,
+                        CreditCardEnabled = vendor.EnableCreditCardPayment ?? false
+                    };
                 }
                 
             }

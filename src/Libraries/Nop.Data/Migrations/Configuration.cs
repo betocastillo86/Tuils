@@ -240,7 +240,11 @@ namespace Nop.Data.Migrations
             newLocaleStringResources.Add("Admin.Catalog.Products.Fields.LeftFeatured.Hint", "Muestra el producto en la parte izquierda de las paginas");
             newLocaleStringResources.Add("ProductBox.AddToWishlist", "Añadir deseo");
             newLocaleStringResources.Add("ProductBox.Compare", "Comparar");
+            newLocaleStringResources.Add("Products.StateProvinceName", "Ubicación");
+            newLocaleStringResources.Add("Products.VendorShippingEnabled", "Envío a acordar con el vendedor");
+            newLocaleStringResources.Add("Products.VendorCreditCardEnabled", "Recibimos tarjetas");
 
+            
 
             //Recorre todas las llaves que desea adicional
             foreach (var resource in newLocaleStringResources)
