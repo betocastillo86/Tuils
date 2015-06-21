@@ -1,0 +1,13 @@
+@if (Model.ShowVendor)
+{ 
+    if (Model.VendorModel.CreditCardEnabled)
+    { 
+        <div class="product-cardShip">
+        	<span class="icon-card"></span>
+        	<div class="product-cardShip-txt">
+        		<h3>@T("Products.VendorCreditCardEnabled")</h3>
+        		<a href="javascript:;">Más opciones</a>
+        	</div>
+        </div>
+    }
+}

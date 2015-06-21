@@ -15,12 +15,4 @@ else
     <input type="button" value="@T("Products.SeeVendor")" id="btnShowVendor" data-productid="@Model.Id" data-vendorurl="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })" class="button-2">
 }
 
-@if (Model.ShowVendor)
-{ 
-    if (Model.VendorModel.CreditCardEnabled)
-    { 
-        <br />
-        <span>@T("Products.VendorCreditCardEnabled")</span>
-    }
-}
 

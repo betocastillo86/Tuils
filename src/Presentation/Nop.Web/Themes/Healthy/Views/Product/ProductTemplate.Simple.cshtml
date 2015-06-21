@@ -81,6 +81,36 @@
                     @Html.Partial("_ProductDetailsPictures", Model)
                     @Html.Widget("productdetails_after_pictures", Model.Id)
                     <div class="overview">
+                        <!--product price-->
+                        @{
+                            var dataDictPrice = new ViewDataDictionary();
+                            dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
+                            @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
+                        }
+                        <!--product reviews-->
+                        @Html.Partial("_ProductReviewOverview", Model.ProductReviewOverview)
+                        <!--product creditcard-->
+                        @Html.Partial("_ProductCreditcard", Model)
+                        <!--Información de envío-->
+                        @Html.Partial("_ProductShipping", Model)
+                        @if (!String.IsNullOrEmpty(Model.FullDescription))
+                        {
+                            <div class="full-description" itemprop="description">
+                                @Html.Raw(Model.FullDescription)
+                            </div>
+                        }
+                        <div class="product-infopluss">
+                            <h3>Información adicional</h3>
+                            <!--product manufacturers-->
+                            @Html.Partial("_ProductSpecialCategories", Model)
+                            <!--product manufacturers-->
+                            @Html.Partial("_ProductManufacturers", Model.ProductManufacturers)
+                            <!--product SKU, manufacturer part number, stock info-->
+                            @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
+                        </div>
+                        <!--vendor info-->
+                        @Html.Partial("_ProductVendor", Model)
+
                         @*<div class="product-name">
                                 <h1 itemprop="name">
                                     @Model.Name
@@ -88,35 +118,19 @@
                             </div>*@
 
                         
-                        @if (!String.IsNullOrEmpty(Model.ShortDescription))
+                        @*@if (!String.IsNullOrEmpty(Model.ShortDescription))
                         {
                             <div class="short-description">
                                 @Html.Raw(Model.ShortDescription)
                             </div>
-                        }
-                        @if (!String.IsNullOrEmpty(Model.FullDescription))
-                        {
-                            <div class="full-description" itemprop="description">
-                                @Html.Raw(Model.FullDescription)
-                            </div>
-                        }
+                        }*@
                         @*@Html.Widget("productdetails_overview_top", Model.Id)*@
                         <!--product SKU, manufacturer part number, stock info-->
-                        @Html.Partial("_SKU_Man_Stock", Model)
-                        <!--vendor info-->
-                        @Html.Partial("_ProductVendor", Model)
-                        <!--Información de envío-->
-                        @Html.Partial("_ProductShipping", Model)
-                        <!--product SKU, manufacturer part number, stock info-->
-                        @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
+                        @*@Html.Partial("_SKU_Man_Stock", Model)*@
                         <!--Back in stock subscription-->
-                        @Html.Partial("_BackInStockSubscription", Model)
-                        <!--product manufacturers-->
-                        @Html.Partial("_ProductManufacturers", Model.ProductManufacturers)
-                        <!--product reviews-->
-                        @Html.Partial("_ProductReviewOverview", Model.ProductReviewOverview)
-                        <!--product manufacturers-->
-                        @Html.Partial("_ProductSpecialCategories", Model)
+                        @*@Html.Partial("_BackInStockSubscription", Model)*@
+                        
+                        
                         
                                                  @*
              <!--sample download-->
@@ -137,9 +151,6 @@
         }*@
                         <!--price & add to cart-->
                         @{
-                        var dataDictPrice = new ViewDataDictionary();
-                        dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
-                        @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
 
                         @*Se inhabiita la vista de agregar producto->*@
                         @*var dataDictAddToCart = new ViewDataDictionary();

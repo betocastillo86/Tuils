@@ -2,5 +2,5 @@
 @using Nop.Web.Models.Catalog;
 @if (!Model.DisableWishlistButton)
 {
-    <a href="javascript:void(0);" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.Id, shoppingCartTypeId = (int)Nop.Core.Domain.Orders.ShoppingCartType.Wishlist })', '#product-details-form');return false;"><span class="icon-corazon"></span> @T("ProductBox.AddToWishlist")</a>
+    <a class="product-addLink" href="javascript:void(0);" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.Id, shoppingCartTypeId = (int)Nop.Core.Domain.Orders.ShoppingCartType.Wishlist })', '#product-details-form');return false;"><span class="icon-corazon"></span> @T("ProductBox.AddToWishlist")</a>
 }
