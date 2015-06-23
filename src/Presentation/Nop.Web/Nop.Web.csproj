@@ -1714,6 +1714,7 @@
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore-min.js" />
     <Content Include="Scripts\underscore-min.map" />
+    <Content Include="Scripts\responsiveslides.min.js" />
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\wysihtml5-0.3.0.min.js" />
     <Content Include="Themes\DefaultClean\Content\images\free-shipping.png" />

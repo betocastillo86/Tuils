@@ -38,23 +38,27 @@
             deps: ['jquery'],
             exports: 'mmenu'
         },
-        iView: {
-            deps: ['combined', 'jquery', 'jqueryui', 'raphael'],
-            //deps: ['combined', 'jquery', 'jqueryui'],
-            exports : 'iView'
+        slide: {
+            deps: ['jquery', 'jqueryui'],
+            exports:'slide'
+        },
+        //iView: {
+        //    deps: ['combined', 'jquery', 'jqueryui', 'raphael'],
+        //    //deps: ['combined', 'jquery', 'jqueryui'],
+        //    exports : 'iView'
 
-        },
-        raphael: {
-            deps: ['eve'],
-            exports : 'Raphael'
-        },
+        //},
+        //raphael: {
+        //    deps: ['eve'],
+        //    exports : 'Raphael'
+        //},
         carousel: {
             deps: ['jquery', 'jqueryui'],
             exports : 'carousel'
         },
-        combined: {
-            deps:['jquery', 'jqueryui']
-        }
+        //combined: {
+        //    deps:['jquery', 'jqueryui']
+        //}
     },
     paths: {
         //Externas
@@ -94,11 +98,6 @@
             'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.amd.min',
             'handlebars.min'
         ],
-        //eve :[
-        //    'https://cdnjs.cloudflare.com/ajax/libs/eve.js/0.8.4/eve.min',
-        //    'eve'
-        //],
-        eve : 'eve',
         mmenu:'mmenu/js_umd/jquery.mmenu.umd',
         handlebarsh: 'handelbars.helpers',
         maps: 'http://maps.google.com/maps/api/js?sensor=false',
@@ -152,9 +151,11 @@
             'accounting.min'
         ],
         carousel: 'owl.carousel',
-        iView: 'iview',
-        combined: 'combined',
-        raphael: 'raphael-min'
+        slide:'responsiveslides.min'
+        //iView: 'iview',
+        //combined: 'combined',
+        //raphael: 'raphael-min',
+        //eve : 'eve',
     }
 
 });

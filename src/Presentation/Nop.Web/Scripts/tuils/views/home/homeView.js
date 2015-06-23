@@ -1,5 +1,5 @@
 ﻿
-define(['jquery', 'underscore', 'baseView','jqueryui', 'iView'],
+define(['jquery', 'underscore', 'baseView','jqueryui', 'slide'],
     function ($, _, BaseView) {
 
     var HomeView = BaseView.extend({
@@ -8,13 +8,19 @@ define(['jquery', 'underscore', 'baseView','jqueryui', 'iView'],
         },
         loadSlider : function()
         {
-            $('#iview').iView({
-                timerDiameter: 25, // Timer diameter
-                animationSpeed: 500, // Slide transition speed
-                pauseTime: 7000,
-                pauseOnHover: true,
-                keyboardNav: true, // Use left & right arrows
-                touchNav: true // Use Touch swipe to change slides
+            var totalSlides = $(".rslides li").length;
+            $(".rslides").responsiveSlides({
+                timeout: 7000,
+                pager: true,
+                nav: true,
+                before: function (numSlide) {
+                    if(numSlide+1 <= totalSlides)
+                    {
+                        var image = $($(".rslides li img").get(numSlide+1));
+                        if (image.attr('src') === '')
+                            image.attr('src', image.attr('data-src'));
+                    }
+                }
             });
         },
         render: function ()
