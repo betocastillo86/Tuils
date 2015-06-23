@@ -857,6 +857,8 @@ html.oldie .container { width: 940px; }
     .conte-spc{width: 345px;}
     .col-producto{width: 565px;}
 
+    .picture-resume li{height: 96px;}
+
     /*mis datos*/
     .inputs_mid input[type="text"], .inputs_mid input[type="password"], .inputs_mid select{width: auto;}
     .inputs_mid label{width: 120px; padding: 0 8px 0 0; position: relative; display:inline-block; text-align: right;}
@@ -921,6 +923,8 @@ html.oldie .container { width: 940px; }
     .product-details-page .gallery .picture a{height:235px;}
 
 
+    /*publicar producto*/
+    .picture-resume li{height: 72px;}
     /*panel de contrlo*/
     .panel-items li{width: calc(25% - 25px);}
     .wizard-breadcrumb li{padding:6px; box-sizing:border-box;}
@@ -1035,7 +1039,9 @@ html.oldie .container { width: 940px; }
     .nav-category li{height: 162px;}
     .nav-category li span{bottom: 20px; right: 27px; font-size: 16px;}
     .category-column ul{font-size: 12px;}
+    /*publicar producto*/
     .resumen-product{width: 100%; float: none;}
+    .picture-resume li{height:100px;}
 
     /*mis datos*/
     .inputs_mid{width: 50%;}
@@ -1097,7 +1103,7 @@ html.oldie .container { width: 940px; }
     .panel-items li{float: none; width: 100%; margin:0 0 15px; text-align: left; height: auto; padding: 15px;}
         .panel-items li span{font-size: 30px; width: 30px; float:left; text-align:center; margin: 0 10px 0 0;}
     /*mis datos*/
-    .conte_check label{margin:10px 0 10px 5px; width:calc(100% - 20px); display:inline-block;}
+    .conte_check label{margin:10px 0 10px 5px; width:calc(100% - 30px); display:inline-block;}
     /*ventas compras*/
     .conte_sale{overflow-x:auto; padding: 0 0 15px; height: auto;}
         .conte_sale li{width: 710px; min-height: 72px;}
@@ -1164,10 +1170,14 @@ html.oldie .container { width: 940px; }
     .conte-spc{width: 100%; margin:25px 0 0; float: none; height: auto;}
     .col-producto .product-grid .item-box{width: 49%;}
     .conte_perfil2{padding: 20px;}
+    /*publicar producto*/
+    .picture-resume li{height:85px;}
 }
 @media screen and (max-width:375px) {
     /* PRODUCT DETAILS PAGE */
     .product-details-page .gallery .picture a{height:214px;}
+    /*publicar producto*/
+    .picture-resume li{height:60px;}
 }
 @media screen and (max-width:360px) {
     /*Header*/
@@ -1186,6 +1196,9 @@ html.oldie .container { width: 940px; }
 @media screen and (max-width:320px) {
     /* PRODUCT DETAILS PAGE */
     .product-details-page .gallery .picture a{height:177px;}
+
+    /*publicar producto*/
+    .picture-resume li{height:53px;}
 
     .nav-category li{height: 232px;}
     .nav-category li span{bottom: 32px; right: 36px; font-size: 23px;}

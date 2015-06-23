@@ -57,8 +57,8 @@
                     @Html.TextAreaFor(m => m.Description, new { style = "display:none", tuils_for = "edit" })
                 }
                 <div class="ctl-tarjetas" tuils-for="show">
-                    <li id="liShipping" @(Model.EnableShipping ? string.Empty : "style=display:none")>@T("vendor.enableShipping") <span class="icon-mail"></span></li>
-                    <li id="liCreditCard" @(Model.EnableCreditCardPayment ? string.Empty : "style=display:none")>@T("vendor.enableCreditCard") <span class="icon-mail"></span></li>
+                    <li id="liShipping" @(Model.EnableShipping ? string.Empty : "style=display:none")>@T("vendor.enableShipping") <span class="icon-envio"></span></li>
+                    <li id="liCreditCard" @(Model.EnableCreditCardPayment ? string.Empty : "style=display:none")>@T("vendor.enableCreditCard") <span class="icon-card"></span></li>
                     <br />
                 </div>
                 @if (Model.AllowEdit)

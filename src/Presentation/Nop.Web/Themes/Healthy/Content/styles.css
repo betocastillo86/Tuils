@@ -779,8 +779,8 @@ td.fieldname{font-size:12px;}
 	.tipe-register{margin: 0 0 10px; padding: 0; list-style: none; width: 326px;}
 	.tipe-register li{display: inline-block; text-align: center; margin: 0 14px 0 0;}
 	.tipe-register li a{color: #D8DEE6; text-align: center; display: block; transition:ease all 0.4s;}
-	.tipe-register a span{font-size: 60px; padding:18px; display: block; width: 60px; height: 60px;}
-	.tipe-register a:hover span{background:#F5F6F8; border-radius: 2px;}
+	.tipe-register a span{font-size: 60px; color:#D8DEE6; padding:18px; display: block; width: 60px; height: 60px;}
+	.tipe-register a:hover span{background:#F5F6F8; border-radius: 2px; color:#FB7055;}
 	.tipe-register a.active span{background:#EBEEF2; color:#FB7055;}
 	.tipe-register a p{color:#D8DEE6; font-size: 20px;}
 	.tipe-register a:hover p{color:#395983;}
@@ -1456,7 +1456,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 }
 
 /*PUBLICAR PRDUCTO*/
-.product-public{margin: 0 0 10px;}
+.product-public{margin: 25px 0 30px;}
     .wizard-breadcrumb{list-style: none; background:#F6F9FD; margin: 0 0 20px;}
     .wizard-breadcrumb li{float: left; position: relative; text-align: center; width: 25%; padding: 4px 0; cursor: pointer;}
     .wizard-step{color: #A9A9AD; font-style: italic; font-size: 12px; font-weight: 500;}
@@ -1506,12 +1506,12 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .resumen-product{width: 50%; float: left;}
     .resumen-product p{margin: 0; padding: 3px 0;}
     .picture-resume{margin: 0 auto; padding: 0; width:auto; list-style: none;}
-    .picture-resume li{box-sizing: border-box; width:calc(25% - 20px); max-height:144px; background:#F9FDFF; border: 1px dashed #D8DEE6; text-align: center; color: #899CB5; font-size: 12px; float: left; margin:10px 20px 10px 0; overflow: hidden;}
+    .picture-resume li{box-sizing: border-box; width:calc(25% - 20px); height:126px; background:#F9FDFF; border: 1px dashed #D8DEE6; text-align: center; color: #899CB5; font-size: 12px; float: left; margin:10px 20px 10px 0; overflow: hidden;}
     .picture-resume li img{width: 100%;}
     .txt-terminos{color:#A9A9AC; text-align: right; margin: 5px 0;}
     .txt-terminos a{color: #F24C19;}
 
-    .imgPublicada{ width: 200px; height: 200px; float: left; margin: 0 20px 0 0;}
+    .imgPublicada{ width: 200px; height: 200px; float: left; margin: 0 20px 0 0; overflow: hidden;}
     .imgPublicada img {width: 100%;}
     .resumen-final{float: left; width: auto;}
     .resumen-final h2{color:#3A5983; font-weight: 500; font-size: 20px;}
@@ -1534,7 +1534,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 .img_pf{background:#EBEEF2;}
 .tit_sec{color:#395983; font-size: 20px; font-weight: 500; padding:8px 0;}
     .img_pf img{width: 100%; height: 100%;}
-.panel-control{}
+.panel-control{padding: 25px 0 30px;}
     .tit_name{float:left;}
     .cant_art{float: left; color: #F94C2A; font-weight: 500; margin: 8px 0 20px 30px;}
         .cant_art span{background:#FB7055; color: #FFF; font-size: 20px; font-weight: 400; position: relative; padding: 9px 3px; margin: 0 0 0 20px;}
@@ -1550,6 +1550,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
             .items-ctl li b:before{border-bottom:solid 10px #D8DEE6; border-left:solid 12px transparent; position: absolute; content: ""; top: 8px; left: -12px;}
     .panel-items{margin:30px 0 0; padding:0; list-style: none;}
         .panel-items li{background:#F3F5F7; width:calc(20% - 25px); margin: 0 12px 25px 13px; box-shadow:2px 2px 1px rgba(41, 39, 52, 0.1); padding: 25px 15px 20px; box-sizing:border-box; text-align: center; color:#3A5983; font-size: 20px; font-weight: 500; float: left; cursor: pointer; transition:ease all 0.4s;}
+        .panel-items li a{color:#3A5983;}
         .panel-items li:hover, .panel-items li:active{background:#ECEEF1;}
         .panel-items li span{color:#FB7055; display:block; font-size: 60px; }   
     .panel-control .title{color:#F84C2A; font-size: 16px; font-weight: 500; margin: 0 0 10px;}
@@ -1638,7 +1639,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .product_list{list-style: none; width: 100%; margin:20px 0 0;}
         .product-detail{width: 100%; border-bottom: 1px solid #E5E5E5; transition:ease background 0.4s; padding:0 0 2px;}
             .product-detail:hover{background:#F8F8F9; border-bottom: 3px solid #FDB7AA; padding: 0;}
-        .product-dtl-img{width: 125px; height:125px; float:left;}
+        .product-dtl-img{width: 125px; height:125px; float:left; overflow: hidden;}
             .product-dtl-img img{width: 100%;}
         .product-dtl-txt{float: left; width: calc(100% - 365px); margin: 10px 0 10px 15px;}
             .product-dtl-txt h3{font-size:16px; color:#282632; font-weight: 500; padding: 0 0 6px;}
@@ -1674,7 +1675,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
         .cover-editor:hover i{display: inline-block;}
     .conte_perfil{background:#F3F5F7; height: 60px; margin: 0 0 22px; text-align: left;}
         .conte_perfil .container.hd{position: relative;}
-        .pos-perfil{position: absolute; top:-120px;}
+        .pos-perfil{position: absolute; top:-120px; width: 100%;}
         .ctl-tarjetas{background: #D8DEE6; border-radius:3px; color: #3A5983; position: absolute; top:0; right: 0; list-style: none;}
             .ctl-tarjetas li{float: left; padding:6px 10px;}
         .ctl-switch{position: absolute; top:0; right: 0;}
@@ -1689,7 +1690,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
             .tit-perfil h2 span{cursor: pointer;}
             .tit-perfil .product-review-box{margin: 0;}
             .tit-perfil .product-review-box .rating div{background: url("images/star-x-active2.png") repeat-x scroll 0 0 transparent;}
-        .pr-perfil{margin: 0 0 0 270px;}
+        .pr-perfil{margin: 0 0 0 270px; width: calc(100% - 270px);}
             .pr-perfil p{color:#EBEDF2; text-align: justify; height: 55px; margin: 0 0 17px;}
             .pr-perfil textarea{width:910px; resize:none; height: 55px; background: #f3f5f7; border-radius: 2px; margin:0 0 17px; padding: 9px 10px; box-sizing: border-box; color:#53525A; font-family: 'Ubuntu', sans-serif;}
             .conte_perfil .items-ctl, .conte_perfil2 .items-ctl{float: left; margin: 16px 0; background:none; padding: 0;}
