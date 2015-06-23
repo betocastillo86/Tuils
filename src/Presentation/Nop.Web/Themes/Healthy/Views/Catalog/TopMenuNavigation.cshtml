@@ -9,7 +9,7 @@
 @{
     Layout = "";
     Html.AddCssFileParts("~/Scripts/mmenu/css/jquery.mmenu.all.css");
-    Html.AddScriptParts("~/Scripts/mmenu/js/jquery.mmenu.min.js");
+    //Html.AddScriptParts("~/Scripts/mmenu/js/jquery.mmenu.min.js");
 }
 
 @helper RenderCategoryLine(CategorySimpleModel category, TopMenuModel.SpecificationAttributeOptionModel attribute)
@@ -40,7 +40,7 @@
 
                 @foreach (var attribute in Model.SpecificationAttributesFilter)
                 {
-                    <li data-id="@attribute.Id" style="display:none">
+                    <li data-id="@attribute.Id" >
                         <a class="aFirstLevel"><span class="icon-@attribute.SeName.Replace("-", "_")"></span><span class="tooltip-menu">@attribute.Name</span></a>
                         <ul class="childrenOptions">
                             @foreach (var category in Model.Categories)

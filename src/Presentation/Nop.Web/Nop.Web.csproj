@@ -1007,6 +1007,7 @@
     <Content Include="Content\tinymce\skins\lightgray\skin.min.css" />
     <Content Include="Content\tinymce\themes\modern\theme.min.js" />
     <Content Include="Content\tinymce\tinymce.min.js" />
+    <Content Include="Scripts\accounting.min.js" />
     <Content Include="Scripts\async.js" />
     <Content Include="Scripts\backbone-validation.js" />
     <Content Include="Scripts\backbone-validation.min.js" />
@@ -1014,6 +1015,7 @@
     <Content Include="Scripts\backbone-min.js" />
     <Content Include="Scripts\backbone.stickit.js" />
     <Content Include="Scripts\backbone.stickit.min.js" />
+    <Content Include="Scripts\combined.js" />
     <Content Include="Scripts\css.js" />
     <Content Include="Scripts\handlebars.amd.js" />
     <Content Include="Scripts\handlebars.amd.min.js" />
@@ -1023,6 +1025,8 @@
     <Content Include="Scripts\handlebars.runtime.amd.min.js" />
     <Content Include="Scripts\handlebars.runtime.js" />
     <Content Include="Scripts\handlebars.runtime.min.js" />
+    <Content Include="Scripts\iview.js" />
+    <Content Include="Scripts\iview.min.js" />
     <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.autoheight.css" />
     <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.counters.css" />
     <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.dividers.css" />
@@ -1073,6 +1077,9 @@
     <Content Include="Scripts\mmenu\js_umd\jquery.mmenu.umd.js" />
     <Content Include="Scripts\mmenu\js_umd\_inc\affix.js" />
     <Content Include="Scripts\mmenu\js_umd\_inc\prefix.js" />
+    <Content Include="Scripts\owl.carousel.js" />
+    <Content Include="Scripts\owl.carousel.min.js" />
+    <Content Include="Scripts\tuils\build.js" />
     <Content Include="Scripts\tuils\collections\addresses.js" />
     <Content Include="Scripts\tuils\collections\categories.js" />
     <Content Include="Scripts\tuils\collections\files.js" />
@@ -1103,6 +1110,7 @@
     <Content Include="Scripts\tuils\views\common\newsletterView.js" />
     <Content Include="Scripts\tuils\views\common\searcherView.js" />
     <Content Include="Scripts\tuils\views\common\topMenuView.js" />
+    <Content Include="Scripts\tuils\views\home\homeView.js" />
     <Content Include="Scripts\tuils\views\login\createUser.js" />
     <Content Include="Scripts\tuils\views\login\login.js" />
     <Content Include="Scripts\tuils\views\panel\addAddressView.js" />

@@ -208,4 +208,7 @@ src/Presentation/Nop.Web/Content/Images/Thumbs/
 src/Presentation/Nop.Web/TempFiles/*
 
 #JS de configuracion generado automaticamente
-src/Presentacion/Scripts/tuils/configuration.js
+src/Presentation/Nop.Web/Scripts/tuils/configuration.js
+
+#JS de compilado de RequireJS
+src/Presentation/Nop.Web/Scripts/tuils/built.js

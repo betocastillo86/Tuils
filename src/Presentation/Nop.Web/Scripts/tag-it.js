@@ -24,8 +24,8 @@
 *   jQuery v1.4+
 *   jQuery UI v1.8+
 */
-(function ($) {
 
+define(['jquery', 'jqueryui'], function ($) {
     $.widget('ui.tagit', {
         options: {
             allowDuplicates: false,
@@ -52,7 +52,7 @@
             allowSpaces: false,
 
             //True: Solo permite agregar tags que esten en la lista de disponibles
-            allowOnlyAvailableTags : false,
+            allowOnlyAvailableTags: false,
 
             // The below options are for using a single field instead of several
             // for our form values.
@@ -207,8 +207,7 @@
 
                         //Busca en los tags por el campo value
                         $.each(that.options.availableTags, function (index, element) {
-                            if (element['value'] && element.value == tag)
-                            {
+                            if (element['value'] && element.value == tag) {
                                 tag = element;
                                 return;
                             }
@@ -433,7 +432,7 @@
                     this.tagList.find(".tagit-new input[type='text']").val("");
                     return false;
                 }
-                
+
             }
 
 
@@ -442,7 +441,7 @@
                 value = this.options.preprocessTag(value);
             }
 
-            
+
 
             if (!this.options.allowDuplicates && !this._isNew(value)) {
                 var existingTag = this._findTagByLabel(value);
@@ -583,5 +582,10 @@
         }
 
     });
-})(jQuery);
+});
+
+//(function ($) {
+
+    
+//})(jQuery);
 
