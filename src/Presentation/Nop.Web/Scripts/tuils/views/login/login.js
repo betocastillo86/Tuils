@@ -1,5 +1,5 @@
-﻿define(['underscore', 'backbone', 'text!/Customer/FastLogin', 'handlebars', 'tuils/models/userRegister', 'baseView', 'resources', 'css!/Plugins/ExternalAuth.Facebook/Content/facebookstyles'],
-    function (_, Backbone, template, Handlebars, UserRegisterModel, BaseView, Resources) {
+﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'tuils/models/userRegister', 'baseView', 'resources'],
+    function ($, _, Backbone, Handlebars, UserRegisterModel, BaseView, Resources) {
     var LoginView = BaseView.extend({
 
         viewCreateUser: undefined,
@@ -15,13 +15,19 @@
             "#txtPassword": "Password"
         },
 
-        template : Handlebars.compile(template),
+        template : undefined,
 
         initialize: function (args) {
-            this.model = new UserRegisterModel({TermsOfUse : true});
+
+            this.model = new UserRegisterModel({ TermsOfUse: true });
             this.model.on("sync", this.userAuthenticated, this);
             this.model.on("error", this.errorAuthenticated, this);
-            this.render();
+
+            var that = this;
+            require(['text!/Customer/FastLogin', 'css!/Plugins/ExternalAuth.Facebook/Content/facebookstyles'], function (template) {
+                that.template = Handlebars.compile(template);
+                that.render();
+            });
         },
         register: function () {
             this.trigger("register");

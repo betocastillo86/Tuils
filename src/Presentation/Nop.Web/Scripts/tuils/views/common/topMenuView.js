@@ -1,4 +1,5 @@
-﻿define(['underscore', 'backbone', 'baseView'], function (_, Backbone, BaseView) {
+﻿define(['jquery', 'underscore', 'backbone', 'baseView', 'mmenu'],
+    function ($, _, Backbone, BaseView) {
     var TopMenuView = BaseView.extend({
 
         responsiveMenuOptions :{

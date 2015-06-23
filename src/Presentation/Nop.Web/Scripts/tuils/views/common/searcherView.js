@@ -1,4 +1,5 @@
-﻿define(['underscore', 'backbone', 'baseView', 'configuration'], function (_, Backbone, BaseView, TuilsConfiguration) {
+﻿define(['jquery', 'underscore', 'backbone', 'baseView', 'configuration', 'jqueryui'],
+    function ($, _, Backbone, BaseView, TuilsConfiguration) {
     var SearchView = BaseView.extend({
         events: {
             'click .icon-lupa': 'showSearchBox',

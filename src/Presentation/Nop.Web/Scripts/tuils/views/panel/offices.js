@@ -1,5 +1,5 @@
-﻿define(['underscore', 'util', 'baseView', 'tuils/collections/addresses', 'handlebars', 'tuils/views/panel/addAddressView', 'imageSelectorView','handlebarsh'],
-    function (_, TuilsUtilities, BaseView, AddressCollection, HandleBars, AddressView, ImageSelectorView) {
+﻿define(['jquery', 'underscore', 'util', 'baseView', 'tuils/collections/addresses', 'handlebars', 'tuils/views/panel/addAddressView', 'imageSelectorView', 'handlebarsh'],
+    function ($, _, TuilsUtilities, BaseView, AddressCollection, HandleBars, AddressView, ImageSelectorView) {
     var OfficesView = BaseView.extend({
 
         events: {
@@ -9,8 +9,7 @@
 
         vendorId: 0,
 
-        template: HandleBars.compile($("#templateListOffices").html()),
-
+        
         viewAddAddress: undefined,
 
         viewImages : undefined,
@@ -21,6 +20,7 @@
 
         initialize: function (args)
         {
+            this.template= HandleBars.compile($("#templateListOffices").html());
             this.vendorId = parseInt(this.$("#VendorId").val());
             this.loadControls();
         },

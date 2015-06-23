@@ -1,5 +1,5 @@
-﻿define(['underscore', 'baseView', 'tuils/models/vendor/vendorHeader', 'util', 'configuration'],
-    function (_, BaseView, VendorHeaderModel, TuilsUtilities, TuilsConfiguration) {
+﻿define(['jquery', 'underscore', 'baseView', 'tuils/models/vendor/vendorHeader', 'util', 'configuration'],
+    function ($, _, BaseView, VendorHeaderModel, TuilsUtilities, TuilsConfiguration) {
 
         var VendorHeaderView = BaseView.extend({
 

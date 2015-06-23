@@ -1,4 +1,5 @@
-﻿define(['underscore', 'backbone', 'util', 'validations', 'stickit'], function (_, Backbone, TuilsUtil) {
+﻿define(['jquery', 'underscore', 'backbone', 'util', 'validations', 'stickit'],
+    function ($, _, Backbone, TuilsUtil) {
     
     var BaseView = Backbone.View.extend({
 

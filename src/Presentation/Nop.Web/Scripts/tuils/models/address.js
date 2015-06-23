@@ -1,4 +1,4 @@
-﻿define(['underscore', 'backbone'], function (_, Backbone, FileModel) {
+﻿define(['underscore', 'backbone', 'fileModel', 'resize'], function (_, Backbone, FileModel) {
     var AddressModel = Backbone.Model.extend({
 
         idAttribute: "Id",
@@ -64,7 +64,7 @@
         },
         saveImage: function (file, pictureId, sizeMini, sizeBig) {
             var that = this;
-            require(['fileModel', 'resize'], function (FileModel) {
+           // require(['fileModel', 'resize'], function (FileModel) {
 
                 that.fileModel = new FileModel();
                 that.fileModel.on("file-saved", that.fileUploaded, that);
@@ -78,7 +78,7 @@
                         that.fileModel.upload({ saveUrl: '/api/addresses/' + that.get('Id') + '/picture' + (pictureId > 0 ? '/' + pictureId : '') });
                     });
                 });
-            });
+          //  });
         },
         fileUploaded: function (file) {
             this.trigger("file-saved", file);

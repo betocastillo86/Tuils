@@ -1,4 +1,5 @@
-﻿define(['underscore', 'backbone', 'baseView', 'tuils/models/newsletter'], function (_, Backbone, BaseView, NewsletterModel) {
+﻿define(['jquery', 'underscore', 'backbone', 'baseView', 'tuils/models/newsletter'],
+    function ($, _, Backbone, BaseView, NewsletterModel) {
     var NewsletterView = BaseView.extend({
         el : '.block-newsletter',
         subscribeProgress: undefined,

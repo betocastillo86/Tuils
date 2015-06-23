@@ -1,5 +1,5 @@
-﻿define(['underscore', 'baseView', 'util'],
-    function (_, BaseView, TuilsUtil) {
+﻿define(['jquery', 'underscore', 'baseView', 'util'],
+    function ($, _, BaseView, TuilsUtil) {
             
         var MyProductsView = BaseView.extend({
             events: {

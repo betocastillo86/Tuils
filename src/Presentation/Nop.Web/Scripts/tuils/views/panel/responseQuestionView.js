@@ -1,5 +1,5 @@
-﻿define(['underscore', 'baseView', 'tuils/models/panel/responseQuestion'],
-    function (_, BaseView, ResponseQuestionModel) {
+﻿define(['jquery', 'underscore', 'baseView', 'tuils/models/panel/responseQuestion'],
+    function ($, _, BaseView, ResponseQuestionModel) {
 
         var ResponseQuestionsView = BaseView.extend({
 

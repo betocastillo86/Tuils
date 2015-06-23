@@ -1,5 +1,5 @@
-﻿define(['underscore', 'baseView', 'productModel', 'storage', 'configuration'],
-    function (_, BaseView, ProductModel, TuilsStorage, TuilsConfiguration) {
+﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'storage', 'configuration', 'publishProductSelectCategoryView', 'publishProductProductDetailView'],
+    function ($, _, BaseView, ProductModel, TuilsStorage, TuilsConfiguration, SelectCategoryView, ProductDetailView) {
 
     var PublishProductView = BaseView.extend({
 
@@ -36,12 +36,12 @@
         },
         showCategories: function () {
             var that = this;
-            require(['publishProductSelectCategoryView'], function (SelectCategoryView) {
+            //require(['publishProductSelectCategoryView'], function (SelectCategoryView) {
                 that.viewSelectCategory = new SelectCategoryView({ el: "#divStep_1", productType: that.productType });
                 that.viewSelectCategory.on("category-selected", that.showProductDetail, that);
                 that.viewSelectCategory.once("categories-loaded", TuilsStorage.loadBikeReferences);
                 that.viewSelectCategory.on("categories-middle-selected", that.restartNextStep, that);
-            });
+            //});
         },
         showProductDetail: function (categoryId) {
             this.showNextStep();
@@ -51,11 +51,11 @@
 
                 var that = this;
 
-                require(['publishProductProductDetailView'], function (ProductDetailView) {
+                //require(['publishProductProductDetailView'], function (ProductDetailView) {
                     that.viewProductDetail = new ProductDetailView({ el: "#divStep_2", productType: that.productType, selectedCategory: categoryId, model: that.model });
                     that.viewProductDetail.on("detail-product-finished", that.showPictures, that);
                     that.viewProductDetail.on("detail-product-back", that.showStepBack, that);
-                });
+                //});
 
             }
         },

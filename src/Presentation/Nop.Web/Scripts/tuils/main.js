@@ -2,33 +2,104 @@
     baseUrl: '/Scripts',
     shim: {
         tagit: {
-            //deps: ['jquery', 'jqueryui'],
-            exports:'tagit'
+            deps :['jquery', 'jqueryui'],
+            exports: 'tagit'
         },
+        //jquery: {
+        //    exports: ['$', 'jQuery']
+        //},
         backbone: {
-            //deps: ['underscore', 'jquery'],
-            deps: ['underscore'],
-            exports:'Backbone'
+            deps: ['underscore', 'jquery'],
+            exports: 'Backbone'
         },
+        jqueryvalidate: {
+            deps:['jquery'],
+            exports : 'jqueryvalidate'
+        },
+        jqueryui: {
+            deps: ['jquery'],
+            exports : 'jqueryui'
+        },
+        //jquerymigrate: {
+        //    degps: ['jquery'],
+        //    exports:''
+        //},
         validations: {
-            deps: ['backbone']
+            deps: ['backbone'],
+            exports: 'Backbone'
         },
         stickit: {
             deps: ['backbone']
         },
         resize: {
             deps: ['canvasBlob']
+        },
+        mmenu: {
+            deps: ['jquery'],
+            exports: 'mmenu'
+        },
+        iView: {
+            deps: ['combined', 'jquery', 'jqueryui', 'raphael'],
+            //deps: ['combined', 'jquery', 'jqueryui'],
+            exports : 'iView'
+
+        },
+        raphael: {
+            deps: ['eve'],
+            exports : 'Raphael'
+        },
+        carousel: {
+            deps: ['jquery', 'jqueryui'],
+            exports : 'carousel'
+        },
+        combined: {
+            deps:['jquery', 'jqueryui']
         }
     },
     paths: {
         //Externas
-        //jquery: 'jquery-1.10.2',
-        underscore: 'underscore-min',
-        backbone: 'backbone',
-        stickit: 'backbone.stickit.min',
-        jqueryui: 'jquery-ui-1.10.3.custom.min',
-        validations: 'backbone-validation.min',
-        handlebars: 'handlebars.min',
+        jquery: [
+            'https://code.jquery.com/jquery-1.10.2.min',
+            'jquery-1.10.2'
+        ],
+        jqueryui: [
+            'http://code.jquery.com/ui/1.11.4/jquery-ui.min',
+            'jquery-ui-1.10.3.custom.min'
+        ],
+        jqueryunobtrusive: [
+            'http://ajax.aspnetcdn.com/ajax/mvc/5.0/jquery.validate.unobtrusive.min',
+            'jquery.validate.unobtrusive.min'
+        ],
+        jqueryvalidate: [
+            'http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min',
+            'jquery.validate.min'
+        ],
+        underscore: [
+            'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min',
+            'underscore-min'
+        ],
+        backbone: [
+            'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.1/backbone-min',
+            'backbone'
+        ],
+        stickit:[
+            'https://cdnjs.cloudflare.com/ajax/libs/backbone.stickit/0.8.0/backbone.stickit.min',
+            'backbone.stickit.min'
+        ],
+        validations: [
+            'http://cdnjs.cloudflare.com/ajax/libs/backbone.validation/0.11.5/backbone-validation-min',
+            'backbone-validation.min'
+        ],
+        handlebars: [
+            'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.amd.min',
+            'handlebars.min'
+        ],
+        //eve :[
+        //    'https://cdnjs.cloudflare.com/ajax/libs/eve.js/0.8.4/eve.min',
+        //    'eve'
+        //],
+        eve : 'eve',
+        mmenu:'mmenu/js_umd/jquery.mmenu.umd',
         handlebarsh: 'handelbars.helpers',
         maps: 'http://maps.google.com/maps/api/js?sensor=false',
         //Basic Tuils
@@ -47,9 +118,9 @@
         //Colecciones
         productCollection: 'tuils/collections/products',
         manufacturerCollection: 'tuils/collections/manufacturers',
-        categoryCollection : 'tuils/collections/categories',
+        categoryCollection: 'tuils/collections/categories',
         fileCollection: 'tuils/collections/files',
-        specificationAttributeCollection : 'tuils/collections/specificationAttribute',
+        specificationAttributeCollection: 'tuils/collections/specificationAttribute',
         //Vistas
         baseView: 'tuils/views/baseView',
         publishProductView: 'tuils/views/publishProduct/publishProduct',
@@ -60,24 +131,36 @@
 
         loginView: 'tuils/views/login/createUser',
         loginCreateUserView: 'tuils/views/login/createUser',
-        
+
 
         htmlEditorView: 'tuils/views/utilities/htmlEditorView',
         imageSelectorView: 'tuils/views/utilities/imagesSelectorView',
-        
+
+        //NopCommerce
+        ajaxCart: 'public.ajaxcart',
+        nopCommon: 'public.common',
+
         //Tuils Extensions
-        extensionNumbers : 'tuils/extensions/numbers',
+        extensionNumbers: 'tuils/extensions/numbers',
         //Externas
         tagit: 'tag-it',
         wysihtml5: 'wysihtml5-0.3.0.min',
         resize: 'resize',
         canvasBlob: 'canvas-to-blob.min',
-        accounting: 'accounting.min',
-        imagedrag: 'jquery.imagedrag'
+        accounting: [
+            'https://cdnjs.cloudflare.com/ajax/libs/accounting.js/0.4.1/accounting.min',
+            'accounting.min'
+        ],
+        carousel: 'owl.carousel',
+        iView: 'iview',
+        combined: 'combined',
+        raphael: 'raphael-min'
     }
-    
+
 });
 
-require(['tuils/app'], function (TuilsApp) {
+require(['tuils/app'], function (TuilsApp, $) {
     TuilsApp.init();
+    window.jQuery = $;
+    window.$ = $;
 });

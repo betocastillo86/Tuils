@@ -1,4 +1,5 @@
-﻿define(['underscore', 'backbone', 'async!maps'], function (_, Backbone) {
+﻿define(['jquery', 'underscore', 'backbone', 'async!maps'],
+    function ($, _, Backbone) {
    
     var SelectPointMapView = Backbone.View.extend({
         map: undefined,

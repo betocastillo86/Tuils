@@ -1,5 +1,5 @@
-﻿define(['underscore', 'util', 'baseView', 'tuils/models/address', 'handlebars', 'tuils/views/utilities/selectPointMapView', 'tuils/collections/addresses', 'handlebarsh'],
-    function (_, TuilsUtilities, BaseView, AddressModel, Handlebars, MapView, AddressCollection) {
+﻿define(['jquery', 'underscore', 'util', 'baseView', 'tuils/models/address', 'handlebars', 'tuils/views/utilities/selectPointMapView', 'tuils/collections/addresses', 'handlebarsh'],
+    function ($, _, TuilsUtilities, BaseView, AddressModel, Handlebars, MapView, AddressCollection) {
 
         var AddAddressView = BaseView.extend({
             events: {
@@ -23,9 +23,7 @@
 
             pictureCollection : undefined,
 
-            template: Handlebars.compile($("#templateOfficeDetail").html()),
-
-            templatePictures: Handlebars.compile($("#templatePictures").html()),
+            templatePictures: undefined,
 
             bindings: {
                 "#txtName": "Name",
@@ -38,6 +36,9 @@
             },
             initialize: function (args)
             {
+                this.template = Handlebars.compile($("#templateOfficeDetail").html());
+                this.templatePictures = Handlebars.compile($("#templatePictures").html());
+
                 this.vendorId = args.VendorId;
                 this.model = new AddressModel({ 'VendorId': args.VendorId });
                 this.model.on('error', this.errorSaving, this);

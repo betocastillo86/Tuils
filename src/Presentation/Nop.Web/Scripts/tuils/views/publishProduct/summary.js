@@ -1,13 +1,13 @@
 ﻿
-define(['underscore', 'backbone', 'configuration', 'util', 'handlebars', 'extensionNumbers'],
-    function ( _, Backbone, TuilsConfiguration, TuilsUtil, Handlebars) {
+define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars', 'extensionNumbers'],
+    function ($, _, Backbone, TuilsConfiguration, TuilsUtil, Handlebars) {
 
         var SummaryView = Backbone.View.extend({
             events: {
                 "click .btnFinish": "save",
                 "click .btnBack": "back"
             },
-            template: Handlebars.compile($("#templateSummary").html()),
+            
 
             productType: undefined,
             btnFinish:undefined,
@@ -15,6 +15,7 @@ define(['underscore', 'backbone', 'configuration', 'util', 'handlebars', 'extens
             productProperties: undefined,
 
             initialize: function (args) {
+                this.template= Handlebars.compile($("#templateSummary").html());
                 this.productType = args.productType;
                 this.loadControls(args);
                 this.model.on("error", this.showButtonBar, this);

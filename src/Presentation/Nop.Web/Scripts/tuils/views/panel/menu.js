@@ -1,4 +1,4 @@
-﻿define(['underscore', 'backbone'], function (_, Backbone) {
+﻿define(['jquery', 'underscore', 'backbone'], function ($, _, Backbone) {
     var MenuPanelView = Backbone.View.extend({
 
         viewLogin: undefined,

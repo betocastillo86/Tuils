@@ -1,5 +1,5 @@
-﻿define(['underscore', 'util', 'baseView', 'tuils/collections/addresses', 'handlebars', 'tuils/views/utilities/singleMapView'],
-    function (_, TuilsUtilities, BaseView, AddressCollection, Handlebars, SingleMapView) {
+﻿define(['jquery', 'underscore', 'util', 'baseView', 'tuils/collections/addresses', 'handlebars', 'tuils/views/utilities/singleMapView'],
+    function ($, _, TuilsUtilities, BaseView, AddressCollection, Handlebars, SingleMapView) {
 
         var OfficesView = BaseView.extend({
             events: {
@@ -7,7 +7,7 @@
                 'click #btnNext': 'nextOffice'
             },
 
-            templateOffice: Handlebars.compile($("#templateSelectedOffice").html()),
+            //templateOffice: Handlebars.compile($("#templateSelectedOffice").html()),
 
             viewMap : undefined,
 
@@ -21,6 +21,7 @@
 
             initialize: function (args)
             {
+                this.templateOffice= Handlebars.compile($("#templateSelectedOffice").html());
                 this.id = args.id;
                 this.loadControls();
                 this.render();

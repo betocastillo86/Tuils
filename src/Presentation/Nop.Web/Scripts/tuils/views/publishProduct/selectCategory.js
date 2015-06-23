@@ -1,5 +1,5 @@
-﻿define(['underscore', 'backbone', 'categoryModel', 'handlebars', 'configuration', 'baseView', 'handlebarsh'],
-    function ( _, Backbone, CategoryModel, Handlebars, TuilsConfiguration, BaseView) {
+﻿define(['jquery', 'underscore', 'backbone', 'categoryModel', 'handlebars', 'configuration', 'baseView', 'handlebarsh'],
+    function ($, _, Backbone, CategoryModel, Handlebars, TuilsConfiguration, BaseView) {
         
         var SelectCategoryView = BaseView.extend({
 
@@ -28,10 +28,8 @@
 
             divShowCategories: undefined,
 
-            template: Handlebars.compile($("#templateCategorySelector").html()),
-
             initialize: function (args) {
-
+                this.template = Handlebars.compile($("#templateCategorySelector").html());
                 this.productType = args.productType;
                 this.loadControls();
                 this.loadDefaultCategories();

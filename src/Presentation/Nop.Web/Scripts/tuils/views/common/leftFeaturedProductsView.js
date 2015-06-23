@@ -1,4 +1,5 @@
-﻿define(['underscore', 'backbone', 'baseView', 'tuils/models/newsletter'], function (_, Backbone, BaseView, NewsletterModel) {
+﻿define(['jquery', 'underscore', 'backbone', 'baseView', 'tuils/models/newsletter', 'jqueryui', 'carousel'],
+    function ($, _, Backbone, BaseView, NewsletterModel) {
     var LeftFeaturedProductsView = BaseView.extend({
         initialize: function () {
             this.render();

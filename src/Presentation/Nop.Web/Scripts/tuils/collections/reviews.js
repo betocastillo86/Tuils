@@ -1,5 +1,5 @@
-﻿define(['underscore', 'backbone'],
-    function (_, Backbone) {
+﻿define(['jquery', 'underscore', 'backbone'],
+    function ($, _, Backbone) {
 
     var ReviewsCollection = Backbone.Collection.extend({
         url: "/api/products",

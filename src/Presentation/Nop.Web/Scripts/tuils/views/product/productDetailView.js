@@ -1,5 +1,5 @@
-﻿define(['underscore', 'baseView', 'tuils/models/order', 'resources'],
-    function (_, BaseView, OrderModel, Resources) {
+﻿define(['jquery', 'underscore', 'baseView', 'tuils/models/order', 'resources'],
+    function ($, _, BaseView, OrderModel, Resources) {
 
         var ProductDetailView = BaseView.extend({
 

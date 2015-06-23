@@ -1,5 +1,5 @@
-﻿define(['underscore', 'baseView', 'tuils/views/vendor/vendorOfficesView', 'tuils/views/vendor/vendorReviewsView'],
-    function (_, BaseView, VendorOfficesView, VendorReviewsView) {
+﻿define(['jquery', 'underscore', 'baseView', 'tuils/views/vendor/vendorOfficesView', 'tuils/views/vendor/vendorReviewsView', 'tuils/views/vendor/vendorHeaderView'],
+    function ($, _, BaseView, VendorOfficesView, VendorReviewsView, VendorHeaderView) {
 
         var VendorDetailView = BaseView.extend({
             events: {
@@ -26,9 +26,9 @@
                 if (this.allowEdit)
                 {
                     var that = this;
-                    require(['tuils/views/vendor/vendorHeaderView'], function (VendorHeaderView) {
+                    //require(['tuils/views/vendor/vendorHeaderView'], function (VendorHeaderView) {
                         that.viewHeader = new VendorHeaderView({ el: "#divHeaderVendor", id: that.id, allowEdit: that.allowEdit });
-                    });
+                   // });
                 }
             },
             search: function (obj) {
