@@ -115,7 +115,7 @@ define(['jquery'], function ($) {
     }
 
     $.fn.fixedDialog = function (options) {
-        this.dialog(options);
+        this.dialog(options).html('<div align="center"><img id="divLoadingback" src="/Content/loading_2x.gif" /></div>');
         $("[role='dialog']").css('position', 'fixed');
         return this;
     }

@@ -54,20 +54,18 @@
             },
             sellProduct: function () {
                 var that = this;
-                that.loadSubViews();
                 that.currentView = new PublishProductView({ el: that.defaultEl, productType: TuilsConfiguration.productBaseTypes.product });
+                that.loadSubViews();
             },
             sellBike: function () {
                 var that = this;
-
-                that.loadSubViews();
                 that.currentView = new PublishProductView({ el: that.defaultEl, productType: TuilsConfiguration.productBaseTypes.bike });
+                that.loadSubViews();
             },
             sellService: function () {
                 var that = this;
-                
-                that.loadSubViews();
                 that.currentView = new PublishProductView({ el: that.defaultEl, productType: TuilsConfiguration.productBaseTypes.service });
+                that.loadSubViews();
             },
             myAccount: function () {
                 var that = this;

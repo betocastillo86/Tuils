@@ -65,12 +65,12 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
                 //Muestra los valores de envio
                 pushProperty(this, "IsShipEnabled", true);
 
-                if (this.model.get('IsShipEnabled'))
-                {
-                    this.productProperties.push({ name: this.model.labels.AdditionalShippingCharge, value: this.model.get('AdditionalShippingCharge').toPesos() });
-                    if (this.model.get('DetailShipping'))
-                        pushProperty(this, 'DetailShipping');
-                }
+                //if (this.model.get('IsShipEnabled'))
+                //{
+                //    this.productProperties.push({ name: this.model.labels.AdditionalShippingCharge, value: this.model.get('AdditionalShippingCharge').toPesos() });
+                //    if (this.model.get('DetailShipping'))
+                //        pushProperty(this, 'DetailShipping');
+                //}
                 
 
                 this.productProperties.push({ name: 'Fecha Cierre Publicacion', value: '30 dias' });

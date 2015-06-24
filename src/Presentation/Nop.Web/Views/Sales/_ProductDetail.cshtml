@@ -22,26 +22,21 @@
         <div class="inputs">
             <input id="chkIsShipEnabled" type="checkbox" /> @Html.Label(@T("PublishProduct.HasShipping").Text)
         </div>
-        <div class="inputs" tuils-for="shipping">
+        @*<div class="inputs" tuils-for="shipping">
             @Html.LabelT("PublishProduct.ShippingValue")
             <input id="txtAdditionalShippingCharge" type="text" tuils-val="int" placeholder="@T("PublishProduct.PriceExample")" />
             <span class="required">*</span>
             <div class="text-character"></div>
             <span class="field-validation-error" tuils-val-for="AdditionalShippingCharge"></span>
-        </div>
+        </div>*@
         <div class="tipo-marca">
             @Html.LabelT("PublishProduct.Product.ForBrandBike")
             <input id="txtBikeReferencesProduct" />
         </div>
         <br />
     </div>
-    <div class="title">@T("PublishProduct.Product.Html")</div>
 
-    <div id="divProductHtml" class="form-public">
-        @Html.Partial("_TextEditor", "productHtml")
-        <div class="text-character"></div>
-        <span class="field-validation-error" tuils-val-for="FullDescription"></span>
-    </div>
+    @Html.TextAreaRequired("FullDescription", labelResource: "PublishProduct.Product.Html")
 
 </form>
 <input type="button" class="btn_continue button-1 btnNext" value="@T("PublishProduct.NextStep")">

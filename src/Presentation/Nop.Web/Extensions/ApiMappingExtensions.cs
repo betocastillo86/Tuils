@@ -26,7 +26,7 @@ namespace Nop.Web.Extensions.Api
             entity.Name = model.Name;
             entity.FullDescription = model.FullDescription;
             entity.IsShipEnabled = model.IsShipEnabled;
-            entity.AdditionalShippingCharge = model.AdditionalShippingCharge;
+            //entity.AdditionalShippingCharge = model.AdditionalShippingCharge;
             entity.Price = model.Price;
 
             var _tuilsSettings = EngineContext.Current.Resolve<TuilsSettings>();
@@ -74,7 +74,7 @@ namespace Nop.Web.Extensions.Api
                 });
 
             #endregion
-            
+
 
             #region Properties Bikes
 
@@ -110,7 +110,7 @@ namespace Nop.Web.Extensions.Api
 
             //El año es esclusivo de las motos
             if (model.Year > 0)
-                entity.Year = model.Year;
+                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.Option, AllowFiltering = true, CustomValue = model.Year.ToString(), SpecificationAttributeOptionId = model.Year });
 
             #endregion
 
@@ -130,7 +130,7 @@ namespace Nop.Web.Extensions.Api
                                             }
                                            ));
             entity.IncludeSupplies = model.IncludeSupplies;
-            
+
             if (model.SuppliesValue > 0)
                 entity.SuppliesValue = model.SuppliesValue;
 
@@ -163,11 +163,11 @@ namespace Nop.Web.Extensions.Api
             //Agrega los atributos básicos del registro
             attributes.Add(SystemCustomerAttributeNames.FirstName, model.Name);
             attributes.Add(SystemCustomerAttributeNames.LastName, model.LastName);
-            
-            if(model.VendorType != Core.Domain.Vendors.VendorType.User)
+
+            if (model.VendorType != Core.Domain.Vendors.VendorType.User)
                 attributes.Add(SystemCustomerAttributeNames.Company, model.CompanyName);
 
-            return entity;   
+            return entity;
         }
 
         #endregion
@@ -186,8 +186,9 @@ namespace Nop.Web.Extensions.Api
 
         public static AddressModel ToModel(this Address entity)
         {
-            return new AddressModel() { 
-                Id= entity.Id,
+            return new AddressModel()
+            {
+                Id = entity.Id,
                 Address = entity.Address1,
                 Email = entity.Email,
                 PhoneNumber = entity.PhoneNumber,
@@ -244,7 +245,7 @@ namespace Nop.Web.Extensions.Api
                 models.Add(entity.ToModel(name, size, _pictureService, _localizationService));
             }
             return models;
-            
+
         }
         #endregion
 
@@ -253,7 +254,8 @@ namespace Nop.Web.Extensions.Api
         #region Vendor
         public static Vendor ToEntity(this VendorModel model)
         {
-            return new Vendor() {
+            return new Vendor()
+            {
                 Id = model.Id,
                 Name = model.Name,
                 Description = model.Description,
@@ -304,7 +306,7 @@ namespace Nop.Web.Extensions.Api
         //{
         //    foreach (var order in orders)
         //    {
-                
+
 
         //        model.Orders.Add(orderModel);
         //    }
@@ -316,7 +318,8 @@ namespace Nop.Web.Extensions.Api
 
         public static ProductReviewModel ToModel(this ProductReview entity)
         {
-            return new ProductReviewModel() { 
+            return new ProductReviewModel()
+            {
                 CustomerId = entity.CustomerId,
                 //CustomerName = entity.Customer != null ? entity.Customer.attr
                 IsApproved = entity.IsApproved,
@@ -327,7 +330,7 @@ namespace Nop.Web.Extensions.Api
                 Title = entity.Title,
                 CreatedOnUtcTicks = entity.CreatedOnUtc.Ticks,
                 CreatedOnUtc = entity.CreatedOnUtc
-            }; 
+            };
         }
 
 

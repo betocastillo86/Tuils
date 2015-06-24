@@ -25,7 +25,7 @@
         },
         validateAuthorization: function ()
         {
-            this.model.on('unauthorized', this.showLogin, this);
+            this.model.once('unauthorized', this.showLogin, this);
         },
         userAuthenticated: function () {
             //Relanza el evento que el usuario fue autenticado, para que la vista que hereda lo pueda capturar

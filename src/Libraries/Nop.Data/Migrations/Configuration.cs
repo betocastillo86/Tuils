@@ -10,6 +10,7 @@ namespace Nop.Data.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Text;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Nop.Data.NopObjectContext>
     {
@@ -28,7 +29,7 @@ namespace Nop.Data.Migrations
             specificationAttributeTable.AddOrUpdate(sa => sa.Id,
                 new SpecificationAttribute[]{
                     new SpecificationAttribute() { Id = 1, Name = "Estado", DisplayOrder = 0 },
-                    new SpecificationAttribute() { Id = 2, Name = "Para Cilindrajes", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 2, Name = "Año", DisplayOrder = 0 },
                     new SpecificationAttribute() { Id = 3, Name = "Realiza Envios", DisplayOrder = 0 },
                     new SpecificationAttribute() { Id = 4, Name = "Tipo de Moto", DisplayOrder = 0 },
                     new SpecificationAttribute() { Id = 5, Name = "Color", DisplayOrder = 0 },
@@ -43,13 +44,12 @@ namespace Nop.Data.Migrations
 
 
             #region SpecificationAttributeOption
+            
             var specificationAttributeOptionTable = context.Set<SpecificationAttributeOption>();
             specificationAttributeOptionTable.AddOrUpdate(sao => sao.Id,
                     new SpecificationAttributeOption[]{
                     new SpecificationAttributeOption() { Id  = 1, Name = "Nuevo", SpecificationAttributeId = 1},
                     new SpecificationAttributeOption() { Id  = 2, Name = "Usado", SpecificationAttributeId = 1},
-                    new SpecificationAttributeOption() { Id  = 3, Name = "200", SpecificationAttributeId = 2},
-                    new SpecificationAttributeOption() { Id  = 4, Name = "600", SpecificationAttributeId = 2},
                     new SpecificationAttributeOption() { Id  = 5, Name = "Si", SpecificationAttributeId = 3},
                     new SpecificationAttributeOption() { Id  = 6, Name = "No", SpecificationAttributeId = 3},
                     //new SpecificationAttributeOption() { Id  = 7, Name = "Clasica", SpecificationAttributeId = 4},
@@ -93,6 +93,20 @@ namespace Nop.Data.Migrations
                     new SpecificationAttributeOption() { Id  = 1040, Name = "Pastillas", SpecificationAttributeId = 1011},
                     //new SpecificationAttributeOption() { Id  = 1041, Name = "Naked", SpecificationAttributeId = 4}
                 });
+
+
+            //REALIZA LA INSERCION DE LOS AÑOS DE MANERA MANUAL
+            var sqlSAO = new StringBuilder();
+            sqlSAO.Append("SET IDENTITY_INSERT [dbo].[SpecificationAttributeOption] ON;");
+            sqlSAO.AppendLine();
+            //Agrega el listado de años existentes 
+            for (int i = 1940; i < 2020; i++)
+            {
+                sqlSAO.AppendFormat("INSERT INTO [dbo].[SpecificationAttributeOption]([Id], [SpecificationAttributeId],[Name],[DisplayOrder]) VALUES ({0},2,'{0}',0);", i);
+                sqlSAO.AppendLine();
+            }
+            sqlSAO.Append("SET IDENTITY_INSERT [dbo].[SpecificationAttributeOption] OFF");
+            context.ExecuteSqlCommand(sqlSAO.ToString());
             #endregion
 
 

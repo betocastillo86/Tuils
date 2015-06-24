@@ -26,8 +26,8 @@ namespace Nop.Web.Models.Api
 
         public bool IsShipEnabled { get; set; }
 
-        [RequiredIf("IsShipEnabled", true)]
-        public decimal AdditionalShippingCharge { get; set; }
+        //[RequiredIf("IsShipEnabled", true)]
+        //public decimal AdditionalShippingCharge { get; set; }
 
         [Required]
         public decimal Price { get; set; }

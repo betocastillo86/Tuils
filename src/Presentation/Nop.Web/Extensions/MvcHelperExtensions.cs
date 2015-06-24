@@ -71,7 +71,7 @@ namespace System.Web.Mvc.Html
                     //htmlControl.Append(helper.DropDownList(string.Concat("txt", field), selectList, controlHtmlAttributes).ToHtmlString());
                     break;
                 case ControlType.TextArea:
-                    //htmlControl.Append(helper.TextArea(string.Concat("txt", field), value ?? string.Empty, controlHtmlAttributes).ToHtmlString());
+                    htmlControl.Append(helper.TextAreaFor(expression, htmlAttributes));
                     break;
                 case ControlType.Password:
                     //htmlControl.Append(helper.Password(string.Concat("txt", field), value ?? string.Empty, controlHtmlAttributes).ToHtmlString());
@@ -159,6 +159,21 @@ namespace System.Web.Mvc.Html
         }
 
         /// <summary>
+        /// Retorna el HHTML completo de un textarea con su label y etiquetas relacionadas con las validaciones
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="field">Nombre del campo que se va agregar</param>
+        /// <param name="value">Valor asignado al control por defecto</param>
+        /// <param name="labelText">texto que se encuentra en el Label</param>
+        /// <param name="labelResource">texto tomado de los recursos que se carga en el Label (Este valor prima sobre labelText)</param>
+        /// <param name="controlHtmlAttributes">objeto con las propiedades agregadas al control</param>
+        /// <returns>contenido Html del control</returns>
+        public static MvcHtmlString TextAreaRequired(this HtmlHelper helper, string field, string value = null, string labelText = null, string labelResource = null, object controlHtmlAttributes = null, bool required = true)
+        {
+            return ControlRequired(helper, ControlType.TextArea, field, value, labelText, labelResource, controlHtmlAttributes, required: required);
+        }
+
+        /// <summary>
         /// Retorna el HHTML completo de un textbox con su label y etiquetas relacionadas con las validaciones
         /// </summary>
         /// <param name="helper"></param>
@@ -189,6 +204,7 @@ namespace System.Web.Mvc.Html
         {
             return ControlRequired(helper, ControlType.DropdownList, field, value, labelText, labelResource, controlHtmlAttributes, selectList, required);
         }
+
 
 
 
