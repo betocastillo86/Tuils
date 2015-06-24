@@ -1740,6 +1740,13 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
         .caja-comment p{text-align: justify; padding: 8px 0;}
 /*MODAL*/
 .modal_bkg{background: rgba(60, 90, 135, 0.8); position: fixed; top: 0; height: 100%; width: 100%;}
-.modal{background: #FFF; border-radius: 2px; padding: 20px; position: relative; margin: 0 auto;}
+.modal{font-family: 'Ubuntu', sans-serif; background: #FFF; border-radius: 2px; padding: 20px; position: relative; margin: 0 auto;}
 .modal-btn-close{background:#FB7055; color:#FFF !important; display: block; transition:ease all 0.4s; position: absolute; top: 10px; right: 10px; color:#FFF; padding:3px;}
 .modal-btn-close:hover{background:#3b5a83; color: #FFF;}
+
+
+
+
+fieldset.facebook-login-block{float: none !important; width: 100%; margin: 0 !important; padding: 0 !important;}
+fieldset.facebook-login-block legend {display: none;}
+.facebook-btn{background:#3D61A6 !important; background-image: none !important; width: 100% !important; margin:10px 0 0 !important; padding: 8px 10px !important; box-sizing:border-box;}
