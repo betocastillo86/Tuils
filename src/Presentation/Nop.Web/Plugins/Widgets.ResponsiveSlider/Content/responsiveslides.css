@@ -5,6 +5,7 @@
   list-style: none;
   overflow: hidden;
   width: 100%;
+  height: 500px;
   padding: 0;
   margin: 0;
   }
@@ -34,9 +35,8 @@
 
 
 .rslides_container {
-  margin-bottom: 50px;
+  margin:0 0 30px;
   position: relative;
-  float: left;
   width: 100%;
   }
 
@@ -45,7 +45,7 @@
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   top: 50%;
   left: 0;
-  z-index: 99;
+  z-index: 2;
   opacity: 0.7;
   text-indent: -9999px;
   overflow: hidden;
@@ -116,8 +116,11 @@
   }
 
 .rslides_tabs {
-  margin-top: 10px;
+  position: absolute;
   text-align: center;
+  width: 100%;
+  bottom: 10px;
+  z-index: 3;
   }
 
 .rslides_tabs li {
@@ -149,4 +152,19 @@
 .rslides_tabs .rslides_here a {
   background: #222;
   background: rgba(0,0,0, .8);
+  }
+  @media screen and (max-width:1200px) {
+    .rslides{
+      height:470px;
+    }
+  }
+  @media screen and (max-width:960px) {
+    .rslides{
+      height:370px;
+    }
+  }
+  @media screen and (max-width:960px) {
+    .rslides{
+      height:370px;
+    }
   }
