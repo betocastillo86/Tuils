@@ -22,6 +22,7 @@
 
             var that = this;
             this.loadModel();
+            this.$el.fixedDialog(this.dialogBasicOptions);
 
             require(['text!/Customer/CreateUser'], function (template) {
                 that.template = Handlebars.compile(template);

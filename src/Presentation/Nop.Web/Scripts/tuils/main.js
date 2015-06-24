@@ -152,15 +152,11 @@
         ],
         carousel: 'owl.carousel',
         slide:'responsiveslides.min'
-        //iView: 'iview',
-        //combined: 'combined',
-        //raphael: 'raphael-min',
-        //eve : 'eve',
     }
 
 });
 
-require(['tuils/app'], function (TuilsApp, $) {
+require(['tuils/app', 'jquery'], function (TuilsApp, $) {
     TuilsApp.init();
     window.jQuery = $;
     window.$ = $;

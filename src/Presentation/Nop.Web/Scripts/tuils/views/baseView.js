@@ -11,7 +11,13 @@
 
         loadingTemplate: '<img id="divLoadingback" src="/Content/loading_2x.gif" />',
 
-        minSizeDesktopWith : 1024,
+        minSizeDesktopWith: 1024,
+
+        dialogBasicOptions: {
+            modal: true,
+            draggable: false,
+            resizable: false
+        },
 
         showLogin: function (model)
         {

@@ -1,7 +1,10 @@
 ﻿define(['jquery', 'underscore', 'backbone', 'baseView', 'mmenu'],
     function ($, _, Backbone, BaseView) {
     var TopMenuView = BaseView.extend({
-
+        events: {
+            'click .main-register .ico-register': 'register',
+            'click .main-register .ico-login': 'login'
+        },
         responsiveMenuOptions :{
             // options
             extensions: ["theme-dark"],
@@ -31,6 +34,20 @@
             this.selectDefaultMenuOption();
             this.loadResponsiveMenu();
             this.hoverMenu();
+            //se registra este evento de esta manera, ya que no se encuentra en el el
+            var that = this;
+            $(".main-registro .ico-register").click(function () {
+                that.register(that);
+            });
+            $(".main-registro .ico-login").click(function () {
+                that.login(that);
+            });
+        },
+        register: function () {
+            this.trigger('register');
+        },
+        login: function () {
+            this.trigger('login');
         },
         selectDefaultMenuOption: function () {
             if (!this.isMobile())

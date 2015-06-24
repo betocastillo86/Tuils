@@ -22,6 +22,7 @@
             this.model = new UserRegisterModel({ TermsOfUse: true });
             this.model.on("sync", this.userAuthenticated, this);
             this.model.on("error", this.errorAuthenticated, this);
+            this.$el.fixedDialog(this.dialogBasicOptions);
 
             var that = this;
             require(['text!/Customer/FastLogin', 'css!/Plugins/ExternalAuth.Facebook/Content/facebookstyles'], function (template) {

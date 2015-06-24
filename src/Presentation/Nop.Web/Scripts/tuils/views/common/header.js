@@ -1,11 +1,12 @@
-﻿define(['jquery','underscore', 'backbone', 'handlebars', 'tuils/views/login/login', 'tuils/views/login/createUser'],
-    function ($,_, Backbone, Handlebars, LoginView, CreateUserView) {
+﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'tuils/views/login/login', 'tuils/views/login/createUser', 'tuils/views/common/topMenuView'],
+    function ($,_, Backbone, Handlebars, LoginView, CreateUserView, TopMenuView) {
     var HeaderView = Backbone.View.extend({
 
         el: ".header-links",
 
         viewLogin: undefined,
         viewRegister: undefined,
+        viewTopMenu : undefined,
 
         templateUserAuthenticated :undefined,
 
@@ -14,16 +15,14 @@
             'click #liRegister': 'showRegister'
         },
         initialize: function () {
-            
+            this.render();
         },
         showLogin: function () {
             var that = this;
             if (!this.viewLogin) {
-                //require(['tuils/views/login/login'], function (LoginView) {
-                    that.viewLogin = new LoginView({ $el: that.$('#divLoginUser') });
-                    that.viewLogin.on("register", that.showRegister, that);
-                    that.viewLogin.on("user-authenticated", that.showUserAuthenticated, that);
-               // });
+                that.viewLogin = new LoginView({ $el: that.$('#divLoginUser') });
+                that.viewLogin.on("register", that.showRegister, that);
+                that.viewLogin.on("user-authenticated", that.showUserAuthenticated, that);
             }
             else {
                 this.viewLogin.show();
@@ -33,11 +32,9 @@
             var that = this;
 
             if (!this.viewRegister) {
-               // require(['tuils/views/login/createUser'], function (CreateUserView) {
-                    that.viewRegister = new CreateUserView({ $el: that.$('#divRegisterUser') });
-                    that.viewRegister.on("user-authenticated", that.showUserAuthenticated, that);
-                    that.viewRegister.on("login", that.showLogin, that);
-              //  });
+                that.viewRegister = new CreateUserView({ $el: that.$('#divRegisterUser') });
+                that.viewRegister.on("user-authenticated", that.showUserAuthenticated, that);
+                that.viewRegister.on("login", that.showLogin, that);
             }
             else {
                 this.viewRegister.show();
@@ -52,7 +49,16 @@
             this.$(".preLogin").hide();
             this.$("ul").prepend(this.templateUserAuthenticated(model.toJSON()));
         },
+        loadTopMenu: function () {
+            this.viewTopMenu = new TopMenuView({ el: '.header-menu' });
+            this.viewTopMenu.on("register", this.showRegister, this);
+            this.viewTopMenu.on("login", this.showLogin, this);
+        },
+        loadControls: function () {
+            this.loadTopMenu();
+        },
         render: function () {
+            this.loadControls();
             return this;
         }
     });

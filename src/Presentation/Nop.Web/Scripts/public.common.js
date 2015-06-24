@@ -113,5 +113,12 @@ define(['jquery'], function ($) {
     window.htmlDecode = function (value) {
         return $('<div/>').html(value).text();
     }
+
+    $.fn.fixedDialog = function (options) {
+        this.dialog(options);
+        $("[role='dialog']").css('position', 'fixed');
+        return this;
+    }
+
 });
 
