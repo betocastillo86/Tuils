@@ -408,7 +408,7 @@ namespace Nop.Web.Controllers
                     var item = order.OrderItems.FirstOrDefault();
 
                     //Consulta el review de una orden
-                    var review = _productService.GetAllProductReviews(orderItemId:item.Id, approved:true).FirstOrDefault();
+                    var review = _productService.GetAllProductReviews(orderItemId:item.Id, approved:isMyOrders ? (bool?)null : true).FirstOrDefault();
                     if(review != null)
                         orderModel.Rating = review.Rating;
 

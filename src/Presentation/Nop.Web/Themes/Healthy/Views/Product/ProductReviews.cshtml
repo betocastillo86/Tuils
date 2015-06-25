@@ -1,11 +1,11 @@
 ﻿@model ProductReviewsModel
 @using Nop.Web.Models.Catalog;
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = null;
 
     //title
-    Html.AddTitleParts(Model.ProductName);
-    Html.AddTitleParts(T("PageTitle.ProductReviews").Text);
+    //Html.AddTitleParts(Model.ProductName);
+    //Html.AddTitleParts(T("PageTitle.ProductReviews").Text);
 }
 @*edited*@
 @*<div class="page product-reviews-page">*@
@@ -30,15 +30,18 @@
             {
                 <div class="write-review" id="review-form">
                     <div class="title">@T("Reviews.Write")</div>
-                    @using (Html.BeginForm())
+                    @using (Html.BeginForm("ProductReviews", "Product", FormMethod.Post))
                     {
                         <div class="message-error">@Html.ValidationSummary(true)</div>
                         <div class="form-fields">
                             <div class="inputs">
-                                @Html.LabelFor(model => model.AddProductReview.Title, new { }, ":")
+                                @*@Html.LabelFor(model => model.AddProductReview.Title, new { }, ":")
                                 @Html.TextBoxFor(model => model.AddProductReview.Title, Model.AddProductReview.CanCurrentCustomerLeaveReview ? (object)(new { @class = "review-title" }) : (object)(new { @class = "review-title", disabled = "disabled" }))
-                                @Html.ValidationMessageFor(model => model.AddProductReview.Title)
-                                <div class="text-character">Restan 140 caracteres</div>
+                                @Html.ValidationMessageFor(model => model.AddProductReview.Title)*@
+
+                                @Html.TextBoxRequiredFor(model => model.AddProductReview.Title, htmlAttributes: new { @class = "review-title" })
+
+                                @*<div class="text-character">Restan 140 caracteres</div>*@
                             </div>
                             <div class="review-rating">
                                 @Html.LabelFor(model => model.AddProductReview.Rating, new { }, ":")
@@ -53,11 +56,11 @@
                                     </li>
                                     <li class="last">@T("Reviews.Fields.Rating.Excellent")</li>
                                 </ul>
+                                <span class="field-validation-error" tuils-val-for="Rating"></span>
                             </div>
                                 @*@Html.LabelFor(model => model.AddProductReview.ReviewText, new { }, ":")*@
-                                @Html.TextAreaFor(model => model.AddProductReview.ReviewText, Model.AddProductReview.CanCurrentCustomerLeaveReview ? (object)(new { @class = "review-text", placeholder="Haz clic aquí si quieres escribir un comentario" }) : (object)(new { @class = "review-text", disabled = "disabled" }))
-                                @Html.ValidationMessageFor(model => model.AddProductReview.ReviewText)
-                            
+                                @Html.TextAreaRequiredFor(model => model.AddProductReview.ReviewText, htmlAttributes: new { @class = "review-text", placeholder = "Haz clic aquí si quieres escribir un comentario" }, showLabel: false)
+                                @*@Html.TextAreaFor(model => model.AddProductReview.ReviewText, Model.AddProductReview.CanCurrentCustomerLeaveReview ? (object)(new { @class = "review-text", placeholder="Haz clic aquí si quieres escribir un comentario" }) : (object)(new { @class = "review-text", disabled = "disabled" }))*@
                             @if (Model.AddProductReview.DisplayCaptcha)
                             {
                                 <div class="captcha-box">
@@ -66,7 +69,7 @@
                             }
                         </div>
                         <div class="buttons">
-                            <input type="submit" name="add-review" class="button-1 write-product-review-button" value="@T("Reviews.SubmitButton")" />
+                            <input type="button" name="add-review" class="button-1 write-product-review-button" value="@T("Reviews.SubmitButton")" />
                         </div>
                     }
                 </div>

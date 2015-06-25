@@ -3,7 +3,7 @@
 @using Nop.Core.Infrastructure;
 @using Nop.Web.Models.Catalog;
 @{
-    Html.AddScriptParts("~/Scripts/jquery.magnific-popup.js");
+    //Html.AddScriptParts("~/Scripts/jquery.magnific-popup.js");
     Html.AddCssFileParts("~/Content/magnific-popup/magnific-popup.css");
 
     int productPerRow = EngineContext.Current.Resolve<MediaSettings>().ProductThumbPerRowOnProductDetailsPage;
@@ -16,44 +16,9 @@
 
     @if (Model.DefaultPictureZoomEnabled)
     {
-        Html.AddScriptParts(String.Format("~/Themes/{0}/Content/Scripts/jquery.jqzoom-core-pack.js", currentThemeName));
+        //Html.AddScriptParts(String.Format("~/Themes/{0}/Content/Scripts/jquery.jqzoom-core-pack.js", currentThemeName));
         <div class="picture">
-            <script type="text/javascript">
-                $(document).ready(function () {
 
-                    @{
-        var supportRtl = EngineContext.Current.Resolve<Nop.Core.IWorkContext>().WorkingLanguage.Rtl;
-        var position = "right";
-        if (supportRtl)
-        {
-            position = "left";
-        }
-                    }
-                    var _lens = true;
-                    if ($(window).width() < 768) {
-                        _lens = false;
-                    }
-                    $('.jqzoom').jqzoom({
-                        zoomType: 'standard',
-                        title: true,
-                        lens: _lens,
-                        preloadImages: true,
-                        alwaysOn: false,
-                        xOffset: 70,
-                        position: '@position',
-                        showEffect: 'fadein',
-                        hideEffect: 'fadeout'
-                    });
-                    $('#main-product-img-lightbox-anchor-@Model.Id').magnificPopup(
-                    {
-                        type: 'image',
-                        removalDelay: 300,
-                        gallery: {
-                            enabled: true
-                        }
-                    });
-                });
-            </script>
             <div class="clearfix" id="content">
                 <div class="clearfix">
                     <a href="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.Name" id="main-product-img-lightbox-anchor-@Model.Id" class="jqzoom" rel='gal1'>
@@ -96,7 +61,7 @@
             <a href="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.Name" id="main-product-img-lightbox-anchor-@Model.Id">
                 <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img-@Model.Id" />
             </a>
-            <script type="text/javascript">
+            @*<script type="text/javascript">
                 $(document).ready(function () {
                     $('#main-product-img-lightbox-anchor-@Model.Id').magnificPopup(
                     {
@@ -107,7 +72,7 @@
                         }
                     });
                 });
-            </script>
+            </script>*@
             @*<img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img-@Model.Id" />*@
 
             @if (Model.PictureModels.Count > 1)
@@ -132,7 +97,7 @@
                         }
                     }
                 </div>
-                <script type="text/javascript">
+                @*<script type="text/javascript">
                     $(document).ready(function () {
                         $('.thumb-popup-link').magnificPopup(
                         {
@@ -143,7 +108,7 @@
                             }
                         });
                     });
-                </script>
+                </script>*@
             }
         </div>
     }

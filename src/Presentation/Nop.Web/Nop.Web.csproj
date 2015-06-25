@@ -1027,6 +1027,8 @@
     <Content Include="Scripts\handlebars.runtime.min.js" />
     <Content Include="Scripts\iview.js" />
     <Content Include="Scripts\iview.min.js" />
+    <Content Include="Scripts\jquery.easytabs.js" />
+    <Content Include="Scripts\jquery.jqzoom-core-pack.js" />
     <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.autoheight.css" />
     <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.counters.css" />
     <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.dividers.css" />
@@ -1089,6 +1091,7 @@
     <Content Include="Scripts\tuils\collections\specificationAttribute.js" />
     <Content Include="Scripts\tuils\extensions\numbers.js" />
     <Content Include="Scripts\tuils\models\address.js" />
+    <Content Include="Scripts\tuils\models\review.js" />
     <Content Include="Scripts\tuils\models\newsletter.js" />
     <Content Include="Scripts\tuils\models\order.js" />
     <Content Include="Scripts\tuils\models\panel\responseQuestion.js" />
@@ -1122,6 +1125,7 @@
     <Content Include="Scripts\tuils\views\panel\responseQuestionView.js" />
     <Content Include="Scripts\tuils\views\panel\vendorServices.js" />
     <Content Include="Scripts\tuils\views\product\productDetailView.js" />
+    <Content Include="Scripts\tuils\views\product\reviewView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
     <Content Include="Scripts\tuils\views\utilities\imagesSelectorView.js" />

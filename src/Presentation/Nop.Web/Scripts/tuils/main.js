@@ -1,64 +1,59 @@
 ﻿require.config({
     baseUrl: '/Scripts',
     shim: {
-        tagit: {
-            deps :['jquery', 'jqueryui'],
-            exports: 'tagit'
-        },
-        //jquery: {
-        //    exports: ['$', 'jQuery']
+        //tagit: {
+        //    deps :['jquery', 'jqueryui'],
+        //    exports: 'tagit'
         //},
-        backbone: {
-            deps: ['underscore', 'jquery'],
-            exports: 'Backbone'
-        },
-        jqueryvalidate: {
-            deps:['jquery'],
-            exports : 'jqueryvalidate'
-        },
-        jqueryui: {
-            deps: ['jquery'],
-            exports : 'jqueryui'
-        },
-        //jquerymigrate: {
-        //    degps: ['jquery'],
-        //    exports:''
+        //jquery: {
+        //    exports: ['jQuery']
+        //},
+        //backbone: {
+        //    deps: ['underscore', 'jquery'],
+        //    exports: 'Backbone'
+        //},
+        //jqueryvalidate: {
+        //    deps:['jquery'],
+        //    exports : 'jqueryvalidate'
+        //},
+        //jqueryui: {
+        //    deps: ['jquery'],
+        //    exports : 'jqueryui'
         //},
         validations: {
             deps: ['backbone'],
             exports: 'Backbone'
-        },
-        stickit: {
-            deps: ['backbone']
-        },
-        resize: {
-            deps: ['canvasBlob']
-        },
-        mmenu: {
-            deps: ['jquery'],
-            exports: 'mmenu'
-        },
-        slide: {
-            deps: ['jquery', 'jqueryui'],
-            exports:'slide'
-        },
-        //iView: {
-        //    deps: ['combined', 'jquery', 'jqueryui', 'raphael'],
-        //    //deps: ['combined', 'jquery', 'jqueryui'],
-        //    exports : 'iView'
-
+        }
+        //stickit: {
+        //    deps: ['backbone']
         //},
-        //raphael: {
-        //    deps: ['eve'],
-        //    exports : 'Raphael'
+        //resize: {
+        //    deps: ['canvasBlob']
         //},
-        carousel: {
-            deps: ['jquery', 'jqueryui'],
-            exports : 'carousel'
-        },
-        //combined: {
-        //    deps:['jquery', 'jqueryui']
+        //mmenu: {
+        //    deps: ['jquery'],
+        //    exports: 'mmenu'
+        //},
+        //slide: {
+        //    deps: ['jquery', 'jqueryui'],
+        //    exports:'slide'
+        //},
+        //carousel: {
+        //    deps: ['jquery', 'jqueryui'],
+        //    exports : 'carousel'
+        //},
+        //jzoom: {
+        //    deps: ['jquery', 'jqueryui'],
+        //    exports : 'jzoom'
+        //},
+        //jpopup: {
+        //    deps: ['jquery']
+        //},
+        //jtabs: {
+        //    deps: ['jquery'],
+        //    exports: 'jQuery'
         //}
+        //'jtabs': ['jquery']
     },
     paths: {
         //Externas
@@ -151,7 +146,10 @@
             'accounting.min'
         ],
         carousel: 'owl.carousel',
-        slide:'responsiveslides.min'
+        slide: 'responsiveslides.min',
+        jzoom: 'jquery.jqzoom-core-pack',
+        jpopup: 'jquery.magnific-popup',
+        jtabs: 'jquery.easytabs'
     }
 
 });

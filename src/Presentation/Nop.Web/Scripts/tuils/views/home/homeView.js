@@ -13,6 +13,8 @@ define(['jquery', 'underscore', 'baseView','jqueryui', 'slide'],
                 timeout: 7000,
                 pager: true,
                 nav: true,
+                prevText: '<span class="icon-prev"></span>',
+                nextText: '<span class="icon-next"></span>',
                 before: function (numSlide) {
                     if(numSlide+1 <= totalSlides)
                     {

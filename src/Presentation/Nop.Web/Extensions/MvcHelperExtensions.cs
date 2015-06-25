@@ -44,21 +44,29 @@ namespace System.Web.Mvc.Html
         /// <param name="labelText">si el texto no viene del modelo se envía en esta propiedad</param>
         /// <param name="required">True: Muestra la zona de requerido. False: No lo muestra</param>
         /// <returns></returns>
-        public static MvcHtmlString TextBoxRequiredFor<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null, string labelText = null, bool required = true)
+        public static MvcHtmlString TextBoxRequiredFor<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null, string labelText = null, bool required = true, bool showLabel = true)
         {
-            return ControlRequiredFor(helper, ControlType.TextBox, expression, htmlAttributes, labelText, required);
+            return ControlRequiredFor(helper, ControlType.TextBox, expression, htmlAttributes, labelText, required, showLabel);
+        }
+
+        public static MvcHtmlString TextAreaRequiredFor<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null, string labelText = null, bool required = true, bool showLabel = true)
+        {
+            return ControlRequiredFor(helper, ControlType.TextArea, expression, htmlAttributes, labelText, required, showLabel);
         }
 
 
-        private static MvcHtmlString ControlRequiredFor<TModel, TProperty>(this HtmlHelper<TModel> helper, ControlType controlType, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null, string labelText = null, bool required= true)
+        private static MvcHtmlString ControlRequiredFor<TModel, TProperty>(this HtmlHelper<TModel> helper, ControlType controlType, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null, string labelText = null, bool required= true, bool showLabel = true)
         {
             var htmlControl = new StringBuilder();
 
-            //Si el label viene de los recursos realiza la consulta sino pega el html que llegó
-            if (labelText != null)
-                htmlControl.Append(LabelExtensions.LabelFor(helper, expression, labelText, htmlAttributes).ToHtmlString());
-            else
-                htmlControl.Append(LabelExtensions.LabelFor(helper, expression, htmlAttributes).ToHtmlString());
+            if (showLabel)
+            {
+                //Si el label viene de los recursos realiza la consulta sino pega el html que llegó
+                if (labelText != null)
+                    htmlControl.Append(LabelExtensions.LabelFor(helper, expression, labelText, htmlAttributes).ToHtmlString());
+                else
+                    htmlControl.Append(LabelExtensions.LabelFor(helper, expression, htmlAttributes).ToHtmlString());
+            }
 
             ///Valida el tipo de control y lo carga en el html
             switch (controlType)
@@ -218,7 +226,8 @@ namespace System.Web.Mvc.Html
             if(required)
                 str.Append("<span class=\"required\">*</span>");
             str.Append("<div class=\"text-character\"></div>");
-            str.AppendFormat("<span class=\"field-validation-error\" tuils-val-for=\"{0}\"></span>", field);
+            //En los casso que contenga . solo toma la parte final de la cadena
+            str.AppendFormat("<span class=\"field-validation-error\" tuils-val-for=\"{0}\"></span>", !field.Contains(".") ? field : field.Split(new char[] { '.' })[field.Split(new char[] { '.' }).Length - 1]);
             return str.ToString();
         }
         #endregion

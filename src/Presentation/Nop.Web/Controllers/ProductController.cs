@@ -1236,7 +1236,7 @@ namespace Nop.Web.Controllers
 
 
         #region Product reviews
-
+        [ChildActionOnly]
         [NopHttpsRequirement(SslRequirement.No)]
         public ActionResult ProductReviews(int productId)
         {
@@ -1251,11 +1251,11 @@ namespace Nop.Web.Controllers
                 ModelState.AddModelError("", _localizationService.GetResource("Reviews.OnlyRegisteredUsersCanWriteReviews"));
             //default value
             model.AddProductReview.Rating = _catalogSettings.DefaultProductRatingValue;
-            return View(model);
+            return PartialView(model);
         }
 
         [HttpPost, ActionName("ProductReviews")]
-        [FormValueRequired("add-review")]
+        //[FormValueRequired("add-review")]
         [CaptchaValidator]
         public ActionResult ProductReviewsAdd(int productId, ProductReviewsModel model, bool captchaValid)
         {
@@ -1326,12 +1326,13 @@ namespace Nop.Web.Controllers
                 else
                     model.AddProductReview.Result = _localizationService.GetResource("Reviews.SuccessfullyAdded");
 
-                return View(model);
+                return RedirectToAction("MyOrders", "ControlPanel");
             }
 
             //If we got this far, something failed, redisplay form
-            PrepareProductReviewsModel(model, product);
-            return View(model);
+            //PrepareProductReviewsModel(model, product);
+            //return View(model);
+            return RedirectToAction("ProductDetails", new { productId = productId });
         }
 
         [HttpPost]

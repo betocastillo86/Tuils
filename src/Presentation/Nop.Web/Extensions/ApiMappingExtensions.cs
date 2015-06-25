@@ -102,15 +102,15 @@ namespace Nop.Web.Extensions.Api
 
             //Si viene los kilometros los asocia
             if (model.Kms > 0)
-                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.Kms.ToString(), SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionKms });
+                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.Kms.ToString(), SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionKms, ShowOnProductPage = true });
 
             //La placa es exclusiva de las motos
             if (!string.IsNullOrEmpty(model.CarriagePlate))
-                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.Kms.ToString(), SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionCarriagePlate });
+                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.Kms.ToString(), SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionCarriagePlate, ShowOnProductPage = true });
 
             //El año es esclusivo de las motos
             if (model.Year > 0)
-                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.Option, AllowFiltering = true, CustomValue = model.Year.ToString(), SpecificationAttributeOptionId = model.Year });
+                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.Option, AllowFiltering = true, CustomValue = model.Year.ToString(), SpecificationAttributeOptionId = model.Year, ShowOnProductPage=true });
 
             #endregion
 
