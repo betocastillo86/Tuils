@@ -23,6 +23,9 @@
         validations: {
             deps: ['backbone'],
             exports: 'Backbone'
+        },
+        mmenunav: {
+            deps : ['mmenu']
         }
         //stickit: {
         //    deps: ['backbone']
@@ -93,7 +96,8 @@
             'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.amd.min',
             'handlebars.min'
         ],
-        mmenu:'mmenu/js_umd/jquery.mmenu.umd',
+        mmenu: 'mmenu/js_umd/jquery.mmenu.umd',
+        mmenunav: 'mmenu/js_umd/addons/jquery.mmenu.navbars.umd',
         handlebarsh: 'handelbars.helpers',
         maps: 'http://maps.google.com/maps/api/js?sensor=false',
         //Basic Tuils

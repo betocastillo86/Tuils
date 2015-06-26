@@ -316,7 +316,7 @@ namespace Nop.Web.Extensions.Api
 
         #region ProductReviewModel
 
-        public static ProductReviewModel ToModel(this ProductReview entity)
+        public static ProductReviewModel ToModel(this ProductReview entity, System.Web.Http.Routing.UrlHelper urlHelper = null)
         {
             return new ProductReviewModel()
             {
@@ -325,22 +325,25 @@ namespace Nop.Web.Extensions.Api
                 IsApproved = entity.IsApproved,
                 ProductId = entity.ProductId,
                 ProductName = entity.Product != null ? entity.Product.Name : null,
+                ProductUrl = urlHelper != null ? urlHelper.Route("Product", new { action = "ProductDetails", controller = "Product", SeName = entity.Product.GetSeName()} ) : string.Empty,
                 Rating = entity.Rating,
                 ReviewText = entity.ReviewText,
                 Title = entity.Title,
                 CreatedOnUtcTicks = entity.CreatedOnUtc.Ticks,
-                CreatedOnUtc = entity.CreatedOnUtc
+                CreatedOnUtc = entity.CreatedOnUtc,
+                CreatedOnUtcStr = entity.CreatedOnUtc.ToString("g")
             };
+
         }
 
 
-        public static List<ProductReviewModel> ToModels(this IList<ProductReview> entities)
+        public static List<ProductReviewModel> ToModels(this IList<ProductReview> entities, System.Web.Http.Routing.UrlHelper urlHelper = null)
         {
             var models = new List<ProductReviewModel>();
 
             foreach (var entity in entities)
             {
-                models.Add(entity.ToModel());
+                models.Add(entity.ToModel(urlHelper));
             }
 
             return models;

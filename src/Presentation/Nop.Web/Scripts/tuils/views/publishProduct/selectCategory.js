@@ -42,15 +42,6 @@
             },
             loadControls: function () {
                 this.divShowCategories = this.$(".divShowCategories");
-
-                var button = this.$(".nav-category li");
-                if(this.productType == TuilsConfiguration.productBaseTypes.product)
-                    button.addClass("hub-std");
-                else if(this.productType == TuilsConfiguration.productBaseTypes.bike)
-                    button.addClass("hub-mot");
-                else
-                    button.addClass("hub-srv");
-
             },
             loadChildrenCategories: function (parentId) {
                 var category = new CategoryModel();

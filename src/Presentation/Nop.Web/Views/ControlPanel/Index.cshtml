@@ -30,7 +30,7 @@
         @foreach (var option in Model.Modules)
         {
             <li>
-                <a href="@Url.Action(option.Action, option.Controller, option.Parameters)"><span class="icon-mail"></span>@T(string.Format("controlpanel.{0}", option.Name)) </a>
+                <a href="@Url.Action(option.Action, option.Controller, option.Parameters)"><span class="@option.IconBig"></span>@T(string.Format("controlpanel.{0}", option.Name)) </a>
             </li>
         }
         <br/>

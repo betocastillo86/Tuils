@@ -287,7 +287,7 @@ namespace Nop.Web.Infrastructure
 
             //passwordrecovery
             routes.MapLocalizedRoute("PasswordRecovery",
-                            "passwordrecovery",
+                            "recordar-clave",
                             new { controller = "Customer", action = "PasswordRecovery" },
                             new[] { "Nop.Web.Controllers" });
             //password recovery confirmation
@@ -724,6 +724,12 @@ namespace Nop.Web.Infrastructure
             routes.MapLocalizedRoute("ControlPanelMyAccount",
               "mi-cuenta/datos-basicos",
               new { controller = "ControlPanel", action = "MyAccount" },
+              new[] { "Nop.Web.Controllers" }
+              );
+
+            routes.MapLocalizedRoute("ControlPanelOffices",
+              "mi-cuenta/sedes/{id}",
+              new { controller = "ControlPanel", action = "Offices", id = UrlParameter.Optional },
               new[] { "Nop.Web.Controllers" }
               );
 

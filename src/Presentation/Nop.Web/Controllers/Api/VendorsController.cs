@@ -179,11 +179,13 @@ namespace Nop.Web.Controllers.Api
         {
             if (id > 0)
             {
+                //var urlHelper = new UrlHelper(this.ControllerContext.RequestContext);
                 return Ok(_vendorService.GetReviewsByVendorId(id)
                     .Skip(_vendorSettings.DefaultReviewsPageSize * page)
                     .Take(_vendorSettings.DefaultReviewsPageSize)
                     .ToList()
-                    .ToModels());
+                    .ToModels(this.Url));
+
             }
             else
             {

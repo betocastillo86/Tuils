@@ -42,7 +42,7 @@
                 {
                     <li data-id="@attribute.Id" >
                         <a class="aFirstLevel"><span class="icon-@attribute.SeName.Replace("-", "_")"></span><span class="tooltip-menu">@attribute.Name</span></a>
-                        <ul class="childrenOptions">
+                        <ul class="childrenOptions" style="display:none">
                             @foreach (var category in Model.Categories)
                             {
                                 @RenderCategoryLine(category, attribute)

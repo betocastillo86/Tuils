@@ -34,6 +34,8 @@ namespace Nop.Web.Controllers.Api
         /// </summary>
         /// <param name="id">id del attributo</param>
         /// <returns></returns>
+        [HttpGet]
+        [Route("api/attributes")]
         public IHttpActionResult Get(int id)
         {
             if (id > 0)
@@ -55,6 +57,7 @@ namespace Nop.Web.Controllers.Api
         /// Retorna los insumos
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         [Route("api/attributes/supplies")]
         public IHttpActionResult GetSupplies()
         {

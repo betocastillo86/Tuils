@@ -11,6 +11,8 @@
         var vendorUrl = Url.RouteUrl("Vendor", new { SeName = Model.SeName }, this.Request.Url.Scheme);
         Html.AddCanonicalUrlParts(vendorUrl);
     }
+
+    Html.AppendCssFileParts("~/Content/magnific-popup/magnific-popup.css");
 }
 @using Nop.Core.Domain.Seo;
 @using Nop.Core.Infrastructure;
@@ -18,9 +20,7 @@
 @using Nop.Web.Extensions;
 
 
-<link href="~/Content/magnific-popup/magnific-popup.css" rel="stylesheet" />
-<script src="~/Scripts/jquery.magnific-popup.js"></script>
-
+<link href="" rel="stylesheet" />
 <div id="divMainSection">
     @Html.Hidden("VendorId", Model.Id)
     @Html.HiddenFor(m => m.AllowEdit)

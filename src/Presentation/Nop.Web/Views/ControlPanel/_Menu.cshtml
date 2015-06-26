@@ -1,35 +1,45 @@
 ﻿@model Nop.Web.Models.ControlPanel.MenuModel
-<div class="side-2 columns two">
+@{
+    Html.AddCssFileParts("~/Scripts/mmenu/css/jquery.mmenu.all.css");
+}
+<div class="headerButtonMenuResponsive">
+    <a href="#mainMenu" class="icon-menu"></a>
+</div>
+<div class="side-2 columns two" id="divPanelMenu">
     <nav class="block block-category-navigation">
         <div class="title">@Html.ActionLink(@T("controlpanel.menutitle").Text, "Index", "ControlPanel") </div>
         <div class="listbox">
-            <ul class="menu-panel">
+            <div id="mainMenu">
+                <ul class="menu-panel">
 
 
-                @foreach (var option in Model.Modules)
-                {
-                    bool hasSubMenu = option.SubModules.Count > 0;
-                    bool selected = Model.SelectedParentModule == option.Name;
-                    
-                    <li>
-                        <a class="nav-item-panel @(hasSubMenu ? "nav-with-sub" : string.Empty) @(selected ? "active" : string.Empty)" href="@(hasSubMenu ? "#" : Url.Action(option.Action, option.Controller, option.Parameters))"><span class="icon-mail"></span>@T(string.Format("controlpanel.{0}", option.Name)) </a>
+                    @foreach (var option in Model.Modules)
+                    {
+                        bool hasSubMenu = option.SubModules.Count > 0;
+                        bool selected = Model.SelectedParentModule == option.Name;
 
-                        @if (hasSubMenu)
-                        { 
-                            <ul class="sub-menu-panel" style="display:@(Model.SelectedParentModule == option.Name ? "block" : "none")">
-                                @foreach (var subMenu in option.SubModules)
-                                {
-                                    selected = subMenu.Name.Equals(Model.SelectedModule);
-                                    <li>
-                                        <a href="@Url.Action(subMenu.Action, subMenu.Controller, subMenu.Parameters)" class="sub-item-panel @(selected ? "active" : string.Empty)">@T(string.Format("controlpanel.{0}", subMenu.Name)) </a>
-                                    </li>
-                                }
-                            </ul>
-                        }
+                        <li>
+                            <a class="nav-item-panel @(hasSubMenu ? "nav-with-sub" : string.Empty) @(selected ? "active" : string.Empty)" href="@(hasSubMenu ? "#" : Url.Action(option.Action, option.Controller, option.Parameters))"><span class="icon-mail"></span>@T(string.Format("controlpanel.{0}", option.Name)) </a>
 
-                    </li>
-                }
-            </ul>
+                            @if (hasSubMenu)
+                            {
+                                <ul class="sub-menu-panel" style="display:@(Model.SelectedParentModule == option.Name ? "block" : "none")">
+                                    @foreach (var subMenu in option.SubModules)
+                                    {
+                                        selected = subMenu.Name.Equals(Model.SelectedModule);
+                                        <li>
+                                            <a href="@Url.Action(subMenu.Action, subMenu.Controller, subMenu.Parameters)" class="sub-item-panel @(selected ? "active" : string.Empty)">@T(string.Format("controlpanel.{0}", subMenu.Name)) </a>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+
+                        </li>
+                    }
+                </ul>
+            </div>
+
+
         </div>
     </nav>
 </div>

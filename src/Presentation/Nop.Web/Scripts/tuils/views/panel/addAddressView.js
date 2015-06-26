@@ -67,13 +67,14 @@
             loadMap: function () {
                 this.viewMap = new MapView({ el: "#canvasMapAddress" });
                 this.viewMap.on('set-position', this.setMapPosition, this);
+                this.viewMap.on('set-address', this.setAddress, this);
             },
             newAddress : function()
             {
                 this.removeErrors();
                 this.model.clear();
                 this.model.set('VendorId', this.vendorId);
-                this.viewMap.loadMap();
+                this.viewMap.loadMap({showAddress : true });
             },
             deleteById : function(id)
             {
@@ -85,7 +86,7 @@
             showAddress : function()
             {
                 this.$("#ddlStateProvinceId").val(this.model.get('StateProvinceId'));
-                this.viewMap.loadMap({ lat: this.model.get('Latitude'), lon: this.model.get('Longitude') });
+                this.viewMap.loadMap({ lat: this.model.get('Latitude'), lon: this.model.get('Longitude'), showAddress: true });
                 this.loadPictures();
             },
             loadPictures : function(){
@@ -102,6 +103,9 @@
             {
                 this.model.set('Latitude', args.lat);
                 this.model.set('Longitude', args.lon);
+            },
+            setAddress : function(address){
+                this.model.set('Address', address.address);
             },
             render : function()
             {

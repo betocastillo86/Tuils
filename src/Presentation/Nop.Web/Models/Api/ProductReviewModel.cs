@@ -42,8 +42,12 @@ namespace Nop.Web.Models.Api
 
         public string ProductName { get; set; }
 
+        public string ProductUrl { get; set; }
+
         public long CreatedOnUtcTicks { get; set; }
 
         public DateTime CreatedOnUtc { get; set; }
+
+        public string  CreatedOnUtcStr { get; set; }
     }
 }

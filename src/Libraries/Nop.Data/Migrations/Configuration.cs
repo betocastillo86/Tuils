@@ -102,8 +102,12 @@ namespace Nop.Data.Migrations
             //Agrega el listado de años existentes 
             for (int i = 1940; i < 2020; i++)
             {
-                sqlSAO.AppendFormat("INSERT INTO [dbo].[SpecificationAttributeOption]([Id], [SpecificationAttributeId],[Name],[DisplayOrder]) VALUES ({0},2,'{0}',0);", i);
-                sqlSAO.AppendLine();
+                var spec = specificationAttributeOptionTable.Where(s => s.Id == i);
+                if (spec == null)
+                {
+                    sqlSAO.AppendFormat("INSERT INTO [dbo].[SpecificationAttributeOption]([Id], [SpecificationAttributeId],[Name],[DisplayOrder]) VALUES ({0},2,'{0}',0);", i);
+                    sqlSAO.AppendLine();
+                }
             }
             sqlSAO.Append("SET IDENTITY_INSERT [dbo].[SpecificationAttributeOption] OFF");
             context.ExecuteSqlCommand(sqlSAO.ToString());
@@ -284,9 +288,6 @@ namespace Nop.Data.Migrations
             }
 
             #endregion
-
-
-
 
             #region Settings
 

@@ -29,7 +29,7 @@
                 "quiero-vender/moto": "sellBike",
                 "quiero-vender/servicio-especializado": "sellService",
                 "mi-cuenta/datos-basicos": "myAccount",
-                "ControlPanel/Offices": "myOffices",
+                "mi-cuenta/sedes": "myOffices",
                 "ControlPanel/VendorServices": "vendorServices",
                 "mi-cuenta/mis-compras(/:query)": "myOrders",
                 "mi-cuenta/mis-ventas(/:query)": "myOrders",
@@ -41,7 +41,8 @@
                 "m/:query":"manufacturer",
                 "p/:query": "product",
                 'entrar' : 'login',
-                'buscar(/:query)' : 'search'
+                'buscar(/:query)': 'search',
+                'recordar-clave' :'passwordRecovery'
             },
             home : function()
             {
@@ -106,6 +107,7 @@
                 $(".master-wrapper-page").first().removeClass("master-wrapper-page").removeClass("container").removeClass("hd");
                 var that = this;
                 that.currentView = new VendorDetailView({ el: that.defaultEl });
+                this.loadSubViews();
             },
             category : function(categoryName, specification, query)
             {
@@ -115,6 +117,9 @@
                 this.loadTwoColumns();
             },
             search: function () {
+                this.loadTwoColumns();
+            },
+            passwordRecovery: function () {
                 this.loadTwoColumns();
             },
             login: function () {
@@ -164,7 +169,7 @@
             
             loadSubViewsPanel: function () {
                 var that = this;
-                that.viewLeftMenu = new MenuPanelView({ el : ".menu-panel" });
+                that.viewLeftMenu = new MenuPanelView({ el: "#divPanelMenu" });
             }
         });
 
