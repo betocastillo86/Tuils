@@ -60,11 +60,11 @@
             @Html.ValidationMessageFor(model => model.Newsletter)
         </div>
 
-    <div class="inputs" id="divDateOfBirth">
+    <div class="inputs_date" id="divDateOfBirth">
         @Html.LabelFor(model => model.DateOfBirth, new { }, ":")
         <div class="date">
             @Html.TextBoxFor(model => model.DateOfBirth, "{0:MM/dd/yyyy}", new { tuils_val = "none" })
-            <span class="icon-mail datepickerButton"></span>
+            <span class="icon-calendar datepickerButton"></span>
         </div>
         @Html.RequiredHint()
         @Html.ValidationMessageFor(model => model.DateOfBirth)
@@ -127,7 +127,7 @@
         <input type="submit" value="@T("Common.Save")" name="save-info-button" class="btn_2 button-1 right" />
 
     }
-
+<br/>
 </div>
 
 

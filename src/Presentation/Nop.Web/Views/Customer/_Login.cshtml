@@ -17,5 +17,8 @@
     <div class="external-authentication">
         @Html.Action("ExternalMethods", "ExternalAuthentication", new { BlankWindow = true, ReturnUrl = "http://local.tuils.com/home/close" })
     </div>
+    <div>
+        @Html.ActionLink(T("Account.Login.ForgotPassword").Text, "PasswordRecovery", "Customer")
+    </div>
     <a id="btnRegister" class="rgt-login" href="javascript:;">@T("Login.RegisterButton")</a>
 </div>

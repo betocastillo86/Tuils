@@ -1,5 +1,5 @@
-﻿define(['underscore', 'util', 'baseView', 'tuils/models/address', 'handlebars', 'tuils/views/utilities/selectPointMapView', 'tuils/collections/addresses', 'handlebarsh'],
-    function (_, TuilsUtilities, BaseView, AddressModel, Handlebars, MapView, AddressCollection) {
+﻿define(['jquery', 'underscore', 'util', 'baseView', 'tuils/models/address', 'handlebars', 'tuils/views/utilities/selectPointMapView', 'tuils/collections/addresses', 'handlebarsh'],
+    function ($, _, TuilsUtilities, BaseView, AddressModel, Handlebars, MapView, AddressCollection) {
 
         var AddAddressView = BaseView.extend({
             events: {
@@ -23,9 +23,7 @@
 
             pictureCollection : undefined,
 
-            template: Handlebars.compile($("#templateOfficeDetail").html()),
-
-            templatePictures: Handlebars.compile($("#templatePictures").html()),
+            templatePictures: undefined,
 
             bindings: {
                 "#txtName": "Name",
@@ -38,6 +36,9 @@
             },
             initialize: function (args)
             {
+                this.template = Handlebars.compile($("#templateOfficeDetail").html());
+                this.templatePictures = Handlebars.compile($("#templatePictures").html());
+
                 this.vendorId = args.VendorId;
                 this.model = new AddressModel({ 'VendorId': args.VendorId });
                 this.model.on('error', this.errorSaving, this);
@@ -66,13 +67,14 @@
             loadMap: function () {
                 this.viewMap = new MapView({ el: "#canvasMapAddress" });
                 this.viewMap.on('set-position', this.setMapPosition, this);
+                this.viewMap.on('set-address', this.setAddress, this);
             },
             newAddress : function()
             {
                 this.removeErrors();
                 this.model.clear();
                 this.model.set('VendorId', this.vendorId);
-                this.viewMap.loadMap();
+                this.viewMap.loadMap({showAddress : true });
             },
             deleteById : function(id)
             {
@@ -84,7 +86,7 @@
             showAddress : function()
             {
                 this.$("#ddlStateProvinceId").val(this.model.get('StateProvinceId'));
-                this.viewMap.loadMap({ lat: this.model.get('Latitude'), lon: this.model.get('Longitude') });
+                this.viewMap.loadMap({ lat: this.model.get('Latitude'), lon: this.model.get('Longitude'), showAddress: true });
                 this.loadPictures();
             },
             loadPictures : function(){
@@ -101,6 +103,9 @@
             {
                 this.model.set('Latitude', args.lat);
                 this.model.set('Longitude', args.lon);
+            },
+            setAddress : function(address){
+                this.model.set('Address', address.address);
             },
             render : function()
             {

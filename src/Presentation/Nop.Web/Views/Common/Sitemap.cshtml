@@ -15,14 +15,14 @@
             <div class="entity-body">
                 <ul>
                     <li><a href="@Url.RouteUrl("HomePage")">@T("HomePage")</a></li>
-                    <li><a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a></li>
+                    @*<li><a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a></li>*@
                     @if (Model.NewsEnabled)
                     {
                         <li><a href="@Url.RouteUrl("NewsArchive")">@T("News")</a></li>
                     }
                     @if (Model.BlogEnabled)
                     {
-                        <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
+                        <li><a href="http://blog.tuils.com" target="_blank">@T("Blog")</a></li>
                     }
                     @if (Model.ForumEnabled)
                     {
@@ -40,6 +40,22 @@
                 </ul>
             </div>
         </div>
+        @if (Model.Manufacturers.Count > 0)
+        {
+            <div class="entity">
+                <div class="entity-title">
+                    <h2>@T("Sitemap.Manufacturers")</h2>
+                </div>
+                <div class="entity-body">
+                    <ul>
+                        @foreach (var manufacturer in Model.Manufacturers)
+                        {
+                            <li><a href="@Url.RouteUrl("Manufacturer", new { SeName = manufacturer.SeName })">@manufacturer.Name</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
         @if (Model.Categories.Count > 0)
         {
             <div class="entity">
@@ -51,22 +67,6 @@
                         @foreach (var category in Model.Categories)
                         { 
                             <li><a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name</a></li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        }
-        @if (Model.Manufacturers.Count > 0)
-        {
-            <div class="entity">
-                <div class="entity-title">
-                    <h2>@T("Sitemap.Manufacturers")</h2>
-                </div>
-                <div class="entity-body">
-                    <ul>
-                        @foreach (var manufacturer in Model.Manufacturers)
-                        { 
-                            <li><a href="@Url.RouteUrl("Manufacturer", new { SeName = manufacturer.SeName })">@manufacturer.Name</a></li>
                         }
                     </ul>
                 </div>

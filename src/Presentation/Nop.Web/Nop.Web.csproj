@@ -296,6 +296,7 @@
     <Compile Include="Models\Catalog\IComparableModel.cs" />
     <Compile Include="Models\Catalog\IWishableModel.cs" />
     <Compile Include="Models\Catalog\ManufacturerHomePageModel.cs" />
+    <Compile Include="Models\Catalog\SpecialCategoryProductModel.cs" />
     <Compile Include="Models\Catalog\VendorModel.cs" />
     <Compile Include="Models\Catalog\VendorNavigationModel.cs" />
     <Compile Include="Models\Catalog\ProductOverviewModel.cs" />
@@ -1006,6 +1007,7 @@
     <Content Include="Content\tinymce\skins\lightgray\skin.min.css" />
     <Content Include="Content\tinymce\themes\modern\theme.min.js" />
     <Content Include="Content\tinymce\tinymce.min.js" />
+    <Content Include="Scripts\accounting.min.js" />
     <Content Include="Scripts\async.js" />
     <Content Include="Scripts\backbone-validation.js" />
     <Content Include="Scripts\backbone-validation.min.js" />
@@ -1013,6 +1015,7 @@
     <Content Include="Scripts\backbone-min.js" />
     <Content Include="Scripts\backbone.stickit.js" />
     <Content Include="Scripts\backbone.stickit.min.js" />
+    <Content Include="Scripts\combined.js" />
     <Content Include="Scripts\css.js" />
     <Content Include="Scripts\handlebars.amd.js" />
     <Content Include="Scripts\handlebars.amd.min.js" />
@@ -1022,6 +1025,10 @@
     <Content Include="Scripts\handlebars.runtime.amd.min.js" />
     <Content Include="Scripts\handlebars.runtime.js" />
     <Content Include="Scripts\handlebars.runtime.min.js" />
+    <Content Include="Scripts\iview.js" />
+    <Content Include="Scripts\iview.min.js" />
+    <Content Include="Scripts\jquery.easytabs.js" />
+    <Content Include="Scripts\jquery.jqzoom-core-pack.js" />
     <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.autoheight.css" />
     <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.counters.css" />
     <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.dividers.css" />
@@ -1072,6 +1079,9 @@
     <Content Include="Scripts\mmenu\js_umd\jquery.mmenu.umd.js" />
     <Content Include="Scripts\mmenu\js_umd\_inc\affix.js" />
     <Content Include="Scripts\mmenu\js_umd\_inc\prefix.js" />
+    <Content Include="Scripts\owl.carousel.js" />
+    <Content Include="Scripts\owl.carousel.min.js" />
+    <Content Include="Scripts\tuils\build.js" />
     <Content Include="Scripts\tuils\collections\addresses.js" />
     <Content Include="Scripts\tuils\collections\categories.js" />
     <Content Include="Scripts\tuils\collections\files.js" />
@@ -1081,6 +1091,7 @@
     <Content Include="Scripts\tuils\collections\specificationAttribute.js" />
     <Content Include="Scripts\tuils\extensions\numbers.js" />
     <Content Include="Scripts\tuils\models\address.js" />
+    <Content Include="Scripts\tuils\models\review.js" />
     <Content Include="Scripts\tuils\models\newsletter.js" />
     <Content Include="Scripts\tuils\models\order.js" />
     <Content Include="Scripts\tuils\models\panel\responseQuestion.js" />
@@ -1102,6 +1113,7 @@
     <Content Include="Scripts\tuils\views\common\newsletterView.js" />
     <Content Include="Scripts\tuils\views\common\searcherView.js" />
     <Content Include="Scripts\tuils\views\common\topMenuView.js" />
+    <Content Include="Scripts\tuils\views\home\homeView.js" />
     <Content Include="Scripts\tuils\views\login\createUser.js" />
     <Content Include="Scripts\tuils\views\login\login.js" />
     <Content Include="Scripts\tuils\views\panel\addAddressView.js" />
@@ -1113,6 +1125,7 @@
     <Content Include="Scripts\tuils\views\panel\responseQuestionView.js" />
     <Content Include="Scripts\tuils\views\panel\vendorServices.js" />
     <Content Include="Scripts\tuils\views\product\productDetailView.js" />
+    <Content Include="Scripts\tuils\views\product\reviewView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
     <Content Include="Scripts\tuils\views\utilities\imagesSelectorView.js" />
@@ -1705,6 +1718,7 @@
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore-min.js" />
     <Content Include="Scripts\underscore-min.map" />
+    <Content Include="Scripts\responsiveslides.min.js" />
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\wysihtml5-0.3.0.min.js" />
     <Content Include="Themes\DefaultClean\Content\images\free-shipping.png" />
@@ -2502,6 +2516,9 @@
     <Content Include="Themes\Healthy\Views\Product\FeaturedLeftMenu.cshtml" />
     <Content Include="Views\Shared\_AddToWishlist.cshtml" />
     <Content Include="Views\Product\_ProductVendor.cshtml" />
+    <Content Include="Views\Product\_ProductPrice.cshtml" />
+    <Content Include="Views\Product\_ProductShipping.cshtml" />
+    <Content Include="Views\Product\_ProductSpecialCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
@@ -2583,7 +2600,7 @@
     <Content Include="Views\Product\_ProductSpecifications.cshtml" />
     <Content Include="Views\Product\_ProductTierPrices.cshtml" />
     <Content Include="Views\Product\_GiftCardInfo.cshtml" />
-    <Content Include="Views\Product\_ProductPrice.cshtml" />
+    <Content Include="Views\Product\_ProductPrice.Full.cshtml" />
     <Content Include="Views\Product\_AddToCart.cshtml" />
     <Content Include="Views\Product\_DownloadSample.cshtml" />
     <Content Include="Views\Product\_SKU_Man_Stock.cshtml" />

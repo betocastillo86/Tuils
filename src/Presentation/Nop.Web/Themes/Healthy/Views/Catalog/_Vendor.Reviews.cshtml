@@ -7,7 +7,8 @@
 <script type="text/x-handlebars-template" id="templateReview">
     {{#each this}}
     <div class="caja-comment">
-        <h4>{{Title}}<span class="fecha">{{CreatedOnUtc}}</span></h4>
+        <h4><a href="{{ProductUrl}}">{{ProductName}}</a></h4>
+        <h4>{{Title}}<span class="fecha">{{CreatedOnUtcStr}}</span></h4>
         <div class="product-review-box">
             {{stars Rating}}
         </div>

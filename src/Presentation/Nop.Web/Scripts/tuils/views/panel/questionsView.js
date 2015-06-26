@@ -1,5 +1,5 @@
-﻿define(['underscore', 'baseView', 'tuils/views/panel/responseQuestionView'],
-    function (_, BaseView, ResponseQuestionView) {
+﻿define(['jquery', 'underscore', 'baseView', 'tuils/views/panel/responseQuestionView'],
+    function ($,_, BaseView, ResponseQuestionView) {
 
         var QuestionsView = BaseView.extend({
             events: {

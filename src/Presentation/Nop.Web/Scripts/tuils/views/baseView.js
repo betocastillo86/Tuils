@@ -1,4 +1,5 @@
-﻿define(['underscore', 'backbone', 'util', 'validations', 'stickit'], function (_, Backbone, TuilsUtil) {
+﻿define(['jquery', 'underscore', 'backbone', 'util', 'validations', 'stickit'],
+    function ($, _, Backbone, TuilsUtil) {
     
     var BaseView = Backbone.View.extend({
 
@@ -10,7 +11,13 @@
 
         loadingTemplate: '<img id="divLoadingback" src="/Content/loading_2x.gif" />',
 
-        minSizeDesktopWith : 1024,
+        minSizeDesktopWith: 1024,
+
+        dialogBasicOptions: {
+            modal: true,
+            draggable: false,
+            resizable: false
+        },
 
         showLogin: function (model)
         {
@@ -18,7 +25,7 @@
         },
         validateAuthorization: function ()
         {
-            this.model.on('unauthorized', this.showLogin, this);
+            this.model.once('unauthorized', this.showLogin, this);
         },
         userAuthenticated: function () {
             //Relanza el evento que el usuario fue autenticado, para que la vista que hereda lo pueda capturar

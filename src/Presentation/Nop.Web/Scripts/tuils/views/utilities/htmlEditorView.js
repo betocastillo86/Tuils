@@ -1,4 +1,5 @@
-﻿define([ 'underscore', 'backbone', 'handlebars', 'baseView'], function ( _, Backbone, Handlebars, BaseView) {
+﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'baseView'],
+    function ($, _, Backbone, Handlebars, BaseView) {
     var HtmlEditorView = BaseView.extend({
 
 

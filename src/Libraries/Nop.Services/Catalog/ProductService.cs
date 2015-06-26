@@ -57,6 +57,7 @@ namespace Nop.Services.Catalog
         private readonly IRepository<ProductReview> _productReviewRepository;
         private readonly IRepository<ProductWarehouseInventory> _productWarehouseInventoryRepository;
         private readonly IRepository<ProductQuestion> _productQuestionRepository;
+        private readonly IRepository<SpecialCategoryProduct> _specialCategoryProductRepository;
         private readonly IProductAttributeService _productAttributeService;
         private readonly IProductAttributeParser _productAttributeParser;
         private readonly ILanguageService _languageService;
@@ -138,7 +139,8 @@ namespace Nop.Services.Catalog
             IPictureService pictureService,
             IRepository<ProductQuestion> productQuestionRepository,
             TuilsSettings tuilsSettings,
-            IOrderService orderService)
+            IOrderService orderService,
+            IRepository<SpecialCategoryProduct> specialCategoryProductRepository)
         {
             this._cacheManager = cacheManager;
             this._productRepository = productRepository;
@@ -170,6 +172,7 @@ namespace Nop.Services.Catalog
             this._productQuestionRepository = productQuestionRepository;
             this._tuilsSettings = tuilsSettings;
             this._orderService = orderService;
+            this._specialCategoryProductRepository = specialCategoryProductRepository;
         }
 
         #endregion
@@ -2321,7 +2324,23 @@ namespace Nop.Services.Catalog
         }
         #endregion
 
+        #region SpecialCategories
+        public IList<SpecialCategoryProduct> GetSpecialCategoriesByProductId(int productId)
+        {
+            if(productId <= 0)
+                return new List<SpecialCategoryProduct>();
+
+            return _specialCategoryProductRepository.Table
+                .IncludeProperties(sc => sc.Category)
+                .Where(sc => sc.ProductId == productId)
+                .ToList();
+        }
         #endregion
+
+        #endregion
+
+
+
 
 
 

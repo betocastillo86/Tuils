@@ -1,13 +1,13 @@
 ﻿
-define(['underscore', 'backbone', 'configuration', 'util', 'handlebars', 'extensionNumbers'],
-    function ( _, Backbone, TuilsConfiguration, TuilsUtil, Handlebars) {
+define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars', 'extensionNumbers'],
+    function ($, _, Backbone, TuilsConfiguration, TuilsUtil, Handlebars) {
 
         var SummaryView = Backbone.View.extend({
             events: {
                 "click .btnFinish": "save",
                 "click .btnBack": "back"
             },
-            template: Handlebars.compile($("#templateSummary").html()),
+            
 
             productType: undefined,
             btnFinish:undefined,
@@ -15,6 +15,7 @@ define(['underscore', 'backbone', 'configuration', 'util', 'handlebars', 'extens
             productProperties: undefined,
 
             initialize: function (args) {
+                this.template= Handlebars.compile($("#templateSummary").html());
                 this.productType = args.productType;
                 this.loadControls(args);
                 this.model.on("error", this.showButtonBar, this);
@@ -64,12 +65,12 @@ define(['underscore', 'backbone', 'configuration', 'util', 'handlebars', 'extens
                 //Muestra los valores de envio
                 pushProperty(this, "IsShipEnabled", true);
 
-                if (this.model.get('IsShipEnabled'))
-                {
-                    this.productProperties.push({ name: this.model.labels.AdditionalShippingCharge, value: this.model.get('AdditionalShippingCharge').toPesos() });
-                    if (this.model.get('DetailShipping'))
-                        pushProperty(this, 'DetailShipping');
-                }
+                //if (this.model.get('IsShipEnabled'))
+                //{
+                //    this.productProperties.push({ name: this.model.labels.AdditionalShippingCharge, value: this.model.get('AdditionalShippingCharge').toPesos() });
+                //    if (this.model.get('DetailShipping'))
+                //        pushProperty(this, 'DetailShipping');
+                //}
                 
 
                 this.productProperties.push({ name: 'Fecha Cierre Publicacion', value: '30 dias' });

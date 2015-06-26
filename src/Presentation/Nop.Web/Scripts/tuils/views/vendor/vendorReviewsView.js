@@ -1,5 +1,5 @@
-﻿define(['underscore', 'util', 'baseView', 'handlebars', 'tuils/collections/reviews', 'handlebarsh'],
-    function (_, TuilsUtilities, BaseView, Handlebars, ReviewsCollection) {
+﻿define(['jquery', 'underscore', 'util', 'baseView', 'handlebars', 'tuils/collections/reviews', 'handlebarsh'],
+    function ($, _, TuilsUtilities, BaseView, Handlebars, ReviewsCollection) {
 
         var VendorReviewsView = BaseView.extend({
 
@@ -11,9 +11,10 @@
 
             currentPage: 0,
 
-            template: Handlebars.compile($("#templateReview").html()),
+            //template: Handlebars.compile($("#templateReview").html()),
 
             initialize: function (args) {
+                this.template= Handlebars.compile($("#templateReview").html());
                 this.id = args.id;
                 this.collection = new ReviewsCollection();
                 this.collection.on("sync", this.showReviews, this);

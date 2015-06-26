@@ -72,8 +72,8 @@
 
         @*@added*@
 
-        @using (Html.BeginRouteForm("Product", new { SeName = Model.SeName }, FormMethod.Post, new { id = "product-details-form" }))
-        {
+        @*@using (Html.BeginRouteForm("Product", new { SeName = Model.SeName }, FormMethod.Post, new { id = "product-details-form" }))
+        {*@
             <div itemscope itemtype="http://schema.org/Product" data-productid="@Model.Id">
                 <div class="product-essential">
                     @Html.Widget("productdetails_before_pictures", Model.Id)
@@ -81,6 +81,36 @@
                     @Html.Partial("_ProductDetailsPictures", Model)
                     @Html.Widget("productdetails_after_pictures", Model.Id)
                     <div class="overview">
+                        <!--product price-->
+                        @{
+                            var dataDictPrice = new ViewDataDictionary();
+                            dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
+                            @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
+                        }
+                        <!--product reviews-->
+                        @Html.Partial("_ProductReviewOverview", Model.ProductReviewOverview)
+                        <!--product creditcard-->
+                        @Html.Partial("_ProductCreditcard", Model)
+                        <!--Información de envío-->
+                        @Html.Partial("_ProductShipping", Model)
+                        @if (!String.IsNullOrEmpty(Model.FullDescription))
+                        {
+                            <div class="full-description" itemprop="description">
+                                @Html.Raw(Model.FullDescription)
+                            </div>
+                        }
+                        <div class="product-infopluss">
+                            <h3>Información adicional</h3>
+                            <!--product manufacturers-->
+                            @Html.Partial("_ProductSpecialCategories", Model)
+                            <!--product manufacturers-->
+                            @Html.Partial("_ProductManufacturers", Model.ProductManufacturers)
+                            <!--product SKU, manufacturer part number, stock info-->
+                            @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
+                        </div>
+                        <!--vendor info-->
+                        @Html.Partial("_ProductVendor", Model)
+
                         @*<div class="product-name">
                                 <h1 itemprop="name">
                                     @Model.Name
@@ -88,50 +118,39 @@
                             </div>*@
 
                         
-                        @if (!String.IsNullOrEmpty(Model.ShortDescription))
+                        @*@if (!String.IsNullOrEmpty(Model.ShortDescription))
                         {
                             <div class="short-description">
                                 @Html.Raw(Model.ShortDescription)
                             </div>
-                        }
-                        @if (!String.IsNullOrEmpty(Model.FullDescription))
-                        {
-                            <div class="full-description" itemprop="description">
-                                @Html.Raw(Model.FullDescription)
-                            </div>
-                        }
-                        @Html.Widget("productdetails_overview_top", Model.Id)
+                        }*@
+                        @*@Html.Widget("productdetails_overview_top", Model.Id)*@
                         <!--product SKU, manufacturer part number, stock info-->
-                        @Html.Partial("_SKU_Man_Stock", Model)
-                        <!--vendor info-->
-                        @Html.Partial("_ProductVendor", Model)
-                        <!--product SKU, manufacturer part number, stock info-->
-                        @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
+                        @*@Html.Partial("_SKU_Man_Stock", Model)*@
                         <!--Back in stock subscription-->
-                        @Html.Partial("_BackInStockSubscription", Model)
-                        <!--product manufacturers-->
-                        @Html.Partial("_ProductManufacturers", Model.ProductManufacturers)
-                        <!--product reviews-->
-                        @Html.Partial("_ProductReviewOverview", Model.ProductReviewOverview)
-                        <!--sample download-->
-                        @Html.Partial("_DownloadSample", Model)
-                        <!--attributes-->
-                        @{
-                        var dataDictAttributes = new ViewDataDictionary();
-                        dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", Model.Id);
-                        @Html.Partial("_ProductAttributes", Model.ProductAttributes, dataDictAttributes)
-                        }
-                        <!--gift card-->
-                        @{
-                        var dataDictGiftCard = new ViewDataDictionary();
-                        dataDictGiftCard.TemplateInfo.HtmlFieldPrefix = string.Format("giftcard_{0}", Model.Id);
-                        @Html.Partial("_GiftCardInfo", Model.GiftCard, dataDictGiftCard)
-                        }
+                        @*@Html.Partial("_BackInStockSubscription", Model)*@
+                        
+                        
+                        
+                                                 @*
+             <!--sample download-->
+        @Html.Partial("_DownloadSample", Model)
+            <!--attributes-->
+        @{
+        var dataDictAttributes = new ViewDataDictionary();
+        dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", Model.Id);
+        @Html.Partial("_ProductAttributes", Model.ProductAttributes, dataDictAttributes)
+        }
+
+
+            <!--gift card-->
+            @{
+        var dataDictGiftCard = new ViewDataDictionary();
+        dataDictGiftCard.TemplateInfo.HtmlFieldPrefix = string.Format("giftcard_{0}", Model.Id);
+        @Html.Partial("_GiftCardInfo", Model.GiftCard, dataDictGiftCard)
+        }*@
                         <!--price & add to cart-->
                         @{
-                        var dataDictPrice = new ViewDataDictionary();
-                        dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
-                        @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
 
                         @*Se inhabiita la vista de agregar producto->*@
                         @*var dataDictAddToCart = new ViewDataDictionary();
@@ -142,15 +161,15 @@
                         @Html.Partial("_AddToWishlist")
                             
                         }
-                        @Html.Partial("_ProductEmailAFriendButton", Model)
+                        @*@Html.Partial("_ProductEmailAFriendButton", Model)*@
                         @Html.Partial("_CompareProductsButton", Model)
 
                         @*added*@
-                        @Html.Partial("_ProductTierPrices", Model.TierPrices)
+                        @*@Html.Partial("_ProductTierPrices", Model.TierPrices)*@
                         @*added*@
 
                         @Html.Partial("_ShareButton", Model)
-                        @Html.Widget("productdetails_overview_bottom", Model.Id)
+                        @*@Html.Widget("productdetails_overview_bottom", Model.Id)*@
                     </div>
                     @*@if (!String.IsNullOrEmpty(Model.FullDescription))
                         {
@@ -159,46 +178,40 @@
                             </div>
                         }*@
                 </div>
-                @Html.Widget("productdetails_before_collateral", Model.Id)
+                @*@Html.Widget("productdetails_before_collateral", Model.Id)*@
                 <div class="product-collateral">
                     @*added*@
                     @{
-            Html.AppendScriptParts(ResourceLocation.Foot, String.Format("~/Themes/{0}/Content/Scripts/jquery.easytabs.min.js", currentThemeName));
+            //Html.AppendScriptParts(ResourceLocation.Foot, String.Format("~/Themes/{0}/Content/Scripts/jquery.easytabs.min.js", currentThemeName));
                     }
-                    <script type="text/javascript">
-                        jQuery(document).ready(function () {
-                            jQuery('#tab-container').easytabs();
-                        });
-                    </script>
                     <div id="tab-container" class="tab-container">
                         <ul class="etabs">
-                            <li class="tab"><a href="#product-details">@T("Custom.Reviews.ProductDetails")</a></li>
-                            <li class="tab"><a href="/productreviews/@Model.Id #product-reviews-page" data-target="#product-reviews-page">@T("Custom.Reviews.ProductReviews")</a></li>
+                            @*<li class="tab"><a href="#product-details">@T("Custom.Reviews.ProductDetails")</a></li>*@
+                            <li class="tab"><a href="#product-reviews-page" >@T("Custom.Reviews.ProductReviews")</a></li>
                             @*<li class="tab"><a href="/t/shippinginfo #ph-topic" data-target="#shipping-info">@T("ShippingReturns")</a></li>*@
                             @*<li class="tab"><a href="#price-match">@T("Plugins.RequestQuote.PriceMatch.PriceMatchTabAnchor")</a></li>*@
                         </ul>
                         <div class="panel-container">
-                            <div id="product-details">
-                                <!-- content -->
-                                
+                            @*<div id="product-details"> </div>*@
+                            <div id="product-reviews-page">
+                                @Html.Action("ProductReviews", new { productId = Model.Id })
                             </div>
-                            <div id="product-reviews-page"><!-- content --></div>
-                            <div id="shipping-info"><!-- content --></div>
-                            <div id="price-match"><!-- content --></div>
-                            <script type="text/javascript">
-                                jQuery(document).ready(function () {
-                                    jQuery.ajax({
-                                        type: "GET",
-                                        url: '@Url.RouteUrl("PriceMatchTab")',
-                                        data: { productId: @Model.Id},
-                                        success: function (data) {
-                                            jQuery("#price-match").html(data);
-                                        },
-                                        failure: function () {
-                                        }
+                            @*<div id="shipping-info"><!-- content --></div>
+                                <div id="price-match"></div>
+                                <script type="text/javascript">
+                                    jQuery(document).ready(function () {
+                                        jQuery.ajax({
+                                            type: "GET",
+                                            url: '@Url.RouteUrl("PriceMatchTab")',
+                                            data: { productId: @Model.Id},
+                                            success: function (data) {
+                                                jQuery("#price-match").html(data);
+                                            },
+                                            failure: function () {
+                                            }
+                                        });
                                     });
-                                });
-                            </script>
+                                </script>*@
                         </div>
                     </div>
 
@@ -211,7 +224,7 @@
                     @Html.Action("RelatedProducts", "Product", new { productId = Model.Id })
                 </div>
             </div>
-        }
+        
         @Html.Widget("productdetails_bottom", Model.Id)
     </div>
 </div>

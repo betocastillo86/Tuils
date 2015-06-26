@@ -1,0 +1,12 @@
+﻿@model ProductDetailsModel
+@using Nop.Web.Models.Catalog;
+@if (Model.SpecialCategories.Count > 0)
+{ 
+    @T("Product.SpecialCategories")
+    <ul>
+        @foreach (var specialCategory in Model.SpecialCategories)
+	    {
+		    <li>@specialCategory.CategoryName</li>
+	    }
+    </ul>
+}

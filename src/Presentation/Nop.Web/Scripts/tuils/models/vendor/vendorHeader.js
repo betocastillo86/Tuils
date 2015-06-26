@@ -1,4 +1,4 @@
-﻿define(['underscore', 'backbone', 'tuils/models/file', 'resize'], function (_, Backbone, FileModel) {
+﻿define(['underscore', 'backbone', 'fileModel', 'resize'], function (_, Backbone, FileModel) {
     var VendorHeaderModel = Backbone.Model.extend({
 
         idAttribute : 'Id',

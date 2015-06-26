@@ -1,20 +1,20 @@
 ﻿@model ProductDetailsModel
 @using Nop.Web.Models.Catalog;
-@*SKU*@
-@if (!String.IsNullOrWhiteSpace(Model.Sku) && Model.ShowSku)
+
+@*@if (!String.IsNullOrWhiteSpace(Model.Sku) && Model.ShowSku)
 {
     <div class="sku">
         <span class="label">@T("Products.Sku"): </span><span class="value" itemprop="sku" id="sku-@Model.Id">@Model.Sku</span>
     </div>
 }
-    @*Manufacturer part number*@
+    
     @if (!String.IsNullOrWhiteSpace(Model.ManufacturerPartNumber) && Model.ShowManufacturerPartNumber)
     {
         <div class="manufacturer-part-number">
             <span class="label">@T("Products.ManufacturerPartNumber"): </span><span class="value" id="mpn-@Model.Id">@Model.ManufacturerPartNumber</span>
         </div>
     }
-    @*GTIN*@
+    
     @if (!String.IsNullOrWhiteSpace(Model.Gtin) && Model.ShowGtin)
     {
         <div class="gtin">
@@ -22,11 +22,10 @@
         </div>
     }
     
-    @*Delivery date*@
     @if (Model.FreeShippingNotificationEnabled && Model.IsFreeShipping)
     {
         <div class="free-shipping">@T("Products.FreeShipping")</div>
-    }
+    }*@
     @*Delivery date*@
     @if (!String.IsNullOrWhiteSpace(Model.DeliveryDate))
     {
@@ -34,11 +33,5 @@
             <span class="label">@T("Products.DeliveryDate"): </span><span class="value">@Model.DeliveryDate</span>
         </div>
     }
-     @*State province*@
-    @if (!string.IsNullOrEmpty(Model.StateProvinceName))
-    {
-        <div class="manufacturer-part-number">
-            <span class="label">@T("Products.StateProvinceName"): </span><span class="value" >@Model.StateProvinceName</span>
-        </div>
-    }
+     
 

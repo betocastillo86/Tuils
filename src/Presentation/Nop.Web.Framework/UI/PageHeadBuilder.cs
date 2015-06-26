@@ -240,6 +240,14 @@ namespace Nop.Web.Framework.UI
 
                 var result = new StringBuilder();
 
+
+                //parts to do not bundle
+                foreach (var path in partsToDontBundle)
+                {
+                    result.AppendFormat("<script src=\"{0}\" type=\"text/javascript\"></script>", urlHelper.Content(path));
+                    result.Append(Environment.NewLine);
+                }
+
                 if (partsToBundle.Length > 0)
                 {
                     //IMPORTANT: Do not use bundling in web farms or Windows Azure
@@ -269,19 +277,14 @@ namespace Nop.Web.Framework.UI
                     result.AppendLine(Scripts.Render(bundleVirtualPath).ToString());
                 }
 
-                //parts to do not bundle
-                foreach (var path in partsToDontBundle)
-                {
-                    result.AppendFormat("<script src=\"{0}\" type=\"text/javascript\"></script>", urlHelper.Content(path));
-                    result.Append(Environment.NewLine);
-                }
+                
                 return result.ToString();
             }
             else
             {
                 //bundling is disabled
                 var result = new StringBuilder();
-                foreach (var path in _scriptParts[location].Select(x => x.Part).Distinct())
+                foreach (var path in _scriptParts[location].OrderByDescending(x => x.ExcludeFromBundle).Select(x => x.Part).Distinct())
                 {
                     result.AppendFormat("<script src=\"{0}\" type=\"text/javascript\"></script>", urlHelper.Content(path));
                     result.Append(Environment.NewLine);

@@ -26,7 +26,7 @@ namespace Nop.Web.Extensions.Api
             entity.Name = model.Name;
             entity.FullDescription = model.FullDescription;
             entity.IsShipEnabled = model.IsShipEnabled;
-            entity.AdditionalShippingCharge = model.AdditionalShippingCharge;
+            //entity.AdditionalShippingCharge = model.AdditionalShippingCharge;
             entity.Price = model.Price;
 
             var _tuilsSettings = EngineContext.Current.Resolve<TuilsSettings>();
@@ -74,7 +74,7 @@ namespace Nop.Web.Extensions.Api
                 });
 
             #endregion
-            
+
 
             #region Properties Bikes
 
@@ -102,15 +102,15 @@ namespace Nop.Web.Extensions.Api
 
             //Si viene los kilometros los asocia
             if (model.Kms > 0)
-                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.Kms.ToString(), SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionKms });
+                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.Kms.ToString(), SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionKms, ShowOnProductPage = true });
 
             //La placa es exclusiva de las motos
             if (!string.IsNullOrEmpty(model.CarriagePlate))
-                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.Kms.ToString(), SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionCarriagePlate });
+                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.Kms.ToString(), SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionCarriagePlate, ShowOnProductPage = true });
 
             //El año es esclusivo de las motos
             if (model.Year > 0)
-                entity.Year = model.Year;
+                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.Option, AllowFiltering = true, CustomValue = model.Year.ToString(), SpecificationAttributeOptionId = model.Year, ShowOnProductPage=true });
 
             #endregion
 
@@ -130,7 +130,7 @@ namespace Nop.Web.Extensions.Api
                                             }
                                            ));
             entity.IncludeSupplies = model.IncludeSupplies;
-            
+
             if (model.SuppliesValue > 0)
                 entity.SuppliesValue = model.SuppliesValue;
 
@@ -163,11 +163,11 @@ namespace Nop.Web.Extensions.Api
             //Agrega los atributos básicos del registro
             attributes.Add(SystemCustomerAttributeNames.FirstName, model.Name);
             attributes.Add(SystemCustomerAttributeNames.LastName, model.LastName);
-            
-            if(model.VendorType != Core.Domain.Vendors.VendorType.User)
+
+            if (model.VendorType != Core.Domain.Vendors.VendorType.User)
                 attributes.Add(SystemCustomerAttributeNames.Company, model.CompanyName);
 
-            return entity;   
+            return entity;
         }
 
         #endregion
@@ -186,8 +186,9 @@ namespace Nop.Web.Extensions.Api
 
         public static AddressModel ToModel(this Address entity)
         {
-            return new AddressModel() { 
-                Id= entity.Id,
+            return new AddressModel()
+            {
+                Id = entity.Id,
                 Address = entity.Address1,
                 Email = entity.Email,
                 PhoneNumber = entity.PhoneNumber,
@@ -244,7 +245,7 @@ namespace Nop.Web.Extensions.Api
                 models.Add(entity.ToModel(name, size, _pictureService, _localizationService));
             }
             return models;
-            
+
         }
         #endregion
 
@@ -253,7 +254,8 @@ namespace Nop.Web.Extensions.Api
         #region Vendor
         public static Vendor ToEntity(this VendorModel model)
         {
-            return new Vendor() {
+            return new Vendor()
+            {
                 Id = model.Id,
                 Name = model.Name,
                 Description = model.Description,
@@ -304,7 +306,7 @@ namespace Nop.Web.Extensions.Api
         //{
         //    foreach (var order in orders)
         //    {
-                
+
 
         //        model.Orders.Add(orderModel);
         //    }
@@ -314,30 +316,34 @@ namespace Nop.Web.Extensions.Api
 
         #region ProductReviewModel
 
-        public static ProductReviewModel ToModel(this ProductReview entity)
+        public static ProductReviewModel ToModel(this ProductReview entity, System.Web.Http.Routing.UrlHelper urlHelper = null)
         {
-            return new ProductReviewModel() { 
+            return new ProductReviewModel()
+            {
                 CustomerId = entity.CustomerId,
                 //CustomerName = entity.Customer != null ? entity.Customer.attr
                 IsApproved = entity.IsApproved,
                 ProductId = entity.ProductId,
                 ProductName = entity.Product != null ? entity.Product.Name : null,
+                ProductUrl = urlHelper != null ? urlHelper.Route("Product", new { action = "ProductDetails", controller = "Product", SeName = entity.Product.GetSeName()} ) : string.Empty,
                 Rating = entity.Rating,
                 ReviewText = entity.ReviewText,
                 Title = entity.Title,
                 CreatedOnUtcTicks = entity.CreatedOnUtc.Ticks,
-                CreatedOnUtc = entity.CreatedOnUtc
-            }; 
+                CreatedOnUtc = entity.CreatedOnUtc,
+                CreatedOnUtcStr = entity.CreatedOnUtc.ToString("g")
+            };
+
         }
 
 
-        public static List<ProductReviewModel> ToModels(this IList<ProductReview> entities)
+        public static List<ProductReviewModel> ToModels(this IList<ProductReview> entities, System.Web.Http.Routing.UrlHelper urlHelper = null)
         {
             var models = new List<ProductReviewModel>();
 
             foreach (var entity in entities)
             {
-                models.Add(entity.ToModel());
+                models.Add(entity.ToModel(urlHelper));
             }
 
             return models;

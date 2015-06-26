@@ -1,4 +1,5 @@
-﻿define(['underscore', 'backbone', 'fileModel', 'fileCollection', 'resize'], function ( _, Backbone, FileModel, FileCollection) {
+﻿define(['jquery', 'underscore', 'backbone', 'fileModel', 'fileCollection', 'resize'],
+    function ($, _, Backbone, FileModel, FileCollection) {
     var ImagesSelectorView = Backbone.View.extend({
         events: {
             "click .addImageGalery": "addImage",

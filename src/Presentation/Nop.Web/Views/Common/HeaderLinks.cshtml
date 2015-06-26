@@ -13,8 +13,8 @@
         {
             @*<li id="liRegister"><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></li>
             <li id="liLogin"><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></li>*@
-            <li id="liRegister" class="preLogin" >@T("Account.Register")</li>
-            <li id="liLogin" class="preLogin">@T("Account.Login")</li>
+            <li id="liRegister" class="preLogin" ><a href="javascript:;" class="ico-register">@T("Account.Register")</a></li>
+            <li id="liLogin" class="preLogin"><a href="javascript:;" class="ico-login">@T("Account.Login")</a></li>
         }
         @if (Model.AllowPrivateMessages)
         {
@@ -101,8 +101,8 @@
         else
         {
             <div class="main-registro">
-                <a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a>
-                <a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a>
+                <a href="javascript:void(0);" class="ico-register">@T("Account.Register")</a>
+                <a href="javascript:void(0);" class="ico-login">@T("Account.Login")</a>
             </div>
         }
 

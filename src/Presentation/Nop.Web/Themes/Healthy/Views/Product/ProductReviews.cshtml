@@ -1,19 +1,19 @@
 ﻿@model ProductReviewsModel
 @using Nop.Web.Models.Catalog;
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = null;
 
     //title
-    Html.AddTitleParts(Model.ProductName);
-    Html.AddTitleParts(T("PageTitle.ProductReviews").Text);
+    //Html.AddTitleParts(Model.ProductName);
+    //Html.AddTitleParts(T("PageTitle.ProductReviews").Text);
 }
 @*edited*@
 @*<div class="page product-reviews-page">*@
 <div class="page product-reviews-page" id="product-reviews-page">
     @*edited*@
-    <div class="page-title">
+    @*<div class="page-title">
         <h1>@T("Reviews.ProductReviewsFor") <a href="@Url.RouteUrl("Product", new { SeName = Model.ProductSeName })">@Model.ProductName</a></h1>
-    </div>
+    </div>*@
     <div class="page-body">
         @Html.Widget("productreviews_page_top", Model.ProductId)
 
@@ -29,22 +29,19 @@
             else
             {
                 <div class="write-review" id="review-form">
-                    <div class="title">
-                        <strong>@T("Reviews.Write")</strong>
-                    </div>
-                    @using (Html.BeginForm())
+                    <div class="title">@T("Reviews.Write")</div>
+                    @using (Html.BeginForm("ProductReviews", "Product", FormMethod.Post))
                     {
                         <div class="message-error">@Html.ValidationSummary(true)</div>
                         <div class="form-fields">
                             <div class="inputs">
-                                @Html.LabelFor(model => model.AddProductReview.Title, new { }, ":")
+                                @*@Html.LabelFor(model => model.AddProductReview.Title, new { }, ":")
                                 @Html.TextBoxFor(model => model.AddProductReview.Title, Model.AddProductReview.CanCurrentCustomerLeaveReview ? (object)(new { @class = "review-title" }) : (object)(new { @class = "review-title", disabled = "disabled" }))
-                                @Html.ValidationMessageFor(model => model.AddProductReview.Title)
-                            </div>
-                            <div class="inputs">
-                                @Html.LabelFor(model => model.AddProductReview.ReviewText, new { }, ":")
-                                @Html.TextAreaFor(model => model.AddProductReview.ReviewText, Model.AddProductReview.CanCurrentCustomerLeaveReview ? (object)(new { @class = "review-text" }) : (object)(new { @class = "review-text", disabled = "disabled" }))
-                                @Html.ValidationMessageFor(model => model.AddProductReview.ReviewText)
+                                @Html.ValidationMessageFor(model => model.AddProductReview.Title)*@
+
+                                @Html.TextBoxRequiredFor(model => model.AddProductReview.Title, htmlAttributes: new { @class = "review-title" })
+
+                                @*<div class="text-character">Restan 140 caracteres</div>*@
                             </div>
                             <div class="review-rating">
                                 @Html.LabelFor(model => model.AddProductReview.Rating, new { }, ":")
@@ -59,7 +56,11 @@
                                     </li>
                                     <li class="last">@T("Reviews.Fields.Rating.Excellent")</li>
                                 </ul>
+                                <span class="field-validation-error" tuils-val-for="Rating"></span>
                             </div>
+                                @*@Html.LabelFor(model => model.AddProductReview.ReviewText, new { }, ":")*@
+                                @Html.TextAreaRequiredFor(model => model.AddProductReview.ReviewText, htmlAttributes: new { @class = "review-text", placeholder = "Haz clic aquí si quieres escribir un comentario" }, showLabel: false)
+                                @*@Html.TextAreaFor(model => model.AddProductReview.ReviewText, Model.AddProductReview.CanCurrentCustomerLeaveReview ? (object)(new { @class = "review-text", placeholder="Haz clic aquí si quieres escribir un comentario" }) : (object)(new { @class = "review-text", disabled = "disabled" }))*@
                             @if (Model.AddProductReview.DisplayCaptcha)
                             {
                                 <div class="captcha-box">
@@ -68,7 +69,7 @@
                             }
                         </div>
                         <div class="buttons">
-                            <input type="submit" name="add-review" class="button-1 write-product-review-button" value="@T("Reviews.SubmitButton")" />
+                            <input type="button" name="add-review" class="button-1 write-product-review-button" value="@T("Reviews.SubmitButton")" />
                         </div>
                     }
                 </div>
@@ -94,7 +95,22 @@
                     int ratingPercent = review.Rating * 20;
                     <div class="product-review-item">
                         <div class="review-title">
-                            @review.Title
+                            <h3>@review.Title</h3>
+                            <a href="javascript:;">Denunciar</a>
+                            <div class="review-info">
+                                @T("Reviews.From"):
+                                @if (review.AllowViewingProfiles)
+                                {
+                                    <a href="@Url.RouteUrl("CustomerProfile", new { id = review.CustomerId })">@(review.CustomerName)</a>
+                                }
+                                else
+                                {
+                                    @review.CustomerName
+                                }
+                                <span class="separator">|</span>
+                                @T("Reviews.Date"):
+                                @review.WrittenOnStr
+                            </div>
                         </div>
                         <div class="product-review-box">
                             <div class="rating">
@@ -108,20 +124,6 @@
                             @Html.Raw(Nop.Core.Html.HtmlHelper.FormatText(review.ReviewText, false, true, false, false, false, false))
                         </div>
                         <div class="clear">
-                        </div>
-                        <div class="review-info">
-                            @T("Reviews.From"):
-                            @if (review.AllowViewingProfiles)
-                            {
-                                <a href="@Url.RouteUrl("CustomerProfile", new { id = review.CustomerId })">@(review.CustomerName)</a>
-                            }
-                            else
-                            {
-                                @review.CustomerName
-                            }
-                            <span class="separator">|</span>
-                            @T("Reviews.Date"):
-                            @review.WrittenOnStr
                         </div>
                         @Html.Partial("_ProductReviewHelpfulness", review.Helpfulness, new ViewDataDictionary())
                         @Html.Widget("productreviews_page_inside_review")
@@ -175,6 +177,7 @@
                             </div>
                             @Html.Partial("_ProductReviewHelpfulness", review.Helpfulness, new ViewDataDictionary())
                             @Html.Widget("productreviews_page_inside_review", review.Id)
+                            <br/>
                         </div>
                     }
                 </div>

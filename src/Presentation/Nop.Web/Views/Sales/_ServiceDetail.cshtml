@@ -47,12 +47,7 @@
         </div>
         
         <br />
-        <div class="title">@T("PublishProduct.Product.Html")</div>
-        <div id="divProductHtml" class="form-public">
-            @Html.Partial("_TextEditor", "productHtml")
-            <div class="text-character"></div>
-            <span class="field-validation-error" tuils-val-for="FullDescription"></span>
-        </div>
+        @Html.TextAreaRequired("FullDescription", labelResource: "PublishProduct.Product.Html")
 
     </div>
 </form>

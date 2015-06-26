@@ -564,5 +564,8 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="productId"></param>
         void UpdateTotalSalesByProductId(int productId);
+
+
+        IList<SpecialCategoryProduct> GetSpecialCategoriesByProductId(int productId);
     }
 }

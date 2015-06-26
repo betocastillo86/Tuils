@@ -39,23 +39,23 @@ namespace Nop.Services.ControlPanel
                 Name = "Sale",
                 Controller = "Sales",
                 Action = "Index",
-                IconMini = "icon-mail",
-                IconBig = "icon-mail",
+                IconMini = "icon-publica",
+                IconBig = "icon-publica",
                 SubModules = new List<ControlPanelModule>() 
                 { 
                     new ControlPanelModule(){
                         Name = "PublishProductBike",
                         Controller = "Sales",
                         Action = "PublishProductBike",
-                        IconMini = "icon-mail",
-                        IconBig = "icon-mail"
+                        IconMini = "icon-publica",
+                        IconBig = "icon-publica"
                     } ,
                      new ControlPanelModule(){
                         Name = "PublishProduct",
                         Controller = "Sales",
                         Action = "PublishProduct",
-                        IconMini = "icon-mail",
-                        IconBig = "icon-mail"
+                        IconMini = "icon-publica",
+                        IconBig = "icon-publica"
                     }
                 }
             };
@@ -67,8 +67,8 @@ namespace Nop.Services.ControlPanel
                     Name = "PublishProductService",
                     Controller = "Sales",
                     Action = "PublishProductService",
-                    IconMini = "icon-mail",
-                    IconBig = "icon-mail"
+                    IconMini = "icon-publica",
+                    IconBig = "icon-publica"
                 });
 
             modules.Add(salesModule);
@@ -79,24 +79,24 @@ namespace Nop.Services.ControlPanel
                 Name = "MyAccount",
                 Controller = "ControlPanel",
                 Action = "MyAccount",
-                IconMini = "icon-mail",
-                IconBig = "icon-mail",
+                IconMini = "icon-cc",
+                IconBig = "icon-cc",
                 SubModules = new List<ControlPanelModule>() { 
                          new ControlPanelModule()
                         {
                              Name = "MyAccount",
                             Controller = "ControlPanel",
                             Action = "MyAccount",
-                            IconMini = "icon-mail",
-                            IconBig = "icon-mail"
+                            IconMini = "icon-cc",
+                            IconBig = "icon-cc"
                         },
                         new ControlPanelModule()
                         {
                             Name = "ChangePassword",
                             Controller = "Customer",
                             Action = "ChangePassword",
-                            IconMini = "icon-mail",
-                            IconBig = "icon-mail"
+                            IconMini = "icon-cc",
+                            IconBig = "icon-cc"
                         }
                     }
 
@@ -110,8 +110,8 @@ namespace Nop.Services.ControlPanel
                     Name = "Vendor",
                     Controller = "Catalog",
                     Action = "Vendor",
-                    IconMini = "icon-mail",
-                    IconBig = "icon-mail",
+                    IconMini = "icon-tienda",
+                    IconBig = "icon-tienda",
                     Parameters = new { seName = vendor.GetSeName() },
                     SubModules = new List<ControlPanelModule>() { 
                         new ControlPanelModule()
@@ -119,8 +119,8 @@ namespace Nop.Services.ControlPanel
                             Name = "Vendor",
                             Controller = "Catalog",
                             Action = "Vendor",
-                            IconMini = "icon-mail",
-                            IconBig = "icon-mail",
+                            IconMini = "icon-tienda",
+                            IconBig = "icon-tienda",
                             Parameters = new { seName = vendor.GetSeName() }
                         },
                         new ControlPanelModule()
@@ -128,16 +128,16 @@ namespace Nop.Services.ControlPanel
                             Name = "Offices",
                             Controller = "ControlPanel",
                             Action = "Offices",
-                            IconMini = "icon-mail",
-                            IconBig = "icon-mail"
+                            IconMini = "icon-tienda",
+                            IconBig = "icon-tienda"
                         },
                         new ControlPanelModule()
                         {
                             Name = "VendorServices",
                             Controller = "ControlPanel",
                             Action = "VendorServices",
-                            IconMini = "icon-mail",
-                            IconBig = "icon-mail"
+                            IconMini = "icon-tienda",
+                            IconBig = "icon-tienda"
                         }
                     }
                 });
@@ -151,24 +151,24 @@ namespace Nop.Services.ControlPanel
                     Name = "MySales",
                     Controller = "ControlPanel",
                     Action = "MySales",
-                    IconMini = "icon-mail",
-                    IconBig = "icon-mail",
+                    IconMini = "icon-venta",
+                    IconBig = "icon-venta",
                     SubModules = new List<ControlPanelModule>() { 
                     new ControlPanelModule()
                     {
                         Name = "AllOrders",
                         Controller = "ControlPanel",
                         Action = "MySales",
-                        IconMini = "icon-mail",
-                        IconBig = "icon-mail"
+                        IconMini = "icon-venta",
+                        IconBig = "icon-venta"
                     },
                     new ControlPanelModule()
                     {
                         Name = "MySalesNoRating",
                         Controller = "ControlPanel",
                         Action = "MySales",
-                        IconMini = "icon-mail",
-                        IconBig = "icon-mail",
+                        IconMini = "icon-venta",
+                        IconBig = "icon-venta",
                         Parameters = new { filter = "norating" }
                     },
                     new ControlPanelModule()
@@ -176,8 +176,8 @@ namespace Nop.Services.ControlPanel
                         Name = "MySalesRating",
                         Controller = "ControlPanel",
                         Action = "MySales",
-                        IconMini = "icon-mail",
-                        IconBig = "icon-mail",
+                        IconMini = "icon-venta",
+                        IconBig = "icon-venta",
                         Parameters = new { filter = "rating" }
                     },
                     new ControlPanelModule()
@@ -185,8 +185,8 @@ namespace Nop.Services.ControlPanel
                         Name = "MySalesActiveProducts",
                         Controller = "ControlPanel",
                         Action = "MySales",
-                        IconMini = "icon-mail",
-                        IconBig = "icon-mail",
+                        IconMini = "icon-venta",
+                        IconBig = "icon-venta",
                         Parameters = new { filter = "active" }
                     }
                 }
@@ -202,8 +202,8 @@ namespace Nop.Services.ControlPanel
                     Name = "MyProducts",
                     Controller = "ControlPanel",
                     Action = "MyProducts",
-                    IconMini = "icon-mail",
-                    IconBig = "icon-mail",
+                    IconMini = "icon-scooter",
+                    IconBig = "icon-scooter",
                     Parameters = new { p = true },
                     SubModules = new List<ControlPanelModule>() { 
                     new ControlPanelModule()
@@ -211,8 +211,8 @@ namespace Nop.Services.ControlPanel
                         Name = "MyProductsPublished",
                         Controller = "ControlPanel",
                         Action = "MyProducts",
-                        IconMini = "icon-mail",
-                        IconBig = "icon-mail",
+                        IconMini = "icon-scooter",
+                        IconBig = "icon-scooter",
                         Parameters = new { p = true }
                     },
                     new ControlPanelModule()
@@ -220,8 +220,8 @@ namespace Nop.Services.ControlPanel
                         Name = "MyProductsUnpublished",
                         Controller = "ControlPanel",
                         Action = "MyProducts",
-                        IconMini = "icon-mail",
-                        IconBig = "icon-mail",
+                        IconMini = "icon-scooter",
+                        IconBig = "icon-scooter",
                         OptionalParameters = new { p = false }
                     }
                 }
@@ -237,24 +237,24 @@ namespace Nop.Services.ControlPanel
                 Name = "MyOrders",
                 Controller = "ControlPanel",
                 Action = "MyOrders",
-                IconMini = "icon-mail",
-                IconBig = "icon-mail",
+                IconMini = "icon-compra",
+                IconBig = "icon-compra",
                 SubModules = new List<ControlPanelModule>() { 
                     new ControlPanelModule()
                     {
                         Name = "AllOrders",
                         Controller = "ControlPanel",
                         Action = "MyOrders",
-                        IconMini = "icon-mail",
-                        IconBig = "icon-mail"
+                        IconMini = "icon-compra",
+                        IconBig = "icon-compra"
                     },
                    new ControlPanelModule()
                     {
                         Name = "MySalesNoRating",
                         Controller = "ControlPanel",
                         Action = "MyOrders",
-                        IconMini = "icon-mail",
-                        IconBig = "icon-mail",
+                        IconMini = "icon-compra",
+                        IconBig = "icon-compra",
                         Parameters = new { filter = "norating" }
                     },
                     new ControlPanelModule()
@@ -262,8 +262,8 @@ namespace Nop.Services.ControlPanel
                         Name = "MySalesRating",
                         Controller = "ControlPanel",
                         Action = "MyOrders",
-                        IconMini = "icon-mail",
-                        IconBig = "icon-mail",
+                        IconMini = "icon-compra",
+                        IconBig = "icon-compra",
                         Parameters = new { filter = "rating" }
                     }
                 }

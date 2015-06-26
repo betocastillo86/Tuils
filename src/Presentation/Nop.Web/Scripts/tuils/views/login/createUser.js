@@ -1,5 +1,5 @@
-﻿define(['underscore', 'backbone', 'text!/Customer/CreateUser', 'handlebars', 'baseView', 'tuils/models/userRegister', 'resources'],
-    function ( _, Backbone, template, Handlebars, BaseView, UserRegisterModel, Resources) {
+﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'baseView', 'tuils/models/userRegister', 'resources'],
+    function ($, _, Backbone, Handlebars, BaseView, UserRegisterModel, Resources) {
     var CreateUserView = BaseView.extend({
 
         userType : undefined,
@@ -18,12 +18,18 @@
             "#chkTerms": "TermsOfUse"
         },
 
-        template : Handlebars.compile(template),
-
         initialize: function (args) {
+
+            var that = this;
             this.loadModel();
+            this.$el.fixedDialog(this.dialogBasicOptions);
+
+            require(['text!/Customer/CreateUser'], function (template) {
+                that.template = Handlebars.compile(template);
+                that.render();
+            });
             
-            this.render();
+            
         },
         loadModel: function () {
             this.model = new UserRegisterModel();

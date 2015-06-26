@@ -501,5 +501,26 @@ namespace Nop.Web.Extensions
             return destination;
         }
 
+
+        public static SpecialCategoryProductModel ToModel(this SpecialCategoryProduct entity)
+        {
+            return new SpecialCategoryProductModel()
+            {
+                CategoryId = entity.CategoryId,
+                CategoryName = entity.Category.Name,
+                SpecialType = entity.SpecialType
+            };
+        }
+
+        public static IList<SpecialCategoryProductModel> ToModels(this IList<SpecialCategoryProduct> list)
+        {
+            var models = new List<SpecialCategoryProductModel>();
+            foreach (var entity in list)
+            {
+                models.Add(entity.ToModel());
+            }
+            return models;
+        }
+
     }
 }

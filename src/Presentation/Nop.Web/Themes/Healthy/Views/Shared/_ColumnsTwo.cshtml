@@ -43,27 +43,27 @@
         @if (IsSectionDefined("left"))
         {
             //added
-            @Html.Widget("left_side_column_before")
+            @*@Html.Widget("left_side_column_before")*@
             @RenderSection("left")
             @*@Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })*@
-            @Html.Widget("left_side_column_after_category_navigation")
+            @*@Html.Widget("left_side_column_after_category_navigation")*@
             @*@Html.Action("ManufacturerNavigation", "Catalog", new { currentManufacturerId = currentManufacturerId })*@
             @*@Html.Action("VendorNavigation", "Catalog")*@
             @Html.Action("FeaturedLeftMenu", "Product")
             @Html.Action("NewsletterBox", "Newsletter")
-            @Html.Widget("left_side_column_after")
+            @*@Html.Widget("left_side_column_after")*@
             //@added
         }
         else
         {
-            @Html.Widget("left_side_column_before")
+            @*@Html.Widget("left_side_column_before")*@
             @*@Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })*@
-            @Html.Widget("left_side_column_after_category_navigation")
+            @*@Html.Widget("left_side_column_after_category_navigation")*@
             @*@Html.Action("ManufacturerNavigation", "Catalog", new { currentManufacturerId = currentManufacturerId })*@
             @*@Html.Action("VendorNavigation", "Catalog")*@
             @Html.Action("FeaturedLeftMenu", "Product")
             @Html.Action("NewsletterBox", "Newsletter")
-            @Html.Widget("left_side_column_after")
+            @*@Html.Widget("left_side_column_after")*@
         }
     </div>
 

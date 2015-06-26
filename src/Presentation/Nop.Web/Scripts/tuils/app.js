@@ -1,4 +1,5 @@
-﻿define(['underscore', 'backbone', 'router', 'validations'], function (_, Backbone, TuilsRouter) {
+﻿define(['jquery', 'underscore', 'backbone', 'router', 'validations'],
+    function ($, _, Backbone, TuilsRouter) {
     var TuilsApp = {
         router: undefined,
 

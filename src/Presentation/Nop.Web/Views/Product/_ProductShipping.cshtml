@@ -1,0 +1,17 @@
+﻿@model ProductDetailsModel
+@using Nop.Web.Models.Catalog;
+@if (Model.IsShipEnabled || Model.VendorModel.VendorShippingEnabled)
+{
+    <div class="product-cardShip">
+    	<span class="icon-envio"></span>
+    	<div class="product-cardShip-txt">
+    		<h3>@T("Products.VendorShippingEnabled")</h3>
+    		@*State province*@
+			    @if (!string.IsNullOrEmpty(Model.StateProvinceName))
+			    {
+    				<p class="manufacturer-part-number"><span class="label">@T("Products.StateProvinceName"): </span><span class="value" >@Model.StateProvinceName</span></p>
+    			}
+    		<a href="javascript:;">Ver costos de envío</a>
+    	</div>
+    </div>
+}

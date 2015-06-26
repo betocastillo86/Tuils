@@ -39,13 +39,13 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                         return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.product;
                     },
                     pattern: 'number'
-                },
-                AdditionalShippingCharge: {
-                    required: function (val, attr, computed) {
-                        return computed.IsShipEnabled;
-                    },
-                    pattern: 'number'
                 },  
+                //AdditionalShippingCharge: {
+                //    required: function (val, attr, computed) {
+                //        return computed.IsShipEnabled;
+                //    },
+                //    pattern: 'number'
+                //},  
                 Price: {
                     required: true,
                     pattern: 'number'
@@ -115,7 +115,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                 FullDescription :'Descripción',
                 IsShipEnabled : 'Realiza Envios/Domicilios',
                 ManufacturerId: 'Marca',
-                AdditionalShippingCharge: 'Costo por envío',
+                //AdditionalShippingCharge: 'Costo por envío',
                 Price: 'Precio',
                 Condition: 'Condición',
                 CarriagePlate: 'Placa',

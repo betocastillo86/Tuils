@@ -1,10 +1,11 @@
-﻿define(['underscore', 'backbone', 'handlebars', 'accounting'], function (_, Backbone, Handlebars, accounting) {
+﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'accounting'],
+    function ($,_, Backbone, Handlebars, accounting) {
     var PublishFinishedView = Backbone.View.extend({
 
-        template : Handlebars.compile($("#templateFinishPublishProduct").html()),
         images : undefined,
 
         initialize: function (args) {
+            this.template = Handlebars.compile($("#templateFinishPublishProduct").html());
             this.model = args.model;
             this.images = args.images;
             this.render();

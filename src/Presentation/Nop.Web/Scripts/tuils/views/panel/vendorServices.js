@@ -1,5 +1,5 @@
-﻿define(['underscore', 'backbone', 'baseView', 'storage', 'util', 'tuils/models/vendor', 'categoryCollection', 'configuration', 'tagit'],
-    function (_, Backbone, BaseView, TuilsStorage, TuilsUtil, VendorModel, CategoryCollection, TuilsConfiguration) {
+﻿define(['jquery', 'underscore', 'backbone', 'baseView', 'storage', 'util', 'tuils/models/vendor', 'categoryCollection', 'configuration', 'tagit'],
+    function ($, _, Backbone, BaseView, TuilsStorage, TuilsUtil, VendorModel, CategoryCollection, TuilsConfiguration) {
     var VendorServicesView = BaseView.extend({
 
         events: {

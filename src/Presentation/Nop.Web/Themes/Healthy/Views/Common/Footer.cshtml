@@ -14,29 +14,29 @@
                 <li><a href="@Url.RouteUrl("Sitemap")">@T("Sitemap")</a></li>
             }
 
-            <li>@T("Custom.ShoppingGuide")</li>
+            @*<li>@T("Custom.ShoppingGuide")</li>*@
             <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
-            <li>@T("Custom.LiveChat")</li>
-            <li>@T("Custom.FAQ")</li>
-            <li>@T("Custom.Help")</li>
+            @*<li>@T("Custom.LiveChat")</li>*@
+            @*<li>@T("Custom.FAQ")</li>
+            <li>@T("Custom.Help")</li>*@
         </ul>
     </div>
     <div class="footer-menu">
         <h3>@T("Account.MyAccount")</h3>
         <ul class="footer-list">
             <li><a href="@Url.RouteUrl("Login")">@T("Account.Login")</a> | <a href="@Url.RouteUrl("Register")">@T("Account.Register")</a></li>
-            <li><a href="@Url.RouteUrl("CustomerOrders")">@T("Custom.OrderHistory")</a></li>
-            <li><a href="@Url.RouteUrl("CustomerRewardPoints")">@T("Custom.CustomerPoints")</a></li>
+            @*<li><a href="@Url.RouteUrl("CustomerOrders")">@T("Custom.OrderHistory")</a></li>
+            <li><a href="@Url.RouteUrl("CustomerRewardPoints")">@T("Custom.CustomerPoints")</a></li>*@
             <li><a href="@Url.RouteUrl("Wishlist")">@T("Custom.Wishlist")</a></li>
-            <li><a href="@Url.RouteUrl("CustomerReturnRequests")">@T("Custom.RMA")</a></li>
+            @*<li><a href="@Url.RouteUrl("CustomerReturnRequests")">@T("Custom.RMA")</a></li>*@
         </ul>
     </div>
     <div class="footer-menu">
         <h3>@T("Custom.CompanyInfo")</h3>
         <ul class="footer-list">
-            <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("aboutus") })">@T("AboutUs")</a></li>
-            <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("privacyinfo") })">@T("PrivacyNotice")</a></li>
-            <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("shippinginfo") })">@T("ShippingReturns")</a></li>
+            <li><a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("acercadenosotros") })">@T("AboutUs")</a></li>
+            @*<li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("privacyinfo") })">@T("PrivacyNotice")</a></li>
+            <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("shippinginfo") })">@T("ShippingReturns")</a></li>*@
             <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })">@T("ConditionsOfUse")</a></li>
             @if (Model.NewsEnabled)
             {
@@ -44,7 +44,7 @@
             }
             @if (Model.BlogEnabled)
             {
-                <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
+                <li><a href="http://blog.tuils.com" target="_blank">@T("Blog")</a></li>
             }
         </ul>
     </div>
@@ -76,12 +76,12 @@
                 <span class="icon-mail"></span>
                 <a href="mailto:@T("Custom.EmailFooter")">@T("Custom.EmailFooter")</a>
             </p>
-            <ul>
+            @*<ul>
                 <li class="visa"></li>
                 <li class="mastercard"></li>
                 <li class="amex"></li>
                 <li class="discover"></li>
-            </ul>
+            </ul>*@
         </div>
     </div>
     <div class="clear"></div>

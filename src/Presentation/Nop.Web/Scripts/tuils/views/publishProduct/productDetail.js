@@ -1,12 +1,12 @@
-﻿define(['underscore', 'backbone', 'baseView', 'manufacturerModel', 'manufacturerCollection', 'storage', 'util', 'htmlEditorView', 'configuration', 'specificationAttributeModel','tagit', 'validations', 'stickit'],
-    function ( _, Backbone, BaseView, ManufacturerModel, ManufacturerCollection, TuilsStorage, TuilsUtil, HtmlEditorView, TuilsConfiguration, SpecificationAttributeModel) {
+﻿define(['jquery', 'underscore', 'backbone', 'baseView', 'manufacturerModel', 'manufacturerCollection', 'storage', 'util', 'htmlEditorView', 'configuration', 'specificationAttributeModel', 'tagit', 'validations', 'stickit'],
+    function ($, _, Backbone, BaseView, ManufacturerModel, ManufacturerCollection, TuilsStorage, TuilsUtil, HtmlEditorView, TuilsConfiguration, SpecificationAttributeModel) {
     "use strict"
     var ProductDetailView = BaseView.extend({
 
         events: {
             "click .btnNext": "save",
             "click .btnBack": "back",
-            "change #chkIsShipEnabled": "switchShipping",
+            //"change #chkIsShipEnabled": "switchShipping",
             "change #chkIncludeSupplies" : "switchSupplies"
         },
 
@@ -56,10 +56,11 @@
                     return brands;
                 }
             },
-            "#productHtml_textarea": {
-                observe: "FullDescription",
-                controlToMark: "#divProductHtml"
-            },
+            //"#productHtml_textarea": {
+            //    observe: "FullDescription",
+            //    controlToMark: "#divProductHtml"
+            //},
+            "#txtFullDescription": "FullDescription",
             "#ddlCondition": {
                 observe : "Condition",
                 onSet: function (value, ctx) {
@@ -148,16 +149,16 @@
             this.loadManufacturersByCategory();
             this.tagBikeReferences();
             this.loadSupplies();
-            this.loadHtmlEditor();
-            this.switchShipping();
+            //this.loadHtmlEditor();
+            //this.switchShipping();
             if(this.productType != TuilsConfiguration.productBaseTypes.product)
                 this.myStickit();
         },
-        loadHtmlEditor: function () {
-            //el HTML no está habilitado para las motos
-            if (this.productType != TuilsConfiguration.productBaseTypes.bike)
-                this.viewHtmlEditor = new HtmlEditorView({ el: this.el, prefix: 'productHtml' });
-        },
+        //loadHtmlEditor: function () {
+        //    //el HTML no está habilitado para las motos
+        //    if (this.productType != TuilsConfiguration.productBaseTypes.bike)
+        //        this.viewHtmlEditor = new HtmlEditorView({ el: this.el, prefix: 'productHtml' });
+        //},
         loadManufacturersByCategory: function () {
             //Las marcas solo aplican para productos
             if (this.productType == TuilsConfiguration.productBaseTypes.product) {
@@ -216,12 +217,12 @@
                     }
                 });
         },
-        switchShipping: function (obj) {
-            if (this.$("#chkIsShipEnabled").prop("checked"))
-                this.$("[tuils-for='shipping']").show();
-            else
-                this.$("[tuils-for='shipping']").hide();
-        },
+        //switchShipping: function (obj) {
+        //    if (this.$("#chkIsShipEnabled").prop("checked"))
+        //        this.$("[tuils-for='shipping']").show();
+        //    else
+        //        this.$("[tuils-for='shipping']").hide();
+        //},
         switchSupplies: function (obj) {
             if (this.$("#chkIncludeSupplies").prop("checked")) {
                 this.$("[tuils-for='no-supplies']").hide();
@@ -231,7 +232,7 @@
             }
         },
         save: function () {
-            this.model.set({ FullDescription: this.$("#productHtml_textarea").val() });
+            //this.model.set({ FullDescription: this.$("#productHtml_textarea").val() });
             this.validateControls();
             if (this.model.isValid()) {
                 this.trigger("detail-product-finished", this.model);

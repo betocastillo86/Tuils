@@ -69,13 +69,7 @@
             </div>
         }
     </div>
-    <div class="title">@T("PublishProduct.Product.Html")</div>
-
-    <div id="divProductHtml" class="form-public">
-        <textarea id="productHtml_textarea"></textarea>
-        <div class="text-character"></div>
-        <span class="field-validation-error" tuils-val-for="FullDescription"></span>
-    </div>
+    @Html.TextAreaRequired("FullDescription", labelResource: "PublishProduct.Product.Html")
     
 
 </form>

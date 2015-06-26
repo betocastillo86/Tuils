@@ -1,5 +1,5 @@
-﻿define(['underscore', 'backbone', 'categoryModel', 'handlebars', 'configuration', 'baseView', 'handlebarsh'],
-    function ( _, Backbone, CategoryModel, Handlebars, TuilsConfiguration, BaseView) {
+﻿define(['jquery', 'underscore', 'backbone', 'categoryModel', 'handlebars', 'configuration', 'baseView', 'handlebarsh'],
+    function ($, _, Backbone, CategoryModel, Handlebars, TuilsConfiguration, BaseView) {
         
         var SelectCategoryView = BaseView.extend({
 
@@ -28,10 +28,8 @@
 
             divShowCategories: undefined,
 
-            template: Handlebars.compile($("#templateCategorySelector").html()),
-
             initialize: function (args) {
-
+                this.template = Handlebars.compile($("#templateCategorySelector").html());
                 this.productType = args.productType;
                 this.loadControls();
                 this.loadDefaultCategories();
@@ -44,15 +42,6 @@
             },
             loadControls: function () {
                 this.divShowCategories = this.$(".divShowCategories");
-
-                var button = this.$(".nav-category li");
-                if(this.productType == TuilsConfiguration.productBaseTypes.product)
-                    button.addClass("hub-std");
-                else if(this.productType == TuilsConfiguration.productBaseTypes.bike)
-                    button.addClass("hub-mot");
-                else
-                    button.addClass("hub-srv");
-
             },
             loadChildrenCategories: function (parentId) {
                 var category = new CategoryModel();
