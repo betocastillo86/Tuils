@@ -68,12 +68,12 @@ namespace Nop.Web.Infrastructure
 
             //contact us
             routes.MapLocalizedRoute("ContactUs",
-                            "contactus",
+                            "contacto",
                             new { controller = "Common", action = "ContactUs" },
                             new[] { "Nop.Web.Controllers" });
             //sitemap
             routes.MapLocalizedRoute("Sitemap",
-                            "sitemap",
+                            "mapa-del-sitio",
                             new { controller = "Common", action = "Sitemap" },
                             new[] { "Nop.Web.Controllers" });
 

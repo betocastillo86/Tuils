@@ -42,7 +42,12 @@
                 "p/:query": "product",
                 'entrar' : 'login',
                 'buscar(/:query)': 'search',
-                'recordar-clave' :'passwordRecovery'
+                'recordar-clave': 'passwordRecovery',
+                'mapa-del-sitio': 'sitemap',
+                'condiciones-de-uso': 'useConditions',
+                'contacto': 'contactUs',
+                'acerca-de-nosotros' : 'aboutUs'
+
             },
             home : function()
             {
@@ -109,6 +114,9 @@
                 that.currentView = new VendorDetailView({ el: that.defaultEl });
                 this.loadSubViews();
             },
+            sitemap: function () {
+                this.loadSubViews();
+            },
             category : function(categoryName, specification, query)
             {
                 this.loadTwoColumns();
@@ -120,6 +128,15 @@
                 this.loadTwoColumns();
             },
             passwordRecovery: function () {
+                this.loadTwoColumns();
+            },
+            useConditions: function () {
+                this.loadTwoColumns();
+            },
+            contactUs: function () {
+                this.loadTwoColumns();
+            },
+            aboutUs: function () {
                 this.loadTwoColumns();
             },
             login: function () {

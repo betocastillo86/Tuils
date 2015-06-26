@@ -4,9 +4,9 @@
     var browser = Request.Browser;
     //added
 }
-@Html.Widget("body_start_html_tag_after")
+@*@Html.Widget("body_start_html_tag_after")*@
 @Html.Partial("_Notifications")
-@Html.Action("AdminHeaderLinks", "Common")
+@*@Html.Action("AdminHeaderLinks", "Common")*@
 @*added*@
 @if ((browser.Browser == "IE" && browser.MajorVersion > 8) || browser.Browser != "IE")
 {
@@ -64,7 +64,7 @@
                     <div class="master-wrapper-main">
                         @RenderBody()
                     </div>
-                    @Html.Widget("content_after")
+                    @*@Html.Widget("content_after")*@
                 </div>
                 @*edited*@
                 @if (browser.Browser == "IE" && browser.MajorVersion < 9)
@@ -76,7 +76,7 @@
                     @*edited*@
                 </div>
 
-                @Html.Action("EuCookieLaw", "Common")
+                @*@Html.Action("EuCookieLaw", "Common")*@
                 @*added*@
                 @if ((browser.Browser == "IE" && browser.MajorVersion > 8) || browser.Browser != "IE")
                 {
@@ -102,10 +102,10 @@
                             @*<div class="footer-store-theme">
                                 @Html.Action("StoreThemeSelector", "Common")
                             </div>*@
-                            @Html.Widget("footer")
+                            @*@Html.Widget("footer")*@
                         </div>
                     </footer>
                 </div>
                 }
                 @*added*@
-                @Html.Widget("body_end_html_tag_before")
+                @*@Html.Widget("body_end_html_tag_before")*@
