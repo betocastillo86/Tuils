@@ -52,6 +52,7 @@
 
             $(".header-logo").css('display', !showSearch ? 'block' : 'none');
             this.$("#divSearchText input").css('display', showSearch ? 'block' : '');
+            this.$("#divSearchText a").css('display', showSearch ? 'block' : '');
         },
         loadAutoComplete: function () {
             this.searchBox.autocomplete({
