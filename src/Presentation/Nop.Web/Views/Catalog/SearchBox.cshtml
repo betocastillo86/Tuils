@@ -5,7 +5,7 @@
 {
     <div id="divSearchText" class="responsiveSearch">
         <input type="text" class="search-box-text" id="small-searchterms" autocomplete="off" name="q" placeholder="@T("Search.SearchBox.Tooltip")" data-url="@(Url.RouteUrl("ProductSearchAutoComplete"))" data-minlength="@(Model.SearchTermMinimumLength.ToString())" />
-        <input type="button" class="closeSearchResponsive" value="x" style="display:none" />
+        <a class="closeSearchResponsive"><span class="icon-close"></span></a>
     </div>
 
     @Html.Widget("searchbox_before_search_button")

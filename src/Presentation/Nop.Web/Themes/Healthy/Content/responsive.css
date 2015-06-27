@@ -874,7 +874,9 @@ html.oldie .container { width: 940px; }
     /*Header*/
     .header{padding: 0; position: absolute; width: 100%; left: 0; top: 0;}
         .divSearchTextResponsive{display: block;}
-        #small-searchterms{display: none;}
+
+        #small-searchterms{display: none; width:calc(100% - 70px); margin: 10px;}
+        .closeSearchResponsive{}
         .header .search-box form .btn_search{display: none;}
     .main-search-box{display: block; z-index: 2;}
         .main-search-box:before{border-bottom: 60px solid #3B5A83; border-left: 15px solid transparent; position:absolute; top: 0; left:-15px; content: "";}
@@ -896,7 +898,8 @@ html.oldie .container { width: 940px; }
     .main-anuncia{width: 100% !important; padding: 0 !important;}
         .main-btn_anuncia{font-size: 16px; color: #FFF !important; border-radius: 2px; text-align: center; display: block; padding: 10px; margin: 10px; background: rgb(246,113,78); transition:ease all 0.2s; background: -moz-linear-gradient(top,  rgba(246,113,78,1) 0%, rgba(245,78,26,1) 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(246,113,78,1)), color-stop(100%,rgba(245,78,26,1))); background: -webkit-linear-gradient(top,  rgba(246,113,78,1) 0%,rgba(245,78,26,1) 100%); background: -o-linear-gradient(top,  rgba(246,113,78,1) 0%,rgba(245,78,26,1) 100%);background: -ms-linear-gradient(top,  rgba(246,113,78,1) 0%,rgba(245,78,26,1) 100%);background: linear-gradient(to bottom,  rgba(246,113,78,1) 0%,rgba(245,78,26,1) 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6714e', endColorstr='#f54e1a',GradientType=0 );}
         .main-btn_anuncia:hover, .main-btn_anuncia:active{background: #f9715a; background: -moz-linear-gradient(top,  #f9715a 0%, #f74d34 86%, #cc4a2c 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9715a), color-stop(86%,#f74d34), color-stop(100%,#cc4a2c)); background: -webkit-linear-gradient(top,  #f9715a 0%,#f74d34 86%,#cc4a2c 100%); background: -o-linear-gradient(top,  #f9715a 0%,#f74d34 86%,#cc4a2c 100%); background: -ms-linear-gradient(top,  #f9715a 0%,#f74d34 86%,#cc4a2c 100%); background: linear-gradient(to bottom,  #f9715a 0%,#f74d34 86%,#cc4a2c 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9715a', endColorstr='#cc4a2c',GradientType=0 );}
-    .main-registro{background: #3E3C47 !important; width: 100% !important;}
+    .main-registro{background: #3E3C47 !important; width: 100% !important; padding: 20px 0;}
+    .main-registro a{color: #FFF; display: block; float: left; width: 50%;}
     .main-wishlist{background: #3E3C47 !important; width: 100% !important; clear: both !important;}
         .main-wishlist .icon-corazon{color: #FFF; font-size: 25px;}    
 }
@@ -906,7 +909,6 @@ html.oldie .container { width: 940px; }
     .header{position: relative; height: 60px;}
     .btn_anuncia{right: 40px;}
     .header-logo{left: calc(50% - 68px);}
-    #small-searchterms{width: 90%;}
     /*top menu*/
     .nav-menu{display: none;}
     .mm-menu ul li a [class^="icon-"]{display: none;}
