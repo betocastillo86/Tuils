@@ -5,8 +5,8 @@
 
     </div>
     <div class="btn-sedes">
-        <a id="btnBack"><span class="icon-mail"></span></a>
-        <a id="btnNext"><span class="icon-mail"></span></a>
+        <a id="btnBack"><span class="icon-prev"></span></a>
+        <a id="btnNext"><span class="icon-next"></span></a>
     </div>
     @if (Model.AllowEdit)
     {
@@ -15,7 +15,7 @@
 </div>
 <script id="templateSelectedOffice" type="text/x-handlebars-template">
     <h3>{{Name}} - {{Address}}</h3> 
-    <p><span class="icon-mail"></span> {{StateProvinceName}}</p>
+    <p><span class="icon-loc"></span> {{StateProvinceName}}</p>
     <p><span class="icon-tel"></span>{{PhoneNumber}}</p>
     <p><span class="icon-mail"></span>{{Email}}</p>
     <a id="btnViewGallery" class="button-1">Ver galeria</a>

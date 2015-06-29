@@ -10,16 +10,21 @@
 
 @using(Html.BeginForm())
 { 
-    <div>
-        @Html.LabelT("VendorServices.References")
-        @Html.TextBoxFor(m => m.BikeReferencesString, new { style = "display:none" })
-    </div>
-    <div>
-        @Html.LabelT("VendorServices.Specialized")
-        @Html.TextBoxFor(m => m.SpecializedCategoriesString, new { style = "display:none" })
-    </div>
-    <div>
-        <input type="submit" />
+    <div class="panel-control">
+        <h2 class="tit_sec">Servicios</h2>
+        <div class="tipo-marca">
+            @Html.LabelT("VendorServices.References")
+            @Html.TextBoxFor(m => m.BikeReferencesString, new { style = "display:none" })
+        </div>
+        <br/>
+        <div class="tipo-marca">
+            @Html.LabelT("VendorServices.Specialized")
+            @Html.TextBoxFor(m => m.SpecializedCategoriesString, new { style = "display:none" })
+        </div>
+        <br/>
+        <div>
+            <input class="btn_continue button-1" value="Guardar" type="submit" />
+        </div>
     </div>
 }
 

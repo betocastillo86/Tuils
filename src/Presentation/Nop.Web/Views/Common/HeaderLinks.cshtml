@@ -5,7 +5,7 @@
         @Html.Widget("header_links_before")
         @if (Model.IsAuthenticated)
         {
-            <li><a href="@Url.RouteUrl("ControlPanel")" class="account">@Model.CustomerEmailUsername</a></li>
+            <li class="user-li"><a href="@Url.RouteUrl("ControlPanel")"><img src="~/Themes/Healthy/Content/images/img_user.svg"/> <p>@Model.CustomerEmailUsername</p><br/></a></li>
             <li><a href="@Url.RouteUrl("CustomerInfo")" class="account">@Model.CustomerEmailUsername</a></li>
             <li><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></li>
         }
@@ -96,7 +96,7 @@
 
         @if (Model.IsAuthenticated)
         {
-            <div class="main-userName"><a href="@Url.RouteUrl("ControlPanel")" class="account">@Model.CustomerEmailUsername</a></div>
+            <div class="user-li"><a href="@Url.RouteUrl("ControlPanel")"><img src="~/Themes/Healthy/Content/images/img_user.svg"/> <p>@Model.CustomerEmailUsername</p><br/></a></div>
         }
         else
         {

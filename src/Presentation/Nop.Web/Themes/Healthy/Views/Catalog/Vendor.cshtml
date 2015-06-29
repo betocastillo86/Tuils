@@ -37,10 +37,11 @@
                     </div>
                     <ul class="conte-spc">
                         <h3>
-                            @T("Vendor.SpecialCategoriesServices") <span class="icon-mail"></span>
+                            @T("Vendor.SpecialCategoriesServices")
 
                         @if (Model.AllowEdit)
                         {
+                            <span class="icon-edit"></span>
                             @Html.ActionLink("Editar", "VendorServices", "ControlPanel")
                         }
 
@@ -50,10 +51,11 @@
                         <li>@special.Category.Name</li>
                     }
                     <h3>
-                        @T("Vendor.SpecialCategoriesBikes") <span class="icon-mail"></span>
+                        @T("Vendor.SpecialCategoriesBikes")
 
                     @if (Model.AllowEdit)
                     {
+                        <span class="icon-edit"></span>
                         @Html.ActionLink("Editar", "VendorServices", "ControlPanel")
                     }
                 </h3>
@@ -68,7 +70,7 @@
                 <div class="title"> <strong>Productos</strong> </div>
                 <div class="search-pdt">
                     <input type="text" class="searchinput" value="@Model.PagingFilteringContext.q" />
-                    <a class="btn_search"><span class="icon-mail"></span></a>
+                    <a class="btn_search"><span class="icon-lupa"></span></a>
                 </div>
 
 
