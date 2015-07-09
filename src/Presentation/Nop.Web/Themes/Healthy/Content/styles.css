@@ -977,7 +977,10 @@ td.fieldname{font-size:12px;}
 .password-recovery-page .page-body,newsletter-page .page-body{margin:0;padding:0;color:#555;background-color:inherit;}
 .password-recovery-page .email{width:250px;}
 .password-recovery-page .result{font-family:Verdana,Arial,sans-serif;font-size:10px;font-weight:700;color:red;}
-
+.pass-recover p{margin: 0 0 20px;}
+.pass-recover .inputs{width: 100%; height: auto !important;}
+.pass-recover .inputs input{ width: 400px !important;}
+.pass-recover .inputs .field-validation-error{text-align: left;}
 
 /* ACCOUNT ACTIVATION */
 .account-activation-page{}
@@ -1010,7 +1013,7 @@ td.fieldname{font-size:12px;}
 
 /* CUSTOMER ACCOUNT PAGES */
 .account-page{}
-.account-page .result{font-family:Verdana,Arial,sans-serif;font-size:10px;font-weight:700;color:red;}
+.account-page .result{font-size:14px;font-weight:700;color:#fa4c2a;}
 .account-page .page-title{margin-bottom:20px;}
 .account-page .page-body{margin:0;padding:0;color:#555;}
 .account-page .section{padding:10px;margin-bottom:20px;border:1px solid #eee;border-radius:5px;zoom:1;}
@@ -1042,7 +1045,6 @@ td.fieldname{font-size:12px;}
 .back-in-stock-subscription-list-page .no-data{}
 .back-in-stock-subscription-list-page .buttons{margin-bottom:5px;margin-top:5px;text-align:left;}
 .change-password-page{}
-.change-password-page .buttons{margin-bottom:5px;margin-top:5px;}
 .downloadable-products-page{}
 .downloadable-products-page .no-data{}
 .forum-subscriptions-page{}
@@ -1686,7 +1688,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
         .cover-editor i{font-size: 12px; font-style: inherit; display: none;}
         .cover-editor:hover i{display: inline-block;}
         .menu-cover{position: absolute; top:45px; box-shadow: 2px 2px 4px #3a5985; left: 0; width:140px; background:#F3F5F7; height: auto; box-sizing:border-box; padding:0; margin: 0; border-radius: 3px; list-style: none;}
-    	.menu-cover li{padding: 7px 10px; border-radius: 3px; color:#3a5985; font-size: 13px; transition:ease all 0.2s;}
+    	.menu-cover li{padding: 7px 10px; border-radius: 3px; color:#3a5985; font-size: 13px; transition:ease all 0.2pxs;}
     	.menu-cover li:hover, .menu-cover li:focus{background:#637A9F; color:#FFF;}
     .conte_perfil{background:#F3F5F7; height: 60px; margin: 0 0 22px; text-align: left;}
         .conte_perfil .container.hd{position: relative;}

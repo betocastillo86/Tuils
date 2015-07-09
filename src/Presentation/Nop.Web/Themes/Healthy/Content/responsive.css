@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+
     /*Templates*/
     body { background: #fff; }
     .master-wrapper-main .center-2 { padding: 0; border: 0; }
@@ -1184,6 +1185,8 @@ html.oldie .container { width: 940px; }
     .conte_perfil2{padding: 20px;}
     /*publicar producto*/
     .picture-resume li{height:85px;}
+
+    .pass-recover .inputs input{ width:calc(100% - 20px) !important;}
 }
 @media screen and (max-width:375px) {
     /* PRODUCT DETAILS PAGE */
