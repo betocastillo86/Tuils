@@ -364,7 +364,8 @@ namespace Nop.Web.Extensions
                     ProductId = product.Id,
                     RatingSum = product.ApprovedRatingSum,
                     TotalReviews = product.ApprovedTotalReviews,
-                    AllowCustomerReviews = product.AllowCustomerReviews
+                    AllowCustomerReviews = product.AllowCustomerReviews,
+                    ProductSeName = model.SeName
                 };
 
                 models.Add(model);

@@ -11,8 +11,13 @@
 
             viewQuestions: undefined,
 
+            //Bandera que valida si el usuario efectivamente quería ver el vendedor
+            //Esto ayuda a controlar que si el usuario se autentica no cargue información que no debe
+            wantedToShowVendor : false,
+
             events: {
-                'click #btnShowVendor': 'confirmShowVendor'
+                'click #btnShowVendor': 'confirmShowVendor',
+                'click .rating a' : 'showReviews'
             },
 
             initialize: function (args) {
@@ -52,6 +57,9 @@
                 });
                 
             },
+            showReviews: function () {
+                this.$('.tab[data-name="reviews"] a').click();
+            },
             loadTabs : function(){
                 var that = this;
                 $('#tab-container').easytabs();
@@ -71,6 +79,8 @@
                 this.requiredViewsWithAuthentication.push(this.viewQuestions);
             },
             confirmShowVendor: function (obj) {
+                //Cambia la bandera marcando que si quiere comprar el producto
+                this.wantedToShowVendor = true;
                 obj = $(obj.target);
                 this.vendorUrl = obj.attr('data-vendorUrl');
                 this.createOrder();
@@ -79,7 +89,12 @@
                 this.model.newOrder();
             },
             userAuthenticated: function () {
-                this.createOrder();
+                //Si quería comprar el producto, despues de aautenticarse realiza de nuevo un intento
+                if (this.wantedToShowVendor)
+                {
+                    this.wantedToShowVendor = false;
+                    this.createOrder();
+                }
             },
             redirectToVendor: function () {
                 document.location.href = this.vendorUrl;

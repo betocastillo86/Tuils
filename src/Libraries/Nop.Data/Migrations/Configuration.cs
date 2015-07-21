@@ -280,7 +280,8 @@ namespace Nop.Data.Migrations
             newLocaleStringResources.Add("Questions.NoQuestions", "No han dejado preguntas todavia");
             newLocaleStringResources.Add("Reviews.NoReviews", "Nadie ha calificado este producto todavía");
             newLocaleStringResources.Add("custom.reviews.productreviews", "Calificaciones");
-            newLocaleStringResources.Add("custom.reviews.productreviews.Alt", "Revisa las calificaciones que otros usuarios le han dejado a este vendedor");
+            newLocaleStringResources.Add("custom.reviews.productreviews.Alt", "Revisa las calificaciones que otros usuarios le han dejado a este producto");
+            
             
             
             newLocaleStringResources.Add("Admin.Configuration.Settings.GeneralCommon.CaptchaShowOnProductQuestionsPage", "Mostrar el captcha en la zona de preguntas del producto");

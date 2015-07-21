@@ -760,7 +760,8 @@ namespace Nop.Web.Controllers
                 ProductId = product.Id,
                 RatingSum = product.ApprovedRatingSum,
                 TotalReviews = product.ApprovedTotalReviews,
-                AllowCustomerReviews = product.AllowCustomerReviews
+                AllowCustomerReviews = product.AllowCustomerReviews,
+                IsProductDetail = true
             };
 
             #endregion

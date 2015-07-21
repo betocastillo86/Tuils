@@ -89,19 +89,17 @@
         <div class="title">@T("Account.MyBike")</div>
 
         <div class="form-public">
+            @if (Model.BikeBrand.Picture != null)
+            {
+                <img id="imgBrand" src="@Model.BikeBrand.Picture.ImageUrl" alt="@Model.BikeBrand.Picture.AlternateText" title="@Model.BikeBrand.Picture.Title" />
+            }
+            else
+            {
+                <img id="imgBrand" />
+            }
             <div class="inputs">
                 @Html.LabelFor(model => model.BikeBrand.CategoryId, new { }, ":")
                 @Html.DropDownListFor(model => model.BikeBrand.CategoryId, new SelectList(Model.BikeBrands, "Id", "Name"), "-")
-                
-                @if (Model.BikeBrand.Picture != null)
-                {
-                    <img id="imgBrand" src="@Model.BikeBrand.Picture.ImageUrl" alt="@Model.BikeBrand.Picture.AlternateText" title="@Model.BikeBrand.Picture.Title"  />
-                }
-                else
-                { 
-                    <img id="imgBrand"  />
-                }
-                
             </div>
             <div class="inputs">
                 @Html.LabelFor(model => model.BikeReferenceId, new { }, ":")
