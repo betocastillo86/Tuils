@@ -2265,12 +2265,8 @@ namespace Nop.Services.Catalog
 
             if (UpdateProductQuestion(question))
             {
-                //consulta las preguntas sin respuesta
-                var questions = GetProductQuestions(productId: question.ProductId, status: QuestionStatus.Created);
-                var product = GetProductById(question.ProductId);
-                product.UnansweredQuestions = questions.Count;
-                //Actualiza el número de pregundas pendientes
-                UpdateProduct(product);
+                //Actualiza el numero de preguntas sin responder de un producto
+                UpdateUnansweredQuestionsByProductId(question.ProductId);
 
                 //Envia la notificacion de que fue respondida la pregunta
                 _workflowMessageService.SendQuestionAnsweredNotificationMessage(question, _workContext.WorkingLanguage.Id);
@@ -2279,6 +2275,38 @@ namespace Nop.Services.Catalog
             }
             else
                 return false;
+        }
+
+        /// <summary>
+        /// Actualiza el numero de preguntas sin responder de un producto en especifico
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public void UpdateUnansweredQuestionsByProductId(int productId)
+        {
+            //consulta las preguntas sin respuesta
+            var questions = GetProductQuestions(productId: productId, status: QuestionStatus.Created);
+            var product = GetProductById(productId);
+            product.UnansweredQuestions = questions.Count;
+            //Actualiza el número de pregundas pendientes
+            UpdateProduct(product);
+        }
+
+
+        /// <summary>
+        /// Inserta una pregunta relacionada a un product
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns></returns>
+        public void InsertQuestion(ProductQuestion question)
+        {
+            question.CreatedOnUtc = DateTime.Now;
+            question.Status = QuestionStatus.Created;
+            _productQuestionRepository.Insert(question);
+            //Envia la notificacion de que fue respondida la pregunta
+            _workflowMessageService.SendNewQuestionNotificationMessage(question, _workContext.WorkingLanguage.Id);
+            //Actualiza el numero de preguntas sin responder por producto
+            UpdateUnansweredQuestionsByProductId(question.ProductId);
         }
         #endregion
 
@@ -2335,6 +2363,8 @@ namespace Nop.Services.Catalog
                 .Where(sc => sc.ProductId == productId)
                 .ToList();
         }
+
+
         #endregion
 
         #endregion
@@ -2348,5 +2378,8 @@ namespace Nop.Services.Catalog
 
 
 
+
+
+        
     }
 }

@@ -1262,6 +1262,44 @@ namespace Nop.Services.Messages
         }
 
         /// <summary>
+        /// Envia la notificacion a un vendedor cuando se realizó una nueva pregunta de un producto
+        /// </summary>
+        /// <param name="productQuestion"></param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        public virtual int SendNewQuestionNotificationMessage(ProductQuestion productQuestion, int languageId)
+        {
+            if (productQuestion == null)
+                throw new ArgumentNullException("productQuestion");
+
+            var store = _storeContext.CurrentStore;
+            languageId = EnsureLanguageIsActive(languageId, store.Id);
+
+            var messageTemplate = GetActiveMessageTemplate("Product.NewQuestion", store.Id);
+            if (messageTemplate == null)
+                return 0;
+
+            //email account
+            var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);
+
+            //tokens
+            var tokens = new List<Token>();
+            _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
+            _messageTokenProvider.AddProductTokens(tokens, productQuestion.Product, languageId);
+            _messageTokenProvider.AddCustomerTokens(tokens, productQuestion.Customer);
+            _messageTokenProvider.AddQuestionTokens(tokens, productQuestion);
+
+            //event notification
+            _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
+
+            var toEmail = productQuestion.Product.Vendor.Email;
+            var toName = productQuestion.Product.Vendor.Name;
+            return SendNotification(messageTemplate, emailAccount,
+                languageId, tokens,
+                toEmail, toName);
+        }
+
+        /// <summary>
         /// Sends a "quantity below" notification to a store owner
         /// </summary>
         /// <param name="product">Product</param>

@@ -4,6 +4,7 @@ namespace Nop.Data.Migrations
     using Nop.Core.Domain.Catalog;
     using Nop.Core.Domain.Configuration;
     using Nop.Core.Domain.Localization;
+    using Nop.Core.Domain.Messages;
     using Nop.Core.Infrastructure;
     using System;
     using System.Collections.Generic;
@@ -265,7 +266,24 @@ namespace Nop.Data.Migrations
 
             newLocaleStringResources.Add("vendor.enableShipping.description", "Se realizan envíos. El valor depende de la ubicación geográfica");
             newLocaleStringResources.Add("vendor.enableCreditCard.description", "Se recibes tarjetas. Para más información contactarnos en los teléfonos de las sedes");
+
+            newLocaleStringResources.Add("Custom.Reviews.ProductReviews", "Calificaciones de los usuarios");
+            newLocaleStringResources.Add("Products.Questions", "Preguntas");
+            newLocaleStringResources.Add("Questions.Write", "Deja una pregunta para el vendedor");
+            newLocaleStringResources.Add("Questions.Date", "Fecha de Pregunta");
+            newLocaleStringResources.Add("Questions.AnsweredDate", "Fecha de respuesta");
+            newLocaleStringResources.Add("Questions.SubmitButton", "Preguntar al vendedor");
+            newLocaleStringResources.Add("Questions.InvalidCatpcha", "Valida que el número de la imagen sea el correcto");
+            newLocaleStringResources.Add("Questions.QuestionPublished", "Tu pregunta fue guardada correctamente");
+            newLocaleStringResources.Add("Questions.LinkWriteQuestion", "Puedes dejarle una pregunta al vendedor");
+            newLocaleStringResources.Add("Questions.LinkWriteQuestion.Alt", "Deja una pregunta al vendedor de este producto para que la conteste lo más rapido posible");
+            newLocaleStringResources.Add("custom.reviews.productreviews", "Calificaciones");
+            newLocaleStringResources.Add("custom.reviews.productreviews.Alt", "Revisa las calificaciones que otros usuarios le han dejado a este vendedor");
             
+            
+            newLocaleStringResources.Add("Admin.Configuration.Settings.GeneralCommon.CaptchaShowOnProductQuestionsPage", "Mostrar el captcha en la zona de preguntas del producto");
+            
+           
 
             //Recorre todas las llaves que desea adicional
             foreach (var resource in newLocaleStringResources)
@@ -298,6 +316,8 @@ namespace Nop.Data.Migrations
             var settings = new Dictionary<string, string>();
 
             settings.Add("CatalogSettings.ProductSearchAutoCompleteWithSearchTerms", "True");
+            settings.Add("CaptchaSettings.ShowOnProductQuestions", "True");
+            
 
             //Recorre todas las llaves que desea adicional
             foreach (var setting in settings)
@@ -314,6 +334,36 @@ namespace Nop.Data.Migrations
                     });
                 }
             }
+
+            #endregion
+
+            #region Template
+
+            var templatesTable = context.Set<MessageTemplate>();
+
+            var templates = new List<MessageTemplate>(){
+                new MessageTemplate()
+                {
+                    Id = 33,
+                    Name = "Product.QuestionAnswered",
+                    Subject = "%Store.Name%. Te han respondido la pregunta de %Product.Name%",
+                    Body = "<p>Respondieron la pregunta:</p><p>&nbsp;</p><p>%Question.Answer%</p>",
+                    IsActive = true,
+                    EmailAccountId = 1
+                },
+                new MessageTemplate()
+                {
+                    Id = 34,
+                    Name = "Product.NewQuestion",
+                    Subject = "%Store.Name%. Tienes una nueva pregunta del producto %Product.Name%",
+                    Body = "<p>Te han hecho una nueva pregunta con el siguiente contenido:</p><p>&nbsp;</p><p>%Question.QuestionText%</p>",
+                    IsActive = true,
+                    EmailAccountId = 1
+                }
+            };
+
+            templatesTable.AddOrUpdate(t => t.Id, templates.ToArray());
+
 
             #endregion
         }

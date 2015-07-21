@@ -36,6 +36,7 @@ using Nop.Web.Framework.UI.Captcha;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Media;
+using Nop.Web.Extensions.Api;
 
 namespace Nop.Web.Controllers
 {
@@ -1236,7 +1237,6 @@ namespace Nop.Web.Controllers
 
 
         #region Product reviews
-        [ChildActionOnly]
         [NopHttpsRequirement(SslRequirement.No)]
         public ActionResult ProductReviews(int productId)
         {
@@ -1399,8 +1399,38 @@ namespace Nop.Web.Controllers
 
         #endregion
 
+        #region Questions
+        [ChildActionOnly]
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult Questions(int productId)
+        {
+            var product = _productService.GetProductById(productId);
+            if (product == null || product.Deleted || !product.Published || !product.AllowCustomerReviews)
+                return RedirectToRoute("HomePage");
+
+            var model = new QuestionsModel();
+            model.Questions = _productService.GetProductQuestions(productId).ToModels(_dateTimeHelper);
+            model.ShowCaptcha = _captchaSettings.ShowOnProductQuestions;
+            
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        [CaptchaValidator]
+        public ActionResult Questions(int productId, Nop.Web.Models.Api.ProductQuestionModel model, bool captchaValid)
+        {
+            //validate CAPTCHA
+            if (_captchaSettings.Enabled && _captchaSettings.ShowOnProductQuestions && !captchaValid)
+            {
+                ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
+            }
+
+            return RedirectToAction("ProductDetails", new { productId = productId });
+        }
+        #endregion
+
         #region Email a friend
-        
+
         [NopHttpsRequirement(SslRequirement.No)]
         public ActionResult ProductEmailAFriend(int productId)
         {

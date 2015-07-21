@@ -350,6 +350,58 @@ namespace Nop.Web.Extensions.Api
         }
         #endregion
 
+        #region Questions
+        public static ProductQuestionModel ToModel(this ProductQuestion entity, IDateTimeHelper _dateTimeHelper)
+        {
+            var model = new ProductQuestionModel()
+            {
+                Id = entity.Id,
+                CustomerId = entity.CustomerId,
+                ProductId = entity.ProductId,
+                QuestionText = entity.QuestionText,
+                CreatedOnUtc = entity.CreatedOnUtc,
+                AnsweredOnUtc = entity.AnsweredOnUtc,
+                CreatedOnStr = _dateTimeHelper.ConvertToUserTime(entity.CreatedOnUtc, DateTimeKind.Utc).ToString("g"),
+                AnsweredOnStr = entity.AnsweredOnUtc.HasValue ? _dateTimeHelper.ConvertToUserTime(entity.AnsweredOnUtc.Value, DateTimeKind.Utc).ToString("g") : string.Empty
+            };
 
+            if (entity.Product != null)
+            {
+                model.Product = new Nop.Web.Models.Catalog.ProductOverviewModel() { 
+                    Id = entity.ProductId,
+                    Name = entity.Product.Name,
+                    SeName = entity.Product.GetSeName()
+                };
+            }
+
+            return model;
+
+        }
+
+        public static List<ProductQuestionModel> ToModels(this IList<ProductQuestion> entities, IDateTimeHelper _dateTimeHelper)
+        {
+            var list = new List<ProductQuestionModel>();
+
+            foreach (var entity in entities)
+            {
+                list.Add(entity.ToModel(_dateTimeHelper));
+            }
+
+            return list;
+        }
+
+
+        public static ProductQuestion ToEntity(this ProductQuestionModel model)
+        {
+            return new ProductQuestion() { 
+                Id = model.Id,
+                CustomerId = model.CustomerId,
+                ProductId = model.ProductId,
+                QuestionText = model.QuestionText,
+                CreatedOnUtc = model.CreatedOnUtc,
+                AnsweredOnUtc = model.AnsweredOnUtc
+            };
+        }
+        #endregion
     }
 }

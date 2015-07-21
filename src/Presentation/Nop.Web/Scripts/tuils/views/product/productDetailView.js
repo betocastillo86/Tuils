@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'baseView', 'tuils/models/order', 'resources','tuils/models/review', 'tuils/views/product/reviewView', 'jpopup', 'jtabs'],
-    function ($, _, BaseView, OrderModel, Resources, ReviewModel, ReviewView) {
+﻿define(['jquery', 'underscore', 'baseView', 'tuils/models/order', 'resources','tuils/models/review', 'tuils/views/product/reviewView','tuils/views/product/questionView', 'jpopup', 'jtabs'],
+    function ($, _, BaseView, OrderModel, Resources, ReviewModel, ReviewView, QuestionView) {
 
         var ProductDetailView = BaseView.extend({
 
@@ -7,7 +7,9 @@
 
             vendorUrl: undefined,
 
-            viewReviews : undefined,
+            viewReviews: undefined,
+
+            viewQuestions: undefined,
 
             events: {
                 'click #btnShowVendor': 'confirmShowVendor'
@@ -24,23 +26,14 @@
                 this.validateAuthorization();
             },
             loadControls: function () {
-                this.productId = parseInt(this.$("#ProductId").val());
+                this.productId = parseInt($("#productId").val());
                 this.loadGallery();
                 this.loadTabs();
                 this.loadReviews();
+                this.loadComments();
             },
             loadGallery: function () {
-                //$('.jqzoom').jqzoom({
-                //    zoomType: 'standard',
-                //    title: true,
-                //    lens: _lens,
-                //    preloadImages: true,
-                //    alwaysOn: false,
-                //    xOffset: 70,
-                //    position: 'left',
-                //    showEffect: 'fadein',
-                //    hideEffect: 'fadeout'
-                //});
+
                 $('#main-product-img-lightbox-anchor-'+this.productId).magnificPopup(
                    {
                        type: 'image',
@@ -66,12 +59,17 @@
             loadReviews : function(){
                 this.viewReviews = new ReviewView({ el: '#product-reviews-page' });
             },
+            loadComments: function () {
+                this.viewQuestions = new QuestionView({ el: '#product-questions' });
+                var that = this;
+                //this.viewQuestions.on('unauthorized', function () { that.trigger('unauthorized'); });
+                //agrega la vista de preguntas como una de las que requiere autenticacion
+                this.requiredViewsWithAuthentication.push(this.viewQuestions);
+            },
             confirmShowVendor: function (obj) {
                 obj = $(obj.target);
-                if (confirm(Resources.products.confirmBuy)) {
-                    this.vendorUrl = obj.attr('data-vendorUrl');
-                    this.createOrder();
-                }
+                this.vendorUrl = obj.attr('data-vendorUrl');
+                this.createOrder();
             },
             createOrder: function () {
                 this.model.newOrder();

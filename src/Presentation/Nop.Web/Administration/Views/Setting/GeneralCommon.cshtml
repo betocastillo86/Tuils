@@ -48,6 +48,7 @@
                 $('#ssCaptchaShowOnProductReviewPagepnl').show();
                 $('#ssReCaptchaPublicKeypnl').show();
                 $('#ssReCaptchaPrivateKeypnl').show();
+                $('#ssCaptchaShowOnProductQuestionsPagepnl').show();
             }
             else {
                 $('#ssCaptchaShowOnLoginPagepnl').hide();
@@ -60,6 +61,7 @@
                 $('#ssCaptchaShowOnProductReviewPagepnl').hide();
                 $('#ssReCaptchaPublicKeypnl').hide();
                 $('#ssReCaptchaPrivateKeypnl').hide();
+                $('#ssCaptchaShowOnProductQuestionsPagepnl').hide();
             }
         }
     </script>
@@ -507,6 +509,15 @@
             <td class="adminData">
                 @Html.EditorFor(model => model.SecuritySettings.CaptchaShowOnNewsCommentPage)
                 @Html.ValidationMessageFor(model => model.SecuritySettings.CaptchaShowOnNewsCommentPage)
+            </td>
+        </tr>
+        <tr id="ssCaptchaShowOnProductQuestionsPagepnl">
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SecuritySettings.CaptchaShowOnProductQuestionsPage):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SecuritySettings.CaptchaShowOnProductQuestionsPage)
+                @Html.ValidationMessageFor(model => model.SecuritySettings.CaptchaShowOnProductQuestionsPage)
             </td>
         </tr>
         <tr id="ssCaptchaShowOnProductReviewPagepnl">

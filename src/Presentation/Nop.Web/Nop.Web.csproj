@@ -296,6 +296,7 @@
     <Compile Include="Models\Catalog\IComparableModel.cs" />
     <Compile Include="Models\Catalog\IWishableModel.cs" />
     <Compile Include="Models\Catalog\ManufacturerHomePageModel.cs" />
+    <Compile Include="Models\Catalog\QuestionProductModel.cs" />
     <Compile Include="Models\Catalog\SpecialCategoryProductModel.cs" />
     <Compile Include="Models\Catalog\VendorModel.cs" />
     <Compile Include="Models\Catalog\VendorNavigationModel.cs" />
@@ -1091,6 +1092,7 @@
     <Content Include="Scripts\tuils\collections\specificationAttribute.js" />
     <Content Include="Scripts\tuils\extensions\numbers.js" />
     <Content Include="Scripts\tuils\models\address.js" />
+    <Content Include="Scripts\tuils\models\question.js" />
     <Content Include="Scripts\tuils\models\review.js" />
     <Content Include="Scripts\tuils\models\newsletter.js" />
     <Content Include="Scripts\tuils\models\order.js" />
@@ -1125,6 +1127,7 @@
     <Content Include="Scripts\tuils\views\panel\responseQuestionView.js" />
     <Content Include="Scripts\tuils\views\panel\vendorServices.js" />
     <Content Include="Scripts\tuils\views\product\productDetailView.js" />
+    <Content Include="Scripts\tuils\views\product\questionView.js" />
     <Content Include="Scripts\tuils\views\product\reviewView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
@@ -2519,6 +2522,7 @@
     <Content Include="Views\Product\_ProductPrice.cshtml" />
     <Content Include="Views\Product\_ProductShipping.cshtml" />
     <Content Include="Views\Product\_ProductSpecialCategories.cshtml" />
+    <Content Include="Themes\Healthy\Views\Product\Questions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

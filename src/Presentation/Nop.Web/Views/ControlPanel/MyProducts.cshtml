@@ -31,9 +31,9 @@
         @foreach (var product in Model.Products)
         {
             <li class="product-detail">
-            <div class="product-dtl-img"><img title="@product.Name" src="@product.DefaultPictureModel.ImageUrl" alt="@product.Name"></div>
+            <div class="product-dtl-img"><a href="@Url.Action("ProductDetails", "Product", new { seName = product.SeName })"><img title="@product.Name" src="@product.DefaultPictureModel.ImageUrl" alt="@product.Name"></a></div>
             <div class="product-dtl-txt">
-                <h3>@product.Name</h3>
+                <h3><a href="@Url.Action("ProductDetails", "Product", new { seName = product.SeName })">@product.Name</a></h3>
                 <ul>
                     <li>@T("myproducts.visits"): @product.Visits</li>
                     <li>@T("myproducts.totalsales"): @product.TotalSales</li>

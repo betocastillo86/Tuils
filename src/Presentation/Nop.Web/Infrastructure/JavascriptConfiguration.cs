@@ -3,6 +3,7 @@ using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Vendors;
 using Nop.Core.Infrastructure;
 using Nop.Services.Localization;
+using Nop.Web.Framework.UI.Captcha;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,31 +25,35 @@ namespace Nop.Web.Infrastructure
         public static void CreateJavascriptConfigurationFile(TuilsSettings tuilsSettings)
         {
             var catalogSettings = EngineContext.Current.Resolve<CatalogSettings>();
+            var captchaSettings = EngineContext.Current.Resolve<CaptchaSettings>();
 
             var config = new
             {
 
-                
-                    //Configuración de las categorias base
-                    productBaseTypes = new
-                    {
-                        product = tuilsSettings.productBaseTypes_product,
-                        service = tuilsSettings.productBaseTypes_service,
-                        bike = tuilsSettings.productBaseTypes_bike
-                    },
-                    specialCategories = new
-                    {
-                        bikeBrand = (int)SpecialCategoryProductType.BikeBrand
-                    },
-                    specialCategoriesVendor = new
-                    {
-                        bikeBrand = (int)SpecialCategoryVendorType.BikeBrand,
-                        specializedCategory = (int)SpecialCategoryVendorType.SpecializedCategory
-                    },
-                    maxFileUploadSize = tuilsSettings.maxFileUploadSize,
-                    searchWithSearchTerms = catalogSettings.ProductSearchAutoCompleteWithSearchTerms
-                    
-                
+
+                //Configuración de las categorias base
+                productBaseTypes = new
+                {
+                    product = tuilsSettings.productBaseTypes_product,
+                    service = tuilsSettings.productBaseTypes_service,
+                    bike = tuilsSettings.productBaseTypes_bike
+                },
+                specialCategories = new
+                {
+                    bikeBrand = (int)SpecialCategoryProductType.BikeBrand
+                },
+                specialCategoriesVendor = new
+                {
+                    bikeBrand = (int)SpecialCategoryVendorType.BikeBrand,
+                    specializedCategory = (int)SpecialCategoryVendorType.SpecializedCategory
+                },
+                maxFileUploadSize = tuilsSettings.maxFileUploadSize,
+                searchWithSearchTerms = catalogSettings.ProductSearchAutoCompleteWithSearchTerms,
+                captcha = new { 
+                    showOnQuestions = captchaSettings.ShowOnProductQuestions
+                }
+
+
             };
 
             //Convierte el valor del json a un string

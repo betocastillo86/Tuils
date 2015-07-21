@@ -750,6 +750,15 @@ namespace Nop.Web.Infrastructure
               new { controller = "ControlPanel", action = "MySales" },
               new[] { "Nop.Web.Controllers" }
               );
+
+            routes.MapLocalizedRoute("Questions",
+              "mi-cuenta/preguntas-pendientes",
+              new { controller = "ControlPanel", action = "Questions" },
+              new[] { "Nop.Web.Controllers" }
+              );
+
+
+            
             #endregion
 
             #region Mi Tienda

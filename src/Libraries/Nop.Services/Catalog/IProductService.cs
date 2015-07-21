@@ -557,6 +557,14 @@ namespace Nop.Services.Catalog
 
 
         bool AnswerQuestion(ProductQuestion question);
+
+        void InsertQuestion(ProductQuestion question);
+        
+        /// <summary>
+        /// Actualiza el numero de preguntas sin responder de un producto
+        /// </summary>
+        /// <param name="productId"></param>
+        void UpdateUnansweredQuestionsByProductId(int productId);
         #endregion
 
         /// <summary>

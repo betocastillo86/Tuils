@@ -22,6 +22,7 @@ using Nop.Core.Caching;
 using Nop.Services.Media;
 using Nop.Core;
 using Nop.Core.Domain.Media;
+using Nop.Services.Helpers;
 
 namespace Nop.Web.Extensions
 {
@@ -61,6 +62,9 @@ namespace Nop.Web.Extensions
         }
         #endregion
 
+        #region Question
+        
+        #endregion
 
         //category
         public static CategoryModel ToModel(this Category entity)

@@ -34,7 +34,7 @@
                 "mi-cuenta/mis-compras(/:query)": "myOrders",
                 "mi-cuenta/mis-ventas(/:query)": "myOrders",
                 "mi-cuenta/mis-productos(/:query)": "myProducts",
-                "ControlPanel/Questions(/:query)": "questions",
+                "mi-cuenta/preguntas-pendientes(/:query)": "questions",
                 "customer/changepassword" : "changePassword",
                 "v/:query": "vendor",
                 "c/:categoryName/:attribute(/:query)": "category",
@@ -180,6 +180,20 @@
                     that.currentView.on('unauthorized', that.viewHeader.showLogin, that.viewHeader);
                     //atacha a la vista actual al evento cuando el usuario se autenticó
                     that.viewHeader.on('user-authenticated', that.currentView.userAuthenticated, that.currentView);
+
+                    //Recorre todas las vistas anidadas que requieren autenticación y les agrega los eventos de autorizacion
+                    //Esto se hace para controlar estos eventos en las vistas que no son de primer nivel
+                    if (that.currentView.requiredViewsWithAuthentication && that.currentView.requiredViewsWithAuthentication.length > 0)
+                    {
+                        for (var i = 0; i < that.currentView.requiredViewsWithAuthentication.length; i++) {
+                            var view = that.currentView.requiredViewsWithAuthentication[i];
+                            //se atacha al evento de solicitud de ingreso
+                            view.on('unauthorized', that.viewHeader.showLogin, that.viewHeader);
+                            //atacha a la vista actual al evento cuando el usuario se autenticó
+                            that.viewHeader.on('user-authenticated', view.userAuthenticated, view);
+                        }
+                    }
+
                 }
 
             },

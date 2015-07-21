@@ -9,6 +9,10 @@
 
         viewLogin: undefined,
 
+        //Lista de vistas anidadas que requieren autenticación para realizar alguna acción
+        //Todas las vistas que se encuentren en esta propiedad se les agregará el evento unautorized
+        requiredViewsWithAuthentication : [],
+
         loadingTemplate: '<img id="divLoadingback" src="/Content/loading_2x.gif" />',
 
         minSizeDesktopWith: 1024,

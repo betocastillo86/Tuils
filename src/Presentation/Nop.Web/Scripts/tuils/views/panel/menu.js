@@ -20,19 +20,19 @@
             ]
         },
         $menu : undefined,
-        events: {
-            'click .nav-with-sub': 'openMenu'
-        },
+        //events: {
+        //    'click .nav-with-sub': 'openMenu'
+        //},
         initialize: function (args) {
             this.handleResize();
             this.on("window-resized-max", this.hideMenuResponsive, this);
             this.on("window-resized-min", this.showMenuResponsive, this);
             this.loadResponsiveMenu();
         },
-        openMenu : function(ev)
-        {
-            $(ev.target).parent().find("ul").show();
-        },
+        //openMenu : function(ev)
+        //{
+        //    $(ev.target).parent().find("ul").show();
+        //},
         showMenuResponsive: function () {
             this.loadResponsiveMenu();
         },

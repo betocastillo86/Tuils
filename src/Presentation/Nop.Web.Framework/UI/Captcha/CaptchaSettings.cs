@@ -14,8 +14,11 @@ namespace Nop.Web.Framework.UI.Captcha
         public bool ShowOnBlogCommentPage { get; set; }
         public bool ShowOnNewsCommentPage { get; set; }
         public bool ShowOnProductReviewPage { get; set; }
+
+        public bool ShowOnProductQuestions { get; set; }
         public string ReCaptchaPublicKey { get; set; }
         public string ReCaptchaPrivateKey { get; set; }
         public string ReCaptchaTheme { get; set; }
+
     }
 }
