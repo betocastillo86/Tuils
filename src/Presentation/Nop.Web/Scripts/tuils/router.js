@@ -2,12 +2,12 @@
   'tuils/views/panel/myAccount','tuils/views/panel/vendorServices','tuils/views/panel/questionsView','tuils/views/vendor/vendorDetailView'			
 ,'tuils/views/product/productDetailView','tuils/views/common/newsletterView','tuils/views/common/searcherView','tuils/views/common/leftFeaturedProductsView'	
 , 'tuils/views/common/header', 'tuils/views/panel/offices', 'tuils/views/panel/menu', 'tuils/views/panel/myProductsView', 'tuils/views/home/homeView',
-
+'tuils/views/product/searchView',
 'ajaxCart', 'nopCommon'],
     function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView,
         MyAccountView,VendorServicesView ,QuestionsView ,VendorDetailView,
-        ProductDetailView, NewsletterView, SearchView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
-        HomeView) {
+        ProductDetailView, NewsletterView, SearcherView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
+        HomeView, SearchView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -110,8 +110,7 @@
             {
                 $(".master-wrapper-main").first().removeClass("master-wrapper-main");
                 $(".master-wrapper-page").first().removeClass("master-wrapper-page").removeClass("container").removeClass("hd");
-                var that = this;
-                that.currentView = new VendorDetailView({ el: that.defaultEl });
+                this.currentView = new VendorDetailView({ el: this.defaultEl });
                 this.loadSubViews();
             },
             sitemap: function () {
@@ -125,6 +124,7 @@
                 this.loadTwoColumns();
             },
             search: function () {
+                this.currentView = new SearchView({ el: this.defaultEl });
                 this.loadTwoColumns();
             },
             passwordRecovery: function () {
@@ -162,7 +162,7 @@
             },
             loadSearcher: function () {
                 var that = this;
-                that.viewSearcher = new SearchView({ el: 'header' });
+                that.viewSearcher = new SearcherView({ el: 'header' });
             },
             loadLeftFeaturedProducts: function () {
                 var that = this;

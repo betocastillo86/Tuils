@@ -9,156 +9,160 @@
 @using Nop.Web.Extensions;
 
 @*<script type="text/javascript">
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        $("#@Html.FieldIdFor(model => model.As)").click(toggleAdvancedSearch);
+            $("#@Html.FieldIdFor(model => model.As)").click(toggleAdvancedSearch);
 
-        toggleAdvancedSearch();
-    });
+            toggleAdvancedSearch();
+        });
 
-    function toggleAdvancedSearch() {
+        function toggleAdvancedSearch() {
 
-        if ($('#@Html.FieldIdFor(model => model.As)').is(':checked')) {
-            $('#advanced-search-block').show();
+            if ($('#@Html.FieldIdFor(model => model.As)').is(':checked')) {
+                $('#advanced-search-block').show();
+            }
+            else {
+                $('#advanced-search-block').hide();
+            }
         }
-        else {
-            $('#advanced-search-block').hide();
-        }
+    </script>*@
+<div id="divMainSection">
+
+
+    @section left {
+
+        <div class="product-filters-wrapper">
+
+            @if (Model.PagingFilteringContext.CategoryFilter.Enabled)
+            {
+                @Html.Partial("_FilterCategoryBox", Model.PagingFilteringContext.CategoryFilter, new ViewDataDictionary())
+            }
+            @if (Model.PagingFilteringContext.StateProvinceFilter.Enabled)
+            {
+                @Html.Partial("_FilterStateProvinceBox", Model.PagingFilteringContext.StateProvinceFilter, new ViewDataDictionary())
+            }
+            @if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
+            {
+                @Html.Partial("_FilterSpecsBox", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
+            }
+            @if (Model.PagingFilteringContext.ManufacturerFilter.Enabled)
+            {
+                @Html.Partial("_FilterManufacturerBox", Model.PagingFilteringContext.ManufacturerFilter, new ViewDataDictionary())
+            }
+            @if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
+            {
+                @Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
+            }
+            @if (Model.PagingFilteringContext.BikeReferenceFilter.Enabled)
+            {
+                @Html.Partial("_FilterBikeReferenceBox", Model.PagingFilteringContext.BikeReferenceFilter, new ViewDataDictionary())
+            }
+
+        </div>
     }
-</script>*@
-
-@section left {
-
-    <div class="product-filters-wrapper">
-        
-        @if (Model.PagingFilteringContext.CategoryFilter.Enabled)
-        {
-            @Html.Partial("_FilterCategoryBox", Model.PagingFilteringContext.CategoryFilter, new ViewDataDictionary())
-        }
-        @if (Model.PagingFilteringContext.StateProvinceFilter.Enabled)
-        {
-            @Html.Partial("_FilterStateProvinceBox", Model.PagingFilteringContext.StateProvinceFilter, new ViewDataDictionary())
-        }
-        @if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
-        {
-            @Html.Partial("_FilterSpecsBox", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
-        }
-        @if (Model.PagingFilteringContext.ManufacturerFilter.Enabled)
-        {
-            @Html.Partial("_FilterManufacturerBox", Model.PagingFilteringContext.ManufacturerFilter, new ViewDataDictionary())
-        }
-        @if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
-        {
-            @Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
-        }
-        @if (Model.PagingFilteringContext.BikeReferenceFilter.Enabled)
-        {
-            @Html.Partial("_FilterBikeReferenceBox", Model.PagingFilteringContext.BikeReferenceFilter, new ViewDataDictionary())
-        }
-        
-    </div>
-}
-<div class="page search-page">
-    <div class="page-title">
-        <h1>@T("Search")</h1>
-    </div>
-    <div class="page-body">
-        <div class="product-selectors">
-            @*view mode*@
-            @if (Model.PagingFilteringContext.AllowProductViewModeChanging && Model.Products.Count > 0)
-            {
-                @*edited*@
-                 <div class="product-viewmode">
-                   <a rel="nofollow" class="fontawesome-th" href="@Model.PagingFilteringContext.AvailableViewModes.First().Value"></a>
-                    <a rel="nofollow" class="fontawesome-reorder" href="@Model.PagingFilteringContext.AvailableViewModes.Last().Value"></a>
-                </div> 
-                <script>
-                    $(document).ready(function () {
-                        $('div.product-list').length ? $('.fontawesome-reorder').addClass('active') : $('.fontawesome-th').addClass('active');
-                    });
-                </script>
-                @*edited*@
-
-                @*<div class="product-viewmode">
-                    <span>@T("Catalog.ViewMode")</span>
-                    @Html.DropDownList("products-viewmode", Model.PagingFilteringContext.AvailableViewModes, new { onchange = "setLocation(this.value);" })
-                </div>*@
-            }
-            @*sorting*@
-            @if (Model.PagingFilteringContext.AllowProductSorting && Model.Products.Count > 0)
-            {
-                <div class="product-sorting">
-                    <span>@T("Catalog.OrderBy")</span>
-                    @Html.DropDownList("products-orderby", Model.PagingFilteringContext.AvailableSortOptions, new { onchange = "setLocation(this.value);" })
-                </div>
-            }
-            @*page size*@
-            @*@if (Model.PagingFilteringContext.AllowCustomersToSelectPageSize && Model.Products.Count > 0)
-            {
-                <div class="product-page-size">
-                    <span>@T("Catalog.PageSize")</span>
-                    @Html.DropDownList("products-pagesize", Model.PagingFilteringContext.PageSizeOptions, new { onchange = "setLocation(this.value);" })
-                    <span>@T("Catalog.PageSize.PerPage")</span>
-                </div>
-            }*@
+    <div class="page search-page">
+        <div class="page-title">
+            <h1>@T("Search")</h1>
         </div>
-        @*added*@
-        @if (Model.PagingFilteringContext.AllowCustomersToSelectPageSize && Model.Products.Count > 0)
-        {
-            <div class="product-page-size">
-                <span>@T("Catalog.PageSize")</span>
-                @foreach (var per in Model.PagingFilteringContext.PageSizeOptions)
+        <div class="page-body">
+            <div class="product-selectors">
+                @*view mode*@
+                @if (Model.PagingFilteringContext.AllowProductViewModeChanging && Model.Products.Count > 0)
                 {
-                    <a href="@per.Value" rel="nofollow">@per.Text</a>
+                    @*edited*@
+                    <div class="product-viewmode">
+                        <a rel="nofollow" class="fontawesome-th" href="@Model.PagingFilteringContext.AvailableViewModes.First().Value"></a>
+                        <a rel="nofollow" class="fontawesome-reorder" href="@Model.PagingFilteringContext.AvailableViewModes.Last().Value"></a>
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            $('div.product-list').length ? $('.fontawesome-reorder').addClass('active') : $('.fontawesome-th').addClass('active');
+                        });
+                    </script>
+                    @*edited*@
+
+                    @*<div class="product-viewmode">
+                            <span>@T("Catalog.ViewMode")</span>
+                            @Html.DropDownList("products-viewmode", Model.PagingFilteringContext.AvailableViewModes, new { onchange = "setLocation(this.value);" })
+                        </div>*@
                 }
-                <span>@T("Catalog.PageSize.PerPage")</span>
-            </div>
-        }
-        @*@added*@
-        <div class="search-results">
-            @if (!String.IsNullOrEmpty(Model.Warning))
-            {
-                <strong class="warning">
-                    @Model.Warning
-                </strong>
-            }
-            @if (Model.NoResults)
-            {
-                <strong class="result">
-                    @T("Search.NoResultsText")
-                </strong>
-            }
-            @*product list*@
-            @if (Model.Products.Count > 0)
-            {
-                if (Model.PagingFilteringContext.ViewMode == "list")
+                @*sorting*@
+                @if (Model.PagingFilteringContext.AllowProductSorting && Model.Products.Count > 0)
                 {
-                    @*list mode*@
-                    <div class="product-list">
-                        @foreach (var product in Model.Products)
-                        {
-                            <div class="item-box">
-                                @Html.Partial("_ProductBox", product)
-                            </div>
-                        }
+                    <div class="product-sorting">
+                        <span>@T("Catalog.OrderBy")</span>
+                        @Html.DropDownList("products-orderby", Model.PagingFilteringContext.AvailableSortOptions, new { onchange = "setLocation(this.value);" })
                     </div>
                 }
-                else
-                {
-                    @*grid mode*@
-                    <div class="product-grid">
-                        @foreach (var product in Model.Products)
+                @*page size*@
+                    @*@if (Model.PagingFilteringContext.AllowCustomersToSelectPageSize && Model.Products.Count > 0)
                         {
-                            <div class="item-box">
-                                @Html.Partial("_ProductBox", product)
+                            <div class="product-page-size">
+                                <span>@T("Catalog.PageSize")</span>
+                                @Html.DropDownList("products-pagesize", Model.PagingFilteringContext.PageSizeOptions, new { onchange = "setLocation(this.value);" })
+                                <span>@T("Catalog.PageSize.PerPage")</span>
                             </div>
+                        }*@
+                </div>
+                @*added*@
+                @if (Model.PagingFilteringContext.AllowCustomersToSelectPageSize && Model.Products.Count > 0)
+                {
+                    <div class="product-page-size">
+                        <span>@T("Catalog.PageSize")</span>
+                        @foreach (var per in Model.PagingFilteringContext.PageSizeOptions)
+                        {
+                            <a href="@per.Value" rel="nofollow">@per.Text</a>
                         }
+                        <span>@T("Catalog.PageSize.PerPage")</span>
                     </div>
                 }
-            }
-            <div class="pager">
-                @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber").BooleanParameterName("as").BooleanParameterName("isc").BooleanParameterName("sid")
+                @*@added*@
+                <div class="search-results">
+                    @if (!String.IsNullOrEmpty(Model.Warning))
+                    {
+                        <strong class="warning">
+                            @Model.Warning
+                        </strong>
+                    }
+                    @if (Model.NoResults)
+                    {
+                        <strong class="result">
+                            @T("Search.NoResultsText")
+                        </strong>
+                    }
+                    @*product list*@
+                    @if (Model.Products.Count > 0)
+                    {
+                        if (Model.PagingFilteringContext.ViewMode == "list")
+                        {
+                            @*list mode*@
+                            <div class="product-list">
+                                @foreach (var product in Model.Products)
+                                {
+                                    <div class="item-box">
+                                        @Html.Partial("_ProductBox", product)
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            @*grid mode*@
+                            <div class="product-grid">
+                                @foreach (var product in Model.Products)
+                                {
+                                    <div class="item-box">
+                                        @Html.Partial("_ProductBox", product)
+                                    </div>
+                                }
+                            </div>
+                        }
+                    }
+                    <div class="pager">
+                        @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber").BooleanParameterName("as").BooleanParameterName("isc").BooleanParameterName("sid")
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
-</div>
