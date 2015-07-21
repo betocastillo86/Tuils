@@ -277,6 +277,8 @@ namespace Nop.Data.Migrations
             newLocaleStringResources.Add("Questions.QuestionPublished", "Tu pregunta fue guardada correctamente");
             newLocaleStringResources.Add("Questions.LinkWriteQuestion", "Puedes dejarle una pregunta al vendedor");
             newLocaleStringResources.Add("Questions.LinkWriteQuestion.Alt", "Deja una pregunta al vendedor de este producto para que la conteste lo más rapido posible");
+            newLocaleStringResources.Add("Questions.NoQuestions", "No han dejado preguntas todavia");
+            newLocaleStringResources.Add("Reviews.NoReviews", "Nadie ha calificado este producto todavía");
             newLocaleStringResources.Add("custom.reviews.productreviews", "Calificaciones");
             newLocaleStringResources.Add("custom.reviews.productreviews.Alt", "Revisa las calificaciones que otros usuarios le han dejado a este vendedor");
             

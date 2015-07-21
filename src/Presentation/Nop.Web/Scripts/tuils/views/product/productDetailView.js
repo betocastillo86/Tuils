@@ -29,7 +29,6 @@
                 this.productId = parseInt($("#productId").val());
                 this.loadGallery();
                 this.loadTabs();
-                this.loadReviews();
                 this.loadComments();
             },
             loadGallery: function () {
@@ -54,7 +53,12 @@
                 
             },
             loadTabs : function(){
+                var that = this;
                 $('#tab-container').easytabs();
+                $('#tab-container').on('easytabs:ajax:complete', function (a,b) {
+                    if (b.attr("data-target") == "#product-reviews-page")
+                        that.viewReviews = new ReviewView({ el: '#product-reviews-page' });
+                });
             },
             loadReviews : function(){
                 this.viewReviews = new ReviewView({ el: '#product-reviews-page' });
