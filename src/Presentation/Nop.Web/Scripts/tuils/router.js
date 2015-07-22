@@ -35,9 +35,11 @@
                 "mi-cuenta/mis-ventas(/:query)": "myOrders",
                 "mi-cuenta/mis-productos(/:query)": "myProducts",
                 "mi-cuenta/preguntas-pendientes(/:query)": "questions",
+                "mis-deseos(/:customerGuid)": 'wishlist',
+                "comparar": 'compare',
                 "customer/changepassword" : "changePassword",
                 "v/:query": "vendor",
-                "c/:categoryName/:attribute(/:query)": "category",
+                "c/:categoryName(/:attribute)(/:query)": "category",
                 "m/:query":"manufacturer",
                 "p/:query": "product",
                 'entrar' : 'login',
@@ -89,6 +91,12 @@
             changePassword : function()
             {
                 this.loadSubViewsPanel();
+            },
+            wishlist: function () {
+                this.loadTwoColumns();
+            },
+            compare: function () {
+                this.loadTwoColumns();
             },
             myProducts : function()
             {

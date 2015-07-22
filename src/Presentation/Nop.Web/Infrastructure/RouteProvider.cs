@@ -48,7 +48,7 @@ namespace Nop.Web.Infrastructure
                             new[] { "Nop.Web.Controllers" });
             //wishlist
             routes.MapLocalizedRoute("Wishlist",
-                            "wishlist/{customerGuid}",
+                            "mis-deseos/{customerGuid}",
                             new { controller = "ShoppingCart", action = "Wishlist", customerGuid = UrlParameter.Optional },
                             new[] { "Nop.Web.Controllers" });
 
@@ -136,7 +136,7 @@ namespace Nop.Web.Infrastructure
 
             //compare products
             routes.MapLocalizedRoute("CompareProducts",
-                            "compareproducts/",
+                            "comparar/",
                             new { controller = "Product", action = "CompareProducts" },
                             new[] { "Nop.Web.Controllers" });
 
