@@ -150,12 +150,19 @@ namespace Nop.Services.Catalog
            int? stateProvinceId = null,
             bool? leftFeatured = null);
 
+
         /// <summary>
         /// Realiza un conteo de los productos activos de un vendedor
         /// </summary>
         /// <param name="vendorId"></param>
         /// <returns></returns>
         int CountActiveProductsByVendorId(int vendorId);
+
+        /// <summary>
+        /// Cuenta todas las preguntas que no han sido contestadas de los productos de un vendedor
+        /// </summary>
+        /// <returns></returns>
+        int CountUnansweredQuestionsByVendorId(int vendorId);
 
         /// <summary>
         /// Search products

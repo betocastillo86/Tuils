@@ -64,6 +64,11 @@
         <div class="page-title">
             <h1>@T("Search")</h1>
         </div>
+        @if (Model.ShowSimilarSearches)
+        { 
+            @Html.Action("SimilarSearches")
+        }
+        
         <div class="page-body">
             <div class="product-selectors">
                 @*view mode*@

@@ -12,6 +12,7 @@
     <div class="page-body">
         @Html.Widget("home_page_top")
         @*@Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })*@
+        @Html.Action("SimilarSearches", "Catalog")
         @Html.Action("ManufacturerHomePage", "Catalog")
         @*@Html.Action("HomepageCategories", "Catalog")*@
         @Html.Action("HomepageProducts", "Product")

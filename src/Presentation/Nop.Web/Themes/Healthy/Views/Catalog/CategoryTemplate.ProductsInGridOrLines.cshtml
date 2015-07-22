@@ -49,6 +49,7 @@
     <div class="page-title">
         <h1>@Model.Name</h1>
     </div>
+    @Html.Action("SimilarSearches", "Catalog", new { q = Model.Name })
     <div class="page-body">
         @Html.Widget("categorydetails_top", Model.Id)
         @*description*@

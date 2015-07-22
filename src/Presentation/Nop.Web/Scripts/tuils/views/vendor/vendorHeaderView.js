@@ -5,11 +5,12 @@
 
             events: {
                 "click #btnEditVendorHeader": "edit",
-                "click .coverPerfil .cover-editor": "changeBackgroundPicture",
+                "click #btnChangeCover": "changeBackgroundPicture",
                 "click .img_perfil .cover-editor": "changePicture",
                 "change input[type='file']": "saveImage",
                 "click #btnMoveCover": "enableMoveCover",
-                "click #btnSaveCoverPosition": "saveCoverPosition"
+                "click #btnSaveCoverPosition": "saveCoverPosition",
+                'click .icon-foto': 'showCoverOptions'
             },
 
 
@@ -115,6 +116,10 @@
                 this.imageType = 'main';
                 this.fileUpload.click();
             },
+            showCoverOptions: function () {
+                var display = $('.cover-editor .menu-cover').css('display') == 'none' ? 'block' : 'none';
+                this.$('.cover-editor .menu-cover').css('display', display);
+            },
             saveImage : function (obj)
             {
                 var file = obj.target.files[0];
@@ -156,6 +161,7 @@
                 //Activa las propiedades para poder mover el fondo
                 this.$('#divMainCover').css('overflow', 'hidden').css('height', '300px').css("cursor", "move");
                 this.$('#btnMoveCover').hide();
+                this.$('#btnChangeCover').hide();
                 this.$('#btnSaveCoverPosition').show();
 
                 var cover = this.$('.coverPerfil');
@@ -185,9 +191,12 @@
                 this.model.saveCoverPosition();
                 this.$('.coverPerfil').draggable('destroy');
                 this.$('#btnMoveCover').show();
+                this.$('#btnChangeCover').show();
+                
                 this.$('#btnSaveCoverPosition').hide();
                 this.$('#divMainCover').css('data-pos', this.initPositionBackground);
                 this.$('#divMainCover').css('overflow', '').css('height', '').css("cursor", "");
+                this.showCoverOptions();
             },
             switchEnabled: function (editing)
             {

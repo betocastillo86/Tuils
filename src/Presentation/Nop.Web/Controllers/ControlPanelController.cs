@@ -140,16 +140,15 @@ namespace Nop.Web.Controllers
                 model.AvgRating = _workContext.CurrentVendor.AvgRating ?? 0;
                 model.NumRatings = _workContext.CurrentVendor.NumRatings;
 
-                //trae todos los productos del vendedor y los cuenta Activos
-                var vendorProducts = _productService.SearchProducts(vendorId: _workContext.CurrentVendor.Id);
-                model.PublishedProducts = vendorProducts.Count;
+                //cuenta el numero de productos activos
+                model.PublishedProducts = _productService.CountActiveProductsByVendorId(vendorId: _workContext.CurrentVendor.Id);
 
                 //Consulta todas las ventas del vendedor
                 var vendorSellings = _orderService.SearchOrders(vendorId: _workContext.CurrentVendor.Id);
                 model.SoldProducts = vendorSellings.Count;
 
                 //Suma el numero de preguntas sin responder
-                model.UnansweredQuestions = vendorProducts.Sum(p => p.UnansweredQuestions);
+                model.UnansweredQuestions = _productService.CountUnansweredQuestionsByVendorId(_workContext.CurrentVendor.Id);
 
             }
 

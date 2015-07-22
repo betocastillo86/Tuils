@@ -2350,6 +2350,25 @@ namespace Nop.Services.Catalog
 
             return query.FirstOrDefault();
         }
+
+        /// <summary>
+        /// Cuenta todas las preguntas que no han sido contestadas de los productos de un vendedor
+        /// </summary>
+        /// <returns></returns>
+        public int CountUnansweredQuestionsByVendorId(int vendorId)
+        {
+            if (vendorId <= 0)
+                return 0;
+
+            //Suma todas las preguntas sin responder de los productos del vendedor
+            var query = _productRepository.Table
+                .Where(p => p.VendorId == vendorId)
+                .Sum(p => p.UnansweredQuestions);
+
+            return query;
+        }
+
+
         #endregion
 
         #region SpecialCategories
@@ -2368,6 +2387,9 @@ namespace Nop.Services.Catalog
         #endregion
 
         #endregion
+
+
+
 
 
 

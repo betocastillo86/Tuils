@@ -328,5 +328,21 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public int NumberManufacturersOnHome { get; set; }
 
+        /// <summary>
+        /// Cargar busquedas similares
+        /// </summary>
+        public bool ShowSimilarSearches { get; set; }
+
+
+        /// <summary>
+        /// Número de sugerencias que se le mostrará al usuario de busquedas similares
+        /// </summary>
+        public int NumSuggestionSimilarSearches { get; set; }
+
+        /// <summary>
+        /// Número de sugerencias que se le mostrará al usuario de busquedas similares en el HOME
+        /// </summary>
+        public int NumSuggestionSimilarSearchesHome { get; set; }
+
     }
 }

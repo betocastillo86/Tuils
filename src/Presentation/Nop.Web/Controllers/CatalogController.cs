@@ -1139,6 +1139,9 @@ namespace Nop.Web.Controllers
 
             model.PagingFilteringContext.LoadPagedList(products);
 
+            //Agrega al view data que no cargue los estilos del ancho del template
+            ViewData.Add("noWidth", true);
+
             return View(model);
         }
 
@@ -1459,12 +1462,16 @@ namespace Nop.Web.Controllers
             // only search if query string search keyword is set (used to avoid searching or displaying search term min length error message on /search page load)
             if (Request.Params["Q"] != null)
             {
+                
                 if (model.Q.Length < _catalogSettings.ProductSearchTermMinimumLength)
                 {
                     model.Warning = string.Format(_localizationService.GetResource("Search.SearchTermMinimumLengthIsNCharacters"), _catalogSettings.ProductSearchTermMinimumLength);
                 }
                 else
                 {
+
+                    model.ShowSimilarSearches = _catalogSettings.ShowSimilarSearches;
+                    
                     var categoryIds = new List<int>();
 
 
@@ -1619,6 +1626,45 @@ namespace Nop.Web.Controllers
             }
 
             model.PagingFilteringContext.LoadPagedList(products);
+            return View(model);
+        }
+
+        [ChildActionOnly]
+        public ActionResult SimilarSearches(string q)
+        {
+            var model = new SimilarSearchesModel();
+
+            
+            if (_catalogSettings.ShowSimilarSearches)
+            {
+                //Si no tiene ninguna busqueda es porque es la general
+                string cacheKey = string.Empty;
+                int top = _catalogSettings.NumSuggestionSimilarSearches;
+                if (string.IsNullOrEmpty(q))
+                {
+                    cacheKey = ModelCacheEventConsumer.SEARCH_SUGGEST_BY_GENERAL;
+                    top = _catalogSettings.NumSuggestionSimilarSearchesHome;
+                    model.Title = _localizationService.GetResource("similarSearches.most");
+                    model.TitleOfTitle = _localizationService.GetResource("similarSearches.most.title");
+                }
+                else
+                {
+                    cacheKey = string.Format(ModelCacheEventConsumer.SEARCH_SUGGEST_BY_NEW_SEARCH, q);
+                    model.Title = _localizationService.GetResource("similarSearches");
+                    model.TitleOfTitle = string.Format(_localizationService.GetResource("similarSearches.title"), q);
+                }
+                    
+
+                
+                model.Enable = true;
+                model.Searches = _cacheManager.Get(cacheKey, () =>
+                {
+                    return _searchTermService.GetTemsByKeyword(q, top, getMostCommon:true)
+                    .Select(s => s.Keyword)
+                    .ToList();
+                }); 
+            }
+
             return View(model);
         }
 

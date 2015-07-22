@@ -37,7 +37,7 @@ namespace Nop.Services.Common
         /// <param name="keyword">llaves por las que el usuario busca</param>
         /// <param name="top">numero maximo de resultados</param>
         /// <returns></returns>
-        IList<SearchTerm> GetTemsByKeyword(string keyword, int top);
+        IList<SearchTerm> GetTemsByKeyword(string keyword, int top, bool getMostCommon = false);
 
         /// <summary>
         /// Gets a search term statistics

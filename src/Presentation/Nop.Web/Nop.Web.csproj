@@ -302,6 +302,7 @@
     <Compile Include="Models\Catalog\IWishableModel.cs" />
     <Compile Include="Models\Catalog\ManufacturerHomePageModel.cs" />
     <Compile Include="Models\Catalog\QuestionProductModel.cs" />
+    <Compile Include="Models\Catalog\SimilarSearchesModel.cs" />
     <Compile Include="Models\Catalog\SpecialCategoryProductModel.cs" />
     <Compile Include="Models\Catalog\VendorModel.cs" />
     <Compile Include="Models\Catalog\VendorNavigationModel.cs" />
@@ -2532,6 +2533,7 @@
     <Content Include="Views\Product\_ProductShipping.cshtml" />
     <Content Include="Views\Product\_ProductSpecialCategories.cshtml" />
     <Content Include="Themes\Healthy\Views\Product\Questions.cshtml" />
+    <Content Include="Themes\Healthy\Views\Catalog\SimilarSearches.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

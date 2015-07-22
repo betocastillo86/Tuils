@@ -137,6 +137,15 @@ namespace Nop.Web.Infrastructure.Cache
         public const string SEARCH_CATEGORIES_MODEL_KEY = "Nop.pres.search.categories-{0}-{1}-{2}";
         public const string SEARCH_CATEGORIES_PATTERN_KEY = "Nop.pres.search.categories";
 
+
+        /// <summary>
+        /// Cache de las busquedas similares
+        /// {0}  Valor de la busqueda
+        /// </summary>
+        public const string SEARCH_SUGGEST_BY_GENERAL = "Nop.pres.search.suggest";
+        public const string SEARCH_SUGGEST_BY_NEW_SEARCH = "Nop.pres.search.suggest-{0}";
+
+
         /// <summary>
         /// Key for ManufacturerNavigationModel caching
         /// </summary>
@@ -252,6 +261,8 @@ namespace Nop.Web.Infrastructure.Cache
         public const string CATEGORY_CHILD_IDENTIFIERS_MODEL_KEY = "Nop.pres.category.childidentifiers-{0}-{1}-{2}";
         public const string CATEGORY_CHILD_IDENTIFIERS_PATTERN_KEY = "Nop.pres.category.childidentifiers";
 
+
+        
 
         public const string CATEGORIES_API_ALL_SERVICES = "Nop.category.api.services";
         public const string CATEGORIES_API_ALL_BIKEREFERENCES = "Nop.category.api.allbikebrands";

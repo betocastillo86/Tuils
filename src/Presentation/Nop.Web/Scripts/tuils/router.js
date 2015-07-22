@@ -116,8 +116,6 @@
             },
             vendor : function(query)
             {
-                $(".master-wrapper-main").first().removeClass("master-wrapper-main");
-                $(".master-wrapper-page").first().removeClass("master-wrapper-page").removeClass("container").removeClass("hd");
                 this.currentView = new VendorDetailView({ el: this.defaultEl });
                 this.loadSubViews();
             },

@@ -281,9 +281,28 @@ namespace Nop.Data.Migrations
             newLocaleStringResources.Add("Reviews.NoReviews", "Nadie ha calificado este producto todavía");
             newLocaleStringResources.Add("custom.reviews.productreviews", "Calificaciones");
             newLocaleStringResources.Add("custom.reviews.productreviews.Alt", "Revisa las calificaciones que otros usuarios le han dejado a este producto");
+            newLocaleStringResources.Add("vendor.backgroudPicture", "Subir imagen");
+            newLocaleStringResources.Add("vendor.backgroudPicture.alt", "Cambia la imagen de fondo de tu tienda");
             
+            newLocaleStringResources.Add("vendor.movecover", "Mover");
+            newLocaleStringResources.Add("vendor.movecover.alt", "Acomoda la imagen como mejor te parezca");
+
+            newLocaleStringResources.Add("vendor.edit", "Actualizar los datos");
+            newLocaleStringResources.Add("vendor.edit.alt", "Cambia la información de tu almacen o taller");
+
+
+            newLocaleStringResources.Add("similarSearches", "Busquedas similares:");
+            newLocaleStringResources.Add("similarSearches.title", "Busquedas similares para {0}");
+            newLocaleStringResources.Add("similarSearches.suggest.title", "Busca resultados para {0}");
+            newLocaleStringResources.Add("similarSearches.most", "Busquedas más comunes:");
+            newLocaleStringResources.Add("similarSearches.most.title", "Estas son las busquedas más comunes en tuils");
             
-            
+
+            newLocaleStringResources.Add("Vendor.vendorServices.services.title", "Servicios en los que {0} se especializa");
+            newLocaleStringResources.Add("Vendor.vendorServices.services.edit", "Actualiza los servicios en los que te especializas");
+            newLocaleStringResources.Add("Vendor.vendorServices.bikes.title", "Referencias de motocicletas en los que {0} se especializa");
+            newLocaleStringResources.Add("Vendor.vendorServices.bikes.edit", "Actualiza las referencias de motocicletas en las que te especializas");
+
             newLocaleStringResources.Add("Admin.Configuration.Settings.GeneralCommon.CaptchaShowOnProductQuestionsPage", "Mostrar el captcha en la zona de preguntas del producto");
             
            
@@ -320,6 +339,10 @@ namespace Nop.Data.Migrations
 
             settings.Add("CatalogSettings.ProductSearchAutoCompleteWithSearchTerms", "True");
             settings.Add("CaptchaSettings.ShowOnProductQuestions", "True");
+            settings.Add("CatalogSettings.ShowSimilarSearches", "True");
+            settings.Add("CatalogSettings.NumSuggestionSimilarSearches", "5");
+            settings.Add("CatalogSettings.NumSuggestionSimilarSearchesHome", "10");
+            
             
 
             //Recorre todas las llaves que desea adicional
