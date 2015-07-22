@@ -1,5 +1,6 @@
 ﻿using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Common;
+using Nop.Core.Domain.Media;
 using Nop.Core.Domain.Vendors;
 using Nop.Core.Infrastructure;
 using Nop.Services.Helpers;
@@ -28,6 +29,7 @@ namespace Nop.Web.Infrastructure
             var catalogSettings = EngineContext.Current.Resolve<CatalogSettings>();
             var captchaSettings = EngineContext.Current.Resolve<CaptchaSettings>();
             var dateSettings = EngineContext.Current.Resolve<DateTimeSettings>();
+            var mediaSettings = EngineContext.Current.Resolve<MediaSettings>();
 
             var config = new
             {
@@ -55,8 +57,14 @@ namespace Nop.Web.Infrastructure
                 {
                     showOnQuestions = captchaSettings.ShowOnProductQuestions
                 },
-                jquery = new {
+                jquery = new
+                {
                     dateFormat = dateSettings.JqueryFormat
+                },
+                media = new {
+                    productImageMaxSizeResize = mediaSettings.ProductImageMaxSizeResize,
+                    coverImageMaxSizeResize = mediaSettings.CoverImageMaxSizeResize,
+                    logoImageMaxSizeResize = mediaSettings.LogoImageMaxSizeResize
                 }
             };
 

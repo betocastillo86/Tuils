@@ -343,6 +343,11 @@ namespace Nop.Data.Migrations
             settings.Add("CatalogSettings.NumSuggestionSimilarSearches", "5");
             settings.Add("CatalogSettings.NumSuggestionSimilarSearchesHome", "10");
             settings.Add("datetimesettings.jqueryformat", "dd/mm/yy");
+            settings.Add("mediasettings.productImageMaxSizeResize", "2400");
+            settings.Add("mediasettings.CoverImageMaxSizeResize", "2400");
+            settings.Add("mediasettings.LogoImageMaxSizeResize", "1700");
+            
+            
             
             //Recorre todas las llaves que desea adicional
             foreach (var setting in settings)

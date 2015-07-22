@@ -21,6 +21,7 @@ using Nop.Services.Stores;
 using Nop.Services.Media;
 using Nop.Services.Vendors;
 using Nop.Services.Orders;
+using Nop.Services.Logging;
 
 namespace Nop.Services.Catalog
 {
@@ -76,6 +77,7 @@ namespace Nop.Services.Catalog
         private readonly IStoreMappingService _storeMappingService;
         private readonly IPictureService _pictureService;
         private readonly IOrderService _orderService;
+        private readonly ILogger _logger;
 
         #endregion
 
@@ -140,7 +142,8 @@ namespace Nop.Services.Catalog
             IRepository<ProductQuestion> productQuestionRepository,
             TuilsSettings tuilsSettings,
             IOrderService orderService,
-            IRepository<SpecialCategoryProduct> specialCategoryProductRepository)
+            IRepository<SpecialCategoryProduct> specialCategoryProductRepository,
+            ILogger logger)
         {
             this._cacheManager = cacheManager;
             this._productRepository = productRepository;
@@ -173,6 +176,7 @@ namespace Nop.Services.Catalog
             this._tuilsSettings = tuilsSettings;
             this._orderService = orderService;
             this._specialCategoryProductRepository = specialCategoryProductRepository;
+            this._logger = logger;
         }
 
         #endregion
@@ -2359,13 +2363,18 @@ namespace Nop.Services.Catalog
         {
             if (vendorId <= 0)
                 return 0;
-
-            //Suma todas las preguntas sin responder de los productos del vendedor
-            var query = _productRepository.Table
-                .Where(p => p.VendorId == vendorId)
-                .Sum(p => p.UnansweredQuestions);
-
-            return query;
+            try
+            {
+                //Suma todas las preguntas sin responder de los productos del vendedor
+                return _productRepository.Table
+                    .Where(p => p.VendorId == vendorId)
+                    .Sum(p => p.UnansweredQuestions);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e.ToString(), e);
+                return 0;
+            }
         }
 
 

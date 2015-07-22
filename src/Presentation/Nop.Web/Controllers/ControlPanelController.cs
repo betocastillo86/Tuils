@@ -147,8 +147,9 @@ namespace Nop.Web.Controllers
                 var vendorSellings = _orderService.SearchOrders(vendorId: _workContext.CurrentVendor.Id);
                 model.SoldProducts = vendorSellings.Count;
 
-                //Suma el numero de preguntas sin responder
-                model.UnansweredQuestions = _productService.CountUnansweredQuestionsByVendorId(_workContext.CurrentVendor.Id);
+                if(model.PublishedProducts > 0)
+                    //Suma el numero de preguntas sin responder
+                    model.UnansweredQuestions = _productService.CountUnansweredQuestionsByVendorId(_workContext.CurrentVendor.Id);
 
             }
 

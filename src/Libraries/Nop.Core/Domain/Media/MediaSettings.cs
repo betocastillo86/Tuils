@@ -39,5 +39,21 @@ namespace Nop.Core.Domain.Media
         public int VendorBackgroundThumbPictureSize { get; set; }
 
         public int OfficeThumbPictureSizeOnControlPanel { get; set; }
+        
+        /// <summary>
+        /// Tamaño maximo al que se deben redimensionar las imagenes que se van a subir. NO las que se muestran, solo las que se suben
+        /// </summary>
+        public int ProductImageMaxSizeResize { get; set; }
+
+        /// <summary>
+        /// Tamaño maximo al que se deben redimensionar las imagenes del cover que se van a subir. NO las que se muestran, solo las que se suben
+        /// </summary>
+        public int CoverImageMaxSizeResize { get; set; }
+
+        /// <summary>
+        /// Tamaño maximo al que se deben redimensionar las imagenes del LOGO que se van a subir. NO las que se muestran, solo las que se suben
+        /// </summary>
+        public int LogoImageMaxSizeResize { get; set; }
+        
     }
 }

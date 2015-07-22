@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'backbone', 'fileModel', 'fileCollection', 'resize'],
-    function ($, _, Backbone, FileModel, FileCollection) {
+﻿define(['jquery', 'underscore', 'backbone', 'fileModel', 'fileCollection', 'configuration','resize'],
+    function ($, _, Backbone, FileModel, FileCollection, TuilsConfiguration) {
     var ImagesSelectorView = Backbone.View.extend({
         events: {
             "click .addImageGalery": "addImage",
@@ -76,7 +76,7 @@
                 var fileModel = new FileModel();
                 fileModel.on("file-saved", this.fileUploaded, this);
                 fileModel.on("file-error", this.fileErrorUpload, this)
-                this.resizer.photo(file, 1200, 'file', function (resizedFile) {
+                this.resizer.photo(file, TuilsConfiguration.media.productImageMaxSizeResize, 'file', function (resizedFile) {
 
                     that.resizer.photo(resizedFile, 400, 'dataURL', function (thumbnail) {
                         that.switchImage(thumbnail);
