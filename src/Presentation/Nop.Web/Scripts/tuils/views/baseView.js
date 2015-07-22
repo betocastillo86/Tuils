@@ -115,6 +115,14 @@
         {
             Backbone.Validation.bind(this);
         },
+        //Con el fin de evitar muchos clicks inhabilita el boton unos segundos
+        disableButtonForSeconds: function (obj, seconds) {
+            seconds = !seconds ? 4 : seconds;
+            obj.attr("disabled", 'disabled');
+            setTimeout(function () {
+                obj.removeAttr("disabled");
+            }, seconds*1000);
+        },
         removeErrors: function () {
             this.$el.find(".input-validation-error").removeClass("input-validation-error");
             this.$el.find(".field-validation-error").text("").removeClass("input-validation-error");

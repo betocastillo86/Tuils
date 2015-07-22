@@ -1630,7 +1630,8 @@ namespace Nop.Web.Controllers
                 AutoCompleteEnabled = _catalogSettings.ProductSearchAutoCompleteEnabled,
                 ShowProductImagesInSearchAutoComplete = _catalogSettings.ShowProductImagesInSearchAutoComplete,
                 SearchTermMinimumLength = _catalogSettings.ProductSearchTermMinimumLength,
-                SearchWithSearchTerms = _catalogSettings.ProductSearchAutoCompleteWithSearchTerms
+                SearchWithSearchTerms = _catalogSettings.ProductSearchAutoCompleteWithSearchTerms,
+                CurrentSearchTerms = Request.QueryString["q"] ?? string.Empty
             };
             return PartialView(model);
         }

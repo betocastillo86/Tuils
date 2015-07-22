@@ -3,7 +3,7 @@ define(['jquery', 'underscore', 'baseView', 'dlmenu'],
     function ($, _, BaseView) {
         var FilterSearchView = BaseView.extend({
             initialize: function (args) {
-                debugger;
+               // debugger;
             },
             render: function () {
             }

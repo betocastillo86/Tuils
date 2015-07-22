@@ -4,12 +4,12 @@
 @using (Html.BeginRouteForm("ProductSearch", FormMethod.Get))
 {
     <div id="divSearchText" class="responsiveSearch">
-        <input type="text" class="search-box-text" id="small-searchterms" autocomplete="off" name="q" placeholder="@T("Search.SearchBox.Tooltip")" data-url="@(Url.RouteUrl("ProductSearchAutoComplete"))" data-minlength="@(Model.SearchTermMinimumLength.ToString())" />
+        <input type="text" class="search-box-text" id="small-searchterms" autocomplete="off" name="q" placeholder="@T("Search.SearchBox.Tooltip")" data-url="@(Url.RouteUrl("ProductSearchAutoComplete"))" data-minlength="@(Model.SearchTermMinimumLength.ToString())" value="@Model.CurrentSearchTerms" />
         <a class="closeSearchResponsive"><span class="icon-close"></span></a>
     </div>
 
     @Html.Widget("searchbox_before_search_button")
-    <a href="javascript:;" type="submit" class="btn_search responsiveSearch" value="@T("Search")"><span class="icon-lupa"></span></a>
+    <a href="javascript:;" type="submit" class="btn_search responsiveSearch"><span class="icon-lupa"></span></a>
     <input id="Search_EnterSearchTerms" value="@Html.Raw(HttpUtility.JavaScriptStringEncode(T("Search.EnterSearchTerms").Text))" type="hidden" />
 
     @Html.Widget("searchbox")

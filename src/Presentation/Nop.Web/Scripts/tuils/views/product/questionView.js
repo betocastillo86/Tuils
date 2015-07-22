@@ -29,9 +29,10 @@
             {
                 this.save();
             },
-            save: function () {
+            save: function (e) {
                 var errors = this.validateControls();
                 if (this.model.isValid()) {
+                    this.disableButtonForSeconds($(e.target));
                     if (TuilsConfiguration.captcha.showOnQuestions)
                         this.model.set("recaptcha_challenge_field", this.$("#recaptcha_challenge_field").val());
                     this.model.set("productId", this.$("#productId").val());

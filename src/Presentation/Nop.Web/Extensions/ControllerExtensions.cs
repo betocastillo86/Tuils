@@ -18,6 +18,7 @@ using Nop.Services.Tax;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Media;
+using Nop.Core.Domain.Customers;
 
 namespace Nop.Web.Extensions
 {
@@ -101,7 +102,8 @@ namespace Nop.Web.Extensions
                     ShortDescription = product.GetLocalized(x => x.ShortDescription),
                     FullDescription = product.GetLocalized(x => x.FullDescription),
                     SeName = product.GetSeName(),
-                    CompareProductsEnabled = catalogSettings.CompareProductsEnabled
+                    CompareProductsEnabled = catalogSettings.CompareProductsEnabled,
+                    DisableWishlistButton = workContext.CurrentCustomer == null || workContext.CurrentCustomer.IsGuest()
                 };
                 //price
                 if (preparePriceModel)

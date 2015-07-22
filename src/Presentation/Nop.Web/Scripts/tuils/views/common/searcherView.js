@@ -55,11 +55,13 @@
             this.$("#divSearchText a").css('display', showSearch ? 'block' : '');
         },
         loadAutoComplete: function () {
+            var that = this;
             this.searchBox.autocomplete({
                 delay: 200,
                 minLength: this.minLengthAutocomplete,
                 source: this.autocompleteUrl,
-                select: function(event, ui) {
+                select: function (event, ui) {
+                    that.$("#small-searchterms").val(ui.item.value);
                     this.form.submit();
                 }
             })

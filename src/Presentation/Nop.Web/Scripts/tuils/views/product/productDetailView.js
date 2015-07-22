@@ -78,10 +78,11 @@
                 //agrega la vista de preguntas como una de las que requiere autenticacion
                 this.requiredViewsWithAuthentication.push(this.viewQuestions);
             },
-            confirmShowVendor: function (obj) {
+            confirmShowVendor: function (e) {
                 //Cambia la bandera marcando que si quiere comprar el producto
                 this.wantedToShowVendor = true;
-                obj = $(obj.target);
+                var obj = $(e.target);
+                this.disableButtonForSeconds(obj);
                 this.vendorUrl = obj.attr('data-vendorUrl');
                 this.createOrder();
             },

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using Nop.Web.Framework.Mvc;
 using Nop.Web.Models.Media;
+using Nop.Core;
+
 
 namespace Nop.Web.Models.Catalog
 {
     public partial class ProductOverviewModel : BaseNopEntityModel, IComparableModel, IWishableModel
     {
+
         public ProductOverviewModel()
         {
             ProductPrice = new ProductPriceModel();

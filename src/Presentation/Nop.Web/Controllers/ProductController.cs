@@ -425,7 +425,8 @@ namespace Nop.Web.Controllers
             #endregion
 
             #region WishList
-            model.DisableWishlistButton = product.DisableWishlistButton;
+            //Solo se muestra la lista deseos para usuarios registrados
+            model.DisableWishlistButton = _workContext.CurrentCustomer.IsGuest() || product.DisableWishlistButton;
             #endregion
 
             #region Product price

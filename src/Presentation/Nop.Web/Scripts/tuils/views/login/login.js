@@ -7,7 +7,8 @@
         events: {
             'click #btnLogin' : 'login',
             'click #btnRegister': 'register',
-            'click .facebook-login-block a' : 'externalAuthentication'
+            'click .facebook-login-block a': 'externalAuthentication',
+            'keypress form input' : 'validateEnter'
         },
 
         bindings: {
@@ -33,6 +34,10 @@
         register: function () {
             this.trigger("register");
             this.close();
+        },
+        validateEnter: function (e) {
+            if(e.keyCode==13)
+                this.login();
         },
         login: function () {
             this.validateControls();
