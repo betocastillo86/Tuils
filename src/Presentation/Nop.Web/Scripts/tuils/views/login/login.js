@@ -7,7 +7,7 @@
         events: {
             'click #btnLogin' : 'login',
             'click #btnRegister': 'register',
-            'click .facebook-login-block a': 'externalAuthentication',
+            'click .fb-btn': 'externalAuthentication',
             'keypress form input' : 'validateEnter'
         },
 
@@ -26,7 +26,7 @@
             this.$el.fixedDialog(this.dialogBasicOptions);
 
             var that = this;
-            require(['text!/Customer/FastLogin', 'css!/Plugins/ExternalAuth.Facebook/Content/facebookstyles'], function (template) {
+            require(['text!/Customer/FastLogin'], function (template) {
                 that.template = Handlebars.compile(template);
                 that.render();
             });
@@ -76,13 +76,12 @@
         },
         validateActiveSession : function(model)
         {
-            model = model.toJSON();
-            if (model.Active)
+            if (model.toJSON().Active)
             {
                 if (this.intervalAuthentication)
                     clearInterval(this.intervalAuthentication);
 
-                this.userAuthenticated();
+                this.userAuthenticated(model);
             }
         },
         render: function () {

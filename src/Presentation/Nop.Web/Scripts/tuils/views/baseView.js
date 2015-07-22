@@ -31,9 +31,13 @@
         {
             this.model.once('unauthorized', this.showLogin, this);
         },
-        userAuthenticated: function () {
+        userAuthenticated: function (model) {
             //Relanza el evento que el usuario fue autenticado, para que la vista que hereda lo pueda capturar
-            this.trigger("user-authenticated");
+            if (model)
+                this.trigger("user-authenticated", model);
+            else
+                this.trigger("user-authenticated");
+
         },
         stickThem: function () {
             this.stickit();

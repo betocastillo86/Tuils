@@ -125,7 +125,11 @@ namespace Nop.Web.Controllers.Api
         [Route("api/auth/verify")]
         public IHttpActionResult IsSessionActive()
         {
-            return Ok(new { Active = _workContext.CurrentCustomer != null && !_workContext.CurrentCustomer.IsGuest()});
+            return Ok(
+                new { 
+                    Active = _workContext.CurrentCustomer != null && !_workContext.CurrentCustomer.IsGuest(), 
+                    Name = _workContext.CurrentCustomer != null && !_workContext.CurrentCustomer.IsGuest() ? _workContext.CurrentCustomer.GetFullName() : string.Empty 
+            });
         }
     }
 }

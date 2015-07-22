@@ -2,6 +2,7 @@
 using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Vendors;
 using Nop.Core.Infrastructure;
+using Nop.Services.Helpers;
 using Nop.Services.Localization;
 using Nop.Web.Framework.UI.Captcha;
 using System;
@@ -26,6 +27,7 @@ namespace Nop.Web.Infrastructure
         {
             var catalogSettings = EngineContext.Current.Resolve<CatalogSettings>();
             var captchaSettings = EngineContext.Current.Resolve<CaptchaSettings>();
+            var dateSettings = EngineContext.Current.Resolve<DateTimeSettings>();
 
             var config = new
             {
@@ -49,11 +51,13 @@ namespace Nop.Web.Infrastructure
                 },
                 maxFileUploadSize = tuilsSettings.maxFileUploadSize,
                 searchWithSearchTerms = catalogSettings.ProductSearchAutoCompleteWithSearchTerms,
-                captcha = new { 
+                captcha = new
+                {
                     showOnQuestions = captchaSettings.ShowOnProductQuestions
+                },
+                jquery = new {
+                    dateFormat = dateSettings.JqueryFormat
                 }
-
-
             };
 
             //Convierte el valor del json a un string

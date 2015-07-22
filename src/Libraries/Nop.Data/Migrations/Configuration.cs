@@ -342,9 +342,8 @@ namespace Nop.Data.Migrations
             settings.Add("CatalogSettings.ShowSimilarSearches", "True");
             settings.Add("CatalogSettings.NumSuggestionSimilarSearches", "5");
             settings.Add("CatalogSettings.NumSuggestionSimilarSearchesHome", "10");
+            settings.Add("datetimesettings.jqueryformat", "dd/mm/yy");
             
-            
-
             //Recorre todas las llaves que desea adicional
             foreach (var setting in settings)
             {

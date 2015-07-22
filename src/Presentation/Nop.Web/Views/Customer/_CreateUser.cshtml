@@ -54,6 +54,9 @@
         <input id="btnCreateUser" type="button" value="@T("CreateUser.Save")" class="button-1 btn_register" />
 
     </form>
+    <div class="external-authentication">
+        @Html.Action("ExternalMethods", "ExternalAuthentication", new { BlankWindow = true, ReturnUrl = Url.Action("Close", "Home") })
+    </div>
     <a id="btnBack" href="javsacript:void(0);" class="rgt-login">@T("CreateUser.Back")</a>
 </div>
 
