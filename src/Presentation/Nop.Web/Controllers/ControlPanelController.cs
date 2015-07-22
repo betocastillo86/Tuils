@@ -259,6 +259,8 @@ namespace Nop.Web.Controllers
             {
                 var model = new OfficesModel();
                 model.States = _stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry);
+                model.Name = _workContext.CurrentVendor.Name;
+                model.VendorSeName = _workContext.CurrentVendor.GetSeName();
                 model.VendorId = _workContext.CurrentVendor.Id;
                 return View(model);
             }

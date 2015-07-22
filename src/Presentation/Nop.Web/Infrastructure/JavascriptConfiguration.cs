@@ -30,6 +30,7 @@ namespace Nop.Web.Infrastructure
             var captchaSettings = EngineContext.Current.Resolve<CaptchaSettings>();
             var dateSettings = EngineContext.Current.Resolve<DateTimeSettings>();
             var mediaSettings = EngineContext.Current.Resolve<MediaSettings>();
+            var vendorSettings = EngineContext.Current.Resolve<VendorSettings>();
 
             var config = new
             {
@@ -61,10 +62,14 @@ namespace Nop.Web.Infrastructure
                 {
                     dateFormat = dateSettings.JqueryFormat
                 },
-                media = new {
+                media = new
+                {
                     productImageMaxSizeResize = mediaSettings.ProductImageMaxSizeResize,
                     coverImageMaxSizeResize = mediaSettings.CoverImageMaxSizeResize,
                     logoImageMaxSizeResize = mediaSettings.LogoImageMaxSizeResize
+                },
+                vendor = new {
+                    reviewsPageSize = vendorSettings.DefaultReviewsPageSize
                 }
             };
 

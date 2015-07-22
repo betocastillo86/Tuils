@@ -302,6 +302,14 @@ namespace Nop.Data.Migrations
             newLocaleStringResources.Add("Vendor.vendorServices.services.edit", "Actualiza los servicios en los que te especializas");
             newLocaleStringResources.Add("Vendor.vendorServices.bikes.title", "Referencias de motocicletas en los que {0} se especializa");
             newLocaleStringResources.Add("Vendor.vendorServices.bikes.edit", "Actualiza las referencias de motocicletas en las que te especializas");
+            newLocaleStringResources.Add("Vendor.offices.noResults", "{0} no tiene sedes configuradas");
+            newLocaleStringResources.Add("Vendor.offices.editar", "Actualiza tus sedes");
+            newLocaleStringResources.Add("Vendor.offices.editar.alt", "Actualiza las sedes para que te conozcan mejor");
+            newLocaleStringResources.Add("Vendor.products.noResults", "<b>{0}</b> no tiene productos registrados");
+            newLocaleStringResources.Add("Vendor.products.noResults.publish", "Publica tu primer producto");
+            newLocaleStringResources.Add("Offices.GoVendor", "Volver a mi tienda");
+            newLocaleStringResources.Add("vendor.reviews.noRows", "Nadie a calificado a {0}");
+            
 
             newLocaleStringResources.Add("Admin.Configuration.Settings.GeneralCommon.CaptchaShowOnProductQuestionsPage", "Mostrar el captcha en la zona de preguntas del producto");
             

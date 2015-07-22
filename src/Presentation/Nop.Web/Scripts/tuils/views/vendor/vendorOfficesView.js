@@ -47,6 +47,11 @@
 
                 if (this.officeCollection.length > 0)
                     this.changeOffice(this.officeCollection[0].Id);
+                else
+                {
+                    this.$(".mapa").hide();
+                    this.$("#divOfficesNoResults").show();
+                }
 
                 this.$('.btn-sedes').css('display', this.officeCollection.length > 1 ? "block" : "none");
                 return this;

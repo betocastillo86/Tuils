@@ -84,6 +84,17 @@
                                 }
                             </div>
                         }
+                        else
+                        { 
+                            <div>@T("Vendor.products.noResults", Model.Name)
+                            @if (Model.AllowEdit)
+                            { 
+                                <div><a href="@Url.Action("PublishProduct", "Sales")">@T("Vendor.products.noResults.publish")</a></div>
+                            }
+                        
+                            </div>
+                            
+                        }
 
                         <div class="pager">
                             @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")

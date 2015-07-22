@@ -11,6 +11,10 @@ namespace Nop.Web.Models.ControlPanel
     public class OfficesModel
     {
         public int VendorId { get; set; }
+
+        public string VendorSeName { get; set; }
+
+        public string Name { get; set; }
         
         public IList<StateProvince> States { get; set; }
 
