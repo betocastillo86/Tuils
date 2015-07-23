@@ -358,8 +358,8 @@ namespace Nop.Data.Migrations
             settings.Add("CatalogSettings.ShowMyBikeProductsOnHomepage", "True");
             settings.Add("CatalogSettings.NumberOfProductsMyBikeOnHomepage", "8");
             
-            
-            
+            settings.Add("CatalogSettings.LimitOfSpecialCategories", "5");
+            settings.Add("CatalogSettings.LimitDaysOfProductPublished", "18");
             
             //Recorre todas las llaves que desea adicional
             foreach (var setting in settings)

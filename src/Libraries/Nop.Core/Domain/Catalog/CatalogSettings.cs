@@ -355,5 +355,16 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public int NumSuggestionSimilarSearchesHome { get; set; }
 
+        /// <summary>
+        /// Numero limite de categorias especiales al crear un producto
+        /// </summary>
+        public int LimitOfSpecialCategories { get; set; }
+
+        /// <summary>
+        /// Dias que dura publicado un producto
+        /// </summary>
+        public int LimitDaysOfProductPublished { get; set; }
+        
+
     }
 }

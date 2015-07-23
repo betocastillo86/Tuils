@@ -68,8 +68,13 @@ namespace Nop.Web.Infrastructure
                     coverImageMaxSizeResize = mediaSettings.CoverImageMaxSizeResize,
                     logoImageMaxSizeResize = mediaSettings.LogoImageMaxSizeResize
                 },
-                vendor = new {
+                vendor = new
+                {
                     reviewsPageSize = vendorSettings.DefaultReviewsPageSize
+                },
+                catalog = new {
+                    limitOfSpecialCategories = catalogSettings.LimitOfSpecialCategories,
+                    limitDaysOfProductPublished = catalogSettings.LimitDaysOfProductPublished
                 }
             };
 

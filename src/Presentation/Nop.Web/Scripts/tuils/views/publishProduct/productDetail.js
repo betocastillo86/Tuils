@@ -187,7 +187,7 @@
                     tagReferences.push({ label: element.Name, value: element.Id });
                 };
                 _.each(TuilsStorage.bikeReferences, function (element, index) {
-                    addTag(element);
+                    //addTag(element);
                     _.each(element.ChildrenCategories, function (child, index) {
                         child.Name = element.Name + ' ' + child.Name;
                         addTag(child);
@@ -198,7 +198,7 @@
                     .tagit({
                         availableTags: tagReferences,
                         allowOnlyAvailableTags: true,
-                        tagLimit: 5,
+                        tagLimit: TuilsConfiguration.catalog.limitOfSpecialCategories,
                         autocomplete: {
                             source: TuilsUtil.tagItAutocomplete
                         }

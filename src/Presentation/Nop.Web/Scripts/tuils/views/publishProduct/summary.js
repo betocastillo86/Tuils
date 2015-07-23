@@ -73,7 +73,7 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
                 //}
                 
 
-                this.productProperties.push({ name: 'Fecha Cierre Publicacion', value: '30 dias' });
+                this.productProperties.push({ name: 'Fecha Cierre Publicacion', value: TuilsConfiguration.catalog.limitDaysOfProductPublished + ' dias' });
                 this.productProperties.push({ name: 'Categoria', value: TuilsUtil.toStringWithSeparator(args.breadCrumb, ' > ') });
 
                 function pushProperty(ctx, field, isName) {

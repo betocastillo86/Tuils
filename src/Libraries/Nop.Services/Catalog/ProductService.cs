@@ -2180,6 +2180,7 @@ namespace Nop.Services.Catalog
             product.OrderMaximumQuantity = 1;
             product.OrderMaximumQuantity = 1;
             product.StockQuantity = _tuilsSettings.defaultStockQuantity;
+            product.AvailableEndDateTimeUtc = DateTime.Now.AddDays(_catalogSettings.LimitDaysOfProductPublished);
 
             try
             {
