@@ -309,7 +309,8 @@ namespace Nop.Data.Migrations
             newLocaleStringResources.Add("Vendor.products.noResults.publish", "Publica tu primer producto");
             newLocaleStringResources.Add("Offices.GoVendor", "Volver a mi tienda");
             newLocaleStringResources.Add("vendor.reviews.noRows", "Nadie a calificado a {0}");
-            
+
+            newLocaleStringResources.Add("Products.ForMyBike", "Productos para mi moto");
 
             newLocaleStringResources.Add("Admin.Configuration.Settings.GeneralCommon.CaptchaShowOnProductQuestionsPage", "Mostrar el captcha en la zona de preguntas del producto");
             
@@ -354,6 +355,9 @@ namespace Nop.Data.Migrations
             settings.Add("mediasettings.productImageMaxSizeResize", "2400");
             settings.Add("mediasettings.CoverImageMaxSizeResize", "2400");
             settings.Add("mediasettings.LogoImageMaxSizeResize", "1700");
+            settings.Add("CatalogSettings.ShowMyBikeProductsOnHomepage", "True");
+            settings.Add("CatalogSettings.NumberOfProductsMyBikeOnHomepage", "8");
+            
             
             
             

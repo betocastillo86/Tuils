@@ -163,6 +163,17 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public int NumberOfBestsellersOnHomepage { get; set; }
 
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show bestsellers on home page
+        /// </summary>
+        public bool ShowMyBikeProductsOnHomepage { get; set; }
+
+        /// <summary>
+        /// Gets or sets a number of bestsellers on home page
+        /// </summary>
+        public int NumberOfProductsMyBikeOnHomepage { get; set; }
+
         /// <summary>
         /// Gets or sets a number of products per page on the search products page
         /// </summary>

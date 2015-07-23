@@ -103,7 +103,8 @@ namespace Nop.Web.Extensions
                     FullDescription = product.GetLocalized(x => x.FullDescription),
                     SeName = product.GetSeName(),
                     CompareProductsEnabled = catalogSettings.CompareProductsEnabled,
-                    DisableWishlistButton = workContext.CurrentCustomer == null || workContext.CurrentCustomer.IsGuest()
+                    DisableWishlistButton = workContext.CurrentCustomer == null || workContext.CurrentCustomer.IsGuest(),
+                    FeaturedBySpecialCategory = product.FeaturedBySpecialCategory
                 };
                 //price
                 if (preparePriceModel)

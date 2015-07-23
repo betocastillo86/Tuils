@@ -50,6 +50,10 @@
                 
                 @Html.Partial("_AddToWishlist")
                 @Html.Partial("_CompareProductsButton")
+                @if (Model.FeaturedBySpecialCategory)
+                { 
+                    <span>SERVICIO PARA TU MOTO</span>
+                }
             </div>
             @*@Html.Widget("productbox_add_info", Model.Id)*@
         </div>

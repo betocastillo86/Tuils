@@ -31,6 +31,7 @@ using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Media;
 using Nop.Services.Orders;
+using Nop.Services.Customers;
 
 namespace Nop.Web.Controllers
 {
@@ -1514,7 +1515,7 @@ namespace Nop.Web.Controllers
                     //categoria especial por la que debería ordenar que solo se activa si el usuario cuenta con esta registrada como moto
                     //Además si viene filtro por categoría especial NO debe ordenar por categoría especial
                     //Si viene algún orden seleccionado NO debe ordenar por categoria especial
-                    int? orderBySpecialCategoryId = !specialCategoryId.HasValue && command.OrderBy == 0  ? _workContext.CurrentCustomer.GetAttribute<int?>(SystemCustomerAttributeNames.BikeReferenceId) : null;
+                    int? orderBySpecialCategoryId = !specialCategoryId.HasValue && command.OrderBy == 0  ? _workContext.CurrentCustomer.GetBikeReference() : null;
 
                     //var searchInProductTags = false;
                     var searchInProductTags = searchInDescriptions;

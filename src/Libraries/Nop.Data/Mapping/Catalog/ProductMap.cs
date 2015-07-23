@@ -38,6 +38,8 @@ namespace Nop.Data.Mapping.Catalog
             this.Ignore(p => p.ManageInventoryMethod);
             this.Ignore(p => p.RecurringCyclePeriod);
             this.Ignore(p => p.RentalPricePeriod);
+            //this.Ignore(p => p.FeaturedBySpecialCategory);
+            
 
             this.HasMany(p => p.ProductTags)
                 .WithMany(pt => pt.Products)

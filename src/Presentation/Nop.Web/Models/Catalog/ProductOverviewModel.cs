@@ -50,6 +50,8 @@ namespace Nop.Web.Models.Catalog
 
         public bool CompareProductsEnabled { get; set; }
 
+        public bool FeaturedBySpecialCategory { get; set; }
+
 
 		#region Nested Classes
 

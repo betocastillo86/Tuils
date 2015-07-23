@@ -37,6 +37,7 @@ using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Media;
 using Nop.Web.Extensions.Api;
+using Nop.Services.Common;
 
 namespace Nop.Web.Controllers
 {
@@ -1205,6 +1206,39 @@ namespace Nop.Web.Controllers
             return PartialView(model);
         }
 
+        [ChildActionOnly]
+        public ActionResult ProductsForMyBike(int? productThumbPictureSize)
+        {
+            int? bikeReference = _workContext.CurrentCustomer.GetBikeReference();
+            
+            //Para consultar debe tener configurada una motocicleta
+            if(_workContext.CurrentCustomer.IsGuest() || !bikeReference.HasValue)
+                return Content("");
+            
+            //Llave configurada de cache para la categoria
+            string cacheKey = string.Format(ModelCacheEventConsumer.PRODUCTS_ORDERED_BY_SPECIALCATEGORYID_KEY, bikeReference);
+
+            //Consulta los productos
+            var products =  _cacheManager.Get(cacheKey, () => {
+                //Toma 20 provisionalmente hasta cuando se implemente funcionalidad para por pago destacar productos
+                return _productService.SearchProducts(
+                    specialCategoryId:bikeReference, 
+                    orderBySpecialCategoryId:bikeReference)
+                    .OrderBy(p => Guid.NewGuid())
+                    .Take(20)
+                    .ToList();
+            });
+                
+            if (products.Count == 0)
+                return Content("");
+
+
+            var model = PrepareProductOverviewModels(products
+                 .OrderBy(p => Guid.NewGuid())
+                 .Take(_catalogSettings.NumberOfProductsMyBikeOnHomepage), true, true, productThumbPictureSize).ToList();
+            return PartialView(model);
+        }
+
         #endregion
 
         #region Left featured products
@@ -1215,16 +1249,47 @@ namespace Nop.Web.Controllers
             if (!_catalogSettings.ShowBestsellersOnHomepage || _catalogSettings.NumberOfBestsellersOnHomepage == 0)
                 return Content("");
 
+            //categoria especial por la que debería ordenar que solo se activa si el usuario cuenta con esta registrada como moto
+            int? orderBySpecialCategoryId =  _workContext.CurrentCustomer.GetBikeReference();
+
+            //Carga la llave de cache ya sea para usuarios con categoria especial, o normal
+            string cacheKey = orderBySpecialCategoryId.HasValue ? string.Format(ModelCacheEventConsumer.HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_PATTERN_KEY, orderBySpecialCategoryId) : ModelCacheEventConsumer.HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_KEY;
+
             //load and cache report
-            var products = _cacheManager.Get(string.Format(ModelCacheEventConsumer.HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_PATTERN_KEY, _storeContext.CurrentStore.Id),
+            var products = _cacheManager.Get(cacheKey,
                 () =>
-                    _productService.SearchProducts(storeId: _storeContext.CurrentStore.Id, leftFeatured:true).ToList() );
+                    _productService.SearchProducts(storeId: _storeContext.CurrentStore.Id, 
+                                                    leftFeatured:true,
+                                                    orderBySpecialCategoryId: orderBySpecialCategoryId)
+                    .ToList());
+
+            ////Si hay productos destacados por la categoria de moto del usuario
+            ////Se ordenan por este criterio y no aleatoreamente
+            //if (orderBySpecialCategoryId.HasValue && products.Count(p => p.FeaturedBySpecialCategory) > 0)
+            //{
+            //    //toma aleatoriamente un numero de productos
+            //    products = products
+            //        .OrderByDescending(p)
+            //        .OrderBy(p => Guid.NewGuid())
+            //        .Take(_catalogSettings.NumberOfBestsellersOnHomepage)
+            //        .ToList();
+            //}
+            //else
+            //{
+            //    //toma aleatoriamente un numero de productos
+            //    products = products
+            //        .OrderBy(p => Guid.NewGuid())
+            //        .Take(_catalogSettings.NumberOfBestsellersOnHomepage)
+            //        .ToList();
+            //}
 
             //toma aleatoriamente un numero de productos
             products = products
                 .OrderBy(p => Guid.NewGuid())
+                .OrderByDescending(p => p.FeaturedBySpecialCategory)
                 .Take(_catalogSettings.NumberOfBestsellersOnHomepage)
                 .ToList();
+            
 
             if (products.Count == 0)
                 return Content("");
