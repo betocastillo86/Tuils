@@ -3,7 +3,9 @@
 
     var PublishProductView = BaseView.extend({
 
-
+        events :{
+            'click .wizard-breadcrumb li': 'showStepByBreadcrumb'
+        },
         //Views
         viewSelectCategory: undefined,
         viewProductDetail: undefined,
@@ -19,6 +21,10 @@
         images: undefined,
 
         productType: 0,
+
+        //Numero del paso que ya fue terminado
+        //Sirve para validar los pasos cuando se hacen por medio de las pestañas
+        stepFinished: 0,
 
         initialize: function (args) {
             this.productType = args.productType;
@@ -36,12 +42,10 @@
         },
         showCategories: function () {
             var that = this;
-            //require(['publishProductSelectCategoryView'], function (SelectCategoryView) {
-                that.viewSelectCategory = new SelectCategoryView({ el: "#divStep_1", productType: that.productType });
-                that.viewSelectCategory.on("category-selected", that.showProductDetail, that);
-                that.viewSelectCategory.once("categories-loaded", TuilsStorage.loadBikeReferences);
-                that.viewSelectCategory.on("categories-middle-selected", that.restartNextStep, that);
-            //});
+            that.viewSelectCategory = new SelectCategoryView({ el: "#divStep_1", productType: that.productType });
+            that.viewSelectCategory.on("category-selected", that.showProductDetail, that);
+            that.viewSelectCategory.once("categories-loaded", TuilsStorage.loadBikeReferences);
+            that.viewSelectCategory.on("categories-middle-selected", that.restartNextStep, that);
         },
         showProductDetail: function (categoryId) {
             this.showNextStep();
@@ -50,13 +54,9 @@
             if (!this.viewProductDetail) {
 
                 var that = this;
-
-                //require(['publishProductProductDetailView'], function (ProductDetailView) {
-                    that.viewProductDetail = new ProductDetailView({ el: "#divStep_2", productType: that.productType, selectedCategory: categoryId, model: that.model });
-                    that.viewProductDetail.on("detail-product-finished", that.showPictures, that);
-                    that.viewProductDetail.on("detail-product-back", that.showStepBack, that);
-                //});
-
+                that.viewProductDetail = new ProductDetailView({ el: "#divStep_2", productType: that.productType, selectedCategory: categoryId, model: that.model });
+                that.viewProductDetail.on("detail-product-finished", that.showPictures, that);
+                that.viewProductDetail.on("detail-product-back", that.showStepBack, that);
             }
         },
         showPictures: function (model) {
@@ -115,6 +115,27 @@
         },
         showNextStep: function () {
             this.showStep(++this.currentStep);
+            //Cuando el paso actual va más avanzado que los pasos terminados por el usuario lo iguala
+            //con el fin de tener el valor real del paso terminado
+            if (this.currentStep > this.stepFinished)
+                this.stepFinished = this.currentStep;
+        },
+        showStepByBreadcrumb : function(obj){
+            var step = parseInt($(obj.currentTarget).attr("data-id"));
+
+            //no puede haber pasos superiores al ultimo finalizado
+            if (step <= this.stepFinished)
+            {
+                //hasta que alcance el paso actual   desea  empieza a disminuir o aumentar los pasos
+                while (this.currentStep != step) {
+                    if (step > this.currentStep)
+                        this.showNextStep();
+                    else
+                        this.showStepBack();
+                        
+                }
+            }
+            
         },
         //Reinicia la vista del siguiente paso xq el DOM cargado ya no va ser valido
         //Ejemplo: En detalle da clic en atras y selecciona una nueva categoria, esto inhbilita lo del siguiente paso
@@ -130,6 +151,8 @@
                 this.viewSummary.undelegateEvents();
                 this.viewSummary = undefined;
             }
+            //Cuando se reinicia el paso siguiente también se reinicia el paso finalizado
+            this.stepFinished = this.currentStep;
         },
         errorOnSaving: function () {
             alert("Ocurrió un error, intentalo de nuevo");

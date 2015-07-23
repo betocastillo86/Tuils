@@ -1,5 +1,5 @@
 ﻿
-define(['jquery', 'underscore', 'baseView', 'dlmenu'],
+define(['jquery', 'underscore', 'baseView'],
     function ($, _, BaseView) {
         var FilterSearchView = BaseView.extend({
             initialize: function (args) {

@@ -748,5 +748,7 @@ namespace Nop.Core.Domain.Catalog
         [System.ComponentModel.DefaultValue(0)]
         public int UnansweredQuestions { get; set; }
 
+        //public virtual bool FeaturedBySpecialCategory { get; set; }
+
     }
 }

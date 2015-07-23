@@ -304,6 +304,7 @@
     <Compile Include="Models\Catalog\QuestionProductModel.cs" />
     <Compile Include="Models\Catalog\SimilarSearchesModel.cs" />
     <Compile Include="Models\Catalog\SpecialCategoryProductModel.cs" />
+    <Compile Include="Models\Catalog\SpecialCategoryVendorModel.cs" />
     <Compile Include="Models\Catalog\VendorModel.cs" />
     <Compile Include="Models\Catalog\VendorNavigationModel.cs" />
     <Compile Include="Models\Catalog\ProductOverviewModel.cs" />

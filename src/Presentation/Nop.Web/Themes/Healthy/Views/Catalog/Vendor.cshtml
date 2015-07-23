@@ -47,7 +47,7 @@
                         </h3>
                         @foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.SpecializedCategory))
                         {
-                            <li>@special.Category.Name</li>
+                            <li><a href="@Url.RouteUrl("Category", new { SeName = special.CategorySeName })" title="@special.CategoryName">@special.CategoryName</a></li>
                         }
                         <h3 title="@T("Vendor.vendorServices.bikes.title", Model.Name)">
                             @T("Vendor.SpecialCategoriesBikes")
@@ -59,7 +59,7 @@
                         </h3>
                         @foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.BikeBrand))
                         {
-                            <li>@special.Category.Name</li>
+                            <li><a href="@Url.RouteUrl("Category", new { SeName = special.CategorySeName })" title="@special.CategoryName">@special.CategoryName</a></li>
                         }
                     </ul>
                 </div>

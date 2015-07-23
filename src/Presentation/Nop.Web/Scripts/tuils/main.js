@@ -153,8 +153,8 @@
         slide: 'responsiveslides.min',
         jzoom: 'jquery.jqzoom-core-pack',
         jpopup: 'jquery.magnific-popup',
-        jtabs: 'jquery.easytabs',
-        dlmenu :'jquery.dlmenu'
+        jtabs: 'jquery.easytabs'
+        //dlmenu :'jquery.dlmenu'
     }
 
 });

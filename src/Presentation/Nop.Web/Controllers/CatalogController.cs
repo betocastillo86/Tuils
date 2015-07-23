@@ -1183,7 +1183,7 @@ namespace Nop.Web.Controllers
             model.BackgroundPicture = backgroundPictureModel;
 
             //Carga las categorias especiales
-            model.SpecialCategories = _vendorService.GetSpecialCategoriesByVendorId(vendor.Id).ToList();
+            model.SpecialCategories = _vendorService.GetSpecialCategoriesByVendorId(vendor.Id).ToModels();
 
             return model;
         }
