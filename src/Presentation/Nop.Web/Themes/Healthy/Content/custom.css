@@ -212,8 +212,6 @@ input, select { vertical-align: middle; }
 .product-tags-list ul li, .pager ul li{ float: left; list-style-type: none; margin-right: 5px; }
 .product-tags-list ul li.separator { display:none; }
 .product-tags-list ul li a.producttag:hover { text-decoration:none;}
-.product-filters-wrapper ul{ margin: 10px 0 0;}
-.product-filters-wrapper ul.group li{ list-style-type: none;}
 #social { margin: 20px 0 0;float:left; }
 .product-details-page .prices .old-product-price { text-decoration: none; }
 .old-product-price span { text-decoration: line-through; }

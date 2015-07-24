@@ -502,7 +502,6 @@
 
     /*3.31*/
     .tier-prices { margin-left: 2px; max-width: 100%; }
-    .filter-title { font-weight: 400; }
     .topic-html-content-header { text-align: left; }
     .footer .footer-menu, .footer .footer-menu-1 { float: left; text-align: left; }
     .footer .footer-menu { margin-left: 20px; width:133px;}
@@ -1036,6 +1035,23 @@ html.oldie .container { width: 940px; }
     .picture-uploader li{margin:10px 20px 10px 0;}
     .picture-uploader li.picture_principal{width: 120px; height: 120px; margin:10px 20px 10px 0;}
     .picture-uploader li.picture_principal span{font-size: 60px; margin: 30px 30px 0; height: 60px; width: 60px;}
+    /*FILTROS*/
+    .filters-main{position:absolute; background:#d4d4d6; top: 0; left: 0; width: 100%; height: 100%; z-index:3;}
+    .product-filters-wrapper{margin:80px 20px 20px;}
+    .product-filters-wrapper ul{margin: 0;}
+    .product-filters-wrapper .tit_fil{position: absolute; top: 0; left: 0; width: 100%; font-size: 16px; text-align: center; box-sizing:border-box; height: 60px;}
+        .tit_fil i{display:inline-block; color:#fb7055; font-size: 30px; margin: 0 10px 0 0;}
+        .tit_fil .icon-close{display: block; color: #FFF; font-size: 30px; position: absolute; top: 0; right: 0; cursor: pointer; width: 30px; height: 30px; padding: 15px;}
+    .filter-result{padding: 0 0 20px; background:#d4d4d6;}
+        .filter-result li{float: left; margin: 2px;}
+    .product-filters .filter-title{font-size: 18px; margin: 0; padding: 9px 15px;}
+    .product-filters{padding: 0;}
+    .product-filters li{border-bottom:#d4d4d6 solid 1px; margin: 0; font-size: 16px; list-style: none;}
+    .product-filters li a{display: block; padding: 10px 20px;}
+    .fil_cant{font-size: 14px;}
+    .qcat-more-filters{font-size: 12px; display: block; text-align: center; margin: 10px 0;}
+    .filt-inputs{padding:0 20px 10px;}
+    /*fin FILTROS*/
 }
 @media screen and (max-width:640px) {
     /*header*/

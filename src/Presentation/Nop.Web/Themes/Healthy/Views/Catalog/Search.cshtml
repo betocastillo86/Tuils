@@ -31,33 +31,72 @@
 
     @section left {
 
-        <div class="product-filters-wrapper">
+        <div class="filters-main">
+            <div class="product-filters-wrapper">
+                <h2 class="tit_fil"><i class="icon-mail"></i>FILTRAR POR <span class="icon-close"></span></h2>
+                <ul class="filter-result">
+                    <li>Moto <span class="icon-close"></span></li>
+                    <li>Moto <span class="icon-close"></span></li>
+                    <li>Moto <span class="icon-close"></span></li>
+                    <br/>
+                </ul>
+                <ul class="product-filters">
+                    <div class="filter-title">CATEGORIA</div>
+                    <li><a href="javascript:;">Moto <span class="fil_cant">4</span></a></li>
+                    <li><a href="javascript:;">Casco <span class="fil_cant">4</span></a></li>
+                </ul>
+                <ul class="product-filters">
+                    <div class="filter-title">marca</div>
+                    <li><a href="javascript:;">KTM <span class="fil_cant">4</span></a></li>
+                    <li><a href="javascript:;">Yamaha <span class="fil_cant">4</span></a></li>
+                </ul>
+                <ul class="product-filters">
+                    <div class="filter-title">ubicación</div>
+                    <li><a href="javascript:;">Bogotá <span class="fil_cant">4</span></a></li>
+                    <li><a href="javascript:;">Cali <span class="fil_cant">4</span></a></li>
+                    <li><a href="javascript:;">Medellin <span class="fil_cant">4</span></a></li>
+                    <a href="javascript:;" class="qcat-more-filters"><b>Más opciones</b> <span class="icon-down"></span></a>
+                </ul>
+                <ul class="product-filters">
+                    <div class="filter-title">RANGO DE PRECIO</div>
+                    <div class="filt-inputs">
+                        <input type="text" placeholder="Desde" /> &#45;
+                        <input type="text" placeholder="Hasta" />
+                        <a href="javascript:;" class="btn_fil icon-next"></a>
+                    </div>
+                    <li><a href="javascript:;">$5.000 - $38.000</li>
+                    <li><a href="javascript:;">$38.000 - $50.000</li>
+                    <li><a href="javascript:;">$50.000 - $75.000</li>
+                    <li><a href="javascript:;">Sobre $75.000</li>
+                </ul>
 
-            @if (Model.PagingFilteringContext.CategoryFilter.Enabled)
-            {
-                @Html.Partial("_FilterCategoryBox", Model.PagingFilteringContext.CategoryFilter, new ViewDataDictionary())
-            }
-            @if (Model.PagingFilteringContext.StateProvinceFilter.Enabled)
-            {
-                @Html.Partial("_FilterStateProvinceBox", Model.PagingFilteringContext.StateProvinceFilter, new ViewDataDictionary())
-            }
-            @if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
-            {
-                @Html.Partial("_FilterSpecsBox", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
-            }
-            @if (Model.PagingFilteringContext.ManufacturerFilter.Enabled)
-            {
-                @Html.Partial("_FilterManufacturerBox", Model.PagingFilteringContext.ManufacturerFilter, new ViewDataDictionary())
-            }
-            @if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
-            {
-                @Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
-            }
-            @if (Model.PagingFilteringContext.BikeReferenceFilter.Enabled)
-            {
-                @Html.Partial("_FilterBikeReferenceBox", Model.PagingFilteringContext.BikeReferenceFilter, new ViewDataDictionary())
-            }
 
+                @if (Model.PagingFilteringContext.CategoryFilter.Enabled)
+                {
+                    @Html.Partial("_FilterCategoryBox", Model.PagingFilteringContext.CategoryFilter, new ViewDataDictionary())
+                }
+                @if (Model.PagingFilteringContext.StateProvinceFilter.Enabled)
+                {
+                    @Html.Partial("_FilterStateProvinceBox", Model.PagingFilteringContext.StateProvinceFilter, new ViewDataDictionary())
+                }
+                @if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
+                {
+                    @Html.Partial("_FilterSpecsBox", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
+                }
+                @if (Model.PagingFilteringContext.ManufacturerFilter.Enabled)
+                {
+                    @Html.Partial("_FilterManufacturerBox", Model.PagingFilteringContext.ManufacturerFilter, new ViewDataDictionary())
+                }
+                @if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
+                {
+                    @Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
+                }
+                @if (Model.PagingFilteringContext.BikeReferenceFilter.Enabled)
+                {
+                    @Html.Partial("_FilterBikeReferenceBox", Model.PagingFilteringContext.BikeReferenceFilter, new ViewDataDictionary())
+                }
+
+            </div>
         </div>
     }
     <div class="page search-page">
