@@ -1216,6 +1216,7 @@
     <Content Include="App_Readme\Handlebarsjs_LICENSE" />
     <Content Include="Scripts\handelbars.helpers.js" />
     <None Include="Properties\PublishProfiles\SmarterAspNet-Release.pubxml" />
+    <None Include="Properties\PublishProfiles\Smarter_Co-Release.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />

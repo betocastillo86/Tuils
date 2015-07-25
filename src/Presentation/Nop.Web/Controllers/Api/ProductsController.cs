@@ -48,7 +48,7 @@ namespace Nop.Web.Controllers.Api
             if (ModelState.IsValid && model.Validate())
             {
                 //Si llegan más valores de los posibles para categorias especiales, toma solo los permitidos
-                if (model.SpecialCategories.Where(s => s.SpecialType == SpecialCategoryProductType.BikeBrand).Count() > _catalogSettings.LimitOfSpecialCategories)
+                if (model.SpecialCategories != null && model.SpecialCategories.Where(s => s.SpecialType == SpecialCategoryProductType.BikeBrand).Count() > _catalogSettings.LimitOfSpecialCategories)
                     model.SpecialCategories = model.SpecialCategories.Take(_catalogSettings.LimitOfSpecialCategories).ToList();
 
                 

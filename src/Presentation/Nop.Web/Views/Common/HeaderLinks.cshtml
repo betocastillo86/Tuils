@@ -6,7 +6,7 @@
         @if (Model.IsAuthenticated)
         {
             <li class="user-li"><a href="@Url.RouteUrl("ControlPanel")"><img src="~/Themes/Healthy/Content/images/img_user.svg"/> <p>@Model.CustomerEmailUsername</p><br/></a></li>
-            <li><a href="@Url.RouteUrl("CustomerInfo")" class="account">@Model.CustomerEmailUsername</a></li>
+            <li><a class="account">@Model.CustomerEmailUsername</a></li>
             <li><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></li>
         }
         else
@@ -52,8 +52,10 @@
     @if (!Model.IsAuthenticated)
     { 
         <script id="templateLoggedUser" type="text/x-handlebars-template">
-            <li><a href="@Url.RouteUrl("ControlPanel")" class="account">{{Name}}</a></li>
+
+            <li class="user-li"><a href="@Url.RouteUrl("ControlPanel")"><img src="/Themes/Healthy/Content/images/img_user.svg" /> <p>Hola {{Name}} !</p> <br /></a></li>
             <li><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></li>
+
         </script>
         <div id="divRegisterUser"></div>
         <div id="divLoginUser"></div>
