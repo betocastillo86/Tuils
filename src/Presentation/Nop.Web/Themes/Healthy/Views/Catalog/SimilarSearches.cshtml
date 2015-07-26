@@ -1,12 +1,12 @@
 ﻿@model Nop.Web.Models.Catalog.SimilarSearchesModel
 
-<div>
+<div class="similarSearch">
     <span title="@Model.TitleOfTitle">@Model.Title</span>
-    <div>
+    <ul>
         @foreach (var item in Model.Searches)
         {
-            <a href="@Url.Action("Search", new { q = item })" title="@T("similarSearches.suggest.title", item)">@item</a>
+            <a href="@Url.Action("Search", new { q = item })" title="@T("similarSearches.suggest.title", item)"><li>@item,</li></a>
         }
-    </div>
+    </ul>
 </div>
 
