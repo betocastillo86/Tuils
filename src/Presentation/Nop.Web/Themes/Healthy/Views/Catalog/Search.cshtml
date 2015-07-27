@@ -30,67 +30,7 @@
 
 
     @section left {
-    <div class="content-filter">
-        <input id="btnShowFilter" type="button" value="Mostrar Filtro" />
-        <div class="filters-main" style="display:none">
-            <div class="product-filters-wrapper">
-                <h2 class="tit_fil"><i class="icon-mail"></i>FILTRAR POR <span class="icon-close"></span></h2>
-                
-                <ul class="filter-result">
-                    @if (Model.PagingFilteringContext.CategoryFilter.Enabled)
-                    {
-                        @Html.Partial("_FilterCategoryBox_Filtered", Model.PagingFilteringContext.CategoryFilter, new ViewDataDictionary())
-                    }
-                    @if (Model.PagingFilteringContext.StateProvinceFilter.Enabled)
-                    {
-                        @Html.Partial("_FilterStateProvinceBox_Filtered", Model.PagingFilteringContext.StateProvinceFilter, new ViewDataDictionary())
-                    }
-                    @if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
-                    {
-                        @Html.Partial("_FilterSpecsBox_Filtered", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
-                    }
-                    @if (Model.PagingFilteringContext.ManufacturerFilter.Enabled)
-                    {
-                        @Html.Partial("_FilterManufacturerBox_Filtered", Model.PagingFilteringContext.ManufacturerFilter, new ViewDataDictionary())
-                    }
-                    @if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
-                    {
-                        @Html.Partial("_FilterPriceBox_Filtered", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
-                    }
-                    @if (Model.PagingFilteringContext.BikeReferenceFilter.Enabled)
-                    {
-                        @Html.Partial("_FilterBikeReferenceBox_Filtered", Model.PagingFilteringContext.BikeReferenceFilter, new ViewDataDictionary())
-                    }
-                </ul>
-
-                @if (Model.PagingFilteringContext.CategoryFilter.Enabled)
-                    {
-                    @Html.Partial("_FilterCategoryBox", Model.PagingFilteringContext.CategoryFilter, new ViewDataDictionary())
-                    }
-                @if (Model.PagingFilteringContext.StateProvinceFilter.Enabled)
-                    {
-                    @Html.Partial("_FilterStateProvinceBox", Model.PagingFilteringContext.StateProvinceFilter, new ViewDataDictionary())
-                    }
-                @if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
-                    {
-                    @Html.Partial("_FilterSpecsBox", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
-                    }
-                @if (Model.PagingFilteringContext.ManufacturerFilter.Enabled)
-                    {
-                    @Html.Partial("_FilterManufacturerBox", Model.PagingFilteringContext.ManufacturerFilter, new ViewDataDictionary())
-                    }
-                @if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
-                    {
-                    @Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
-                    }
-                @if (Model.PagingFilteringContext.BikeReferenceFilter.Enabled)
-                    {
-                    @Html.Partial("_FilterBikeReferenceBox", Model.PagingFilteringContext.BikeReferenceFilter, new ViewDataDictionary())
-                    }
-
-            </div>
-        </div>
-    </div>
+        @Html.Partial("_FilterSearches", Model.PagingFilteringContext)
     }
     <div class="page search-page">
         <div class="page-title">

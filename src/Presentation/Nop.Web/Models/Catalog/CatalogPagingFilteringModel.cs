@@ -304,7 +304,7 @@ namespace Nop.Web.Models.Catalog
                     var priceRangeStr = new StringBuilder();
 
                     //Muestra 4 rangos de precios
-                    double prevMin = Math.Round(minPrice / 100d, 0) * 1000d;
+                    double prevMin = Math.Round(minPrice / 1000d, 0) * 1000d;
                     double prevMax = minPrice;
                     for (int i = 4; i > 0; i--)
                     {

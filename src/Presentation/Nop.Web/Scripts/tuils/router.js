@@ -2,12 +2,12 @@
   'tuils/views/panel/myAccount','tuils/views/panel/vendorServices','tuils/views/panel/questionsView','tuils/views/vendor/vendorDetailView'			
 ,'tuils/views/product/productDetailView','tuils/views/common/newsletterView','tuils/views/common/searcherView','tuils/views/common/leftFeaturedProductsView'	
 , 'tuils/views/common/header', 'tuils/views/panel/offices', 'tuils/views/panel/menu', 'tuils/views/panel/myProductsView', 'tuils/views/home/homeView',
-'tuils/views/product/searchView',
+'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView',
 'ajaxCart', 'nopCommon'],
     function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView,
         MyAccountView,VendorServicesView ,QuestionsView ,VendorDetailView,
         ProductDetailView, NewsletterView, SearcherView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
-        HomeView, SearchView) {
+        HomeView, SearchView, CategoryView, ManufacturerView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -124,9 +124,11 @@
             },
             category : function(categoryName, specification, query)
             {
+                this.currentView = new CategoryView({ el: this.defaultEl });
                 this.loadTwoColumns();
             },
-            manufacturer : function(){
+            manufacturer: function () {
+                this.currentView = new ManufacturerView({ el: this.defaultEl });
                 this.loadTwoColumns();
             },
             search: function () {

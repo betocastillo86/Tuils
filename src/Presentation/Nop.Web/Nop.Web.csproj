@@ -1135,10 +1135,12 @@
     <Content Include="Scripts\tuils\views\panel\questionsView.js" />
     <Content Include="Scripts\tuils\views\panel\responseQuestionView.js" />
     <Content Include="Scripts\tuils\views\panel\vendorServices.js" />
+    <Content Include="Scripts\tuils\views\product\manufacturerView.js" />
     <Content Include="Scripts\tuils\views\product\filterSearchView.js" />
     <Content Include="Scripts\tuils\views\product\productDetailView.js" />
     <Content Include="Scripts\tuils\views\product\questionView.js" />
     <Content Include="Scripts\tuils\views\product\reviewView.js" />
+    <Content Include="Scripts\tuils\views\product\categoryView.js" />
     <Content Include="Scripts\tuils\views\product\searchView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
@@ -2543,6 +2545,7 @@
     <Content Include="Views\Catalog\_FilterManufacturerBox_Filtered.cshtml" />
     <Content Include="Views\Catalog\_FilterPriceBox_Filtered.cshtml" />
     <Content Include="Views\Catalog\_FilterBikeReferenceBox_Filtered.cshtml" />
+    <Content Include="Themes\Healthy\Views\Catalog\_FilterSearches.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

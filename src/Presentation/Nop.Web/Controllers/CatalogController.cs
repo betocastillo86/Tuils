@@ -339,8 +339,8 @@ namespace Nop.Web.Controllers
         protected virtual IList<CategorySimpleModel> PrepareCategoryTopMenuSimpleModels()
         {
             var result = new List<CategorySimpleModel>();
-            
-            foreach (var category in _categoryService.GetAllCategories(includeInTopMenu:true))
+
+            foreach (var category in _categoryService.GetAllCategories(includeInTopMenu: true))
             {
                 var categoryModel = new CategorySimpleModel
                 {
@@ -350,7 +350,7 @@ namespace Nop.Web.Controllers
                 };
                 result.Add(categoryModel);
             }
-            
+
             return result;
         }
 
@@ -360,7 +360,7 @@ namespace Nop.Web.Controllers
             IList<int> loadSubCategoriesForIds, int level, int levelsToLoad, bool validateIncludeInTopMenu)
         {
             var result = new List<CategorySimpleModel>();
-            
+
             foreach (var category in _categoryService.GetAllCategoriesByParentCategoryId(rootCategoryId))
             {
                 if (validateIncludeInTopMenu && !category.IncludeInTopMenu)
@@ -423,7 +423,7 @@ namespace Nop.Web.Controllers
                 }
                 result.Add(categoryModel);
             }
-            
+
 
 
             return result;
@@ -497,22 +497,6 @@ namespace Nop.Web.Controllers
                 category.AllowCustomersToSelectPageSize,
                 category.PageSizeOptions,
                 category.PageSize);
-
-            //price ranges
-            model.PagingFilteringContext.PriceRangeFilter.LoadPriceRangeFilters(category.PriceRanges, _webHelper, _priceFormatter);
-            var selectedPriceRange = model.PagingFilteringContext.PriceRangeFilter.GetSelectedPriceRange(_webHelper, category.PriceRanges);
-            decimal? minPriceConverted = null;
-            decimal? maxPriceConverted = null;
-            if (selectedPriceRange != null)
-            {
-                if (selectedPriceRange.From.HasValue)
-                    minPriceConverted = _currencyService.ConvertToPrimaryStoreCurrency(selectedPriceRange.From.Value, _workContext.WorkingCurrency);
-
-                if (selectedPriceRange.To.HasValue)
-                    maxPriceConverted = _currencyService.ConvertToPrimaryStoreCurrency(selectedPriceRange.To.Value, _workContext.WorkingCurrency);
-            }
-
-
 
 
 
@@ -624,17 +608,51 @@ namespace Nop.Web.Controllers
                 //include subcategories
                 categoryIds.AddRange(GetChildCategoryIds(category.Id));
             }
+
+
+            decimal? minPriceConverted = null;
+            decimal? maxPriceConverted = null;
+            //Valida el rango de precios
+            var priceFilter = command.PriceRangeFilter.GetSelectedPriceRange(_webHelper, null);
+            if (priceFilter != null)
+            {
+                minPriceConverted = priceFilter.From;
+                maxPriceConverted = priceFilter.To;
+            }
+
+
             //products
             IList<int> alreadyFilteredSpecOptionIds = model.PagingFilteringContext.SpecificationFilter.GetAlreadyFilteredIds(_webHelper);
-            //Si viene filtro de atributo por URL y no viene por queryString lo agrega al command
-            //if (specFilterId.HasValue && command.SpecificationFilter.GetAlreadyFilteredIds(_webHelper).Count == 0)
-            //{
-            //    alreadyFilteredSpecOptionIds.Add(specFilterId.Value);
-            //    command.SpecificationFilter.Add(specFilterId.Value, _specificationAttributeService, _workContext);
-            //}
+            //Categorias seleccionadas
+            IList<int> alreadyFilteredCategoryIds = model.PagingFilteringContext.CategoryFilter.GetAlreadyFilteredIds(_webHelper);
+            //Ciudad seleccionada
+            int? stateProvinceId = model.PagingFilteringContext.StateProvinceFilter.GetAlreadyFilteredId(_webHelper);
+            //Marca seleccionada
+            int? manufacturerId = model.PagingFilteringContext.ManufacturerFilter.GetAlreadyFilteredId(_webHelper);
+            //Categoria especial seleccionada (Marca de la moto)
+            int? specialCategoryId = model.PagingFilteringContext.BikeReferenceFilter.GetAlreadyFilteredId(_webHelper);
 
             Dictionary<int, int> filterableSpecificationAttributeOptionIds;
-            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, true,
+            Dictionary<int, int> filterableCategoryIds;
+            Dictionary<int, int> filterableStateProvinceIds;
+            Dictionary<int, int> filterableManufacturerIds;
+            Dictionary<int, int> filterableSpecialCategoryIds;
+            Tuple<int, int> minMaxPrice;
+
+
+            var products = _productService.SearchProducts(
+                out filterableSpecificationAttributeOptionIds,
+                out filterableCategoryIds,
+                out filterableStateProvinceIds,
+                out filterableManufacturerIds,
+                out filterableSpecialCategoryIds,
+                out minMaxPrice,
+                true,
+                loadFilterableCategoryIds: categoryIds.Count == 0,  //Solo realiza conteo de categorias si no está filtrando por categoria
+                loadFilterableStateProvinceIds: !stateProvinceId.HasValue, //Solo realiza conteo de ciudaddes si no está filtrando por ciudad,
+                loadPriceRange: !minPriceConverted.HasValue && !maxPriceConverted.HasValue, //Solo realiza conteo de precios si no está filtrando por precio
+                loadFilterableManufacturerIds: !manufacturerId.HasValue, //Solo realiza conteo de marcas si no está filtrando por marca
+                loadFilterableSpecialCategoryIds: !specialCategoryId.HasValue,//Solo realiza connteo de categorias especiales si no está filtrado por referencia
                 categoryIds: categoryIds,
                 storeId: _storeContext.CurrentStore.Id,
                 visibleIndividuallyOnly: true,
@@ -649,11 +667,34 @@ namespace Nop.Web.Controllers
 
             model.PagingFilteringContext.LoadPagedList(products);
 
+            //Price
+            model.PagingFilteringContext.PriceRangeFilter.LoadPriceRangeFilters(minMaxPrice.Item1, minMaxPrice.Item2, _webHelper, _priceFormatter);
+
             //specs
             model.PagingFilteringContext.SpecificationFilter.PrepareSpecsFilters(alreadyFilteredSpecOptionIds,
-                filterableSpecificationAttributeOptionIds,
-                _specificationAttributeService, _webHelper, _workContext);
+        filterableSpecificationAttributeOptionIds,
+        _specificationAttributeService, _webHelper, _workContext);
 
+            //categories
+            model.PagingFilteringContext.CategoryFilter.PrepareCategoriesFilters(alreadyFilteredCategoryIds,
+        filterableCategoryIds,
+        _categoryService, _webHelper, _workContext);
+
+            //state provinces
+            model.PagingFilteringContext.StateProvinceFilter.PrepareStateProvinceFilters(stateProvinceId,
+        filterableStateProvinceIds,
+        _stateProvinceService, _webHelper, _workContext);
+
+            //manufacturer
+            model.PagingFilteringContext.ManufacturerFilter.PrepareFilters(manufacturerId,
+        filterableManufacturerIds,
+        _manufacturerService, _webHelper, _workContext);
+
+
+            //bike references
+            model.PagingFilteringContext.BikeReferenceFilter.PrepareFilters(specialCategoryId,
+        filterableSpecialCategoryIds,
+        _categoryService, _webHelper, _workContext);
 
             //template
             var templateCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_TEMPLATE_MODEL_KEY, category.CategoryTemplateId);
@@ -724,7 +765,7 @@ namespace Nop.Web.Controllers
 
             #region Codigo eliminado
             //categories
-            
+
 
             //////top menu topics
             //string topicCacheKey = string.Format(ModelCacheEventConsumer.TOPIC_TOP_MENU_MODEL_KEY,
@@ -765,19 +806,20 @@ namespace Nop.Web.Controllers
             string attributesCacheKey = string.Format(ModelCacheEventConsumer.TOPIC_TOP_MENU_ATTRIBUTES_KEY);
             var cachedMenuAttributes = _cacheManager.Get(attributesCacheKey, () =>
                 {
-                     var attributes = new List<TopMenuModel.SpecificationAttributeOptionModel>();
+                    var attributes = new List<TopMenuModel.SpecificationAttributeOptionModel>();
                     foreach (var attribute in _specificationAttributeService
                     .GetSpecificationAttributeOptionsBySpecificationAttribute(_tuilsSettings.specificationAttributeBikeType))
-	                {
-                        attributes.Add(new TopMenuModel.SpecificationAttributeOptionModel() {
+                    {
+                        attributes.Add(new TopMenuModel.SpecificationAttributeOptionModel()
+                        {
                             Id = attribute.Id,
                             Name = attribute.Name,
-                            SeName = attribute.GetSeName(_workContext.WorkingLanguage.Id, ensureTwoPublishedLanguages:false)
+                            SeName = attribute.GetSeName(_workContext.WorkingLanguage.Id, ensureTwoPublishedLanguages: false)
                         });
-	                }
+                    }
                     return attributes;
                 }
-                
+
             );
 
             int idSelectedAttribute = 0;
@@ -800,8 +842,8 @@ namespace Nop.Web.Controllers
 
             return PartialView(model);
         }
-        
-        
+
+
         [ChildActionOnly]
         public ActionResult ManufacturerHomePage()
         {
@@ -976,11 +1018,44 @@ namespace Nop.Web.Controllers
             }
 
 
+            var categoryIds = new List<int>();
+            //advanced search
+            var categoryId = 0;
+            int.TryParse(Request.QueryString["Cid"] == null ? "0" : Request.QueryString["Cid"], out categoryId);
+            if (categoryId > 0)
+            {
+                categoryIds.Add(categoryId);
+            }
 
             //products
-            Dictionary<int, int> filterableSpecificationAttributeOptionIds;
+            IList<int> alreadyFilteredSpecOptionIds = model.PagingFilteringContext.SpecificationFilter.GetAlreadyFilteredIds(_webHelper);
+            //Categorias seleccionadas
+            IList<int> alreadyFilteredCategoryIds = model.PagingFilteringContext.CategoryFilter.GetAlreadyFilteredIds(_webHelper);
+            //Ciudad seleccionada
+            int? stateProvinceId = model.PagingFilteringContext.StateProvinceFilter.GetAlreadyFilteredId(_webHelper);
+            //Categoria especial seleccionada (Marca de la moto)
+            int? specialCategoryId = model.PagingFilteringContext.BikeReferenceFilter.GetAlreadyFilteredId(_webHelper);
 
-            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, false,
+            Dictionary<int, int> filterableSpecificationAttributeOptionIds;
+            Dictionary<int, int> filterableCategoryIds;
+            Dictionary<int, int> filterableStateProvinceIds;
+            Dictionary<int, int> filterableManufacturerIds;
+            Dictionary<int, int> filterableSpecialCategoryIds;
+            Tuple<int, int> minMaxPrice;
+
+            var products = _productService.SearchProducts(
+                out filterableSpecificationAttributeOptionIds,
+                out filterableCategoryIds,
+                out filterableStateProvinceIds,
+                out filterableManufacturerIds,
+                out filterableSpecialCategoryIds,
+                out minMaxPrice,
+                true,
+                loadFilterableCategoryIds: categoryIds.Count == 0,  //Solo realiza conteo de categorias si no está filtrando por categoria
+                loadFilterableStateProvinceIds: !stateProvinceId.HasValue, //Solo realiza conteo de ciudaddes si no está filtrando por ciudad,
+                loadPriceRange: !minPriceConverted.HasValue && !maxPriceConverted.HasValue, //Solo realiza conteo de precios si no está filtrando por precio
+                loadFilterableManufacturerIds: false, //Solo realiza conteo de marcas si no está filtrando por marca
+                loadFilterableSpecialCategoryIds: !specialCategoryId.HasValue,//Solo realiza connteo de categorias especiales si no está filtrado por referencia
                 manufacturerId: manufacturer.Id,
                 storeId: _storeContext.CurrentStore.Id,
                 visibleIndividuallyOnly: true,
@@ -993,6 +1068,30 @@ namespace Nop.Web.Controllers
             model.Products = PrepareProductOverviewModels(products).ToList();
 
             model.PagingFilteringContext.LoadPagedList(products);
+
+
+            //Price
+            model.PagingFilteringContext.PriceRangeFilter.LoadPriceRangeFilters(minMaxPrice.Item1, minMaxPrice.Item2, _webHelper, _priceFormatter);
+
+            //specs
+            model.PagingFilteringContext.SpecificationFilter.PrepareSpecsFilters(alreadyFilteredSpecOptionIds,
+        filterableSpecificationAttributeOptionIds,
+        _specificationAttributeService, _webHelper, _workContext);
+
+            //categories
+            model.PagingFilteringContext.CategoryFilter.PrepareCategoriesFilters(alreadyFilteredCategoryIds,
+        filterableCategoryIds,
+        _categoryService, _webHelper, _workContext);
+
+            //state provinces
+            model.PagingFilteringContext.StateProvinceFilter.PrepareStateProvinceFilters(stateProvinceId,
+        filterableStateProvinceIds,
+        _stateProvinceService, _webHelper, _workContext);
+
+            //bike references
+            model.PagingFilteringContext.BikeReferenceFilter.PrepareFilters(specialCategoryId,
+        filterableSpecialCategoryIds,
+        _categoryService, _webHelper, _workContext);
 
 
             //template
@@ -1134,7 +1233,7 @@ namespace Nop.Web.Controllers
             model.TotalActiveProducts = _productService.CountActiveProductsByVendorId(vendor.Id);
 
             //Consulta todas las ventas del vendedor
-            var vendorSellings = _orderService.SearchOrders(vendorId: vendorId,os :Nop.Core.Domain.Orders.OrderStatus.Complete);
+            var vendorSellings = _orderService.SearchOrders(vendorId: vendorId, os: Nop.Core.Domain.Orders.OrderStatus.Complete);
             model.TotalSoldProducts = vendorSellings.Count;
 
 
@@ -1463,7 +1562,7 @@ namespace Nop.Web.Controllers
             // only search if query string search keyword is set (used to avoid searching or displaying search term min length error message on /search page load)
             if (Request.Params["Q"] != null)
             {
-                
+
                 if (model.Q.Length < _catalogSettings.ProductSearchTermMinimumLength)
                 {
                     model.Warning = string.Format(_localizationService.GetResource("Search.SearchTermMinimumLengthIsNCharacters"), _catalogSettings.ProductSearchTermMinimumLength);
@@ -1472,7 +1571,7 @@ namespace Nop.Web.Controllers
                 {
 
                     model.ShowSimilarSearches = _catalogSettings.ShowSimilarSearches;
-                    
+
                     var categoryIds = new List<int>();
 
 
@@ -1515,7 +1614,7 @@ namespace Nop.Web.Controllers
                     //categoria especial por la que debería ordenar que solo se activa si el usuario cuenta con esta registrada como moto
                     //Además si viene filtro por categoría especial NO debe ordenar por categoría especial
                     //Si viene algún orden seleccionado NO debe ordenar por categoria especial
-                    int? orderBySpecialCategoryId = !specialCategoryId.HasValue && command.OrderBy == 0  ? _workContext.CurrentCustomer.GetBikeReference() : null;
+                    int? orderBySpecialCategoryId = !specialCategoryId.HasValue && command.OrderBy == 0 ? _workContext.CurrentCustomer.GetBikeReference() : null;
 
                     //var searchInProductTags = false;
                     var searchInProductTags = searchInDescriptions;
@@ -1558,7 +1657,7 @@ namespace Nop.Web.Controllers
                         pageIndex: command.PageNumber - 1,
                         pageSize: command.PageSize,
                         stateProvinceId: stateProvinceId,
-                        specialCategoryId:specialCategoryId,
+                        specialCategoryId: specialCategoryId,
                         orderBySpecialCategoryId: orderBySpecialCategoryId);
                     model.Products = PrepareProductOverviewModels(products).ToList();
 
@@ -1635,7 +1734,7 @@ namespace Nop.Web.Controllers
         {
             var model = new SimilarSearchesModel();
 
-            
+
             if (_catalogSettings.ShowSimilarSearches)
             {
                 //Si no tiene ninguna busqueda es porque es la general
@@ -1654,16 +1753,16 @@ namespace Nop.Web.Controllers
                     model.Title = _localizationService.GetResource("similarSearches");
                     model.TitleOfTitle = string.Format(_localizationService.GetResource("similarSearches.title"), q);
                 }
-                    
 
-                
+
+
                 model.Enable = true;
                 model.Searches = _cacheManager.Get(cacheKey, () =>
                 {
-                    return _searchTermService.GetTemsByKeyword(q, top, getMostCommon:true)
+                    return _searchTermService.GetTemsByKeyword(q, top, getMostCommon: true)
                     .Select(s => s.Keyword)
                     .ToList();
-                }); 
+                });
             }
 
             return View(model);
@@ -1721,7 +1820,7 @@ namespace Nop.Web.Controllers
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
 
-            
+
         }
 
         #endregion
