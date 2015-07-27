@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Nop.Web.Extensions;
 using Nop.Services.Directory;
+using Nop.Core;
 
 namespace Nop.Web.Controllers
 {
@@ -19,6 +20,7 @@ namespace Nop.Web.Controllers
         private ISpecificationAttributeService _specificationAttributeService;
         private IStateProvinceService _stateProvinceService;
         private TuilsSettings _tuilsSettings;
+        private IWorkContext _workContext;
         #endregion
 
         #region Ctor
@@ -26,12 +28,14 @@ namespace Nop.Web.Controllers
         public SalesController(ICategoryService categoryService,
             ISpecificationAttributeService specificationAttributeService,
             IStateProvinceService stateProvinceService,
-            TuilsSettings tuilsSettings)
+            TuilsSettings tuilsSettings,
+            IWorkContext workContext)
         {
             this._categoryService = categoryService;
             this._tuilsSettings = tuilsSettings;
             this._specificationAttributeService = specificationAttributeService;
             this._stateProvinceService = stateProvinceService;
+            this._workContext = workContext;
         }
         #endregion
 
@@ -42,7 +46,12 @@ namespace Nop.Web.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            return View();
+            var model = new SelectPublishCategoryModel();
+            //Solo los talleres pueden publicar servicios
+            if (_workContext.CurrentVendor != null)
+                model.CanSelectService = _workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.RepairShop;
+
+            return View(model);
         }
 
         /// <summary>

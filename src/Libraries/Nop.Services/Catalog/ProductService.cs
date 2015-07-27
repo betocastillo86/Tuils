@@ -78,6 +78,9 @@ namespace Nop.Services.Catalog
         private readonly IPictureService _pictureService;
         private readonly IOrderService _orderService;
         private readonly ILogger _logger;
+        private readonly ICategoryService _categoryService;
+        private readonly ILocalizationService _localizationService;
+
 
         #endregion
 
@@ -143,7 +146,9 @@ namespace Nop.Services.Catalog
             TuilsSettings tuilsSettings,
             IOrderService orderService,
             IRepository<SpecialCategoryProduct> specialCategoryProductRepository,
-            ILogger logger)
+            ILogger logger,
+            ICategoryService categoryService,
+            ILocalizationService localizacionService)
         {
             this._cacheManager = cacheManager;
             this._productRepository = productRepository;
@@ -177,6 +182,8 @@ namespace Nop.Services.Catalog
             this._orderService = orderService;
             this._specialCategoryProductRepository = specialCategoryProductRepository;
             this._logger = logger;
+            this._categoryService = categoryService;
+            this._localizationService = localizacionService;
         }
 
         #endregion
@@ -2157,6 +2164,13 @@ namespace Nop.Services.Catalog
         /// <param name="product">Datos del producto</param>
         public void PublishProduct(Product product)
         {
+            
+            var rootCategory = _categoryService.GetRootCategoryByCategoryId(product.ProductCategories.FirstOrDefault().CategoryId);
+            if (rootCategory == null)
+                throw new NopException(CodeNopException.CategoryDoesntExist);
+            else if (rootCategory.Id == _tuilsSettings.productBaseTypes_service && _workContext.CurrentVendor.VendorType != Core.Domain.Vendors.VendorType.RepairShop)
+                throw new NopException(CodeNopException.UserTypeNotAllowedPublishProductType, _localizationService.GetResource("publishProduct.error.publishInvalidCategoryService"));
+
             //Si tiene imagenes temporales por cargar las crea
             if (product.TempFiles.Count > 0)
             {

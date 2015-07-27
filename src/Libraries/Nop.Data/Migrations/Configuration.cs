@@ -699,6 +699,10 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("CUSTOM.JOINOURCOMMUNITY", "Nosotros");
                 newLocaleStringResources.Add("ACCOUNT.MYACCOUNT", "Mi cuenta");
                 newLocaleStringResources.Add("CUSTOM.CUSTOMERSERVICES", "Tuils web");
+                newLocaleStringResources.Add("controlpanel.RepairShop", "Mi taller");
+                newLocaleStringResources.Add("publishProduct.error.publishInvalidCategoryService", "Para poder publicar un servicio debes estar registrado como un taller");
+
+                
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)

@@ -154,8 +154,11 @@
             //Cuando se reinicia el paso siguiente también se reinicia el paso finalizado
             this.stepFinished = this.currentStep;
         },
-        errorOnSaving: function () {
-            alert("Ocurrió un error, intentalo de nuevo");
+        errorOnSaving: function (model, response) {
+            if (response.responseJSON.ModelState && response.responseJSON.ModelState.ErrorCode == TuilsConfiguration.errorCodes.publishInvalidCategory)
+                alert(response.responseJSON.ModelState.ErrorMessage);
+            else
+                alert("Ocurrió un error, intentalo de nuevo");
         },
         showFinish: function () {
             var that = this;

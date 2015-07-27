@@ -11,6 +11,7 @@ using Nop.Core;
 using Nop.Services.Vendors;
 using Nop.Web.Framework.Mvc.Api;
 using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Common;
 
 
 namespace Nop.Web.Controllers.Api
@@ -24,6 +25,7 @@ namespace Nop.Web.Controllers.Api
         private readonly IVendorService _vendorService;
         private readonly ICategoryService _categoryService;
         private readonly CatalogSettings _catalogSettings;
+        private readonly TuilsSettings _tuilsSettings;
         #endregion
 
         #region Ctor
@@ -31,13 +33,15 @@ namespace Nop.Web.Controllers.Api
             IWorkContext workContext,
             IVendorService vendorService,
             ICategoryService categoryService,
-            CatalogSettings catalogSettings)
+            CatalogSettings catalogSettings,
+            TuilsSettings tuilsSettings)
         {
             this._productService = productService;
             this._workContext = workContext;
             this._vendorService = vendorService;
             this._categoryService = categoryService;
             this._catalogSettings = catalogSettings;
+            this._tuilsSettings = tuilsSettings;
         }
         #endregion
         [Route("api/products")]
@@ -66,9 +70,21 @@ namespace Nop.Web.Controllers.Api
                     product.VendorId = _workContext.CurrentVendor.Id;
                 }
 
-                //Crea el producto en un estado inactivo 
-                _productService.PublishProduct(product);
-                return Ok(new { Id = product.Id });
+
+                try
+                {
+                    //Crea el producto en un estado inactivo 
+                    _productService.PublishProduct(product);
+                    return Ok(new { Id = product.Id });
+                }
+                catch (NopException e)
+                {
+                    ModelState.AddModelError("ErrorCode", Convert.ToInt32(e.Code).ToString());
+                    ModelState.AddModelError("ErrorMessage", e.Message);
+                    return BadRequest(ModelState);
+                }
+                
+               
             }
             else
             {

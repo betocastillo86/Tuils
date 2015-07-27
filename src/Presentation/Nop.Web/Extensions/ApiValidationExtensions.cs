@@ -1,5 +1,6 @@
 ﻿using Nop.Core.Domain.Common;
 using Nop.Core.Infrastructure;
+using Nop.Services.Catalog;
 using Nop.Web.Models.Api;
 using System;
 using System.Collections.Generic;

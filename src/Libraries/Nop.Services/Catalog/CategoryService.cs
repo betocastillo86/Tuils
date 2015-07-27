@@ -709,5 +709,21 @@ namespace Nop.Services.Catalog
 
             return categoriesIds;
         }
+
+
+        /// <summary>
+        /// Retorna la categoria raíz de una categoría especifica
+        /// </summary>
+        /// <param name="categoryId">id de la categoría</param>
+        /// <returns></returns>
+        public Category GetRootCategoryByCategoryId(int categoryId)
+        {
+            var category = GetCategoryById(categoryId);
+            while (category != null && category.ParentCategoryId != 0)
+            {
+                category = GetCategoryById(category.ParentCategoryId);
+            }
+            return category;
+        }
     }
 }

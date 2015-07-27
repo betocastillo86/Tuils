@@ -14,11 +14,11 @@
     @T("controlpanelindex.description")
 
     <ul class="items-ctl">
-        
+
         <li>@T("controlpanelindex.SoldProducts")<span><b>@Model.SoldProducts</b></span></li>
         <li>@T("controlpanelindex.NumRatings")<span><b>@Model.NumRatings</b></span></li>
         <li>@T("controlpanelindex.AvgRating")<span><b>@Model.AvgRating</b></span></li>
-        <li>@T("controlpanelindex.NewMessages")<span><b>@Html.ActionLink(Model.UnansweredQuestions.ToString(), "Questions","ControlPanel") </b></span></li>
+        <li>@T("controlpanelindex.NewMessages")<span><b>@Html.ActionLink(Model.UnansweredQuestions.ToString(), "Questions", "ControlPanel") </b></span></li>
         @*<li>@T("controlpanelindex.PendingMessages")<span><b>@Model.PendingMessages</b></span></li>*@
         <br>
     </ul>
@@ -29,29 +29,17 @@
 
         @foreach (var option in Model.Modules)
         {
-            <li>
-                <a href="@Url.Action(option.Action, option.Controller, option.Parameters)"><span class="@option.IconBig"></span>@T(string.Format("controlpanel.{0}", option.Name)) </a>
-            </li>
+            <a href="@Url.Action(option.Action, option.Controller, option.Parameters)">
+                <li>
+                    <span class="@option.IconBig"></span>@T(string.Format("controlpanel.{0}", option.Name))
+                </li>
+
+            </a>
         }
-        <br/>
+        <br />
     </ul>
 
 
 
 
 </div>
-@*<ul class="panel-items">
-        <li><span class="icon-publica"></span>Publicar</li>
-        <li><span class="icon-tienda"></span>Mi tienda</li>
-        <li><span class="icon-venta"></span>Mis ventas</li>
-        <li><span class="icon-scooter"></span>Mis productos</li>
-        <li><span class="icon-cc"></span>Mis Datos</li>
-        <li><span class="icon-compra"></span>Mis compras</li>
-        <li><span class="icon-corazon"></span>Favoritos</li>
-        <li><span class="icon-cotiza"></span>Cotizar</li>
-        <li><span class="icon-buzon"></span>Buzón de mensajes</li>
-        <li><span class="icon-cotiza"></span>Mis cotizaciones</li>
-        <li><span class="icon-tienda"></span>Mi taller</li>
-        <li><span class="icon-tool"></span>Mis servicios</li>
-    </ul>*@
-

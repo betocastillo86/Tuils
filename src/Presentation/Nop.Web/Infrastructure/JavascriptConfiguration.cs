@@ -1,4 +1,5 @@
-﻿using Nop.Core.Domain.Catalog;
+﻿using Nop.Core;
+using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Media;
 using Nop.Core.Domain.Vendors;
@@ -72,9 +73,13 @@ namespace Nop.Web.Infrastructure
                 {
                     reviewsPageSize = vendorSettings.DefaultReviewsPageSize
                 },
-                catalog = new {
+                catalog = new
+                {
                     limitOfSpecialCategories = catalogSettings.LimitOfSpecialCategories,
                     limitDaysOfProductPublished = catalogSettings.LimitDaysOfProductPublished
+                },
+                errorCodes = new {
+                    publishInvalidCategory = (int)CodeNopException.UserTypeNotAllowedPublishProductType
                 }
             };
 
