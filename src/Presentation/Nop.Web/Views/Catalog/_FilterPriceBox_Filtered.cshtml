@@ -22,20 +22,8 @@
 }
 @if (Model.Enabled)
 {
-
-    if (selectedItem == null)
+    if (selectedItem != null)
     {
-        <ul class="product-filters">
-            <div class="filter-title">@T("Filtering.PriceRangeFilter")</div>
-            <div class="filt-inputs">
-                <input type="text" placeholder="Desde" /> &#45;
-                <input type="text" placeholder="Hasta" />
-                <a href="javascript:;" class="btn_fil icon-next"></a>
-            </div>
-            @foreach (var item in Model.Items)
-            {
-                <li><a href="@item.FilterUrl">@FormatPriceRangeText(item)</a></li>
-            }
-        </ul>
+        <li>@FormatPriceRangeText(selectedItem) <a href="@Model.RemoveFilterUrl"><span class="icon-close"></span></a></li>
     }
 }

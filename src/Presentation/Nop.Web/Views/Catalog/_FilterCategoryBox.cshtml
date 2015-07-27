@@ -3,43 +3,15 @@
 
 @if (Model.Enabled)
 {
-    <div class="product-filters product-spec-filter">
-        <div class="filter-title">
-            @T("Filtering.CategoryFilter")
-        </div>
-        <div class="filter-content">
-            @if (Model.NotFilteredItems.Count > 0)
-            {
-                <div class="available-items">
-                    @foreach (var category in Model.NotFilteredItems)
-                    {
+    if (Model.NotFilteredItems.Count > 0)
+    {
+        <ul class="product-filters">
+            <div class="filter-title">@T("Filtering.CategoryFilter")</div>
 
-                        <ul class="group">
-                            <li class="title">
-                                @category.Name (<a href="@category.FilterUrl">@category.NumOfProducts</a>)
-                            </li>
-                        </ul>
-                    }
-                </div>
-            }
-            @if (Model.AlreadyFilteredItems.Count > 0)
+            @foreach (var category in Model.NotFilteredItems)
             {
-                <div class="already-filtered-items">
-                    <div class="filter-title">
-                        @T("Filtering.CategoryFilter.CurrentlyFilteredBy")
-                    </div>
-                    @foreach (var item in Model.AlreadyFilteredItems)
-                    {
-                        <div class="item">
-                            <strong>@(item.Name)</strong>
-                        </div>
-                    }
-                </div>
-                <div class="remove-filter">
-                    <a href="@Model.RemoveFilterUrl">@T("Filtering.SpecificationFilter.Remove")</a>
-                </div>
+                <li><a href="@category.FilterUrl">@category.Name <span class="fil_cant">@category.NumOfProducts</span></a></li>
             }
-        </div>
-    </div>
-
+        </ul>
+    }
 }

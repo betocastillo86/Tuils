@@ -3,39 +3,16 @@
 
 @if (Model.Enabled)
 {
-    <div class="product-filters product-spec-filter">
-        <div class="filter-title">
-            @T("Filtering.BikeReferenceFilter")
-        </div>
-        <div class="filter-content">
-            @if (Model.NotFilteredItems != null && Model.NotFilteredItems.Count > 0)
-            {
-                <div class="available-items">
-                    @foreach (var state in Model.NotFilteredItems)
-                    {
+    if (Model.NotFilteredItems != null && Model.NotFilteredItems.Count > 0)
+    {
+        <ul class="product-filters">
+            <div class="filter-title">@T("Filtering.BikeReferenceFilter")</div>
 
-                        <ul class="group">
-                            <li class="title">
-                                @state.Name (<a href="@state.FilterUrl">@state.NumOfProducts</a>)
-                            </li>
-                        </ul>
-                    }
-                </div>
-            }
-            @if (Model.FilteredItem != null)
+            @foreach (var item in Model.NotFilteredItems)
             {
-                <div class="already-filtered-items">
-                    <div class="filter-title">
-                        @T("Filtering.BikeReference.CurrentlyFilteredBy")
-                    </div>
-                    <div class="item">
-                        <strong>@(Model.FilteredItem.Name)</strong>
-                    </div>
-                </div>
-                <div class="remove-filter">
-                    <a href="@Model.RemoveFilterUrl">@T("Filtering.BikeReference.Remove")</a>
-                </div>
+                <li><a href="@item.FilterUrl">@item.Name <span class="fil_cant">@item.NumOfProducts</span></a></li>
             }
-        </div>
-    </div>
+        </ul>
+    }
 }
+

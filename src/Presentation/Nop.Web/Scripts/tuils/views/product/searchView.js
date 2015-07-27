@@ -7,7 +7,7 @@
             },
             loadControls : function()
             {
-                this.viewFiler = new FilterSearchView({ el: '.product-filters-wrapper' });
+                this.viewFiler = new FilterSearchView({ el: '.content-filter' });
             },
             render: function () {
 

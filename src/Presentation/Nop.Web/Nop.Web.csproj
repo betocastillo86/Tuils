@@ -2537,6 +2537,12 @@
     <Content Include="Themes\Healthy\Views\Product\Questions.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\SimilarSearches.cshtml" />
     <Content Include="Views\Product\ProductsForMyBike.cshtml" />
+    <Content Include="Views\Catalog\_FilterCategoryBox_Filtered.cshtml" />
+    <Content Include="Views\Catalog\_FilterStateProvinceBox_Filtered.cshtml" />
+    <Content Include="Views\Catalog\_FilterSpecsBox_Filtered.cshtml" />
+    <Content Include="Views\Catalog\_FilterManufacturerBox_Filtered.cshtml" />
+    <Content Include="Views\Catalog\_FilterPriceBox_Filtered.cshtml" />
+    <Content Include="Views\Catalog\_FilterBikeReferenceBox_Filtered.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
