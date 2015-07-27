@@ -27,10 +27,10 @@
     {
         <ul class="product-filters">
             <div class="filter-title">@T("Filtering.PriceRangeFilter")</div>
-            <div class="filt-inputs">
-                <input type="text" placeholder="Desde" /> &#45;
-                <input type="text" placeholder="Hasta" />
-                <a href="javascript:;" class="btn_fil icon-next"></a>
+            <div class="filt-inputs priceFilter">
+                <input id="fromFilter" type="text" placeholder="Desde" tuils-val="int" /> &#45;
+                <input id="toFilter" type="text" placeholder="Hasta" tuils-val="int" />
+                <a id="aCustomFilterPrice" href="" class="btn_fil icon-next" data-url="@Model.CustomFilterUrl"></a>
             </div>
             @foreach (var item in Model.Items)
             {
