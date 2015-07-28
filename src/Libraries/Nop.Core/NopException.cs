@@ -76,6 +76,8 @@ namespace Nop.Core
     public enum CodeNopException
     { 
         None = 0,
+
+        #region Publish
         /// <summary>
         /// Cuando un usuario intenta publicar un producto que no le está permitido hacerlo
         /// Ej: Un usuario simple intentar vender un servicio
@@ -84,6 +86,13 @@ namespace Nop.Core
         /// <summary>
         /// Categoría en la que se está intentando crear un prodcuto no existe
         /// </summary>
-        CategoryDoesntExist = 101
+        CategoryDoesntExist = 101,
+        #endregion
+
+        #region User
+        HasSessionActive = 201
+        #endregion
+
+
     }
 }

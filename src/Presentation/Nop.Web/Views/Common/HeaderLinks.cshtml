@@ -2,7 +2,7 @@
 @using Nop.Web.Models.Common;
 <div class="header-links">
     <ul>
-        @Html.Widget("header_links_before")
+        @*@Html.Widget("header_links_before")*@
         @if (Model.IsAuthenticated)
         {
             <li class="user-li"><a href="@Url.RouteUrl("ControlPanel")"><img src="~/Themes/Healthy/Content/images/img_user.svg"/> <p>@Model.CustomerEmailUsername</p><br/></a></li>
@@ -44,7 +44,7 @@
                 </a>
             </li>
         }
-        @Html.Widget("header_links_after")
+        @*@Html.Widget("header_links_after")*@
     </ul>
 
 
@@ -120,6 +120,10 @@
         }
         <br />
 
+    </script>
+
+    <script id="templateLoggedInResponsive" type="text/x-handlebars-template">
+        <div class="user-li"><a href="@Url.RouteUrl("ControlPanel")"><img src="/Themes/Healthy/Content/images/img_user.svg"/> <p>{{Name}}</p><br/></a></div>
     </script>
 
     <script id="templateLogoutResponsiveMenu" type="text/x-handlebars">

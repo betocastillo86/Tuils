@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'backbone', 'fileModel', 'fileCollection', 'configuration','resize'],
-    function ($, _, Backbone, FileModel, FileCollection, TuilsConfiguration) {
+﻿define(['jquery', 'underscore', 'backbone', 'fileModel', 'fileCollection', 'configuration', 'util', 'resize'],
+    function ($, _, Backbone, FileModel, FileCollection, TuilsConfiguration, TuilsUtilities) {
     var ImagesSelectorView = Backbone.View.extend({
         events: {
             "click .addImageGalery": "addImage",
@@ -73,17 +73,31 @@
             var file = obj.target.files[0];
             var that = this;
             if (file) {
-                var fileModel = new FileModel();
-                fileModel.on("file-saved", this.fileUploaded, this);
-                fileModel.on("file-error", this.fileErrorUpload, this)
-                this.resizer.photo(file, TuilsConfiguration.media.productImageMaxSizeResize, 'file', function (resizedFile) {
 
-                    that.resizer.photo(resizedFile, 400, 'dataURL', function (thumbnail) {
-                        that.switchImage(thumbnail);
-                        fileModel.set({ src: thumbnail, file: resizedFile });
-                        fileModel.upload({saveUrl : that.urlSave });
-                    });
-                });
+                if (TuilsUtilities.isValidSize(obj.target)) {
+                    if (TuilsUtilities.isValidExtension(obj.target, 'image')) {
+                        var fileModel = new FileModel();
+                        fileModel.on("file-saved", this.fileUploaded, this);
+                        fileModel.on("file-error", this.fileErrorUpload, this)
+                        this.resizer.photo(file, TuilsConfiguration.media.productImageMaxSizeResize, 'file', function (resizedFile) {
+
+                            that.resizer.photo(resizedFile, 400, 'dataURL', function (thumbnail) {
+                                that.switchImage(thumbnail);
+                                fileModel.set({ src: thumbnail, file: resizedFile });
+                                fileModel.upload({ saveUrl: that.urlSave });
+                            });
+                        });
+                    }
+                    else {
+                        alert("La extensión del archivo no es valida");
+                        return false;
+                    }
+
+                }
+                else {
+                    alert("El tamaño excede el limite");
+                    return false;
+                }
 
             }
 

@@ -50,23 +50,28 @@ namespace Nop.Web.Controllers.Api
             
         [HttpPost]
         [Route("api/auth/register")]
-        public IHttpActionResult Register(CustomerBaseModel customer)
+        public IHttpActionResult Register(CustomerBaseModel model)
         {
             //Si hay un usuario autenticado no permite la creación
             if (_workContext.CurrentCustomer.IsRegistered())
-                return Conflict();
+            {
+                ModelState.AddModelError("errorCode", Convert.ToInt32(CodeNopException.HasSessionActive).ToString());
+                ModelState.AddModelError("errorMessage", CodeNopException.HasSessionActive.GetLocalizedEnum(_localizationService, _workContext));
+                return BadRequest(ModelState); 
+            }
+                
 
             if (ModelState.IsValid)
             {
                 //Convierte a entidad e intenta realizar el registro
                 var attributes = new Dictionary<string, object>();
-                var entityCustomer = customer.ToEntity(out attributes);
-                var result = _customerRegistrationService.Register(entityCustomer, attributes, customer.VendorType);
+                var entityCustomer = model.ToEntity(out attributes);
+                var result = _customerRegistrationService.Register(entityCustomer, attributes, model.VendorType);
                 if (result.Success)
                 {
                     //Si el registro es exitoso se autentca
                     _authenticationService.SignIn(entityCustomer, true);
-                    return Ok(new { Email = customer.Email, Name = entityCustomer.GetFullName() });
+                    return Ok(new { Email = model.Email, Name = entityCustomer.GetFullName() });
                 }
                 else
                 {
@@ -86,7 +91,11 @@ namespace Nop.Web.Controllers.Api
         {
             //Si hay un usuario autenticado no permite la creación
             if (_workContext.CurrentCustomer.IsRegistered())
-                return Conflict();
+            {
+                ModelState.AddModelError("errorCode", Convert.ToInt32(CodeNopException.HasSessionActive).ToString());
+                ModelState.AddModelError("errorMessage", CodeNopException.HasSessionActive.GetLocalizedEnum(_localizationService, _workContext));
+                return BadRequest(ModelState);
+            }
 
             if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.Password))
             {

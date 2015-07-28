@@ -26,10 +26,13 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                 },
                 Name: {
                     required: true,
-                    maxLength : 50
+                    maxLength: 50,
+                    minLength: 10
                 },
                 FullDescription: {
-                    required: true
+                    required: true,
+                    maxLength: 500,
+                    minLength: 30
                 },
                 IsShipEnabled: {
                     required: false

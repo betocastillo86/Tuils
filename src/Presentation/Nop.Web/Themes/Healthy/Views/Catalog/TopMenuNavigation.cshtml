@@ -14,7 +14,7 @@
 @helper RenderCategoryLine(CategorySimpleModel category, TopMenuModel.SpecificationAttributeOptionModel attribute)
 {
     <li>
-        <a title="@category.Name para @attribute.Name" href="@Url.RouteUrl("Category", new { SeName = category.SeName, specsFilter = attribute.SeName, specs = attribute.Id })">@category.Name</a>
+        <a title="@category.Name para @attribute.Name" href="@Url.RouteUrl("Category", new { SeName = category.SeName, specsFilter = attribute.SeName, specs = attribute.Id })" class="@(category.Id == Model.SelectedCategory ? "active" : string.Empty)">@category.Name</a>
         @{
             if (category.SubCategories.Count > 0)
             {

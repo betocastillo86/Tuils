@@ -289,6 +289,25 @@ define(['jquery', 'jqueryui'], function ($) {
                     if (!that.tagInput.data('autocomplete-open')) {
                         that.createTag(that._cleanedInput());
                     }
+                }).keyup(function (event) {
+                    //Evento creado para que cuando el usuario navegue las opciones existentes no muestre el numero
+                    if (event.which === $.ui.keyCode.DOWN || event.which === $.ui.keyCode.UP)
+                    {
+                        var selectedTag;
+                        var tag = that.tagList.find(".tagit-new input[type='text']").val();
+                        $.each(that.options.availableTags, function (index, element) {
+                            if (element['value'] && element.value == tag) {
+                                selectedTag = element;
+                                return;
+                           }
+                        });
+
+                        if (selectedTag)
+                        {
+                            that.tagList.find(".tagit-new input[type='text']").val(selectedTag['label']);
+                        }
+                    }
+                    
                 });
 
             // Autocomplete.
@@ -519,6 +538,8 @@ define(['jquery', 'jqueryui'], function ($) {
                 tagLabel: this.tagLabel(tag),
                 duringInitialization: duringInitialization
             });
+
+            this.tagList.find(".ui-autocomplete-input").val("");
 
             if (this.options.showAutocompleteOnFocus && !duringInitialization) {
                 setTimeout(function () { that._showAutocomplete(); }, 0);

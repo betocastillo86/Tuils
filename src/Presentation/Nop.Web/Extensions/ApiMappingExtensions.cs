@@ -359,6 +359,7 @@ namespace Nop.Web.Extensions.Api
                 CustomerId = entity.CustomerId,
                 ProductId = entity.ProductId,
                 QuestionText = entity.QuestionText,
+                AnswerText = entity.AnswerText,
                 CreatedOnUtc = entity.CreatedOnUtc,
                 AnsweredOnUtc = entity.AnsweredOnUtc,
                 CreatedOnStr = _dateTimeHelper.ConvertToUserTime(entity.CreatedOnUtc, DateTimeKind.Utc).ToString("g"),

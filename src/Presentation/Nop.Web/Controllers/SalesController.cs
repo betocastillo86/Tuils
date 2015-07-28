@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Nop.Web.Extensions;
 using Nop.Services.Directory;
 using Nop.Core;
+using Nop.Core.Domain.Catalog;
 
 namespace Nop.Web.Controllers
 {
@@ -20,6 +21,7 @@ namespace Nop.Web.Controllers
         private ISpecificationAttributeService _specificationAttributeService;
         private IStateProvinceService _stateProvinceService;
         private TuilsSettings _tuilsSettings;
+        private CatalogSettings _catalogSettings;
         private IWorkContext _workContext;
         #endregion
 
@@ -29,13 +31,15 @@ namespace Nop.Web.Controllers
             ISpecificationAttributeService specificationAttributeService,
             IStateProvinceService stateProvinceService,
             TuilsSettings tuilsSettings,
-            IWorkContext workContext)
+            IWorkContext workContext,
+            CatalogSettings catalogSettings)
         {
             this._categoryService = categoryService;
             this._tuilsSettings = tuilsSettings;
             this._specificationAttributeService = specificationAttributeService;
             this._stateProvinceService = stateProvinceService;
             this._workContext = workContext;
+            this._catalogSettings = catalogSettings;
         }
         #endregion
 
@@ -125,6 +129,7 @@ namespace Nop.Web.Controllers
         private PublishProductModel GetPublishModel()
         {
             var model = new PublishProductModel();
+            model.LimitDaysOfProductPublished = _catalogSettings.LimitDaysOfProductPublished;
             model.StateProvinces = new SelectList(_stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry), "Id", "Name");
             return model;
         }

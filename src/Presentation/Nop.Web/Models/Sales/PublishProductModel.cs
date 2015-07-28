@@ -54,6 +54,8 @@ namespace Nop.Web.Models.Sales
         /// Titulo del tipo de producto que se está ofreciendo
         /// </summary>
         public string SubSectionTitle { get; set; }
+
+        public int LimitDaysOfProductPublished { get; set; }
     }
 
     

@@ -51,7 +51,7 @@
             this.$el.dialog('close');
         },
         errorAuthenticated: function (model, error) {
-            alert(error.responseJSON.Message);
+            alert(error.responseJSON.ModelState ? error.responseJSON.ModelState.errorMessage : error.responseJSON.Message);
         },
         show: function () {
             this.$el.dialog({

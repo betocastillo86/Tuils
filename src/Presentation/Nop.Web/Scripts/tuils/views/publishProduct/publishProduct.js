@@ -1,5 +1,9 @@
-﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'storage', 'configuration', 'publishProductSelectCategoryView', 'publishProductProductDetailView'],
-    function ($, _, BaseView, ProductModel, TuilsStorage, TuilsConfiguration, SelectCategoryView, ProductDetailView) {
+﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'storage',
+    'configuration', 'publishProductSelectCategoryView', 'publishProductProductDetailView',
+    'publishProductFinishedView', 'publishProductSummaryView'],
+    function ($, _, BaseView, ProductModel, TuilsStorage,
+        TuilsConfiguration, SelectCategoryView, ProductDetailView,
+        PublishFinishedView, SummaryView) {
 
     var PublishProductView = BaseView.extend({
 
@@ -86,12 +90,9 @@
             if (!this.viewSummary) {
 
                 var that = this;
-                require(['publishProductSummaryView'], function (SummaryView) {
-                    that.viewSummary = new SummaryView({ el: "#divStep_4", product: that.model, images: that.images, productType: that.productType, breadCrumb: that.viewSelectCategory.breadCrumbCategories });
-                    that.viewSummary.on("summary-back", that.showStepBack, that);
-                    that.viewSummary.on("summary-save", that.save, that);
-                });
-
+                that.viewSummary = new SummaryView({ el: "#divStep_4", product: that.model, images: that.images, productType: that.productType, breadCrumb: that.viewSelectCategory.breadCrumbCategories });
+                that.viewSummary.on("summary-back", that.showStepBack, that);
+                that.viewSummary.on("summary-save", that.save, that);
             }
             else {
                 this.viewSummary.loadControls({ product: this.model, images: this.images, breadCrumb: this.viewSelectCategory.breadCrumbCategories });
@@ -161,11 +162,9 @@
                 alert("Ocurrió un error, intentalo de nuevo");
         },
         showFinish: function () {
-            var that = this;
             this.showNextStep();
-            require(['publishProductFinishedView'], function (PublishFinishedView) {
-                that.viewPublishFinished = new PublishFinishedView({ el: '#divStep_5', model: that.model, images: that.images });
-            });
+            this.viewPublishFinished = new PublishFinishedView({ el: '#divStep_5', model: this.model, images: this.images });
+            this.$(".wizard-breadcrumb").hide();
         },
         productSaved: function (model) {
             this.viewSelectCategory.remove();

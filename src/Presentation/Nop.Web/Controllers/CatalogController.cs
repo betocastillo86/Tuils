@@ -830,13 +830,15 @@ namespace Nop.Web.Controllers
                 idSelectedAttribute = attributeSelected != null ? attributeSelected.Id : 0;
             }
 
+
             var model = new TopMenuModel
             {
                 Categories = cachedCategoriesModel,
                 Topics = new List<TopMenuModel.TopMenuTopicModel>(),
                 SpecificationAttributesFilter = cachedMenuAttributes,
                 //Si no viene filtrado por atributo tipo moto, selecciona la primera de la lista
-                SelectedSpecificationAttribute = idSelectedAttribute > 0 ? idSelectedAttribute : cachedMenuAttributes.FirstOrDefault().Id
+                SelectedSpecificationAttribute = idSelectedAttribute > 0 ? idSelectedAttribute : _catalogSettings.DefaultSpecificationAttributeTopMenu,
+                SelectedCategory = RouteData.Values["categoryId"] != null ? (int)RouteData.Values["categoryId"] : 0
             };
 
 
