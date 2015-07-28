@@ -46,7 +46,7 @@
                 <h2 tuils-for="show">@Model.Name</h2>
                 @if (Model.AllowEdit)
                 {
-                    @Html.TextBoxFor(m => m.Name, new { style = "display:none", tuils_for = "edit" })
+                    @Html.TextBoxFor(m => m.Name, new { style = "display:none", tuils_for = "edit", maxLength = "80" })
                 }
                 <div class="product-review-box">
                     <div class="rating no-margin">
@@ -60,7 +60,7 @@
                 <p tuils-for="show">@Model.Description</p>
                 @if (Model.AllowEdit)
                 {
-                    @Html.TextAreaFor(m => m.Description, new { style = "display:none", tuils_for = "edit" })
+                    @Html.TextAreaFor(m => m.Description, new { style = "display:none", tuils_for = "edit", maxLength = "400" })
                 }
                 <div class="ctl-tarjetas" tuils-for="show">
                     <li id="liShipping" @(Model.EnableShipping ? string.Empty : "style=display:none") title="@T("vendor.enableShipping.description")">@T("vendor.enableShipping") <span class="icon-envio"></span></li>

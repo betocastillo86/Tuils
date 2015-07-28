@@ -62,7 +62,7 @@
     <div class="inputs_date" id="divDateOfBirth">
         @Html.LabelFor(model => model.DateOfBirth, new { }, ":")
         <div class="date">
-            @Html.TextBoxFor(model => model.DateOfBirth, "{0:MM/dd/yyyy}", new { tuils_val = "none" })
+            @Html.TextBoxFor(model => model.DateOfBirth, new { tuils_val = "none" })
             <span class="icon-calendar datepickerButton"></span>
         </div>
         @Html.RequiredHint()

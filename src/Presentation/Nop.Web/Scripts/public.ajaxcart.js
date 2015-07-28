@@ -8,7 +8,7 @@ define(['jquery'], function ($) {
         loadWaiting: false,
         usepopupnotifications: false,
         topcartselector: '',
-        topwishlistselector: '',
+        topwishlistselector: '.wishlist-qty i',
         flyoutcartselector: '',
 
         init: function (usepopupnotifications, topcartselector, topwishlistselector, flyoutcartselector) {
@@ -100,7 +100,7 @@ define(['jquery'], function ($) {
             return false;
         },
 
-        resetLoadWaiting: function () {
+        resetLoadWaiting: function (a, b, c) {
             AjaxCart.setLoadWaiting(false);
         },
 
