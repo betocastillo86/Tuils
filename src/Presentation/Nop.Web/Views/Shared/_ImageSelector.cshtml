@@ -1,14 +1,45 @@
-﻿@model int
+﻿@model Nop.Web.Models.Sales.PublishProductModel
 
+@helper GetClassImage(int iImage)
+{
+    var style = "icon-foto";
+    
+    if (Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Bike)
+    {
+        switch (iImage)
+        {
+            case 0:
+                style = "icon-deportiva";
+                break;
+            case 1:
+                style = "icon-m_a";
+                break;
+            case 2:
+                style = "icon-m_b";
+                break;
+            case 3:
+                style = "icon-m_c";
+                break;
+            case 4:
+                style = "icon-placa";
+                break;
+            default:
+                style = "icon-foto";
+                break;
+        }
+    }
+    
+    @:@style
+}
 <div id="divContentImages">
 
     <div class="content-public">
 
         <ul class="picture-uploader">
-            @for (int i = 0; i < Model; i++)
+            @for (int i = 0; i < 7; i++)
             {
                 <li class="addImageGalery @(i==0 ? "picture_principal" : string.Empty )">
-                    <span class="icon-foto"></span>
+                    <span class="@GetClassImage(i)"></span>
                     <img width="100%" height="100%" style="display:none" />
                     @(i == 0 ? "Foto principal" : string.Empty)
                 </li>

@@ -259,7 +259,6 @@
     <Compile Include="Infrastructure\Installation\InstallationLanguage.cs" />
     <Compile Include="Infrastructure\Installation\InstallationLocalizationService.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
-    <Compile Include="Infrastructure\JavascriptConfiguration.cs" />
     <Compile Include="Infrastructure\RouteApiProvider.cs" />
     <Compile Include="Infrastructure\RouteProvider.cs" />
     <Compile Include="Models\Api\AddressModel.cs" />

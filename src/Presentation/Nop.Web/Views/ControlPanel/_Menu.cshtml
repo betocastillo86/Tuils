@@ -19,7 +19,7 @@
                         bool selected = Model.SelectedParentModule == option.Name;
 
                         <li>
-                            <a class="nav-item-panel @(hasSubMenu ? "nav-with-sub" : string.Empty) @(selected ? "active" : string.Empty)" href="@Url.Action(option.Action, option.Controller, option.Parameters)"><span class="icon-mail"></span>@T(string.Format("controlpanel.{0}", option.Name)) </a>
+                            <a class="nav-item-panel @(hasSubMenu ? "nav-with-sub" : string.Empty) @(selected ? "active" : string.Empty)" href="@Url.Action(option.Action, option.Controller, option.Parameters)"><span class="@option.IconBig"></span>@T(string.Format("controlpanel.{0}", option.Name)) </a>
 
                             @if (hasSubMenu)
                             {

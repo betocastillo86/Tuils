@@ -23,6 +23,9 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
             },
             render: function () {
                 this.$el.html(this.template({ Images: this.images != undefined ? this.images.toJSON() : undefined, Properties: this.productProperties }));
+
+                if (this.productType == TuilsConfiguration.productBaseTypes.service)
+                    this.$("#divImageSummary").hide();
                 
                 return this;
             },
@@ -56,7 +59,6 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
                 else {
                     pushProperty(this, "IncludeSupplies", true);
                     pushProperty(this, "Supplies", true);
-                    
                     if (!this.model.get('IncludeSupplies'))
                         this.productProperties.push({ name: this.model.labels.SuppliesValue, value: this.model.get('SuppliesValue').toPesos() });
                 }

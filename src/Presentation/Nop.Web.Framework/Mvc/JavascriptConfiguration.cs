@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Nop.Web.Infrastructure
+namespace Nop.Web.Framework.Mvc
 {
     /// <summary>
     /// Clase que genera el archivo javascript que contiene la configuración de la aplicación
