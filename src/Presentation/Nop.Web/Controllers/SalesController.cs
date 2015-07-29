@@ -131,6 +131,8 @@ namespace Nop.Web.Controllers
             var model = new PublishProductModel();
             model.LimitDaysOfProductPublished = _catalogSettings.LimitDaysOfProductPublished;
             model.StateProvinces = new SelectList(_stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry), "Id", "Name");
+            if (_workContext.CurrentVendor != null)
+                model.PhoneNumber = _workContext.CurrentVendor.PhoneNumber;
             return model;
         }
         #endregion
