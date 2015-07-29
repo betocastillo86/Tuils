@@ -239,7 +239,7 @@ nav:not(.mm-menu, .nav-category) {display: none;}
 .a-left{text-align:left!important;}
 .a-center{text-align:center!important;}
 .a-right{text-align:right!important;}
-.page{padding: 0 0 0; clear: both; margin: 0;}
+.page{padding: 0 0 30px; clear: both; margin: 0;}
 .page-body{}
 .page-title{margin:0 0 10px;overflow:hidden;width:100%;}
 .page-title h1,.page-title h2{padding:5px 5px 5px 0;font-size:20px;margin:0;font-family: 'Ubuntu', sans-serif;font-weight:400;}
@@ -995,8 +995,12 @@ td.fieldname{font-size:12px;}
 .search-page .warning{text-decoration:underline;}
 .similarSearch{font-size: 11px; margin: 0 0 10px;}
 .similarSearch ul{list-style: none; display: inline; margin: 0;}
-.similarSearch ul li{display: inline; color:#fa4c2a; margin: 0 5px 0 0;}
+.similarSearch ul li{display: inline; color:#fa4c2a; margin: 0;}
 .similarSearch ul li:hover{text-decoration: underline;}
+.similarSearch a{color:#fa4c2a; margin: 0 5px 0 0;}
+.similarSearch a:hover{text-decoration: underline;}
+.no-result{background:#fee9e5; border-radius: 2px; padding: 10px; width: 100%; box-sizing:border-box; font-size: 20px; color:#54525b;}
+.no-result .similarSearch{margin: 0;}
 
 /* PASSWORD RECOVERY AND NEWSLETTER PAGES */
 .password-recovery-page,newsletter-page{}
