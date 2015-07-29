@@ -57,6 +57,11 @@ input[type="text"]:disabled{background:none repeat scroll 0 0 #FFF;}
 
 [class^="icon-"], [class*=" icon-"] { font-family: 'icomoon'; speak: none; font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; /* Better Font Rendering =========== */ -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
 
+.icon-m_c:before {content: "\e631";}
+.icon-filtros:before {content: "\e62d";}
+.icon-m_a:before {content: "\e62e";}
+.icon-m_b:before {content: "\e62f";}
+.icon-placa:before {content: "\e630";}
 .icon-loc:before {content: "\e62c";}
 .icon-card:before {content: "\e62a";}
 .icon-envio:before {content: "\e62b";}
