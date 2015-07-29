@@ -22,31 +22,20 @@
 }
 @if (Model.Enabled)
 {
-    <div class="product-filters price-range-filter">
-        <div class="filter-title">
-            <strong>@T("Filtering.PriceRangeFilter")</strong>
-        </div>
-        <div class="filter-content">
-            @if (selectedItem == null)
-            {
-                <ul class="price-range-selector">
-                    @foreach (var item in Model.Items)
-                    {
-                        <li><a href="@item.FilterUrl">@FormatPriceRangeText(item)</a> </li>
-                    }
-                </ul>
-            }
-            else
-            {
-                <div class="selected-price-range">
-                    @FormatPriceRangeText(selectedItem)
 
-                </div>
-                <div class="remove-filter">
-                    <a href="@Model.RemoveFilterUrl" class="remove-price-range-filter">@T("Filtering.PriceRangeFilter.Remove")</a>
-                </div>
+    if (selectedItem == null)
+    {
+        <ul class="product-filters">
+            <div class="filter-title">@T("Filtering.PriceRangeFilter")</div>
+            <div class="filt-inputs priceFilter">
+                <input id="fromFilter" type="text" placeholder="Desde" tuils-val="int" /> &#45;
+                <input id="toFilter" type="text" placeholder="Hasta" tuils-val="int" />
+                <a id="aCustomFilterPrice" href="" class="btn_fil icon-next" data-url="@Model.CustomFilterUrl"></a>
+            </div>
+            @foreach (var item in Model.Items)
+            {
+                <li><a href="@item.FilterUrl">@FormatPriceRangeText(item)</a></li>
             }
-        </div>
-
-    </div>
+        </ul>
+    }
 }

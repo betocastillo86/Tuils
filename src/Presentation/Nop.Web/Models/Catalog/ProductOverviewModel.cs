@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using Nop.Web.Framework.Mvc;
 using Nop.Web.Models.Media;
+using Nop.Core;
+
 
 namespace Nop.Web.Models.Catalog
 {
     public partial class ProductOverviewModel : BaseNopEntityModel, IComparableModel, IWishableModel
     {
+
         public ProductOverviewModel()
         {
             ProductPrice = new ProductPriceModel();
@@ -46,6 +49,8 @@ namespace Nop.Web.Models.Catalog
         public bool Published { get; set; }
 
         public bool CompareProductsEnabled { get; set; }
+
+        public bool FeaturedBySpecialCategory { get; set; }
 
 
 		#region Nested Classes

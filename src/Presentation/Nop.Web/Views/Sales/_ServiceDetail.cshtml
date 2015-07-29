@@ -5,19 +5,23 @@
     <div class="form-public">
 
         @Html.Partial("_CommonFieldsProductBikeDetail", Model)
-
-        <div class="tipo-marca">
-            @Html.LabelT("PublishProduct.Product.ForBrandBike")
-            <input id="txtBikeReferencesProduct" />
-        </div>
-
-        <br />
-
-        <div class="inputs">
+        <div class="input_check">
             <input id="chkIsShipEnabled" type="checkbox" /> @Html.LabelT("PublishProduct.IsDoorToDoor")
         </div>
-
+        <br/>
+        <div class="input_check" title="@T("PublishProduct.HasSpecialBikes.Alt")">
+            <input id="chkHasSpecialBikes" type="checkbox" /> @Html.Label(@T("PublishProduct.HasSpecialBikes").Text)
+        </div>
         <br />
+        <div id ="divBikeReferences" style="display:none">
+            <div class="title">@T("PublishProduct.Product.TitleForBrandBike")</div>
+            <div class="tipo-marca">
+                @Html.LabelT("PublishProduct.Product.ForBrandBike")
+                <input id="txtBikeReferencesProduct" />
+            </div>
+        </div>
+        <br />
+        
         <div tuils-for="shipping">
             <div class="title">@T("PublishProduct.TitleDoorToDoor")</div>
             <div class="inputs">
@@ -33,12 +37,12 @@
         </div>
         <br />
         <div class="title">@T("PublishProduct.TitleSupplies")</div>
-        <div class="inputs">
+        <div class="input_check">
             <input id="chkIncludeSupplies" type="checkbox" /> @Html.LabelT("PublishProduct.IncludeSupplies")
         </div>
         <div class="inputs" >
             @Html.LabelT("PublishProduct.Supplies")
-            <input id="txtSupplies" />
+            <input id="txtSupplies" type="text" />
         </div>
         <div class="inputs" tuils-for="no-supplies" >
             @Html.LabelT("PublishProduct.SuppliesValue")
@@ -47,8 +51,9 @@
         </div>
         
         <br />
-        @Html.TextAreaRequired("FullDescription", labelResource: "PublishProduct.Product.Html")
-
+        <div class="descript_crea">
+            @Html.TextAreaRequired("FullDescription", labelResource: "PublishProduct.Product.Html")
+        </div>
     </div>
 </form>
 <input type="button" class="btn_continue button-1 btnNext" value="@T("PublishProduct.NextStep")">

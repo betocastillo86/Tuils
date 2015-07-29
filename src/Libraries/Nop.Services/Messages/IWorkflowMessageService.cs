@@ -337,6 +337,8 @@ namespace Nop.Services.Messages
 
         #region Products
         int SendQuestionAnsweredNotificationMessage(ProductQuestion productQuestion, int languageId);
+
+        int SendNewQuestionNotificationMessage(ProductQuestion productQuestion, int languageId);
         #endregion
     }
 }

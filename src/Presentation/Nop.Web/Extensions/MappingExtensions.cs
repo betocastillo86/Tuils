@@ -22,6 +22,8 @@ using Nop.Core.Caching;
 using Nop.Services.Media;
 using Nop.Core;
 using Nop.Core.Domain.Media;
+using Nop.Services.Helpers;
+using Nop.Core.Domain.Vendors;
 
 namespace Nop.Web.Extensions
 {
@@ -61,6 +63,9 @@ namespace Nop.Web.Extensions
         }
         #endregion
 
+        #region Question
+        
+        #endregion
 
         //category
         public static CategoryModel ToModel(this Category entity)
@@ -448,6 +453,43 @@ namespace Nop.Web.Extensions
                 model.CustomAddressAttributes.Add(attributeModel);
             }
         }
+
+
+        #region SpecialCategoryVendorModel
+
+        public static SpecialCategoryVendorModel ToModel(this SpecialCategoryVendor entity)
+        {
+            var model = new SpecialCategoryVendorModel() { 
+                Id = entity.Id,
+                CategoryId = entity.CategoryId,
+                VendorId = entity.VendorId,
+                SpecialTypeId = entity.SpecialTypeId,
+                VendorName = entity.Vendor.Name
+            };
+
+            if (entity.Category != null)
+            {
+                model.CategoryName = entity.Category.Name;
+                model.CategorySeName = entity.Category.GetSeName();
+            }
+
+            return model;
+        }
+
+        public  static List<SpecialCategoryVendorModel> ToModels(this IList<SpecialCategoryVendor> entities)
+        {
+            var models = new List<SpecialCategoryVendorModel>();
+            foreach (var entity in entities)
+            {
+                models.Add(entity.ToModel());
+            }
+            return models;
+        }
+
+        #endregion
+
+
+
         public static Address ToEntity(this AddressModel model, bool trimFields = true)
         {
             if (model == null)

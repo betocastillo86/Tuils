@@ -14,5 +14,10 @@ namespace Nop.Services.Helpers
         /// Gets or sets a value indicating whether customers are allowed to select theirs time zone
         /// </summary>
         public bool AllowCustomersToSetTimeZone { get; set; }
+
+        /// <summary>
+        /// Formato del datepicker de jquery
+        /// </summary>
+        public string JqueryFormat { get; set; }
     }
 }

@@ -32,7 +32,7 @@
 
 
     @*@added*@
-    <div class="master-wrapper-page container hd">
+    <div class="@(this.ViewData["noWidth"] != null && Convert.ToBoolean(this.ViewData["noWidth"]) ? string.Empty : "master-wrapper-page container hd")">
         @Html.Action("JavaScriptDisabledWarning", "Common")
         <div class="master-wrapper-content">
             @*<script type="text/javascript">
@@ -61,9 +61,9 @@
                         <div class="loading-image">
                         </div>
                     </div>
-                    <div class="master-wrapper-main">
-                        @RenderBody()
-                    </div>
+            <div class="@(this.ViewData["noWidth"] != null && Convert.ToBoolean(this.ViewData["noWidth"]) ? string.Empty : "master-wrapper-main")">
+                @RenderBody()
+            </div>
                     @*@Html.Widget("content_after")*@
                 </div>
                 @*edited*@

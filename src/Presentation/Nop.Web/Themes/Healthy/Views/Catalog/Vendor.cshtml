@@ -36,191 +36,83 @@
                         @Html.Partial("_Vendor.Offices", Model)
                     </div>
                     <ul class="conte-spc">
-                        <h3>
-                            @T("Vendor.SpecialCategoriesServices") <span class="icon-mail"></span>
+                        <h3 title="@T("Vendor.vendorServices.services.title", Model.Name)">
+                            @T("Vendor.SpecialCategoriesServices")
 
-                        @if (Model.AllowEdit)
+                            @if (Model.AllowEdit)
+                            {
+                                <a href="@Url.Action("VendorServices", "ControlPanel")" title="@T("Vendor.vendorServices.services.edit")"><span class="icon-edit"></span></a>
+                            }
+
+                        </h3>
+                        @foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.SpecializedCategory))
                         {
-                            @Html.ActionLink("Editar", "VendorServices", "ControlPanel")
+                            <li><a href="@Url.RouteUrl("Category", new { SeName = special.CategorySeName })" title="@special.CategoryName">@special.CategoryName</a></li>
                         }
+                        <h3 title="@T("Vendor.vendorServices.bikes.title", Model.Name)">
+                            @T("Vendor.SpecialCategoriesBikes")
 
-                    </h3>
-                    @foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.SpecializedCategory))
-                    {
-                        <li>@special.Category.Name</li>
-                    }
-                    <h3>
-                        @T("Vendor.SpecialCategoriesBikes") <span class="icon-mail"></span>
-
-                    @if (Model.AllowEdit)
-                    {
-                        @Html.ActionLink("Editar", "VendorServices", "ControlPanel")
-                    }
-                </h3>
-                @foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.BikeBrand))
-                {
-                    <li>@special.Category.Name</li>
-                }
-            </ul>
-        </div>
-        <div class="col-producto">
-            <div class="product-grid home-page-product-grid">
-                <div class="title"> <strong>Productos</strong> </div>
-                <div class="search-pdt">
-                    <input type="text" class="searchinput" value="@Model.PagingFilteringContext.q" />
-                    <a class="btn_search"><span class="icon-mail"></span></a>
-                </div>
-
-
-                @if (Model.Products.Count > 0)
-                {
-                    @*grid mode*@
-                    <div class="product-grid">
-                        @foreach (var product in Model.Products)
+                            @if (Model.AllowEdit)
+                            {
+                                <a href="@Url.Action("VendorServices", "ControlPanel")" title="@T("Vendor.vendorServices.bikes.edit")"><span class="icon-edit"></span></a>
+                            }
+                        </h3>
+                        @foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.BikeBrand))
                         {
-                            <div class="item-box">
-                                @Html.Partial("_ProductBox", product)
+                            <li><a href="@Url.RouteUrl("Category", new { SeName = special.CategorySeName })" title="@special.CategoryName">@special.CategoryName</a></li>
+                        }
+                    </ul>
+                </div>
+                <div class="col-producto">
+                    <div class="product-grid home-page-product-grid">
+                        <div class="title"> <strong>Productos</strong> </div>
+                        <div class="search-pdt">
+                            <input type="text" class="searchinput" value="@Model.PagingFilteringContext.q" />
+                            <a class="btn_search"><span class="icon-lupa"></span></a>
+                        </div>
+
+
+                        @if (Model.Products.Count > 0)
+                        {
+                            @*grid mode*@
+                            <div class="product-grid">
+                                @foreach (var product in Model.Products)
+                                {
+                                    <div class="item-box">
+                                        @Html.Partial("_ProductBox", product)
+                                    </div>
+                                }
                             </div>
                         }
+                        else
+                        { 
+                            <div>@T("Vendor.products.noResults", Model.Name)
+                            @if (Model.AllowEdit)
+                            { 
+                                <div><a href="@Url.Action("PublishProduct", "Sales")">@T("Vendor.products.noResults.publish")</a></div>
+                            }
+                        
+                            </div>
+                            
+                        }
+
+                        <div class="pager">
+                            @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
+                        </div>
+
+
                     </div>
-                }
-
-                <div class="pager">
-                    @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
                 </div>
-
-
+                <br />
+                <div class="conte-comment">
+                    @Html.Partial("_Vendor.Reviews")
+                </div>
             </div>
         </div>
-        <br />
-        <div class="conte-comment">
-            @Html.Partial("_Vendor.Reviews")
-        </div>
     </div>
-</div>
-</div>
 
 
 
 
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@{
-    #region EliminadoHTML
-    ///   <div class="page vendor-page">
-    ///   <div class="page-title">
-    ///       <h1>@Model.Name</h1>
-    ///   </div>
-    ///   <div class="page-body">
-    ///       @Html.Widget("vendordetails_top", Model.Id)
-    ///       @*description*@
-    ///       @if (!String.IsNullOrWhiteSpace(Model.Description))
-    ///       {
-    ///           <div class="vendor-description">
-    ///               @Html.Raw(Model.Description)
-    ///           </div>
-    ///       }
-    ///       <div class="product-selectors">
-    ///           @*view mode*@
-    ///           @if (Model.PagingFilteringContext.AllowProductViewModeChanging && Model.Products.Count > 0)
-    ///           {
-    ///               @*edited*@
-    ///                <div class="product-viewmode">
-    ///                  <a rel="nofollow" class="fontawesome-th" href="@Model.PagingFilteringContext.AvailableViewModes.First().Value"></a>
-    ///                   <a rel="nofollow" class="fontawesome-reorder" href="@Model.PagingFilteringContext.AvailableViewModes.Last().Value"></a>
-    ///               </div>
-    ///               <script>
-    ///                   $( document ).ready(function() {
-    ///                       $('div.product-list').length ? $('.fontawesome-reorder').addClass('active') : $('.fontawesome-th').addClass('active');
-    ///                   });
-    ///               </script>
-    ///               @*<div class="product-viewmode">
-    ///                   <span>@T("Catalog.ViewMode")</span>
-    ///                   @Html.DropDownList("products-viewmode", Model.PagingFilteringContext.AvailableViewModes, new { onchange = "setLocation(this.value);" })
-    ///               </div>*@
-    ///               @*edited*@
-    ///           }
-    ///           @*sorting*@
-    ///           @if (Model.PagingFilteringContext.AllowProductSorting && Model.Products.Count > 0)
-    ///           {
-    ///               <div class="product-sorting">
-    ///                   <span>@T("Catalog.OrderBy")</span>
-    ///                   @Html.DropDownList("products-orderby", Model.PagingFilteringContext.AvailableSortOptions, new { onchange = "setLocation(this.value);" })
-    ///               </div>
-    ///           }
-    ///           @*page size*@
-    ///           @*@if (Model.PagingFilteringContext.AllowCustomersToSelectPageSize && Model.Products.Count > 0)
-    ///           {
-    ///               <div class="product-page-size">
-    ///                   <span>@T("Catalog.PageSize")</span>
-    ///                   @Html.DropDownList("products-pagesize", Model.PagingFilteringContext.PageSizeOptions, new { onchange = "setLocation(this.value);" })
-    ///                   <span>@T("Catalog.PageSize.PerPage")</span>
-    ///               </div>
-    ///           }*@
-    ///       </div>
-    ///       @*added*@
-    ///       @*@if (Model.PagingFilteringContext.AllowCustomersToSelectPageSize && Model.Products.Count > 0)
-    ///       {
-    ///               <div class="product-page-size">
-    ///                   <span>@T("Catalog.PageSize")</span>
-    ///                   @Html.DropDownList("products-pagesize", Model.PagingFilteringContext.PageSizeOptions, new { onchange = "setLocation(this.value);" })
-    ///                   <span>@T("Catalog.PageSize.PerPage")</span>
-    ///               </div>
-    ///       }*@
-    ///       @*@section left {
-    ///           @Html.Widget("categorydetails_before_filters", Model.Id)
-    ///           <div class="product-filters-wrapper">
-    ///
-    ///               @if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
-    ///               {
-    ///                   @Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
-    ///               }
-    ///
-    ///               @if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
-    ///               {
-    ///                   @Html.Partial("_FilterSpecsBox", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
-    ///               }
-    ///           </div>
-    ///       }*@
-    ///       @*product list*@
-    ///
-    ///
-    ///       @Html.Widget("vendordetails_bottom", Model.Id)
-    ///   </div>
-    ////<div>
-    #endregion
-}
-
-

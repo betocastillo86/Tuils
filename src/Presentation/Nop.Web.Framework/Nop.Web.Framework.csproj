@@ -86,6 +86,7 @@
     </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -153,10 +154,13 @@
     <Compile Include="Mvc\Api\AuthorizeApiAttribute.cs" />
     <Compile Include="Mvc\ConditionalValidationAttribute.cs" />
     <Compile Include="Mvc\DependencyRegistrarExtensions.cs" />
+    <Compile Include="Mvc\JavascriptConfiguration.cs" />
     <Compile Include="Mvc\NullJsonResult.cs" />
     <Compile Include="Mvc\RequiredIfAttribute.cs" />
+    <Compile Include="Security\BasicAuthenticationAttribute.cs" />
     <Compile Include="Seo\CustomUrlRecordEntityNameRequested.cs" />
     <Compile Include="Seo\WwwRequirementAttribute.cs" />
+    <Compile Include="UI\Captcha\CaptchaValidatorApiAttribute.cs" />
     <Compile Include="Validators\BaseNopValidator.cs" />
     <Compile Include="WebStoreContext.cs" />
     <Compile Include="StoreIpAddressAttribute.cs" />

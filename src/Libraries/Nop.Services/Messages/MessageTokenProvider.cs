@@ -828,6 +828,7 @@ namespace Nop.Services.Messages
         public void AddQuestionTokens(IList<Token> tokens, ProductQuestion question)
         {
             tokens.Add(new Token("Question.Answer", question.AnswerText, true));
+            tokens.Add(new Token("Question.QuestionText", question.QuestionText, true));
 
             //event notification
             _eventPublisher.EntityTokensAdded(question, tokens);

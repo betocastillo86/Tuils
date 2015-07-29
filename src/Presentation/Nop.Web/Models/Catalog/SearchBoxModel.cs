@@ -8,5 +8,7 @@ namespace Nop.Web.Models.Catalog
         public bool ShowProductImagesInSearchAutoComplete { get; set; }
         public int SearchTermMinimumLength { get; set; }
         public bool SearchWithSearchTerms { get; set; }
+
+        public string CurrentSearchTerms { get; set; }
     }
 }

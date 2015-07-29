@@ -7,7 +7,8 @@
             "click .btnNext": "save",
             "click .btnBack": "back",
             //"change #chkIsShipEnabled": "switchShipping",
-            "change #chkIncludeSupplies" : "switchSupplies"
+            "change #chkIncludeSupplies": "switchSupplies",
+            "change #chkHasSpecialBikes" : 'switchBikeReferences'
         },
 
         bindings: {
@@ -187,7 +188,7 @@
                     tagReferences.push({ label: element.Name, value: element.Id });
                 };
                 _.each(TuilsStorage.bikeReferences, function (element, index) {
-                    addTag(element);
+                    //addTag(element);
                     _.each(element.ChildrenCategories, function (child, index) {
                         child.Name = element.Name + ' ' + child.Name;
                         addTag(child);
@@ -198,7 +199,7 @@
                     .tagit({
                         availableTags: tagReferences,
                         allowOnlyAvailableTags: true,
-                        tagLimit: 5,
+                        tagLimit: TuilsConfiguration.catalog.limitOfSpecialCategories,
                         autocomplete: {
                             source: TuilsUtil.tagItAutocomplete
                         }
@@ -230,6 +231,9 @@
             else {
                 this.$("[tuils-for='no-supplies']").show();
             }
+        },
+        switchBikeReferences: function (obj) {
+            this.$("#divBikeReferences").css("display", this.$("#chkHasSpecialBikes").prop("checked") ? "block" : "none");
         },
         save: function () {
             //this.model.set({ FullDescription: this.$("#productHtml_textarea").val() });

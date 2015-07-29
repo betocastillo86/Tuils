@@ -1,14 +1,18 @@
 ﻿
-define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars', 'extensionNumbers'],
-    function ($, _, Backbone, TuilsConfiguration, TuilsUtil, Handlebars) {
+define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars', 'extensionNumbers'],
+    function ($, _, BaseView, TuilsConfiguration, TuilsUtil, Handlebars) {
 
-        var SummaryView = Backbone.View.extend({
+        var SummaryView = BaseView.extend({
             events: {
                 "click .btnFinish": "save",
                 "click .btnBack": "back"
             },
-            
-
+            errors: {
+                'PhoneNumber' : 'El número de contacto es obligatorio'
+            },
+            bindings: {
+                "PhoneNumber" : "#PhoneNumber"
+            },
             productType: undefined,
             btnFinish:undefined,
             //Propiedades que se van a mostrar en el resumen, esto depende del tipo de producto
@@ -23,7 +27,10 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
             },
             render: function () {
                 this.$el.html(this.template({ Images: this.images != undefined ? this.images.toJSON() : undefined, Properties: this.productProperties }));
-                
+
+                if (this.productType == TuilsConfiguration.productBaseTypes.service)
+                    this.$("#divImageSummary").hide();
+
                 return this;
             },
             loadControls: function (args)
@@ -56,7 +63,6 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
                 else {
                     pushProperty(this, "IncludeSupplies", true);
                     pushProperty(this, "Supplies", true);
-                    
                     if (!this.model.get('IncludeSupplies'))
                         this.productProperties.push({ name: this.model.labels.SuppliesValue, value: this.model.get('SuppliesValue').toPesos() });
                 }
@@ -73,7 +79,7 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
                 //}
                 
 
-                this.productProperties.push({ name: 'Fecha Cierre Publicacion', value: '30 dias' });
+                this.productProperties.push({ name: 'Fecha Cierre Publicacion', value: TuilsConfiguration.catalog.limitDaysOfProductPublished + ' dias' });
                 this.productProperties.push({ name: 'Categoria', value: TuilsUtil.toStringWithSeparator(args.breadCrumb, ' > ') });
 
                 function pushProperty(ctx, field, isName) {
@@ -87,8 +93,24 @@ define(['jquery', 'underscore', 'backbone', 'configuration', 'util', 'handlebars
             switchButtonBar: function (show) {
                 this.$("#buttonsBar input[type='button']").prop("disabled", !show);
             },
+            validateForm: function () {
+                this.removeErrors();
+                var phoneNumber = this.$("#PhoneNumber").val();
+                if (phoneNumber.length > 6)
+                {
+                    this.model.set('PhoneNumber', phoneNumber);
+                    return true;
+                }
+                else
+                {
+                    this.markErrorsOnForm(this.errors, this.bindings);
+                    return false;
+                }
+            },
             save: function () {
-                if (this.$("#chkConditions").is(":checked")) {
+                if (!this.validateForm())
+                    return;
+                else if (this.$("#chkConditions").is(":checked")) {
                     this.switchButtonBar(false);
                     this.trigger("summary-save");
                 }

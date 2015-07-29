@@ -33,6 +33,7 @@ using Nop.Web.Models.Media;
 using Nop.Services.Localization;
 using Nop.Web.Models.Catalog;
 using Nop.Core.Domain.Orders;
+using Nop.Web.Extensions.Api;
 
 namespace Nop.Web.Controllers
 {
@@ -64,7 +65,7 @@ namespace Nop.Web.Controllers
         private readonly MediaSettings _mediaSettings;
         private readonly ControlPanelSettings _controlPanelSettings;
 
-        
+
         #endregion
 
         #region Ctor
@@ -123,7 +124,7 @@ namespace Nop.Web.Controllers
         {
             return View(PrepareControlPanelModel());
         }
-        
+
         /// <summary>
         /// Carga las variables del modelo del panel de control
         /// </summary>
@@ -139,16 +140,16 @@ namespace Nop.Web.Controllers
                 model.AvgRating = _workContext.CurrentVendor.AvgRating ?? 0;
                 model.NumRatings = _workContext.CurrentVendor.NumRatings;
 
-                //trae todos los productos del vendedor y los cuenta Activos
-                var vendorProducts =  _productService.SearchProducts(vendorId: _workContext.CurrentVendor.Id);
-                model.PublishedProducts = vendorProducts.Count;
+                //cuenta el numero de productos activos
+                model.PublishedProducts = _productService.CountActiveProductsByVendorId(vendorId: _workContext.CurrentVendor.Id);
 
                 //Consulta todas las ventas del vendedor
-                var vendorSellings = _orderService.SearchOrders(vendorId:_workContext.CurrentVendor.Id);
+                var vendorSellings = _orderService.SearchOrders(vendorId: _workContext.CurrentVendor.Id);
                 model.SoldProducts = vendorSellings.Count;
 
-                //Suma el numero de preguntas sin responder
-                model.UnansweredQuestions = vendorProducts.Sum(p => p.UnansweredQuestions);
+                if(model.PublishedProducts > 0)
+                    //Suma el numero de preguntas sin responder
+                    model.UnansweredQuestions = _productService.CountUnansweredQuestionsByVendorId(_workContext.CurrentVendor.Id);
 
             }
 
@@ -156,7 +157,7 @@ namespace Nop.Web.Controllers
 
         }
         #endregion
-        
+
 
 
         #region MyAccount
@@ -186,12 +187,12 @@ namespace Nop.Web.Controllers
                         _customerRegistrationService.SetEmail(customer, model.Email.Trim());
                         _authenticationService.SignIn(customer, true);
                     }
-                    
+
                     //Actualiza el valor del genero
                     model.Gender = model.Gender == null ? "M" : "F";
 
                     //Guarda los atributos
-                    _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.Gender, model.Gender); 
+                    _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.Gender, model.Gender);
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.FirstName, model.FirstName);
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.LastName, model.LastName);
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.StateProvinceId, model.StateProvinceId);
@@ -220,7 +221,7 @@ namespace Nop.Web.Controllers
 
         private MyAccountModel GetModelMyAccount(MyAccountModel model)
         {
-            if(model == null)
+            if (model == null)
                 model = _workContext.CurrentCustomer.ToMyAccountModel();
 
             model.BikeReferences = model.BikeBrand.CategoryId.HasValue ? _categoryService.GetAllCategoriesByParentCategoryId(model.BikeBrand.CategoryId.Value) : new List<Category>();
@@ -258,6 +259,8 @@ namespace Nop.Web.Controllers
             {
                 var model = new OfficesModel();
                 model.States = _stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry);
+                model.Name = _workContext.CurrentVendor.Name;
+                model.VendorSeName = _workContext.CurrentVendor.GetSeName();
                 model.VendorId = _workContext.CurrentVendor.Id;
                 return View(model);
             }
@@ -292,8 +295,8 @@ namespace Nop.Web.Controllers
         [HttpPost]
         public ActionResult VendorServices(VendorServicesModel model)
         {
-            
-            if(_workContext.CurrentVendor != null)
+
+            if (_workContext.CurrentVendor != null)
             {
                 //Toma la cadena separada por comas y crea una lista de categorias relacinoadas
                 List<SpecialCategoryVendor> bikeReferences;
@@ -301,11 +304,11 @@ namespace Nop.Web.Controllers
                 {
                     bikeReferences = model.BikeReferencesString
                     .Split(new char[] { ',' })
-                    .Select(c => new SpecialCategoryVendor() 
-                    { 
-                        CategoryId = Convert.ToInt32(c), 
-                        VendorId = _workContext.CurrentVendor.Id, 
-                        SpecialType = SpecialCategoryVendorType.BikeBrand 
+                    .Select(c => new SpecialCategoryVendor()
+                    {
+                        CategoryId = Convert.ToInt32(c),
+                        VendorId = _workContext.CurrentVendor.Id,
+                        SpecialType = SpecialCategoryVendorType.BikeBrand
                     })
                     .ToList();
                 }
@@ -387,7 +390,7 @@ namespace Nop.Web.Controllers
                     customerId: _workContext.CurrentCustomer.Id, pageIndex: command.PageIndex, pageSize: command.PageSize,
                     publishedProducts: publishedProducts, withRating: withRating);
             else
-                orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id, 
+                orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
                     vendorId: _workContext.CurrentVendor.Id, pageIndex: command.PageIndex, pageSize: command.PageSize,
                     publishedProducts: publishedProducts, withRating: withRating);
 
@@ -408,16 +411,17 @@ namespace Nop.Web.Controllers
                     var item = order.OrderItems.FirstOrDefault();
 
                     //Consulta el review de una orden
-                    var review = _productService.GetAllProductReviews(orderItemId:item.Id, approved:isMyOrders ? (bool?)null : true).FirstOrDefault();
-                    if(review != null)
+                    var review = _productService.GetAllProductReviews(orderItemId: item.Id, approved: isMyOrders ? (bool?)null : true).FirstOrDefault();
+                    if (review != null)
                         orderModel.Rating = review.Rating;
 
-                    orderModel.Product = new Models.Catalog.ProductOverviewModel() { 
-                         Id = item.Product.Id,
-                         Name = item.Product.Name,
-                         SeName = item.Product.GetSeName()
+                    orderModel.Product = new Models.Catalog.ProductOverviewModel()
+                    {
+                        Id = item.Product.Id,
+                        Name = item.Product.Name,
+                        SeName = item.Product.GetSeName()
                     };
-                    
+
                     #region DefaultPictureModel
                     int pictureSize = _mediaSettings.ProductThumbPictureSize;
                     //prepare picture model
@@ -445,14 +449,15 @@ namespace Nop.Web.Controllers
                         };
                     else
                     {
-                         orderModel.Customer = new CustomerInfoModel() { 
+                        orderModel.Customer = new CustomerInfoModel()
+                        {
                             FirstName = order.Customer.GetAttribute<string>("FirstName"),
                             LastName = order.Customer.GetAttribute<string>("LastName"),
                             Phone = order.Customer.GetAttribute<string>("Phone"),
                             Email = order.Customer.Email
                         };
                     }
-                       
+
                 }
                 else
                 {
@@ -494,16 +499,16 @@ namespace Nop.Web.Controllers
                 var model = new MyProductsModel();
                 //Carga los tamaños de la paginación
                 PreparePageSizeOptions(model.PagingFilteringContext, command);
-                
+
                 string keywordsSearch = !string.IsNullOrWhiteSpace(command.q) ? command.q : null;
-                
+
                 IList<int> categoriesIds = null;
                 if (command.pt.HasValue)
                     categoriesIds = GetChildCategoryIds(command.pt.Value);
 
-                var products = _productService.SearchProducts(showHidden:true, categoryIds: categoriesIds, vendorId:_workContext.CurrentVendor.Id,
-                    pageSize: command.PageSize, pageIndex:command.PageIndex, keywords:keywordsSearch,
-                    orderBy: ProductSortingEnum.UpdatedOn, published:command.p);
+                var products = _productService.SearchProducts(showHidden: true, categoryIds: categoriesIds, vendorId: _workContext.CurrentVendor.Id,
+                    pageSize: command.PageSize, pageIndex: command.PageIndex, keywords: keywordsSearch,
+                    orderBy: ProductSortingEnum.UpdatedOn, published: command.p);
 
                 model.Products = products.Select(p => new ProductOverviewModel()
                 {
@@ -539,7 +544,7 @@ namespace Nop.Web.Controllers
                     Url = _webHelper.ModifyQueryString(url, "pt=" + _tuilsSettings.productBaseTypes_product, null),
                     Active = command.pt.HasValue && command.pt.Value == _tuilsSettings.productBaseTypes_product
                 };
- 
+
                 return View(model);
             }
             else
@@ -564,22 +569,25 @@ namespace Nop.Web.Controllers
         public ActionResult Questions(QuestionsPaginFilteringModel command)
         {
             //Valida que exista un vendedor en sesion
-            if (_workContext.CurrentVendor != null && command.p > 0)
+            if (_workContext.CurrentVendor != null)
             {
-                var product = _productService.GetProductById(command.p);
+                var model = new QuestionsModel();
 
-                //Valida que el vendedor en sesion sea el correspondiente al producto
-                if (product.VendorId == _workContext.CurrentVendor.Id)
+                //si el filtro es por producto
+                if (command.p > 0)
                 {
-                    var model = new QuestionsModel();
-                    model.Questions = _productService.GetProductQuestions(productId: command.p, status: QuestionStatus.Created);
-                    model.Product.SeName = product.GetSeName();
-                    return View(model);
+                    model.Questions = _productService.GetProductQuestions(productId: command.p, status: QuestionStatus.Created).ToModels(_dateTimeHelper);
+                    //Valida que el vendedor en sesion sea el correspondiente al producto
+                    var product = _productService.GetProductById(command.p);
+                    if (product.VendorId != _workContext.CurrentVendor.Id)
+                    {
+                        return InvokeHttp404();
+                    }
                 }
                 else
-                {
-                    return InvokeHttp404();
-                }
+                    model.Questions = _productService.GetProductQuestions(vendorId: _workContext.CurrentVendor.Id, status: QuestionStatus.Created).ToModels(_dateTimeHelper);
+
+                return View(model);
             }
             else
             {
@@ -590,7 +598,7 @@ namespace Nop.Web.Controllers
 
         #region Menu
         [ChildActionOnly]
-        public ActionResult Menu() 
+        public ActionResult Menu()
         {
             var model = new MenuModel();
             model.Modules = this._controlPanelService.GetModulesActiveUser();
@@ -629,7 +637,7 @@ namespace Nop.Web.Controllers
                             {
                                 return false;
                             }
-                        } 
+                        }
                     }
 
                     if (routeValuesModuleOptional != null)
@@ -646,17 +654,17 @@ namespace Nop.Web.Controllers
                             }
                         }
                     }
-                    
+
                     return true;
                 };
-                
+
                 parent = module.Name;
                 //Valida que no tenga submodulos activos, que corresponda a la misma acción y que los parametros adicionales coincidan todos
                 var queryStringParent = ControllerContext.ParentActionViewContext.RequestContext.HttpContext.Request.QueryString;
                 if (module.SubModules.Count == 0
-                    && module.Action.Equals(currentAction) 
-                    && module.Controller.Equals(currentController) 
-                    && validateQueryString(queryStringParent, module.Parameters, module.OptionalParameters) )
+                    && module.Action.Equals(currentAction)
+                    && module.Controller.Equals(currentController)
+                    && validateQueryString(queryStringParent, module.Parameters, module.OptionalParameters))
                     return module.Name;
                 else
                 {
@@ -669,17 +677,17 @@ namespace Nop.Web.Controllers
                             subModuleName = sm.Name;
                     }
                     //Si algún submodulo fue encontrado lo retorna
-                    if(!string.IsNullOrEmpty(subModuleName)) return subModuleName;
+                    if (!string.IsNullOrEmpty(subModuleName)) return subModuleName;
                 }
 
-                
+
 
             }
             return string.Empty;
         }
 
 
-        
+
         #endregion
     }
 }

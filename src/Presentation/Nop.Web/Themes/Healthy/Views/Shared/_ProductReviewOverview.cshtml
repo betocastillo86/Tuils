@@ -14,34 +14,31 @@
         <div class="product-review-box">
             <div class="rating">
                 <div style="width: @(ratingPercent)%">
-                    <a href="@Url.RouteUrl("ProductReviews", new { productId = Model.ProductId })"></a>
+                    @if (Model.IsProductDetail)
+{
+    <a href="#tab-container" title="@T("custom.reviews.productreviews.Alt")"></a>
+}
+else
+{
+                        <a href="@Url.RouteUrl("Product", new { SeName = Model.ProductSeName })#product-reviews-page" title="@T("custom.reviews.productreviews.Alt")"></a>
+                    }
                 </div>
-                @*<div style="width: @(ratingPercent)%">
-                </div>*@
+
             </div>
             @*added*@
             <div class="product-rating-total">
-                (<a href="@Url.RouteUrl("ProductReviews", new { productId = Model.ProductId })">@Model.TotalReviews</a>)
+                @if (Model.IsProductDetail)
+                {
+                    <a href="#tab-container" title="@T("custom.reviews.productreviews.Alt")"></a>
+                }
+                else
+                {
+                    @:(<a href="@Url.RouteUrl("Product", new { SeName = Model.ProductSeName })#product-reviews-page" title="@T("custom.reviews.productreviews.Alt")">@Model.TotalReviews</a>)
+                }
+                
             </div>
             @*@added*@
         </div>
-        
-        @* @if (Model.TotalReviews > 0)
-        {
-            <div class="product-review-links">
-                <a href="@Url.RouteUrl("ProductReviews", new { productId = Model.ProductId })">@Model.TotalReviews
-                    @T("Reviews.Overview.Reviews")</a> <span class="separator">|</span> <a href="@Url.RouteUrl("ProductReviews", new { productId = Model.ProductId })">@T("Reviews.Overview.AddNew")</a>
-            </div>
-            
-            decimal ratingValue = ratingPercent / (decimal)20;
-            <span itemprop="ratingValue" style="display: none;">@ratingValue.ToString("0.0", new CultureInfo("en-US"))</span>
-            <span itemprop="reviewCount" style="display: none;">@Model.TotalReviews</span>
-        }
-        else
-        {
-            <div class="product-no-reviews">
-                <a href="@Url.RouteUrl("ProductReviews", new { productId = Model.ProductId })">@T("Reviews.Overview.First")</a>
-            </div>
-        }*@
+
     </div>
 }

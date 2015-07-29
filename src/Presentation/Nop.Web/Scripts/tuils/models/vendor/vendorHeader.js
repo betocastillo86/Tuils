@@ -1,4 +1,4 @@
-﻿define(['underscore', 'backbone', 'fileModel', 'resize'], function (_, Backbone, FileModel) {
+﻿define(['underscore', 'backbone', 'fileModel','configuration', 'resize'], function (_, Backbone, FileModel, TuilsConfiguration) {
     var VendorHeaderModel = Backbone.Model.extend({
 
         idAttribute : 'Id',
@@ -38,15 +38,15 @@
         },
         saveBackground: function (file)
         {
-            this.saveImage(file, 'backgroundPicture', 500, 1000);
+            this.saveImage(file, 'backgroundPicture', TuilsConfiguration.media.coverImageMaxSizeResize, TuilsConfiguration.media.coverImageMaxSizeResize);
         },
         saveLogo: function (file) {
-            this.saveImage(file, 'picture', 1800, 2400);
+            this.saveImage(file, 'picture', 800, TuilsConfiguration.media.logoImageMaxSizeResize);
         },
         saveImage: function (file, type, sizeMini, sizeBig)
         {
             var that = this;
-            this.resizer.photo(file, sizeBig, 'file', function (resizedFile) {
+            this.resizer.photoCrop(file, sizeBig, 'file', function (resizedFile) {
                 that.resizer.photo(resizedFile, sizeMini, 'dataURL', function (thumbnail) {
                     that.fileModel.set({ src: thumbnail, file: resizedFile });
                     that.fileModel.upload({ saveUrl: '/api/vendors/' + that.get('Id') + '/' + type });

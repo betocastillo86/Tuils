@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'util', 'baseView', 'handlebars', 'tuils/collections/reviews', 'handlebarsh'],
-    function ($, _, TuilsUtilities, BaseView, Handlebars, ReviewsCollection) {
+﻿define(['jquery', 'underscore', 'util', 'baseView', 'handlebars', 'tuils/collections/reviews', 'configuration','handlebarsh'],
+    function ($, _, TuilsUtilities, BaseView, Handlebars, ReviewsCollection, TuilsConfiguration) {
 
         var VendorReviewsView = BaseView.extend({
 
@@ -25,7 +25,12 @@
                 this.collection.getReviewsByVendor(this.id, this.currentPage);
             },
             showReviews: function () {
-                this.$('#divReviews').append(this.template(this.collection.toJSON()));
+                var reviews = this.collection.toJSON();
+                this.$('#divReviews').append(this.template(reviews));
+                if (TuilsConfiguration.vendor.reviewsPageSize > reviews.length)
+                    this.$("#btnMore").hide();
+                if (this.currentPage == 0 && reviews.length == 0)
+                    this.$("#divNoReviews").show();
             },
             more: function () {
                 this.currentPage++;

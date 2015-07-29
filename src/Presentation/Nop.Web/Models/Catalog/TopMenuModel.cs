@@ -18,6 +18,8 @@ namespace Nop.Web.Models.Catalog
 
         public int SelectedSpecificationAttribute { get; set; }
 
+        public int SelectedCategory { get; set; }
+
         public bool BlogEnabled { get; set; }
         public bool RecentlyAddedProductsEnabled { get; set; }
         public bool ForumEnabled { get; set; }

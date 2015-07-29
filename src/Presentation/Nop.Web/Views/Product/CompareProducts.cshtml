@@ -48,7 +48,10 @@
                                         <input type="button" value="@T("Common.Remove")" title="@T("Common.Remove")" class="button-2 remove-button" onclick="setLocation('@Url.RouteUrl("RemoveProductFromCompareList", new { productId = product.Id })')" />
                                     </p>
                                     <p class="a-center">
-                                        <img alt="@product.DefaultPictureModel.AlternateText" src="@product.DefaultPictureModel.ImageUrl" title="@product.DefaultPictureModel.Title" />
+                                        <a href="@Url.RouteUrl("Product", new { SeName = product.SeName })">
+                                            <img alt="@product.DefaultPictureModel.AlternateText" src="@product.DefaultPictureModel.ImageUrl" title="@product.DefaultPictureModel.Title" />
+                                        </a>
+                                        
                                     </p>
                                 </div>
                             </td>

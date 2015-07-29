@@ -49,6 +49,7 @@
     <div class="page-title">
         <h1>@Model.Name</h1>
     </div>
+    @Html.Action("SimilarSearches", "Catalog", new { q = Model.Name })
     <div class="page-body">
         @Html.Widget("categorydetails_top", Model.Id)
         @*description*@
@@ -155,28 +156,7 @@
 
     @*@added*@
     @section left {
-        @Html.Widget("categorydetails_before_filters", Model.Id)
-        <div class="product-filters-wrapper">
-            @*filtering*@
-            @if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
-            {
-                @Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
-            }
-            @*filtering*@
-            @if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
-            {
-                @Html.Partial("_FilterSpecsBox", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
-            }
-            
-            @if (Model.PagingFilteringContext.CategoryFilter.Enabled)
-            {
-                @Html.Partial("_FilterCategoryBox", Model.PagingFilteringContext.CategoryFilter, new ViewDataDictionary())
-            }
-            @if (Model.PagingFilteringContext.StateProvinceFilter.Enabled)
-            {
-                @Html.Partial("_FilterStateProvinceBox", Model.PagingFilteringContext.StateProvinceFilter, new ViewDataDictionary())
-            }
-        </div>
+       @Html.Partial("_FilterSearches", Model.PagingFilteringContext)
     }
         @Html.Widget("categorydetails_before_product_list", Model.Id)
         @*product list*@

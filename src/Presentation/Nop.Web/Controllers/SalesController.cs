@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using Nop.Web.Extensions;
 using Nop.Services.Directory;
+using Nop.Core;
+using Nop.Core.Domain.Catalog;
 
 namespace Nop.Web.Controllers
 {
@@ -19,6 +21,8 @@ namespace Nop.Web.Controllers
         private ISpecificationAttributeService _specificationAttributeService;
         private IStateProvinceService _stateProvinceService;
         private TuilsSettings _tuilsSettings;
+        private CatalogSettings _catalogSettings;
+        private IWorkContext _workContext;
         #endregion
 
         #region Ctor
@@ -26,12 +30,16 @@ namespace Nop.Web.Controllers
         public SalesController(ICategoryService categoryService,
             ISpecificationAttributeService specificationAttributeService,
             IStateProvinceService stateProvinceService,
-            TuilsSettings tuilsSettings)
+            TuilsSettings tuilsSettings,
+            IWorkContext workContext,
+            CatalogSettings catalogSettings)
         {
             this._categoryService = categoryService;
             this._tuilsSettings = tuilsSettings;
             this._specificationAttributeService = specificationAttributeService;
             this._stateProvinceService = stateProvinceService;
+            this._workContext = workContext;
+            this._catalogSettings = catalogSettings;
         }
         #endregion
 
@@ -42,7 +50,12 @@ namespace Nop.Web.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            return View();
+            var model = new SelectPublishCategoryModel();
+            //Solo los talleres pueden publicar servicios
+            if (_workContext.CurrentVendor != null)
+                model.CanSelectService = _workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.RepairShop;
+
+            return View(model);
         }
 
         /// <summary>
@@ -116,7 +129,10 @@ namespace Nop.Web.Controllers
         private PublishProductModel GetPublishModel()
         {
             var model = new PublishProductModel();
+            model.LimitDaysOfProductPublished = _catalogSettings.LimitDaysOfProductPublished;
             model.StateProvinces = new SelectList(_stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry), "Id", "Name");
+            if (_workContext.CurrentVendor != null)
+                model.PhoneNumber = _workContext.CurrentVendor.PhoneNumber;
             return model;
         }
         #endregion

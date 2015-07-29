@@ -304,7 +304,7 @@ namespace Nop.Web.Models.Catalog
                     var priceRangeStr = new StringBuilder();
 
                     //Muestra 4 rangos de precios
-                    double prevMin = Math.Round(minPrice / 100d, 0) * 1000d;
+                    double prevMin = Math.Round(minPrice / 1000d, 0) * 1000d;
                     double prevMax = minPrice;
                     for (int i = 4; i > 0; i--)
                     {
@@ -360,6 +360,11 @@ namespace Nop.Web.Models.Catalog
                         return item;
                     }).ToList();
 
+                    //Filtro que se debe ejecutar cuando un usuario pone el rango de tiempo
+                    string customUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "={from}-{to}", null);
+                    customUrl = ExcludeQueryStringParams(customUrl, webHelper);
+                    this.CustomFilterUrl = customUrl;
+
                     if (selectedPriceRange != null)
                     {
                         //remove filter URL
@@ -380,6 +385,8 @@ namespace Nop.Web.Models.Catalog
             public bool Enabled { get; set; }
             public IList<PriceRangeFilterItem> Items { get; set; }
             public string RemoveFilterUrl { get; set; }
+
+            public string CustomFilterUrl { get; set; }
 
             #endregion
         }

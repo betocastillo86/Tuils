@@ -7,6 +7,7 @@
         events : {
             "click #step1 a": "selectType",
             "click #btnCreateUser": "createUser",
+            'click .fb-btn': 'externalAuthentication',
             "click #btnBack": "back"
         },
 
@@ -37,6 +38,27 @@
             this.model.on("sync", this.userCreated, this);
             this.model.set('IsRegister', true);
             this.model.set('VendorType', 0);
+        },
+        externalAuthentication: function () {
+            var that = this;
+            var modelValidation = new UserRegisterModel();
+            modelValidation.on("sync", that.validateActiveSession, that);
+            //Realiza la validacion de sesion cada N segundos cuando la autenticación es externa
+            this.intervalAuthentication = setInterval(function () {
+                modelValidation.isSessionActive();
+            }, 2000);
+        },
+        validateActiveSession: function (model) {
+            
+            if (model.toJSON().Active) {
+                if (this.intervalAuthentication)
+                    clearInterval(this.intervalAuthentication);
+                this.userAuthenticated(model);
+            }
+        },
+        userAuthenticated: function (model) {
+            this.trigger("user-authenticated", model);
+            this.$el.dialog('close');
         },
         selectType: function (obj) {
             

@@ -36,6 +36,8 @@ using Nop.Web.Framework.UI.Captcha;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Media;
+using Nop.Web.Extensions.Api;
+using Nop.Services.Common;
 
 namespace Nop.Web.Controllers
 {
@@ -272,7 +274,9 @@ namespace Nop.Web.Controllers
                         Name = vendor.GetLocalized(x => x.Name),
                         SeName = vendor.GetSeName(),
                         VendorShippingEnabled = vendor.EnableShipping ?? false,
-                        CreditCardEnabled = vendor.EnableCreditCardPayment ?? false
+                        CreditCardEnabled = vendor.EnableCreditCardPayment ?? false,
+                        PhoneNumber = vendor.PhoneNumber,
+                        VendorType = vendor.VendorType
                     };
                 }
                 
@@ -424,7 +428,8 @@ namespace Nop.Web.Controllers
             #endregion
 
             #region WishList
-            model.DisableWishlistButton = product.DisableWishlistButton;
+            //Solo se muestra la lista deseos para usuarios registrados
+            model.DisableWishlistButton = _workContext.CurrentCustomer.IsGuest() || product.DisableWishlistButton;
             #endregion
 
             #region Product price
@@ -759,7 +764,8 @@ namespace Nop.Web.Controllers
                 ProductId = product.Id,
                 RatingSum = product.ApprovedRatingSum,
                 TotalReviews = product.ApprovedTotalReviews,
-                AllowCustomerReviews = product.AllowCustomerReviews
+                AllowCustomerReviews = product.AllowCustomerReviews,
+                IsProductDetail = true
             };
 
             #endregion
@@ -1202,6 +1208,39 @@ namespace Nop.Web.Controllers
             return PartialView(model);
         }
 
+        [ChildActionOnly]
+        public ActionResult ProductsForMyBike(int? productThumbPictureSize)
+        {
+            int? bikeReference = _workContext.CurrentCustomer.GetBikeReference();
+            
+            //Para consultar debe tener configurada una motocicleta
+            if(_workContext.CurrentCustomer.IsGuest() || !bikeReference.HasValue)
+                return Content("");
+            
+            //Llave configurada de cache para la categoria
+            string cacheKey = string.Format(ModelCacheEventConsumer.PRODUCTS_ORDERED_BY_SPECIALCATEGORYID_KEY, bikeReference);
+
+            //Consulta los productos
+            var products =  _cacheManager.Get(cacheKey, () => {
+                //Toma 20 provisionalmente hasta cuando se implemente funcionalidad para por pago destacar productos
+                return _productService.SearchProducts(
+                    specialCategoryId:bikeReference, 
+                    orderBySpecialCategoryId:bikeReference)
+                    .OrderBy(p => Guid.NewGuid())
+                    .Take(20)
+                    .ToList();
+            });
+                
+            if (products.Count == 0)
+                return Content("");
+
+
+            var model = PrepareProductOverviewModels(products
+                 .OrderBy(p => Guid.NewGuid())
+                 .Take(_catalogSettings.NumberOfProductsMyBikeOnHomepage), true, true, productThumbPictureSize).ToList();
+            return PartialView(model);
+        }
+
         #endregion
 
         #region Left featured products
@@ -1212,16 +1251,47 @@ namespace Nop.Web.Controllers
             if (!_catalogSettings.ShowBestsellersOnHomepage || _catalogSettings.NumberOfBestsellersOnHomepage == 0)
                 return Content("");
 
+            //categoria especial por la que debería ordenar que solo se activa si el usuario cuenta con esta registrada como moto
+            int? orderBySpecialCategoryId =  _workContext.CurrentCustomer.GetBikeReference();
+
+            //Carga la llave de cache ya sea para usuarios con categoria especial, o normal
+            string cacheKey = orderBySpecialCategoryId.HasValue ? string.Format(ModelCacheEventConsumer.HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_PATTERN_KEY, orderBySpecialCategoryId) : ModelCacheEventConsumer.HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_KEY;
+
             //load and cache report
-            var products = _cacheManager.Get(string.Format(ModelCacheEventConsumer.HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_PATTERN_KEY, _storeContext.CurrentStore.Id),
+            var products = _cacheManager.Get(cacheKey,
                 () =>
-                    _productService.SearchProducts(storeId: _storeContext.CurrentStore.Id, leftFeatured:true).ToList() );
+                    _productService.SearchProducts(storeId: _storeContext.CurrentStore.Id, 
+                                                    leftFeatured:true,
+                                                    orderBySpecialCategoryId: orderBySpecialCategoryId)
+                    .ToList());
+
+            ////Si hay productos destacados por la categoria de moto del usuario
+            ////Se ordenan por este criterio y no aleatoreamente
+            //if (orderBySpecialCategoryId.HasValue && products.Count(p => p.FeaturedBySpecialCategory) > 0)
+            //{
+            //    //toma aleatoriamente un numero de productos
+            //    products = products
+            //        .OrderByDescending(p)
+            //        .OrderBy(p => Guid.NewGuid())
+            //        .Take(_catalogSettings.NumberOfBestsellersOnHomepage)
+            //        .ToList();
+            //}
+            //else
+            //{
+            //    //toma aleatoriamente un numero de productos
+            //    products = products
+            //        .OrderBy(p => Guid.NewGuid())
+            //        .Take(_catalogSettings.NumberOfBestsellersOnHomepage)
+            //        .ToList();
+            //}
 
             //toma aleatoriamente un numero de productos
             products = products
                 .OrderBy(p => Guid.NewGuid())
+                .OrderByDescending(p => p.FeaturedBySpecialCategory)
                 .Take(_catalogSettings.NumberOfBestsellersOnHomepage)
                 .ToList();
+            
 
             if (products.Count == 0)
                 return Content("");
@@ -1236,7 +1306,6 @@ namespace Nop.Web.Controllers
 
 
         #region Product reviews
-        [ChildActionOnly]
         [NopHttpsRequirement(SslRequirement.No)]
         public ActionResult ProductReviews(int productId)
         {
@@ -1399,8 +1468,38 @@ namespace Nop.Web.Controllers
 
         #endregion
 
+        #region Questions
+        [ChildActionOnly]
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult Questions(int productId)
+        {
+            var product = _productService.GetProductById(productId);
+            if (product == null || product.Deleted || !product.Published || !product.AllowCustomerReviews)
+                return RedirectToRoute("HomePage");
+
+            var model = new QuestionsModel();
+            model.Questions = _productService.GetProductQuestions(productId).ToModels(_dateTimeHelper);
+            model.ShowCaptcha = _captchaSettings.ShowOnProductQuestions;
+            
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        [CaptchaValidator]
+        public ActionResult Questions(int productId, Nop.Web.Models.Api.ProductQuestionModel model, bool captchaValid)
+        {
+            //validate CAPTCHA
+            if (_captchaSettings.Enabled && _captchaSettings.ShowOnProductQuestions && !captchaValid)
+            {
+                ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
+            }
+
+            return RedirectToAction("ProductDetails", new { productId = productId });
+        }
+        #endregion
+
         #region Email a friend
-        
+
         [NopHttpsRequirement(SslRequirement.No)]
         public ActionResult ProductEmailAFriend(int productId)
         {

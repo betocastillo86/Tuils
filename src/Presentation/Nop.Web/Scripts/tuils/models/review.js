@@ -3,8 +3,6 @@
 
         idAttribute: "Id",
 
-        url: "/subscribenewsletter",
-
         validation: {
             Title: {
                 required: true,

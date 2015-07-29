@@ -9,6 +9,10 @@
 
         viewLogin: undefined,
 
+        //Lista de vistas anidadas que requieren autenticación para realizar alguna acción
+        //Todas las vistas que se encuentren en esta propiedad se les agregará el evento unautorized
+        requiredViewsWithAuthentication : [],
+
         loadingTemplate: '<img id="divLoadingback" src="/Content/loading_2x.gif" />',
 
         minSizeDesktopWith: 1024,
@@ -27,9 +31,13 @@
         {
             this.model.once('unauthorized', this.showLogin, this);
         },
-        userAuthenticated: function () {
+        userAuthenticated: function (model) {
             //Relanza el evento que el usuario fue autenticado, para que la vista que hereda lo pueda capturar
-            this.trigger("user-authenticated");
+            if (model)
+                this.trigger("user-authenticated", model);
+            else
+                this.trigger("user-authenticated");
+
         },
         stickThem: function () {
             this.stickit();
@@ -86,30 +94,37 @@
                     }
                 });
 
-                _.each(errors, function (errorField, index) {
-                    //recorre los errores y marca solo los que tienen objeto DOM
-                    var domObj = that.$(fieldsToMark[index]);
-                    if (domObj)
-                        domObj.addClass("input-validation-error");
-                    //busca el mensaje, si existe lo marca
-                    var domMessage = that.$("span[tuils-val-for='" + index + "']");
-                    if (domMessage)
-                    {
-                        domMessage.text(errorField);
-                        domMessage.addClass("field-validation-error");
-                    }
-                        
-
-                    
-                        
-                });
+                this.markErrorsOnForm(errors, fieldsToMark);
             }
 
             return errors;
         },
+        markErrorsOnForm: function (errors, fieldsToMark) {
+            var that = this;
+            _.each(errors, function (errorField, index) {
+                //recorre los errores y marca solo los que tienen objeto DOM
+                var domObj = that.$(fieldsToMark[index]);
+                if (domObj)
+                    domObj.addClass("input-validation-error");
+                //busca el mensaje, si existe lo marca
+                var domMessage = that.$("span[tuils-val-for='" + index + "']");
+                if (domMessage) {
+                    domMessage.text(errorField);
+                    domMessage.addClass("field-validation-error");
+                }
+            });
+        },
         bindValidation : function()
         {
             Backbone.Validation.bind(this);
+        },
+        //Con el fin de evitar muchos clicks inhabilita el boton unos segundos
+        disableButtonForSeconds: function (obj, seconds) {
+            seconds = !seconds ? 4 : seconds;
+            obj.attr("disabled", 'disabled');
+            setTimeout(function () {
+                obj.removeAttr("disabled");
+            }, seconds*1000);
         },
         removeErrors: function () {
             this.$el.find(".input-validation-error").removeClass("input-validation-error");

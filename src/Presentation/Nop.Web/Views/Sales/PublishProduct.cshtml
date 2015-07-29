@@ -18,10 +18,10 @@
                 <div class="product-public">
                     <ol class="wizard-breadcrumb">
 
-                        <li id="btnPublishProductStep1" class="wizard-current"><b>PASO 1</b><div>@T("PublishProduct.StepMenu1")</div></li>
-                        <li id="btnPublishProductStep2" class="wizard-step"><b>PASO 2</b><div>@T("PublishProduct.StepMenu2")</div></li>
-                        <li id="btnPublishProductStep3" class="wizard-step"><b>PASO 3</b><div>@T("PublishProduct.StepMenu3")</div></li>
-                        <li id="btnPublishProductStep4" class="wizard-step"><b>PASO 4</b><div>@T("PublishProduct.StepMenu4")</div></li>
+                        <li id="btnPublishProductStep1" data-id="1" class="wizard-current"><b>PASO 1</b><div>@T("PublishProduct.StepMenu1")</div></li>
+                        <li id="btnPublishProductStep2" data-id="2" class="wizard-step"><b>PASO 2</b><div>@T("PublishProduct.StepMenu2")</div></li>
+                        <li id="btnPublishProductStep3" data-id="3" class="wizard-step"><b>PASO 3</b><div>@T("PublishProduct.StepMenu3")</div></li>
+                        <li id="btnPublishProductStep4" data-id="4" class="wizard-step"><b>PASO 4</b><div>@T("PublishProduct.StepMenu4")</div></li>
 
                         <br />
                     </ol>
@@ -47,7 +47,7 @@
                     </div>
                     <div id="divStep_3" style="display:none">
                         <div class="title">@T("PublishProduct.SelectImagesDescription")</div>
-                        @Html.Partial("_ImageSelector", 7)
+                        @Html.Partial("_ImageSelector")
                         <input type="button" class="btn_continue button-1 btnNext" value="@T("PublishProduct.NextStep")">
                         <input type="button" class="btn_continue button-1 btnBack" value="@T("PublishProduct.BackStep")">
                     </div>

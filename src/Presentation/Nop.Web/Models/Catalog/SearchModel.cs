@@ -65,6 +65,9 @@ namespace Nop.Web.Models.Catalog
         public CatalogPagingFilteringModel PagingFilteringContext { get; set; }
         public IList<ProductOverviewModel> Products { get; set; }
 
+
+        public bool ShowSimilarSearches { get; set; }
+
         #region Nested classes
 
         public class CategoryModel : BaseNopEntityModel

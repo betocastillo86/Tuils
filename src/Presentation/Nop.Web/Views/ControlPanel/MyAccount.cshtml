@@ -20,7 +20,6 @@
             @Html.ValidationSummary(true)
         </div>
 
-
         <div class="title">@T("Account.YourPersonalDetails")</div>
         <div class="form-public">
             <div class="inputs">
@@ -63,7 +62,7 @@
     <div class="inputs_date" id="divDateOfBirth">
         @Html.LabelFor(model => model.DateOfBirth, new { }, ":")
         <div class="date">
-            @Html.TextBoxFor(model => model.DateOfBirth, "{0:MM/dd/yyyy}", new { tuils_val = "none" })
+            @Html.TextBoxFor(model => model.DateOfBirth, new { tuils_val = "none" })
             <span class="icon-calendar datepickerButton"></span>
         </div>
         @Html.RequiredHint()
@@ -89,19 +88,17 @@
         <div class="title">@T("Account.MyBike")</div>
 
         <div class="form-public">
+            @if (Model.BikeBrand.Picture != null)
+            {
+                <img id="imgBrand" src="@Model.BikeBrand.Picture.ImageUrl" alt="@Model.BikeBrand.Picture.AlternateText" title="@Model.BikeBrand.Picture.Title" />
+            }
+            else
+            {
+                <img id="imgBrand" />
+            }
             <div class="inputs">
                 @Html.LabelFor(model => model.BikeBrand.CategoryId, new { }, ":")
                 @Html.DropDownListFor(model => model.BikeBrand.CategoryId, new SelectList(Model.BikeBrands, "Id", "Name"), "-")
-                
-                @if (Model.BikeBrand.Picture != null)
-                {
-                    <img id="imgBrand" src="@Model.BikeBrand.Picture.ImageUrl" alt="@Model.BikeBrand.Picture.AlternateText" title="@Model.BikeBrand.Picture.Title"  />
-                }
-                else
-                { 
-                    <img id="imgBrand"  />
-                }
-                
             </div>
             <div class="inputs">
                 @Html.LabelFor(model => model.BikeReferenceId, new { }, ":")

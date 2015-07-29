@@ -1,0 +1,65 @@
+﻿@model CatalogPagingFilteringModel
+@using Nop.Web.Models.Catalog;
+@using Nop.Web.Extensions;
+
+<div class="content-filter">
+    <input id="btnShowFilter" type="button" value="Mostrar Filtro" />
+    <div class="filters-main" style="display:none">
+        <div class="product-filters-wrapper">
+            <h2 class="tit_fil"><i class="icon-mail"></i>FILTRAR POR <span class="icon-close"></span></h2>
+
+            <ul class="filter-result">
+                @if (Model.CategoryFilter.Enabled)
+                {
+                    @Html.Partial("_FilterCategoryBox_Filtered", Model.CategoryFilter, new ViewDataDictionary())
+                }
+                @if (Model.StateProvinceFilter.Enabled)
+                {
+                    @Html.Partial("_FilterStateProvinceBox_Filtered", Model.StateProvinceFilter, new ViewDataDictionary())
+                }
+                @if (Model.SpecificationFilter.Enabled)
+                {
+                    @Html.Partial("_FilterSpecsBox_Filtered", Model.SpecificationFilter, new ViewDataDictionary())
+                }
+                @if (Model.ManufacturerFilter.Enabled)
+                {
+                    @Html.Partial("_FilterManufacturerBox_Filtered", Model.ManufacturerFilter, new ViewDataDictionary())
+                }
+                @if (Model.PriceRangeFilter.Enabled)
+                {
+                    @Html.Partial("_FilterPriceBox_Filtered", Model.PriceRangeFilter, new ViewDataDictionary())
+                }
+                @if (Model.BikeReferenceFilter.Enabled)
+                {
+                    @Html.Partial("_FilterBikeReferenceBox_Filtered", Model.BikeReferenceFilter, new ViewDataDictionary())
+                }
+            </ul>
+
+            @if (Model.CategoryFilter.Enabled)
+            {
+                @Html.Partial("_FilterCategoryBox", Model.CategoryFilter, new ViewDataDictionary())
+            }
+            @if (Model.StateProvinceFilter.Enabled)
+            {
+                @Html.Partial("_FilterStateProvinceBox", Model.StateProvinceFilter, new ViewDataDictionary())
+            }
+            @if (Model.SpecificationFilter.Enabled)
+            {
+                @Html.Partial("_FilterSpecsBox", Model.SpecificationFilter, new ViewDataDictionary())
+            }
+            @if (Model.ManufacturerFilter.Enabled)
+            {
+                @Html.Partial("_FilterManufacturerBox", Model.ManufacturerFilter, new ViewDataDictionary())
+            }
+            @if (Model.PriceRangeFilter.Enabled)
+            {
+                @Html.Partial("_FilterPriceBox", Model.PriceRangeFilter, new ViewDataDictionary())
+            }
+            @if (Model.BikeReferenceFilter.Enabled)
+            {
+                @Html.Partial("_FilterBikeReferenceBox", Model.BikeReferenceFilter, new ViewDataDictionary())
+            }
+
+        </div>
+    </div>
+</div>

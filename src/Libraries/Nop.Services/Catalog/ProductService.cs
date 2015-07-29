@@ -21,6 +21,7 @@ using Nop.Services.Stores;
 using Nop.Services.Media;
 using Nop.Services.Vendors;
 using Nop.Services.Orders;
+using Nop.Services.Logging;
 
 namespace Nop.Services.Catalog
 {
@@ -76,6 +77,10 @@ namespace Nop.Services.Catalog
         private readonly IStoreMappingService _storeMappingService;
         private readonly IPictureService _pictureService;
         private readonly IOrderService _orderService;
+        private readonly ILogger _logger;
+        private readonly ICategoryService _categoryService;
+        private readonly ILocalizationService _localizationService;
+
 
         #endregion
 
@@ -140,7 +145,10 @@ namespace Nop.Services.Catalog
             IRepository<ProductQuestion> productQuestionRepository,
             TuilsSettings tuilsSettings,
             IOrderService orderService,
-            IRepository<SpecialCategoryProduct> specialCategoryProductRepository)
+            IRepository<SpecialCategoryProduct> specialCategoryProductRepository,
+            ILogger logger,
+            ICategoryService categoryService,
+            ILocalizationService localizacionService)
         {
             this._cacheManager = cacheManager;
             this._productRepository = productRepository;
@@ -173,6 +181,9 @@ namespace Nop.Services.Catalog
             this._tuilsSettings = tuilsSettings;
             this._orderService = orderService;
             this._specialCategoryProductRepository = specialCategoryProductRepository;
+            this._logger = logger;
+            this._categoryService = categoryService;
+            this._localizationService = localizacionService;
         }
 
         #endregion
@@ -2153,6 +2164,13 @@ namespace Nop.Services.Catalog
         /// <param name="product">Datos del producto</param>
         public void PublishProduct(Product product)
         {
+            
+            var rootCategory = _categoryService.GetRootCategoryByCategoryId(product.ProductCategories.FirstOrDefault().CategoryId);
+            if (rootCategory == null)
+                throw new NopException(CodeNopException.CategoryDoesntExist);
+            else if (rootCategory.Id == _tuilsSettings.productBaseTypes_service && _workContext.CurrentVendor.VendorType != Core.Domain.Vendors.VendorType.RepairShop)
+                throw new NopException(CodeNopException.UserTypeNotAllowedPublishProductType, _localizationService.GetResource("publishProduct.error.publishInvalidCategoryService"));
+
             //Si tiene imagenes temporales por cargar las crea
             if (product.TempFiles.Count > 0)
             {
@@ -2176,6 +2194,7 @@ namespace Nop.Services.Catalog
             product.OrderMaximumQuantity = 1;
             product.OrderMaximumQuantity = 1;
             product.StockQuantity = _tuilsSettings.defaultStockQuantity;
+            product.AvailableEndDateTimeUtc = DateTime.Now.AddDays(_catalogSettings.LimitDaysOfProductPublished);
 
             try
             {
@@ -2265,12 +2284,8 @@ namespace Nop.Services.Catalog
 
             if (UpdateProductQuestion(question))
             {
-                //consulta las preguntas sin respuesta
-                var questions = GetProductQuestions(productId: question.ProductId, status: QuestionStatus.Created);
-                var product = GetProductById(question.ProductId);
-                product.UnansweredQuestions = questions.Count;
-                //Actualiza el número de pregundas pendientes
-                UpdateProduct(product);
+                //Actualiza el numero de preguntas sin responder de un producto
+                UpdateUnansweredQuestionsByProductId(question.ProductId);
 
                 //Envia la notificacion de que fue respondida la pregunta
                 _workflowMessageService.SendQuestionAnsweredNotificationMessage(question, _workContext.WorkingLanguage.Id);
@@ -2279,6 +2294,38 @@ namespace Nop.Services.Catalog
             }
             else
                 return false;
+        }
+
+        /// <summary>
+        /// Actualiza el numero de preguntas sin responder de un producto en especifico
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public void UpdateUnansweredQuestionsByProductId(int productId)
+        {
+            //consulta las preguntas sin respuesta
+            var questions = GetProductQuestions(productId: productId, status: QuestionStatus.Created);
+            var product = GetProductById(productId);
+            product.UnansweredQuestions = questions.Count;
+            //Actualiza el número de pregundas pendientes
+            UpdateProduct(product);
+        }
+
+
+        /// <summary>
+        /// Inserta una pregunta relacionada a un product
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns></returns>
+        public void InsertQuestion(ProductQuestion question)
+        {
+            question.CreatedOnUtc = DateTime.Now;
+            question.Status = QuestionStatus.Created;
+            _productQuestionRepository.Insert(question);
+            //Envia la notificacion de que fue respondida la pregunta
+            _workflowMessageService.SendNewQuestionNotificationMessage(question, _workContext.WorkingLanguage.Id);
+            //Actualiza el numero de preguntas sin responder por producto
+            UpdateUnansweredQuestionsByProductId(question.ProductId);
         }
         #endregion
 
@@ -2322,6 +2369,30 @@ namespace Nop.Services.Catalog
 
             return query.FirstOrDefault();
         }
+
+        /// <summary>
+        /// Cuenta todas las preguntas que no han sido contestadas de los productos de un vendedor
+        /// </summary>
+        /// <returns></returns>
+        public int CountUnansweredQuestionsByVendorId(int vendorId)
+        {
+            if (vendorId <= 0)
+                return 0;
+            try
+            {
+                //Suma todas las preguntas sin responder de los productos del vendedor
+                return _productRepository.Table
+                    .Where(p => p.VendorId == vendorId)
+                    .Sum(p => p.UnansweredQuestions);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e.ToString(), e);
+                return 0;
+            }
+        }
+
+
         #endregion
 
         #region SpecialCategories
@@ -2335,6 +2406,8 @@ namespace Nop.Services.Catalog
                 .Where(sc => sc.ProductId == productId)
                 .ToList();
         }
+
+
         #endregion
 
         #endregion
@@ -2348,5 +2421,11 @@ namespace Nop.Services.Catalog
 
 
 
+
+
+
+
+
+        
     }
 }

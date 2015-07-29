@@ -137,6 +137,15 @@ namespace Nop.Web.Infrastructure.Cache
         public const string SEARCH_CATEGORIES_MODEL_KEY = "Nop.pres.search.categories-{0}-{1}-{2}";
         public const string SEARCH_CATEGORIES_PATTERN_KEY = "Nop.pres.search.categories";
 
+
+        /// <summary>
+        /// Cache de las busquedas similares
+        /// {0}  Valor de la busqueda
+        /// </summary>
+        public const string SEARCH_SUGGEST_BY_GENERAL = "Nop.pres.search.suggest";
+        public const string SEARCH_SUGGEST_BY_NEW_SEARCH = "Nop.pres.search.suggest-{0}";
+
+
         /// <summary>
         /// Key for ManufacturerNavigationModel caching
         /// </summary>
@@ -253,6 +262,8 @@ namespace Nop.Web.Infrastructure.Cache
         public const string CATEGORY_CHILD_IDENTIFIERS_PATTERN_KEY = "Nop.pres.category.childidentifiers";
 
 
+        
+
         public const string CATEGORIES_API_ALL_SERVICES = "Nop.category.api.services";
         public const string CATEGORIES_API_ALL_BIKEREFERENCES = "Nop.category.api.allbikebrands";
         /// <summary>
@@ -310,6 +321,13 @@ namespace Nop.Web.Infrastructure.Cache
         /// </remarks>
         public const string PRODUCT_MANUFACTURERS_MODEL_KEY = "Nop.pres.product.manufacturers-{0}-{1}-{2}-{3}";
         public const string PRODUCT_MANUFACTURERS_PATTERN_KEY = "Nop.pres.product.manufacturers";
+
+
+        /// <summary>
+        /// Listado de productos que son especiales para una categoria en especifico
+        /// {0} : category id
+        /// </summary>
+        public const string PRODUCTS_ORDERED_BY_SPECIALCATEGORYID_KEY = "Nop.pres.products.orderedBySpecialCategoryId-{0}";
 
         /// <summary>
         /// Key for ProductSpecificationModel caching
@@ -409,13 +427,17 @@ namespace Nop.Web.Infrastructure.Cache
         public const string HOMEPAGE_BESTSELLERS_IDS_PATTERN_KEY = "Nop.pres.bestsellers.homepage";
 
 
+        
+
+
         /// <summary>
-        /// Key for featured identifiers displayed on the home page
+        /// Trae los productos destacados de la izquierda
         /// </summary>
         /// <remarks>
-        /// {0} : current store ID
+        /// {0} : Categoria especial destacada Ej: Motocicletas
         /// </remarks>
-        public const string HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_PATTERN_KEY = "Nop.pres.leftFeatured.homepage";
+        public const string HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_KEY = "Nop.pres.leftFeatured.homepage";
+        public const string HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_PATTERN_KEY = "Nop.pres.leftFeatured.homepage-{0}";
 
         /// <summary>
         /// Key for "also purchased" product identifiers displayed on the product details page
@@ -852,6 +874,13 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(PRODUCTS_ALSO_PURCHASED_IDS_PATTERN_KEY);
             _cacheManager.RemoveByPattern(PRODUCTS_RELATED_IDS_PATTERN_KEY);
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
+
+            //Limpia el cache de los destacados a la izquierda solo si se actualizan
+            if (eventMessage.Entity.LeftFeatured.HasValue && eventMessage.Entity.LeftFeatured.Value)
+            {
+                _cacheManager.RemoveByPattern(HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_PATTERN_KEY);
+                _cacheManager.RemoveByPattern(HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_KEY);    
+            }
         }
         public void HandleEvent(EntityDeleted<Product> eventMessage)
         {
@@ -862,6 +891,13 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(PRODUCTS_ALSO_PURCHASED_IDS_PATTERN_KEY);
             _cacheManager.RemoveByPattern(PRODUCTS_RELATED_IDS_PATTERN_KEY);
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
+
+            //Limpia el cache de los destacados a la izquierda solo si se actualizan
+            if (eventMessage.Entity.LeftFeatured.HasValue && eventMessage.Entity.LeftFeatured.Value)
+            {
+                _cacheManager.RemoveByPattern(HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_PATTERN_KEY);
+                _cacheManager.RemoveByPattern(HOMEPAGE_FEATURED_LEFT_PRODUCTS_IDS_KEY);
+            }
         }
         
         //product tags

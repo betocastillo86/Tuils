@@ -276,12 +276,15 @@ namespace Nop.Services.Vendors
                     
                 }
 
-                //Si la imagen es nueva actualiza el vendor
-                //Si la actualiza la imagen y el fondo no ha sido movido previamente NO actualiza el vendor ya que devolverá error
-                if (!pictureExisted || (pictureExisted && vendor.BackgroundPosition != 0))
+                
+                //Si la imagen no existia actualiza
+                //Si la imagen existia pero es el Cover, debe actualizar la posición del fondo
+                if (!pictureExisted || (!isMainPicture && vendor.BackgroundPosition != 0))
                 {
-                    //Actualiza el vendor con los datos de la nueva foto
-                    vendor.BackgroundPosition = 0;
+                    //Si es el cover actualiza la posición del fondo
+                    if (!isMainPicture)
+                        vendor.BackgroundPosition = 0;
+
                     return UpdateVendor(vendor);
                 }
                 else

@@ -12,6 +12,7 @@ using Nop.Web.Extensions.Api;
 using Nop.Services.Authentication;
 using Nop.Services.Logging;
 using Nop.Services.Localization;
+using Nop.Web.Framework.Security;
 
 namespace Nop.Web.Controllers.Api
 {
@@ -50,23 +51,28 @@ namespace Nop.Web.Controllers.Api
             
         [HttpPost]
         [Route("api/auth/register")]
-        public IHttpActionResult Register(CustomerBaseModel customer)
+        public IHttpActionResult Register(CustomerBaseModel model)
         {
             //Si hay un usuario autenticado no permite la creación
             if (_workContext.CurrentCustomer.IsRegistered())
-                return Conflict();
+            {
+                ModelState.AddModelError("errorCode", Convert.ToInt32(CodeNopException.HasSessionActive).ToString());
+                ModelState.AddModelError("errorMessage", CodeNopException.HasSessionActive.GetLocalizedEnum(_localizationService, _workContext));
+                return BadRequest(ModelState); 
+            }
+                
 
             if (ModelState.IsValid)
             {
                 //Convierte a entidad e intenta realizar el registro
                 var attributes = new Dictionary<string, object>();
-                var entityCustomer = customer.ToEntity(out attributes);
-                var result = _customerRegistrationService.Register(entityCustomer, attributes, customer.VendorType);
+                var entityCustomer = model.ToEntity(out attributes);
+                var result = _customerRegistrationService.Register(entityCustomer, attributes, model.VendorType);
                 if (result.Success)
                 {
                     //Si el registro es exitoso se autentca
                     _authenticationService.SignIn(entityCustomer, true);
-                    return Ok(new { Email = customer.Email, Name = entityCustomer.GetFullName() });
+                    return Ok(new { Email = model.Email, Name = entityCustomer.GetFullName() });
                 }
                 else
                 {
@@ -81,26 +87,36 @@ namespace Nop.Web.Controllers.Api
 
 
         [HttpPost]
+        [BasicAuthentication]
         [Route("api/auth")]
-        public IHttpActionResult Login(CustomerBaseModel model)
-        {
+        //public IHttpActionResult Login(string username, string password)
+        public IHttpActionResult Login()
+        
+        {  
             //Si hay un usuario autenticado no permite la creación
             if (_workContext.CurrentCustomer.IsRegistered())
-                return Conflict();
-
-            if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.Password))
             {
-                var loginResult = _customerRegistrationService.ValidateCustomer(model.Email, model.Password);
+                ModelState.AddModelError("errorCode", Convert.ToInt32(CodeNopException.HasSessionActive).ToString());
+                ModelState.AddModelError("errorMessage", CodeNopException.HasSessionActive.GetLocalizedEnum(_localizationService, _workContext));
+                return BadRequest(ModelState);
+            }
+
+            object username = Request.GetRouteData().Values.ContainsKey("username") ? Request.GetRouteData().Values["username"] : null ;
+            object password = Request.GetRouteData().Values.ContainsKey("password") ? Request.GetRouteData().Values["password"] : null ;
+
+            if (username != null && password != null && !string.IsNullOrEmpty(username.ToString()) && !string.IsNullOrEmpty(password.ToString()))
+            {
+                var loginResult = _customerRegistrationService.ValidateCustomer(username.ToString(), password.ToString());
                 switch (loginResult)
                 {
                     case CustomerLoginResults.Successful:
                         {
-                            var customer = _customerService.GetCustomerByEmail(model.Email);
+                            var customer = _customerService.GetCustomerByEmail(username.ToString());
                             //Crea la sesion
                             _authenticationService.SignIn(customer, false);
                             _customerActivityService.InsertActivity("PublicStore.Login", _localizationService.GetResource("ActivityLog.PublicStore.Login"), customer);
 
-                            return Ok(new { Email = model.Email, Name = customer.GetFullName() });
+                            return Ok(new { Email = username, Name = customer.GetFullName() });
                         }
                     //Si hay algún error retorna un BadRequest
                     case CustomerLoginResults.CustomerNotExist:
@@ -125,7 +141,11 @@ namespace Nop.Web.Controllers.Api
         [Route("api/auth/verify")]
         public IHttpActionResult IsSessionActive()
         {
-            return Ok(new { Active = _workContext.CurrentCustomer != null && !_workContext.CurrentCustomer.IsGuest()});
+            return Ok(
+                new { 
+                    Active = _workContext.CurrentCustomer != null && !_workContext.CurrentCustomer.IsGuest(), 
+                    Name = _workContext.CurrentCustomer != null && !_workContext.CurrentCustomer.IsGuest() ? _workContext.CurrentCustomer.GetFullName() : string.Empty 
+            });
         }
     }
 }

@@ -34,7 +34,7 @@
             this.selectDefaultMenuOption();
             this.loadResponsiveMenu();
             this.hoverMenu();
-            //se registra este evento de esta manera, ya que no se encuentra en el el
+            //se registra este evento de esta manera, ya que no se encuentra en el $el
             var that = this;
             $(".main-registro .ico-register").click(function () {
                 that.register(that);

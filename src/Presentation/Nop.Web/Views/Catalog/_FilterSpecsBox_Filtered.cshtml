@@ -1,0 +1,12 @@
+﻿@model CatalogPagingFilteringModel.SpecificationFilterModel
+@using Nop.Web.Models.Catalog;
+@if (Model.Enabled)
+{
+    if (Model.AlreadyFilteredItems.Count > 0)
+    {
+        foreach (var item in Model.AlreadyFilteredItems)
+        {
+            <li>@(item.Name): @item.SpecificationAttributeOptionName <a href="@Model.RemoveFilterUrl"><span class="icon-close"></span></a></li>
+        }
+    }
+}

@@ -1,4 +1,5 @@
-﻿@model Nop.Web.Models.ControlPanel.QuestionsModel
+﻿@model QuestionsModel
+@using Nop.Web.Models.Catalog
 @{
     Html.AddTitleParts(T("PageTitle.Questions").Text);
     Layout = "~/Views/Shared/_PanelLayoutTwo.cshtml";
@@ -16,7 +17,7 @@
         <h3>@question.Product.Name</h3>
         <div class="conte_pgt">
             <p>@question.QuestionText</p>
-            <div class="date_pgt">@question.CreatedOnUtc.ToString()</div>
+            <div class="date_pgt">@question.CreatedOnStr</div>
             <textarea maxlength="400" name="AnswerText"></textarea>
             <a href="javascript:void(0)">@T("Questions.ButtonAnswer")</a>
             <br />

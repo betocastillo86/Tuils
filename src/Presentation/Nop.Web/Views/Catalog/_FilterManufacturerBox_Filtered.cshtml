@@ -1,0 +1,9 @@
+﻿@model CatalogPagingFilteringModel.ManufacturerFilterModel
+@using Nop.Web.Models.Catalog;
+@if (Model.Enabled)
+{
+    if (Model.FilteredItem != null)
+    {
+        <li>@(Model.FilteredItem.Name) <a href="@Model.RemoveFilterUrl"><span class="icon-close"></span></a></li>
+    }
+}

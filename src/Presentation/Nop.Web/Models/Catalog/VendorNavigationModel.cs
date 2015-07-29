@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Nop.Web.Framework.Mvc;
+using Nop.Core.Domain.Vendors;
 
 namespace Nop.Web.Models.Catalog
 {
@@ -24,5 +25,9 @@ namespace Nop.Web.Models.Catalog
         public bool VendorShippingEnabled { get; set; }
 
         public bool CreditCardEnabled { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public VendorType VendorType { get; set; }
     }
 }

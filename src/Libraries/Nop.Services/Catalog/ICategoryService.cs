@@ -154,5 +154,12 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <returns></returns>
         IList<Category> GetAllServices();
+
+        /// <summary>
+        /// Retorna la categoria de primer nivel padre de una categoria
+        /// </summary>
+        /// <param name="categoryId">Categoria que se desea buscar el padre</param>
+        /// <returns></returns>
+        Category GetRootCategoryByCategoryId(int categoryId);
     }
 }

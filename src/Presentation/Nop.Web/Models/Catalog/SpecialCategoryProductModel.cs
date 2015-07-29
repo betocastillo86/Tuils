@@ -10,6 +10,8 @@ namespace Nop.Web.Models.Catalog
     {
         public string CategoryName { get; set; }
 
+        public string CategorySeName { get; set; }
+
         public string ProductName { get; set; }
 
         public int ProductId { get; set; }

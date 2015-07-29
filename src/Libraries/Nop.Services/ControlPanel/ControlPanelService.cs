@@ -107,7 +107,7 @@ namespace Nop.Services.ControlPanel
             {
                 modules.Add(new ControlPanelModule()
                 {
-                    Name = "Vendor",
+                    Name = _workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.Market ? "Vendor" : "RepairShop",
                     Controller = "Catalog",
                     Action = "Vendor",
                     IconMini = "icon-tienda",

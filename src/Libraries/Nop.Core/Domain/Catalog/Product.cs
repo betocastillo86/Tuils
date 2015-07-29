@@ -748,5 +748,12 @@ namespace Nop.Core.Domain.Catalog
         [System.ComponentModel.DefaultValue(0)]
         public int UnansweredQuestions { get; set; }
 
+        /// <summary>
+        /// Usado para destacar los productos tienen categorias especiales de ordenamiento
+        /// NO hay valores almacenados en este campo
+        /// Ej: ordenar primero los que sean de la moto del usuario
+        /// </summary>
+        public bool FeaturedBySpecialCategory { get; set; }
+
     }
 }

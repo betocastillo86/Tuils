@@ -14,7 +14,23 @@ namespace Nop.Core
         /// </summary>
         public NopException()
         {
+
         }
+
+        public NopException(CodeNopException code)
+        {
+            this.Code = code;
+        }
+
+        public NopException(CodeNopException code, string message) : base(message)
+        {
+            this.Code = code;
+        }
+
+        /// <summary>
+        /// Codigo relacionado con la excepcion que se desea mostrar
+        /// </summary>
+        public CodeNopException Code { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the Exception class with a specified error message.
@@ -55,5 +71,28 @@ namespace Nop.Core
             : base(message, innerException)
         {
         }
+    }
+
+    public enum CodeNopException
+    { 
+        None = 0,
+
+        #region Publish
+        /// <summary>
+        /// Cuando un usuario intenta publicar un producto que no le está permitido hacerlo
+        /// Ej: Un usuario simple intentar vender un servicio
+        /// </summary>
+        UserTypeNotAllowedPublishProductType = 100,
+        /// <summary>
+        /// Categoría en la que se está intentando crear un prodcuto no existe
+        /// </summary>
+        CategoryDoesntExist = 101,
+        #endregion
+
+        #region User
+        HasSessionActive = 201
+        #endregion
+
+
     }
 }

@@ -9,8 +9,14 @@
         @if (Model.AllowEdit)
         {
             <div class="cover-editor">
-                <span class="icon-foto"></span>
+                <span class="icon-foto" title="@T("vendor.backgroudPicture.alt")"></span>
                 <i>@T("vendor.backgroudPicture")</i>
+                <ul class="menu-cover" style="display:none">
+                    <li id="btnChangeCover"  title="@T("vendor.backgroudPicture.alt")">@T("vendor.backgroudPicture")</li>
+                    <li id="btnMoveCover" title="@T("vendor.movecover.alt")">@T("vendor.movecover")</li>
+                    <li id="btnSaveCoverPosition" title="@T("vendor.save")" style="display:none">@T("vendor.save")</li>
+                    @*<li>Eliminar</li>*@
+                </ul>
             </div>
         }
         <div class="grad_cv"></div>
@@ -40,7 +46,7 @@
                 <h2 tuils-for="show">@Model.Name</h2>
                 @if (Model.AllowEdit)
                 {
-                    @Html.TextBoxFor(m => m.Name, new { style = "display:none", tuils_for = "edit" })
+                    @Html.TextBoxFor(m => m.Name, new { style = "display:none", tuils_for = "edit", maxLength = "80" })
                 }
                 <div class="product-review-box">
                     <div class="rating no-margin">
@@ -54,7 +60,7 @@
                 <p tuils-for="show">@Model.Description</p>
                 @if (Model.AllowEdit)
                 {
-                    @Html.TextAreaFor(m => m.Description, new { style = "display:none", tuils_for = "edit" })
+                    @Html.TextAreaFor(m => m.Description, new { style = "display:none", tuils_for = "edit", maxLength = "400" })
                 }
                 <div class="ctl-tarjetas" tuils-for="show">
                     <li id="liShipping" @(Model.EnableShipping ? string.Empty : "style=display:none") title="@T("vendor.enableShipping.description")">@T("vendor.enableShipping") <span class="icon-envio"></span></li>
@@ -78,13 +84,11 @@
                 <div class="btpfl">
                     @if (Model.AllowEdit)
                     {
-                        <div id="btnEditVendorHeader" class="button-1 btn_perfil" tuils-textedit="@T("vendor.edit")" tuils-textsave="@T("vendor.save")">@T("vendor.edit")</div>
-                        <div id="btnMoveCover" class="button-1 btn_perfil" style="display:none">@T("vendor.movecover")</div>
-                        <div id="btnSaveCoverPosition" class="button-1 btn_perfil" style="display:none">@T("vendor.save")</div>
+                        <div id="btnEditVendorHeader" class="button-1 btn_perfil" title="@T("vendor.edit.alt")" tuils-textedit="@T("vendor.edit")" tuils-textsave="@T("vendor.save")">@T("vendor.edit")</div>
                     }
                     else
                     {
-                        <a class="button-1 btn_perfil">@T("vendor.contactus")</a>
+                        <a href="#infoContacto" class="button-1 btn_perfil">@T("vendor.contactus")</a>
                         @*<a class="button-1 btn_perfil">@T("vendor.rateUs")</a>*@
                     }
                     <br />

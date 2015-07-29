@@ -2,12 +2,12 @@
   'tuils/views/panel/myAccount','tuils/views/panel/vendorServices','tuils/views/panel/questionsView','tuils/views/vendor/vendorDetailView'			
 ,'tuils/views/product/productDetailView','tuils/views/common/newsletterView','tuils/views/common/searcherView','tuils/views/common/leftFeaturedProductsView'	
 , 'tuils/views/common/header', 'tuils/views/panel/offices', 'tuils/views/panel/menu', 'tuils/views/panel/myProductsView', 'tuils/views/home/homeView',
-
+'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView',
 'ajaxCart', 'nopCommon'],
     function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView,
         MyAccountView,VendorServicesView ,QuestionsView ,VendorDetailView,
-        ProductDetailView, NewsletterView, SearchView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
-        HomeView) {
+        ProductDetailView, NewsletterView, SearcherView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
+        HomeView, SearchView, CategoryView, ManufacturerView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -34,10 +34,12 @@
                 "mi-cuenta/mis-compras(/:query)": "myOrders",
                 "mi-cuenta/mis-ventas(/:query)": "myOrders",
                 "mi-cuenta/mis-productos(/:query)": "myProducts",
-                "ControlPanel/Questions(/:query)": "questions",
+                "mi-cuenta/preguntas-pendientes(/:query)": "questions",
+                "mis-deseos(/:customerGuid)": 'wishlist',
+                "comparar": 'compare',
                 "customer/changepassword" : "changePassword",
                 "v/:query": "vendor",
-                "c/:categoryName/:attribute(/:query)": "category",
+                "c/:categoryName(/:attribute)(/:query)": "category",
                 "m/:query":"manufacturer",
                 "p/:query": "product",
                 'entrar' : 'login',
@@ -90,6 +92,12 @@
             {
                 this.loadSubViewsPanel();
             },
+            wishlist: function () {
+                this.loadTwoColumns();
+            },
+            compare: function () {
+                this.loadTwoColumns();
+            },
             myProducts : function()
             {
                 var that = this;
@@ -108,10 +116,7 @@
             },
             vendor : function(query)
             {
-                $(".master-wrapper-main").first().removeClass("master-wrapper-main");
-                $(".master-wrapper-page").first().removeClass("master-wrapper-page").removeClass("container").removeClass("hd");
-                var that = this;
-                that.currentView = new VendorDetailView({ el: that.defaultEl });
+                this.currentView = new VendorDetailView({ el: this.defaultEl });
                 this.loadSubViews();
             },
             sitemap: function () {
@@ -119,12 +124,15 @@
             },
             category : function(categoryName, specification, query)
             {
+                this.currentView = new CategoryView({ el: this.defaultEl });
                 this.loadTwoColumns();
             },
-            manufacturer : function(){
+            manufacturer: function () {
+                this.currentView = new ManufacturerView({ el: this.defaultEl });
                 this.loadTwoColumns();
             },
             search: function () {
+                this.currentView = new SearchView({ el: this.defaultEl });
                 this.loadTwoColumns();
             },
             passwordRecovery: function () {
@@ -162,7 +170,7 @@
             },
             loadSearcher: function () {
                 var that = this;
-                that.viewSearcher = new SearchView({ el: 'header' });
+                that.viewSearcher = new SearcherView({ el: 'header' });
             },
             loadLeftFeaturedProducts: function () {
                 var that = this;
@@ -180,6 +188,20 @@
                     that.currentView.on('unauthorized', that.viewHeader.showLogin, that.viewHeader);
                     //atacha a la vista actual al evento cuando el usuario se autenticó
                     that.viewHeader.on('user-authenticated', that.currentView.userAuthenticated, that.currentView);
+
+                    //Recorre todas las vistas anidadas que requieren autenticación y les agrega los eventos de autorizacion
+                    //Esto se hace para controlar estos eventos en las vistas que no son de primer nivel
+                    if (that.currentView.requiredViewsWithAuthentication && that.currentView.requiredViewsWithAuthentication.length > 0)
+                    {
+                        for (var i = 0; i < that.currentView.requiredViewsWithAuthentication.length; i++) {
+                            var view = that.currentView.requiredViewsWithAuthentication[i];
+                            //se atacha al evento de solicitud de ingreso
+                            view.on('unauthorized', that.viewHeader.showLogin, that.viewHeader);
+                            //atacha a la vista actual al evento cuando el usuario se autenticó
+                            that.viewHeader.on('user-authenticated', view.userAuthenticated, view);
+                        }
+                    }
+
                 }
 
             },

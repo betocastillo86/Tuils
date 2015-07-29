@@ -83,6 +83,17 @@ namespace Nop.Services.Customers
         }
 
 
+        /// <summary>
+        /// Retorna la moto que tiene configurada
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
+        public static int? GetBikeReference(this Customer customer)
+        {
+            return customer.GetAttribute<int?>(SystemCustomerAttributeNames.BikeReferenceId);
+        }
+
+
         #region Gift cards
 
         /// <summary>

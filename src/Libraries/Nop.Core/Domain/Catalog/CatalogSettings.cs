@@ -163,6 +163,17 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public int NumberOfBestsellersOnHomepage { get; set; }
 
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show bestsellers on home page
+        /// </summary>
+        public bool ShowMyBikeProductsOnHomepage { get; set; }
+
+        /// <summary>
+        /// Gets or sets a number of bestsellers on home page
+        /// </summary>
+        public int NumberOfProductsMyBikeOnHomepage { get; set; }
+
         /// <summary>
         /// Gets or sets a number of products per page on the search products page
         /// </summary>
@@ -328,5 +339,36 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public int NumberManufacturersOnHome { get; set; }
 
+        /// <summary>
+        /// Cargar busquedas similares
+        /// </summary>
+        public bool ShowSimilarSearches { get; set; }
+
+
+        /// <summary>
+        /// Número de sugerencias que se le mostrará al usuario de busquedas similares
+        /// </summary>
+        public int NumSuggestionSimilarSearches { get; set; }
+
+        /// <summary>
+        /// Número de sugerencias que se le mostrará al usuario de busquedas similares en el HOME
+        /// </summary>
+        public int NumSuggestionSimilarSearchesHome { get; set; }
+
+        /// <summary>
+        /// Numero limite de categorias especiales al crear un producto
+        /// </summary>
+        public int LimitOfSpecialCategories { get; set; }
+
+        /// <summary>
+        /// Dias que dura publicado un producto
+        /// </summary>
+        public int LimitDaysOfProductPublished { get; set; }
+
+
+        /// <summary>
+        /// Opción por defecto seleccinada por tipo de producto
+        /// </summary>
+        public int DefaultSpecificationAttributeTopMenu { get; set; }
     }
 }

@@ -95,6 +95,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\MaxMind.GeoIP2.2.1.0.0\lib\net40\MaxMind.GeoIP2.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.WebApi.MessageHandlers.Compression, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.MessageHandlers.Compression.1.3.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Microsoft.AspNet.WebApi.MessageHandlers.Compression.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -119,6 +123,7 @@
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Extensions, Version=2.2.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -254,7 +259,6 @@
     <Compile Include="Infrastructure\Installation\InstallationLanguage.cs" />
     <Compile Include="Infrastructure\Installation\InstallationLocalizationService.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
-    <Compile Include="Infrastructure\JavascriptConfiguration.cs" />
     <Compile Include="Infrastructure\RouteApiProvider.cs" />
     <Compile Include="Infrastructure\RouteProvider.cs" />
     <Compile Include="Models\Api\AddressModel.cs" />
@@ -296,7 +300,10 @@
     <Compile Include="Models\Catalog\IComparableModel.cs" />
     <Compile Include="Models\Catalog\IWishableModel.cs" />
     <Compile Include="Models\Catalog\ManufacturerHomePageModel.cs" />
+    <Compile Include="Models\Catalog\QuestionProductModel.cs" />
+    <Compile Include="Models\Catalog\SimilarSearchesModel.cs" />
     <Compile Include="Models\Catalog\SpecialCategoryProductModel.cs" />
+    <Compile Include="Models\Catalog\SpecialCategoryVendorModel.cs" />
     <Compile Include="Models\Catalog\VendorModel.cs" />
     <Compile Include="Models\Catalog\VendorNavigationModel.cs" />
     <Compile Include="Models\Catalog\ProductOverviewModel.cs" />
@@ -397,6 +404,7 @@
     <Compile Include="Models\Profile\PostsModel.cs" />
     <Compile Include="Models\Profile\ProfilePostsModel.cs" />
     <Compile Include="Models\Sales\PublishProductModel.cs" />
+    <Compile Include="Models\Sales\SelectPublishCategoryModel.cs" />
     <Compile Include="Models\ShoppingCart\MiniShoppingCartModel.cs" />
     <Compile Include="Models\ShoppingCart\WishlistEmailAFriendModel.cs" />
     <Compile Include="Models\ShoppingCart\WishlistModel.cs" />
@@ -671,6 +679,7 @@
     <Content Include="Content\kendo\2014.1.318\Uniform\sprite.png" />
     <Content Include="Content\kendo\2014.1.318\Uniform\sprite_2x.png" />
     <Content Include="Content\magnific-popup\magnific-popup.css" />
+    <Content Include="Content\dlmenu\dlmenu.css" />
     <Content Include="Content\Roxy_Fileman\conf.json" />
     <Content Include="Content\Roxy_Fileman\css\images\animated-overlay.gif" />
     <Content Include="Content\Roxy_Fileman\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1011,6 +1020,7 @@
     <Content Include="Scripts\async.js" />
     <Content Include="Scripts\backbone-validation.js" />
     <Content Include="Scripts\backbone-validation.min.js" />
+    <Content Include="Scripts\backbone.basicauth.js" />
     <Content Include="Scripts\backbone.js" />
     <Content Include="Scripts\backbone-min.js" />
     <Content Include="Scripts\backbone.stickit.js" />
@@ -1027,6 +1037,7 @@
     <Content Include="Scripts\handlebars.runtime.min.js" />
     <Content Include="Scripts\iview.js" />
     <Content Include="Scripts\iview.min.js" />
+    <Content Include="Scripts\jquery.dlmenu.js" />
     <Content Include="Scripts\jquery.easytabs.js" />
     <Content Include="Scripts\jquery.jqzoom-core-pack.js" />
     <Content Include="Scripts\mmenu\css\addons\jquery.mmenu.autoheight.css" />
@@ -1091,6 +1102,7 @@
     <Content Include="Scripts\tuils\collections\specificationAttribute.js" />
     <Content Include="Scripts\tuils\extensions\numbers.js" />
     <Content Include="Scripts\tuils\models\address.js" />
+    <Content Include="Scripts\tuils\models\question.js" />
     <Content Include="Scripts\tuils\models\review.js" />
     <Content Include="Scripts\tuils\models\newsletter.js" />
     <Content Include="Scripts\tuils\models\order.js" />
@@ -1124,8 +1136,13 @@
     <Content Include="Scripts\tuils\views\panel\questionsView.js" />
     <Content Include="Scripts\tuils\views\panel\responseQuestionView.js" />
     <Content Include="Scripts\tuils\views\panel\vendorServices.js" />
+    <Content Include="Scripts\tuils\views\product\manufacturerView.js" />
+    <Content Include="Scripts\tuils\views\product\filterSearchView.js" />
     <Content Include="Scripts\tuils\views\product\productDetailView.js" />
+    <Content Include="Scripts\tuils\views\product\questionView.js" />
     <Content Include="Scripts\tuils\views\product\reviewView.js" />
+    <Content Include="Scripts\tuils\views\product\categoryView.js" />
+    <Content Include="Scripts\tuils\views\product\searchView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
     <Content Include="Scripts\tuils\views\utilities\imagesSelectorView.js" />
@@ -1202,6 +1219,7 @@
     <Content Include="App_Readme\Handlebarsjs_LICENSE" />
     <Content Include="Scripts\handelbars.helpers.js" />
     <None Include="Properties\PublishProfiles\SmarterAspNet-Release.pubxml" />
+    <None Include="Properties\PublishProfiles\Smarter_Co-Release.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />
@@ -2519,6 +2537,16 @@
     <Content Include="Views\Product\_ProductPrice.cshtml" />
     <Content Include="Views\Product\_ProductShipping.cshtml" />
     <Content Include="Views\Product\_ProductSpecialCategories.cshtml" />
+    <Content Include="Themes\Healthy\Views\Product\Questions.cshtml" />
+    <Content Include="Themes\Healthy\Views\Catalog\SimilarSearches.cshtml" />
+    <Content Include="Views\Product\ProductsForMyBike.cshtml" />
+    <Content Include="Views\Catalog\_FilterCategoryBox_Filtered.cshtml" />
+    <Content Include="Views\Catalog\_FilterStateProvinceBox_Filtered.cshtml" />
+    <Content Include="Views\Catalog\_FilterSpecsBox_Filtered.cshtml" />
+    <Content Include="Views\Catalog\_FilterManufacturerBox_Filtered.cshtml" />
+    <Content Include="Views\Catalog\_FilterPriceBox_Filtered.cshtml" />
+    <Content Include="Views\Catalog\_FilterBikeReferenceBox_Filtered.cshtml" />
+    <Content Include="Themes\Healthy\Views\Catalog\_FilterSearches.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

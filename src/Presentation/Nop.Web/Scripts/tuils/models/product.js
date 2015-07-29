@@ -26,10 +26,13 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                 },
                 Name: {
                     required: true,
-                    maxLength : 50
+                    maxLength: 50,
+                    minLength: 10
                 },
                 FullDescription: {
-                    required: true
+                    required: true,
+                    maxLength: 500,
+                    minLength: 30
                 },
                 IsShipEnabled: {
                     required: false
@@ -55,6 +58,9 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                         return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.bike;
                     },
                     pattern: 'number'
+                },
+                PhoneNumber: {
+                    required : false
                 },
                 Condition: {
                     required: function (val, attr, computed) {
@@ -128,7 +134,8 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                 DetailShipping: 'Cobertura',
                 IncludeSupplies : 'Incluye los insumos',
                 SuppliesValue: 'Valor de Insumos',
-                Supplies: 'Insumos'
+                Supplies: 'Insumos',
+                PhoneNumber : 'Número de contacto'
 
             },
             publish: function () {

@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'backbone', 'categoryModel', 'util', 'baseView'],
-    function ($, _, Backbone, CategoryModel, TuilsUtilities, BaseView) {
+﻿define(['jquery', 'underscore', 'backbone', 'categoryModel', 'util', 'baseView', 'configuration'],
+    function ($, _, Backbone, CategoryModel, TuilsUtilities, BaseView, TuilsConfiguration) {
     var MyAccountView = BaseView.extend({
 
         events : {
@@ -42,7 +42,7 @@
             TuilsUtilities.loadDropDown(this.ddlBikeReference, category.ChildrenCategories);
         },
         loadDateOfBirth: function () {
-            this.$("#DateOfBirth").datepicker({ maxDate: '-15y', changeYear : true, yearRange: 'c-50:c' });
+            this.$("#DateOfBirth").datepicker({ maxDate: '-15y', changeYear: true, yearRange: 'c-50:c', dateFormat: TuilsConfiguration.jquery.dateFormat });
         },
         render: function () {
             this.basicValidations();

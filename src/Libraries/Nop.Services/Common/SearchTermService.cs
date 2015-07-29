@@ -84,33 +84,46 @@ namespace Nop.Services.Common
             return searchTerm;
         }
 
+        ///<param name="getMostCommon">Trae las busquedas mas populares sin importar que keyword venga vacio</param>
         /// <summary>
         /// Retorna un listado de busquedas más comunes dependiendo de la cadena enviada
         /// </summary>
         /// <returns></returns>
-        public virtual IList<SearchTerm> GetTemsByKeyword(string keyword, int top)
+        public virtual IList<SearchTerm> GetTemsByKeyword(string keyword, int top, bool getMostCommon = false)
         {
             //Valida que existan llaves para buscar
-            if(string.IsNullOrWhiteSpace(keyword))
+
+            if(!getMostCommon && string.IsNullOrWhiteSpace(keyword))
                 return new List<SearchTerm>();
 
-            //reemplaza comillas para evitar errores
-            keyword = keyword.Replace("'", " ").Replace("\"", " ");
-
-            //recoorre las llaves y las arega para la consulta
-            var keywords = new System.Text.StringBuilder();
-            foreach (var item in keyword.Split(new char[]{' '}))
+            //Si debe traer las mas comunes busquedas y no trae filtro retorna de esta manera
+            if (getMostCommon && string.IsNullOrEmpty(keyword))
             {
-                if(keywords.Length > 0)
-                    keywords.Append(" AND ");
+                return _searchTermRepository.Table
+                    .OrderByDescending(s => s.Count)
+                    .Take(top)
+                    .ToList();
+            }
+            else
+            {
+                //reemplaza comillas para evitar errores
+                keyword = keyword.Replace("'", " ").Replace("\"", " ");
 
-                keywords.AppendFormat("\"{0}*\"", item);
+                //recoorre las llaves y las arega para la consulta
+                var keywords = new System.Text.StringBuilder();
+                foreach (var item in keyword.Split(new char[] { ' ' }))
+                {
+                    if (keywords.Length > 0)
+                        keywords.Append(" AND ");
+
+                    keywords.AppendFormat("\"{0}*\"", item);
+                }
+
+                var query = string.Format("select top {0} Id, Keyword, StoreId, Count from SearchTerm WHERE CONTAINS(Keyword, '{1}') order by count desc", top, keywords);
+
+                return _dbContext.ExecuteStoredProcedureList<SearchTerm>(query, new object[0]);
             }
 
-            var query = string.Format("select top {0} Id, Keyword, StoreId, Count from SearchTerm WHERE CONTAINS(Keyword, '{1}') order by count desc", top, keywords); 
-
-            var list = _dbContext.ExecuteStoredProcedureList<SearchTerm>(query, new object[0]);
-            return list;
         }
 
         /// <summary>

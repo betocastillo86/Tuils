@@ -206,6 +206,9 @@ namespace Nop.Admin.Models.Settings
             [NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.reCaptchaPrivateKey")]
             [AllowHtml]
             public string ReCaptchaPrivateKey { get; set; }
+
+            [NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.CaptchaShowOnProductQuestionsPage")]
+            public bool CaptchaShowOnProductQuestionsPage { get; set; }
         }
 
         public partial class PdfSettingsModel : BaseNopModel

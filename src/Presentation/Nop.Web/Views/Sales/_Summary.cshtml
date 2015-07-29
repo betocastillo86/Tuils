@@ -1,4 +1,4 @@
-﻿
+﻿@model Nop.Web.Models.Sales.PublishProductModel
 <script id="templateSummary" type="text/template">
 
     <div class="content-public">
@@ -8,7 +8,7 @@
             <p><b>{{name}}:</b>  {{value}}</p>
             {{/each}}
         </div>
-        <div class="resumen-product">
+        <div id="divImageSummary" class="resumen-product">
             <div class="title">Fotos</div>
             <ul class="picture-resume">
                 {{#each Images}}
@@ -22,6 +22,9 @@
 
         </div>
         <br />
+        <div>
+            @Html.TextBoxRequiredFor(m => m.PhoneNumber, labelText: "PublishProduct.PhoneNumber")
+        </div>
     </div>
     <hr />
     <div id="buttonsBar">

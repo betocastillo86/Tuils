@@ -60,7 +60,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   box-sizing: border-box;
-  padding: 0 20px; }
+  }
   .mm-menu > .mm-panel.mm-hasnavbar {
     padding-top: 40px; }
   .mm-menu > .mm-panel:before, .mm-menu > .mm-panel:after {
