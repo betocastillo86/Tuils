@@ -163,6 +163,10 @@
     <Compile Include="Migrations\201507231718273_AddColumn_FeaturedBySpecialCategory_Table_Product.Designer.cs">
       <DependentUpon>201507231718273_AddColumn_FeaturedBySpecialCategory_Table_Product.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507292106115_AddColumn_PhoneNumber_Table_Vendor.cs" />
+    <Compile Include="Migrations\201507292106115_AddColumn_PhoneNumber_Table_Vendor.Designer.cs">
+      <DependentUpon>201507292106115_AddColumn_PhoneNumber_Table_Vendor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -356,6 +360,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507231718273_AddColumn_FeaturedBySpecialCategory_Table_Product.resx">
       <DependentUpon>201507231718273_AddColumn_FeaturedBySpecialCategory_Table_Product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507292106115_AddColumn_PhoneNumber_Table_Vendor.resx">
+      <DependentUpon>201507292106115_AddColumn_PhoneNumber_Table_Vendor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -59,6 +59,9 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                     },
                     pattern: 'number'
                 },
+                PhoneNumber: {
+                    required : false
+                },
                 Condition: {
                     required: function (val, attr, computed) {
                         return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.bike;
@@ -131,7 +134,8 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                 DetailShipping: 'Cobertura',
                 IncludeSupplies : 'Incluye los insumos',
                 SuppliesValue: 'Valor de Insumos',
-                Supplies: 'Insumos'
+                Supplies: 'Insumos',
+                PhoneNumber : 'Número de contacto'
 
             },
             publish: function () {

@@ -42,7 +42,7 @@
         <br />
     </div>
     <div class="descript_crea">
-        @Html.TextAreaRequired("FullDescription", labelResource: "PublishProduct.Product.Html")
+        @Html.TextAreaRequired("FullDescription", labelResource: "PublishProduct.Product.Html", controlHtmlAttributes: new { maxLength = 500 })
     </div>
 </form>
 <input type="button" class="btn_continue button-1 btnNext" value="@T("PublishProduct.NextStep")">

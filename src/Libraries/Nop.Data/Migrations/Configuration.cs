@@ -705,6 +705,9 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("PublishProduct.HasSpecialBikes", "¿Te gustaría destacar tu producto para algunas referencias de moto?");
                 newLocaleStringResources.Add("PublishProduct.HasSpecialBikes.Alt", "Puedes agregar referencias de motocicletas en las cuales tu producto funcionará mejor. Esto permitira a los moteros con estas motocicletas encontrarte más fácil");
                 newLocaleStringResources.Add("PublishProduct.Product.TitleForBrandBike", "Referencias de motos");
+                newLocaleStringResources.Add("PublishProduct.PhoneNumber", "Teléfono de contacto");
+                newLocaleStringResources.Add("Products.Vendor.PhoneNumber", "Teléfono de contacto");
+                
                 
                 
                 

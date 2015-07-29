@@ -56,6 +56,11 @@ namespace Nop.Web.Models.Sales
         public string SubSectionTitle { get; set; }
 
         public int LimitDaysOfProductPublished { get; set; }
+
+        /// <summary>
+        /// Número telefónico del vendedor
+        /// </summary>
+        public string PhoneNumber { get; set; }
     }
 
     

@@ -115,6 +115,11 @@ namespace Nop.Core.Domain.Vendors
         public int NumRatings { get; set; }
 
         /// <summary>
+        /// Numero de contacto principal del vendedor
+        /// </summary>
+        public string PhoneNumber { get; set; }
+
+        /// <summary>
         /// Direcciones del vendedor
         /// </summary>
         public virtual ICollection<Address> Addresses
