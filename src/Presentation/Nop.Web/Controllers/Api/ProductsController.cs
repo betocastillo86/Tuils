@@ -12,6 +12,8 @@ using Nop.Services.Vendors;
 using Nop.Web.Framework.Mvc.Api;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Common;
+using Nop.Services.Common;
+using Nop.Core.Domain.Customers;
 
 
 namespace Nop.Web.Controllers.Api
@@ -26,6 +28,7 @@ namespace Nop.Web.Controllers.Api
         private readonly ICategoryService _categoryService;
         private readonly CatalogSettings _catalogSettings;
         private readonly TuilsSettings _tuilsSettings;
+        private readonly IGenericAttributeService _genericAttributeService;
         #endregion
 
         #region Ctor
@@ -34,7 +37,8 @@ namespace Nop.Web.Controllers.Api
             IVendorService vendorService,
             ICategoryService categoryService,
             CatalogSettings catalogSettings,
-            TuilsSettings tuilsSettings)
+            TuilsSettings tuilsSettings,
+            IGenericAttributeService genericAttributeService)
         {
             this._productService = productService;
             this._workContext = workContext;
@@ -42,6 +46,7 @@ namespace Nop.Web.Controllers.Api
             this._categoryService = categoryService;
             this._catalogSettings = catalogSettings;
             this._tuilsSettings = tuilsSettings;
+            this._genericAttributeService = genericAttributeService;
         }
         #endregion
         [Route("api/products")]
@@ -69,7 +74,11 @@ namespace Nop.Web.Controllers.Api
                 {
                     product.VendorId = _workContext.CurrentVendor.Id;
                 }
-
+                
+                //Guarda el número telefónico de contacto
+                _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, SystemCustomerAttributeNames.BikeCarriagePlate, model.PhoneNumber);
+                _workContext.CurrentVendor.PhoneNumber = model.PhoneNumber;
+                _vendorService.UpdateVendor(_workContext.CurrentVendor);
 
                 try
                 {

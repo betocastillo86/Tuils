@@ -32,7 +32,8 @@ namespace Nop.Services.Media
         /// <returns>Picture URL</returns>
         string GetDefaultPictureUrl(int targetSize = 0, 
             PictureType defaultPictureType = PictureType.Entity,
-            string storeLocation = null);
+            string storeLocation = null,
+            bool crop = false);
 
         /// <summary>
         /// Get a picture URL
@@ -62,7 +63,8 @@ namespace Nop.Services.Media
             int targetSize = 0,
             bool showDefaultPicture = true, 
             string storeLocation = null, 
-            PictureType defaultPictureType = PictureType.Entity);
+            PictureType defaultPictureType = PictureType.Entity,
+            bool crop = false);
 
         /// <summary>
         /// Get a picture local path

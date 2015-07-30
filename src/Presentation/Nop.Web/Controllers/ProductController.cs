@@ -274,7 +274,9 @@ namespace Nop.Web.Controllers
                         Name = vendor.GetLocalized(x => x.Name),
                         SeName = vendor.GetSeName(),
                         VendorShippingEnabled = vendor.EnableShipping ?? false,
-                        CreditCardEnabled = vendor.EnableCreditCardPayment ?? false
+                        CreditCardEnabled = vendor.EnableCreditCardPayment ?? false,
+                        PhoneNumber = vendor.PhoneNumber,
+                        VendorType = vendor.VendorType
                     };
                 }
                 

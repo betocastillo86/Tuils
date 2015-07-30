@@ -338,7 +338,8 @@ namespace Nop.Services.Media
         /// <returns>Picture URL</returns>
         public virtual string GetDefaultPictureUrl(int targetSize = 0, 
             PictureType defaultPictureType = PictureType.Entity,
-            string storeLocation = null)
+            string storeLocation = null,
+            bool crop = false)
         {
             string defaultImageFileName;
             switch (defaultPictureType)
@@ -384,13 +385,28 @@ namespace Nop.Services.Media
                         var newSize = CalculateDimensions(b.Size, targetSize);
 
                         var destStream = new MemoryStream();
-                        ImageBuilder.Current.Build(b, destStream, new ResizeSettings
-                        {
-                            Width = newSize.Width,
-                            Height = newSize.Height,
-                            Scale = ScaleMode.Both,
-                            Quality = _mediaSettings.DefaultImageQuality
-                        });
+
+                        //Si debe cortar la imagen carga el ancho y alto fijo
+                        ResizeSettings settings;
+                        if(crop)
+                            settings = new ResizeSettings
+                            {
+                                Width = newSize.Width,
+                                Height = newSize.Width,
+                                Mode = FitMode.Crop
+                            };
+                        else
+                            settings = new ResizeSettings
+                            {
+                                Width = newSize.Width,
+                                Height = newSize.Height,
+                                Scale = ScaleMode.Both,
+                                Quality = _mediaSettings.DefaultImageQuality
+                            };
+
+
+
+                        ImageBuilder.Current.Build(b, destStream, settings);
                         var destBinary = destStream.ToArray();
                         File.WriteAllBytes(thumbFilePath, destBinary);
                     }
@@ -432,7 +448,8 @@ namespace Nop.Services.Media
             int targetSize = 0,
             bool showDefaultPicture = true, 
             string storeLocation = null, 
-            PictureType defaultPictureType = PictureType.Entity)
+            PictureType defaultPictureType = PictureType.Entity,
+            bool crop = false)
         {
             string url = string.Empty;
             byte[] pictureBinary = null;
@@ -504,13 +521,27 @@ namespace Nop.Services.Media
                             var newSize = CalculateDimensions(b.Size, targetSize);
 
                             var destStream = new MemoryStream();
-                            ImageBuilder.Current.Build(b, destStream, new ResizeSettings
-                            {
-                                Width = newSize.Width,
-                                Height = newSize.Height,
-                                Scale = ScaleMode.Both,
-                                Quality = _mediaSettings.DefaultImageQuality
-                            });
+                            
+                            //Si debe cortar la imagen carga el ancho y alto fijo
+                            ResizeSettings settings;
+                            if (crop)
+                                settings = new ResizeSettings
+                                {
+                                    Width = newSize.Width,
+                                    Height = newSize.Width,
+                                    Mode = FitMode.Crop
+                                };
+                            else
+                                settings = new ResizeSettings
+                                {
+                                    Width = newSize.Width,
+                                    Height = newSize.Height,
+                                    Scale = ScaleMode.Both,
+                                    Quality = _mediaSettings.DefaultImageQuality
+                                };
+
+
+                            ImageBuilder.Current.Build(b, destStream, settings);
                             var destBinary = destStream.ToArray();
                             File.WriteAllBytes(thumbFilePath, destBinary);
 

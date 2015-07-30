@@ -58,6 +58,14 @@
                         <div class="review-text">
                             @Html.Raw(Nop.Core.Html.HtmlHelper.FormatText(question.QuestionText, false, true, false, false, false, false))
                         </div>
+
+                        @if (!string.IsNullOrEmpty(question.AnswerText))
+                        { 
+                            <div class="review-text" style="color:red">
+                                RTA: @Html.Raw(Nop.Core.Html.HtmlHelper.FormatText(question.AnswerText, false, true, false, false, false, false))
+                            </div>
+                        }
+                        
                         <div class="clear">
                         </div>
                     </div>

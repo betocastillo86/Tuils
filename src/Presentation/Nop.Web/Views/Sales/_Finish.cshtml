@@ -1,11 +1,12 @@
-﻿<script id="templateFinishPublishProduct" type="text/x-handlebars-template">
+﻿@model Nop.Web.Models.Sales.PublishProductModel
+<script id="templateFinishPublishProduct" type="text/x-handlebars-template">
     <div class="imgPublicada">
         <img src="{{ImgSrc}}" />
     </div>
     <div class="resumen-final">
         <h2>@T("PublishProduct.PublishFinished")</h2>
         <p>{{Name}} <b>{{{Price}}}</b></p>
-        <h3>@T("PublishProduct.TimeOutPost", 30)</h3>
+        <h3>@T("PublishProduct.TimeOutPost", Model.LimitDaysOfProductPublished)</h3>
         @Html.ActionLink(T("PublishProduct.PublishSimilar").Text, "PublishProduct")
         @Html.ActionLink(T("PublishProduct.GotoPublishing").Text, "MyProducts", "ControlPanel")
         @*<input type="button" class="btn_2 button-1" value="Ver publicación">*@

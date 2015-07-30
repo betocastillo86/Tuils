@@ -63,5 +63,7 @@ namespace Nop.Web.Models.Api
 
         public int SuppliesValue { get; set; }
 
+        public string PhoneNumber { get; set; }
+
     }
 }

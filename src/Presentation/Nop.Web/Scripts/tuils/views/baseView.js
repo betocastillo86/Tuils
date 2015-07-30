@@ -94,26 +94,25 @@
                     }
                 });
 
-                _.each(errors, function (errorField, index) {
-                    //recorre los errores y marca solo los que tienen objeto DOM
-                    var domObj = that.$(fieldsToMark[index]);
-                    if (domObj)
-                        domObj.addClass("input-validation-error");
-                    //busca el mensaje, si existe lo marca
-                    var domMessage = that.$("span[tuils-val-for='" + index + "']");
-                    if (domMessage)
-                    {
-                        domMessage.text(errorField);
-                        domMessage.addClass("field-validation-error");
-                    }
-                        
-
-                    
-                        
-                });
+                this.markErrorsOnForm(errors, fieldsToMark);
             }
 
             return errors;
+        },
+        markErrorsOnForm: function (errors, fieldsToMark) {
+            var that = this;
+            _.each(errors, function (errorField, index) {
+                //recorre los errores y marca solo los que tienen objeto DOM
+                var domObj = that.$(fieldsToMark[index]);
+                if (domObj)
+                    domObj.addClass("input-validation-error");
+                //busca el mensaje, si existe lo marca
+                var domMessage = that.$("span[tuils-val-for='" + index + "']");
+                if (domMessage) {
+                    domMessage.text(errorField);
+                    domMessage.addClass("field-validation-error");
+                }
+            });
         },
         bindValidation : function()
         {

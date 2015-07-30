@@ -46,7 +46,7 @@
         saveImage: function (file, type, sizeMini, sizeBig)
         {
             var that = this;
-            this.resizer.photo(file, sizeBig, 'file', function (resizedFile) {
+            this.resizer.photoCrop(file, sizeBig, 'file', function (resizedFile) {
                 that.resizer.photo(resizedFile, sizeMini, 'dataURL', function (thumbnail) {
                     that.fileModel.set({ src: thumbnail, file: resizedFile });
                     that.fileModel.upload({ saveUrl: '/api/vendors/' + that.get('Id') + '/' + type });

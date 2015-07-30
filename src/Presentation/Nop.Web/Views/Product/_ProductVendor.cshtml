@@ -5,8 +5,13 @@
     //Si el usuario ya compró el producto se muestra el link al vendedor
     if (Model.ShowVendor)
     {
-        <div class="product-vendor">
+        <div class="product-vendor" style="border:solid red;">
             <span class="label">@T("Products.Vendor"): </span><span class="value"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">@Model.VendorModel.Name</a></span>
+            @if (Model.VendorModel.VendorType == Nop.Core.Domain.Vendors.VendorType.User)
+            { 
+                <br />
+                <span class="label">@T("Products.Vendor.PhoneNumber"): </span><span class="value">@Model.VendorModel.PhoneNumber</span>
+            }
         </div>
     }
 }

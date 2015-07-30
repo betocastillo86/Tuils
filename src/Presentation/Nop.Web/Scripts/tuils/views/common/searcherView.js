@@ -53,6 +53,7 @@
             $(".header-logo").css('display', !showSearch ? 'block' : 'none');
             this.$("#divSearchText input").css('display', showSearch ? 'block' : '');
             this.$("#divSearchText a").css('display', showSearch ? 'block' : '');
+            this.$("#small-searchterms").focus();
         },
         loadAutoComplete: function () {
             var that = this;

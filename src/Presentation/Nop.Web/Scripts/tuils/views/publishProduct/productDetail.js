@@ -7,7 +7,8 @@
             "click .btnNext": "save",
             "click .btnBack": "back",
             //"change #chkIsShipEnabled": "switchShipping",
-            "change #chkIncludeSupplies" : "switchSupplies"
+            "change #chkIncludeSupplies": "switchSupplies",
+            "change #chkHasSpecialBikes" : 'switchBikeReferences'
         },
 
         bindings: {
@@ -230,6 +231,9 @@
             else {
                 this.$("[tuils-for='no-supplies']").show();
             }
+        },
+        switchBikeReferences: function (obj) {
+            this.$("#divBikeReferences").css("display", this.$("#chkHasSpecialBikes").prop("checked") ? "block" : "none");
         },
         save: function () {
             //this.model.set({ FullDescription: this.$("#productHtml_textarea").val() });

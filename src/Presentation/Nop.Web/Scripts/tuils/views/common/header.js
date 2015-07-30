@@ -1,6 +1,6 @@
-﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'tuils/views/login/login', 'tuils/views/login/createUser', 'tuils/views/common/topMenuView'],
-    function ($,_, Backbone, Handlebars, LoginView, CreateUserView, TopMenuView) {
-    var HeaderView = Backbone.View.extend({
+﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'tuils/views/login/login', 'tuils/views/login/createUser', 'tuils/views/common/topMenuView', 'baseView'],
+    function ($,_, Backbone, Handlebars, LoginView, CreateUserView, TopMenuView, BaseView) {
+    var HeaderView = BaseView.extend({
 
         el: ".header-links",
 
@@ -48,6 +48,12 @@
             this.templateUserAuthenticated = Handlebars.compile(this.$("#templateLoggedUser").html());
             this.$(".preLogin").hide();
             this.$("ul").prepend(this.templateUserAuthenticated(model.toJSON()));
+            if (this.isMinSize())
+            {
+                var templateLoggedInResponsive = Handlebars.compile(this.$("#templateLoggedInResponsive").html());
+                $(".main-registro").parent().prepend(templateLoggedInResponsive(model.toJSON()));
+                $(".main-registro").hide();
+            }
         },
         loadTopMenu: function () {
             this.viewTopMenu = new TopMenuView({ el: '.header-menu' });

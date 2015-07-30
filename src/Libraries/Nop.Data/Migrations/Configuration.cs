@@ -701,6 +701,16 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("CUSTOM.CUSTOMERSERVICES", "Tuils web");
                 newLocaleStringResources.Add("controlpanel.RepairShop", "Mi taller");
                 newLocaleStringResources.Add("publishProduct.error.publishInvalidCategoryService", "Para poder publicar un servicio debes estar registrado como un taller");
+                newLocaleStringResources.Add("enums.nop.core.CodeNopException.HasSessionActive", "Ya hay una sesión activa. Cierra primero sesión.");
+                newLocaleStringResources.Add("PublishProduct.HasSpecialBikes", "¿Te gustaría destacar tu producto para algunas referencias de moto?");
+                newLocaleStringResources.Add("PublishProduct.HasSpecialBikes.Alt", "Puedes agregar referencias de motocicletas en las cuales tu producto funcionará mejor. Esto permitira a los moteros con estas motocicletas encontrarte más fácil");
+                newLocaleStringResources.Add("PublishProduct.Product.TitleForBrandBike", "Referencias de motos");
+                newLocaleStringResources.Add("PublishProduct.PhoneNumber", "Teléfono de contacto");
+                newLocaleStringResources.Add("Products.Vendor.PhoneNumber", "Teléfono de contacto");
+                
+                
+                
+                
 
                 
 
@@ -1441,6 +1451,8 @@ namespace Nop.Data.Migrations
                 settings.Add("CatalogSettings.NumberOfProductsMyBikeOnHomepage", "8");
                 settings.Add("CatalogSettings.LimitOfSpecialCategories", "5");
                 settings.Add("CatalogSettings.LimitDaysOfProductPublished", "18");
+                settings.Add("CatalogSettings.DefaultSpecificationAttributeTopMenu", "6");
+
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var setting in settings)

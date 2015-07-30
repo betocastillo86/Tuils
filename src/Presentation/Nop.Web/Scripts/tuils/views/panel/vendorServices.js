@@ -63,7 +63,8 @@
                     tagLimit: 5,
                     autocomplete: {
                         source: TuilsUtil.tagItAutocomplete
-                    }
+                    },
+                    allowSpaces:true
                 });
         },
         loadServices: function (services) {

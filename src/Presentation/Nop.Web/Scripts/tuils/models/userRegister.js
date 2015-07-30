@@ -1,4 +1,4 @@
-﻿define(['underscore', 'backbone'], function (_, Backbone) {
+﻿define(['underscore', 'backbone', 'backbone.basicauth'], function (_, Backbone) {
     var UserRegisterModel = Backbone.Model.extend({
         url: '/api/auth',
         baseUrl: '/api/auth',
@@ -40,6 +40,14 @@
             TermsOfUse: "Terminos y condiciones"
         },
         login: function () {
+            
+            this.credentials = {
+                username: this.get('Email'),
+                password: this.get('Password')
+            };
+
+            this.set('Password', this.credentials.password.replace(/./gi, "*"));
+
             this.url = this.baseUrl;
             this.save();
         },
