@@ -390,7 +390,6 @@
     .master-wrapper-main .center-product-2.columns.ten { float: none; width: auto; }
     .product-details-page .product-variant-list .product-variant-line { float: left; }
     .tab { display: inline-block; margin: 0; padding: 0; text-align: left; }
-    .tab-container { margin: 0 10px; }
     .tab.active { border-color: #EDEDED; }
     .advanced { padding: 20px 5px; }
     .product-details-page .email-a-friend, .product-details-page .compare-products { float: none; display: inline-block; vertical-align: top; }
