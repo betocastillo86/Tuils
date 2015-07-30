@@ -5,6 +5,7 @@
 
             events: {
                 "click li": "loadCategories",
+                "change select": "loadCategories",
                 "keyup input[type='text']": "filterCategories",
                 "click .btn_continue": "finishSelection"
             },
@@ -56,17 +57,19 @@
             },
             loadCategories: function (obj) {
                 obj = $(obj.currentTarget);
-                
-                var categoryId = parseInt(obj.attr("tuils-id"));
+                var isSelect = obj.is('select');
+                var categoryId = parseInt(isSelect ? obj.val() : obj.attr("tuils-id"));
+                var selectedLevel = parseInt(obj.attr("tuils-level"));
+
                 //Si la selección llega a ser del botón entonces no la tiene en cuenta
                 if (!isNaN(categoryId)) {
 
-                    obj.parent().find(".cat_select").removeClass("cat_select");
-                    obj.addClass("cat_select");
-                    
+                    if (!isSelect) {
+                        obj.parent().find(".cat_select").removeClass("cat_select");
+                        obj.addClass("cat_select");
+                    }
 
                     this.currentCategory = categoryId;
-                    var selectedLevel = parseInt(obj.attr("tuils-level"));
                     this.currentLevel = ++selectedLevel;
 
                     //actualiza la miga de pan
@@ -79,6 +82,10 @@
                     this.loadChildrenCategories(this.currentCategory);
                     this.trigger("categories-middle-selected", categoryId);
                 }
+                else {
+                    //Elimina las columnas de niveles inferiores
+                    this.divShowCategories.find(".category-column").slice(selectedLevel+1).remove();
+                }
 
             },
             showCategories: function (category) {
@@ -89,16 +96,18 @@
                 if (obj.ChildrenCategories.length > 0) {
                     this.divShowCategories.append(this.template(obj));
                     //Solo permite mostrar el buscador para más de 5 categorias
-                    if (obj.ChildrenCategories.length < this.minChildrenCategoriesForFiltering)
+                    if (!this.isMobile() && obj.ChildrenCategories.length < this.minChildrenCategoriesForFiltering)
                         this.divShowCategories.find("ul:last-child input[type='text']").hide();
+                    if (this.isMobile())
+                        this.scrollFocusObject(".category-column:last", -50);
+
                     this.trigger("categories-loaded");
                     this.$(".btn_continue").hide();
                 }
                 else {
                     this.$(".btn_continue").show();
+                    this.scrollFocusObject(".btn_continue", -150);
                 }
-
-                
             },
             filterCategories: function (obj) {
 

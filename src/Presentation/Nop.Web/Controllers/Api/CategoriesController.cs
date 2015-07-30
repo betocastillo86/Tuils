@@ -95,7 +95,14 @@ namespace Nop.Web.Controllers.Api
         [Route("api/categories/{id}/manufacturers")]
         public IHttpActionResult GetManufacturesByCategoryId(int id)
         {
-            var manufacturers = this._manufacturerService.GetManufacturersByCategoryId(id).ToModels();
+
+            var cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_MANUFACTURERS_PATTERN_KEY, id);
+            var manufacturers = _cacheManager.Get(cacheKey, () => {
+                return this._manufacturerService.GetManufacturersByCategoryId(id)
+                    .OrderBy(m => m.Name)
+                    .ToList()
+                    .ToModels();
+            }); 
 
             if (manufacturers != null)
             {

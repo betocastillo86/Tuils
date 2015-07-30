@@ -59,6 +59,7 @@
             sell : function()
             {
                 this.loadSubViews();
+                $('.btn_anuncia').hide();
             },
             sellProduct: function () {
                 var that = this;

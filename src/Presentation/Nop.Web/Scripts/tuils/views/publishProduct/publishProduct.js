@@ -43,6 +43,7 @@
             this.showStep();
             this.showCategories();
             this.on("user-authenticated", this.save, this);
+            $('.btn_anuncia').hide();
         },
         showCategories: function () {
             var that = this;
@@ -105,6 +106,7 @@
                 this.$(".wizard-current").removeClass('wizard-current').addClass("wizard-step");
                 this.$("#btnPublishProductStep" + this.currentStep).removeClass("wizard-step").addClass('wizard-current');
                 this.$("div[id^='divStep_']").hide();
+                this.scrollFocusObject('.wizard-breadcrumb', -50);
             }
             
             this.$("#divStep_" + this.currentStep).show();

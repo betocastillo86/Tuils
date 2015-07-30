@@ -324,6 +324,15 @@ namespace Nop.Web.Infrastructure.Cache
 
 
         /// <summary>
+        /// Marcas por category
+        /// </summary>
+        /// <remarks>
+        /// {0} : category id
+        /// </remarks>
+        public const string CATEGORY_MANUFACTURERS_PATTERN_KEY = "Nop.category.api.category-{0}"; 
+
+
+        /// <summary>
         /// Listado de productos que son especiales para una categoria en especifico
         /// {0} : category id
         /// </summary>

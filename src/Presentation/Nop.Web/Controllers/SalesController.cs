@@ -117,7 +117,7 @@ namespace Nop.Web.Controllers
         public ActionResult PublishProductService()
         {
             var model = GetPublishModel();
-
+            
             //Tipo de producto moto
             model.ProductType = ProductTypePublished.Service;
             model.SubSectionTitle = "Servicios";
@@ -131,6 +131,7 @@ namespace Nop.Web.Controllers
             var model = new PublishProductModel();
             model.LimitDaysOfProductPublished = _catalogSettings.LimitDaysOfProductPublished;
             model.StateProvinces = new SelectList(_stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry), "Id", "Name");
+            model.IsMobileDevice = Request.Browser.IsMobileDevice;
             if (_workContext.CurrentVendor != null)
                 model.PhoneNumber = _workContext.CurrentVendor.PhoneNumber;
             return model;
