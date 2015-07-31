@@ -53,9 +53,10 @@
             else {
                 this.showStep();
                 this.showCategories();
-                if (this.isMobile())
-                    $('.btn_anuncia').hide();
             }
+
+            if (this.isMobile())
+                $('.btn_anuncia').hide();
         },
         showPreviousProductCreated: function () {
             this.viewPreviousProductCreated = new PreviousProductCreatedView({ el: '#divStep_0', model: this.model });

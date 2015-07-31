@@ -1145,6 +1145,7 @@
     <Content Include="Scripts\tuils\views\product\searchView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\previousProductCreatedView.js" />
+    <Content Include="Scripts\tuils\views\publishProduct\publishView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
     <Content Include="Scripts\tuils\views\utilities\imagesSelectorView.js" />
     <Content Include="Scripts\tuils\views\utilities\htmlEditorView.js" />

@@ -2,12 +2,12 @@
   'tuils/views/panel/myAccount','tuils/views/panel/vendorServices','tuils/views/panel/questionsView','tuils/views/vendor/vendorDetailView'			
 ,'tuils/views/product/productDetailView','tuils/views/common/newsletterView','tuils/views/common/searcherView','tuils/views/common/leftFeaturedProductsView'	
 , 'tuils/views/common/header', 'tuils/views/panel/offices', 'tuils/views/panel/menu', 'tuils/views/panel/myProductsView', 'tuils/views/home/homeView',
-'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView',
+'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView','tuils/views/publishProduct/publishView',
 'ajaxCart', 'nopCommon'],
     function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView,
         MyAccountView,VendorServicesView ,QuestionsView ,VendorDetailView,
         ProductDetailView, NewsletterView, SearcherView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
-        HomeView, SearchView, CategoryView, ManufacturerView) {
+        HomeView, SearchView, CategoryView, ManufacturerView, PublishView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -59,7 +59,7 @@
             sell : function()
             {
                 this.loadSubViews();
-                $('.btn_anuncia').hide();
+                this.currentView = new PublishView({ el : this.defaultEl });
             },
             sellProduct: function (step) {
                 if (!this.currentView) {
