@@ -1793,3 +1793,9 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 .modal-btn-close:hover{background:#3b5a83; color: #FFF;}
 .registration-modal a.fb-btn{font-size:20px; border-radius:2px; transition:ease all 0.4s; display: block; color:#FFF !important; background:#3A5699; width: 100%; height: auto; margin:10px 0 0; padding: 8px 10px; box-sizing:border-box;}
 .registration-modal a:hover.fb-btn{background:#2F467E;}
+.loadingBack {
+    background: #e0ffc7 url(/Content/loading_2x.gif) no-repeat center center !important;
+}
+    .loadingBack span {
+        display:none !important;
+    }

@@ -43,6 +43,7 @@
         },
         fileUploaded: function (resp) {
             this.set('guid', resp.fileGuid);
+            this.trigger("sync", this);
             this.trigger("file-saved", this);
         },
         errorUploaded: function (resp) {

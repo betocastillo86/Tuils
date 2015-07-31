@@ -51,11 +51,19 @@
             this.$("input[tuils-val='int']").on("keypress", TuilsUtil.onlyNumbers);
             this.$("input[tuils-val='none']").on("keypress", function () { return false; });
         },
+        //Agrega o reemplaza el html
         showLoading: function(model, append)
         {
             model.once("sync", this.removeLoading, this);
             model.once("error", this.removeLoading, this);
             append ? this.$el.append(this.loadingTemplate) : this.$el.html(this.loadingTemplate);
+        },
+        //Esta opción para cargar la clase loadingBack al elemento que envien
+        showLoadingBack : function(model, el)
+        {
+            model.once("sync", this.removeLoading, this);
+            model.once("error", this.removeLoading, this);
+            el.addClass('loadingBack');
         },
         handleResize : function(){
             var that = this;
@@ -69,6 +77,7 @@
         },
         removeLoading : function(){
             this.$el.find("#divLoadingback").remove();
+            this.$el.find('.loadingBack').removeClass('loadingBack');
         },
         validateControls: function (model, goToFocus) {
             //Formatea los mensajes de respuesta contra los label

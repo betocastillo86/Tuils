@@ -1,6 +1,6 @@
-﻿define(['jquery', 'underscore', 'backbone', 'fileModel', 'fileCollection', 'configuration', 'util', 'resize'],
-    function ($, _, Backbone, FileModel, FileCollection, TuilsConfiguration, TuilsUtilities) {
-    var ImagesSelectorView = Backbone.View.extend({
+﻿define(['jquery', 'underscore', 'baseView', 'fileModel', 'fileCollection', 'configuration', 'util', 'resize'],
+    function ($, _, BaseView, FileModel, FileCollection, TuilsConfiguration, TuilsUtilities) {
+    var ImagesSelectorView = BaseView.extend({
         events: {
             "click .addImageGalery": "addImage",
             "change input[type=file]": "uploadImage",
@@ -101,14 +101,19 @@
                 if (TuilsUtilities.isValidSize(obj.target)) {
                     if (TuilsUtilities.isValidExtension(obj.target, 'image')) {
                         var fileModel = new FileModel();
+                        this.showLoadingBack(fileModel, this.currentControlImage);
                         fileModel.on("file-saved", this.fileUploaded, this);
                         fileModel.on("file-error", this.fileErrorUpload, this)
                         this.resizer.photo(file, TuilsConfiguration.media.productImageMaxSizeResize, 'file', function (resizedFile) {
 
                             that.resizer.photo(resizedFile, 400, 'dataURL', function (thumbnail) {
-                                that.switchImage(thumbnail);
                                 fileModel.set({ src: thumbnail, file: resizedFile });
+                                //Hasta que la imagen no haya sido subida 
+                                fileModel.on('sync', function () {
+                                    that.switchImage(thumbnail);
+                                });
                                 fileModel.upload({ saveUrl: that.urlSave });
+
                             });
                         });
                     }
