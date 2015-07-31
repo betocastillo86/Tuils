@@ -823,8 +823,14 @@ namespace Nop.Web.Controllers
                     login = _localizationService.GetResource("account.login"),
                     newCustomer = _localizationService.GetResource("account.login.newcustomer")
                 },
-                products = new {
+                products = new
+                {
                     confirmBuy = _localizationService.GetResource("products.confirmBuy")
+                },
+                loginMessages = new {
+                    publishProduct = _localizationService.GetResource("LoginMessage.PublishProduct"),
+                    showVendor = _localizationService.GetResource("LoginMessage.ShowVendor"),
+                    askQuestion = _localizationService.GetResource("LoginMessage.AskQuestion")
                 }
             };
 

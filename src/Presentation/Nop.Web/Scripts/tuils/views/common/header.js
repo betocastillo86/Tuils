@@ -17,12 +17,13 @@
         initialize: function () {
             this.render();
         },
-        showLogin: function () {
+        showLogin: function (model) {
             var that = this;
             if (!this.viewLogin) {
-                that.viewLogin = new LoginView({ $el: that.$('#divLoginUser') });
+                that.viewLogin = new LoginView({ $el: that.$('#divLoginUser'), sourceModel : model });
                 that.viewLogin.on("register", that.showRegister, that);
                 that.viewLogin.on("user-authenticated", that.showUserAuthenticated, that);
+                that.viewLogin.on("close-menu-responsive", that.closeMenuResponsive, that);
             }
             else {
                 this.viewLogin.show();
@@ -35,6 +36,7 @@
                 that.viewRegister = new CreateUserView({ $el: that.$('#divRegisterUser') });
                 that.viewRegister.on("user-authenticated", that.showUserAuthenticated, that);
                 that.viewRegister.on("login", that.showLogin, that);
+                that.viewRegister.on("close-menu-responsive", that.closeMenuResponsive, that);
             }
             else {
                 this.viewRegister.show();
@@ -59,6 +61,9 @@
             this.viewTopMenu = new TopMenuView({ el: '.header-menu' });
             this.viewTopMenu.on("register", this.showRegister, this);
             this.viewTopMenu.on("login", this.showLogin, this);
+        },
+        closeMenuResponsive: function () {
+            this.viewTopMenu.hideMenuResponsive();
         },
         loadControls: function () {
             this.loadTopMenu();

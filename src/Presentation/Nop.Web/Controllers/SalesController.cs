@@ -62,7 +62,7 @@ namespace Nop.Web.Controllers
         /// Publicación de producto simple
         /// </summary>
         /// <returns></returns>
-        public ActionResult PublishProduct()
+        public ActionResult PublishProduct(int? id)
         {
             var model = GetPublishModel();
 
@@ -77,7 +77,7 @@ namespace Nop.Web.Controllers
         /// Publicación de producto tipo motocicleta
         /// </summary>
         /// <returns></returns>
-        public ActionResult PublishProductBike()
+        public ActionResult PublishProductBike(int? id)
         {
             var model = GetPublishModel();
             //Caga los colores existentes
@@ -114,7 +114,7 @@ namespace Nop.Web.Controllers
         /// OPción para publicar un servicio
         /// </summary>
         /// <returns></returns>
-        public ActionResult PublishProductService()
+        public ActionResult PublishProductService(int? id)
         {
             var model = GetPublishModel();
             

@@ -44,9 +44,11 @@
             });
         },
         register: function () {
+            this.hideMenuResponsive();
             this.trigger('register');
         },
         login: function () {
+            this.hideMenuResponsive();
             this.trigger('login');
         },
         selectDefaultMenuOption: function () {

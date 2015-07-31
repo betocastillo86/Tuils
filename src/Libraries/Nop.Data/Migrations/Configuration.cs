@@ -707,6 +707,9 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("PublishProduct.Product.TitleForBrandBike", "Referencias de motos");
                 newLocaleStringResources.Add("PublishProduct.PhoneNumber", "Teléfono de contacto");
                 newLocaleStringResources.Add("Products.Vendor.PhoneNumber", "Teléfono de contacto");
+                newLocaleStringResources.Add("LoginMessage.PublishProduct", "Para poder publicar debes registrarte, si ya tienes usuario ingresa tu usuario y clave");
+                newLocaleStringResources.Add("LoginMessage.ShowVendor", "Para poder ver los datos del vendedor debes registrarte, si ya tienes usuario ingresa tu usuario y clave");
+                newLocaleStringResources.Add("LoginMessage.AskQuestion", "Para poder preguntar debes registrarte, si ya tienes usuario ingresa tu usuario y clave");
                 
                 
                 

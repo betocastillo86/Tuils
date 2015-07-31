@@ -23,7 +23,13 @@
 
             var that = this;
             this.loadModel();
-            this.$el.fixedDialog(this.dialogBasicOptions);
+
+            if (this.isMobile()) {
+                this.$el.dialog(this.dialogBasicOptions);
+                this.trigger('close-menu-responsive');
+            }
+            else
+                this.$el.fixedDialog(this.dialogBasicOptions);
 
             require(['text!/Customer/CreateUser'], function (template) {
                 that.template = Handlebars.compile(template);

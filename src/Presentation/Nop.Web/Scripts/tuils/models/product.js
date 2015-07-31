@@ -1,6 +1,6 @@
 ﻿
-define(['underscore', 'backbone', '_authenticationModel', 'configuration'], 
-    function (_, Backbone, AuthenticationModel, TuilsConfiguration) {
+define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'resources'], 
+    function (_, Backbone, AuthenticationModel, TuilsConfiguration, TuilsResources) {
 
         'use strict'
         
@@ -139,6 +139,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
 
             },
             publish: function () {
+                this.set('message_login', TuilsResources.loginMessages.publishProduct);
                 this.save();
             }
         });

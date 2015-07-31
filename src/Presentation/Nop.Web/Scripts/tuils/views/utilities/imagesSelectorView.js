@@ -22,12 +22,23 @@
         onBackRemoveImages: false,
 
         initialize: function (args) {
+            
             this.loadControls();
+
             if (args.onBackRemoveImages)
                 this.onBackRemoveImages = args.onBackRemoveImages;
 
+            //Cuando viene modelo valida si ya se han cargado previamente imagenes
+            if (args.model)
+            {
+                this.model = args.model;
+                this.loadPreviousImages();
+            }
+                
             if (args.urlSave)
                 this.urlSave = args.urlSave;
+
+            
         },
         render: function () {
             return this;
@@ -37,6 +48,19 @@
             this.collection = new FileCollection();
             this.resizer = new window.resize();
             this.resizer.init();
+        },
+        loadPreviousImages: function () {
+
+            var that = this;
+            //Recorre cada uno de los archivos temporales que se habian cargado anteriormente
+            _.each(this.model.get('TempFiles'), function (element, index) {
+                //Busca la imagen en orden y la empieza a cargar una a una
+                that.currentControlImage = that.$('.addImageGalery:eq(' + index + ')');
+                var fileName = '/TempFiles/' + element;
+                var currentModel = new FileModel({ guid: element, src: fileName });
+                that.fileUploaded(currentModel);
+                that.switchImage(fileName);
+            });
         },
         addImage: function (obj) {
             var target = $(obj.currentTarget);
@@ -115,7 +139,7 @@
             }
         },
         fileUploaded: function (model) {
-            var srcImage = this.currentControlImage.find("img", "src");
+            //var srcImage = this.currentControlImage.find("img", "src");
             var guidImage = model.get('guid');
             this.collection.add(model);
             this.currentControlImage.attr(this.attributeFile, guidImage);

@@ -1144,6 +1144,7 @@
     <Content Include="Scripts\tuils\views\product\categoryView.js" />
     <Content Include="Scripts\tuils\views\product\searchView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
+    <Content Include="Scripts\tuils\views\publishProduct\previousProductCreatedView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
     <Content Include="Scripts\tuils\views\utilities\imagesSelectorView.js" />
     <Content Include="Scripts\tuils\views\utilities\htmlEditorView.js" />
@@ -2547,6 +2548,7 @@
     <Content Include="Views\Catalog\_FilterPriceBox_Filtered.cshtml" />
     <Content Include="Views\Catalog\_FilterBikeReferenceBox_Filtered.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\_FilterSearches.cshtml" />
+    <Content Include="Views\Sales\_PreviousProductCreated.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

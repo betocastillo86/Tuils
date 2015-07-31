@@ -3,6 +3,8 @@ define(['jquery', 'categoryCollection'], function ($, CategoryCollection) {
     var TuilsStorage = {
 
         bikeReferences: undefined,
+        //Variable en el storage que almacena un producto que se está creando para retomar una próxima vez
+        keyPublishProduct : 'tuils-publishProduct',
 
         //Carga las referencias de las motocicletas en la propiedad 
         loadBikeReferences: function (callback, ctx) {
@@ -27,6 +29,16 @@ define(['jquery', 'categoryCollection'], function ($, CategoryCollection) {
             }
         },
 
+        setPublishProduct: function (product) {
+            if (product)
+                localStorage.setItem(TuilsStorage.keyPublishProduct, JSON.stringify(product.toJSON()));
+            else
+                localStorage.removeItem(TuilsStorage.keyPublishProduct);
+        },
+        getPublishProduct: function () {
+            if (localStorage.getItem(TuilsStorage.keyPublishProduct))
+                return JSON.parse(localStorage.getItem(TuilsStorage.keyPublishProduct));
+        }
     }
 
     return TuilsStorage;

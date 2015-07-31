@@ -693,21 +693,21 @@ namespace Nop.Web.Infrastructure
 
             //publicar producto simple
             routes.MapLocalizedRoute("PublishProduct",
-                "quiero-vender/producto",
-                new { controller = "Sales", action = "PublishProduct" },
+                "quiero-vender/producto/{id}",
+                new { controller = "Sales", action = "PublishProduct", id = UrlParameter.Optional },
                 new[] { "Nop.Web.Controllers" }
                 );
 
             //publicar producto simple
             routes.MapLocalizedRoute("PublishProductBike",
-                "quiero-vender/moto",
-                new { controller = "Sales", action = "PublishProductBike" },
+                "quiero-vender/moto/{id}",
+                new { controller = "Sales", action = "PublishProductBike", id = UrlParameter.Optional },
                 new[] { "Nop.Web.Controllers" }
                 );
             //Publicar servicio
             routes.MapLocalizedRoute("PublishProductService",
-               "quiero-vender/servicio-especializado",
-               new { controller = "Sales", action = "PublishProductService" },
+               "quiero-vender/servicio-especializado/{id}",
+               new { controller = "Sales", action = "PublishProductService", id = UrlParameter.Optional },
                new[] { "Nop.Web.Controllers" }
                );
 

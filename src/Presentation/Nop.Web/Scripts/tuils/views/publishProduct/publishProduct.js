@@ -1,9 +1,9 @@
 ﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'storage',
     'configuration', 'publishProductSelectCategoryView', 'publishProductProductDetailView',
-    'publishProductFinishedView', 'publishProductSummaryView'],
+    'publishProductFinishedView', 'publishProductSummaryView', 'tuils/views/publishProduct/previousProductCreatedView'],
     function ($, _, BaseView, ProductModel, TuilsStorage,
         TuilsConfiguration, SelectCategoryView, ProductDetailView,
-        PublishFinishedView, SummaryView) {
+        PublishFinishedView, SummaryView, PreviousProductCreatedView) {
 
     var PublishProductView = BaseView.extend({
 
@@ -11,6 +11,7 @@
             'click .wizard-breadcrumb li': 'showStepByBreadcrumb'
         },
         //Views
+        viewPreviousProductCreated : undefined,
         viewSelectCategory: undefined,
         viewProductDetail: undefined,
         viewImageSelector: undefined,
@@ -32,37 +33,82 @@
 
         initialize: function (args) {
             this.productType = args.productType;
-            this.model = new ProductModel({ 'ProductTypeId': this.productType });
+            
             this.loadControls();
+            
             this.render();
         },
         render: function () {
             return this;
         },
         loadControls: function () {
-            this.showStep();
-            this.showCategories();
+            this.model = new ProductModel({ 'ProductTypeId': this.productType });
             this.on("user-authenticated", this.save, this);
-            $('.btn_anuncia').hide();
+            this.model.once('sync', this.productSaved, this);
+            this.model.once('error', this.errorOnSaving, this);
+
+            if (this.hasPreviousProductStorage()) {
+                this.showPreviousProductCreated();
+            }
+            else {
+                this.showStep();
+                this.showCategories();
+                if (this.isMobile())
+                    $('.btn_anuncia').hide();
+            }
         },
-        showCategories: function () {
+        showPreviousProductCreated: function () {
+            this.viewPreviousProductCreated = new PreviousProductCreatedView({ el: '#divStep_0', model: this.model });
+            this.viewPreviousProductCreated.on('previousProduct-createNew', this.loadControls, this);
+            this.viewPreviousProductCreated.on('previousProduct-recover', this.recoverProduct, this);
+            this.currentStep = 0;
+            this.showStep();
+        },
+        showCategories: function (autoSelectCategories) {
             var that = this;
-            that.viewSelectCategory = new SelectCategoryView({ el: "#divStep_1", productType: that.productType });
+            that.viewSelectCategory = new SelectCategoryView({ el: "#divStep_1", productType: that.productType, model: this.model, autoSelectCategories: autoSelectCategories });
             that.viewSelectCategory.on("category-selected", that.showProductDetail, that);
-            that.viewSelectCategory.once("categories-loaded", TuilsStorage.loadBikeReferences);
+            //that.viewSelectCategory.once("categories-loaded", TuilsStorage.loadBikeReferences);
             that.viewSelectCategory.on("categories-middle-selected", that.restartNextStep, that);
         },
-        showProductDetail: function (categoryId) {
+        showProductDetail: function (model) {
             this.showNextStep();
-            this.model.set('CategoryId', categoryId);
+            //Solo toma el modelo si viene valor, sino es el mismo de la vista general
+            if(model)
+                this.model = model;
 
             if (!this.viewProductDetail) {
 
                 var that = this;
-                that.viewProductDetail = new ProductDetailView({ el: "#divStep_2", productType: that.productType, selectedCategory: categoryId, model: that.model });
+                that.viewProductDetail = new ProductDetailView({ el: "#divStep_2", productType: that.productType, selectedCategory: this.model.get('CategoryId'), model: that.model });
                 that.viewProductDetail.on("detail-product-finished", that.showPictures, that);
                 that.viewProductDetail.on("detail-product-back", that.showStepBack, that);
             }
+        },
+        recoverProduct: function () {
+            this.currentStep = 1;
+            //Envia parametro en el que debe autoseleccionar las categorias previamente escogidas en el modelo
+            this.showCategories(true);
+            this.showProductDetail();
+        },
+        //Valia si hay un producto almacenado valido para esta sección
+        //Solo es valido si es del mismo tipo. Es decir si el usuario está entrando en 
+        //publicar un servicio el producto en el storage debe ser de tipo servicio
+        //de lo contrario es eliminado
+        hasPreviousProductStorage: function () {
+            var publishedProduct = TuilsStorage.getPublishProduct();
+            if (publishedProduct && publishedProduct.ProductTypeId == this.productType) {
+                ////Si hay datos pasa automáticamente al paso 2
+                this.model.set(publishedProduct);
+                //this.showProductDetail(publishedProduct.CategoryId);
+                return true;
+            }
+            else {
+                this.currentStep = 1;
+                TuilsStorage.setPublishProduct(undefined);
+                return false;
+            }
+                
         },
         showPictures: function (model) {
             this.model = model;
@@ -72,7 +118,7 @@
             if (this.productType != TuilsConfiguration.productBaseTypes.service) {
                 if (!this.viewImageSelector) {
                     require(['imageSelectorView'], function (ImagesSelectorView) {
-                        that.viewImageSelector = new ImagesSelectorView({ el: "#divStep_3" });
+                        that.viewImageSelector = new ImagesSelectorView({ el: "#divStep_3", model : that.model });
                         that.viewImageSelector.on("images-save", that.showSummary, that);
                         that.viewImageSelector.on("images-back", that.showStepBack, that);
                     });
@@ -85,8 +131,10 @@
         },
         showSummary: function (images) {
             
-            this.showNextStep();
+            
             this.images = images;
+            this.model.set('TempFiles', _.pluck(this.images ? this.images.toJSON() : undefined, 'guid'));
+            this.showNextStep();
 
             if (!this.viewSummary) {
 
@@ -107,6 +155,12 @@
                 this.$("#btnPublishProductStep" + this.currentStep).removeClass("wizard-step").addClass('wizard-current');
                 this.$("div[id^='divStep_']").hide();
                 this.scrollFocusObject('.wizard-breadcrumb', -50);
+                
+                //Actualiza el producto en el storage y realiza la navegación
+                if (this.currentStep > 1)
+                    this.model.on('change', TuilsStorage.setPublishProduct);
+
+                Backbone.history.navigate("quiero-vender/producto/" + this.currentStep);
             }
             
             this.$("#divStep_" + this.currentStep).show();
@@ -175,11 +229,9 @@
             this.viewSummary.remove();
             this.showFinish();
             Backbone.history.navigate("quiero-vender/publicacion-exitosa/" + model.get('Id'));
+            TuilsStorage.setPublishProduct(undefined);
         },
         save: function () {
-            this.model.set('TempFiles', _.pluck(this.images ? this.images.toJSON() : undefined, 'guid'));
-            this.model.once('sync', this.productSaved, this);
-            this.model.once('error', this.errorOnSaving, this);
             this.validateAuthorization();
             this.model.publish();
         }

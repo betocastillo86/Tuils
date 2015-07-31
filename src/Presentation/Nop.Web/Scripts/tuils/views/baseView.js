@@ -27,7 +27,7 @@
 
         showLogin: function (model)
         {
-            this.trigger('unauthorized');
+            this.trigger('unauthorized', model);
         },
         validateAuthorization: function ()
         {

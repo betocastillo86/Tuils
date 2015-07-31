@@ -55,6 +55,9 @@
                         brands.push({ SpecialTypeId: TuilsConfiguration.specialCategories.bikeBrand, CategoryId: parseInt(element) });
                     });
                     return brands;
+                },
+                onGet: function (brands, ctx) {
+                    return _.pluck(brands, 'CategoryId').toString();
                 }
             },
             //"#productHtml_textarea": {
@@ -179,31 +182,42 @@
             this.stickThem();
         },
         tagBikeReferences: function () {
+
+
             //Los tags no se cargan para las motocicletas
             if (this.productType != TuilsConfiguration.productBaseTypes.bike)
             {
-                var tagReferences = [];
+                if (TuilsStorage.bikeReferences) {
+                    var tagReferences = [];
 
-                var addTag = function (element) {
-                    tagReferences.push({ label: element.Name, value: element.Id });
-                };
-                _.each(TuilsStorage.bikeReferences, function (element, index) {
-                    //addTag(element);
-                    _.each(element.ChildrenCategories, function (child, index) {
-                        child.Name = element.Name + ' ' + child.Name;
-                        addTag(child);
+                    var addTag = function (element) {
+                        tagReferences.push({ label: element.Name, value: element.Id });
+                    };
+                    _.each(TuilsStorage.bikeReferences, function (element, index) {
+                        //addTag(element);
+                        _.each(element.ChildrenCategories, function (child, index) {
+                            child.Name = element.Name + ' ' + child.Name;
+                            addTag(child);
+                        });
                     });
-                });
+                    if (this.model.get('SpecialCategories'))
+                        this.$('#txtBikeReferencesProduct').val(_.pluck(this.model.get('SpecialCategories'), 'CategoryId').toString());
+                    this.$("#txtBikeReferencesProduct")
+                        .tagit({
+                            availableTags: tagReferences,
+                            allowOnlyAvailableTags: true,
+                            tagLimit: TuilsConfiguration.catalog.limitOfSpecialCategories,
+                            autocomplete: {
+                                source: TuilsUtil.tagItAutocomplete
+                            },
+                            allowSpaces: true
+                        });
+                }
+                else {
+                    TuilsStorage.loadBikeReferences(this.tagBikeReferences, this);
+                }
 
-                this.$("#txtBikeReferencesProduct")
-                    .tagit({
-                        availableTags: tagReferences,
-                        allowOnlyAvailableTags: true,
-                        tagLimit: TuilsConfiguration.catalog.limitOfSpecialCategories,
-                        autocomplete: {
-                            source: TuilsUtil.tagItAutocomplete
-                        }
-                    });
+                
             }
             
         },

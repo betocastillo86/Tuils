@@ -19,7 +19,18 @@
             //Categoria que se está seleccionando
             currentCategory: 0,
 
+            //Cuando está en true significa que debe seleccionar en background el arbol de categorías
+            //que se encuentran en cache
+            autoSelectCategories : false,
+
             breadCrumbCategories: undefined,
+
+            //Secuencia de categorias seleccionadas
+            arrayCategories: [],
+
+            //Variable temporal que contiene las categorias que se seleccionaron en un producto que se desea retomar
+            //Este array se desocupará en la medida que automáticamente carguen las categorias escogídas
+            _tempPreviousCategories : undefined,
 
             //Solo comienza a hacer filtro cuando se pone más de una letra
             minCharactersForFiltering: 1,
@@ -32,16 +43,25 @@
             initialize: function (args) {
                 this.template = Handlebars.compile($("#templateCategorySelector").html());
                 this.productType = args.productType;
-                this.loadControls();
-                this.loadDefaultCategories();
+                this.autoSelectCategories = args.autoSelectCategories;
                 this.breadCrumbCategories = new Array();
-
+                this.arrayCategories = new Array();
+                
+                this.model = args.model;
+                this.loadControls();
                 this.render();
             },
             render: function () {
                 return this;
             },
             loadControls: function () {
+
+                if (this.autoSelectCategories) {
+                    //Toma el valor original de las categorias e intenta para realizar las cargas automáticas
+                    this._tempPreviousCategories = this.model.get('_arrayCategories');
+                }
+
+                this.loadDefaultCategories();
                 this.divShowCategories = this.$(".divShowCategories");
             },
             loadChildrenCategories: function (parentId) {
@@ -75,6 +95,10 @@
                     //actualiza la miga de pan
                     this.breadCrumbCategories = _.first(this.breadCrumbCategories, this.currentLevel - 1);
                     this.breadCrumbCategories.push(obj.text());
+                    //Empuja al array la secuencia de categorías seleccionadas
+                    this.arrayCategories = _.first(this.arrayCategories, this.currentLevel - 1);
+                    this.arrayCategories.push(categoryId);
+                    this.model.set('_arrayCategories', this.arrayCategories);
 
                     //Elimina las columnas de niveles inferiores
                     this.divShowCategories.find(".category-column").slice(selectedLevel).remove();
@@ -88,6 +112,20 @@
                 }
 
             },
+            autoselectCategory: function () {
+                //Si se está autoseleccionando y todavía hay categorias pendientes de autoseleccionar 
+                //realiza un click automático sobre la categoría seleccionada
+                if (this.autoSelectCategories && this._tempPreviousCategories.length > 0)
+                {
+                    var newCategory = this._tempPreviousCategories[0];
+                    if (this.isMobile())
+                        this.$('select[tuils-level="' + this.currentLevel + '"]').val(newCategory).change();
+                    else
+                        this.$('li[tuils-id="' + newCategory + '"]').click();
+                    //Elimina la posición ya fue cargada
+                    this._tempPreviousCategories.splice(0, 1);
+                }
+            },
             showCategories: function (category) {
                 var obj = category.toJSON();
                 obj['currentLevel'] = this.currentLevel;
@@ -95,18 +133,23 @@
 
                 if (obj.ChildrenCategories.length > 0) {
                     this.divShowCategories.append(this.template(obj));
+
                     //Solo permite mostrar el buscador para más de 5 categorias
                     if (!this.isMobile() && obj.ChildrenCategories.length < this.minChildrenCategoriesForFiltering)
                         this.divShowCategories.find("ul:last-child input[type='text']").hide();
-                    if (this.isMobile())
+                    if (!this.autoSelectCategories && this.isMobile())
                         this.scrollFocusObject(".category-column:last", -50);
+
+                    //Intenta autoseleccionar categorias si es necesario
+                    this.autoselectCategory();
 
                     this.trigger("categories-loaded");
                     this.$(".btn_continue").hide();
                 }
                 else {
                     this.$(".btn_continue").show();
-                    this.scrollFocusObject(".btn_continue", -150);
+                    if (!this.autoSelectCategories)
+                        this.scrollFocusObject(".btn_continue", -150);
                 }
             },
             filterCategories: function (obj) {
@@ -125,7 +168,8 @@
                 }
             },
             finishSelection: function () {
-                this.trigger("category-selected", this.currentCategory);
+                this.model.set('CategoryId', this.currentCategory);
+                this.trigger("category-selected", this.model);
             }
         });
 

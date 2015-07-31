@@ -25,9 +25,9 @@
             routes: {
                 "": "home",
                 "quiero-vender": "sell",
-                "quiero-vender/producto": "sellProduct",
-                "quiero-vender/moto": "sellBike",
-                "quiero-vender/servicio-especializado": "sellService",
+                "quiero-vender/producto(/:step)": "sellProduct",
+                "quiero-vender/moto(/:step)": "sellBike",
+                "quiero-vender/servicio-especializado(/:step)": "sellService",
                 "mi-cuenta/datos-basicos": "myAccount",
                 "mi-cuenta/sedes": "myOffices",
                 "ControlPanel/VendorServices": "vendorServices",
@@ -61,17 +61,23 @@
                 this.loadSubViews();
                 $('.btn_anuncia').hide();
             },
-            sellProduct: function () {
-                var that = this;
-                that.currentView = new PublishProductView({ el: that.defaultEl, productType: TuilsConfiguration.productBaseTypes.product });
-                that.loadSubViews();
+            sellProduct: function (step) {
+                if (!this.currentView) {
+                    this.currentView = new PublishProductView({ el: this.defaultEl, productType: TuilsConfiguration.productBaseTypes.product });
+                }
+                else {
+                    this.currentView.currentStep = step;
+                    this.currentView.showStep();
+                }
+                
+                this.loadSubViews();
             },
-            sellBike: function () {
+            sellBike: function (step) {
                 var that = this;
                 that.currentView = new PublishProductView({ el: that.defaultEl, productType: TuilsConfiguration.productBaseTypes.bike });
                 that.loadSubViews();
             },
-            sellService: function () {
+            sellService: function (step) {
                 var that = this;
                 that.currentView = new PublishProductView({ el: that.defaultEl, productType: TuilsConfiguration.productBaseTypes.service });
                 that.loadSubViews();
@@ -187,6 +193,8 @@
                 {
                     //se atacha al evento de solicitud de ingreso
                     that.currentView.on('unauthorized', that.viewHeader.showLogin, that.viewHeader);
+                    //evento para cerrar el menu responsive
+                    that.currentView.on('close-menu-responsive', that.viewHeader.closeMenuResponsive, that.viewHeader);
                     //atacha a la vista actual al evento cuando el usuario se autenticó
                     that.viewHeader.on('user-authenticated', that.currentView.userAuthenticated, that.currentView);
 
