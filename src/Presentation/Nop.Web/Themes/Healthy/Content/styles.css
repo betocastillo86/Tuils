@@ -743,6 +743,7 @@ td.fieldname{font-size:12px;}
 	.filt-inputs input[type="text"]{width:calc(50% - 20px); padding:5px; background: #FFF;}
 	.filt-inputs .btn_fil{background:#fb7055; text-align: center; padding: 6px; color: #FFF; transition:ease all 0.2s; border-radius: 2px;}
 	.filt-inputs .btn_fil:hover{background:#3b5a83;}
+	.btn_filter{display: none;}
 
 .product-filters .filter-title{font-weight:500;color:#3b5a83; text-transform: uppercase; margin:0 0 10px 5px;}
 .product-filters .filter-content{padding:5px 10px;}
