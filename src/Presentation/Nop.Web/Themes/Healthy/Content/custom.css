@@ -95,7 +95,7 @@ a:hover { text-decoration: none; }
 .block,.news-list-homepage .item,.search-panel .search-input,.product-filters,fieldset,.product-list .product-item,.product-list .product-item .picture{border-radius:0;-webkit-border-radius: 0; -moz-border-radius: 0; -o-border-radius:0;-icab-border-radius:0;-khtml-border-radius:0;}
 
 .add-to-cart-button {border: 0 none; color: #FFFFFF; cursor: pointer; font-size: 13px;font-family: 'Ubuntu', sans-serif; font-weight: 400; margin: 0 2px; padding: 3px 3px 6px; text-shadow: none; filter: none; }
-.button-1, .button-2 { font-size: 20px; padding: 8px 10px; min-width: 100px; width: auto; border: 0 none; color: #FFFFFF; cursor: pointer; font-family: 'Ubuntu', sans-serif; font-weight: 400; text-shadow: none; filter: none;}
+.button-1, .button-2 { font-size: 20px; padding: 8px 10px; min-width: 100px; width: auto; border: 0 none; color: #FFFFFF !important; cursor: pointer; font-family: 'Ubuntu', sans-serif; font-weight: 400; text-shadow: none; filter: none;}
 .button-1.search-box-button, .add-to-cart-button, .checkout-button { /*background: #D91424;*/color: #FFFFFF; }
     .button-1:hover, .button-2:hover { color: #fff; }
 .button-1, .button-2, .button-1.search-box-button, .opc .active .step-title .number {background: #FB7055; transition:0.4s ease all;}

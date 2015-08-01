@@ -1170,6 +1170,9 @@ html.oldie .container { width: 940px; }
         .form-sedes{width:calc(100% + 20px);}
         .caja_edtsedes{width: 100%;}
             .caja_edtsedes .picture-uploader li{width:82px; height: 82px; margin: 7px;}
+    .help_table{display:block; margin: 0 0 10px;}
+    .help_table span{background:url(images/table_respon.gif) no-repeat; width: 50px; height: 50px; margin: 0 5px 0 0; display: block; float: left;}
+    .help_table p{float: left; width: calc(100% - 70px); padding: 16px 0;}
     /*Mis productos*/
     .product-dtl-txt{width:calc(100% - 120px);}
     .product-dtl-date{float:left; text-align: left; width: auto; margin:15px;}
