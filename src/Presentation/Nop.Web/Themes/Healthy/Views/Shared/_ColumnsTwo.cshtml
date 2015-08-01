@@ -34,11 +34,6 @@
 @*added*@
 @if ((browser.Browser == "IE" && browser.MajorVersion > 8) || browser.Browser != "IE")
 {
-    <div class="center-2 columns ten">
-        @Html.Widget("main_column_before")
-        @RenderBody()
-        @Html.Widget("main_column_after")
-    </div>
     <div class="side-2 columns two">
         @if (IsSectionDefined("left"))
         {
@@ -66,10 +61,21 @@
             @*@Html.Widget("left_side_column_after")*@
         }
     </div>
+    <div class="center-2 columns ten">
+        @Html.Widget("main_column_before")
+        @RenderBody()
+        @Html.Widget("main_column_after")
+    </div>
+    
 
 }
 else
 {
+    <div class="center-2">
+        @Html.Widget("main_column_before")
+        @RenderBody()
+        @Html.Widget("main_column_after")
+    </div>
     <div class="side-2">
         @if (IsSectionDefined("left"))
         {
@@ -98,11 +104,7 @@ else
             @Html.Widget("left_side_column_after")
         }
     </div>
-    <div class="center-2">
-        @Html.Widget("main_column_before")
-        @RenderBody()
-        @Html.Widget("main_column_after")
-    </div>
+    
 }
 @*added*@
 @section ContentSliderSection {
