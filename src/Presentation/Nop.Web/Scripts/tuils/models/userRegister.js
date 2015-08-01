@@ -36,7 +36,8 @@
             Email: "Correo electrónico",
             Password: "Clave",
             CompanyName : "Nombre establecimiento",
-            TermsOfUse: "Terminos y condiciones"
+            TermsOfUse: "Terminos y condiciones",
+            Bike : 'con tu Motocicleta'
         },
         login: function () {
             

@@ -28,7 +28,7 @@ namespace Nop.Services.Messages
         /// <param name="customer">Customer instance</param>
         /// <param name="languageId">Message language identifier</param>
         /// <returns>Queued email identifier</returns>
-        int SendCustomerWelcomeMessage(Customer customer, int languageId);
+        int SendCustomerWelcomeMessage(Customer customer, int languageId, string autoPassword = null);
 
         /// <summary>
         /// Sends an email validation message to a customer
