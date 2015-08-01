@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'backbone', 'util', 'validations', 'stickit'],
-    function ($, _, Backbone, TuilsUtil) {
+﻿define(['jquery', 'underscore', 'backbone', 'util', 'confirm', 'validations', 'stickit' ],
+    function ($, _, Backbone, TuilsUtil, ConfirmMessageView) {
     
     var BaseView = Backbone.View.extend({
 
@@ -8,6 +8,8 @@
         viewCreateUser : undefined,
 
         viewLogin: undefined,
+
+        viewConfirm : undefined,
 
         _isMobile : undefined,
 
@@ -22,7 +24,10 @@
         dialogBasicOptions: {
             modal: true,
             draggable: false,
-            resizable: false
+            resizable: false,
+            open: function () {
+                $('.ui-dialog-titlebar button').html('<span class="icon-close"></span>');
+            }
         },
 
         showLogin: function (model)
@@ -78,6 +83,13 @@
         removeLoading : function(){
             this.$el.find("#divLoadingback").remove();
             this.$el.find('.loadingBack').removeClass('loadingBack');
+        },
+        //Muestra un mesaje de alerta ya sea con un Resource o con el mensaje directamente
+        alert: function (args) {
+            if (!this.viewConfirm)
+                this.viewConfirm = new ConfirmMessageView();
+
+            this.viewConfirm.show(args);
         },
         validateControls: function (model, goToFocus) {
             //Formatea los mensajes de respuesta contra los label

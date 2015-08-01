@@ -1,5 +1,7 @@
-﻿define(['jquery', 'underscore', 'backbone', 'baseView', 'manufacturerModel', 'manufacturerCollection', 'storage', 'util', 'htmlEditorView', 'configuration', 'specificationAttributeModel', 'tagit', 'validations', 'stickit'],
-    function ($, _, Backbone, BaseView, ManufacturerModel, ManufacturerCollection, TuilsStorage, TuilsUtil, HtmlEditorView, TuilsConfiguration, SpecificationAttributeModel) {
+﻿define(['jquery', 'underscore', 'backbone', 'baseView', 'manufacturerModel', 'manufacturerCollection', 'storage',
+    'util', 'htmlEditorView', 'configuration', 'specificationAttributeModel', 'tagit', 'validations', 'stickit'],
+    function ($, _, Backbone, BaseView, ManufacturerModel, ManufacturerCollection, TuilsStorage,
+        TuilsUtil, HtmlEditorView, TuilsConfiguration, SpecificationAttributeModel) {
     "use strict"
     var ProductDetailView = BaseView.extend({
 
@@ -200,8 +202,7 @@
                             addTag(child);
                         });
                     });
-                    if (this.model.get('SpecialCategories'))
-                        this.$('#txtBikeReferencesProduct').val(_.pluck(this.model.get('SpecialCategories'), 'CategoryId').toString());
+
                     this.$("#txtBikeReferencesProduct")
                         .tagit({
                             availableTags: tagReferences,

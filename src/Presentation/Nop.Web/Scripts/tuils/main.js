@@ -127,6 +127,8 @@
         publishProductSummaryView: 'tuils/views/publishProduct/summary',
         publishProductFinishedView: 'tuils/views/publishProduct/finish',
 
+        confirm : 'tuils/views/common/confirmMessageView',
+
         loginView: 'tuils/views/login/createUser',
         loginCreateUserView: 'tuils/views/login/createUser',
 

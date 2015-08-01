@@ -27,13 +27,21 @@
 
         productType: 0,
 
+        productTypeName : '',
+
         //Numero del paso que ya fue terminado
         //Sirve para validar los pasos cuando se hacen por medio de las pestañas
         stepFinished: 0,
 
         initialize: function (args) {
             this.productType = args.productType;
-            
+            if (this.productType == TuilsConfiguration.productBaseTypes.product)
+                this.productTypeName = 'producto';
+            else if (this.productType == TuilsConfiguration.productBaseTypes.service)
+                this.productTypeName = 'servicio';
+            else
+                this.productTypeName = 'moto';
+
             this.loadControls();
             
             this.render();
@@ -161,7 +169,7 @@
                 if (this.currentStep > 1)
                     this.model.on('change', TuilsStorage.setPublishProduct);
 
-                Backbone.history.navigate("quiero-vender/producto/" + this.currentStep);
+                Backbone.history.navigate('quiero-vender/' + this.productTypeName + '/' + this.currentStep);
             }
             
             this.$("#divStep_" + this.currentStep).show();

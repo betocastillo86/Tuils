@@ -710,6 +710,13 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("LoginMessage.PublishProduct", "Para poder publicar debes registrarte, si ya tienes usuario ingresa tu usuario y clave");
                 newLocaleStringResources.Add("LoginMessage.ShowVendor", "Para poder ver los datos del vendedor debes registrarte, si ya tienes usuario ingresa tu usuario y clave");
                 newLocaleStringResources.Add("LoginMessage.AskQuestion", "Para poder preguntar debes registrarte, si ya tienes usuario ingresa tu usuario y clave");
+                newLocaleStringResources.Add("CreateUser.Bike", "Referencia de tu moto");
+                newLocaleStringResources.Add("MyAccount.Confirm", "Tus datos han sido actualizados correctamente");
+                newLocaleStringResources.Add("Common.CloseButtonDialog", "Cerrar");
+                newLocaleStringResources.Add("MyAccount.ModelInvalid", "Los datos están incompletos o mal diligenciados");
+                
+                
+                
                 
                 
                 

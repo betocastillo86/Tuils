@@ -20,7 +20,8 @@
         showLogin: function (model) {
             var that = this;
             if (!this.viewLogin) {
-                that.viewLogin = new LoginView({ $el: that.$('#divLoginUser'), sourceModel : model });
+                //Debe validar si el modelo es un evento o un modelo, si es evento no lo envía
+                that.viewLogin = new LoginView({ $el: that.$('#divLoginUser'), sourceModel: model && !model.type ? model : undefined });
                 that.viewLogin.on("register", that.showRegister, that);
                 that.viewLogin.on("user-authenticated", that.showUserAuthenticated, that);
                 that.viewLogin.on("close-menu-responsive", that.closeMenuResponsive, that);

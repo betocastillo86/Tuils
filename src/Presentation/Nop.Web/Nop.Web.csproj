@@ -1120,6 +1120,7 @@
     <Content Include="Scripts\tuils\storage.js" />
     <Content Include="Scripts\tuils\utilities.js" />
     <Content Include="Scripts\tuils\views\baseView.js" />
+    <Content Include="Scripts\tuils\views\common\confirmMessageView.js" />
     <Content Include="Scripts\tuils\views\common\header.js" />
     <Content Include="Scripts\tuils\views\common\leftFeaturedProductsView.js" />
     <Content Include="Scripts\tuils\views\common\newsletterView.js" />
@@ -2550,6 +2551,7 @@
     <Content Include="Views\Catalog\_FilterBikeReferenceBox_Filtered.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\_FilterSearches.cshtml" />
     <Content Include="Views\Sales\_PreviousProductCreated.cshtml" />
+    <Content Include="Views\Shared\_ConfirmMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

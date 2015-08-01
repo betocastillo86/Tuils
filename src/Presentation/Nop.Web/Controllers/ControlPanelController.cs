@@ -207,11 +207,18 @@ namespace Nop.Web.Controllers
                     _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.NewsletterBrand, Core.Domain.Messages.NewsLetterSuscriptionType.MyBrand);
                     _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.NewsletterReference, Core.Domain.Messages.NewsLetterSuscriptionType.MyReference);
 
+                    model.ConfirmMessage = _localizationService.GetResource("MyAccount.Confirm");
+
+                }
+                else
+                {
+                    model.ConfirmMessage = _localizationService.GetResource("MyAccount.ModelInvalid");
                 }
             }
             catch (Exception exc)
             {
                 ModelState.AddModelError("", exc.Message);
+                model.ConfirmMessage = _localizationService.GetResource("common.error");
             }
 
             model = GetModelMyAccount(model);

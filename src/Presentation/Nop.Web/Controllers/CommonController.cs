@@ -831,6 +831,11 @@ namespace Nop.Web.Controllers
                     publishProduct = _localizationService.GetResource("LoginMessage.PublishProduct"),
                     showVendor = _localizationService.GetResource("LoginMessage.ShowVendor"),
                     askQuestion = _localizationService.GetResource("LoginMessage.AskQuestion")
+                },
+                confirm = new {
+                    myAccount = _localizationService.GetResource("MyAccount.Confirm"),
+                    offices = _localizationService.GetResource("MyOffices.Confirm"),
+                    closeButton = _localizationService.GetResource("Common.CloseButtonDialog")
                 }
             };
 

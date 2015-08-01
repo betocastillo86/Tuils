@@ -9,7 +9,7 @@
             VendorType: {
 
             },
-            Name: {
+            Bike: {
                 required: function (val, attr, computed) {
                     return computed.IsRegister;
                 }
@@ -19,7 +19,7 @@
                 pattern : 'email'
             },
             Password: {
-                required: true,
+                required: false,
                 minLength : 5
             },
             CompanyName: {
@@ -30,7 +30,6 @@
             TermsOfUse: {
                 acceptance: true
             }
-
         },
         labels: {
             Name: "Nombres",

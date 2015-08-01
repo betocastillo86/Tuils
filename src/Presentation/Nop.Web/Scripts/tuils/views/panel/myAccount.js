@@ -19,6 +19,9 @@
             this.loadDateOfBirth();
             this.ddlBikeBrand = this.$("#BikeBrand_CategoryId");
             this.ddlBikeReference = this.$("#BikeReferenceId");
+            
+            if (this.$('.confirmHiddenField').length > 0)
+                this.alert({ message: this.$('.confirmHiddenField').val() });
         },
         loadReferences: function () {
 

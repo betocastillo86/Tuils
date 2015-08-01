@@ -1,5 +1,7 @@
-﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'baseView', 'tuils/models/userRegister', 'resources'],
-    function ($, _, Backbone, Handlebars, BaseView, UserRegisterModel, Resources) {
+﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'baseView', 'tuils/models/userRegister',
+    'resources', 'storage', 'util'],
+    function ($, _, Backbone, Handlebars, BaseView, UserRegisterModel,
+        Resources, TuilsStorage, TuilsUtil) {
     var CreateUserView = BaseView.extend({
 
         userType : undefined,
@@ -12,10 +14,10 @@
         },
 
         bindings: {
-            "#txtName": "Name",
+            //"#txtName": "Name",
             "#txtCompanyName": "CompanyName",
             "#txtEmail": "Email",
-            "#txtPassword": "Password",
+            //"#txtPassword": "Password",
             "#chkTerms": "TermsOfUse"
         },
 
@@ -112,12 +114,45 @@
                 modal:true
             });
         },
+        tagBikeReferences: function () {
+
+            if (TuilsStorage.bikeReferences) {
+                var tagReferences = [];
+
+                var addTag = function (element) {
+                    tagReferences.push({ label: element.Name, value: element.Id });
+                };
+                _.each(TuilsStorage.bikeReferences, function (element, index) {
+                    //addTag(element);
+                    _.each(element.ChildrenCategories, function (child, index) {
+                        child.Name = element.Name + ' ' + child.Name;
+                        addTag(child);
+                    });
+                });
+
+                this.$("#txtBike")
+                    .tagit({
+                        availableTags: tagReferences,
+                        allowOnlyAvailableTags: true,
+                        tagLimit: 1,
+                        autocomplete: {
+                            source: TuilsUtil.tagItAutocomplete
+                        },
+                        placeholderText : this.$("#txtBike").attr('placeholder'),
+                        allowSpaces: true
+                    });
+            }
+            else {
+                TuilsStorage.loadBikeReferences(this.tagBikeReferences, this);
+            }
+        },
         close: function () {
             this.$el.dialog('close');
         },
         render: function () {
             this.$el.html(this.template());
             this.show();
+            this.tagBikeReferences();
 
             Backbone.Validation.bind(this);
             this.stickit();
