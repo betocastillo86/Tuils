@@ -11,7 +11,7 @@
             },
             Bike: {
                 required: function (val, attr, computed) {
-                    return computed.IsRegister;
+                    return computed.VendorType == 0;
                 }
             },
             Email: {

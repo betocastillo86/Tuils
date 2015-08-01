@@ -11,7 +11,10 @@
 
         viewConfirm : undefined,
 
-        _isMobile : undefined,
+        _isMobile: undefined,
+
+        //Despues de un evento de sesion valida si tiene que enviar algun formulario o no
+        validateSendRequestAfterSession : false,
 
         //Lista de vistas anidadas que requieren autenticación para realizar alguna acción
         //Todas las vistas que se encuentren en esta propiedad se les agregará el evento unautorized
@@ -36,15 +39,20 @@
         },
         validateAuthorization: function ()
         {
+            this.validateSendRequestAfterSession = true;
             this.model.once('unauthorized', this.showLogin, this);
         },
         userAuthenticated: function (model) {
-            //Relanza el evento que el usuario fue autenticado, para que la vista que hereda lo pueda capturar
-            if (model)
-                this.trigger("user-authenticated", model);
-            else
-                this.trigger("user-authenticated");
+            if (this.validateSendRequestAfterSession)
+            {
+                //Relanza el evento que el usuario fue autenticado, para que la vista que hereda lo pueda capturar
+                if (model)
+                    this.trigger("user-authenticated", model);
+                else
+                    this.trigger("user-authenticated");
 
+                this.validateSendRequestAfterSession = false;
+            }
         },
         stickThem: function () {
             this.stickit();
@@ -56,18 +64,31 @@
             this.$("input[tuils-val='int']").on("keypress", TuilsUtil.onlyNumbers);
             this.$("input[tuils-val='none']").on("keypress", function () { return false; });
         },
+        //Muestra el cargando en toda la pantalla
+        showLoadingAll: function (model) {
+            model = model ? model : this.model;
+            model.once("sync", this.removeLoading, this);
+            model.once("error", this.removeLoading, this);
+            model.once("unauthorized", this.removeLoading, this);
+            
+            displayAjaxLoading(true);
+        },
         //Agrega o reemplaza el html
         showLoading: function(model, append)
         {
+            model = model ? model : this.model;
             model.once("sync", this.removeLoading, this);
             model.once("error", this.removeLoading, this);
+            model.once("unauthorized", this.removeLoading, this);
             append ? this.$el.append(this.loadingTemplate) : this.$el.html(this.loadingTemplate);
         },
         //Esta opción para cargar la clase loadingBack al elemento que envien
         showLoadingBack : function(model, el)
         {
+            model = model ? model : this.model;
             model.once("sync", this.removeLoading, this);
             model.once("error", this.removeLoading, this);
+            model.once("unauthorized", this.removeLoading, this);
             el.addClass('loadingBack');
         },
         handleResize : function(){
@@ -83,6 +104,7 @@
         removeLoading : function(){
             this.$el.find("#divLoadingback").remove();
             this.$el.find('.loadingBack').removeClass('loadingBack');
+            displayAjaxLoading(false);
         },
         //Muestra un mesaje de alerta ya sea con un Resource o con el mensaje directamente
         alert: function (args) {
