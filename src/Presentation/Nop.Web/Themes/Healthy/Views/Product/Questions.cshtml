@@ -8,13 +8,12 @@
 
     <div class="page-body">
         
-        <div id="divLinkWriteQuestion"><a href="javascript:void(0)" title="@T("Questions.LinkWriteQuestion.Alt")">@T("Questions.LinkWriteQuestion")</a> </div>
-        <div class="write-review" id="question-form" style="display:none">
-            <div class="title">@T("Questions.Write")</div>
+
+        <div class="write-review" id="question-form" >
             
                 <div class="message-error">@Html.ValidationSummary(true)</div>
                 <div class="form-fields">
-                    @Html.TextAreaRequiredFor(model => model.NewQuestion.QuestionText, htmlAttributes: new { @class = "review-title" })
+                    @Html.TextAreaRequiredFor(model => model.NewQuestion.QuestionText, htmlAttributes: new { @class = "review-title" }, labelText: T("Questions.Write").Text, required:false )
                     @Html.Hidden("productId", Model.ProductId)
 
                     @if(Model.ShowCaptcha)
