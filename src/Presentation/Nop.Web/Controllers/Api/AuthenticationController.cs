@@ -13,6 +13,7 @@ using Nop.Services.Authentication;
 using Nop.Services.Logging;
 using Nop.Services.Localization;
 using Nop.Web.Framework.Security;
+using Nop.Services.Catalog;
 
 namespace Nop.Web.Controllers.Api
 {
@@ -27,6 +28,7 @@ namespace Nop.Web.Controllers.Api
         private readonly IAuthenticationService _authenticationService;
         private readonly ICustomerActivityService _customerActivityService;
         private readonly ILocalizationService _localizationService;
+        private readonly ICategoryService _categoryService;
         #endregion
 
         #region Ctor
@@ -37,7 +39,8 @@ namespace Nop.Web.Controllers.Api
             ICustomerRegistrationService customerRegistrationService,
             IAuthenticationService authenticationService,
             ICustomerActivityService customerActivityService,
-            ILocalizationService localizationService)
+            ILocalizationService localizationService,
+            ICategoryService categoryService)
         {
             this._customerService = customerService;
             this._workContext = workContext;
@@ -46,6 +49,7 @@ namespace Nop.Web.Controllers.Api
             this._authenticationService = authenticationService;
             this._customerActivityService = customerActivityService;
             this._localizationService = localizationService;
+            this._categoryService = categoryService;
         }
         #endregion
             
@@ -66,7 +70,7 @@ namespace Nop.Web.Controllers.Api
             {
                 //Convierte a entidad e intenta realizar el registro
                 var attributes = new Dictionary<string, object>();
-                var entityCustomer = model.ToEntity(out attributes);
+                var entityCustomer = model.ToEntity(out attributes, _categoryService);
 
                 var result = _customerRegistrationService.Register(entityCustomer, attributes, model.VendorType, true);
                 if (result.Success)

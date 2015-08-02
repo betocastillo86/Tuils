@@ -33,7 +33,7 @@ namespace Nop.Data.Migrations
             bool runResources = true;
             bool runManufacturers = false;
             bool runSettings = true;
-            bool runTemplatesEmails = false;
+            bool runTemplatesEmails = true;
             bool runUrls = false;
 
 
@@ -1491,25 +1491,43 @@ namespace Nop.Data.Migrations
                 var templatesTable = context.Set<MessageTemplate>();
 
                 var templates = new List<MessageTemplate>(){
-                new MessageTemplate()
-                {
-                    Id = 33,
-                    Name = "Product.QuestionAnswered",
-                    Subject = "%Store.Name%. Te han respondido la pregunta de %Product.Name%",
-                    Body = "<p>Respondieron la pregunta:</p><p>&nbsp;</p><p>%Question.Answer%</p>",
-                    IsActive = true,
-                    EmailAccountId = 1
-                },
-                new MessageTemplate()
-                {
-                    Id = 34,
-                    Name = "Product.NewQuestion",
-                    Subject = "%Store.Name%. Tienes una nueva pregunta del producto %Product.Name%",
-                    Body = "<p>Te han hecho una nueva pregunta con el siguiente contenido:</p><p>&nbsp;</p><p>%Question.QuestionText%</p>",
-                    IsActive = true,
-                    EmailAccountId = 1
-                }
-            };
+                    new MessageTemplate()
+                    {
+                        Id = 33,
+                        Name = "Product.QuestionAnswered",
+                        Subject = "%Store.Name%. Te han respondido la pregunta de %Product.Name%",
+                        Body = "<p>Respondieron la pregunta:</p><p>&nbsp;</p><p>%Question.Answer%</p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 34,
+                        Name = "Product.NewQuestion",
+                        Subject = "%Store.Name%. Tienes una nueva pregunta del producto %Product.Name%",
+                        Body = "<p>Te han hecho una nueva pregunta con el siguiente contenido:</p><p>&nbsp;</p><p>%Question.QuestionText%</p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 35,
+                        Name = "Product.Published",
+                        Subject = "%Store.Name%. Acabas de publicar un nuevo producto %Product.Name%",
+                        Body = "<p>Acabas de publicar el producto <b>%Product.Name%</b> muy pronto recibiras un correo con la aprobación del producto </p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 36,
+                        Name = "Product.PublishApproved",
+                        Subject = "%Store.Name%. La publicación de %Product.Name% ha sido aprobada",
+                        Body = "<p>Acabamos de aprobar la publicación del producto <b>%Product.Name%</b>. Miles de personas lo estan viendo desede este momento </p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    }
+                };
 
                 templatesTable.AddOrUpdate(t => t.Id, templates.ToArray());
             }

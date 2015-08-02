@@ -339,6 +339,21 @@ namespace Nop.Services.Messages
         int SendQuestionAnsweredNotificationMessage(ProductQuestion productQuestion, int languageId);
 
         int SendNewQuestionNotificationMessage(ProductQuestion productQuestion, int languageId);
+        /// <summary>
+        /// Correo que se envia cuando un usuario publica un producto
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        int SendProductPublishedNotificationMessage(Product product, int languageId);
+
+        /// <summary>
+        /// Correo que se envia cuando un producto ha sido aprovado para ser publicado
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        int SendPublishApprovedNotificationMessage(Product product, int languageId);
         #endregion
     }
 }

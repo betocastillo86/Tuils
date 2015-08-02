@@ -36,6 +36,7 @@ using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Mvc;
+using Nop.Services.Messages;
 
 namespace Nop.Admin.Controllers
 {
@@ -83,6 +84,7 @@ namespace Nop.Admin.Controllers
         private readonly IProductAttributeFormatter _productAttributeFormatter;
         private readonly IProductAttributeParser _productAttributeParser;
         private readonly IDownloadService _downloadService;
+        private readonly IWorkflowMessageService _workflowMessageService;
 
         #endregion
 
@@ -127,7 +129,8 @@ namespace Nop.Admin.Controllers
             IShoppingCartService shoppingCartService,
             IProductAttributeFormatter productAttributeFormatter,
             IProductAttributeParser productAttributeParser,
-            IDownloadService downloadService)
+            IDownloadService downloadService,
+            IWorkflowMessageService workflowMessageService)
         {
             this._productService = productService;
             this._productTemplateService = productTemplateService;
@@ -169,6 +172,7 @@ namespace Nop.Admin.Controllers
             this._productAttributeFormatter = productAttributeFormatter;
             this._productAttributeParser = productAttributeParser;
             this._downloadService = downloadService;
+            this._workflowMessageService = workflowMessageService;
         }
 
         #endregion 
@@ -1054,6 +1058,10 @@ namespace Nop.Admin.Controllers
                 {
                     _backInStockSubscriptionService.SendNotificationsToSubscribers(product);
                 }
+
+                //Si fue aprobado y antes no lo estaba envía notificación al vendedor
+                if (product.Published && !model.PreviousPublisedProduct)
+                    _workflowMessageService.SendPublishApprovedNotificationMessage(product, _workContext.WorkingLanguage.Id);
 
                 //activity log
                 _customerActivityService.InsertActivity("EditProduct", _localizationService.GetResource("ActivityLog.EditProduct"), product.Name);

@@ -2199,6 +2199,9 @@ namespace Nop.Services.Catalog
             try
             {
                 InsertProduct(product);
+                //Despues de insertar envía la notificación
+                if (product.Id > 0)
+                    _workflowMessageService.SendProductPublishedNotificationMessage(product, _workContext.WorkingLanguage.Id);
             }
             catch (Exception e)
             {

@@ -154,7 +154,7 @@ namespace Nop.Web.Extensions.Api
         #endregion
 
         #region Customer
-        public static Customer ToEntity(this CustomerBaseModel model, out Dictionary<string, object> attributes)
+        public static Customer ToEntity(this CustomerBaseModel model, out Dictionary<string, object> attributes, ICategoryService categoryService)
         {
             var entity = new Customer();
             entity.Email = model.Email;
@@ -166,7 +166,20 @@ namespace Nop.Web.Extensions.Api
             if (model.VendorType != Core.Domain.Vendors.VendorType.User)
                 attributes.Add(SystemCustomerAttributeNames.Company, model.CompanyName);
             else
-                attributes.Add(SystemCustomerAttributeNames.BikeReferenceId, model.Bike);
+            {
+                
+                if (model.Bike > 0)
+                {
+                    var bikeCategory = categoryService.GetCategoryById(model.Bike);
+                    if (bikeCategory != null)
+                    {
+                        attributes.Add(SystemCustomerAttributeNames.BikeReferenceId, model.Bike);
+                        //Consulta la categoria padre ya que es la marca de la motocicleta
+                        attributes.Add(SystemCustomerAttributeNames.BikeBrandId, bikeCategory.ParentCategoryId);
+                    }       
+                }
+            }
+                
 
             return entity;
         }

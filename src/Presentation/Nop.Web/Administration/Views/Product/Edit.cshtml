@@ -15,6 +15,7 @@
             <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />
             <input type="submit" name="save-continue" class="k-button" value="@T("Admin.Common.SaveContinue")" />
             <input type="submit" id="copyproduct" name="copyproduct" class="k-button" value="@T("Admin.Catalog.Products.Copy")" />
+            @Html.Hidden("PreviousPublisedProduct", Model.Published)
             <span id="product-delete" class="k-button">@T("Admin.Common.Delete")</span>
         </div>
     </div>
