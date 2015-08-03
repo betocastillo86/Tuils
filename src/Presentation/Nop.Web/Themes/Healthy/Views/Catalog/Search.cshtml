@@ -103,9 +103,9 @@
                     }
                     @if (Model.NoResults)
                     {
-                        <strong class="result">
+                        <div class="no-result">
                             @T("Search.NoResultsText")
-                        </strong>
+                        </div>
                     }
                     @*product list*@
                     @if (Model.Products.Count > 0)

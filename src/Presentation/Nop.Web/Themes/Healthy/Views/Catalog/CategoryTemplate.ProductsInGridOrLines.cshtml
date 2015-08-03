@@ -49,9 +49,9 @@
     <div class="page-title">
         <h1>@Model.Name</h1>
     </div>
-    @Html.Action("SimilarSearches", "Catalog", new { q = Model.Name })
+    
     <div class="page-body">
-        @Html.Widget("categorydetails_top", Model.Id)
+        @*@Html.Widget("categorydetails_top", Model.Id)*@
         @*description*@
         @if (!String.IsNullOrWhiteSpace(Model.Description))
         {
@@ -59,7 +59,8 @@
                 @Html.Raw(Model.Description)
             </div>
         }
-        @Html.Widget("categorydetails_before_subcategories", Model.Id)
+        @Html.Action("SimilarSearches", "Catalog", new { q = Model.Name })
+        @*@Html.Widget("categorydetails_before_subcategories", Model.Id)*@
         @*subcategories*@
         @if (Model.SubCategories.Count > 0)
         {
@@ -187,6 +188,15 @@
             </div>
             }
         }
+        else
+        { 
+            <div class="no-result">
+                @T("Category.NoRows")
+            </div>
+        }
+        
+
+        
         <div class="pager">
             @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
         </div>

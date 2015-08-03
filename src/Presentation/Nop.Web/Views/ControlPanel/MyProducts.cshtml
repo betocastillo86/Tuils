@@ -74,7 +74,7 @@
 
     </ul>
 
-    @Html.Partial("_NoRows", new NoRowsModel() { List = Model.Products, ResourceMessage = "NoResults" })
+    @Html.Partial("_NoRows", new NoRowsModel() { List = Model.Products, ResourceMessage = Model.ResorceMessageNoRows, ShowPublishProduct=true })
 
     <div class="pager">
         @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")

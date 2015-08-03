@@ -4,17 +4,17 @@
 { 
     <div class="no-result">
         @T(Model.ResourceMessage)
-        <div class="similarSearch">
-		    <span title="Estas son las busquedas más comunes en tuils"> Quizas querias decir:</span>
-		    <ul>
-		            <a title="Busca resultados para casco" href="/buscar?q=casco"><li>casco,</li></a>
-		            <a title="Busca resultados para casco hjc" href="/buscar?q=casco%20hjc"><li>casco hjc,</li></a>
-		            <a title="Busca resultados para Bateria" href="/buscar?q=Bateria"><li>Bateria,</li></a>
-		            <a title="Busca resultados para Exosto" href="/buscar?q=Exosto"><li>Exosto,</li></a>
-		            <a title="Busca resultados para velocidad" href="/buscar?q=velocidad"><li>velocidad,</li></a>
-		            <a title="Busca resultados para moto" href="/buscar?q=moto"><li>moto.</li></a>
-		    </ul>
-		</div>
+        @if (Model.ShowPublishProduct)
+        {
+            <br />
+            <a class="button-1" href="@Url.Action("Index", "Sales")">@T("common.publishProduct")</a>
+            <br />
+        }
+
+        @if (Model.ShowSimilarSearches)
+        { 
+            @Html.Action("SimilarSearches", "Catalog")
+        }
     </div>
 }
 

@@ -381,14 +381,18 @@ namespace Nop.Web.Controllers
             {
                 case "rating":
                     withRating = true;
+                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.Rating", isMyOrders ? "MyOrders": "MySales");
                     break;
                 case "norating":
                     withRating = false;
+                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.NoRating", isMyOrders ? "MyOrders": "MySales");
                     break;
                 case "active":
                     publishedProducts = true;
+                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.Active", isMyOrders ? "MyOrders" : "MySales");
                     break;
                 default:
+                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.General", isMyOrders ? "MyOrders" : "MySales");
                     break;
             }
 
@@ -536,6 +540,10 @@ namespace Nop.Web.Controllers
 
                 model.PagingFilteringContext.q = command.q;
                 model.PagingFilteringContext.LoadPagedList(products);
+
+
+                //Carga la cadena de respuesta cuando no  hay resultados del filtro
+                model.ResorceMessageNoRows = string.Format("MyProducts.{0}", command.p ? "Active" : "Inactive");
 
                 string url = _webHelper.GetThisPageUrl(true);
                 model.UrlFilterByServices = new MyProductsModel.LinkFilter()

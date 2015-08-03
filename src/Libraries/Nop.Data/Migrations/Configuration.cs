@@ -719,6 +719,23 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Products.DetailShipping", "Detalles del domicilio");
                 newLocaleStringResources.Add("Products.IncludeSupplies", "Incluye insumos");
                 newLocaleStringResources.Add("Products.SuppliesValue", "Valor de los insumos");
+                newLocaleStringResources.Add("MyOrders.NoRows.Rating", "No tienes compras calificadas todavía");
+                newLocaleStringResources.Add("MyOrders.NoRows.Active", "No tienes compras, animate a buscar el producto que necesitas para tu moto. Acá van unas sugerencias");
+                newLocaleStringResources.Add("MyOrders.NoRows.General", "No tienes compras, animate a buscar el producto que necesitas para tu moto. Acá van unas sugerencias");
+                newLocaleStringResources.Add("MyOrders.NoRows.NoRating", "No tienes compras sin calificar");
+
+                newLocaleStringResources.Add("MySales.NoRows.Rating", "No tienes ventas calificadas todavía");
+                newLocaleStringResources.Add("MySales.NoRows.Active", "No tienes ventas activas, animate a publicar un producto");
+                newLocaleStringResources.Add("MySales.NoRows.General", "No tienes ventas, animate a publicar un producto");
+                newLocaleStringResources.Add("MySales.NoRows.NoRating", "No tienes ventas pendientes de calificación");
+                newLocaleStringResources.Add("MyProducts.NoRows.Active", "No productos activos, animate a publicar uno");
+                newLocaleStringResources.Add("MyProducts.NoRows.Inactive", "No tienes productos pendientes de activar, si quieres vender algo animate a hacerlo en Tuils");
+
+                newLocaleStringResources.Add("MyOffices.NoRows", "No tienes sedes cargadas, puedes crear una ahora mismo");
+                newLocaleStringResources.Add("Category.NoRows", "No hay productos activos en esta categoría");
+                
+
+                
                 
                 
                 

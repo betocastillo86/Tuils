@@ -59,7 +59,7 @@
 
     }
 
-    @Html.Partial("_NoRows", new NoRowsModel() { List = Model.Orders, ResourceMessage = "NoResults" })
+    @Html.Partial("_NoRows", new NoRowsModel() { List = Model.Orders, ResourceMessage = Model.ResorceMessageNoRows, ShowSimilarSearches = true })
 
     <div class="pager">
         @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")

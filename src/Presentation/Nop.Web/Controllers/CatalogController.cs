@@ -1562,10 +1562,11 @@ namespace Nop.Web.Controllers
 
             IPagedList<Product> products = new PagedList<Product>(new List<Product>(), 0, 1);
             // only search if query string search keyword is set (used to avoid searching or displaying search term min length error message on /search page load)
-            if (Request.Params["Q"] != null)
+            //Se agrega validación de specs para poder realizar filtro desde el menu
+            if (Request.Params["Q"] != null || (Request.Params["Q"] == null && Request["specs"] != null))
             {
-
-                if (model.Q.Length < _catalogSettings.ProductSearchTermMinimumLength)
+                //Solo si tiene un filto por speficicación puede buscar
+                if (model.Q.Length < _catalogSettings.ProductSearchTermMinimumLength && Request["specs"] == null)
                 {
                     model.Warning = string.Format(_localizationService.GetResource("Search.SearchTermMinimumLengthIsNCharacters"), _catalogSettings.ProductSearchTermMinimumLength);
                 }

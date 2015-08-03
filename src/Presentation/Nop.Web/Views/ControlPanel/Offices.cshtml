@@ -10,10 +10,13 @@
     <div id="divListOffices">
 
     </div>
+    
 </div>
 
 <script id="templateListOffices" type="text/x-handlebars-template">
     <div class="help_table"><span></span><p>Visualizar tabla horizontalmente</p><br/></div>
+    
+    {{#if this.length}}
     <div class="conte-edit-sede">
         <div class="table-header">
             <div class="td-sede">@T("Offices.Name")</div>
@@ -43,6 +46,11 @@
         </ul>
 
     </div>
+    {{else}}
+    <div class="no-result" style="display:block">
+        @T("MyOffices.NoRows")
+    </div>
+    {{/if}}
     <div class="headerAccordion table-header"><span class="icon-tienda"></span>@T("Offices.New")</div>
     <div>
         <div id="divNewOffice" class="sede-edited" style="display:none">
