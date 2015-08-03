@@ -189,7 +189,7 @@ nav:not(.mm-menu, .nav-category) {display: none;}
 		.nav-menu .mm-menu ul li ul li a:after{display: none;} .nav-menu .mm-menu ul li ul li a:before{display: none;}
 		.nav-menu .mm-menu ul li ul li:first-child{ border: none;}
 			.nav-menu .mm-menu ul li ul li a{color:#3B5A83; font-size: 14px; font-weight: 500; text-transform: uppercase; padding: 11px 15px 12px; display: block; transition:ease all 0.4s;}
-				.nav-menu .mm-menu ul li ul li a:hover, .nav-menu .mm-menu ul li ul li a:focus{background:#3B5A83; color:#D8DEE6;}
+				.nav-menu .mm-menu ul li ul li a:hover, .nav-menu .mm-menu ul li ul li a:focus, .mm-menu ul li ul li a.active{background:#3B5A83 !important; color:#D8DEE6;}
 		.childrenOptions li:first-child{margin-left: 15% !important;}
 
 
