@@ -38,7 +38,7 @@
             if (this.productType == TuilsConfiguration.productBaseTypes.product)
                 this.productTypeName = 'producto';
             else if (this.productType == TuilsConfiguration.productBaseTypes.service)
-                this.productTypeName = 'servicio';
+                this.productTypeName = 'servicio-especializado';
             else
                 this.productTypeName = 'moto';
 

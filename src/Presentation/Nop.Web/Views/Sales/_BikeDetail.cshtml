@@ -9,20 +9,6 @@
     <div class="form-public">
            @Html.Partial("_CommonFieldsProductBikeDetail", Model)  
 
-          <div class="inputs">
-            @Html.LabelT("PublishProduct.Color")
-            @Html.DropDownList("ddlColor", Model.ColorOptions, "-")
-            @ShowRequired("Color")
-        </div>
-
-        
-       
-            <div class="inputs">
-                @Html.LabelT("PublishProduct.Codition")
-                @Html.DropDownList("ddlCondition", Model.ConditionOptions, "-")
-                @ShowRequired("Condition")
-            </div>
-           
             <div class="inputs">
                 @Html.LabelT("PublishProduct.CarriagePlate")
                 <input id="txtCarriagePlate" type="text" placeholder="@T("PublishProduct.CarriagePlateExample")" maxlength="7" />
@@ -43,6 +29,16 @@
                     }
                 </select>
                 @ShowRequired("Year")
+            </div>
+            <div class="inputs">
+                @Html.LabelT("PublishProduct.Color")
+                @Html.DropDownList("ddlColor", Model.ColorOptions, "-")
+                @*@ShowRequired("Color")*@
+            </div>
+            <div class="inputs">
+                @Html.LabelT("PublishProduct.Codition")
+                @Html.DropDownList("ddlCondition", Model.ConditionOptions, "-")
+                @*@ShowRequired("Condition")*@
             </div>
 
             <br />

@@ -81,6 +81,25 @@ namespace Nop.Core.Domain.Common
         /// Atributo correspondiente al tipo de motocicleta
         /// </summary>
         public int specificationAttributeBikeType { get; set; }
+
+        /// <summary>
+        /// Atributo Estado (Nuevo o Usado)
+        /// </summary>
+        public int specificationattributeIsNew { get; set; }
+
+        /// <summary>
+        /// Opción de atributo Nuevo
+        /// </summary>
+        public int specificationattributeOptionIsNewYes { get; set; }
+
+
+        /// <summary>
+        /// Opción de atributo Usado
+        /// </summary>
+        public int specificationattributeOptionIsNewNo { get; set; }
+
+
+
         #endregion
 
         #region Productos

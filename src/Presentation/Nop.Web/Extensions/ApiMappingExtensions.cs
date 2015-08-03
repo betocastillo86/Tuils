@@ -61,7 +61,7 @@ namespace Nop.Web.Extensions.Api
             }
 
             entity.TempFiles = model.TempFiles;
-            entity.IsNew = model.IsNew;
+            entity.IsNew = model.IsNew ?? false;
             entity.StateProvinceId = model.StateProvince;
 
             #region Properties Products
@@ -85,7 +85,8 @@ namespace Nop.Web.Extensions.Api
                                             .Add(new ProductSpecificationAttribute()
                                             {
                                                 SpecificationAttributeOptionId = a,
-                                                ShowOnProductPage = true
+                                                ShowOnProductPage = true,
+                                                AllowFiltering = true
                                             }
                                             ));
             //Agrega las condiciones de negociación
@@ -96,22 +97,25 @@ namespace Nop.Web.Extensions.Api
                                             {
                                                 //SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeNegotiation,
                                                 SpecificationAttributeOptionId = a,
-                                                ShowOnProductPage = true
+                                                ShowOnProductPage = true,
+                                                AllowFiltering = true
                                             }
                                             ));
 
             //Si viene los kilometros los asocia
             if (model.Kms > 0)
-                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.Kms.ToString(), SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionKms, ShowOnProductPage = true });
+                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.Kms.ToString(),SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionKms, ShowOnProductPage = true });
 
             //La placa es exclusiva de las motos
             if (!string.IsNullOrEmpty(model.CarriagePlate))
-                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.Kms.ToString(), SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionCarriagePlate, ShowOnProductPage = true });
+                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.CarriagePlate, SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionCarriagePlate, ShowOnProductPage = true });
 
             //El año es esclusivo de las motos
             if (model.Year > 0)
                 entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.Option, AllowFiltering = true, CustomValue = model.Year.ToString(), SpecificationAttributeOptionId = model.Year, ShowOnProductPage=true });
 
+            if(model.IsNew.HasValue)
+                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.Option, AllowFiltering = true, CustomValue = model.Year.ToString(), SpecificationAttributeOptionId = model.IsNew.Value ? _tuilsSettings.specificationattributeOptionIsNewYes : _tuilsSettings.specificationattributeOptionIsNewNo, ShowOnProductPage = true });
             #endregion
 
 

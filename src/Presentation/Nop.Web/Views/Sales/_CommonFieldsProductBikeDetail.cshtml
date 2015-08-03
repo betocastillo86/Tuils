@@ -1,7 +1,9 @@
 ﻿@model Nop.Web.Models.Sales.PublishProductModel
 
 
-@if (Model.ProductType != Nop.Web.Controllers.ProductTypePublished.Service)
+
+
+@if (Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Product)
 { 
     <div class="inputs">
         @Html.LabelT("PublishProduct.IsNew")
@@ -14,18 +16,18 @@
     </div>
 }
 
-
+<div class="inputs">
+    @Html.LabelT("PublishProduct.ProductTitle")
+    <input id="txtName" type="text" placeholder="@T("PublishProduct.TitleExample")" />
+    @ShowRequired("Name")
+</div>
 <div class="inputs">
     @Html.LabelT("PublishProduct.StateProvince")
     @Html.DropDownList("ddlStateProvince", Model.StateProvinces, "-")
     @ShowRequired("StateProvince")
 </div>
 
-<div class="inputs">
-    @Html.LabelT("PublishProduct.ProductTitle")
-    <input id="txtName" type="text" placeholder="@T("PublishProduct.TitleExample")" />
-    @ShowRequired("Name")
-</div>
+
 <div class="inputs">
     @Html.LabelT("PublishProduct.Price")
     <input id="txtPrice" type="text" tuils-val="int" placeholder="@T("PublishProduct.PriceExample")" maxlength="10" />

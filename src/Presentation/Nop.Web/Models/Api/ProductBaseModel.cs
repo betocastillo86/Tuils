@@ -34,9 +34,9 @@ namespace Nop.Web.Models.Api
 
         public List<SpecialCategoryProduct> SpecialCategories { get; set; }
 
-        public int Color { get; set; }
+        public int? Color { get; set; }
 
-        public int Condition { get; set; }
+        public int? Condition { get; set; }
         public string CarriagePlate { get; set; }
 
         public int Year { get; set; }
@@ -49,7 +49,7 @@ namespace Nop.Web.Models.Api
 
         public List<string> TempFiles { get; set; }
 
-        public bool IsNew { get; set; }
+        public bool? IsNew { get; set; }
 
         public int StateProvince { get; set; }
 

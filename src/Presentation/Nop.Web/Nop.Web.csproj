@@ -2552,6 +2552,8 @@
     <Content Include="Themes\Healthy\Views\Catalog\_FilterSearches.cshtml" />
     <Content Include="Views\Sales\_PreviousProductCreated.cshtml" />
     <Content Include="Views\Shared\_ConfirmMessage.cshtml" />
+    <Content Include="Views\Product\_ProductCreditcard.cshtml" />
+    <Content Include="Views\Product\_ProductSupplies.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

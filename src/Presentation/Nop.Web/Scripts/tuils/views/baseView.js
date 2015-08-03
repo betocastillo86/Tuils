@@ -24,6 +24,8 @@
 
         minSizeDesktopWith: 1024,
 
+        minSizeMobileWith: 400,
+
         dialogBasicOptions: {
             modal: true,
             draggable: false,
@@ -202,6 +204,11 @@
         isMinSize: function () {
             var currentWidth = window.innerWidth || document.documentElement.clientWidth;
             return currentWidth <= this.minSizeDesktopWith;
+        },
+        //Es un tamaño mucho más pequeño para hacer validaciones de tamaño más estrictas
+        isMinSizeMobile: function () {
+            var currentWidth = window.innerWidth || document.documentElement.clientWidth;
+            return currentWidth <= this.minSizeMobileWith;
         }
     });
 

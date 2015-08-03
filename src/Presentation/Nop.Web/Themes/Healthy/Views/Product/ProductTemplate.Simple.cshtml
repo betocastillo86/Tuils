@@ -102,6 +102,8 @@
                             @Html.Partial("_ProductSpecialCategories", Model)
                             <!--product manufacturers-->
                             @Html.Partial("_ProductManufacturers", Model.ProductManufacturers)
+                            <!--Include Supplies-->
+                            @Html.Partial("_ProductSupplies")
                             <!--product SKU, manufacturer part number, stock info-->
                             @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
                         </div>

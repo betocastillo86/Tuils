@@ -39,6 +39,7 @@
                         that.remove();
                     }
                 });
+                this.alert('Operación exitosa');
                 
             }
 

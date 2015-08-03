@@ -16,6 +16,12 @@
 	    return str;
 	});
 
+	Handlebars.registerHelper('replaceEmpty', function (str, options) {
+	    if (!str || str == '')
+	        str = options.hash['replace'];
+	    return str;
+	});
+
 	Handlebars.registerHelper('stars', function (value) {
 	    var ret = '<div class="rating no-margin">';
 	    ret += '<div style="width:' + parseInt(value) * 20 + '%">';

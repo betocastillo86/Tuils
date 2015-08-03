@@ -113,7 +113,21 @@ namespace Nop.Web.Models.Catalog
         /// </summary>
         public string StateProvinceName { get; set; }
 
+        /// <summary>
+        /// Detalles del envío
+        /// </summary>
+        public string DetailShipping { get; set; }
+
         public bool DisableWishlistButton { get; set; }
+
+        public bool IncludeSupplies { get; set; }
+
+        /// <summary>
+        /// Valor de los insumos
+        /// </summary>
+        public int SuppliesValue { get; set; }
+
+        public string SuppliesValueStr { get; set; }
 
 		#region Nested Classes
 

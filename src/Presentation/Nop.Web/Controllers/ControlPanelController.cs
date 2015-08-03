@@ -340,6 +340,8 @@ namespace Nop.Web.Controllers
                 //Concatena las dos listas anteriores y las envía a ser actualizadas
                 _vendorService.InsertUpdateVendorSpecialCategories(_workContext.CurrentVendor.Id, bikeReferences.Concat(specializedCategories).ToList());
 
+                model.ConfirmMessage = _localizationService.GetResource("VendorServices.Confirm");
+
                 return View(model);
             }
             else

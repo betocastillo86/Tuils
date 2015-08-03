@@ -8,7 +8,7 @@
         events: {
             "click .btnNext": "save",
             "click .btnBack": "back",
-            //"change #chkIsShipEnabled": "switchShipping",
+            "change #chkIsShipEnabled": "switchDoorToDoor",
             "change #chkIncludeSupplies": "switchSupplies",
             "change #chkHasSpecialBikes" : 'switchBikeReferences'
         },
@@ -108,13 +108,15 @@
             "#chkIncludeSupplies": "IncludeSupplies",
             "#txtSupplies": {
                 observe: "Supplies",
+                controlToMark: '[tuils-for="no-supplies"] .tagit-new .ui-widget-content',
                 onSet: function (value, ctx) {
                     var names = "";
-                    _.each(value.split(','), function (element) {
-                        //Carga los nombres de los insumos
-                        var name = _.findWhere(ctx.view.suppliesCollection.get('Options'), { Id: element }).Name;
-                        names += names!="" ? ("," + name) : name;
-                    });
+                    if(value.length > 0)
+                        _.each(value.split(','), function (element) {
+                            //Carga los nombres de los insumos
+                            var name = _.findWhere(ctx.view.suppliesCollection.get('Options'), { Id: element }).Name;
+                            names += names!="" ? ("," + name) : name;
+                        });
                     ctx.view.model.set("SuppliesName", names);
 
                     return value.split(',');
@@ -246,6 +248,9 @@
             else {
                 this.$("[tuils-for='no-supplies']").show();
             }
+        },
+        switchDoorToDoor: function (obj) {
+            this.$("[tuils-for='no-doorToDoor']").css('display', this.$("#chkIsShipEnabled").prop("checked") ? 'block' : 'none');
         },
         switchBikeReferences: function (obj) {
             this.$("#divBikeReferences").css("display", this.$("#chkHasSpecialBikes").prop("checked") ? "block" : "none");

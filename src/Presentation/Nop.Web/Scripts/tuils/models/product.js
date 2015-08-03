@@ -43,19 +43,21 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                     },
                     pattern: 'number'
                 },  
-                //AdditionalShippingCharge: {
-                //    required: function (val, attr, computed) {
-                //        return computed.IsShipEnabled;
-                //    },
-                //    pattern: 'number'
-                //},  
+                AdditionalShippingCharge: {
+                    required: function (val, attr, computed) {
+                        //Como está deshabilitado cargar el precio del en´vío para productos, solo se tiene cuenta la obligatoriedad si es un servicio
+                        return computed.IsShipEnabled && computed.ProductTypeId == TuilsConfiguration.productBaseTypes.service;
+                    },
+                    pattern: 'number'
+                },  
                 Price: {
                     required: true,
                     pattern: 'number'
                 },
                 Color: {
                     required: function (val, attr, computed) {
-                        return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.bike;
+                        //return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.bike;
+                        return false;
                     },
                     pattern: 'number'
                 },
@@ -64,7 +66,8 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                 },
                 Condition: {
                     required: function (val, attr, computed) {
-                        return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.bike;
+                        //return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.bike;
+                        return false;
                     },
                     pattern: 'number'
                 },
@@ -89,7 +92,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                 },
                 IsNew: {
                     required: function (val, attr, computed) {
-                        return computed.ProductTypeId != TuilsConfiguration.productBaseTypes.service;
+                        return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.product;
                     },
                     pattern: /^(true|false)$/
                 },
@@ -105,7 +108,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                 },
                 Supplies: {
                     required: function (val, attr, computed) {
-                        return computed.IncludeSupplies;
+                        return !computed.IncludeSupplies && computed.ProductTypeId == TuilsConfiguration.productBaseTypes.service;
                     }
                 },
                 SuppliesValue: {

@@ -221,9 +221,11 @@ namespace Nop.Web.Controllers
                 Gtin = product.Gtin,
                 StockAvailability = product.FormatStockMessage(_localizationService),
                 HasSampleDownload = product.IsDownload && product.HasSampleDownload,
-                StateProvinceName = product.StateProvince != null ? product.StateProvince.Name : string.Empty
+                StateProvinceName = product.StateProvince != null ? product.StateProvince.Name : string.Empty,
+                DetailShipping = product.DetailShipping,
+                IncludeSupplies = product.IncludeSupplies
             };
-
+            
             //automatically generate product description?
             if (_seoSettings.GenerateProductMetaDescription && String.IsNullOrEmpty(model.MetaDescription))
             {
@@ -436,6 +438,12 @@ namespace Nop.Web.Controllers
 
             model.ProductPrice.ProductId = product.Id;
             model.ProductPrice.Price = _priceFormatter.FormatPrice(product.Price);
+            if (product.SuppliesValue > 0)
+            {
+                model.SuppliesValue = product.SuppliesValue;
+                model.SuppliesValueStr = _priceFormatter.FormatPrice(product.SuppliesValue);
+            }
+            
 
             #region Codigo Eliminado
             //No es necesario realizar validaciones del precio ya que actualmente solo posee un único precio

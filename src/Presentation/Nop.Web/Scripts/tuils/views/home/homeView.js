@@ -34,7 +34,7 @@ define(['jquery', 'underscore', 'baseView','jqueryui', 'slide'],
         },
         resizeBanner: function () {
             //Si es pantalla pequeña recalcula el alto del banner
-            $(".rslides_container ul").css("height", this.isMinSize() ? (window.innerWidth / 3.5)+"px" : "");
+            $(".rslides").css("height", this.isMinSizeMobile() ? (window.innerWidth / 2.5) + "px" : "");
         },
         render: function ()
         {

@@ -25,6 +25,7 @@
         <div>
             <input class="btn_continue button-1" value="Guardar" type="submit" />
         </div>
+        @Html.Partial("_ConfirmMessage", Model.ConfirmMessage ?? string.Empty)
     </div>
 }
 

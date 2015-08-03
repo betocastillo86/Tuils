@@ -714,6 +714,12 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("MyAccount.Confirm", "Tus datos han sido actualizados correctamente");
                 newLocaleStringResources.Add("Common.CloseButtonDialog", "Cerrar");
                 newLocaleStringResources.Add("MyAccount.ModelInvalid", "Los datos están incompletos o mal diligenciados");
+                newLocaleStringResources.Add("Offices.New", "Nueva sede");
+                newLocaleStringResources.Add("VendorServices.Confirm", "Servicios actualizados correctamente");
+                newLocaleStringResources.Add("Products.DetailShipping", "Detalles del domicilio");
+                newLocaleStringResources.Add("Products.IncludeSupplies", "Incluye insumos");
+                newLocaleStringResources.Add("Products.SuppliesValue", "Valor de los insumos");
+                
                 
                 
                 
@@ -1432,8 +1438,8 @@ namespace Nop.Data.Migrations
                 settings.Add("publishproduct.isingaranty", "¿Está en garantía?");
                 settings.Add("tuilssettings.specificationattributeaccesories", "8");
                 settings.Add("tuilssettings.specificationattributenegotiation", "7");
-                settings.Add("tuilssettings.specificationattributeoptionkms", "9");
-                settings.Add("tuilssettings.specificationattributeoptioncarriageplate", "11");
+                settings.Add("tuilssettings.specificationattributeoptionkms", "33");
+                settings.Add("tuilssettings.specificationattributeoptioncarriageplate", "34");
                 settings.Add("tuilssettings.defaultcountry", "1");
                 settings.Add("tuilssettings.specificationattributesupplies", "12");
                 settings.Add("vendorsettings.defaultpagesize", "6");
@@ -1463,6 +1469,10 @@ namespace Nop.Data.Migrations
                 settings.Add("CatalogSettings.LimitDaysOfProductPublished", "18");
                 settings.Add("CatalogSettings.DefaultSpecificationAttributeTopMenu", "6");
 
+                settings.Add("tuilssettings.specificationattributeIsNew", "1");
+                settings.Add("tuilssettings.specificationattributeOptionIsNewYes", "1");
+                settings.Add("tuilssettings.specificationattributeOptionIsNewNo", "2");
+                
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var setting in settings)
