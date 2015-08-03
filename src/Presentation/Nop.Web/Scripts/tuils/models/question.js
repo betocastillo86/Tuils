@@ -12,7 +12,8 @@
 
             QuestionText: {
                 required: true,
-                maxLength: 4000
+                maxLength: 4000,
+                minLength: 20
             }
         },
         labels: {

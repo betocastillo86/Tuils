@@ -17,6 +17,10 @@
             //"#txtName": "Name",
             "#txtCompanyName": "CompanyName",
             "#txtEmail": "Email",
+            '#txtBike': {
+                observe: 'Bike',
+                controlToMark: '.tagit-new input[type="text"]'
+            },
             //"#txtPassword": "Password",
             "#chkTerms": "TermsOfUse"
         },
@@ -96,11 +100,13 @@
             this.model.set('VendorType', parseInt(this.userType));
 
             //Si es de tipo almacen muestra los datos
-            if (this.userType != 0) {
-                this.$("[tuils-for='establecimiento']").show();
+            if (this.userType == 0) {
+                this.$("[tuils-for='company']").hide();
+                this.$("[tuils-for='user']").show();
             }
             else {
-                this.$("[tuils-for='establecimiento']").hide();
+                this.$("[tuils-for='company']").show();
+                this.$("[tuils-for='user']").hide();
             }
         },
         back: function () {
@@ -130,6 +136,7 @@
                     });
                 });
 
+                var that = this;
                 this.$("#txtBike")
                     .tagit({
                         availableTags: tagReferences,
@@ -139,7 +146,15 @@
                             source: TuilsUtil.tagItAutocomplete
                         },
                         placeholderText : this.$("#txtBike").attr('placeholder'),
-                        allowSpaces: true
+                        allowSpaces: true,
+                        afterTagAdded: function () {
+                            //Cuando se agrega el tag se oculta la caja de texto
+                            that.$('.tagit-new input[type="text"]').hide();
+                        },
+                        afterTagRemoved: function () {
+                            //Muestra la caja de texto nuevamente
+                            that.$('.tagit-new input[type="text"]').show();
+                        }
                     });
             }
             else {

@@ -17,16 +17,17 @@ namespace Nop.Web.Models.Api
 
         public string Type { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
         public string LastName { get; set; }
 
-        [Required]
+        //[Required]
         public string Password { get; set; }
 
         [Required]
         public string Email { get; set; }
+
+        public int Bike { get; set; }
 
         public string CompanyName { get; set; }
 

@@ -158,14 +158,15 @@ namespace Nop.Web.Extensions.Api
         {
             var entity = new Customer();
             entity.Email = model.Email;
-            entity.Password = model.Password;
             attributes = new Dictionary<string, object>();
             //Agrega los atributos básicos del registro
-            attributes.Add(SystemCustomerAttributeNames.FirstName, model.Name);
-            attributes.Add(SystemCustomerAttributeNames.LastName, model.LastName);
+            //Ya que se eliminó el nombre, queda el mismo correo
+            attributes.Add(SystemCustomerAttributeNames.FirstName, model.Email);
 
             if (model.VendorType != Core.Domain.Vendors.VendorType.User)
                 attributes.Add(SystemCustomerAttributeNames.Company, model.CompanyName);
+            else
+                attributes.Add(SystemCustomerAttributeNames.BikeReferenceId, model.Bike);
 
             return entity;
         }

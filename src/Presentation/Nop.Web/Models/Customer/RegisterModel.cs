@@ -50,6 +50,9 @@ namespace Nop.Web.Models.Customer
         [AllowHtml]
         public string Company { get; set; }
 
+
+        public int Bike { get; set; }
+
         public bool NewsletterEnabled { get; set; }
         [NopResourceDisplayName("Account.Fields.Newsletter")]
         public bool Newsletter { get; set; }

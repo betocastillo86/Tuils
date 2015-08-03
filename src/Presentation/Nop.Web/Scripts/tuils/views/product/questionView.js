@@ -17,7 +17,7 @@
                 this.model = new QuestionModel();
                 this.model.on("error", this.showErrorSave, this);
                 this.model.on("sync", this.questionSaved, this);
-                this.validateAuthorization();
+                this.on("user-authenticated", this.save, this);
                 this.render();
             },
             showQuestionForm : function()
@@ -25,17 +25,16 @@
                 this.$("#divLinkWriteQuestion").hide();
                 this.$("#question-form").show();
             },
-            userAuthenticated : function()
-            {
-                this.save();
-            },
             save: function (e) {
                 var errors = this.validateControls();
                 if (this.model.isValid()) {
-                    this.disableButtonForSeconds($(e.target));
+                    if (e && e.target)
+                        this.disableButtonForSeconds($(e.target));
+
                     if (TuilsConfiguration.captcha.showOnQuestions)
                         this.model.set("recaptcha_challenge_field", this.$("#recaptcha_challenge_field").val());
                     this.model.set("productId", this.$("#productId").val());
+                    this.validateAuthorization();
                     this.model.newQuestion();
                 }
             },

@@ -200,8 +200,9 @@ namespace Nop.Services.Messages
         /// </summary>
         /// <param name="customer">Customer instance</param>
         /// <param name="languageId">Message language identifier</param>
+        /// <param name="autoPassword">Password generado automáticamente para el suuario, cuando viene nulo no lo envía</param>
         /// <returns>Queued email identifier</returns>
-        public virtual int SendCustomerWelcomeMessage(Customer customer, int languageId)
+        public virtual int SendCustomerWelcomeMessage(Customer customer, int languageId, string autoPassword = null)
         {
             if (customer == null)
                 throw new ArgumentNullException("customer");
@@ -220,6 +221,9 @@ namespace Nop.Services.Messages
             var tokens = new List<Token>();
             _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
             _messageTokenProvider.AddCustomerTokens(tokens, customer);
+
+            if (!string.IsNullOrEmpty(autoPassword))
+                tokens.Add(new Token("Customer.Password", autoPassword));
 
             //event notification
             _eventPublisher.MessageTokensAdded(messageTemplate, tokens);

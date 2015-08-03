@@ -1,4 +1,4 @@
-﻿define(['jquery', 'underscore', 'Backbone', 'resources'],
+﻿define(['jquery', 'underscore', 'backbone', 'resources'],
     function ($, _, Backbone, TuilsResources) {
         var ConfirmMessageView = Backbone.View.extend({
 

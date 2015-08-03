@@ -67,7 +67,8 @@ namespace Nop.Web.Controllers.Api
                 //Convierte a entidad e intenta realizar el registro
                 var attributes = new Dictionary<string, object>();
                 var entityCustomer = model.ToEntity(out attributes);
-                var result = _customerRegistrationService.Register(entityCustomer, attributes, model.VendorType);
+
+                var result = _customerRegistrationService.Register(entityCustomer, attributes, model.VendorType, true);
                 if (result.Success)
                 {
                     //Si el registro es exitoso se autentca

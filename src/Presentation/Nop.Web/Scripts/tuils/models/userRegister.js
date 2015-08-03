@@ -11,7 +11,7 @@
             },
             Bike: {
                 required: function (val, attr, computed) {
-                    return computed.IsRegister;
+                    return computed.VendorType == 0;
                 }
             },
             Email: {
@@ -36,7 +36,8 @@
             Email: "Correo electrónico",
             Password: "Clave",
             CompanyName : "Nombre establecimiento",
-            TermsOfUse: "Terminos y condiciones"
+            TermsOfUse: "Terminos y condiciones",
+            Bike : 'con tu Motocicleta'
         },
         login: function () {
             
