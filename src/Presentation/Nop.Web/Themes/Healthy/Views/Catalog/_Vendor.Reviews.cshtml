@@ -3,7 +3,10 @@
 <div id="divReviews">
 
 </div>
-<div id="divNoReviews" style="display:none">@T("vendor.reviews.noRows", Model.Name)</div>
+<div id="divNoReviews" class="no-result" style="font-size:16px; display:none">
+    @T("vendor.reviews.noRows", Model.Name)
+    <a class="btn-result" href="@Url.Action("PublishProduct", "Sales")">Dejar comentario</a>
+</div>
 <div class="button-2" id="btnMore">@T("vendor.moreReviews")</div>
 <script type="text/x-handlebars-template" id="templateReview">
     {{#each this}}

@@ -57,6 +57,7 @@ input[type="text"]:disabled{background:none repeat scroll 0 0 #FFF;}
 
 [class^="icon-"], [class*=" icon-"] { font-family: 'icomoon'; speak: none; font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; /* Better Font Rendering =========== */ -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
 
+.icon-camp:before {content: "\e632";}
 .icon-m_c:before {content: "\e631";}
 .icon-filtros:before {content: "\e62d";}
 .icon-m_a:before {content: "\e62e";}
@@ -138,6 +139,8 @@ ul.language-list li:hover{cursor:pointer;}
 	.header-links ul li span.wishlist-qty:before, .header-links ul li span.cart-qty:before, .wishlist-qty:before{content: ""; position: absolute; top: 0; left: -10px; border-left: 10px solid transparent; border-bottom: 40px solid #3B5A83;}
 	.header-links ul li span.wishlist-qty:after, .header-links ul li span.cart-qty:after, .wishlist-qty:after{content: ""; position: absolute; top: 0; right: -10px; border-right: 10px solid transparent; border-top: 40px solid #3B5A83;}
 	.wishlist-qty i:before{border-bottom:solid 15px #3B5A83; border-left:solid 15px transparent; position: absolute; content: ""; top: 8px; left: -12px;}
+	.btn_noti{color: #FFF; position: relative; font-size:20px; padding:8px !important;}
+	.btn_noti span{background:#fa4c2a; color: #FFF; text-align: center; display: block; position: absolute; top: 5px; left: -10px; font-size: 11px; padding: 2px; border-radius: 3px; box-sizing:border-box; min-width: 14px;}
 .header-links a{color:#FFF;text-decoration:none;float:left; transition: ease all 0.4s;}
 .header-links a:hover{color:#fa4c2a;text-decoration:none;}
 .header-links a.account{color:#FFF;padding-left:10px;padding-bottom:5px;}
@@ -1002,7 +1005,8 @@ td.fieldname{font-size:12px;}
 .similarSearch a:hover{text-decoration: underline;}
 .no-result{background:#fee9e5; border-radius: 2px; padding: 10px; width: 100%; box-sizing:border-box; font-size: 20px; color:#54525b;}
 .no-result .similarSearch{margin: 0;}
-.btn-result{background: #fb7055; color: #FFF !important; font-size: 14px; text-align: center; padding:7px 10px; width: 130px; display: block;}
+.btn-result{background: #fb7055; color: #FFF !important; font-size: 14px; text-align: center; padding:7px 10px; margin: 7px 0 0; width: 130px; border-radius: 2px; display: block; transition:ease all 0.2s;}
+.btn-result:hover{background:#3b5a83;}
 
 /* PASSWORD RECOVERY AND NEWSLETTER PAGES */
 .password-recovery-page,newsletter-page{}
