@@ -3,20 +3,20 @@
 @using Nop.Core.Infrastructure;
 @using Nop.Web.Models.Catalog;
 @{
-    //Html.AddScriptParts("~/Scripts/jquery.magnific-popup.js");
+    /*Html.AddScriptParts("~/Scripts/jquery.magnific-popup.js");*/
     Html.AddCssFileParts("~/Content/magnific-popup/magnific-popup.css");
 
     int productPerRow = EngineContext.Current.Resolve<MediaSettings>().ProductThumbPerRowOnProductDetailsPage;
 
-    //added
+    
     var currentThemeName = EngineContext.Current.Resolve<Nop.Web.Framework.Themes.IThemeContext>().WorkingThemeName;
-    //@added
+    
 }
 <div class="gallery">
 
     @if (Model.DefaultPictureZoomEnabled)
     {
-        //Html.AddScriptParts(String.Format("~/Themes/{0}/Content/Scripts/jquery.jqzoom-core-pack.js", currentThemeName));
+        /*Html.AddScriptParts(String.Format("~/Themes/{0}/Content/Scripts/jquery.jqzoom-core-pack.js", currentThemeName));*/
         <div class="picture">
 
             <div class="clearfix" id="content">
@@ -42,7 +42,7 @@
                                     <img src="@picture.ImageUrl" alt="@picture.AlternateText" title="@picture.Title" />
                                 </a>
                                 if ((i % productPerRow == (productPerRow - 1)) ||
-                                    //last image
+                                    /*last image*/
                                     (i == (Model.PictureModels.Count - 1)))
                                 {
                                     @Html.Raw("</div>")
@@ -90,7 +90,7 @@
                             <img src="@picture.ImageUrl" alt="@picture.AlternateText" title="@picture.Title" />
                         </a>
                         if ((i % productPerRow == (productPerRow - 1)) ||
-                            //last image
+                            /*last image*/
                             (i == (Model.PictureModels.Count - 1)))
                         {
                             @Html.Raw("</div>")

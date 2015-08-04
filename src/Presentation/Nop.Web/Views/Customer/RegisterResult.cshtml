@@ -3,10 +3,10 @@
 @{
     Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
 
-    //title
+    
     Html.AddTitleParts(T("PageTitle.Register").Text);
 
-    //continue URL
+    
     var qs = this.Context.Request.QueryString["returnUrl"];
     var continueUrl = "";
     if (!String.IsNullOrEmpty(qs) && Url.IsLocalUrl(qs))

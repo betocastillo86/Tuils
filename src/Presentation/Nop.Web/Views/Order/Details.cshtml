@@ -9,7 +9,7 @@
     {
         Layout = "~/Views/Shared/_Print.cshtml";
     }
-    //title
+    
     Html.AddTitleParts(T("PageTitle.OrderDetails").Text);
 }
 @if (Model.PrintMode)
@@ -406,8 +406,8 @@
                 @if (Model.Items.Count > 0 && Model.DisplayTaxShippingInfo)
                 {
                 var inclTax = Model.PricesIncludeTax;
-                //tax info is already included in the price (incl/excl tax). that's why we display only shipping info here
-                //of course, you can modify appropriate locales to include VAT info there
+                /*tax info is already included in the price (incl/excl tax). that's why we display only shipping info here
+                of course, you can modify appropriate locales to include VAT info there*/
                 <div class="tax-shipping-info">
                     @T(inclTax ? "Order.TaxShipping.InclTax" : "Order.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") }))
                 </div>

@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_Root.cshtml";
 }
 @{
-    //current category ID
+    /*current category ID*/
     int currentCategoryId = 0;
     if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
         Url.RequestContext.RouteData.Values["action"].ToString().Equals("category", StringComparison.InvariantCultureIgnoreCase))
@@ -11,7 +11,7 @@
     }
 
 
-    //current manufacturer ID
+    
     int currentManufacturerId = 0;
     if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
         Url.RequestContext.RouteData.Values["action"].ToString().Equals("manufacturer", StringComparison.InvariantCultureIgnoreCase))
@@ -20,7 +20,7 @@
     }
 
 
-    //current product ID
+    
     int currentProductId = 0;
     if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("product", StringComparison.InvariantCultureIgnoreCase) &&
         Url.RequestContext.RouteData.Values["action"].ToString().Equals("productdetails", StringComparison.InvariantCultureIgnoreCase))

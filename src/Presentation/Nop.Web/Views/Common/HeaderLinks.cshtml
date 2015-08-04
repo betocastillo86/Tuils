@@ -67,7 +67,7 @@
 
     @if (Model.AllowPrivateMessages && !string.IsNullOrEmpty(Model.AlertMessage))
     {
-        //new private message notification
+        /*new private message notification*/
         <script type="text/javascript">
             $(document).ready(function () {
                 displayPopupNotification('@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.AlertMessage))', 'success', false);

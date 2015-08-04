@@ -2,10 +2,10 @@
 @{
     Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
 
-    //title
+    /*title*/
     Html.AddTitleParts(string.Format(T("PageTitle.ProductsByTag").Text, Model.TagName));
 
-    //canonical URL
+    /*canonical URL*/
     var canonicalUrlsEnabled = EngineContext.Current.Resolve<SeoSettings>().CanonicalUrlsEnabled;
     if (canonicalUrlsEnabled)
     {
