@@ -543,7 +543,7 @@ namespace Nop.Web.Controllers
 
 
                 //Carga la cadena de respuesta cuando no  hay resultados del filtro
-                model.ResorceMessageNoRows = string.Format("MyProducts.{0}", command.p ? "Active" : "Inactive");
+                model.ResorceMessageNoRows = string.Format("MyProducts.NoRows.{0}", command.p ? "Active" : "Inactive");
 
                 string url = _webHelper.GetThisPageUrl(true);
                 model.UrlFilterByServices = new MyProductsModel.LinkFilter()

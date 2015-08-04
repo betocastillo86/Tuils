@@ -116,10 +116,10 @@ namespace Nop.Services.Common
                     if (keywords.Length > 0)
                         keywords.Append(" AND ");
 
-                    keywords.AppendFormat("\"{0}*\"", item);
+                    keywords.AppendFormat("formsof(INFLECTIONAL, \"{0}\")", item);
                 }
 
-                var query = string.Format("select top {0} Id, Keyword, StoreId, Count from SearchTerm WHERE CONTAINS(Keyword, '{1}') order by count desc", top, keywords);
+                var query = string.Format("select top {0} Id, Keyword, StoreId, Count from SearchTerm WHERE contains(Keyword, '{1}') order by count desc", top, keywords);
 
                 return _dbContext.ExecuteStoredProcedureList<SearchTerm>(query, new object[0]);
             }
