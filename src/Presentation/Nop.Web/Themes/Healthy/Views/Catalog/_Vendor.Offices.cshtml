@@ -8,8 +8,10 @@
         <a id="btnBack"><span class="icon-prev"></span></a>
         <a id="btnNext"><span class="icon-next"></span></a>
     </div>
-    <div style="display:none" id="divOfficesNoResults">
-        
+    <div class="sede-noresult" style="display:none" id="divOfficesNoResults">
+        <span class="icon-loc"></span>
+        <p>No tiene sedes configuradas</p>
+        <a href="javascrip:;" class="button-1">Actualiza tus sedes</a>
     </div>
     @if (Model.AllowEdit)
     {

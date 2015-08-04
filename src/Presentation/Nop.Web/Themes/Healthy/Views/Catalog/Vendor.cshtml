@@ -36,6 +36,11 @@
                         @Html.Partial("_Vendor.Offices", Model)
                     </div>
                     <ul class="conte-spc">
+                        <div class="spc-noresult">
+                            <span class="icon-tool"></span>
+                            <p>¿Te especializas en algun servicio?</p>
+                            <a href="javascrip:;" class="button-1">Actualiza servicios</a>
+                        </div>
                         <h3 title="@T("Vendor.vendorServices.services.title", Model.Name)">
                             @T("Vendor.SpecialCategoriesServices")
 
@@ -86,10 +91,10 @@
                         }
                         else
                         { 
-                            <div>@T("Vendor.products.noResults", Model.Name)
+                            <div class="no-result" style="font-size:16px;">@T("Vendor.products.noResults", Model.Name)
                             @if (Model.AllowEdit)
                             { 
-                                <div><a href="@Url.Action("PublishProduct", "Sales")">@T("Vendor.products.noResults.publish")</a></div>
+                                <a class="btn-result" href="@Url.Action("PublishProduct", "Sales")">@T("Vendor.products.noResults.publish")</a>
                             }
                         
                             </div>
