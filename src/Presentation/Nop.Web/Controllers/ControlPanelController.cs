@@ -292,6 +292,7 @@ namespace Nop.Web.Controllers
                     .ToList();
                 model.SpecializedCategoriesString = model.SpecializedCategories.ToStringSeparatedBy();
                 model.BikeReferencesString = model.BikeReferences.ToStringSeparatedBy();
+                model.VendorSeName = _workContext.CurrentVendor.GetSeName();
 
                 return View(model);
             }

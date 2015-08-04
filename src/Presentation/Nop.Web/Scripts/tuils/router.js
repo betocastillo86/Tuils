@@ -30,7 +30,7 @@
                 "quiero-vender/servicio-especializado(/:step)": "sellService",
                 "mi-cuenta/datos-basicos": "myAccount",
                 "mi-cuenta/sedes": "myOffices",
-                "ControlPanel/VendorServices": "vendorServices",
+                "mi-tienda/motos-y-servicios": "vendorServices",
                 "mi-cuenta/mis-compras(/:query)": "myOrders",
                 "mi-cuenta/mis-ventas(/:query)": "myOrders",
                 "mi-cuenta/mis-productos(/:query)": "myProducts",

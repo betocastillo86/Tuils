@@ -10,13 +10,18 @@
     </div>
     <div class="sede-noresult" style="display:none" id="divOfficesNoResults">
         <span class="icon-loc"></span>
-        <p>No tiene sedes configuradas</p>
-        <a href="javascrip:;" class="button-1">Actualiza tus sedes</a>
+        <p>@T("Vendor.Offices.NoRows")</p>
+        @if (Model.AllowEdit)
+        {
+            @Html.ActionLink(T("Vendor.offices.editar").Text, "Offices", "ControlPanel", new { }, new { @class = "button-1", title = T("Vendor.offices.editar.alt").Text })
+        }
     </div>
+
     @if (Model.AllowEdit)
     {
-        @Html.ActionLink(T("Vendor.offices.editar").Text, "Offices", "ControlPanel", new { }, new { @class = "button-1", title = T("Vendor.offices.editar.alt").Text })
+        @Html.ActionLink(T("Vendor.offices.editar").Text, "Offices", "ControlPanel", new { }, new { id = "btnConfigOfficesWithRows", @class = "button-1", title = T("Vendor.offices.editar.alt").Text })
     }
+    
 </div>
 <script id="templateSelectedOffice" type="text/x-handlebars-template">
     <h3>{{Name}} - {{Address}}</h3> 

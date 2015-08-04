@@ -3,7 +3,11 @@
 <div class="header-links">
     <ul>
         @*@Html.Widget("header_links_before")*@
-        <li class="btn_noti"><a href="javascript:;" class="icon-camp"></a><span>0</span></li>
+        @if (Model.UnansweredQuestions > 0)
+        { 
+            <li class="btn_noti"><a href="@Url.Action("Questions", "ControlPanel")" class="icon-camp" title="@T("Account.UnansweredQuestions.Alt", Model.UnansweredQuestions)"></a><span>@Model.UnansweredQuestions</span></li>    
+        }
+        
         @if (Model.IsAuthenticated)
         {
             <li class="user-li"><a href="@Url.RouteUrl("ControlPanel")"><img src="~/Themes/Healthy/Content/images/img_user.svg"/> <p>@Model.CustomerEmailUsername</p><br/></a></li>

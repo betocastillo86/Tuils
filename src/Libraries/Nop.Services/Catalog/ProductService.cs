@@ -22,6 +22,7 @@ using Nop.Services.Media;
 using Nop.Services.Vendors;
 using Nop.Services.Orders;
 using Nop.Services.Logging;
+using Nop.Core.Domain.Vendors;
 
 namespace Nop.Services.Catalog
 {
@@ -59,6 +60,7 @@ namespace Nop.Services.Catalog
         private readonly IRepository<ProductWarehouseInventory> _productWarehouseInventoryRepository;
         private readonly IRepository<ProductQuestion> _productQuestionRepository;
         private readonly IRepository<SpecialCategoryProduct> _specialCategoryProductRepository;
+        private readonly IRepository<Vendor> _vendorRepository;
         private readonly IProductAttributeService _productAttributeService;
         private readonly IProductAttributeParser _productAttributeParser;
         private readonly ILanguageService _languageService;
@@ -80,6 +82,7 @@ namespace Nop.Services.Catalog
         private readonly ILogger _logger;
         private readonly ICategoryService _categoryService;
         private readonly ILocalizationService _localizationService;
+        
 
 
         #endregion
@@ -148,7 +151,8 @@ namespace Nop.Services.Catalog
             IRepository<SpecialCategoryProduct> specialCategoryProductRepository,
             ILogger logger,
             ICategoryService categoryService,
-            ILocalizationService localizacionService)
+            ILocalizationService localizacionService,
+            IRepository<Vendor> vendorRepository)
         {
             this._cacheManager = cacheManager;
             this._productRepository = productRepository;
@@ -184,6 +188,7 @@ namespace Nop.Services.Catalog
             this._logger = logger;
             this._categoryService = categoryService;
             this._localizationService = localizacionService;
+            this._vendorRepository = vendorRepository;
         }
 
         #endregion
@@ -2300,7 +2305,7 @@ namespace Nop.Services.Catalog
         }
 
         /// <summary>
-        /// Actualiza el numero de preguntas sin responder de un producto en especifico
+        /// Actualiza el numero de preguntas sin responder de un producto en especifico y actualiza las del vendedor
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
@@ -2312,6 +2317,11 @@ namespace Nop.Services.Catalog
             product.UnansweredQuestions = questions.Count;
             //Actualiza el número de pregundas pendientes
             UpdateProduct(product);
+
+            //Despues actualiza el numero de preguntas sin responder de un vendedor
+            var vendor = _vendorRepository.GetById(product.VendorId);
+            vendor.UnansweredQuestions = CountUnansweredQuestionsByVendorId(product.VendorId);
+            _vendorRepository.Update(vendor);
         }
 
 

@@ -733,6 +733,15 @@ namespace Nop.Data.Migrations
 
                 newLocaleStringResources.Add("MyOffices.NoRows", "No tienes sedes cargadas, puedes crear una ahora mismo");
                 newLocaleStringResources.Add("Category.NoRows", "No hay productos activos en esta categoría");
+                newLocaleStringResources.Add("Vendor.Offices.NoRows", "No hay sedes configuradas");
+                newLocaleStringResources.Add("Vendor.Services.NoRows.Own", "¿Te especializas en algúna referencia de moto?");
+                newLocaleStringResources.Add("Vendor.Services.NoRows.Other", "{0} no tiene servicios especiales");
+                newLocaleStringResources.Add("Vendor.vendorServices.services.button", "Actualiza servicios");
+                newLocaleStringResources.Add("Account.UnansweredQuestions.Alt", "Tienes {0} preguntas sin responder");
+                
+                
+                
+                
                 
 
                 
