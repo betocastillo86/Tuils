@@ -1185,6 +1185,12 @@ html.oldie .container { width: 940px; }
 @media screen and (max-width:480px) {
     /*Header*/
 
+    /* PRODUCTS IN GRID - TEMPLATE */
+    .product-grid .product-item .product-title a{font-weight: 400; line-height: normal; font-size: 14px; text-align: left; overflow:inherit; height:50px; white-space: inherit;}
+    .product-grid .product-item .prices{font-size: 20px;}
+    .product-grid .product-item .picture, .item .picture{height: 106px;}
+    .item-box .category-item, .item-box .sub-category-item, .product-grid .product-item, .product-grid .item{margin: 5px auto; min-width: auto;}
+
     /* PRODUCT DETAILS PAGE */
     .product-details-page .gallery .picture{max-width:400px; width: auto;}
     .product-details-page .gallery .picture a{width:100%; height:273px;}
@@ -1193,7 +1199,7 @@ html.oldie .container { width: 940px; }
     .wizard-step div, .wizard-current div{display: none;}
         .wizard-step b, .wizard-current b{display: block;}
     .category-view{display:block;}
-    .product-grid .item-box{width: 100%; float: none;}
+
     .nav-category li{ width:100%; height: 315px; }
     .nav-category li span{bottom: 44px; right: 50px; font-size: 30px;}
     .category-container{width: 100%; padding: 0;}
@@ -1228,8 +1234,14 @@ html.oldie .container { width: 940px; }
     .product-details-page .gallery .picture a{height:214px;}
     /*publicar producto*/
     .picture-resume li{height:60px;}
+    /* PRODUCTS IN GRID - TEMPLATE */
+    .product-grid .product-item .picture, .item .picture{margin:0 7px; padding: 5px 0;}
+    .product-grid .product-item .details{margin: 0 7px;}
+    .product-grid .add-to-links a{margin: 0;}
 }
 @media screen and (max-width:360px) {
+    /* PRODUCTS IN GRID - TEMPLATE */
+    .product-grid .item-box{min-width: auto;}
     /*Header*/
 
     /* PRODUCT DETAILS PAGE */
@@ -1244,6 +1256,8 @@ html.oldie .container { width: 940px; }
     .date_pgt{float: none; padding: 0 0 10px; margin: 0;}
 }
 @media screen and (max-width:320px) {
+    /* PRODUCTS IN GRID - TEMPLATE */
+    .product-grid .product-item .picture, .item .picture{height: 85px;}
     /* PRODUCT DETAILS PAGE */
     .product-details-page .gallery .picture a{height:177px;}
 
