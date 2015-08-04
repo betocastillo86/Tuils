@@ -8,7 +8,7 @@
 @using Nop.Web.Framework;
 @{
     Layout = "";
-    Html.AddCssFileParts("~/Scripts/mmenu/css/jquery.mmenu.all.css");
+    Html.AddCssFileParts(ResourceLocation.Foot, "~/Scripts/mmenu/css/jquery.mmenu.all.css");
 }
 
 @helper RenderCategoryLine(CategorySimpleModel category, TopMenuModel.SpecificationAttributeOptionModel attribute)

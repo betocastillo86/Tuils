@@ -8,12 +8,12 @@
     var currentThemeName = EngineContext.Current.Resolve<Nop.Web.Framework.Themes.IThemeContext>().WorkingThemeName;
 
 
+
+
+    Html.AppendCssFileParts(ResourceLocation.Foot, String.Format("~/Themes/{0}/Content/owl.carousel.css", currentThemeName));
+    Html.AppendCssFileParts(ResourceLocation.Foot, String.Format("~/Themes/{0}/Content/owl.theme.default.min.css", currentThemeName));
     
-    
-    Html.AppendCssFileParts(String.Format("~/Themes/{0}/Content/owl.carousel.css", currentThemeName));
-    Html.AppendCssFileParts(String.Format("~/Themes/{0}/Content/owl.theme.default.min.css", currentThemeName));
-    
-    Html.AppendCssFileParts("~/Content/jquery-ui-themes/smoothness/jquery-ui-1.10.3.custom.min.css");
+    Html.AppendCssFileParts(ResourceLocation.Foot, "~/Content/jquery-ui-themes/smoothness/jquery-ui-1.10.3.custom.min.css");
 
 
     bool isDebug = HttpContext.Current.IsDebuggingEnabled;
@@ -53,7 +53,7 @@
     else
     {
         @:
-    <script data-main="/scripts/tuils/built" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js"></script>
+    <script data-main="/scripts/tuils/built" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js" async ></script>
     }
 
     @Html.NopScripts(this.Url, ResourceLocation.Head)

@@ -60,44 +60,60 @@
     },
     paths: {
         //Externas
-        jquery: [
-            'https://code.jquery.com/jquery-1.10.2.min',
-            'jquery-1.10.2'
-        ],
-        jqueryui: [
-            'http://code.jquery.com/ui/1.11.4/jquery-ui.min',
-            'jquery-ui-1.10.3.custom.min'
-        ],
-        jqueryunobtrusive: [
-            'http://ajax.aspnetcdn.com/ajax/mvc/5.0/jquery.validate.unobtrusive.min',
-            'jquery.validate.unobtrusive.min'
-        ],
-        jqueryvalidate: [
-            'http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min',
-            'jquery.validate.min'
-        ],
-        underscore: [
-            'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min',
-            'underscore-min'
-        ],
-        backbone: [
-            'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.1/backbone-min',
-            'backbone'
-        ],
-        stickit:[
-            'https://cdnjs.cloudflare.com/ajax/libs/backbone.stickit/0.8.0/backbone.stickit.min',
-            'backbone.stickit.min'
-        ],
-        validations: [
-            'http://cdnjs.cloudflare.com/ajax/libs/backbone.validation/0.11.5/backbone-validation-min',
-            'backbone-validation.min'
-        ],
-        handlebars: [
-            'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.amd.min',
-            'handlebars.min'
-        ],
-        mmenu: 'mmenu/js_umd/jquery.mmenu.umd',
-        mmenunav: 'mmenu/js_umd/addons/jquery.mmenu.navbars.umd',
+        //jquery: [
+        //    'https://code.jquery.com/jquery-1.10.2.min',
+        //    'jquery-1.10.2'
+        //],
+        //jqueryui: [
+        //    'http://code.jquery.com/ui/1.11.4/jquery-ui.min',
+        //    'jquery-ui-1.10.3.custom.min'
+        //],
+        //jqueryunobtrusive: [
+        //    'http://ajax.aspnetcdn.com/ajax/mvc/5.0/jquery.validate.unobtrusive.min',
+        //    'jquery.validate.unobtrusive.min'
+        //],
+        //jqueryvalidate: [
+        //    'http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min',
+        //    'jquery.validate.min'
+        //],
+        //underscore: [
+        //    'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min',
+        //    'underscore-min'
+        //],
+        //backbone: [
+        //    'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.1/backbone-min',
+        //    'backbone'
+        //],
+        //stickit:[
+        //    'https://cdnjs.cloudflare.com/ajax/libs/backbone.stickit/0.8.0/backbone.stickit.min',
+        //    'backbone.stickit.min'
+        //],
+        //validations: [
+        //    'http://cdnjs.cloudflare.com/ajax/libs/backbone.validation/0.11.5/backbone-validation-min',
+        //    'backbone-validation.min'
+        //],
+        //handlebars: [
+        //    'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.amd.min',
+        //    'handlebars.min'
+        //],
+        //accounting: [
+        //    'https://cdnjs.cloudflare.com/ajax/libs/accounting.js/0.4.1/accounting.min',
+        //    'accounting.min'
+        //],
+        jquery:  'jquery-1.10.2',
+        jqueryui: 'jquery-ui-1.10.3.custom.min',
+        jqueryunobtrusive: 'jquery.validate.unobtrusive.min',
+        jqueryvalidate: 'jquery.validate.min',
+        underscore: 'underscore-min',
+        backbone : 'backbone-min',
+        stickit: 'backbone.stickit.min',
+        validations:'backbone-validation.min',
+        handlebars: 'handlebars.min',
+        accounting : 'accounting.min',
+
+
+
+
         handlebarsh: 'handelbars.helpers',
         maps: 'http://maps.google.com/maps/api/js?sensor=false',
         //Basic Tuils
@@ -143,14 +159,12 @@
         //Tuils Extensions
         extensionNumbers: 'tuils/extensions/numbers',
         //Externas
+        mmenu: 'mmenu/js_umd/jquery.mmenu.umd',
+        mmenunav: 'mmenu/js_umd/addons/jquery.mmenu.navbars.umd',
         tagit: 'tag-it',
         wysihtml5: 'wysihtml5-0.3.0.min',
         resize: 'resize',
         canvasBlob: 'canvas-to-blob.min',
-        accounting: [
-            'https://cdnjs.cloudflare.com/ajax/libs/accounting.js/0.4.1/accounting.min',
-            'accounting.min'
-        ],
         carousel: 'owl.carousel',
         slide: 'responsiveslides.min',
         jzoom: 'jquery.jqzoom-core-pack',
