@@ -1186,10 +1186,12 @@ html.oldie .container { width: 940px; }
     /*Header*/
 
     /* PRODUCTS IN GRID - TEMPLATE */
-    .product-grid .product-item .product-title a{font-weight: 400; line-height: normal; font-size: 14px; text-align: left; overflow:inherit; height:50px; white-space: inherit;}
+    .product-grid .product-item .product-title a{font-weight: 400; line-height: normal; font-size: 14px; text-align: left; overflow:inherit; height:47px; overflow: hidden; white-space: inherit;}
     .product-grid .product-item .prices{font-size: 20px;}
     .product-grid .product-item .picture, .item .picture{height: 106px;}
     .item-box .category-item, .item-box .sub-category-item, .product-grid .product-item, .product-grid .item{margin: 5px auto; min-width: auto;}
+    .serv_espec{font-size: 10px; padding:7px 0 0; position: inherit; box-shadow: none; background: transparent; color: #3b5a83; text-align: center;}
+    .serv_espec:after{display: none;}
 
     /* PRODUCT DETAILS PAGE */
     .product-details-page .gallery .picture{max-width:400px; width: auto;}
