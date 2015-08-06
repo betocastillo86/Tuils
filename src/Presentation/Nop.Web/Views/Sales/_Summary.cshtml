@@ -23,7 +23,7 @@
         </div>
         <br />
         <div>
-            @Html.TextBoxRequiredFor(m => m.PhoneNumber, labelText: "PublishProduct.PhoneNumber")
+            @Html.TextBoxRequiredFor(m => m.PhoneNumber, labelText: T("PublishProduct.PhoneNumber").Text)
         </div>
     </div>
     <hr />
@@ -34,6 +34,6 @@
     
 
     <br />
-    <div class="txt-terminos"><input id="chkConditions" type="checkbox" />Al publicar un aviso, admites y aceptas los <a href="">Términos y Condiciones</a> de Tuils.</div>
+    <div class="txt-terminos"><input id="chkConditions" type="checkbox" />Al publicar un aviso, admites y aceptas los <a href="/condiciones-de-uso" target="_blank">Términos y Condiciones</a> de Tuils.</div>
 
 </script>

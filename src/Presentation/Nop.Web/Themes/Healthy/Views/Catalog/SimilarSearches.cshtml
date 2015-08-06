@@ -5,7 +5,7 @@
     <ul>
         @foreach (var item in Model.Searches)
         {
-            <a href="@Url.Action("Search", new { q = item })" title="@T("similarSearches.suggest.title", item)"><li>@item,</li></a>
+            <a href="@Url.Action("Search", new { q = item, query = string.Empty })" title="@T("similarSearches.suggest.title", item)"><li>@item,</li></a>
         }
     </ul>
 </div>

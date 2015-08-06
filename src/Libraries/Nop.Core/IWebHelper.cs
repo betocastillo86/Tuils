@@ -103,12 +103,30 @@ namespace Nop.Core
         string ModifyQueryString(string url, string queryStringModification, string anchor);
 
         /// <summary>
+        /// Agrega al final de la url ANTES del querystring un valor más para completar la ruta
+        /// ejemplo: 
+        /// -----Url: http://a.com/buscar?a=1&b=2   newRouteValue: "Abatible"  return: http://a.com/buscar/Abatible?a=1&b=2
+        /// </summary>
+        /// <param name="url">url que se quiere modificae</param>
+        /// <param name="newRouteValue">complemento que se va agregar a la url</param>
+        /// <returns></returns>
+        string AddToRouteValues(string url, string newRouteValue);
+
+        /// <summary>
+        /// Realiza el inverso procedimiento del anterior metodod AddToRouteValues
+        /// </summary> 
+        /// <param name="url"></param>
+        /// <param name="newRouteValue">partes de las rutas que debe eliminar</param>
+        /// <returns></returns>
+        string RemoveRouteValues(string url, params string[] routesToRemove);
+
+        /// <summary>
         /// Remove query string from url
         /// </summary>
         /// <param name="url">Url to modify</param>
         /// <param name="queryString">Query string to remove</param>
         /// <returns>New url</returns>
-        string RemoveQueryString(string url, string queryString);
+        string RemoveQueryString(string url, params string[] queryString);
         
         /// <summary>
         /// Gets query string value by name

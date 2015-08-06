@@ -1,6 +1,22 @@
 ﻿@model Nop.Web.Models.Sales.PublishProductModel
 @{
-    ViewBag.Title = "PublishProduct";
+    if(Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Bike)
+    {
+        Html.AddTitleParts(T("PageTitle.Publish.Bike").Text);
+        Html.AddMetaDescriptionParts(T("Publish.Bike.MetaDescription").Text);
+    }
+    else if (Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Service)
+    {
+        Html.AddTitleParts(T("PageTitle.Publish.Service").Text);
+        Html.AddMetaDescriptionParts(T("Publish.Service.MetaDescription").Text);
+    }
+    else
+    {
+        Html.AddTitleParts(T("PageTitle.Publish.Product").Text);
+        Html.AddMetaDescriptionParts(T("Publish.Product.MetaDescription").Text);
+    }
+        
+        
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
     Html.AppendCssFileParts("~/Content/tagit/jquery.tagit.css");

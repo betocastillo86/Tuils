@@ -82,6 +82,7 @@ namespace Nop.Web.Extensions
             IPictureService pictureService,
             IWebHelper webHelper,
             ICacheManager cacheManager,
+            IStateProvinceService stateProvinceService,
             CatalogSettings catalogSettings,
             MediaSettings mediaSettings,
             IEnumerable<Product> products,
@@ -104,7 +105,8 @@ namespace Nop.Web.Extensions
                     SeName = product.GetSeName(),
                     CompareProductsEnabled = catalogSettings.CompareProductsEnabled,
                     DisableWishlistButton = workContext.CurrentCustomer == null || workContext.CurrentCustomer.IsGuest(),
-                    FeaturedBySpecialCategory = product.FeaturedBySpecialCategory
+                    FeaturedBySpecialCategory = product.FeaturedBySpecialCategory,
+                    StateProvinceName = stateProvinceService.GetStateProvinceById(product.StateProvinceId).Name
                 };
                 //price
                 if (preparePriceModel)

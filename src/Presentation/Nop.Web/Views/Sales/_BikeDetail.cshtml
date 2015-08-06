@@ -9,42 +9,43 @@
     <div class="form-public">
            @Html.Partial("_CommonFieldsProductBikeDetail", Model)  
 
-            <div class="inputs">
-                @Html.LabelT("PublishProduct.CarriagePlate")
-                <input id="txtCarriagePlate" type="text" placeholder="@T("PublishProduct.CarriagePlateExample")" maxlength="7" />
-                @ShowRequired("CarriagePlate")
-            </div>
-            <div class="inputs">
-                @Html.LabelT("PublishProduct.Kms")
-                <input id="txtKms" type="text" tuils-val="int" maxlength="10" />
-                @ShowRequired("Kms")
-            </div>
-            <div class="inputs">
-                @Html.LabelT("PublishProduct.Year")
-                <select id="ddlYear">
-                    <option selected>-</option>
-                    @for (int i = DateTime.Now.Year; i > 1990; i--)
-                    {
-                        <option>@i</option>
-                    }
-                </select>
-                @ShowRequired("Year")
-            </div>
-            <div class="inputs">
-                @Html.LabelT("PublishProduct.Color")
-                @Html.DropDownList("ddlColor", Model.ColorOptions, "-")
-                @*@ShowRequired("Color")*@
-            </div>
-            <div class="inputs">
-                @Html.LabelT("PublishProduct.Codition")
-                @Html.DropDownList("ddlCondition", Model.ConditionOptions, "-")
-                @*@ShowRequired("Condition")*@
-            </div>
+        <div class="inputs" title="@T("PublishProduct.CarriagePlate.Alt")">
+            @Html.LabelT("PublishProduct.CarriagePlate")
+            <input id="txtCarriagePlate" type="text" placeholder="@T("PublishProduct.CarriagePlateExample")" maxlength="7" />
+            @ShowRequired("CarriagePlate")
+        </div>
+        <div class="inputs" title="@T("PublishProduct.Kms.Alt")">
+            @Html.LabelT("PublishProduct.Kms")
+            <input id="txtKms" type="text" tuils-val="int" maxlength="10" />
+            @ShowRequired("Kms")
+        </div>
+        <div class="inputs" title="@T("PublishProduct.Year.Alt")">
+            @Html.LabelT("PublishProduct.Year")
+            <select id="ddlYear">
+                <option selected>-</option>
+                @for (int i = DateTime.Now.Year; i > 1990; i--)
+                {
+                    <option>@i</option>
+                }
+            </select>
+            @ShowRequired("Year")
+        </div>
+
+        <div class="inputs" title="@T("PublishProduct.Color.Alt")">
+            @Html.LabelT("PublishProduct.Color")
+            @Html.DropDownList("ddlColor", Model.ColorOptions, "-")
+            @*@ShowRequired("Color")*@
+        </div>
+        <div class="inputs" title="@T("PublishProduct.Condition.Alt")">
+            @Html.LabelT("PublishProduct.Codition")
+            @Html.DropDownList("ddlCondition", Model.ConditionOptions, "-")
+            @*@ShowRequired("Condition")*@
+        </div>
 
             <br />
         </div>
     <br />
-    <div class="title">@T("PublishProduct.NegotiationOptions")</div>
+    <div class="title" title="@T("PublishProduct.NegotiationOptions.Alt")">@T("PublishProduct.NegotiationOptions")</div>
     <div class="form-public">
         @foreach (var condition in Model.NegotiationOptions)
         {
@@ -55,7 +56,7 @@
         }
     </div>
     <br />
-    <div class="title">@T("PublishProduct.AccesoriesOptions")</div>
+    <div class="title" title="@T("PublishProduct.AccesoriesOptions.Alt")">@T("PublishProduct.AccesoriesOptions")</div>
     <div class="form-public">
         @foreach (var accesory in Model.AccesoriesOptions)
         {
@@ -65,7 +66,7 @@
             </div>
         }
     </div>
-    <div class="descript_crea">
+    <div class="descript_crea" title="@T("PublishProduct.FullDescriptionBike.Alt")">
         @Html.TextAreaRequired("FullDescription", labelResource: "PublishProduct.Product.Html")
     </div>
 

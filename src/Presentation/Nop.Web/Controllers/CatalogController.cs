@@ -74,6 +74,7 @@ namespace Nop.Web.Controllers
         private readonly IStateProvinceService _stateProvinceService;
         private readonly IOrderService _orderService;
 
+
         #endregion
 
         #region Constructors
@@ -439,7 +440,7 @@ namespace Nop.Web.Controllers
                 _storeContext, _categoryService, _productService, _specificationAttributeService,
                 _priceCalculationService, _priceFormatter, _permissionService,
                 _localizationService, _taxService, _currencyService,
-                _pictureService, _webHelper, _cacheManager,
+                _pictureService, _webHelper, _cacheManager, _stateProvinceService,
                 _catalogSettings, _mediaSettings, products,
                 preparePriceModel, preparePictureModel,
                 productThumbPictureSize, prepareSpecificationAttributes,
@@ -673,28 +674,28 @@ namespace Nop.Web.Controllers
             //specs
             model.PagingFilteringContext.SpecificationFilter.PrepareSpecsFilters(alreadyFilteredSpecOptionIds,
         filterableSpecificationAttributeOptionIds,
-        _specificationAttributeService, _webHelper, _workContext);
+        _specificationAttributeService, _webHelper, _workContext, false);
 
             //categories
             model.PagingFilteringContext.CategoryFilter.PrepareCategoriesFilters(alreadyFilteredCategoryIds,
         filterableCategoryIds,
-        _categoryService, _webHelper, _workContext);
+        _categoryService, _webHelper, _workContext, false);
 
             //state provinces
             model.PagingFilteringContext.StateProvinceFilter.PrepareStateProvinceFilters(stateProvinceId,
         filterableStateProvinceIds,
-        _stateProvinceService, _webHelper, _workContext);
+        _stateProvinceService, _webHelper, _workContext, false);
 
             //manufacturer
             model.PagingFilteringContext.ManufacturerFilter.PrepareFilters(manufacturerId,
         filterableManufacturerIds,
-        _manufacturerService, _webHelper, _workContext);
+        _manufacturerService, _webHelper, _workContext, false);
 
 
             //bike references
             model.PagingFilteringContext.BikeReferenceFilter.PrepareFilters(specialCategoryId,
         filterableSpecialCategoryIds,
-        _categoryService, _webHelper, _workContext);
+        _categoryService, _webHelper, _workContext, false);
 
             //template
             var templateCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_TEMPLATE_MODEL_KEY, category.CategoryTemplateId);
@@ -850,6 +851,10 @@ namespace Nop.Web.Controllers
         public ActionResult ManufacturerHomePage()
         {
             if (!_catalogSettings.ShowManufacturersHomePage)
+                return Content(string.Empty);
+
+            //Para moviles no se habilita esta f
+            if (HttpContext.Request.Browser.IsMobileDevice)
                 return Content(string.Empty);
 
             var model = new ManufacturerHomePageModel();
@@ -1481,6 +1486,14 @@ namespace Nop.Web.Controllers
             if (model == null)
                 model = new SearchModel();
 
+            model.IsMobileDevice = Request.Browser.IsMobileDevice;
+            
+            string filtersUrl = string.Empty;
+            if(this.RouteData.Values["query"] != null)
+                filtersUrl = string.Join(" ", this.RouteData.Values["query"].ToString().Replace("-", " ").Split(new char[] { '/' }));
+
+            model.Title = string.Format(_localizationService.GetResource("PageTitle.Search"), command.q, filtersUrl);
+
             if (model.Q == null)
                 model.Q = "";
             model.Q = model.Q.Trim();
@@ -1738,7 +1751,7 @@ namespace Nop.Web.Controllers
             var model = new SimilarSearchesModel();
 
 
-            if (_catalogSettings.ShowSimilarSearches)
+            if (_catalogSettings.ShowSimilarSearches && !Request.Browser.IsMobileDevice)
             {
                 //Si no tiene ninguna busqueda es porque es la general
                 string cacheKey = string.Empty;
@@ -1766,9 +1779,16 @@ namespace Nop.Web.Controllers
                     .Select(s => s.Keyword)
                     .ToList();
                 });
+
+                return View(model);
+            }
+            else
+            {
+                return Content(string.Empty);
             }
 
-            return View(model);
+
+            
         }
 
         [ChildActionOnly]

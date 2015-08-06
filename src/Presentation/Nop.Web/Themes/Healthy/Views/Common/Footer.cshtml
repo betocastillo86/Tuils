@@ -52,12 +52,12 @@
         <h3>@T("Custom.JoinOurCommunity")</h3>
         <div id="social">
             @if (!string.IsNullOrEmpty(Model.FacebookLink))
-            {
-                <a class="facebook first" href="@Model.FacebookLink" target="_blank"><span class="icon-fb"></span></a>
-            }
+{
+    <a class="facebook first" href="@Model.FacebookLink" target="_blank" title="@T("Custom.Facebook.Alt")"><span class="icon-fb"></span></a>
+}
             @if (!string.IsNullOrEmpty(Model.TwitterLink))
             {
-                <a class="twitter" href="@Model.TwitterLink" target="_blank"><span class="icon-twt"></span></a>
+                <a class="twitter" href="@Model.TwitterLink" target="_blank" title="@T("Custom.Twitter.Alt")"><span class="icon-twt"></span></a>
             }
             @*@if (!string.IsNullOrEmpty(Model.YoutubeLink))
             {

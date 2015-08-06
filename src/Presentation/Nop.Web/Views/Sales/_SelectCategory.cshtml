@@ -34,7 +34,7 @@
         <div class="category-column">
             <select tuils-level="{{currentLevel}}" tuils-level='{{currentLevel}}'>
                 {{#if ChildrenCategories.length }}
-                <option value="">-</option>
+                <option value="">@T("PublishProduct.SelectCategory")</option>
                 {{#each ChildrenCategories}}
                 <option value="{{Id}}">{{Name}}</option>
                 {{/each}}
@@ -51,7 +51,7 @@ else
                 {{#if ChildrenCategories.length }}
                 <input type="text" placeholder="@T("PublishProduct.SelectCategoryFilter")" />
                 {{#each ChildrenCategories}}
-                <li tuils-id="{{Id}}" tuils-filter="{{toLowerCase Name}}" tuils-level='{{../currentLevel}}'>{{Name}}</li>
+                <li tuils-id="{{Id}}" tuils-filter="{{toLowerCase Name}}" tuils-level='{{../currentLevel}}' title="Selecciona {{Name}}">{{Name}}</li>
                 {{/each}}
                 {{/if}}
             </ul>

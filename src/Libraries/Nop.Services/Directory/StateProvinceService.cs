@@ -22,6 +22,15 @@ namespace Nop.Services.Directory
         /// {1} : country ID
         /// </remarks>
         private const string STATEPROVINCES_ALL_KEY = "Nop.stateprovince.all-{0}";
+
+        /// <summary>
+        /// Key for caching a single StateProvince
+        /// </summary>
+        /// <remarks>
+        /// {1} : state province Id
+        /// </remarks>
+        private const string STATEPROVINCES_BY_ID_KEY = "Nop.stateprovince-{0}";
+
         /// <summary>
         /// Key pattern to clear cache
         /// </summary>
@@ -84,7 +93,13 @@ namespace Nop.Services.Directory
             if (stateProvinceId == 0)
                 return null;
 
-            return _stateProvinceRepository.GetById(stateProvinceId);
+            string cacheKey = string.Format(STATEPROVINCES_BY_ID_KEY, stateProvinceId) ;
+
+            return _cacheManager.Get(cacheKey, () => {
+                return _stateProvinceRepository.GetById(stateProvinceId);
+            });
+
+            //return _stateProvinceRepository.GetById(stateProvinceId);
         }
 
         /// <summary>

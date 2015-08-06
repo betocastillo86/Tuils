@@ -2,7 +2,7 @@
 @{
     Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
 
-    Html.AddTitleParts(T("PageTitle.Search").Text);
+    Html.AddTitleParts(Model.Title);
 }
 @using Nop.Web.Models.Catalog;
 @using Nop.Web.Extensions;
@@ -66,8 +66,14 @@
                 @if (Model.PagingFilteringContext.AllowProductSorting && Model.Products.Count > 0)
                 {
                     <div class="product-sorting">
-                        <span>@T("Catalog.OrderBy")</span>
+                        <span><a href="javascript:;">@T("Catalog.OrderBy")</a></span>
                         @Html.DropDownList("products-orderby", Model.PagingFilteringContext.AvailableSortOptions, new { onchange = "setLocation(this.value);" })
+                    </div>
+                }
+                @if (Model.IsMobileDevice)
+                { 
+                    <div id="product-filter-mobile">
+                        <span><button id="btnFilterByMobile">@T("Catalog.FilterBy")</button></span>
                     </div>
                 }
                 @*page size*@

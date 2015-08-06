@@ -146,5 +146,9 @@
         @Html.Partial("_ProductTags", Model.ProductTags)
         @Html.Action("ProductsAlsoPurchased", "Product", new { productId = Model.Id })
         @Html.Action("RelatedProducts", "Product", new { productId = Model.Id })
+        @if (Model.ShowProductsOfVendor)
+        { 
+            @Html.Action("ProductsSameVendor", "Product", new { id = Model.VendorModel.Id })    
+        }
     </div>
 </div>

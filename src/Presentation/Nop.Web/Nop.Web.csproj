@@ -2554,6 +2554,7 @@
     <Content Include="Views\Shared\_ConfirmMessage.cshtml" />
     <Content Include="Views\Product\_ProductCreditcard.cshtml" />
     <Content Include="Views\Product\_ProductSupplies.cshtml" />
+    <Content Include="Views\Product\ProductsSameVendor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

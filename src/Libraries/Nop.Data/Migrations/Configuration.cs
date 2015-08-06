@@ -33,7 +33,7 @@ namespace Nop.Data.Migrations
             bool runResources = true;
             bool runManufacturers = false;
             bool runSettings = true;
-            bool runTemplatesEmails = true;
+            bool runTemplatesEmails = false;
             bool runUrls = false;
 
 
@@ -738,23 +738,51 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Vendor.Services.NoRows.Other", "{0} no tiene servicios especiales");
                 newLocaleStringResources.Add("Vendor.vendorServices.services.button", "Actualiza servicios");
                 newLocaleStringResources.Add("Account.UnansweredQuestions.Alt", "Tienes {0} preguntas sin responder");
-                
-                
-                
-                
-                
+                newLocaleStringResources.Add("Catalog.FilterBy", "Filtrar");
+                newLocaleStringResources.Add("PageTitle.Home", "Compra y vende motos, cascos, exostos y en Colombia");
+                newLocaleStringResources.Add("Account.Register.Alt", "Registrate y vende tu moto usada");
+                newLocaleStringResources.Add("Account.Login.Alt", "Entra y vende tu moto usada");
+                newLocaleStringResources.Add("Account.Logout.Alt", "Salir");
+                newLocaleStringResources.Add("Account.MyAccount.Alt", "Mi cuenta");
+                newLocaleStringResources.Add("PublishProduct.SelectCategory", "Selecciona");
+                newLocaleStringResources.Add("Products.SameVendor", "Más productos de este vendedor");
+                newLocaleStringResources.Add("Custom.Twitter.Alt", "Siguenos en twitter @mototuils");
+                newLocaleStringResources.Add("Custom.Facebook.Alt", "Siguenos en Facebook @mototuils");
+                newLocaleStringResources.Add("PageTitle.Publish", "Vende tu moto usada, accesorios, repuestos y mucho más");
+                newLocaleStringResources.Add("Publish.MetaDescription", "En Tuils puedes poner a la venta tu moto usada, accesorios para moto, repuestos para moto y mucho más en Colombia");
+                newLocaleStringResources.Add("PageTitle.Publish.Service", "Vende servicios de mecánico para motos, pintura, calcomanias, cursos, lavado de motos");
+                newLocaleStringResources.Add("Publish.Service.MetaDescription", "Si tienes un taller, academia de conducción puedes ofrecer y vender servicios relacionados con las motos. Lavado de motos, calcomanias, pintura para motos, mecanico para motos");
+                newLocaleStringResources.Add("PageTitle.Publish.Bike", "Vende tu moto usada, accesorios, repuestos y mucho más");
+                newLocaleStringResources.Add("Publish.Bike.MetaDescription", "Si tienes una moto usada vendela en tuils gratis, somos una comunidad en la que todos los motociclistas pueden encontrar lo que están buscando");
+                newLocaleStringResources.Add("PageTitle.Publish.Product", "Vende accesorios, respuestos o cualquier cosa relacionada con las motos");
+                newLocaleStringResources.Add("Publish.Product.MetaDescription", "Si tienes alguna parte de tu motocicleta que no usas, o simplemente quieres vender tu casco nuevo o usado solo tienes que publicarlo en Tuils y seguro conseguiras un buen comprador");
+                newLocaleStringResources.Add("Publish.Bike.Img.Alt", "Vender una moto");
+                newLocaleStringResources.Add("Publish.Product.Img.Alt", "Vender un producto, accesorio o repuesto para moto");
+                newLocaleStringResources.Add("Publish.Service.Img.Alt", "Ofrecer y vender servicios");
 
-                
-                
-                
-                
-                
-                
-                
-                
-                
-
-                
+                newLocaleStringResources.Add("PublishProduct.IsNew.Alt", "El producto es nuevo o usado");
+                newLocaleStringResources.Add("PublishProduct.CarriagePlate.Alt", "La placa no se mostrará a nadie");
+                newLocaleStringResources.Add("PublishProduct.Kms.Alt", "Recorrido en kilometros de tu moto");
+                newLocaleStringResources.Add("PublishProduct.Year.Alt", "Año en que salió la moto");
+                newLocaleStringResources.Add("PublishProduct.Color.Alt", "Color de tu moto");
+                newLocaleStringResources.Add("PublishProduct.StateProvince.Alt", "Especifica la ciudad");
+                newLocaleStringResources.Add("PublishProduct.Price.Alt", "Especifica el precio del producto sin comas ni puntos");
+                newLocaleStringResources.Add("PublishProduct.ProductTitle.Alt", "Titulo con el que se mostrará tu producto o servicio");
+                newLocaleStringResources.Add("PublishProduct.Condition.Alt", "Estado en que se encuentra tu moto");
+                newLocaleStringResources.Add("PublishProduct.FullDescriptionBike.Alt", "Describe las características que quieras resaltar de tu moto");
+                newLocaleStringResources.Add("PublishProduct.SuppliesValue.Alt", "Valor en pesos de los insumos requeridos");
+                newLocaleStringResources.Add("PublishProduct.Supplies.Alt", "Insumos requeridos para prestar el servicio");
+                newLocaleStringResources.Add("PublishProduct.IncludeSupplies.Alt", "Si tu asumes el costo de los insumos para realizar el trabajo deja esta opción seleccionada");
+                newLocaleStringResources.Add("PublishProduct.DetailDoorToDoor.Alt", "Especifica cual es la cobertura máxima en caso de realizar el domicílio. Ej: Bogotá sector Suba");
+                newLocaleStringResources.Add("PublishProduct.ShippingValueDoorToDoor.Alt", "Valor de realizar el domicilio");
+                newLocaleStringResources.Add("PublishProduct.TitleDoorToDoor.Alt", "Si realizas domicilios deja seleccionada esta opción");
+                newLocaleStringResources.Add("PublishProduct.ForBrandBikeService.Alt", "Especifica las referencias de motocicletas para las que tu servicio es más importante");
+                newLocaleStringResources.Add("PublishProduct.ForBrandBike.Alt", "Especifica las referencias de motocicletas para las que tu producto es más importante");                
+                newLocaleStringResources.Add("PublishProduct.FullDescriptionProduct.Alt", "Realiza una pequeña descripción del producto que deseas vender");
+                newLocaleStringResources.Add("PublishProduct.HasShipping.Alt", "Si realizas envíos selecciona esta opción");
+                newLocaleStringResources.Add("PublishProduct.NegotiationOptions.Alt", "Opciones de negocación y de estado de tu moto");
+                newLocaleStringResources.Add("PublishProduct.AccesoriesOptions.Alt", "Accesorios con los que cuenta tu moto");
+                newLocaleStringResources.Add("PublishProduct.Manufacturer.Alt", "Escoge la marca de el producto que deseas vender. Si no está en la lista selecciona \"Otro\"");
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)
@@ -1498,6 +1526,11 @@ namespace Nop.Data.Migrations
                 settings.Add("tuilssettings.specificationattributeIsNew", "1");
                 settings.Add("tuilssettings.specificationattributeOptionIsNewYes", "1");
                 settings.Add("tuilssettings.specificationattributeOptionIsNewNo", "2");
+                settings.Add("catalogSettings.NumberOfProductsVendorProductsProductPage", "6");
+                
+                
+                
+                
                 
 
                 //Recorre todas las llaves que desea adicional

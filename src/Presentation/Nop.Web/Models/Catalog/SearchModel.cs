@@ -20,6 +20,8 @@ namespace Nop.Web.Models.Catalog
 
         public bool NoResults { get; set; }
 
+        public string Title { get; set; }
+
         /// <summary>
         /// Query string
         /// </summary>

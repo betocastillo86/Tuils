@@ -43,7 +43,7 @@
                 "m/:query":"manufacturer",
                 "p/:query": "product",
                 'entrar' : 'login',
-                'buscar(/:query)': 'search',
+                'buscar(/*query)': 'search',
                 'recordar-clave': 'passwordRecovery',
                 'mapa-del-sitio': 'sitemap',
                 'condiciones-de-uso': 'useConditions',
