@@ -25,6 +25,10 @@
         </a>
     </div>
     <div class="details">
+        @if (Model.FeaturedBySpecialCategory)
+        { 
+            <span class="serv_espec">PARA TU MOTO</span>
+        }
         <h2 class="product-title">
             <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })">@Model.Name</a>
         </h2>
@@ -54,10 +58,6 @@
                 
                 @Html.Partial("_AddToWishlist")
                 @Html.Partial("_CompareProductsButton")
-                @if (Model.FeaturedBySpecialCategory)
-                { 
-                    <span>SERVICIO PARA TU MOTO</span>
-                }
             </div>
             @*@Html.Widget("productbox_add_info", Model.Id)*@
         </div>
