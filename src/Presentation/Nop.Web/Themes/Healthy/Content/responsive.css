@@ -2,7 +2,7 @@
 
 
     /*Templates*/
-    body { background: #fff; }
+    body { background: #FFF; }
     .master-wrapper-main .center-2 { padding: 0; border: 0; }
     .master-wrapper-page { box-shadow: none; }
     .master-wrapper-content, .master-wrapper-main .center-1, .master-wrapper-main .side-2 { float: none; }
@@ -72,7 +72,7 @@
     .product-sorting { float: none; margin: 0 auto 10px; text-align: center; }
     .home-page-product-grid .title, .related-products-grid .title, .also-purchased-products-grid .title { text-align: left; font-weight: 700; /*padding: 10px;*/ font-size: 18px; color: #3A5983;}
     .product-tags-box .title { text-align: left; }
-    .product-grid .product-item .product-title a { font-size: 18px; }
+    .product-grid .product-item .product-title a { font-size: 16px; }
     .product-grid .product-item .prices .actual-price { font-size: 16px; text-align: center; }
     .rating { margin: 0; }
     .block-category-navigation .active a:hover, .block-category-navigation ul.sublist .active a:hover { /*font-weight: 700;*/ }
@@ -136,8 +136,7 @@
     .message-error ul { font-weight: 400; margin: 10px 0; }
     .product-details-page .giftcard .message { width: 260px; }
     .footer-poweredby, .mini-shopping-cart .item.first {}
-    .mini-shopping-cart .item, .data-table th, .data-table td { border-bottom: 1px solid #EDEDED; }
-    .data-table th, .data-table td { border-right: 1px solid #EDEDED; padding: 3px 5px; }
+    .mini-shopping-cart .item{ border-bottom: 1px solid #EDEDED; }
     .zoomPad { float: none; /*height: 300px;*/ }
     .jqzoom img { border: 0; }
     #thumblist { text-align: left; }
@@ -416,7 +415,6 @@
 }
 
 @media screen and (min-width:768px) {
-    body { background: url("images/bg_body.png") repeat scroll 0 center rgba(0, 0, 0, 0); }
     .master-wrapper-page { box-shadow: none; display: table; }
 
 
@@ -461,7 +459,6 @@
     .bestsellers .item-box { margin: 0; }
 
     /*Product*/
-    .product-specs-box .data-table { min-width: 90%; width: auto; }
     .button-2.add-to-wishlist-button { display: block; margin-left: 0; margin-top: 10px; }
     .product-details-page .giftcard label { margin-left: 0; }
     .tier-prices { margin-bottom: 10px; margin-left: 10px; max-width: 60%; text-align: center; width: auto; }
@@ -542,7 +539,6 @@
     .contact-page .inputs-right, .email-a-friend-page .inputs-right { float: right; margin-left: 20px; }
     /*3.20*/
     /*3.31*/
-    .product-specs-box .data-table { min-width: 60%; }
     /*3.31*/
 }
 
@@ -618,7 +614,6 @@
     /*3.31*/
     .tier-prices { width: auto; }
     .footer .footer-menu { margin-left: 20px; width:277px;}
-    .product-specs-box .data-table { min-width: 50%; }
     /*3.31*/
 
     /*3.40*/
@@ -845,7 +840,7 @@ html.oldie .container { width: 940px; }
     .panel-items li{height: 155px;}
 
     .nav-category li{height: 248px;}
-    .nav-category li span{bottom: 34px; right: 40px; font-size: 23px;}
+    .nav-category li p{bottom: 34px; right: 40px; font-size: 23px;}
     .category-container{width: 600px;}
     .category-column{margin: 0 15px 0 0; height: 246px; width:187px;}
     .category-column ul{height: 227px;}
@@ -929,12 +924,16 @@ html.oldie .container { width: 940px; }
     .product-details-page .gallery .picture a{height:235px;}
     .product-grid .add-to-links{text-align: center;}
 
+    .related-products-grid .product-item .picture{height: 60px;}
+    .related-products-grid .product-item .prices .actual-price{font-size: 18px;}
 
     /*PUBLICAR PRDUCTO*/
     .tipo-marca label{text-align: left; float: none; width: auto;}
     .tipo-marca ul.tagit{width:100%;}
 
     .picture-resume li{height: 72px;}
+    .retoma_publi .icon-publica{margin: 20px 0;}
+
     /*panel de contrlo*/
     .panel-items li{width: calc(25% - 25px);}
     .wizard-breadcrumb li{padding:6px; box-sizing:border-box;}
@@ -942,7 +941,7 @@ html.oldie .container { width: 940px; }
         .wizard-step:before{border-bottom: 28px solid #F6F9FD;}
     .product-grid .item-box{width: 33.3%;}
     .nav-category li{height: 197px;}
-    .nav-category li span{bottom: 25px; right: 30px; font-size: 20px;}
+    .nav-category li p{bottom: 25px; right: 30px; font-size: 20px;}
     .category-container{width: 470px;}
     .category-column{height: 195px; width:143px; padding: 5px;}
     .category-column ul{height: 175px; font-size: 11px; }
@@ -1012,6 +1011,7 @@ html.oldie .container { width: 940px; }
     .product-details-page .gallery .picture{margin: 30px auto 0; width: 480px;}
     .product-details-page .gallery .picture a{width: 480px; height: 328px;}
     .product-details-page .overview{float: none; width: 100%;}
+    .product-details-page h1{font-size: 18px;}
 
     /*panel de contrlo*/
     .panel-items li{ font-size: 18px; height: 150px;}
@@ -1079,10 +1079,13 @@ html.oldie .container { width: 940px; }
     /* PRODUCT DETAILS PAGE */
     .product-review-list .product-review-item .review-info{float: none; width: 100%;}
 
+    .related-products-grid .item-box{width:calc(33.3% - 10px);}
+    .related-products-grid .product-item .prices{text-align: center;}
+
     /*panel de contrlo*/
     .product-grid .item-box{width: 50%;}
     .nav-category li{height: 162px;}
-    .nav-category li span{bottom: 20px; right: 27px; font-size: 16px;}
+    .nav-category li p{bottom: 20px; right: 27px; font-size: 16px;}
     .category-column ul{font-size: 12px;}
     /*publicar producto*/
     .resumen-product{width: 100%; float: none;}
@@ -1140,6 +1143,10 @@ html.oldie .container { width: 940px; }
 
 
     .nav-category li{height: 152px; }
+    /*PUBLICAR PRODUCTO*/
+    .retoma_publi{margin: 20px 0;}
+    .retoma_publi .icon-publica{margin: 40px 0;}
+    .retoma_publi .button-1{font-size: 14px;}
 
     .picture-uploader{font-size: 12px;}
     .txt-terminos{font-size: 12px;}
@@ -1201,11 +1208,17 @@ html.oldie .container { width: 940px; }
     .wizard-step div, .wizard-current div{display: none;}
         .wizard-step b, .wizard-current b{display: block;}
     .category-view{display:block;}
+    .wizard-help{display: block; font-size: 16px; margin: 0 0 10px;}
+    .nav-category li:hover, .nav-category li:active, .nav-category li.cat_select{background: none; box-shadow: none; padding: 0;}
 
-    .nav-category li{ width:100%; height: 315px; }
-    .nav-category li span{bottom: 44px; right: 50px; font-size: 30px;}
+    .nav-category li{ width:100%; max-width: auto; height:auto; margin: 0 0 15px; padding: 15px; border-radius: 2px; background-image: none; background:#F3F5F7; box-shadow:2px 2px 1px rgba(41, 39, 52, 0.1); box-sizing:border-box; transition:ease all 0.4s;}
+    .nav-category li:hover{background-image:none;}
+    .nav-category li span{display: block; float: left; display: block; width: 30px; height: 30px; font-size: 30px; text-align: center; margin: 0 10px 0 0; color: #fb7055;}
+    .nav-category li p{position: inherit; float: left; padding: 5px 0; color: #395983; text-transform: capitalize; text-align: left; text-shadow:none; right: auto; bottom: auto;}
+    .hub-std, .hub-srv, .hub-mot{}
     .category-container{width: 100%; padding: 0;}
-    .category-column{width:calc(100% - 10px); display: block; height: 50px; margin: 0 5px 20px; padding: 10px;}
+    .category-column{width:100%; display: block; height:auto; margin: 0 0 20px; padding: 0; background: none; box-shadow: none;}
+    .category-column select{width: 100%;}
     .category-column ul{font-size: 14px;}
     .btn_continue{float: none; margin: 0 auto !important; display: block;}
     .txt-terminos{font-size: 14px; text-align: center; padding: 0 10px;}
@@ -1230,6 +1243,14 @@ html.oldie .container { width: 940px; }
     .picture-resume li{height:85px;}
 
     .pass-recover .inputs input{ width:calc(100% - 20px) !important;}
+
+    /*PUBLICAR PRODUCTO*/
+    .retoma_publi{margin: 20px 0 0;}
+    .retoma_publi .icon-publica{margin:20px auto 0; float: none;}
+    .retoma_publi .resumen-final{width: 100%; float: none; text-align: center;}
+    .retoma_publi .button-1{padding: 8px 5px;}
+    .retoma_publi .icon-publica{font-size: 50px; height: 50px;}
+    .retoma_publi .resumen-final h2{font-size: 16px;}
 }
 @media screen and (max-width:414px) {
     /* PRODUCTS IN GRID - TEMPLATE */
@@ -1252,8 +1273,6 @@ html.oldie .container { width: 940px; }
     /* PRODUCT DETAILS PAGE */
     .product-details-page .gallery .picture a{height:200px;}
 
-    .nav-category li{height: 264px; }
-    .nav-category li span{bottom: 35px; right: 40px; font-size: 27px;}
 
     .picture-uploader li, .picture-uploader li.picture_principal{width: 96px; height: 96px; margin:7px;}
     .picture-uploader li span, .picture-uploader li.picture_principal span{font-size: 45px; margin: 24px 24px 0; width: 45px; height: 45px;}
@@ -1265,12 +1284,11 @@ html.oldie .container { width: 940px; }
     .product-grid .product-item .picture, .item .picture{height: 85px;}
     /* PRODUCT DETAILS PAGE */
     .product-details-page .gallery .picture a{height:177px;}
+    .related-products-grid .item-box{width:calc(50% - 10px);}
 
     /*publicar producto*/
     .picture-resume li{height:53px;}
 
-    .nav-category li{height: 232px;}
-    .nav-category li span{bottom: 32px; right: 36px; font-size: 23px;}
     .picture-uploader li, .picture-uploader li.picture_principal{width: 82px; height: 82px; margin:7px;}
     .picture-uploader li span, .picture-uploader li.picture_principal span{font-size: 45px; margin:17px 17px 0; width: 45px; height: 45px;}    
 

@@ -55,21 +55,21 @@
 {
     <a class="facebook first" href="@Model.FacebookLink" target="_blank" title="@T("Custom.Facebook.Alt")"><span class="icon-fb"></span></a>
 }
-            @if (!string.IsNullOrEmpty(Model.TwitterLink))
+            @*@if (!string.IsNullOrEmpty(Model.TwitterLink))
             {
                 <a class="twitter" href="@Model.TwitterLink" target="_blank" title="@T("Custom.Twitter.Alt")"><span class="icon-twt"></span></a>
-            }
-            @*@if (!string.IsNullOrEmpty(Model.YoutubeLink))
+            }*@
+            @if (!string.IsNullOrEmpty(Model.YoutubeLink))
             {
-                <a class="youtube" href="@Model.YoutubeLink" target="_blank"></a>
+                <a class="youtube" href="@Model.YoutubeLink" target="_blank"><span class="icon-ytb"></span></a>
             }
-            <a class="pinterest" href="http://www.pinterest.com/your_address" target="_blank"></a>@*TODO:: add link as other *@
+            @*<a class="pinterest" href="http://www.pinterest.com/your_address" target="_blank"><span class="icon-pint"></span></a>TODO:: add link as other *@
             @*@if (!string.IsNullOrEmpty(Model.GooglePlusLink))
             {
                 <a class="googleplus" href="@Model.GooglePlusLink" target="_blank"></a>
             }*@
             <p class="info_datos">
-                <span class="icon-tel"></span>
+                <span class="icon-whatsapp"></span>
                 <a href="tel:@T("Custom.PhoneNumber")">@T("Custom.PhoneNumber")</a>
             </p>
             <p class="info_datos">

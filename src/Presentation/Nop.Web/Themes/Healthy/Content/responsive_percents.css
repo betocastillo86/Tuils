@@ -437,7 +437,6 @@
 @media screen and (min-width:768px) {
     .header { padding: 0; }
     /*.header, .header-menu {padding:0 10px;}*/
-    body { background: url("images/bg_body.png") repeat scroll 0 center rgba(0, 0, 0, 0); }
     .master-wrapper-page { box-shadow: none; display: table; }
 
 

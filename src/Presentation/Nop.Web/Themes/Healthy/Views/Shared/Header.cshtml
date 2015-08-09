@@ -13,14 +13,15 @@
 
 <div class="header">
     @Html.Widget("header")
-    <div class="header-logo">
+    <h1 class="header-logo">
         <a href="@Url.RouteUrl("HomePage")">
             <img title="" alt="@storeName" src="@Url.Content(logoPath)">
+            <span>Tuils a rodar se dijo</span>
         </a>
         @*<div class="menu">
             @Html.Action("TopMenu", "Catalog")
         </div>*@
-    </div>
+    </h1>
     <div class="search-box">
         @Html.Action("SearchBox", "Catalog")
     </div>
