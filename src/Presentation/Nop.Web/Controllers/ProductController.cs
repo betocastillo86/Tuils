@@ -1296,9 +1296,6 @@ namespace Nop.Web.Controllers
         [ChildActionOnly]
         public ActionResult FeaturedLeftMenu(int? productThumbPictureSize)
         {
-            if (!_catalogSettings.ShowBestsellersOnHomepage || _catalogSettings.NumberOfBestsellersOnHomepage == 0)
-                return Content(string.Empty);
-
             //Contenido deshabilitado para moviles
             if (Request.Browser.IsMobileDevice)
                 return Content(string.Empty);
