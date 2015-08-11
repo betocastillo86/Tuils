@@ -50,7 +50,11 @@
 
 
 <!--product breadcrumb-->
-@Html.Partial("_ProductBreadcrumb", Model.Breadcrumb)
+@if (!Model.IsMobileDevice)
+{
+    Html.Partial("_ProductBreadcrumb", Model.Breadcrumb);    
+}
+
 @Html.Widget("productdetails_after_breadcrumb", Model.Id)
 <div id="divMainSection">
     <div class="page product-details-page">

@@ -14,7 +14,7 @@
 
     _.extend(Backbone.Validation.messages, {
         required: 'Campo {0} es obligatorio',
-        acceptance: '{0} must be accepted',
+        acceptance: '{0} deben ser aceptados',
         min: 'Campo {0} debe ser mayor o igual a {1}',
         max: 'Campo {0} debe ser menor o igual a {1}',
         range: '{0} de ser entre {1} y {2}',
@@ -23,7 +23,7 @@
         maxLength: '{0} debe tener máximo {1} caracteres',
         rangeLength: '{0} debe estar entre {1} y {2} caracteres',
         oneOf: '{0} debe ser uno de: {1}',
-        equalTo: '{0} must be the same as {1}',
+        equalTo: '{0} debe ser igual a {1}',
         digits: '{0} solo puede tener números',
         number: '{0} debe ser un número',
         email: '{0} debe ser un correo valido',

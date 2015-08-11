@@ -3,6 +3,7 @@
     var ImagesSelectorView = BaseView.extend({
         events: {
             "click .addImageGalery": "addImage",
+            "click .icon-delete": "removeImage",
             "change input[type=file]": "uploadImage",
             "click .btnNext": "save",
             "click .btnBack": "back"
@@ -12,6 +13,8 @@
         currentControlImage: -1,
         //controls
         attributeFile: "tuils-file",
+
+        minFilesUploaded : 1,
 
         collection: undefined,
 
@@ -34,6 +37,9 @@
                 this.model = args.model;
                 this.loadPreviousImages();
             }
+
+            if (args.minFilesUploaded)
+                this.minFilesUploaded = args.minFilesUploaded;
                 
             if (args.urlSave)
                 this.urlSave = args.urlSave;
@@ -63,6 +69,9 @@
             });
         },
         addImage: function (obj) {
+            
+            if ($(obj.target).is(".icon-delete")) return false;
+
             var target = $(obj.currentTarget);
             this.currentControlImage = target;
 
@@ -78,8 +87,18 @@
 
         },
         removeImage: function (obj) {
-            if (confirm("¿Deseas cambiar la imagen?")) {
-                if (obj.target) obj = $(obj.target);
+            var isRemove = false;
+            if (obj.target)
+            {
+                obj.preventDefault();
+                obj = $(obj.target).parent();
+                this.currentControlImage = obj;
+                isRemove = true;
+            }
+               
+
+            if (confirm("¿Deseas "+(isRemove ? "eliminar" : "cambiar")+" la imagen?")) {
+                
                 //Quita la imagen de la lista y la desvincula del control
                 var fileToRemove = obj.attr(this.attributeFile);
                 this.collection.remove(this.collection.findWhere({ guid: fileToRemove }))
@@ -106,7 +125,7 @@
                         fileModel.on("file-error", this.fileErrorUpload, this)
                         this.resizer.photo(file, TuilsConfiguration.media.productImageMaxSizeResize, 'file', function (resizedFile) {
 
-                            that.resizer.photo(resizedFile, 400, 'dataURL', function (thumbnail) {
+                            that.resizer.photoCrop(resizedFile, 400, 'dataURL', function (thumbnail) {
                                 fileModel.set({ src: thumbnail, file: resizedFile });
                                 //Hasta que la imagen no haya sido subida 
                                 fileModel.on('sync', function () {
@@ -142,6 +161,8 @@
                 this.currentControlImage.removeAttr(this.attributeFile);
                 this.currentControlImage.find("span").show();
             }
+
+            this.currentControlImage.find(".icon-delete").css('display', urlImage ? 'block' : 'none');
         },
         fileUploaded: function (model) {
             //var srcImage = this.currentControlImage.find("img", "src");
@@ -153,13 +174,12 @@
             this.switchImage();
         },
         save: function () {
-            if (this.collection.length > 0) {
+            if (this.collection.length >=  this.minFilesUploaded) {
                 this.trigger("images-save", this.collection);
             }
             else {
-                alert("Debe seleccionar por lo menos una imagen");
+                alert("Debe seleccionar por lo menos "+this.minFilesUploaded+" imagen" + (this.minFilesUploaded > 1 ? "es" : ""));
             }
-
         },
         back: function () {
             if (this.onBackRemoveImages)

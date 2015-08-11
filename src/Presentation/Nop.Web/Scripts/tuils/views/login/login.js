@@ -53,7 +53,7 @@
                 this.login();
         },
         login: function () {
-            this.validateControls();
+            this.validateControls(undefined, false);
 
             if (this.model.isValid()) {
                 this.model.login();

@@ -19,7 +19,9 @@
                 pattern : 'email'
             },
             Password: {
-                required: false,
+                required: function (val, attr, computed) {
+                    return !computed.IsRegister;
+                },
                 minLength : 5
             },
             CompanyName: {

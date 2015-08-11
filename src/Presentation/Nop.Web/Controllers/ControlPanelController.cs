@@ -445,7 +445,7 @@ namespace Nop.Web.Controllers
                         var picture = _pictureService.GetPicturesByProductId(orderModel.Product.Id, 1).FirstOrDefault();
                         var pictureModel = new PictureModel
                         {
-                            ImageUrl = _pictureService.GetPictureUrl(picture, pictureSize),
+                            ImageUrl = _pictureService.GetPictureUrl(picture, pictureSize, crop: true),
                             FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
                             Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), orderModel.Product.Name),
                             AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), orderModel.Product.Name)

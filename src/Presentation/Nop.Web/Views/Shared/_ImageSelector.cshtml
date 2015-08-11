@@ -39,7 +39,7 @@
             @for (int i = 0; i < 7; i++)
             {
                 <li class="addImageGalery @(i==0 ? "picture_principal" : string.Empty )">
-                    <i class="icon-delete"></i>
+                    <i class="icon-delete" style="display:none"></i>
                     <span class="@GetClassImage(i)"></span>
                     <img width="100%" height="100%" style="display:none" />
                     @(i == 0 ? "Foto principal" : string.Empty)

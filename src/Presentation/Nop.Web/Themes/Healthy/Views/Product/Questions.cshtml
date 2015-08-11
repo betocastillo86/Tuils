@@ -13,7 +13,8 @@
             
                 <div class="message-error">@Html.ValidationSummary(true)</div>
                 <div class="form-fields">
-                    @Html.TextAreaRequiredFor(model => model.NewQuestion.QuestionText, htmlAttributes: new { @class = "review-text" }, labelText: T("Questions.Write").Text, required:false )
+                    @Html.Label(T("Questions.Write").Text)
+                    @Html.TextAreaRequiredFor(model => model.NewQuestion.QuestionText, htmlAttributes: new { @class = "review-text" }, required:false, showLabel:false )
                     @Html.Hidden("productId", Model.ProductId)
 
                     @if(Model.ShowCaptcha)

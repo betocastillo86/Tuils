@@ -2,12 +2,13 @@
   'tuils/views/panel/myAccount','tuils/views/panel/vendorServices','tuils/views/panel/questionsView','tuils/views/vendor/vendorDetailView'			
 ,'tuils/views/product/productDetailView','tuils/views/common/newsletterView','tuils/views/common/searcherView','tuils/views/common/leftFeaturedProductsView'	
 , 'tuils/views/common/header', 'tuils/views/panel/offices', 'tuils/views/panel/menu', 'tuils/views/panel/myProductsView', 'tuils/views/home/homeView',
-'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView','tuils/views/publishProduct/publishView',
+'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView', 'tuils/views/publishProduct/publishView',
+'tuils/views/common/footerView',
 'ajaxCart', 'nopCommon'],
     function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView,
         MyAccountView,VendorServicesView ,QuestionsView ,VendorDetailView,
         ProductDetailView, NewsletterView, SearcherView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
-        HomeView, SearchView, CategoryView, ManufacturerView, PublishView) {
+        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -17,7 +18,8 @@
             viewLeftMenu: undefined,
             viewSearcher: undefined,
             viewNewsletter: undefined,
-            viewLeftFeatured : undefined,
+            viewLeftFeatured: undefined,
+            viewFooter : undefined,
 
             //el por defecto para las vistas
             defaultEl: "#divMainSection",
@@ -62,25 +64,24 @@
                 this.currentView = new PublishView({ el : this.defaultEl });
             },
             sellProduct: function (step) {
+                this.sellSwitch(TuilsConfiguration.productBaseTypes.product);
+            },
+            sellBike: function (step) {
+                this.sellSwitch(TuilsConfiguration.productBaseTypes.bike);
+            },
+            sellService: function (step) {
+                this.sellSwitch(TuilsConfiguration.productBaseTypes.service);
+            },
+            sellSwitch: function (type) {
                 if (!this.currentView) {
-                    this.currentView = new PublishProductView({ el: this.defaultEl, productType: TuilsConfiguration.productBaseTypes.product });
+                    this.currentView = new PublishProductView({ el: this.defaultEl, productType: type });
                 }
                 else {
                     this.currentView.currentStep = step;
                     this.currentView.showStep();
                 }
-                
+
                 this.loadSubViews();
-            },
-            sellBike: function (step) {
-                var that = this;
-                that.currentView = new PublishProductView({ el: that.defaultEl, productType: TuilsConfiguration.productBaseTypes.bike });
-                that.loadSubViews();
-            },
-            sellService: function (step) {
-                var that = this;
-                that.currentView = new PublishProductView({ el: that.defaultEl, productType: TuilsConfiguration.productBaseTypes.service });
-                that.loadSubViews();
             },
             myAccount: function () {
                 var that = this;
@@ -170,6 +171,7 @@
             },
             loadSubViews: function () {
                 this.loadHeader();
+                this.loadFooter();
                 this.loadSearcher();
             },
             loadNewsletter: function () {
@@ -214,7 +216,10 @@
                 }
 
             },
-            
+
+            loadFooter: function () {
+                this.viewFooter = new FooterView({ el: 'footer' });
+            },
             loadSubViewsPanel: function () {
                 var that = this;
                 that.viewLeftMenu = new MenuPanelView({ el: "#divPanelMenu" });

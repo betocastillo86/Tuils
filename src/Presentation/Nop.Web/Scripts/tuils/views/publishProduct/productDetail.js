@@ -18,7 +18,12 @@
                 observe: "Name",
                 onSet: function (value, ctx) {
                     var maxSize = ctx.view.model.validation.Name.maxLength;
-                    ctx.view.$("#addMessageName").html("Restan " + (maxSize - value.length) + " caracteres");
+                    var diff = maxSize - value.length;
+                    if(diff < 0)
+                        ctx.view.$("#addMessageName").css('color', 'red').html("Sobran " + (diff * (-1)) + " caracteres");
+                    else
+                        ctx.view.$("#addMessageName").css('color', '').html("Restan " + diff + " caracteres");
+                    
                     return value;
                 }
             },
@@ -198,9 +203,7 @@
                         tagReferences.push({ label: element.Name, value: element.Id });
                     };
                     _.each(TuilsStorage.bikeReferences, function (element, index) {
-                        //addTag(element);
                         _.each(element.ChildrenCategories, function (child, index) {
-                            child.Name = element.Name + ' ' + child.Name;
                             addTag(child);
                         });
                     });

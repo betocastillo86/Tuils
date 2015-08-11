@@ -62,7 +62,8 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                     pattern: 'number'
                 },
                 PhoneNumber: {
-                    required : false
+                    required: false,
+                    minLength : 6
                 },
                 Condition: {
                     required: function (val, attr, computed) {
@@ -122,7 +123,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                 Name: 'Título',
                 CategoryId : 'Categoría',
                 FullDescription :'Descripción',
-                IsShipEnabled : 'Realiza Envios/Domicilios',
+                IsShipEnabled : 'Realiza Envíos/Domicilios',
                 ManufacturerId: 'Marca',
                 //AdditionalShippingCharge: 'Costo por envío',
                 Price: 'Precio',

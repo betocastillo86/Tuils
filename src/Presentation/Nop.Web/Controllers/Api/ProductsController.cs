@@ -76,7 +76,7 @@ namespace Nop.Web.Controllers.Api
                 }
                 
                 //Guarda el número telefónico de contacto
-                _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, SystemCustomerAttributeNames.BikeCarriagePlate, model.PhoneNumber);
+                _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, SystemCustomerAttributeNames.Phone, model.PhoneNumber);
                 _workContext.CurrentVendor.PhoneNumber = model.PhoneNumber;
                 _vendorService.UpdateVendor(_workContext.CurrentVendor);
 

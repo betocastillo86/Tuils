@@ -226,7 +226,8 @@ namespace Nop.Web.Controllers
                 HasSampleDownload = product.IsDownload && product.HasSampleDownload,
                 StateProvinceName = product.StateProvince != null ? product.StateProvince.Name : string.Empty,
                 DetailShipping = product.DetailShipping,
-                IncludeSupplies = product.IncludeSupplies
+                IncludeSupplies = product.IncludeSupplies,
+                IsMobileDevice = Request.Browser.IsMobileDevice
             };
             
             //automatically generate product description?

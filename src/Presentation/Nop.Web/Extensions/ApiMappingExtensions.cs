@@ -246,7 +246,7 @@ namespace Nop.Web.Extensions.Api
         {
             var model = new AddressPictureModel
             {
-                ImageUrl = _pictureService.GetPictureUrl(entity, size),
+                ImageUrl = _pictureService.GetPictureUrl(entity, size, crop:true),
                 FullSizeImageUrl = _pictureService.GetPictureUrl(entity),
                 Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), name),
                 AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), name),

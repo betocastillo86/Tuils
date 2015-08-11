@@ -24,6 +24,7 @@ define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars
                 this.loadControls(args);
                 this.model.on("error", this.showButtonBar, this);
                 this.model.on("unauthorized", this.showButtonBar, this);
+                this.model.on("change", this.loadControls, this);
             },
             render: function () {
                 this.$el.html(this.template({ Images: this.images != undefined ? this.images.toJSON() : undefined, Properties: this.productProperties }));
@@ -35,9 +36,13 @@ define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars
             },
             loadControls: function (args)
             {
-                this.model = args.product;
-                this.images = args.images;
-                this.loadFields({ breadCrumb: args.breadCrumb });
+
+                if (args.product)
+                    this.model = args.product;
+                if(args.images)
+                    this.images = args.images;
+
+                this.loadFields();
                 this.render();
             },
             loadFields: function (args) {
@@ -69,7 +74,8 @@ define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars
 
                 
                 //Muestra los valores de envio
-                pushProperty(this, "IsShipEnabled", true);
+                if (this.productType != TuilsConfiguration.productBaseTypes.bike)
+                    this.productProperties.push({ name: this.model.labels['IsShipEnabled'], value: this.model.get('IsShipEnabled') ? 'Si' : 'No' });
 
                 //if (this.model.get('IsShipEnabled'))
                 //{
@@ -79,8 +85,8 @@ define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars
                 //}
                 
 
-                this.productProperties.push({ name: 'Fecha Cierre Publicacion', value: TuilsConfiguration.catalog.limitDaysOfProductPublished + ' dias' });
-                this.productProperties.push({ name: 'Categoria', value: TuilsUtil.toStringWithSeparator(args.breadCrumb, ' > ') });
+                this.productProperties.push({ name: 'Fecha Cierre Publicación', value: TuilsConfiguration.catalog.limitDaysOfProductPublished + ' dias' });
+                this.productProperties.push({ name: 'Categoría', value: TuilsUtil.toStringWithSeparator(this.model.get('breadCrumb'), ' > ') });
 
                 function pushProperty(ctx, field, isName) {
                     ctx.productProperties.push({ name: ctx.model.labels[field] ? ctx.model.labels[field] : field, value: ctx.model.get(field + (isName ? 'Name' : '')) });
@@ -94,11 +100,12 @@ define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars
                 this.$("#buttonsBar input[type='button']").prop("disabled", !show);
             },
             validateForm: function () {
+                //Realiza la validación manual, sin bindings porque el telefóno solo es necesario en el ultimo paso
                 this.removeErrors();
                 var phoneNumber = this.$("#PhoneNumber").val();
                 if (phoneNumber.length > 6)
                 {
-                    this.model.set('PhoneNumber', phoneNumber);
+                    this.model.set('PhoneNumber', phoneNumber, {silent:true});
                     return true;
                 }
                 else

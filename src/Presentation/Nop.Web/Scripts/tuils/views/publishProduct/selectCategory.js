@@ -4,7 +4,7 @@
         var SelectCategoryView = BaseView.extend({
 
             events: {
-                "click li": "loadCategories",
+                "click .divCategorySelector li": "loadCategories",
                 "change select": "loadCategories",
                 "keyup input[type='text']": "filterCategories",
                 "click .btn_continue": "finishSelection"
@@ -33,7 +33,7 @@
             _tempPreviousCategories : undefined,
 
             //Solo comienza a hacer filtro cuando se pone más de una letra
-            minCharactersForFiltering: 1,
+            minCharactersForFiltering: 0,
 
             //Solo permite filtrar cuando hay más de 5 categorias
             minChildrenCategoriesForFiltering: 5,
@@ -95,6 +95,7 @@
                     //actualiza la miga de pan
                     this.breadCrumbCategories = _.first(this.breadCrumbCategories, this.currentLevel - 1);
                     this.breadCrumbCategories.push(obj.text());
+                    this.model.set('breadCrumb', this.breadCrumbCategories);
                     //Empuja al array la secuencia de categorías seleccionadas
                     this.arrayCategories = _.first(this.arrayCategories, this.currentLevel - 1);
                     this.arrayCategories.push(categoryId);
@@ -135,8 +136,8 @@
                     this.divShowCategories.append(this.template(obj));
 
                     //Solo permite mostrar el buscador para más de 5 categorias
-                    if (!this.isMobile() && obj.ChildrenCategories.length < this.minChildrenCategoriesForFiltering)
-                        this.divShowCategories.find("ul:last-child input[type='text']").hide();
+                    //if (!this.isMobile() && obj.ChildrenCategories.length < this.minChildrenCategoriesForFiltering)
+                    //    this.divShowCategories.find("ul:last input[type='text']").hide();
                     if (!this.autoSelectCategories && this.isMobile())
                         this.scrollFocusObject(".category-column:last", -50);
 

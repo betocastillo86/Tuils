@@ -495,7 +495,9 @@ define(['jquery', 'jqueryui'], function ($) {
                 // Button for removing the tag.
                 var removeTagIcon = $('<span></span>')
                     .addClass('icon-close');
-                var removeTag = $('<a><span class="text-icon">\xd7</span></a>') // \xd7 is an X
+                var removeTag =
+                    //$('<a><span class="text-icon">\xd7</span></a>') // \xd7 is an X
+                    $('<a></a>')
                     .addClass('tagit-close')
                     .append(removeTagIcon)
                     .click(function (e) {

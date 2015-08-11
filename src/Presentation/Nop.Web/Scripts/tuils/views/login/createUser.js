@@ -24,7 +24,7 @@
             //"#txtPassword": "Password",
             "#chkTerms": "TermsOfUse"
         },
-
+        intervalAuthentication: undefined,
         initialize: function (args) {
 
             var that = this;
@@ -81,16 +81,18 @@
             this.showForm();
         },
         createUser: function () {
-            this.validateControls();
+            this.validateControls(undefined, false);
            
             if (this.model.isValid())
             {
                 this.model.register();
             }
         },
-        userCreated : function(model){
+        userCreated: function (model) {
+            this.alert(Resources.confirm.userRegistered);
             this.trigger("user-authenticated", this.model);
             this.close();
+
         },
         errorCreating: function (model, exception) {
             alert(exception.responseJSON.Message);
@@ -129,9 +131,7 @@
                     tagReferences.push({ label: element.Name, value: element.Id });
                 };
                 _.each(TuilsStorage.bikeReferences, function (element, index) {
-                    //addTag(element);
                     _.each(element.ChildrenCategories, function (child, index) {
-                        child.Name = element.Name + ' ' + child.Name;
                         addTag(child);
                     });
                 });

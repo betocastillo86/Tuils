@@ -370,7 +370,8 @@ namespace Nop.Web.Controllers
             var model = new HeaderLinksModel
             {
                 IsAuthenticated = customer.IsRegistered(),
-                CustomerEmailUsername = customer.IsRegistered() ? (_customerSettings.UsernamesEnabled ? customer.Username : customer.Email) : "",
+                //CustomerEmailUsername = customer.IsRegistered() ? (_customerSettings.UsernamesEnabled ? customer.Username : customer.Email) : "",
+                CustomerEmailUsername = customer.IsRegistered() ? (customer.GetFullName()) : "",
                 ShoppingCartEnabled = _permissionService.Authorize(StandardPermissionProvider.EnableShoppingCart),
                 WishlistEnabled = _permissionService.Authorize(StandardPermissionProvider.EnableWishlist) && !_workContext.CurrentCustomer.IsGuest() ,
                 AllowPrivateMessages = customer.IsRegistered() && _forumSettings.AllowPrivateMessages,
@@ -836,7 +837,8 @@ namespace Nop.Web.Controllers
                 confirm = new {
                     myAccount = _localizationService.GetResource("MyAccount.Confirm"),
                     offices = _localizationService.GetResource("MyOffices.Confirm"),
-                    closeButton = _localizationService.GetResource("Common.CloseButtonDialog")
+                    closeButton = _localizationService.GetResource("Common.CloseButtonDialog"),
+                    userRegistered = _localizationService.GetResource("createuser.ConfirmMessage")
                 }
             };
 

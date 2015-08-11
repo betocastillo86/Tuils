@@ -466,6 +466,7 @@ namespace Nop.Services.Media
 
             string lastPart = GetFileExtensionFromMimeType(picture.MimeType);
             string thumbFileName;
+            string complementNameCroppedPicture = crop ? "_c" : string.Empty;
             if (picture.IsNew)
             {
                 DeletePictureThumbs(picture);
@@ -484,8 +485,8 @@ namespace Nop.Services.Media
                 if (targetSize == 0)
                 {
                     thumbFileName = !String.IsNullOrEmpty(seoFileName) ?
-                        string.Format("{0}_{1}.{2}", picture.Id.ToString("0000000"), seoFileName, lastPart) :
-                        string.Format("{0}.{1}", picture.Id.ToString("0000000"), lastPart);
+                        string.Format("{0}_{1}{3}.{2}", picture.Id.ToString("0000000"), seoFileName, lastPart, complementNameCroppedPicture) :
+                        string.Format("{0}{2}.{1}", picture.Id.ToString("0000000"), lastPart, complementNameCroppedPicture);
                     var thumbFilePath = GetThumbLocalPath(thumbFileName);
                     if (!File.Exists(thumbFilePath))
                     {
@@ -495,8 +496,8 @@ namespace Nop.Services.Media
                 else
                 {
                     thumbFileName = !String.IsNullOrEmpty(seoFileName) ?
-                        string.Format("{0}_{1}_{2}.{3}", picture.Id.ToString("0000000"), seoFileName, targetSize, lastPart) :
-                        string.Format("{0}_{1}.{2}", picture.Id.ToString("0000000"), targetSize, lastPart);
+                        string.Format("{0}_{1}_{2}{4}.{3}", picture.Id.ToString("0000000"), seoFileName, targetSize, lastPart, complementNameCroppedPicture) :
+                        string.Format("{0}_{1}{3}.{2}", picture.Id.ToString("0000000"), targetSize, lastPart, complementNameCroppedPicture);
                     var thumbFilePath = GetThumbLocalPath(thumbFileName);
                     if (!File.Exists(thumbFilePath))
                     {

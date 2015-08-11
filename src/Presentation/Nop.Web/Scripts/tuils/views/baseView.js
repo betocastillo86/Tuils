@@ -186,8 +186,12 @@
         scrollFocusObject: function (selector, addPixels) {
             if (addPixels == undefined)
                 addPixels = 0;
+
+            var position = 0;
+            if ($(selector).offset() != undefined)
+                position = $(selector).offset().top;
             $('html, body').animate({
-                scrollTop: $(selector).offset().top + addPixels
+                scrollTop: position + addPixels
             }, 500);
         },
         isMobile: function ()

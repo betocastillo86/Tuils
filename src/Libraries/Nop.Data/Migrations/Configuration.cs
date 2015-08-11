@@ -7,6 +7,7 @@ namespace Nop.Data.Migrations
     using Nop.Core.Domain.Localization;
     using Nop.Core.Domain.Messages;
     using Nop.Core.Domain.Seo;
+    using Nop.Core.Domain.Tasks;
     using Nop.Core.Infrastructure;
     using System;
     using System.Collections.Generic;
@@ -36,6 +37,7 @@ namespace Nop.Data.Migrations
             bool runSettings = true;
             bool runTemplatesEmails = false;
             bool runUrls = false;
+            bool runTasks = true;
 
             #region Specification Attribute
 
@@ -948,6 +950,9 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("PublishProduct.NegotiationOptions.Alt", "Opciones de negocación y de estado de tu moto");
                 newLocaleStringResources.Add("PublishProduct.AccesoriesOptions.Alt", "Accesorios con los que cuenta tu moto");
                 newLocaleStringResources.Add("PublishProduct.Manufacturer.Alt", "Escoge la marca de el producto que deseas vender. Si no está en la lista selecciona \"Otro\"");
+                newLocaleStringResources.Add("createuser.ConfirmMessage", "Has sido registrado correctamente. Tu clave ha sido enviada a tu correo");
+
+                
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)
@@ -2362,6 +2367,26 @@ namespace Nop.Data.Migrations
             }
 		    
 	        #endregion
+
+            #region Task
+            if (runTasks)
+            {
+                var tasksTable = context.Set<ScheduleTask>();
+                var tasks = new List<ScheduleTask>(){
+                    new ScheduleTask()
+                    {
+                        Id = 7,
+                        Name = "Load Bikes Reference Alive",
+                        Seconds = 120,
+                        Enabled = true,
+                        StopOnError = false,
+                        Type = "Nop.Services.Common.LoadBikesCacheTask, Nop.Services"
+                    }
+                };
+
+                tasksTable.AddOrUpdate(t => t.Id, tasks.ToArray());
+            }
+            #endregion
         }
     }
 }

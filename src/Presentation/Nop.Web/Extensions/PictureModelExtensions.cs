@@ -62,7 +62,8 @@ namespace Nop.Web.Extensions
             ILocalizationService localizationService,
             MediaSettings mediaSettings,
             IPictureService pictureService,
-            int? pictureSize = null)
+            int? pictureSize = null,
+            bool crop = true)
         {
             if (!pictureSize.HasValue)
                 pictureSize = mediaSettings.ProductThumbPictureSize;
@@ -70,10 +71,10 @@ namespace Nop.Web.Extensions
             var picture = pictureService.GetPicturesByProductId(product.Id, 1).FirstOrDefault();
             var pictureModel = new PictureModel
             {
-                ImageUrl = pictureService.GetPictureUrl(picture, pictureSize.Value),
+                ImageUrl = pictureService.GetPictureUrl(picture, pictureSize.Value, crop:crop),
                 FullSizeImageUrl = pictureService.GetPictureUrl(picture),
                 Title = string.Format(localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), product.Name),
-                AlternateText = string.Format(localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), product.Name)
+                AlternateText = string.Format(localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), product.Name),
             };
             return pictureModel;
         }
