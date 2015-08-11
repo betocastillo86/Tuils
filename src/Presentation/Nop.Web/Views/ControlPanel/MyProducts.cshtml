@@ -9,22 +9,21 @@
 
 <div class="panel-control">
     <h2 class="tit_sec">@T("MyProducts.Title")</h2>
-    <div>
-        @Html.ActionLink(T("common.publishProduct").Text, "Index", "Sales", new { }, new { @class = "btn-naranja" })
+    <div class="header_myProduct">
+        @Html.ActionLink(T("common.publishProduct").Text, "Index", "Sales", new { }, new { @class = "button-1" })
 
-
-        Filtrar solo:
-        <a href="@Model.UrlFilterByServices.Url" class="@(Model.UrlFilterByServices.Active ? "active" : string.Empty)" title="@T("common.filterByService")">@T("controlpanel.publishproductservice")</a>
+        <div class="filters">
+            Filtrar solo:
+            <a href="@Model.UrlFilterByServices.Url" class="@(Model.UrlFilterByServices.Active ? "active" : string.Empty)" title="@T("common.filterByService")">@T("controlpanel.publishproductservice")</a>
+            <a href="@Model.UrlFilterByProducts.Url" class="@(Model.UrlFilterByProducts.Active ? "active" : string.Empty)" title="@T("common.filterByProduct")">@T("controlpanel.publishproduct")</a>
+            <a href="@Model.UrlFilterByBikes.Url" class="@(Model.UrlFilterByBikes.Active ? "active" : string.Empty)" title="@T("common.filterByBikes")">@T("controlpanel.publishproductbike")</a>
+        </div>
+        
+        <div class="search-pdt">
+            <input type="text" class="searchinput" value="@Model.PagingFilteringContext.q" />
+            <a class="btn_search"><span class="icon-lupa"></span></a>
+        </div>
         <br />
-        <a href="@Model.UrlFilterByProducts.Url" class="@(Model.UrlFilterByProducts.Active ? "active" : string.Empty)" title="@T("common.filterByProduct")">@T("controlpanel.publishproduct")</a>
-        <br />
-        <a href="@Model.UrlFilterByBikes.Url" class="@(Model.UrlFilterByBikes.Active ? "active" : string.Empty)" title="@T("common.filterByBikes")">@T("controlpanel.publishproductbike")</a>
-        <br />
-
-    </div>
-    <div class="search-pdt">
-        <input type="text" class="searchinput" value="@Model.PagingFilteringContext.q" />
-        <a class="btn_search"><span class="icon-mail"></span></a>
     </div>
     <ul class="product_list">
 

@@ -101,13 +101,9 @@ a:hover { text-decoration: none; }
 .button-1:hover, .button-2:hover, .button-1.search-box-button:hover{background: #3B5A83;}
 
     .block .title, .bestsellers .title, .add-to-cart-button, .checkout-button, .button-1.search-box-button {background:#292732; }
-.product-list .product-box-add-to-cart-button { margin: 0; }
-.product-list .product-item .product-title {margin: 10px 50px 0 140px; }
-.product-list .product-item .add-info{top: 70px;}
 .product-grid .product-item .add-info {position: absolute; }
 .product-grid .product-item { width: auto; }
 .product-grid .product-item .picture { height: 220px; }
-.product-list .product-item { min-height: 200px; }
 .product-grid.bestsellers .product-item .picture {border:0 }
 
 .footer-poweredby {}
@@ -290,7 +286,6 @@ ul#thumblist { margin: 0; }
 .product-review-box .rating { background: url("images/star-x-inactive.png") repeat-x scroll 0 0 transparent; float: left; height: 15px; width: 86px; margin-top: 1px;margin-right: 2px; }
 .product-review-box .rating div { background: url("images/star-x-active.png") repeat-x scroll 0 0 transparent; height: 15px; }
 .rating a { display: block; height: 15px; width: 86px; }
-.product-grid .product-item .prices .price, .product-list .product-item .prices .price { }
 .product-grid .product-item .buttons { clear: both; }
 .block-recently-viewed-products li{border:0}
 
