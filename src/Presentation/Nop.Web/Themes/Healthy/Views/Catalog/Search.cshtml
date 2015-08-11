@@ -66,14 +66,15 @@
                 @if (Model.PagingFilteringContext.AllowProductSorting && Model.Products.Count > 0)
                 {
                     <div class="product-sorting">
-                        <span><a href="javascript:;">@T("Catalog.OrderBy")</a></span>
+                        <span class="text-orde">@T("Catalog.OrderBy")</span>
+                        <a class="btn_ordena" href="javascript:;">Ordenar</a>
                         @Html.DropDownList("products-orderby", Model.PagingFilteringContext.AvailableSortOptions, new { onchange = "setLocation(this.value);" })
                     </div>
                 }
                 @if (Model.IsMobileDevice)
                 { 
                     <div id="product-filter-mobile">
-                        <a id="btnFilterByMobile" class="btn_filter"><span><i class="icon-filtros"></i> <b>@T("Catalog.FilterBy")</b><br></span></a>
+                        <a id="btnFilterByMobile" class="btn_filter">@T("Catalog.FilterBy")</a>
                     </div>
                 }
                 @*page size*@

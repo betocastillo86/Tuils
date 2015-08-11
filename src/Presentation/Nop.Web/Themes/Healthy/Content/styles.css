@@ -693,20 +693,24 @@ td.fieldname{font-size:12px;}
 .product-list .item-box:hover{background:#F9F9F9;}
 .product-list .product-item{width:auto;margin-top:10px;position:relative;zoom:1;}
 .product-list .product-item:after{content:".";display:block;clear:both;height:0;font-size:0;line-height:0;visibility:hidden;}
-.product-list .product-item .product-title{font-weight:700;font-size:12px;padding-left:10px;margin-top:10px;}
-.product-list .product-item .product-title a{font-weight:700;display:block;height:auto;line-height:1.3em;overflow:hidden;padding:4px 10px 8px 0;}
-.product-list .product-item .details{}
+.product-list .product-item .product-title{font-weight:500; margin:0; color: #292732; float: left; width:calc(100% - 180px);}
+.product-list .product-item .product-title a{display:block; height:auto; padding:0; color: #292732; font-size: 16px; font-weight: 500;}
+.product-list .product-item .details{float: left; width: calc(100% - 120px); padding: 15px 0 0;}
+.product-list .product-item .details .serv_espec{right: 10px; left: auto; font-size: 11px; background: none; color: #3b5a83; box-shadow: none; padding: 0; text-align: right;}
+.product-list .product-item .details .serv_espec::after{display: none;}
 .product-list .product-item .product-rating-box{padding:0 0 0 10px;margin:0px 100px 0 140px;}
-.product-list .product-item .picture{float:left;margin:10px;}
-.product-list .product-item .description{padding:0 0 0 10px;margin:0px 100px 0 140px;text-align:left;color:#555;}
-.product-list .product-item .add-info{float:right;text-align:right;position:absolute;top:40px;right:10px;}
+.product-list .product-item .picture{float:left; width: 100px; height: 100px; background:#FFF; margin: 10px;}
+.product-list .product-item .description{display: none;}
+.product-list .product-item .add-info{float:right;text-align:right; width: 160px; margin: 10px; font-size: 11px;}
 .product-list .product-item .prices{}
+.product-list .product-item .city-seo{position: inherit; color:#7f7d84; height: auto;}
 .product-list .product-item .prices .price{margin:0px;display:block;}
-.product-list .product-item .prices .actual-price{color:#B80709;}
+.product-list .product-item .prices .actual-price{color: #f94c2a;}
 .product-list .product-item .prices .old-price{color:#5C5B5B;text-decoration:line-through;}
 .product-list .product-item .prices .tax-shipping-info{font-size:11px;}
 .product-list .product-item .prices .tax-shipping-info a{text-decoration:underline;}
-.product-list .product-item .buttons{padding-top:20px;}
+.product-list .product-item .buttons{display: none;}
+.product-list .product-item .add-to-links .product-addLink{margin: 0;}
 
 
 /* FEATURED PRODUCTS */
@@ -755,7 +759,8 @@ td.fieldname{font-size:12px;}
 	.filt-inputs input[type="text"]{width:calc(50% - 20px); padding:5px; background: #FFF;}
 	.filt-inputs .btn_fil{background:#fb7055; text-align: center; padding: 6px; color: #FFF; transition:ease all 0.2s; border-radius: 2px;}
 	.filt-inputs .btn_fil:hover{background:#3b5a83;}
-	.btn_filter{display: none;}
+	.btn_filter, .btn_ordena{display: none;}
+	.btn_ordena a{cursor:inherit; color:#5c5b5b !important;}
 
 .product-filters .filter-title{font-weight:500;color:#3b5a83; text-transform: uppercase; margin:0 0 10px 5px;}
 .product-filters .filter-content{padding:5px 10px;}
@@ -1686,7 +1691,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .caja-mj p{margin: 0; padding: 8px 0; text-align: justify;}
     .caja-rpt{resize:none; width: 100%; height: 150px; background:#F3F5F7; border-radius:2px; padding: 9px 10px; box-sizing:border-box; font-family: 'Ubuntu', sans-serif; font-size: 14px; color: #5c5b5b;}
     /*VENTAS COMPRAS*/
-    .conte_sale{width: 100%; list-style: none;}
+    .conte_sale{width: 100%; list-style: none; margin: 20px 0 0;}
         .conte_sale li{transition:ease all 0.4s; border-bottom:solid 1px #E5E5E5;}
         .conte_sale li:hover{background:#F9FAFB;}
         .table-header{background:#FB7055; color: #FFF; font-size: 16px; padding: 5px 0;}
@@ -1757,6 +1762,10 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
             .conte_pgt a{background:#FB7055; transition:ease all 0.4s; float: right; border-radius:2px; display:block; padding: 6px 10px; color: #FFF; margin: 0 0 0 10px;}
             .conte_pgt a:hover{background:#3B5A83; color:#FFF;}
         .date_pgt{float:left; width: 60px; margin: 0 0 0 20px; padding: 7px 0;}
+    .header_myProduct .search-pdt{float: right; width: 40%;}
+    .header_myProduct .button-1{border-radius: 2px; color: #fff; display: block; float: left; margin: 0 10px 0 0; font-size: 14px; padding: 6px 10px; transition: all 0.4s ease 0s;}
+    .header_myProduct .filters{float: left;}
+
     /*PERFILES*/
     .coverPerfil{background:#627B9C center / cover no-repeat; height: 300px; width: 100%; position: relative;}
         .grad_cv{background: url(images/grad-cover.png) bottom repeat-x; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; z-index: 0;}
@@ -1766,10 +1775,10 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
         .cover-editor:hover span{font-size: 20px; padding: 5px; text-shadow:none;}
         .cover-editor i{font-size: 12px; font-style: inherit; display: none;}
         .cover-editor:hover i{display: inline-block;}
-        .menu-cover{position: absolute; top:45px; box-shadow: 2px 2px 4px #3a5985; left: 0; width:140px; background:#F3F5F7; height: auto; box-sizing:border-box; padding:0; margin: 0; border-radius: 3px; list-style: none;}
+        .menu-cover{position: absolute; top:35px; box-shadow: 2px 2px 4px #3a5985; left: 0; width:140px; background:#F3F5F7; height: auto; box-sizing:border-box; padding:0; margin: 0; border-radius: 3px; list-style: none;}
     	.menu-cover li{padding: 7px 10px; border-radius: 3px; color:#3a5985; font-size: 13px; transition:ease all 0.2pxs;}
     	.menu-cover li:hover, .menu-cover li:focus{background:#637A9F; color:#FFF;}
-    .conte_perfil{background:#F3F5F7; height: 60px; margin: 0 0 22px; text-align: left;}
+    .conte_perfil{background:#F3F5F7; height: 60px; margin: 0 0 42px; text-align: left;}
         .conte_perfil .container.hd{position: relative;}
         .pos-perfil{position: absolute; top:-120px; width: 100%;}
         .ctl-tarjetas{background: #D8DEE6; border-radius:3px; color: #3A5983; position: absolute; top:0; right: 0; list-style: none;}
