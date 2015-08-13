@@ -21,7 +21,6 @@ ul.tagit li.tagit-choice-read-only {
 } 
 
 ul.tagit li.tagit-choice-editable { 
-    padding: .2em 18px .2em .5em; 
 } 
 
 ul.tagit li.tagit-new {
@@ -35,6 +34,9 @@ ul.tagit li.tagit-choice a.tagit-label {
 ul.tagit li.tagit-choice .tagit-close {
     cursor: pointer;
     display: inline-block;
+    color: #FFF !important;
+    margin: 0 0 0 5px;
+    font-size: 11px;
 }
 
 /* used for some custom themes that don't need image icons */

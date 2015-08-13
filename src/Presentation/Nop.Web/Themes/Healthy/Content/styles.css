@@ -837,10 +837,11 @@ td.fieldname{font-size:12px;}
 	.registration-modal .inputs input[type="text"], .registration-modal .inputs input[type="password"], .registration-modal .inputs select{width:100%;}
 	.registration-modal .field-validation-error{margin: 0; text-align: left;}
 		.btn_register{ width: 100% !important;}
-		.terminos{text-align: left; width: 100%; margin: 0 0 20px;}
+		.terminos{text-align: left; width: 100%; margin: 10px 0 20px;}
 		.terminos a:hover{text-decoration: underline;}
 	.rgt-login{margin: 10px 0 0; display: block;}
 	.rgt-login:hover{text-decoration:underline;}
+	.registration-modal .inputs ul.tagit{width: 100%;}
 
 .registration-page{}
 .registration-page .page-title{}
@@ -1613,6 +1614,8 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .retoma_publi .icon-publica{float: left; color: #fb7055; text-align: center; font-size: 80px; width: 120px; height: 80px; margin:15px 0; display: block;}
     .retoma_publi .resumen-final{width: calc(100% - 120px);}
     .retoma_publi .resumen-final p{margin: 0 0 10px;}
+
+    #divStep_3 .title{color: #f84c2a; font-size: 16px; font-weight: 500; margin: 0 0 10px;}
 
 /*PANEL DE CONTROL*/
 .menu-panel{padding:0 !important;}

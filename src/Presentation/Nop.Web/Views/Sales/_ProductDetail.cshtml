@@ -17,8 +17,9 @@
             <div class="text-character"></div>
             <span class="field-validation-error" tuils-val-for="ManufacturerId"></span>
         </div>
-        <div class="input_check" title="@T("PublishProduct.HasShipping.Alt")">
-            <input id="chkIsShipEnabled" type="checkbox" /> @Html.Label(@T("PublishProduct.HasShipping").Text)
+        <div class="inputs" title="@T("PublishProduct.HasShipping.Alt")">
+            @Html.Label(@T("PublishProduct.HasShipping").Text)
+            <input id="chkIsShipEnabled" type="checkbox" />
         </div>
         <br/>
         @*<div class="inputs" tuils-for="shipping">
