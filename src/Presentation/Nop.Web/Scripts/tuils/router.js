@@ -2,12 +2,13 @@
   'tuils/views/panel/myAccount','tuils/views/panel/vendorServices','tuils/views/panel/questionsView','tuils/views/vendor/vendorDetailView'			
 ,'tuils/views/product/productDetailView','tuils/views/common/newsletterView','tuils/views/common/searcherView','tuils/views/common/leftFeaturedProductsView'	
 , 'tuils/views/common/header', 'tuils/views/panel/offices', 'tuils/views/panel/menu', 'tuils/views/panel/myProductsView', 'tuils/views/home/homeView',
-'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView',
+'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView', 'tuils/views/publishProduct/publishView',
+'tuils/views/common/footerView',
 'ajaxCart', 'nopCommon'],
     function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView,
         MyAccountView,VendorServicesView ,QuestionsView ,VendorDetailView,
         ProductDetailView, NewsletterView, SearcherView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
-        HomeView, SearchView, CategoryView, ManufacturerView) {
+        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -17,7 +18,8 @@
             viewLeftMenu: undefined,
             viewSearcher: undefined,
             viewNewsletter: undefined,
-            viewLeftFeatured : undefined,
+            viewLeftFeatured: undefined,
+            viewFooter : undefined,
 
             //el por defecto para las vistas
             defaultEl: "#divMainSection",
@@ -25,12 +27,12 @@
             routes: {
                 "": "home",
                 "quiero-vender": "sell",
-                "quiero-vender/producto": "sellProduct",
-                "quiero-vender/moto": "sellBike",
-                "quiero-vender/servicio-especializado": "sellService",
+                "quiero-vender/producto(/:step)": "sellProduct",
+                "quiero-vender/moto(/:step)": "sellBike",
+                "quiero-vender/servicio-especializado(/:step)": "sellService",
                 "mi-cuenta/datos-basicos": "myAccount",
                 "mi-cuenta/sedes": "myOffices",
-                "ControlPanel/VendorServices": "vendorServices",
+                "mi-tienda/motos-y-servicios": "vendorServices",
                 "mi-cuenta/mis-compras(/:query)": "myOrders",
                 "mi-cuenta/mis-ventas(/:query)": "myOrders",
                 "mi-cuenta/mis-productos(/:query)": "myProducts",
@@ -43,7 +45,7 @@
                 "m/:query":"manufacturer",
                 "p/:query": "product",
                 'entrar' : 'login',
-                'buscar(/:query)': 'search',
+                'buscar(/*query)': 'search',
                 'recordar-clave': 'passwordRecovery',
                 'mapa-del-sitio': 'sitemap',
                 'condiciones-de-uso': 'useConditions',
@@ -59,21 +61,27 @@
             sell : function()
             {
                 this.loadSubViews();
+                this.currentView = new PublishView({ el : this.defaultEl });
             },
-            sellProduct: function () {
-                var that = this;
-                that.currentView = new PublishProductView({ el: that.defaultEl, productType: TuilsConfiguration.productBaseTypes.product });
-                that.loadSubViews();
+            sellProduct: function (step) {
+                this.sellSwitch(TuilsConfiguration.productBaseTypes.product);
             },
-            sellBike: function () {
-                var that = this;
-                that.currentView = new PublishProductView({ el: that.defaultEl, productType: TuilsConfiguration.productBaseTypes.bike });
-                that.loadSubViews();
+            sellBike: function (step) {
+                this.sellSwitch(TuilsConfiguration.productBaseTypes.bike);
             },
-            sellService: function () {
-                var that = this;
-                that.currentView = new PublishProductView({ el: that.defaultEl, productType: TuilsConfiguration.productBaseTypes.service });
-                that.loadSubViews();
+            sellService: function (step) {
+                this.sellSwitch(TuilsConfiguration.productBaseTypes.service);
+            },
+            sellSwitch: function (type) {
+                if (!this.currentView) {
+                    this.currentView = new PublishProductView({ el: this.defaultEl, productType: type });
+                }
+                else {
+                    this.currentView.currentStep = step;
+                    this.currentView.showStep();
+                }
+
+                this.loadSubViews();
             },
             myAccount: function () {
                 var that = this;
@@ -163,6 +171,7 @@
             },
             loadSubViews: function () {
                 this.loadHeader();
+                this.loadFooter();
                 this.loadSearcher();
             },
             loadNewsletter: function () {
@@ -186,6 +195,8 @@
                 {
                     //se atacha al evento de solicitud de ingreso
                     that.currentView.on('unauthorized', that.viewHeader.showLogin, that.viewHeader);
+                    //evento para cerrar el menu responsive
+                    that.currentView.on('close-menu-responsive', that.viewHeader.closeMenuResponsive, that.viewHeader);
                     //atacha a la vista actual al evento cuando el usuario se autenticó
                     that.viewHeader.on('user-authenticated', that.currentView.userAuthenticated, that.currentView);
 
@@ -205,7 +216,10 @@
                 }
 
             },
-            
+
+            loadFooter: function () {
+                this.viewFooter = new FooterView({ el: 'footer' });
+            },
             loadSubViewsPanel: function () {
                 var that = this;
                 that.viewLeftMenu = new MenuPanelView({ el: "#divPanelMenu" });

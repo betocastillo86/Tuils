@@ -82,6 +82,7 @@ namespace Nop.Web.Extensions
             IPictureService pictureService,
             IWebHelper webHelper,
             ICacheManager cacheManager,
+            IStateProvinceService stateProvinceService,
             CatalogSettings catalogSettings,
             MediaSettings mediaSettings,
             IEnumerable<Product> products,
@@ -104,7 +105,8 @@ namespace Nop.Web.Extensions
                     SeName = product.GetSeName(),
                     CompareProductsEnabled = catalogSettings.CompareProductsEnabled,
                     DisableWishlistButton = workContext.CurrentCustomer == null || workContext.CurrentCustomer.IsGuest(),
-                    FeaturedBySpecialCategory = product.FeaturedBySpecialCategory
+                    FeaturedBySpecialCategory = product.FeaturedBySpecialCategory,
+                    StateProvinceName = stateProvinceService.GetStateProvinceById(product.StateProvinceId).Name
                 };
                 //price
                 if (preparePriceModel)
@@ -339,7 +341,7 @@ namespace Nop.Web.Extensions
                         var picture = pictureService.GetPicturesByProductId(product.Id, 1).FirstOrDefault();
                         var pictureModel = new PictureModel
                         {
-                            ImageUrl = pictureService.GetPictureUrl(picture, pictureSize),
+                            ImageUrl = pictureService.GetPictureUrl(picture, pictureSize, crop:true),
                             FullSizeImageUrl = pictureService.GetPictureUrl(picture),
                             Title = string.Format(localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), model.Name),
                             AlternateText = string.Format(localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), model.Name)

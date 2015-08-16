@@ -1,14 +1,25 @@
 ﻿@model Nop.Web.Models.Sales.PublishProductModel
 @{
-    ViewBag.Title = "PublishProduct";
+    if(Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Bike)
+    {
+        Html.AddTitleParts(T("PageTitle.Publish.Bike").Text);
+        Html.AddMetaDescriptionParts(T("Publish.Bike.MetaDescription").Text);
+    }
+    else if (Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Service)
+    {
+        Html.AddTitleParts(T("PageTitle.Publish.Service").Text);
+        Html.AddMetaDescriptionParts(T("Publish.Service.MetaDescription").Text);
+    }
+    else
+    {
+        Html.AddTitleParts(T("PageTitle.Publish.Product").Text);
+        Html.AddMetaDescriptionParts(T("Publish.Product.MetaDescription").Text);
+    }
+        
+        
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
     Html.AppendCssFileParts("~/Content/tagit/jquery.tagit.css");
-    Html.AppendCssFileParts("http://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700,500italic,700italic,400italic,300italic");
-
-
-    
-
 }
 
 <div id="divMainSection">
@@ -56,6 +67,9 @@
                     </div>
                     <div id="divStep_5" style="display:none">
                         @Html.Partial("_Finish")
+                    </div>
+                    <div id="divStep_0" style="display:none">
+                        @Html.Partial("_PreviousProductCreated")
                     </div>
                     <br />
                 </div>

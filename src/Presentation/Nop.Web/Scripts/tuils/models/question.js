@@ -1,4 +1,5 @@
-﻿define(['underscore', 'backbone', '_authenticationModel'], function (_, Backbone, AuthenticationModel) {
+﻿define(['underscore', 'backbone', '_authenticationModel', 'resources'],
+    function (_, Backbone, AuthenticationModel, TuilsResources) {
     var QuestionModel = AuthenticationModel.extend({
 
         idAttribute: "Id",
@@ -11,7 +12,8 @@
 
             QuestionText: {
                 required: true,
-                maxLength: 4000
+                maxLength: 4000,
+                minLength: 20
             }
         },
         labels: {
@@ -20,6 +22,7 @@
         newQuestion: function ()
         {
             var that = this;
+            this.set('message_login', TuilsResources.loginMessages.askQuestion);
             this.url = this.baseUrl;
             this.save({}, {
                 beforeSend: function (xhr)

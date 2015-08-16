@@ -370,12 +370,14 @@ namespace Nop.Web.Controllers
             var model = new HeaderLinksModel
             {
                 IsAuthenticated = customer.IsRegistered(),
-                CustomerEmailUsername = customer.IsRegistered() ? (_customerSettings.UsernamesEnabled ? customer.Username : customer.Email) : "",
+                //CustomerEmailUsername = customer.IsRegistered() ? (_customerSettings.UsernamesEnabled ? customer.Username : customer.Email) : "",
+                CustomerEmailUsername = customer.IsRegistered() ? (customer.GetFullName()) : "",
                 ShoppingCartEnabled = _permissionService.Authorize(StandardPermissionProvider.EnableShoppingCart),
                 WishlistEnabled = _permissionService.Authorize(StandardPermissionProvider.EnableWishlist) && !_workContext.CurrentCustomer.IsGuest() ,
                 AllowPrivateMessages = customer.IsRegistered() && _forumSettings.AllowPrivateMessages,
                 UnreadPrivateMessages = unreadMessage,
                 AlertMessage = alertMessage,
+                UnansweredQuestions = _workContext.CurrentVendor != null ? _workContext.CurrentVendor.UnansweredQuestions : 0
             };
             //performance optimization (use "HasShoppingCartItems" property)
             if (customer.HasShoppingCartItems)
@@ -823,8 +825,20 @@ namespace Nop.Web.Controllers
                     login = _localizationService.GetResource("account.login"),
                     newCustomer = _localizationService.GetResource("account.login.newcustomer")
                 },
-                products = new {
+                products = new
+                {
                     confirmBuy = _localizationService.GetResource("products.confirmBuy")
+                },
+                loginMessages = new {
+                    publishProduct = _localizationService.GetResource("LoginMessage.PublishProduct"),
+                    showVendor = _localizationService.GetResource("LoginMessage.ShowVendor"),
+                    askQuestion = _localizationService.GetResource("LoginMessage.AskQuestion")
+                },
+                confirm = new {
+                    myAccount = _localizationService.GetResource("MyAccount.Confirm"),
+                    offices = _localizationService.GetResource("MyOffices.Confirm"),
+                    closeButton = _localizationService.GetResource("Common.CloseButtonDialog"),
+                    userRegistered = _localizationService.GetResource("createuser.ConfirmMessage")
                 }
             };
 

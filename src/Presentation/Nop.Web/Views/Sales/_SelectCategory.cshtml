@@ -19,24 +19,44 @@
         }
     }
 }
-
+<p class="wizard-help">Elige qué quieres vender</p>
 <nav class="nav-category">
-    <li class="category-view cat_select @GetClassByType(Model.ProductType)"><span>@Model.SubSectionTitle</span></li>
+    <li class="category-view cat_select @GetClassByType(Model.ProductType)"><span class="icon-casco"></span><p>@Model.SubSectionTitle</p></li>
 </nav>
 <div class="divShowCategories category-container">
 
 </div>
 <input type="button" class="btn_continue button-1" value="Continuar" style="display:none">
 
-<script id="templateCategorySelector" type="text/x-handlebars-template">
-    <div class="category-column">
-        <ul class="divCategorySelector" tuils-level="{{currentLevel}}">
-            {{#if ChildrenCategories.length }}
-            <input type="text" placeholder="@T("PublishProduct.SelectCategoryFilter")" />
-            {{#each ChildrenCategories}}
-            <li tuils-id="{{Id}}" tuils-filter="{{toLowerCase Name}}" tuils-level='{{../currentLevel}}'>{{Name}}</li>
-            {{/each}}
-            {{/if}}
-        </ul>
-    </div>
-</script>
+@if (Model.IsMobileDevice)
+{
+    <script id="templateCategorySelector" type="text/x-handlebars-template">
+        <div class="category-column">
+            <select tuils-level="{{currentLevel}}" tuils-level='{{currentLevel}}'>
+                {{#if ChildrenCategories.length }}
+                <option value="">@T("PublishProduct.SelectCategory")</option>
+                {{#each ChildrenCategories}}
+                <option value="{{Id}}">{{Name}}</option>
+                {{/each}}
+                {{/if}}
+            </select>
+        </div>
+    </script>
+}
+else
+{
+    <script id="templateCategorySelector" type="text/x-handlebars-template">
+        <div class="category-column">
+            <ul class="divCategorySelector" tuils-level="{{currentLevel}}">
+                {{#if ChildrenCategories.length }}
+                <input type="text" placeholder="@T("PublishProduct.SelectCategoryFilter")" />
+                {{#each ChildrenCategories}}
+                <li tuils-id="{{Id}}" tuils-filter="{{toLowerCase Name}}" tuils-level='{{../currentLevel}}' title="Selecciona {{Name}}">{{Name}}</li>
+                {{/each}}
+                {{/if}}
+            </ul>
+        </div>
+    </script>
+}
+
+

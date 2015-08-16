@@ -3,7 +3,7 @@
 @{
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
-    //title
+    
     Html.AddTitleParts(T("PageTitle.Checkout").Text);
 }
 <div class="page checkout-page">
@@ -19,10 +19,10 @@
                 <script type="text/javascript">
                     $(document).ready(function () {
                         $('.confirm-order-next-step-button').click(function () {
-                            //terms of service
+                            /*terms of service*/
                             var termOfServiceOk = true;
                             if ($('#termsofservice').length > 0) {
-                                //terms of service element exists
+                                /*-terms of service element exists*/
                                 if (!$('#termsofservice').is(':checked')) {
                                     $("#terms-of-service-warning-box").dialog();
                                     termOfServiceOk = false;
@@ -31,8 +31,8 @@
                                 }
                             }
                             if (termOfServiceOk) {
-                                //$('#confirm-order-form').submit();
-                                //$('.confirm-order-next-step-button').attr('disabled', 'disabled');
+                                /*$('#confirm-order-form').submit();
+                                $('.confirm-order-next-step-button').attr('disabled', 'disabled');*/
                                 return true;
                             } else {
                                 return false;

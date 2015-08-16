@@ -200,8 +200,9 @@ namespace Nop.Services.Messages
         /// </summary>
         /// <param name="customer">Customer instance</param>
         /// <param name="languageId">Message language identifier</param>
+        /// <param name="autoPassword">Password generado automáticamente para el suuario, cuando viene nulo no lo envía</param>
         /// <returns>Queued email identifier</returns>
-        public virtual int SendCustomerWelcomeMessage(Customer customer, int languageId)
+        public virtual int SendCustomerWelcomeMessage(Customer customer, int languageId, string autoPassword = null)
         {
             if (customer == null)
                 throw new ArgumentNullException("customer");
@@ -220,6 +221,9 @@ namespace Nop.Services.Messages
             var tokens = new List<Token>();
             _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
             _messageTokenProvider.AddCustomerTokens(tokens, customer);
+
+            if (!string.IsNullOrEmpty(autoPassword))
+                tokens.Add(new Token("Customer.Password", autoPassword));
 
             //event notification
             _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
@@ -1294,6 +1298,78 @@ namespace Nop.Services.Messages
 
             var toEmail = productQuestion.Product.Vendor.Email;
             var toName = productQuestion.Product.Vendor.Name;
+            return SendNotification(messageTemplate, emailAccount,
+                languageId, tokens,
+                toEmail, toName);
+        }
+
+        /// <summary>
+        /// Correo que se envia cuando un usuario publica un producto
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        public virtual int SendProductPublishedNotificationMessage(Product product, int languageId)
+        {
+            if (product == null)
+                throw new ArgumentNullException("product");
+
+            var store = _storeContext.CurrentStore;
+            languageId = EnsureLanguageIsActive(languageId, store.Id);
+
+            var messageTemplate = GetActiveMessageTemplate("Product.Published", store.Id);
+            if (messageTemplate == null)
+                return 0;
+
+            //email account
+            var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);
+
+            //tokens
+            var tokens = new List<Token>();
+            _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
+            _messageTokenProvider.AddProductTokens(tokens, product, languageId);
+
+            //event notification
+            _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
+
+            var toEmail = product.Vendor.Email;
+            var toName = product.Vendor.Name;
+            return SendNotification(messageTemplate, emailAccount,
+                languageId, tokens,
+                toEmail, toName);
+        }
+
+        /// <summary>
+        /// Correo que se envia cuando un producto ha sido aprovado para ser publicado
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        public virtual int SendPublishApprovedNotificationMessage(Product product, int languageId)
+        {
+            if (product == null)
+                throw new ArgumentNullException("product");
+
+            var store = _storeContext.CurrentStore;
+            languageId = EnsureLanguageIsActive(languageId, store.Id);
+
+            var messageTemplate = GetActiveMessageTemplate("Product.PublishApproved", store.Id);
+            if (messageTemplate == null)
+                return 0;
+
+            //email account
+            var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);
+
+            //tokens
+            var tokens = new List<Token>();
+            _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
+            _messageTokenProvider.AddProductTokens(tokens, product, languageId);
+
+            //event notification
+            _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
+
+            var toEmail = product.Vendor.Email;
+            var toName = product.Vendor.Name;
             return SendNotification(messageTemplate, emailAccount,
                 languageId, tokens,
                 toEmail, toName);

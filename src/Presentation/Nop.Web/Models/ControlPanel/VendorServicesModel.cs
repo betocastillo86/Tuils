@@ -14,5 +14,9 @@ namespace Nop.Web.Models.ControlPanel
         public string BikeReferencesString { get; set; }
 
         public string SpecializedCategoriesString { get; set; }
+
+        public string ConfirmMessage { get; set; }
+
+        public string VendorSeName { get; set; }
     }
 }

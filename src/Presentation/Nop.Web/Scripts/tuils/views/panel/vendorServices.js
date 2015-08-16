@@ -5,30 +5,6 @@
         events: {
             
         },
-
-        //bindings: {
-        //    "#BikeReferencesString": {
-        //        observe: "BikeReferencesString",
-        //        onSet: function (value) {
-        //            var brands = new Array();
-        //            _.each(value.split(','), function (element) {
-        //                brands.push({ SpecialTypeId: TuilsConfiguration.specialCategoriesVendor.bikeBrand, CategoryId: parseInt(element) });
-        //            });
-        //            return brands;
-        //        }
-        //    },
-        //    "#SpecializedCategoriesString": {
-        //        observe: "SpecializedCategoriesString",
-        //        onSet: function (value) {
-        //            var brands = new Array();
-        //            _.each(value.split(','), function (element) {
-        //                brands.push({ SpecialTypeId: TuilsConfiguration.specialCategoriesVendor.specializedCategory, CategoryId: parseInt(element) });
-        //            });
-        //            return brands;
-        //        }
-        //    }
-        //},
-
         initialize: function (args) {
             this.model = new VendorModel();
             this.loadControls();
@@ -39,6 +15,8 @@
             var services = new CategoryCollection();
             services.on("sync", this.loadServices, this);
             services.getServices();
+            if (this.$('.confirmHiddenField').length > 0)
+                this.alert({ message: this.$('.confirmHiddenField').val() });
         },
         loadReferences: function (ctx) {
             var tagReferences = [];

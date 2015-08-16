@@ -7,7 +7,6 @@
   font-family: 'FontAwesome', sans-serif;
 }
 
-body { background: url("images/bg_body.png") repeat scroll 0 0 transparent;color:#7F7D84; }
 .master-wrapper-content { margin: 0 15px;color:#666; }
 header{ background: none repeat scroll 0 0 #FA4C2A; }
 footer{ background: none repeat scroll 0 0 #292732; position: relative; }
@@ -95,20 +94,16 @@ a:hover { text-decoration: none; }
 .block,.news-list-homepage .item,.search-panel .search-input,.product-filters,fieldset,.product-list .product-item,.product-list .product-item .picture{border-radius:0;-webkit-border-radius: 0; -moz-border-radius: 0; -o-border-radius:0;-icab-border-radius:0;-khtml-border-radius:0;}
 
 .add-to-cart-button {border: 0 none; color: #FFFFFF; cursor: pointer; font-size: 13px;font-family: 'Ubuntu', sans-serif; font-weight: 400; margin: 0 2px; padding: 3px 3px 6px; text-shadow: none; filter: none; }
-.button-1, .button-2 { font-size: 20px; padding: 8px 10px; min-width: 100px; width: auto; border: 0 none; color: #FFFFFF; cursor: pointer; font-family: 'Ubuntu', sans-serif; font-weight: 400; text-shadow: none; filter: none;}
+.button-1, .button-2 { font-size: 20px; padding: 8px 10px; min-width: 100px; width: auto; border: 0 none; color: #FFFFFF !important; cursor: pointer; font-family: 'Ubuntu', sans-serif; font-weight: 400; text-shadow: none; filter: none;}
 .button-1.search-box-button, .add-to-cart-button, .checkout-button { /*background: #D91424;*/color: #FFFFFF; }
     .button-1:hover, .button-2:hover { color: #fff; }
 .button-1, .button-2, .button-1.search-box-button, .opc .active .step-title .number {background: #FB7055; transition:0.4s ease all;}
 .button-1:hover, .button-2:hover, .button-1.search-box-button:hover{background: #3B5A83;}
 
     .block .title, .bestsellers .title, .add-to-cart-button, .checkout-button, .button-1.search-box-button {background:#292732; }
-.product-list .product-box-add-to-cart-button { margin: 0; }
-.product-list .product-item .product-title {margin: 10px 50px 0 140px; }
-.product-list .product-item .add-info{top: 70px;}
 .product-grid .product-item .add-info {position: absolute; }
 .product-grid .product-item { width: auto; }
 .product-grid .product-item .picture { height: 220px; }
-.product-list .product-item { min-height: 200px; }
 .product-grid.bestsellers .product-item .picture {border:0 }
 
 .footer-poweredby {}
@@ -137,12 +132,12 @@ sitemap-page .topic-box .item, .sitemap-page .manufacturer-box .item, .sitemap-p
 
 /*Tabs*/
 .etabs { margin: 0; padding: 0; }
-.tab { display: inline-block; zoom:1; *display:inline; background: #eee; border: 1px solid #EEE; border-bottom: none; border-radius:4px 4px 0 0;-webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0; -o-border-radius:4px 4px 0 0;-icab-border-radius:4px 4px 0 0;-khtml-border-radius:4px 4px 0 0;}
-.tab a { font-size: 13px; line-height: 2em; display: block; padding: 0 10px; outline: none; }
-.tab a:hover { text-decoration: underline; }
-.tab.active { background: #fff; padding-top: 1px; position: relative; top: 1px; border-color: #EEE; }
-.tab a.active { font-weight: bold; }
-.tab-container .panel-container {min-height: 150px; background: #fff; border: solid 1px #EEE; padding: 10px; border-radius:0 4px 4px 4px;-webkit-border-radius: 0 4px 4px 4px; -moz-border-radius: 0 4px 4px 4px; -o-border-radius:0 4px 4px 4px;-icab-border-radius:0 4px 4px 4px;-khtml-border-radius:0 4px 4px 4px; }
+.tab { display: inline-block; zoom:1; *display:inline; background: #DFE2EA; border-bottom: none; border-radius:2px 2px 0 0;}
+.tab a {display: block; padding:8px 20px; outline: none; color:#889BB4; font-weight: 500;}
+.tab a:hover { text-decoration: underline; color:#3A5983;}
+.tab.active { background: #EBEEF2; padding-top: 1px; position: relative; top: 1px;}
+.tab a.active { font-weight: 500; color:#3A5983;}
+.tab-container .panel-container {min-height: 150px; background:#EBEEF2; border: solid 1px #EEE; padding: 10px; border-radius:0 2px 2px 2px;}
  /*@Tabs*/
 
 /*Zoom*/
@@ -171,7 +166,10 @@ sitemap-page .topic-box .item, .sitemap-page .manufacturer-box .item, .sitemap-p
 #social a {display: inline-block; height: 28px; width: 33px; border-radius: 2px;}
 #social a.first {/*margin:0*/ }
 
-a.facebook, a.twitter, a.youtube{background:#FB7055; color: #FFF; font-size: 25px; text-align: center; padding: 3px 0; margin: 0 10px 0 0;}
+a.facebook, a.twitter, a.youtube{color: #FFF; font-size: 25px; text-align: center; padding: 3px 0; margin: 0 10px 10px 0;}
+.facebook{background:#3b5998;}
+.twitter{background: #55acee;}
+.youtube{background:#e02f2f;}
 .bottom-footer {background: none repeat scroll 0 0 #F7F7F7;clear: both;height: 240px;margin-bottom: 20px;padding-top: 0;width: 100%;}
 .footer {width: 960px;margin: 0 auto;background: none;}
 .footer-menu, .footer-menu-1 { margin-bottom: 10px; }
@@ -220,7 +218,6 @@ input, select { vertical-align: middle; }
 .order-summary-content .deals { clear: left; }
 .page-body p { clear: left; }
 .tab a:hover { text-decoration: none; }
-.product-specs-box .title, .product-specs-box .data-table { margin: 5px 0;padding:0; }
 .order-progress { border: 0; }
 .checkout-data .order-completed a { text-decoration: underline; color: #5C5B5B; }
 .checkout-data .order-completed a:hover { text-decoration: none; }
@@ -247,7 +244,6 @@ ul.top-menu { margin: 0;}
 .login-page .title strong,.fieldset .title strong { color: #F94C2A; font-family: 'Ubuntu', sans-serif; font-size: 15px; font-weight: normal; line-height: 20px; }
 .contact-page .page-body {border-radius:4px;-webkit-border-radius:4px; -moz-border-radius: 4px; -o-border-radius:4px;-icab-border-radius:4px;-khtml-border-radius:4px;}
 .block-account-navigation a.active,.home-page-category-grid a { font-weight: 400; }
-.product-specs-box .title, .product-specs-box .data-table { font-size:1.1em;}
 .footer { padding: 45px 0;}
 .footer_down{background:#19181D; padding: 15px 0; position: relative;}
 .footer_down:before{content:url(images/brillo_footer.png); width: 100%; height: 29px; position: absolute; top:-28px; left: 0; overflow: hidden;}
@@ -290,7 +286,6 @@ ul#thumblist { margin: 0; }
 .product-review-box .rating { background: url("images/star-x-inactive.png") repeat-x scroll 0 0 transparent; float: left; height: 15px; width: 86px; margin-top: 1px;margin-right: 2px; }
 .product-review-box .rating div { background: url("images/star-x-active.png") repeat-x scroll 0 0 transparent; height: 15px; }
 .rating a { display: block; height: 15px; width: 86px; }
-.product-grid .product-item .prices .price, .product-list .product-item .prices .price { }
 .product-grid .product-item .buttons { clear: both; }
 .block-recently-viewed-products li{border:0}
 

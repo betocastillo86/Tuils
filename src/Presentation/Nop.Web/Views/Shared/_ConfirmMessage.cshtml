@@ -1,0 +1,6 @@
+﻿@model string
+
+@if (!string.IsNullOrEmpty(Model))
+{ 
+    <input class="confirmHiddenField" type="hidden" value="@Model" />
+}

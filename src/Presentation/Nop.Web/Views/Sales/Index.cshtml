@@ -1,6 +1,7 @@
 ﻿@model Nop.Web.Models.Sales.SelectPublishCategoryModel
 @{
-    ViewBag.Title = "Index";
+    Html.AddTitleParts(T("PageTitle.Publish").Text);
+    Html.AddMetaDescriptionParts(T("Publish.MetaDescription").Text);
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 }
 
@@ -16,13 +17,14 @@
                     <li id="btnPublishProductStep4" class="wizard-step"><b>PASO 4</b><div>@T("PublishProduct.StepMenu4")</div></li>
                     <br />
                 </ol>
+                <p class="wizard-help">Elige qué quieres vender</p>
                 <nav class="nav-category">
-                    <a href="@Url.Action("PublishProduct")"><li class="hub-std"><span>productos</span></li></a>
+                    <a href="@Url.Action("PublishProduct")" title="@T("Publish.Bike.Img.Alt")"><li class="hub-std"><span class="icon-casco"></span><p>productos</p></li></a>
                     @if (Model.CanSelectService)
-                    { 
-                        <a href="@Url.Action("PublishProductService")"><li class="hub-srv"><span>servicios</span></li></a>
+                    {
+                        <a href="@Url.Action("PublishProductService")" title="@T("Publish.Service.Img.Alt")"><li class="hub-srv"><span class="icon-tool"></span><p>servicios</p></li></a>
                     }
-                    <a href="@Url.Action("PublishProductBike")"><li class="hub-mot"><span>motos</span></li></a>
+                    <a href="@Url.Action("PublishProductBike")" title="@T("Publish.Product.Img.Alt")"><li class="hub-mot"><span class="icon-deportiva"></span><p>motos</p></li></a>
                 </nav>
                 <br />
             </div>

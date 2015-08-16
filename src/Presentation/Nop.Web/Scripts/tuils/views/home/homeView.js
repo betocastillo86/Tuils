@@ -14,8 +14,8 @@ define(['jquery', 'underscore', 'baseView','jqueryui', 'slide'],
                 timeout: 7000,
                 pager: true,
                 nav: true,
-                prevText: '<span class="icon-prev"></span>',
-                nextText: '<span class="icon-next"></span>',
+                prevText: '<span class="icon-prev" title="Anterior"></span>',
+                nextText: '<span class="icon-next" title="Siguiente"></span>',
                 before: function (numSlide) {
                     if(numSlide+1 <= totalSlides)
                     {
@@ -34,7 +34,7 @@ define(['jquery', 'underscore', 'baseView','jqueryui', 'slide'],
         },
         resizeBanner: function () {
             //Si es pantalla pequeña recalcula el alto del banner
-            $(".rslides_container ul").css("height", this.isMinSize() ? (window.innerWidth / 3.5)+"px" : "");
+            $(".rslides").css("height", this.isMinSizeMobile() ? (window.innerWidth / 2.5) + "px" : "");
         },
         render: function ()
         {

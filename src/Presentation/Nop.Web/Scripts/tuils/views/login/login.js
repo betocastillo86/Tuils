@@ -4,6 +4,9 @@
 
         viewCreateUser: undefined,
 
+        //Modelo que desencadeno el error
+        sourceModel :undefined,
+
         events: {
             'click #btnLogin' : 'login',
             'click #btnRegister': 'register',
@@ -23,7 +26,17 @@
             this.model = new UserRegisterModel({ TermsOfUse: true });
             this.model.on("sync", this.userAuthenticated, this);
             this.model.on("error", this.errorAuthenticated, this);
-            this.$el.fixedDialog(this.dialogBasicOptions);
+
+            if (args.sourceModel)
+                this.sourceModel = args.sourceModel;
+
+            if (this.isMobile())
+            {
+                this.$el.dialog(this.dialogBasicOptions);
+                this.trigger('close-menu-responsive');
+            }
+            else
+                this.$el.fixedDialog(this.dialogBasicOptions);
 
             var that = this;
             require(['text!/Customer/FastLogin'], function (template) {
@@ -40,7 +53,7 @@
                 this.login();
         },
         login: function () {
-            this.validateControls();
+            this.validateControls(undefined, false);
 
             if (this.model.isValid()) {
                 this.model.login();
@@ -55,7 +68,7 @@
         },
         show: function () {
             this.$el.dialog({
-                width: 365,
+                width: window.innerWidth < 365 ? 300 : 365,
                 title : Resources.account.login,
                 modal : true
             });
@@ -85,7 +98,7 @@
             }
         },
         render: function () {
-            this.$el.html(this.template());
+            this.$el.html(this.template({ MessageLogin: this.sourceModel ? this.sourceModel.get('message_login') : '' }));
             this.show();
 
             Backbone.Validation.bind(this);

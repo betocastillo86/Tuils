@@ -13,10 +13,10 @@
 
             //Bandera que valida si el usuario efectivamente quería ver el vendedor
             //Esto ayuda a controlar que si el usuario se autentica no cargue información que no debe
-            wantedToShowVendor : false,
+           // wantedToShowVendor : false,
 
             events: {
-                'click #btnShowVendor': 'confirmShowVendor',
+                'click #btnShowVendor': 'createOrder',
                 'click .rating a' : 'showReviews'
             },
 
@@ -27,8 +27,8 @@
                 this.model = new OrderModel();
                 this.model.on('sync', this.redirectToVendor, this);
                 this.model.set('ProductId', this.productId);
+                this.on("user-authenticated", this.createOrder, this);
 
-                this.validateAuthorization();
             },
             loadControls: function () {
                 this.productId = parseInt($("#productId").val());
@@ -78,25 +78,26 @@
                 //agrega la vista de preguntas como una de las que requiere autenticacion
                 this.requiredViewsWithAuthentication.push(this.viewQuestions);
             },
-            confirmShowVendor: function (e) {
-                //Cambia la bandera marcando que si quiere comprar el producto
-                this.wantedToShowVendor = true;
-                var obj = $(e.target);
-                this.disableButtonForSeconds(obj);
-                this.vendorUrl = obj.attr('data-vendorUrl');
-                this.createOrder();
-            },
-            createOrder: function () {
+            createOrder: function (e) {
+                if (e && e.target)
+                {
+                    var obj = $(e.target);
+                    this.disableButtonForSeconds(obj);
+                    this.vendorUrl = obj.attr('data-vendorUrl');
+                }
+                
+                this.validateAuthorization();
+                this.showLoadingAll();
                 this.model.newOrder();
             },
-            userAuthenticated: function () {
-                //Si quería comprar el producto, despues de aautenticarse realiza de nuevo un intento
-                if (this.wantedToShowVendor)
-                {
-                    this.wantedToShowVendor = false;
-                    this.createOrder();
-                }
-            },
+            //userAuthenticated: function () {
+            //    //Si quería comprar el producto, despues de aautenticarse realiza de nuevo un intento
+            //    //if (this.wantedToShowVendor)
+            //    //{
+            //        //this.wantedToShowVendor = false;
+            //        this.createOrder();
+            //   // }
+            //},
             redirectToVendor: function () {
                 document.location.href = this.vendorUrl;
             }

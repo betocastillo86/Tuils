@@ -8,13 +8,13 @@
 
     <div class="page-body">
         
-        <div id="divLinkWriteQuestion"><a href="javascript:void(0)" title="@T("Questions.LinkWriteQuestion.Alt")">@T("Questions.LinkWriteQuestion")</a> </div>
-        <div class="write-review" id="question-form" style="display:none">
-            <div class="title">@T("Questions.Write")</div>
+
+        <div class="write-review" id="question-form" >
             
                 <div class="message-error">@Html.ValidationSummary(true)</div>
                 <div class="form-fields">
-                    @Html.TextAreaRequiredFor(model => model.NewQuestion.QuestionText, htmlAttributes: new { @class = "review-title" })
+                    @Html.Label(T("Questions.Write").Text)
+                    @Html.TextAreaRequiredFor(model => model.NewQuestion.QuestionText, htmlAttributes: new { @class = "review-text" }, required:false, showLabel:false )
                     @Html.Hidden("productId", Model.ProductId)
 
                     @if(Model.ShowCaptcha)
@@ -31,13 +31,12 @@
             
         </div>
         <div id="divQuestionPublished" style="display:none">
-          <h1>@T("Questions.QuestionPublished")</h1>  
+          <span>@T("Questions.QuestionPublished")</span>  
         </div>
 
         @if (Model.Questions.Count > 0)
         {
-            <div class="clear">
-            </div>
+            <br/>
             <div class="product-review-list">
                 @*<div class="title">
                         @T("Reviews.ExistingReviews")
@@ -45,28 +44,24 @@
                 @foreach (var question in Model.Questions)
                 {
                     <div class="product-review-item">
-                        <div class="review-title">
-                            <div class="review-info">
-
-                                @T("Questions.Date"):
-                                @question.CreatedOnStr
-                                @T("Questions.AnsweredDate"):
-                                @question.AnsweredOnStr
-                            </div>
-                        </div>
                         <div class="clear">
                         </div>
-                        <div class="review-text">
-                            @Html.Raw(Nop.Core.Html.HtmlHelper.FormatText(question.QuestionText, false, true, false, false, false, false))
-                        </div>
-
-                        @if (!string.IsNullOrEmpty(question.AnswerText))
-                        { 
-                            <div class="review-text" style="color:red">
-                                RTA: @Html.Raw(Nop.Core.Html.HtmlHelper.FormatText(question.AnswerText, false, true, false, false, false, false))
+                        <div class="question-text">
+                            <div class="review-text">
+                                <span class="icon-msj"></span>
+                                <span class="txt-quest">@Html.Raw(Nop.Core.Html.HtmlHelper.FormatText(question.QuestionText, false, true, false, false, false, false)) <b class="quest-info"> - @T("Questions.Date"): @question.CreatedOnStr</b></span>
+                                <br/>
                             </div>
-                        }
-                        
+
+                            @if (!string.IsNullOrEmpty(question.AnswerText))
+                            { 
+                                <div class="question-resp">
+                                    <span class="icon-msj2"></span> 
+                                    <span class="txt-quest">@Html.Raw(Nop.Core.Html.HtmlHelper.FormatText(question.AnswerText, false, true, false, false, false, false)) <b class="quest-info"> - @T("Questions.AnsweredDate"): @question.AnsweredOnStr</b></span>
+                                    <br/>
+                                </div>
+                            }
+                        </div>
                         <div class="clear">
                         </div>
                     </div>

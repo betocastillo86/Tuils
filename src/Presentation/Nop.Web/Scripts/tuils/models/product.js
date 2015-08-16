@@ -1,6 +1,6 @@
 ﻿
-define(['underscore', 'backbone', '_authenticationModel', 'configuration'], 
-    function (_, Backbone, AuthenticationModel, TuilsConfiguration) {
+define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'resources'], 
+    function (_, Backbone, AuthenticationModel, TuilsConfiguration, TuilsResources) {
 
         'use strict'
         
@@ -43,28 +43,32 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                     },
                     pattern: 'number'
                 },  
-                //AdditionalShippingCharge: {
-                //    required: function (val, attr, computed) {
-                //        return computed.IsShipEnabled;
-                //    },
-                //    pattern: 'number'
-                //},  
+                AdditionalShippingCharge: {
+                    required: function (val, attr, computed) {
+                        //Como está deshabilitado cargar el precio del en´vío para productos, solo se tiene cuenta la obligatoriedad si es un servicio
+                        return computed.IsShipEnabled && computed.ProductTypeId == TuilsConfiguration.productBaseTypes.service;
+                    },
+                    pattern: 'number'
+                },  
                 Price: {
                     required: true,
                     pattern: 'number'
                 },
                 Color: {
                     required: function (val, attr, computed) {
-                        return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.bike;
+                        //return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.bike;
+                        return false;
                     },
                     pattern: 'number'
                 },
                 PhoneNumber: {
-                    required : false
+                    required: false,
+                    minLength : 6
                 },
                 Condition: {
                     required: function (val, attr, computed) {
-                        return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.bike;
+                        //return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.bike;
+                        return false;
                     },
                     pattern: 'number'
                 },
@@ -89,7 +93,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                 },
                 IsNew: {
                     required: function (val, attr, computed) {
-                        return computed.ProductTypeId != TuilsConfiguration.productBaseTypes.service;
+                        return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.product;
                     },
                     pattern: /^(true|false)$/
                 },
@@ -105,7 +109,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                 },
                 Supplies: {
                     required: function (val, attr, computed) {
-                        return computed.IncludeSupplies;
+                        return !computed.IncludeSupplies && computed.ProductTypeId == TuilsConfiguration.productBaseTypes.service;
                     }
                 },
                 SuppliesValue: {
@@ -119,7 +123,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                 Name: 'Título',
                 CategoryId : 'Categoría',
                 FullDescription :'Descripción',
-                IsShipEnabled : 'Realiza Envios/Domicilios',
+                IsShipEnabled : 'Realiza Envíos/Domicilios',
                 ManufacturerId: 'Marca',
                 //AdditionalShippingCharge: 'Costo por envío',
                 Price: 'Precio',
@@ -131,6 +135,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
                 Accesories: 'Accesorios',
                 IsNew: 'Estado',
                 StateProvinceId: 'Ubicación',
+                StateProvince: 'Ubicación',
                 DetailShipping: 'Cobertura',
                 IncludeSupplies : 'Incluye los insumos',
                 SuppliesValue: 'Valor de Insumos',
@@ -139,6 +144,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration'],
 
             },
             publish: function () {
+                this.set('message_login', TuilsResources.loginMessages.publishProduct);
                 this.save();
             }
         });

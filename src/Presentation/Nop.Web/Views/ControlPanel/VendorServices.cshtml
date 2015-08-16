@@ -23,8 +23,10 @@
         </div>
         <br/>
         <div>
+            <a href="@Url.Action("Vendor", "Catalog", new { seName = Model.VendorSeName })">@T("Offices.GoVendor")</a>
             <input class="btn_continue button-1" value="Guardar" type="submit" />
         </div>
+        @Html.Partial("_ConfirmMessage", Model.ConfirmMessage ?? string.Empty)
     </div>
 }
 

@@ -109,7 +109,10 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.ProductTags")]
         public string ProductTags { get; set; }
 
-
+        /// <summary>
+        /// Sirve para validar si a producto se le cambio el estado
+        /// </summary>
+        public bool PreviousPublisedProduct { get; set; }
 
 
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.Sku")]

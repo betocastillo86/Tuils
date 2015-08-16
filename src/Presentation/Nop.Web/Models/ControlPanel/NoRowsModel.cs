@@ -16,5 +16,8 @@ namespace Nop.Web.Models.ControlPanel
         public IList List { get; set; }
 
         public string ResourceMessage { get; set; }
+
+        public bool ShowSimilarSearches { get; set; }
+        public bool ShowPublishProduct { get; set; }
     }
 }

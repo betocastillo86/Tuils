@@ -3,17 +3,22 @@
 <div class="header-links">
     <ul>
         @*@Html.Widget("header_links_before")*@
+        @if (Model.UnansweredQuestions > 0)
+        { 
+            <li class="btn_noti"><a href="@Url.Action("Questions", "ControlPanel")" class="icon-camp" title="@T("Account.UnansweredQuestions.Alt", Model.UnansweredQuestions)"></a><span>@Model.UnansweredQuestions</span></li>    
+        }
+        
         @if (Model.IsAuthenticated)
         {
-            <li class="user-li"><a href="@Url.RouteUrl("ControlPanel")"><img src="~/Themes/Healthy/Content/images/img_user.svg"/> <p>@Model.CustomerEmailUsername</p><br/></a></li>
-            <li><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></li>
+            <li class="user-li"><a href="@Url.RouteUrl("ControlPanel")" title="@T("Account.MyAccount.Alt")"><img src="~/Themes/Healthy/Content/images/img_user.svg" /> <p>@Model.CustomerEmailUsername</p><br /></a></li>
+            <li><a href="@Url.RouteUrl("Logout")" class="ico-logout" title="@T("Account.Logout.Alt")">@T("Account.Logout")</a></li>
         }
         else
         {
             @*<li id="liRegister"><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></li>
             <li id="liLogin"><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></li>*@
-            <li id="liRegister" class="preLogin" ><a href="javascript:;" class="ico-register">@T("Account.Register")</a></li>
-            <li id="liLogin" class="preLogin"><a href="javascript:;" class="ico-login">@T("Account.Login")</a></li>
+            <li id="liRegister" class="preLogin" ><a href="javascript:;" class="ico-register" title="@T("Account.Register.Alt")">@T("Account.Register")</a></li>
+            <li id="liLogin" class="preLogin"><a href="javascript:;" class="ico-login" title="@T("Account.Login.Alt")">@T("Account.Login")</a></li>
         }
         @if (Model.AllowPrivateMessages)
         {
@@ -52,8 +57,8 @@
     { 
         <script id="templateLoggedUser" type="text/x-handlebars-template">
 
-            <li class="user-li"><a href="@Url.RouteUrl("ControlPanel")"><img src="/Themes/Healthy/Content/images/img_user.svg" /> <p>Hola {{Name}} !</p> <br /></a></li>
-            <li><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></li>
+            <li class="user-li"><a href="@Url.RouteUrl("ControlPanel")" title="@T("Account.MyAccount.Alt")"><img src="/Themes/Healthy/Content/images/img_user.svg" /> <p>Hola {{Name}} !</p> <br /></a></li>
+            <li><a href="@Url.RouteUrl("Logout")" class="ico-logout" title="@T("Account.Logout.Alt")">@T("Account.Logout")</a></li>
 
         </script>
         <div id="divRegisterUser"></div>
@@ -62,7 +67,7 @@
 
     @if (Model.AllowPrivateMessages && !string.IsNullOrEmpty(Model.AlertMessage))
     {
-        //new private message notification
+        /*new private message notification*/
         <script type="text/javascript">
             $(document).ready(function () {
                 displayPopupNotification('@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.AlertMessage))', 'success', false);

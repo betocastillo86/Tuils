@@ -67,6 +67,7 @@ namespace Nop.Web.Extensions
         
         #endregion
 
+        #region Category
         //category
         public static CategoryModel ToModel(this Category entity)
         {
@@ -82,7 +83,10 @@ namespace Nop.Web.Extensions
                 MetaDescription = entity.GetLocalized(x => x.MetaDescription),
                 MetaTitle = entity.GetLocalized(x => x.MetaTitle),
                 SeName = entity.GetSeName(),
-                ChildrenCategories = entity.SubCategories.ToList().ToBaseModels()
+                ChildrenCategories = entity.SubCategories
+                                            .OrderBy(c => c.Name)
+                                            .ToList()
+                                            .ToBaseModels()
             };
             return model;
         }
@@ -101,9 +105,9 @@ namespace Nop.Web.Extensions
                 SeName = entity.GetSeName()
             };
 
-            if(entity.SubCategories.Count > 0)
+            if (entity.SubCategories.Count > 0)
                 model.ChildrenCategories = entity.SubCategories.ToList().ToBaseModels();
-                
+
             return model;
         }
 
@@ -128,6 +132,8 @@ namespace Nop.Web.Extensions
             }
             return models;
         }
+        #endregion
+        
 
 
         //public static List<CategoryBaseModel> ToBaseModels(this IList<Category> entities)

@@ -4,7 +4,7 @@
 @{
     Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
 
-    //title
+    
     Html.AddTitleParts(T("PageTitle.Account").Text);
 }
 @section left
@@ -339,7 +339,7 @@
                     </div>
                     @if (Model.AssociatedExternalAuthRecords.Count > 0)
                     {
-                        //existing associated external records
+                        /*existing associated external records*/
                         <table class="data-table">
                             <colgroup>
                                 <col />
@@ -386,7 +386,7 @@
 
                     @if (Model.NumberOfExternalAuthenticationProviders > Model.AssociatedExternalAuthRecords.Count)
                     {
-                        //we can add more external records
+                        /*we can add more external records*/
                         <div class="form-fields add-more-external-records">
                             @T("Account.AssociatedExternalAuth.AddMoreRecords") <a href="@Url.RouteUrl("Login", null, "http")">@Url.RouteUrl("Login", null, "http")</a>
                         </div>

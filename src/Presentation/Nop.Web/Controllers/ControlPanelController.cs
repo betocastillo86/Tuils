@@ -207,11 +207,18 @@ namespace Nop.Web.Controllers
                     _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.NewsletterBrand, Core.Domain.Messages.NewsLetterSuscriptionType.MyBrand);
                     _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.NewsletterReference, Core.Domain.Messages.NewsLetterSuscriptionType.MyReference);
 
+                    model.ConfirmMessage = _localizationService.GetResource("MyAccount.Confirm");
+
+                }
+                else
+                {
+                    model.ConfirmMessage = _localizationService.GetResource("MyAccount.ModelInvalid");
                 }
             }
             catch (Exception exc)
             {
                 ModelState.AddModelError("", exc.Message);
+                model.ConfirmMessage = _localizationService.GetResource("common.error");
             }
 
             model = GetModelMyAccount(model);
@@ -285,6 +292,7 @@ namespace Nop.Web.Controllers
                     .ToList();
                 model.SpecializedCategoriesString = model.SpecializedCategories.ToStringSeparatedBy();
                 model.BikeReferencesString = model.BikeReferences.ToStringSeparatedBy();
+                model.VendorSeName = _workContext.CurrentVendor.GetSeName();
 
                 return View(model);
             }
@@ -333,6 +341,8 @@ namespace Nop.Web.Controllers
                 //Concatena las dos listas anteriores y las envía a ser actualizadas
                 _vendorService.InsertUpdateVendorSpecialCategories(_workContext.CurrentVendor.Id, bikeReferences.Concat(specializedCategories).ToList());
 
+                model.ConfirmMessage = _localizationService.GetResource("VendorServices.Confirm");
+
                 return View(model);
             }
             else
@@ -372,14 +382,18 @@ namespace Nop.Web.Controllers
             {
                 case "rating":
                     withRating = true;
+                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.Rating", isMyOrders ? "MyOrders": "MySales");
                     break;
                 case "norating":
                     withRating = false;
+                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.NoRating", isMyOrders ? "MyOrders": "MySales");
                     break;
                 case "active":
                     publishedProducts = true;
+                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.Active", isMyOrders ? "MyOrders" : "MySales");
                     break;
                 default:
+                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.General", isMyOrders ? "MyOrders" : "MySales");
                     break;
             }
 
@@ -431,7 +445,7 @@ namespace Nop.Web.Controllers
                         var picture = _pictureService.GetPicturesByProductId(orderModel.Product.Id, 1).FirstOrDefault();
                         var pictureModel = new PictureModel
                         {
-                            ImageUrl = _pictureService.GetPictureUrl(picture, pictureSize),
+                            ImageUrl = _pictureService.GetPictureUrl(picture, pictureSize, crop: true),
                             FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
                             Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), orderModel.Product.Name),
                             AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), orderModel.Product.Name)
@@ -527,6 +541,10 @@ namespace Nop.Web.Controllers
 
                 model.PagingFilteringContext.q = command.q;
                 model.PagingFilteringContext.LoadPagedList(products);
+
+
+                //Carga la cadena de respuesta cuando no  hay resultados del filtro
+                model.ResorceMessageNoRows = string.Format("MyProducts.NoRows.{0}", command.p ? "Active" : "Inactive");
 
                 string url = _webHelper.GetThisPageUrl(true);
                 model.UrlFilterByServices = new MyProductsModel.LinkFilter()

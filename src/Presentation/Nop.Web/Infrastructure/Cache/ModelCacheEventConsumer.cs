@@ -324,6 +324,15 @@ namespace Nop.Web.Infrastructure.Cache
 
 
         /// <summary>
+        /// Marcas por category
+        /// </summary>
+        /// <remarks>
+        /// {0} : category id
+        /// </remarks>
+        public const string CATEGORY_MANUFACTURERS_PATTERN_KEY = "Nop.category.api.category-{0}"; 
+
+
+        /// <summary>
         /// Listado de productos que son especiales para una categoria en especifico
         /// {0} : category id
         /// </summary>
@@ -799,10 +808,7 @@ namespace Nop.Web.Infrastructure.Cache
              _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
              _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_BIKEREFERENCES);
              _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_SERVICES);
-             _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);
-
-
-             
+             _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);          
         }
         public void HandleEvent(EntityUpdated<Category> eventMessage)
         {
@@ -816,7 +822,7 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
             _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_BIKEREFERENCES);
             _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_SERVICES);
-            _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);   
+            _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);
         }
         public void HandleEvent(EntityDeleted<Category> eventMessage)
         {

@@ -36,31 +36,52 @@
                         @Html.Partial("_Vendor.Offices", Model)
                     </div>
                     <ul class="conte-spc">
-                        <h3 title="@T("Vendor.vendorServices.services.title", Model.Name)">
-                            @T("Vendor.SpecialCategoriesServices")
-
-                            @if (Model.AllowEdit)
-                            {
-                                <a href="@Url.Action("VendorServices", "ControlPanel")" title="@T("Vendor.vendorServices.services.edit")"><span class="icon-edit"></span></a>
-                            }
-
-                        </h3>
-                        @foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.SpecializedCategory))
+                        @if (Model.SpecialCategories.Count == 0)
                         {
-                            <li><a href="@Url.RouteUrl("Category", new { SeName = special.CategorySeName })" title="@special.CategoryName">@special.CategoryName</a></li>
-                        }
-                        <h3 title="@T("Vendor.vendorServices.bikes.title", Model.Name)">
-                            @T("Vendor.SpecialCategoriesBikes")
+                            <div class="spc-noresult">
+                                <span class="icon-tool"></span>
+                                @if (Model.AllowEdit)
+                                {
+                                    <p>@T("Vendor.Services.NoRows.Own")</p>
+                                    <a href="@Url.Action("VendorServices", "ControlPanel")" title="@T("Vendor.vendorServices.services.edit")" class="button-1">@T("Vendor.vendorServices.services.button")</a>
+                                }
+                                else
+                                {
+                                    <p>@T("Vendor.Services.NoRows.Other", Model.Name)</p>
+                                }
 
-                            @if (Model.AllowEdit)
-                            {
-                                <a href="@Url.Action("VendorServices", "ControlPanel")" title="@T("Vendor.vendorServices.bikes.edit")"><span class="icon-edit"></span></a>
-                            }
-                        </h3>
-                        @foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.BikeBrand))
-                        {
-                            <li><a href="@Url.RouteUrl("Category", new { SeName = special.CategorySeName })" title="@special.CategoryName">@special.CategoryName</a></li>
+                            </div>
                         }
+                        else
+                        {
+                            <h3 title="@T("Vendor.vendorServices.services.title", Model.Name)">
+                                @T("Vendor.SpecialCategoriesServices")
+
+                                @if (Model.AllowEdit)
+                                {
+                                    <a href="@Url.Action("VendorServices", "ControlPanel")" title="@T("Vendor.vendorServices.services.edit")"><span class="icon-edit"></span></a>
+                                }
+
+                            </h3>
+                            foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.SpecializedCategory))
+                            {
+                                <li><a href="@Url.RouteUrl("Category", new { SeName = special.CategorySeName })" title="@special.CategoryName">@special.CategoryName</a></li>
+                            }
+                            <h3 title="@T("Vendor.vendorServices.bikes.title", Model.Name)">
+                                @T("Vendor.SpecialCategoriesBikes")
+
+                                @if (Model.AllowEdit)
+                                {
+                                    <a href="@Url.Action("VendorServices", "ControlPanel")" title="@T("Vendor.vendorServices.bikes.edit")"><span class="icon-edit"></span></a>
+                                }
+                            </h3>
+                            foreach (var special in Model.SpecialCategories.Where(sc => sc.SpecialType == Nop.Core.Domain.Vendors.SpecialCategoryVendorType.BikeBrand))
+                            {
+                                <li><a href="@Url.RouteUrl("Category", new { SeName = special.CategorySeName })" title="@special.CategoryName">@special.CategoryName</a></li>
+                            }
+                        }
+
+
                     </ul>
                 </div>
                 <div class="col-producto">
@@ -85,15 +106,16 @@
                             </div>
                         }
                         else
-                        { 
-                            <div>@T("Vendor.products.noResults", Model.Name)
+                        {
+                            <div class="no-result" style="font-size:16px;">
+                                @T("Vendor.products.noResults", Model.Name)
                             @if (Model.AllowEdit)
-                            { 
-                                <div><a href="@Url.Action("PublishProduct", "Sales")">@T("Vendor.products.noResults.publish")</a></div>
+                            {
+                                <a class="btn-result" href="@Url.Action("PublishProduct", "Sales")">@T("Vendor.products.noResults.publish")</a>
                             }
-                        
-                            </div>
-                            
+
+                        </div>
+
                         }
 
                         <div class="pager">

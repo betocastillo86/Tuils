@@ -422,12 +422,17 @@ namespace Nop.Services.Customers
         /// </summary>
         /// <param name="customer"></param>
         /// <returns></returns>
-        public CustomerRegistrationResult Register(Customer customer, Dictionary<string, object> attributes, VendorType vendorType = VendorType.User)
+        public CustomerRegistrationResult Register(Customer customer, Dictionary<string, object> attributes, VendorType vendorType = VendorType.User, bool createPassword = false)
         {
 
             try
             {
                 bool isApproved = _customerSettings.UserRegistrationType == UserRegistrationType.Standard;
+
+                string autoPassword = Nop.Utilities.Security.CreateRandomPassword(7);
+                if (createPassword)
+                    customer.Password = autoPassword;
+
                 var registrationRequest = new CustomerRegistrationRequest(customer, customer.Email, customer.Email, customer.Password, _customerSettings.DefaultPasswordFormat, isApproved);
                 var registrationResult = RegisterCustomer(registrationRequest);
 
@@ -507,7 +512,7 @@ namespace Nop.Services.Customers
                     _newsLetterSubscriptionService.InsertNewsLetterSubscription(customer.Email, true, Core.Domain.Messages.NewsLetterSuscriptionType.General);
 
                     //Intenta envíar el correo al usuario
-                    _workflowMessageService.SendCustomerEmailValidationMessage(customer, _workContext.WorkingLanguage.Id);
+                    _workflowMessageService.SendCustomerWelcomeMessage(customer, _workContext.WorkingLanguage.Id, createPassword ? autoPassword : null);
 
                     //Si tiene un vendor asociado actualiza el cliente
                     if(customer.VendorId > 0)

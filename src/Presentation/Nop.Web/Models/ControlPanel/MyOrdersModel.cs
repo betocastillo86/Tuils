@@ -18,6 +18,8 @@ namespace Nop.Web.Models.ControlPanel
 
         public CatalogPagingFilteringModel PagingFilteringContext { get; set; }
 
+        public string ResorceMessageNoRows { get; set; }
+
         //public int TotalItems { get; set; }
 
     }

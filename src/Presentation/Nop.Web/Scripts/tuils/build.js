@@ -10,17 +10,17 @@
     paths: {
         //No agrega al bundle
         maps: 'empty:',
-        configuration : 'empty:',
-        backbone: 'empty:',
-        underscore: 'empty:',
-        stickit: 'empty:',
-        validations: 'empty:',
-        handlebars: 'empty:',
-        accounting: 'empty:',
-        jquery: 'empty:',
-        jqueryui: 'empty:',
-        jqueryunobtrusive: 'empty:',
-        jqueryvalidate: 'empty:',
-        jquerymigrate: 'empty:'
+        configuration: 'empty:'
+       //, backbone: 'empty:',
+       // underscore: 'empty:',
+       // stickit: 'empty:',
+       // validations: 'empty:',
+       // handlebars: 'empty:',
+       // accounting: 'empty:',
+       // jquery: 'empty:',
+       // jqueryui: 'empty:',
+       // jqueryunobtrusive: 'empty:',
+       // jqueryvalidate: 'empty:',
+       // jquerymigrate: 'empty:'
     }
 });

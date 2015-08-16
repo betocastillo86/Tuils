@@ -44,9 +44,11 @@
             });
         },
         register: function () {
+            this.hideMenuResponsive();
             this.trigger('register');
         },
         login: function () {
+            this.hideMenuResponsive();
             this.trigger('login');
         },
         selectDefaultMenuOption: function () {
@@ -93,7 +95,9 @@
                 that.$(".nav-menu nav > ul > li").hover(
                     function () {
                         that.$(".nav-menu .childrenOptions").hide();
+                        that.$(".nav-menu .aFirstLevel.active").removeClass("active");
                         $(this).find(".childrenOptions").show();
+                        $(this).find("a:first").addClass("active");
                     },
                     function () {
                         that.selectDefaultMenuOption();

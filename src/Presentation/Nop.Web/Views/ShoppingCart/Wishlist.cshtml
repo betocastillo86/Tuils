@@ -6,7 +6,7 @@
 @{
     Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
 
-    //title
+    
     Html.AddTitleParts(T("PageTitle.Wishlist").Text);
 }
 
@@ -22,6 +22,7 @@
     }
 
 </h2>
+<div class="help_table"><span></span><p>Visualizar tabla horizontalmente</p><br></div>
 <div class="conte_sale">
 
 
@@ -129,8 +130,8 @@
             if (Model.Items.Count > 0 && Model.DisplayTaxShippingInfo)
             {
                 var inclTax = EngineContext.Current.Resolve<IWorkContext>().TaxDisplayType == TaxDisplayType.IncludingTax;
-                //tax info is already included in the price (incl/excl tax). that's why we display only shipping info here
-                //of course, you can modify appropriate locales to include VAT info there
+                /*tax info is already included in the price (incl/excl tax). that's why we display only shipping info here
+                of course, you can modify appropriate locales to include VAT info there*/
                 <div class="tax-shipping-info">
                     @T(inclTax ? "Wishlist.TaxShipping.InclTax" : "Wishlist.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") }))
                 </div>

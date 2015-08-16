@@ -1,0 +1,12 @@
+﻿@model ProductDetailsModel
+@using Nop.Web.Models.Catalog;
+@if (Model.IncludeSupplies)
+{
+    <p>
+        @T("Products.IncludeSupplies") : Si
+    </p>
+}
+@if (Model.SuppliesValue > 0)
+{ 
+    <p>@T("Products.SuppliesValue") @Model.SuppliesValueStr</p> 
+}

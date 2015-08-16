@@ -10,10 +10,13 @@
     <div id="divListOffices">
 
     </div>
+    
 </div>
 
 <script id="templateListOffices" type="text/x-handlebars-template">
-
+    <div class="help_table" style="margin-top:0;"><span></span><p>Visualizar tabla horizontalmente</p><br/></div>
+    
+    {{#if this.length}}
     <div class="conte-edit-sede">
         <div class="table-header">
             <div class="td-sede">@T("Offices.Name")</div>
@@ -27,12 +30,12 @@
 
 
             <li class="headerAccordion" tuils-id="{{Id}}">
-                <div class="td-sede"><span class="icon-mail"></span>{{Name}}</div>
-                <div class="td-mail">{{Email}}</div>
+                <div class="td-sede"><span class="icon-down"></span>{{Name}}</div>
+                <div class="td-mail">{{replaceEmpty Email replace="-"}}</div>
                 <div class="td-tel">{{PhoneNumber}}</div>
                 <div class="td-opc">
-                    <a id="btnEditAddress" href="javascript:void(0);" class="btn-azul" tuils-id="{{Id}}"><span class="icon-mail"></span><i>@T("Offices.Edit")</i></a>
-                    <a id="btnDeleteAddress" href="javascript:void(0)" class="btn-naranja" tuils-id="{{Id}}"><span class="icon-mail no-margin"></span></a>
+                    <a id="btnEditAddress" href="javascript:void(0);" class="btn-azul" tuils-id="{{Id}}"><span class="icon-edit"></span><i>@T("Offices.Edit")</i></a>
+                    <a id="btnDeleteAddress" href="javascript:void(0)" class="btn-naranja" tuils-id="{{Id}}"><span class="icon-delete no-margin"></span></a>
                 </div>
                 <br />
             </li>
@@ -43,16 +46,22 @@
         </ul>
 
     </div>
-    <li class="headerAccordion">
-        <div class="td-sede"><span class="icon-mail"></span>Nueva sede</div>
-    </li>
+    {{else}}
+    <div class="no-result" style="display:block">
+        @T("MyOffices.NoRows")
+    </div>
+    {{/if}}
+    <div class="headerAccordion table-header"><span class="icon-tienda"></span>@T("Offices.New")</div>
     <div>
         <div id="divNewOffice" class="sede-edited" style="display:none">
 
         </div>
     </div>
-
-    <a href="@Url.Action("Vendor", "Catalog", new { seName = Model.VendorSeName })" class="btn-azul"><span class="icon-mail no-margin"></span>@T("Offices.GoVendor")</a>
+    <div class="btn_newSede">
+        <a href="@Url.Action("Vendor", "Catalog", new { seName = Model.VendorSeName })">@T("Offices.GoVendor")</a>
+        <a class="button-1" href="javascript:;" id="btnNewAddress">@T("Offices.New")</a>
+    </div>
+    <br/>
 
 </script>
 

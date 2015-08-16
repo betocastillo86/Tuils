@@ -22,6 +22,8 @@ namespace Nop.Web.Models.ControlPanel
 
         public LinkFilter UrlFilterByBikes { get; set; }
 
+        public string ResorceMessageNoRows { get; set; }
+
         public CatalogPagingFilteringModel PagingFilteringContext { get; set; }
 
         public class LinkFilter

@@ -8,11 +8,20 @@
         <a id="btnBack"><span class="icon-prev"></span></a>
         <a id="btnNext"><span class="icon-next"></span></a>
     </div>
-    <div style="display:none" id="divOfficesNoResults">@T("Vendor.offices.noResults", Model.Name)</div>
+    <div class="sede-noresult" style="display:none" id="divOfficesNoResults">
+        <span class="icon-loc"></span>
+        <p>@T("Vendor.Offices.NoRows")</p>
+        @if (Model.AllowEdit)
+        {
+            @Html.ActionLink(T("Vendor.offices.editar").Text, "Offices", "ControlPanel", new { }, new { @class = "button-1", title = T("Vendor.offices.editar.alt").Text })
+        }
+    </div>
+
     @if (Model.AllowEdit)
     {
-        @Html.ActionLink(T("Vendor.offices.editar").Text, "Offices", "ControlPanel", new { }, new { @class = "button-1", title = T("Vendor.offices.editar.alt").Text })
+        @Html.ActionLink(T("Vendor.offices.editar").Text, "Offices", "ControlPanel", new { }, new { id = "btnConfigOfficesWithRows", @class = "button-1", title = T("Vendor.offices.editar.alt").Text })
     }
+    
 </div>
 <script id="templateSelectedOffice" type="text/x-handlebars-template">
     <h3>{{Name}} - {{Address}}</h3> 
@@ -21,5 +30,4 @@
     <p><span class="icon-mail"></span>{{Email}}</p>
     <a id="btnViewGallery" class="button-1">Ver galeria</a>
     <div id="divGallery"></div>
-    
 </script>

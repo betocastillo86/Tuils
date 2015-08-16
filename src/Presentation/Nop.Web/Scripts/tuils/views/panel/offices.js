@@ -1,15 +1,17 @@
-﻿define(['jquery', 'underscore', 'util', 'baseView', 'tuils/collections/addresses', 'handlebars', 'tuils/views/panel/addAddressView', 'imageSelectorView', 'handlebarsh'],
-    function ($, _, TuilsUtilities, BaseView, AddressCollection, HandleBars, AddressView, ImageSelectorView) {
+﻿define(['jquery', 'underscore', 'util', 'baseView', 'tuils/collections/addresses', 'handlebars', 'tuils/views/panel/addAddressView',
+    'imageSelectorView', 'confirm','handlebarsh'],
+    function ($, _, TuilsUtilities, BaseView, AddressCollection, HandleBars, AddressView,
+        ImageSelectorView, ConfirmMessageView) {
     var OfficesView = BaseView.extend({
 
         events: {
             'click .headerAccordion' : 'loadAddress',
-            'click #btnDeleteAddress': 'removeAddress'
+            'click #btnDeleteAddress': 'removeAddress',
+            'click #btnNewAddress': 'loadAddress'
         },
 
         vendorId: 0,
 
-        
         viewAddAddress: undefined,
 
         viewImages : undefined,
@@ -29,6 +31,9 @@
             this.loadOffices();
             this.accordion = this.$("#divListOffices");
             this.viewAddressesCollection = new Array();
+        },
+        addAddress: function () {
+            this.accordion.accordion({ active: this.$('.headerAccordion').length - 1 });
         },
         loadOffices : function()
         {
@@ -51,10 +56,8 @@
             this.viewAddAddress = new AddressView({ el: isNaN(id) ? "#divNewOffice" : "#divDetail" + id , VendorId: this.vendorId });
             this.viewAddAddress.on("saved", this.loadOffices, this);
             this.viewAddAddress.on("back", this.closeAccordion, this);
-
-
-
-            this.$('#divNewOffice').css('display', isNaN(id) ? 'block' : 'none');
+            this.hideNewOffice(!isNaN(id));
+            
 
             if (!isNaN(id) && id > 0)
                 this.viewAddAddress.loadAddress(id);
@@ -63,7 +66,11 @@
                 this.accordion.accordion({ active: this.$('.headerAccordion').length - 1 });
                 this.viewAddAddress.newAddress();
             }
-
+        },
+        hideNewOffice : function(hide)
+        {
+            this.$('#divNewOffice').css('display', !hide ? 'block' : 'none');
+            this.$('.headerAccordion:last').css('display', !hide ? 'block' : 'none');
         },
         removeAddress : function(obj)
         {
@@ -93,6 +100,7 @@
             this.accordion.accordion('refresh');
             //Remueve los estilos por defecto de 
             this.accordion.attr("class", '');
+            this.$('.headerAccordion:last').hide();
         },
         closeAccordion: function () {
             this.accordion.accordion({ active: false })

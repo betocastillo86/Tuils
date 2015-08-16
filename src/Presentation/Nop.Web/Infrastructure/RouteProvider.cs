@@ -79,7 +79,7 @@ namespace Nop.Web.Infrastructure
 
             //product search
             routes.MapLocalizedRoute("ProductSearch",
-                            "buscar/{query}",
+                            "buscar/{*query}",
                             new { controller = "Catalog", action = "Search", query = UrlParameter.Optional },
                             new[] { "Nop.Web.Controllers" });
 
@@ -693,21 +693,21 @@ namespace Nop.Web.Infrastructure
 
             //publicar producto simple
             routes.MapLocalizedRoute("PublishProduct",
-                "quiero-vender/producto",
-                new { controller = "Sales", action = "PublishProduct" },
+                "quiero-vender/producto/{id}",
+                new { controller = "Sales", action = "PublishProduct", id = UrlParameter.Optional },
                 new[] { "Nop.Web.Controllers" }
                 );
 
             //publicar producto simple
             routes.MapLocalizedRoute("PublishProductBike",
-                "quiero-vender/moto",
-                new { controller = "Sales", action = "PublishProductBike" },
+                "quiero-vender/moto/{id}",
+                new { controller = "Sales", action = "PublishProductBike", id = UrlParameter.Optional },
                 new[] { "Nop.Web.Controllers" }
                 );
             //Publicar servicio
             routes.MapLocalizedRoute("PublishProductService",
-               "quiero-vender/servicio-especializado",
-               new { controller = "Sales", action = "PublishProductService" },
+               "quiero-vender/servicio-especializado/{id}",
+               new { controller = "Sales", action = "PublishProductService", id = UrlParameter.Optional },
                new[] { "Nop.Web.Controllers" }
                );
 
@@ -754,6 +754,12 @@ namespace Nop.Web.Infrastructure
             routes.MapLocalizedRoute("Questions",
               "mi-cuenta/preguntas-pendientes",
               new { controller = "ControlPanel", action = "Questions" },
+              new[] { "Nop.Web.Controllers" }
+              );
+
+            routes.MapLocalizedRoute("ControlPanelVendorServices",
+              "mi-tienda/motos-y-servicios",
+              new { controller = "ControlPanel", action = "VendorServices" },
               new[] { "Nop.Web.Controllers" }
               );
 

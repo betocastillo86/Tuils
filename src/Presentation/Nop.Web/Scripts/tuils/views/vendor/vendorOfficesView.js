@@ -51,6 +51,7 @@
                 {
                     this.$(".mapa").hide();
                     this.$("#divOfficesNoResults").show();
+                    this.$("#btnConfigOfficesWithRows").hide();
                 }
 
                 this.$('.btn-sedes').css('display', this.officeCollection.length > 1 ? "block" : "none");

@@ -10,15 +10,16 @@
         
         @Html.Partial("_CommonFieldsProductBikeDetail", Model)
 
-        <div class="inputs">
+        <div class="inputs" title="@T("PublishProduct.Manufacturer.Alt")">
             @Html.LabelT("PublishProduct.Manufacturer")
             <select id="ddlManufacturerId"></select>
             <span class="required">*</span>
             <div class="text-character"></div>
             <span class="field-validation-error" tuils-val-for="ManufacturerId"></span>
         </div>
-        <div class="input_check">
-            <input id="chkIsShipEnabled" type="checkbox" /> @Html.Label(@T("PublishProduct.HasShipping").Text)
+        <div class="inputs" title="@T("PublishProduct.HasShipping.Alt")">
+            @Html.Label(@T("PublishProduct.HasShipping").Text)
+            <input id="chkIsShipEnabled" type="checkbox" />
         </div>
         <br/>
         @*<div class="inputs" tuils-for="shipping">
@@ -32,16 +33,16 @@
             <input id="chkHasSpecialBikes" type="checkbox" /> @Html.Label(@T("PublishProduct.HasSpecialBikes").Text)
         </div>
         <br />
-        <div id="divBikeReferences" style="display:none">
+        <div id="divBikeReferences" style="display:none" >
             <div class="title">@T("PublishProduct.Product.TitleForBrandBike")</div>
-            <div class="tipo-marca">
+            <div class="tipo-marca" title="@T("PublishProduct.ForBrandBike.Alt")">
                 @Html.LabelT("PublishProduct.Product.ForBrandBike")
                 <input id="txtBikeReferencesProduct" />
             </div>
         </div>
         <br />
     </div>
-    <div class="descript_crea">
+    <div class="descript_crea" title="@T("PublishProduct.FullDescriptionProduct.Alt")">
         @Html.TextAreaRequired("FullDescription", labelResource: "PublishProduct.Product.Html", controlHtmlAttributes: new { maxLength = 500 })
     </div>
 </form>

@@ -3,7 +3,7 @@
 @{
     Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
 
-    //title
+    
     Html.AddTitleParts(T("PageTitle.Register").Text);
 }
 <script>
@@ -114,11 +114,11 @@
                     $(document).ready(function () {
                         $('#register-button').click(function () {
                             if ($('#accept-privacy-policy').is(':checked')) {
-                                //do some stuff
+                                
                                 return true;
                             }
                             else {
-                                //just show validation errors, dont post
+                                
                                 alert('@Html.Raw(HttpUtility.JavaScriptStringEncode(T("Account.Fields.AcceptPrivacyPolicy.Required").Text))');
                                 return false;
                             }

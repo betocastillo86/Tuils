@@ -8,7 +8,7 @@
     var supportResponsive = EngineContext.Current.Resolve<StoreInformationSettings>().ResponsiveDesignSupported;
     var themeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
 
-    //add browser specific CSS files
+    /*add browser specific CSS files*/
     var browser = Request.Browser;
     if (browser.Browser == "IE" && browser.MajorVersion == 6)
     {
@@ -20,32 +20,32 @@
     }
     if (supportRtl)
     {
-        //added
+        
         if (((browser.Browser == "IE" && browser.MajorVersion > 8) || browser.Browser != "IE") && supportResponsive)
         {
             Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/responsive.rtl.css", themeName));
         }
-        //added
+        
         Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/custom.rtl.css", themeName));
         Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/styles.rtl.css", themeName));
     }
     else
     {
-        //added
+        
         if (((browser.Browser == "IE" && browser.MajorVersion > 8) || browser.Browser != "IE") && supportResponsive)
         {
             Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/responsive.css", themeName));
         }
-        //added
-        <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700,500italic,700italic,400italic,300italic' rel='stylesheet' type='text/css'>
+        
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700,500italic,700italic,400italic,300italic' rel='stylesheet' type='text/css'  />
 
         Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/custom.css", themeName));
         Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/styles.css", themeName));
     }
-    //responsive design
+    /*responsive design*/
     if (supportResponsive)
     {
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     }
 
     

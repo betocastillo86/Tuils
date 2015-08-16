@@ -182,6 +182,7 @@
     <Compile Include="Common\IAddressAttributeParser.cs" />
     <Compile Include="Common\IAddressAttributeService.cs" />
     <Compile Include="Common\ISearchTermService.cs" />
+    <Compile Include="Common\LoadBikesCacheTask.cs" />
     <Compile Include="Common\SearchTermService.cs" />
     <Compile Include="Common\AddressService.cs" />
     <Compile Include="Common\AddressExtensions.cs" />
@@ -426,6 +427,10 @@
     <ProjectReference Include="..\Nop.Data\Nop.Data.csproj">
       <Project>{CCD7F2C9-6A2C-4CF0-8E89-076B8FC0F144}</Project>
       <Name>Nop.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nop.Utilities\Nop.Utilities.csproj">
+      <Project>{a210b081-8f58-4af1-aef3-be60a199505d}</Project>
+      <Name>Nop.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

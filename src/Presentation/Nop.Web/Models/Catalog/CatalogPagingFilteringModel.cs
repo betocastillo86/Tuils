@@ -12,6 +12,7 @@ using Nop.Web.Framework.UI.Paging;
 using Nop.Services.Directory;
 using Nop.Core.Domain.Directory;
 using System.Text;
+using Nop.Services.Seo;
 
 namespace Nop.Web.Models.Catalog
 {
@@ -99,6 +100,9 @@ namespace Nop.Web.Models.Catalog
         {
             protected string QUERYSTRINGPARAM { get; private set; }
 
+            public bool ShowFilterNameInUrl { get; set; }
+
+
             public FilterBaseModel(string queryString)
             {
                 this.QUERYSTRINGPARAM = queryString;
@@ -119,22 +123,76 @@ namespace Nop.Web.Models.Catalog
                 return url;
             }
 
-            protected virtual string GenerateFilteredQueryParam(IList<int> optionIds)
+            /// <summary>
+            /// Crea la Url para los filtros
+            /// </summary>
+            /// <param name="webHelper">Url que se está modificando</param>
+            /// <param name="currentId">Id que se está procesando en el momento</param>
+            /// <param name="currentName">Nombre que se está procesando en el momento</param>
+            /// <returns></returns>
+            protected string CreateFilterUrl(IWebHelper webHelper, int currentId, string currentName)
             {
-                string result = "";
+                var alreadyFilteredOptionIds = GetAlreadyFilteredIds(webHelper);
+                if (!alreadyFilteredOptionIds.Contains(currentId))
+                    alreadyFilteredOptionIds.Add(currentId);
 
-                if (optionIds == null || optionIds.Count == 0)
-                    return result;
+                string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredOptionIds);
 
-                for (int i = 0; i < optionIds.Count; i++)
-                {
-                    result += optionIds[i];
-                    if (i != optionIds.Count - 1)
-                        result += ",";
-                }
-                return result;
+                string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), string.Format("{0}={1}", QUERYSTRINGPARAM, newQueryParam), null);
+
+                //Si el nombre viene lo agrega al queryString
+                if(ShowFilterNameInUrl && currentName != null)
+                    filterUrl = webHelper.AddToRouteValues(filterUrl, SeoExtensions.GetSeName(currentName));
+
+                //Elimina los parametros sobrantes
+                filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
+
+                return filterUrl;
+            }
+            
+            /// <summary>
+            /// Elimina un filtro del listado. Tanto de querystring como de parte de la Url
+            /// </summary>
+            /// <param name="webHelper"></param>
+            /// <param name="currentName">parametros de la Url que debe remover</param>
+            /// <returns></returns>
+            protected string RemoveFilterFromUrl(IWebHelper webHelper, params string[] namesToRemove)
+            {
+                //Elimina del query string la varibale
+                string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+                removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
+                //Si debe eliminar nombres de la raiz de la URL los saca tambien
+                if (ShowFilterNameInUrl && namesToRemove != null && namesToRemove.Length > 0)
+                    removeFilterUrl = webHelper.RemoveRouteValues(removeFilterUrl, namesToRemove);
+
+                return removeFilterUrl;
             }
 
+
+
+            protected virtual string GenerateFilteredQueryParam<T>(IList<T> optionIds)
+            {
+                return string.Join(",", optionIds);
+                
+                //string result = "";
+
+                //if (optionIds == null || optionIds.Count == 0)
+                //    return result;
+
+                //for (int i = 0; i < optionIds.Count; i++)
+                //{
+                //    result += optionIds[i];
+                //    if (i != optionIds.Count - 1)
+                //        result += ",";
+                //}
+                //return result;
+            }
+
+            /// <summary>
+            /// Retorna los ids que ya han sido filtradps
+            /// </summary>
+            /// <param name="webHelper"></param>
+            /// <returns></returns>
             public virtual List<int> GetAlreadyFilteredIds(IWebHelper webHelper)
             {
                 var result = new List<int>();
@@ -294,9 +352,11 @@ namespace Nop.Web.Models.Catalog
 
                         this.Items.Add(priceItem);
 
-                        string url = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
-                        url = ExcludeQueryStringParams(url, webHelper);
-                        this.RemoveFilterUrl = url;
+                        //string url = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+                        //url = ExcludeQueryStringParams(url, webHelper);
+                        //this.RemoveFilterUrl = url;
+
+                        this.RemoveFilterUrl = this.RemoveFilterFromUrl(webHelper, null);
                     }
                 }
                 else
@@ -368,9 +428,10 @@ namespace Nop.Web.Models.Catalog
                     if (selectedPriceRange != null)
                     {
                         //remove filter URL
-                        string url = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
-                        url = ExcludeQueryStringParams(url, webHelper);
-                        this.RemoveFilterUrl = url;
+                        //string url = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+                        //url = ExcludeQueryStringParams(url, webHelper);
+                        //this.RemoveFilterUrl = url;
+                        this.RemoveFilterUrl = this.RemoveFilterFromUrl(webHelper, null);
                     }
                 }
                 else
@@ -407,7 +468,6 @@ namespace Nop.Web.Models.Catalog
             #region Const
 
             private const string _QUERYSTRINGPARAM = "specs";
-
             #endregion
 
             #region Ctor
@@ -439,8 +499,12 @@ namespace Nop.Web.Models.Catalog
                 Dictionary<int, int> filterableSpecificationAttributeOptionIds,
                 ISpecificationAttributeService specificationAttributeService,
                 IWebHelper webHelper,
-                IWorkContext workContext)
+                IWorkContext workContext,
+                //Valida si debe agregar el filtro del nombre a las URL
+                bool addFilterNameToUrl = true)
             {
+                this.ShowFilterNameInUrl = addFilterNameToUrl;
+                
                 var allFilters = new List<SpecificationAttributeOptionFilter>();
                 var specificationAttributeOptions = specificationAttributeService
                     .GetSpecificationAttributeOptionsByIds(filterableSpecificationAttributeOptionIds != null ?
@@ -507,23 +571,32 @@ namespace Nop.Web.Models.Catalog
                         item.SpecificationAttributeOptionName = x.SpecificationAttributeOptionName;
                         item.NumOfProducts = filterableSpecificationAttributeOptionIds.FirstOrDefault(s => s.Key == x.SpecificationAttributeOptionId).Value;
 
-                        //filter URL
-                        var alreadyFilteredOptionIds = GetAlreadyFilteredIds(webHelper);
-                        if (!alreadyFilteredOptionIds.Contains(x.SpecificationAttributeOptionId))
-                            alreadyFilteredOptionIds.Add(x.SpecificationAttributeOptionId);
-                        string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredOptionIds);
-                        string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + newQueryParam, null);
-                        filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
-                        item.FilterUrl = filterUrl;
+                        ////filter URL
+                        //var alreadyFilteredOptionIds = GetAlreadyFilteredIds(webHelper);
+                        //var alreadyFilteredOptionNames = GetAlreadyFilteredNames(webHelper);
+                        //if (!alreadyFilteredOptionIds.Contains(x.SpecificationAttributeOptionId))
+                        //{
+                        //    alreadyFilteredOptionIds.Add(x.SpecificationAttributeOptionId);
+                        //    alreadyFilteredOptionNames.Add(x.SpecificationAttributeOptionName);
+                        //}
+
+                        //string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredOptionIds);
+                        //string newQueryParamName = GenerateFilteredQueryParam(alreadyFilteredOptionNames);
+
+                        //string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), string.Format("{0}={1}&{2}={3}", QUERYSTRINGPARAM, newQueryParam, QUERYSTRINGPARAM_TEXT, newQueryParamName), null);
+                        
+                        //filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
+                        //item.FilterUrl = filterUrl;
+                        item.FilterUrl = this.CreateFilterUrl(webHelper, x.SpecificationAttributeOptionId, null);
 
                         return item;
                     }).ToList();
 
-
+                    this.RemoveFilterUrl = this.RemoveFilterFromUrl(webHelper, alreadyFilteredOptions.Select(f => SeoExtensions.GetSeName(f.SpecificationAttributeOptionName)).ToArray());
                     //remove filter URL
-                    string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
-                    removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
-                    this.RemoveFilterUrl = removeFilterUrl;
+                    //string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM, QUERYSTRINGPARAM_TEXT);
+                    //removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
+                    //this.RemoveFilterUrl = removeFilterUrl;
                 }
                 else
                 {
@@ -577,9 +650,12 @@ namespace Nop.Web.Models.Catalog
                 Dictionary<int, int> filterableCategoryIds,
                 ICategoryService categoryService,
                 IWebHelper webHelper,
-                IWorkContext workContext)
+                IWorkContext workContext,
+                //Valida si debe agregar el filtro del nombre a las URL
+                bool addFilterNameToUrl = true)
             {
                 this.Enabled = true;
+                this.ShowFilterNameInUrl = addFilterNameToUrl;
 
                 if (alreadyCategoryIds.Count > 0)
                 {
@@ -590,9 +666,11 @@ namespace Nop.Web.Models.Catalog
                     });
 
                     //remove filter URL
-                    string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
-                    removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
-                    this.RemoveFilterUrl = removeFilterUrl;
+                    //string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM, QUERYSTRINGPARAM_TEXT);
+                    //removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
+                    //this.RemoveFilterUrl = removeFilterUrl;
+
+                    this.RemoveFilterUrl = this.RemoveFilterFromUrl(webHelper, this.AlreadyFilteredItems.Select(f => SeoExtensions.GetSeName(f.Name)).ToArray());
                 }
                 else if (filterableCategoryIds.Count > 1)
                 {
@@ -608,13 +686,20 @@ namespace Nop.Web.Models.Catalog
                            item.NumOfProducts = filterableCategoryIds.FirstOrDefault(s => s.Key == x.Id).Value;
 
                            //filter URL
-                           var alreadyFilteredCategoryIds = GetAlreadyFilteredIds(webHelper);
-                           if (!alreadyFilteredCategoryIds.Contains(x.Id))
-                               alreadyFilteredCategoryIds.Add(x.Id);
-                           string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredCategoryIds);
-                           string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + newQueryParam, null);
-                           filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
-                           item.FilterUrl = filterUrl;
+                           //var alreadyFilteredCategoryIds = GetAlreadyFilteredIds(webHelper);
+                           //var alreadyFilteredCategoryNames = GetAlreadyFilteredNames(webHelper);
+                           //if (!alreadyFilteredCategoryIds.Contains(x.Id))
+                           //{
+                           //    alreadyFilteredCategoryIds.Add(x.Id);
+                           //    alreadyFilteredCategoryNames.Add(x.Name);
+                           //}
+                               
+                           //string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredCategoryIds);
+                           //string newQueryParamName = GenerateFilteredQueryParam(alreadyFilteredCategoryNames);
+                           //string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), string.Format("{0}={1}&{2}={3}", QUERYSTRINGPARAM, newQueryParam, QUERYSTRINGPARAM_TEXT, newQueryParamName), null);
+                           //filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
+                           //item.FilterUrl = filterUrl;
+                           item.FilterUrl = this.CreateFilterUrl(webHelper, x.Id, x.Name);
 
                            return item;
                        }).ToList();
@@ -667,8 +752,13 @@ namespace Nop.Web.Models.Catalog
                 Dictionary<int, int> filterableStateProvinceIds,
                 IStateProvinceService stateProvinceService,
                 IWebHelper webHelper,
-                IWorkContext workContext)
+                IWorkContext workContext,
+                //Valida si debe agregar el filtro del nombre a las URL
+                bool addFilterNameToUrl = true)
             {
+
+                this.ShowFilterNameInUrl = addFilterNameToUrl;
+
                 List<StateProvince> statesOptions = null;
 
                 if (!selectedProvinceId.HasValue)
@@ -691,6 +781,7 @@ namespace Nop.Web.Models.Catalog
                     if (selectedProvinceId.HasValue)
                     {
                         this.FilteredItem = new FilterBaseItem() { Name = stateProvinceService.GetStateProvinceById(selectedProvinceId.Value).Name };
+                        this.RemoveFilterUrl = this.RemoveFilterFromUrl(webHelper, SeoExtensions.GetSeName(FilteredItem.Name));
                     }
                     else
                     {
@@ -701,22 +792,26 @@ namespace Nop.Web.Models.Catalog
                             item.NumOfProducts = filterableStateProvinceIds.FirstOrDefault(s => s.Key == x.Id).Value;
 
                             //filter URL
-                            var alreadyFilteredCategoryIds = GetAlreadyFilteredIds(webHelper);
-                            if (!alreadyFilteredCategoryIds.Contains(x.Id))
-                                alreadyFilteredCategoryIds.Add(x.Id);
-                            string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredCategoryIds);
-                            string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + newQueryParam, null);
-                            filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
-                            item.FilterUrl = filterUrl;
+                            //var alreadyFilteredCategoryIds = GetAlreadyFilteredIds(webHelper);
+                            //if (!alreadyFilteredCategoryIds.Contains(x.Id))
+                            //    alreadyFilteredCategoryIds.Add(x.Id);
+                            //string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredCategoryIds);
+                            //string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + newQueryParam, null);
+                            //filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
+                            //item.FilterUrl = filterUrl;
+
+                            item.FilterUrl = this.CreateFilterUrl(webHelper, x.Id, x.Name);
 
                             return item;
                         }).ToList();
                     }
 
                     //remove filter URL
-                    string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
-                    removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
-                    this.RemoveFilterUrl = removeFilterUrl;
+                    ////string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+                    ////removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
+                    ////this.RemoveFilterUrl = removeFilterUrl;
+
+                    
 
                 }
                 else
@@ -768,8 +863,12 @@ namespace Nop.Web.Models.Catalog
                 Dictionary<int, int> filterableManufacturerIds,
                 IManufacturerService manufacturerService,
                 IWebHelper webHelper,
-                IWorkContext workContext)
+                IWorkContext workContext,
+                //Valida si debe agregar el filtro del nombre a las URL
+                bool addFilterNameToUrl = true)
             {
+                this.ShowFilterNameInUrl = addFilterNameToUrl;
+
                 List<Manufacturer> options = null;
 
                 if (!manufactutrerId.HasValue)
@@ -791,6 +890,7 @@ namespace Nop.Web.Models.Catalog
                     if (manufactutrerId.HasValue)
                     {
                         this.FilteredItem = new FilterBaseItem() { Name = manufacturerService.GetManufacturerById(manufactutrerId.Value).Name };
+                        this.RemoveFilterUrl = this.RemoveFilterFromUrl(webHelper, SeoExtensions.GetSeName(FilteredItem.Name));
                     }
                     else
                     {
@@ -801,13 +901,14 @@ namespace Nop.Web.Models.Catalog
                             item.NumOfProducts = filterableManufacturerIds.FirstOrDefault(s => s.Key == x.Id).Value;
 
                             //filter URL
-                            var alreadyFilteredCategoryIds = GetAlreadyFilteredIds(webHelper);
-                            if (!alreadyFilteredCategoryIds.Contains(x.Id))
-                                alreadyFilteredCategoryIds.Add(x.Id);
-                            string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredCategoryIds);
-                            string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + newQueryParam, null);
-                            filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
-                            item.FilterUrl = filterUrl;
+                            //var alreadyFilteredCategoryIds = GetAlreadyFilteredIds(webHelper);
+                            //if (!alreadyFilteredCategoryIds.Contains(x.Id))
+                            //    alreadyFilteredCategoryIds.Add(x.Id);
+                            //string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredCategoryIds);
+                            //string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + newQueryParam, null);
+                            //filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
+                            //item.FilterUrl = filterUrl;
+                            item.FilterUrl = this.CreateFilterUrl(webHelper, x.Id, x.Name);
 
                             return item;
                         }).ToList();
@@ -817,9 +918,9 @@ namespace Nop.Web.Models.Catalog
 
 
                     //remove filter URL
-                    string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
-                    removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
-                    this.RemoveFilterUrl = removeFilterUrl;
+                    //string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+                    //removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
+                    //this.RemoveFilterUrl = removeFilterUrl;
 
                 }
                 else
@@ -871,8 +972,12 @@ namespace Nop.Web.Models.Catalog
                 Dictionary<int, int> filterableSpecialCategoryIds,
                 ICategoryService categoryService,
                 IWebHelper webHelper,
-                IWorkContext workContext)
+                IWorkContext workContext,
+                //Valida si debe agregar el filtro del nombre a las URL
+                bool addFilterNameToUrl = true)
             {
+                this.ShowFilterNameInUrl = addFilterNameToUrl;
+                
                 List<Category> options = null;
 
                 if (!specialCategoryId.HasValue)
@@ -894,6 +999,7 @@ namespace Nop.Web.Models.Catalog
                     if (specialCategoryId.HasValue)
                     {
                         this.FilteredItem = new FilterBaseItem() { Name = categoryService.GetCategoryById(specialCategoryId.Value).Name };
+                        this.RemoveFilterUrl = this.RemoveFilterFromUrl(webHelper, SeoExtensions.GetSeName(FilteredItem.Name));
                     }
                     else
                     {
@@ -904,22 +1010,23 @@ namespace Nop.Web.Models.Catalog
                             item.NumOfProducts = filterableSpecialCategoryIds.FirstOrDefault(s => s.Key == x.Id).Value;
 
                             //filter URL
-                            var alreadyFilteredCategoryIds = GetAlreadyFilteredIds(webHelper);
-                            if (!alreadyFilteredCategoryIds.Contains(x.Id))
-                                alreadyFilteredCategoryIds.Add(x.Id);
-                            string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredCategoryIds);
-                            string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + newQueryParam, null);
-                            filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
-                            item.FilterUrl = filterUrl;
+                            //var alreadyFilteredCategoryIds = GetAlreadyFilteredIds(webHelper);
+                            //if (!alreadyFilteredCategoryIds.Contains(x.Id))
+                            //    alreadyFilteredCategoryIds.Add(x.Id);
+                            //string newQueryParam = GenerateFilteredQueryParam(alreadyFilteredCategoryIds);
+                            //string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + newQueryParam, null);
+                            //filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
+                            //item.FilterUrl = filterUrl;
+                            item.FilterUrl = this.CreateFilterUrl(webHelper, x.Id, x.Name);
 
                             return item;
                         }).ToList();
                     }
 
                     //remove filter URL
-                    string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
-                    removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
-                    this.RemoveFilterUrl = removeFilterUrl;
+                    //string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+                    //removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
+                    //this.RemoveFilterUrl = removeFilterUrl;
                 }
                 else
                 {

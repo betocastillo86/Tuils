@@ -839,8 +839,9 @@ namespace Nop.Services.Customers
             _eventPublisher.EntityUpdated(customerRole);
         }
 
+        
+
         #endregion
-       
 
         #endregion
     }

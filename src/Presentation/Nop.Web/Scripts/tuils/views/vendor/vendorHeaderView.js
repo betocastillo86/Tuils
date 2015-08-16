@@ -162,6 +162,7 @@
                 this.$('#divMainCover').css('overflow', 'hidden').css('height', '300px').css("cursor", "move");
                 this.$('#btnMoveCover').hide();
                 this.$('#btnChangeCover').hide();
+                this.$('#btnEditVendorHeader').hide();
                 this.$('#btnSaveCoverPosition').show();
 
                 var cover = this.$('.coverPerfil');
@@ -192,6 +193,7 @@
                 this.$('.coverPerfil').draggable('destroy');
                 this.$('#btnMoveCover').show();
                 this.$('#btnChangeCover').show();
+                this.$('#btnEditVendorHeader').show();
                 
                 this.$('#btnSaveCoverPosition').hide();
                 this.$('#divMainCover').css('data-pos', this.initPositionBackground);

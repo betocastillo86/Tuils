@@ -3,10 +3,10 @@
 @using Nop.Web.Extensions;
 
 <div class="content-filter">
-    <input id="btnShowFilter" type="button" value="Mostrar Filtro" />
+    <a id="btnShowFilter" class="btn_filter"><span><i class="icon-filtros"></i> <b>Filtrar por:</b><br/></span></a>
     <div class="filters-main" style="display:none">
         <div class="product-filters-wrapper">
-            <h2 class="tit_fil"><i class="icon-mail"></i>FILTRAR POR <span class="icon-close"></span></h2>
+            <h2 class="tit_fil"><i class="icon-filtros"></i>FILTRAR POR <span class="icon-close"></span></h2>
 
             <ul class="filter-result">
                 @if (Model.CategoryFilter.Enabled)

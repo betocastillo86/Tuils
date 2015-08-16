@@ -5,26 +5,30 @@
 @using Nop.Core.Infrastructure
 @using Nop.Web.Models.Catalog;
 @{
-    //prepare "Add to cart" AJAX link
-    //string addtocartlink = "";
-    //var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
-    //var quantity = 1;
-    //if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
-    //{
-    //    addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
-    //}
-    //else
-    //{
-    //    addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, });
-    //}    
+    /*prepare "Add to cart" AJAX link
+    string addtocartlink = "";
+    var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
+    var quantity = 1;
+    if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
+    }
+    else
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, });
+    }    */
 }
 <div class="product-item" data-productid="@Model.Id">
     <div class="picture">
         <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
-            <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" />
+            <img alt="@Model.DefaultPictureModel.AlternateText" alt="@Model.DefaultPictureModel.Title" src="@Model.DefaultPictureModel.ImageUrl " />
         </a>
     </div>
     <div class="details">
+        @if (Model.FeaturedBySpecialCategory)
+        { 
+            <span class="serv_espec">PARA TU MOTO</span>
+        }
         <h2 class="product-title">
             <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })">@Model.Name</a>
         </h2>
@@ -38,22 +42,22 @@
             @*added*@
             <!--product reviews-->
             @Html.Partial("_ProductReviewOverview", Model.ReviewOverviewModel)
+            <div class="city-seo">
+                @Model.StateProvinceName
+            </div>
             <div class="clear"></div>
             @*@added*@
             <div class="buttons">
-                <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" class="button-2 product-box-add-to-cart-button" title="@Model.Name">@T("Products.Details")</a>
+                <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" class="button-2 product-box-add-to-cart-button">@T("Products.Details")</a>
                    @*@if (!Model.ProductPrice.DisableBuyButton)
             {
                 <input type="button" value="@(Model.ProductPrice.AvailableForPreOrder ? T("ShoppingCart.PreOrder") : T("ShoppingCart.AddToCart"))" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink    ');return false;" />
             }*@</div>
+            
             <div class="add-to-links">
                 
                 @Html.Partial("_AddToWishlist")
                 @Html.Partial("_CompareProductsButton")
-                @if (Model.FeaturedBySpecialCategory)
-                { 
-                    <span>SERVICIO PARA TU MOTO</span>
-                }
             </div>
             @*@Html.Widget("productbox_add_info", Model.Id)*@
         </div>

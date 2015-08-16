@@ -89,8 +89,7 @@ namespace System.Web.Mvc.Html
             }
 
             //Agrega la sección de codigo que contiene lo que se marca como obligatorio
-            if (required)
-                htmlControl.Append(GetRequiredHtmlPart(ExpressionHelper.GetExpressionText(expression)));
+            htmlControl.Append(GetRequiredHtmlPart(ExpressionHelper.GetExpressionText(expression), required));
 
             return new MvcHtmlString(htmlControl.ToString());
         }

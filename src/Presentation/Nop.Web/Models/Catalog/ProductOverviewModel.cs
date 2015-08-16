@@ -78,7 +78,6 @@ namespace Nop.Web.Models.Catalog
 
 		#endregion
 
-
-        
+        public string StateProvinceName { get; set; }
     }
 }

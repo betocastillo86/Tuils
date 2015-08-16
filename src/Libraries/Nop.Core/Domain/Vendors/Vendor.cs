@@ -120,6 +120,11 @@ namespace Nop.Core.Domain.Vendors
         public string PhoneNumber { get; set; }
 
         /// <summary>
+        /// Numero de preguntas sin contestar de un vendedor
+        /// </summary>
+        public int UnansweredQuestions { get; set; }
+
+        /// <summary>
         /// Direcciones del vendedor
         /// </summary>
         public virtual ICollection<Address> Addresses

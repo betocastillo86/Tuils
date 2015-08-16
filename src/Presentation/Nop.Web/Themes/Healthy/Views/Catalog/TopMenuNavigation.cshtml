@@ -8,7 +8,7 @@
 @using Nop.Web.Framework;
 @{
     Layout = "";
-    Html.AddCssFileParts("~/Scripts/mmenu/css/jquery.mmenu.all.css");
+    Html.AddCssFileParts(ResourceLocation.Foot, "~/Scripts/mmenu/css/jquery.mmenu.all.css");
 }
 
 @helper RenderCategoryLine(CategorySimpleModel category, TopMenuModel.SpecificationAttributeOptionModel attribute)
@@ -40,7 +40,7 @@
                 @foreach (var attribute in Model.SpecificationAttributesFilter)
                 {
                     <li data-id="@attribute.Id" >
-                        <a class="aFirstLevel"><span class="icon-@attribute.SeName.Replace("-", "_")"></span><span class="tooltip-menu">@attribute.Name</span></a>
+                        <a class="aFirstLevel" href="@Url.Action("Search", "Catalog", new { specs=attribute.Id, sn = attribute.Name })"><span class="icon-@attribute.SeName.Replace("-", "_")"></span><span class="tooltip-menu">@attribute.Name</span></a>
                         <ul class="childrenOptions" style="display:none">
                             @foreach (var category in Model.Categories)
                             {

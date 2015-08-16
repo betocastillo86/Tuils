@@ -62,7 +62,7 @@ namespace Nop.Web.Controllers
         /// Publicación de producto simple
         /// </summary>
         /// <returns></returns>
-        public ActionResult PublishProduct()
+        public ActionResult PublishProduct(int? id)
         {
             var model = GetPublishModel();
 
@@ -77,7 +77,7 @@ namespace Nop.Web.Controllers
         /// Publicación de producto tipo motocicleta
         /// </summary>
         /// <returns></returns>
-        public ActionResult PublishProductBike()
+        public ActionResult PublishProductBike(int? id)
         {
             var model = GetPublishModel();
             //Caga los colores existentes
@@ -114,10 +114,10 @@ namespace Nop.Web.Controllers
         /// OPción para publicar un servicio
         /// </summary>
         /// <returns></returns>
-        public ActionResult PublishProductService()
+        public ActionResult PublishProductService(int? id)
         {
             var model = GetPublishModel();
-
+            
             //Tipo de producto moto
             model.ProductType = ProductTypePublished.Service;
             model.SubSectionTitle = "Servicios";
@@ -131,6 +131,7 @@ namespace Nop.Web.Controllers
             var model = new PublishProductModel();
             model.LimitDaysOfProductPublished = _catalogSettings.LimitDaysOfProductPublished;
             model.StateProvinces = new SelectList(_stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry), "Id", "Name");
+            model.IsMobileDevice = Request.Browser.IsMobileDevice;
             if (_workContext.CurrentVendor != null)
                 model.PhoneNumber = _workContext.CurrentVendor.PhoneNumber;
             return model;

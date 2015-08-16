@@ -3,9 +3,11 @@
 <div class="similarSearch">
     <span title="@Model.TitleOfTitle">@Model.Title</span>
     <ul>
-        @foreach (var item in Model.Searches)
+
+        @for (int i = 0; i < Model.Searches.Count; i++)
         {
-            <a href="@Url.Action("Search", new { q = item })" title="@T("similarSearches.suggest.title", item)"><li>@item,</li></a>
+            var item = Model.Searches[i];
+            <a href="@Url.Action("Search", new { q = item, query = string.Empty })" title="@T("similarSearches.suggest.title", item)"><li>@item@(i == Model.Searches.Count-1 ? string.Empty : ",")</li></a>
         }
     </ul>
 </div>

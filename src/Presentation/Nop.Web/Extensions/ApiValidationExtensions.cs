@@ -32,7 +32,8 @@ namespace Nop.Web.Extensions.Api
             {
                 //si es de tipo motocicleta debe tener
                 //Color, Placa, Recorrido y Año
-                if (model.Color == 0 || string.IsNullOrEmpty(model.CarriagePlate) || model.Kms == 0 || model.Year == 0) return false;
+                //if (model.Color == 0 || string.IsNullOrEmpty(model.CarriagePlate) || model.Kms == 0 || model.Year == 0) return false;
+                if (string.IsNullOrEmpty(model.CarriagePlate) || model.Kms == 0 || model.Year == 0) return false;
             }
             else if (model.ProductTypeId == tuilsSettings.productBaseTypes_service)
             {

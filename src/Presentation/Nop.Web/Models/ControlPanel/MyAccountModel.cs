@@ -89,6 +89,8 @@ namespace Nop.Web.Models.ControlPanel
         [NopResourceDisplayName("Account.Fields.ReferenceNewsletter")]
         public bool NewsletterReference { get; set; }
 
+        public string ConfirmMessage { get; set; }
+
         public class BikeBrandCategory
         {
             [NopResourceDisplayName("Account.Fields.BikeBrand")]

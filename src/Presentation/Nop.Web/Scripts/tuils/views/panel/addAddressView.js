@@ -1,5 +1,7 @@
-﻿define(['jquery', 'underscore', 'util', 'baseView', 'tuils/models/address', 'handlebars', 'tuils/views/utilities/selectPointMapView', 'tuils/collections/addresses', 'handlebarsh'],
-    function ($, _, TuilsUtilities, BaseView, AddressModel, Handlebars, MapView, AddressCollection) {
+﻿define(['jquery', 'underscore', 'util', 'baseView', 'tuils/models/address', 'handlebars', 'tuils/views/utilities/selectPointMapView',
+    'tuils/collections/addresses', 'handlebarsh'],
+    function ($, _, TuilsUtilities, BaseView, AddressModel, Handlebars, MapView,
+        AddressCollection) {
 
         var AddAddressView = BaseView.extend({
             events: {
@@ -128,6 +130,7 @@
             {
                 this.trigger("saved", this.model);
                 this.btnSave.attr('disabled', false);
+                this.alert('Guardado correctamente');
             },
             changeImage: function (obj) {
                 this.fileUpload.click();

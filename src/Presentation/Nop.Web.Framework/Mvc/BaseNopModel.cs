@@ -28,6 +28,8 @@ namespace Nop.Web.Framework.Mvc
             
         }
 
+        public bool IsMobileDevice { get; set; }
+
         /// <summary>
         /// Use this property to store any custom value for your models. 
         /// </summary>

@@ -3,7 +3,7 @@
 @{
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
-    //title
+    
     Html.AddTitleParts(T("PageTitle.Checkout").Text);
 }
 <div class="page checkout-page">
@@ -154,7 +154,7 @@
                         <div class="enter-address-body">
                             @{
                                 var dataDictAddress = new ViewDataDictionary();
-                                //Merge ModelState (required for validation)
+                                /*Merge ModelState (required for validation)*/
                                 dataDictAddress.ModelState.Merge(ViewData.ModelState);
                                 dataDictAddress.TemplateInfo.HtmlFieldPrefix = "NewAddress";
                                 @Html.Partial("_CreateOrUpdateAddress", Model.NewAddress, dataDictAddress)

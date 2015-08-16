@@ -91,11 +91,11 @@
                             break;
                         case AttributeControlType.FileUpload:
                             {
-                                //register CSS and JS
+                                /*register CSS and JS*/
                                 Html.AddCssFileParts("~/Scripts/fineuploader/fineuploader-4.2.2.min.css");
                                 Html.AddScriptParts("~/Scripts/fineuploader/jquery.fineuploader-4.2.2.min.js");
 
-                                //ex. ['jpg', 'jpeg', 'png', 'gif'] or []
+                                /*ex. ['jpg', 'jpeg', 'png', 'gif'] or []*/
                                 var allowedFileExtensions = string.Join(", ", attribute.AllowedFileExtensions.Select(x => "'" + x.Trim() + "'").ToList());
                             
                         <input id="@(controlId)" name="@(controlId)" type="hidden" />
@@ -190,7 +190,7 @@
 
 @if (Model.Count > 0)
 {
-    //dynamic price update support
+    
     var hidePrices = !EngineContext.Current.Resolve<IPermissionService>().Authorize(StandardPermissionProvider.DisplayPrices);
     var dynamicPriceUpdate = EngineContext.Current.Resolve<CatalogSettings>().EnableDynamicPriceUpdate;
     var dynamicPriceUpdateAjax = EngineContext.Current.Resolve<CatalogSettings>().DynamicPriceUpdateAjax;
@@ -226,8 +226,8 @@
                             numberOfJsArrayItems++;
                         }
 
-                        //If you create an array with a single numeric parameter, that number is used for specifying the number of elements in this array.
-                        //so have a little hack here (we need at least two elements)
+                        /*If you create an array with a single numeric parameter, that number is used for specifying the number of elements in this array.
+                        so have a little hack here (we need at least two elements)*/
                         if (numberOfJsArrayItems == 1)
                         {
                             priceAdjustmentTableScripts.AppendFormat(CultureInfo.InvariantCulture, "{0},", decimal.Zero);
@@ -266,19 +266,19 @@
     if (dynamicPriceUpdate && !hidePrices)
     {
         <script type="text/javascript">
-            //Price adjustment table
+            /*Price adjustment table*/
             var @(priceAdjustmentTableName) = new Array();
-            //Price adjustment table initialize
+            /*Price adjustment table initialize*/
             @Html.Raw(priceAdjustmentTableScripts.ToString())
 
-            //Price adjustment function
+            /*Price adjustment function*/
             function @(priceAdjustmentFuncName)() {
 
                 
                 @if (dynamicPriceUpdateAjax)
                 {
-                    //load using AJAX
-                    //this way we also load GTIN, SKU, MPN
+                    /*load using AJAX
+                    this way we also load GTIN, SKU, MPN*/
                     var priceVarClass = string.Format("price-value-{0}", productId);
                     
                     <text>
@@ -306,7 +306,7 @@
                 }
                 else
                 {
-                    //calculate new price using java-script (no AJAX)
+                    /*calculate new price using java-script (no AJAX)*/
                     var priceVarName = string.Format("priceValForDynUpd_{0}", productId);
                     var priceVarClass = string.Format("price-val-for-dyn-upd-{0}", productId);
                     
@@ -329,7 +329,7 @@
                 }
             }
             
-            //Price attributes handlers
+            /*Price attributes handlers*/
             $(document).ready(function() {
                 @(priceAdjustmentFuncName)();
                 @Html.Raw(priceAttributeScripts.ToString())
@@ -345,7 +345,7 @@
 
 @if (Model.Count > 0)
 {
-    //attribute picture update
+    /*attribute picture update*/
     var pictureAdjustmentTableScripts = new StringBuilder();
     var pictureAttributeScripts = new StringBuilder();
     string pictureAdjustmentTableName = "";
@@ -390,8 +390,8 @@
                             pictureAdjustmentTableScripts.AppendFormat(CultureInfo.InvariantCulture, "'{0}',", pictureUrl);
                             numberOfJsArrayItems++;
                         }
-                        //If you create an array with a single numeric parameter, that number is used for specifying the number of elements in this array.
-                        //so have a little hack here (we need at least two elements)
+                        /*If you create an array with a single numeric parameter, that number is used for specifying the number of elements in this array.
+                        so have a little hack here (we need at least two elements)*/
                         if (numberOfJsArrayItems == 1)
                         {
                             pictureAdjustmentTableScripts.AppendFormat(CultureInfo.InvariantCulture, "'{0}',", "");
@@ -454,11 +454,11 @@
     {
     <script type="text/javascript">
             
-        //Picture adjustment table
+        /*Picture adjustment table*/
         var @(pictureAdjustmentTableName) = new Array();
-        //Picture adjustment table initialize
+        /*Picture adjustment table initialize*/
         @Html.Raw(pictureAdjustmentTableScripts.ToString())
-        //Picture adjustment function
+        /*Picture adjustment function*/
         function @(pictureAdjustmentFuncName)(controlId, productId) {
             var ctrl = $('#' + controlId);
             var pictureDefaultSizeUrl = '';
@@ -480,7 +480,7 @@
                 $('#main-product-img-lightbox-anchor-' + productId).attr("href", pictureFullSizeUrl);
             }
         }
-        // Picture attributes handlers
+        /* Picture attributes handlers*/
         $(document).ready(function() {
             @Html.Raw(pictureAttributeScripts.ToString())
         });

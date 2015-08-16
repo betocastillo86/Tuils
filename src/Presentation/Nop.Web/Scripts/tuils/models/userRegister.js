@@ -9,9 +9,9 @@
             VendorType: {
 
             },
-            Name: {
+            Bike: {
                 required: function (val, attr, computed) {
-                    return computed.IsRegister;
+                    return computed.VendorType == 0;
                 }
             },
             Email: {
@@ -19,7 +19,9 @@
                 pattern : 'email'
             },
             Password: {
-                required: true,
+                required: function (val, attr, computed) {
+                    return !computed.IsRegister;
+                },
                 minLength : 5
             },
             CompanyName: {
@@ -30,14 +32,14 @@
             TermsOfUse: {
                 acceptance: true
             }
-
         },
         labels: {
             Name: "Nombres",
             Email: "Correo electrónico",
             Password: "Clave",
             CompanyName : "Nombre establecimiento",
-            TermsOfUse: "Terminos y condiciones"
+            TermsOfUse: "Terminos y condiciones",
+            Bike : 'con tu Motocicleta'
         },
         login: function () {
             

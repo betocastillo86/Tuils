@@ -73,6 +73,7 @@ namespace Nop.Web.Controllers
         private readonly ICustomerActivityService _customerActivityService;
         private readonly IProductAttributeParser _productAttributeParser;
         private readonly IShippingService _shippingService;
+        private readonly IStateProvinceService _stateProvinceService;
         private readonly MediaSettings _mediaSettings;
         private readonly CatalogSettings _catalogSettings;
         private readonly VendorSettings _vendorSettings;
@@ -125,7 +126,8 @@ namespace Nop.Web.Controllers
             CaptchaSettings captchaSettings,
             SeoSettings seoSettings,
             ICacheManager cacheManager,
-            IOrderService orderService)
+            IOrderService orderService,
+            IStateProvinceService stateProvince)
         {
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
@@ -165,6 +167,7 @@ namespace Nop.Web.Controllers
             this._seoSettings = seoSettings;
             this._cacheManager = cacheManager;
             this._orderService = orderService;
+            this._stateProvinceService = stateProvince;
         }
 
         #endregion
@@ -181,7 +184,7 @@ namespace Nop.Web.Controllers
                 _storeContext, _categoryService, _productService, _specificationAttributeService,
                 _priceCalculationService, _priceFormatter, _permissionService,
                 _localizationService, _taxService, _currencyService,
-                _pictureService, _webHelper, _cacheManager,
+                _pictureService, _webHelper, _cacheManager, _stateProvinceService,
                 _catalogSettings, _mediaSettings, products,
                 preparePriceModel, preparePictureModel,
                 productThumbPictureSize, prepareSpecificationAttributes,
@@ -221,9 +224,12 @@ namespace Nop.Web.Controllers
                 Gtin = product.Gtin,
                 StockAvailability = product.FormatStockMessage(_localizationService),
                 HasSampleDownload = product.IsDownload && product.HasSampleDownload,
-                StateProvinceName = product.StateProvince != null ? product.StateProvince.Name : string.Empty
+                StateProvinceName = product.StateProvince != null ? product.StateProvince.Name : string.Empty,
+                DetailShipping = product.DetailShipping,
+                IncludeSupplies = product.IncludeSupplies,
+                IsMobileDevice = Request.Browser.IsMobileDevice
             };
-
+            
             //automatically generate product description?
             if (_seoSettings.GenerateProductMetaDescription && String.IsNullOrEmpty(model.MetaDescription))
             {
@@ -278,6 +284,9 @@ namespace Nop.Web.Controllers
                         PhoneNumber = vendor.PhoneNumber,
                         VendorType = vendor.VendorType
                     };
+
+                    //Solo muestra productos del mismo vendedor si este es Tienda o taller
+                    model.ShowProductsOfVendor = vendor.VendorType != VendorType.User;
                 }
                 
             }
@@ -436,6 +445,12 @@ namespace Nop.Web.Controllers
 
             model.ProductPrice.ProductId = product.Id;
             model.ProductPrice.Price = _priceFormatter.FormatPrice(product.Price);
+            if (product.SuppliesValue > 0)
+            {
+                model.SuppliesValue = product.SuppliesValue;
+                model.SuppliesValueStr = _priceFormatter.FormatPrice(product.SuppliesValue);
+            }
+            
 
             #region Codigo Eliminado
             //No es necesario realizar validaciones del precio ya que actualmente solo posee un único precio
@@ -1241,6 +1256,40 @@ namespace Nop.Web.Controllers
             return PartialView(model);
         }
 
+
+        [ChildActionOnly]
+        public ActionResult ProductsSameVendor(int id, int? productThumbPictureSize)
+        {
+            if(id == 0)
+                return Content("");
+
+            //Consulta que el vendor exista
+            var vendor = _vendorService.GetVendorById(id);
+
+            //Valida que exista y que sea de tipo tienda o taller
+            if (vendor == null && vendor.VendorType == VendorType.User)
+                return Content("");
+
+
+            //Consulta los productos
+            //Toma maximo los primeros 20 para realizar el filtro
+            var products =  _productService.SearchProducts(
+                    vendorId: id,
+                    pageIndex:1,
+                    pageSize:20)
+                    .OrderBy(p => Guid.NewGuid())
+                    .ToList();
+
+            //Si no hay retorna vacio
+            if (products.Count == 0)
+                return Content("");
+
+            var model = PrepareProductOverviewModels(products
+                 .OrderBy(p => Guid.NewGuid())
+                 .Take(_catalogSettings.NumberOfProductsVendorProductsProductPage), true, true, productThumbPictureSize).ToList();
+            return PartialView(model);
+        }
+
         #endregion
 
         #region Left featured products
@@ -1248,8 +1297,9 @@ namespace Nop.Web.Controllers
         [ChildActionOnly]
         public ActionResult FeaturedLeftMenu(int? productThumbPictureSize)
         {
-            if (!_catalogSettings.ShowBestsellersOnHomepage || _catalogSettings.NumberOfBestsellersOnHomepage == 0)
-                return Content("");
+            //Contenido deshabilitado para moviles
+            if (Request.Browser.IsMobileDevice)
+                return Content(string.Empty);
 
             //categoria especial por la que debería ordenar que solo se activa si el usuario cuenta con esta registrada como moto
             int? orderBySpecialCategoryId =  _workContext.CurrentCustomer.GetBikeReference();
@@ -1260,10 +1310,13 @@ namespace Nop.Web.Controllers
             //load and cache report
             var products = _cacheManager.Get(cacheKey,
                 () =>
-                    _productService.SearchProducts(storeId: _storeContext.CurrentStore.Id, 
-                                                    leftFeatured:true,
-                                                    orderBySpecialCategoryId: orderBySpecialCategoryId)
-                    .ToList());
+                    //Devuelve los objetos ya convertidos en modelos
+                    PrepareProductOverviewModels(
+                        _productService.SearchProducts(storeId: _storeContext.CurrentStore.Id,
+                                                    leftFeatured: true,
+                                                    orderBySpecialCategoryId: orderBySpecialCategoryId), true, true, productThumbPictureSize)
+                                                    .ToList() 
+                    );
 
             ////Si hay productos destacados por la categoria de moto del usuario
             ////Se ordenan por este criterio y no aleatoreamente
@@ -1285,19 +1338,17 @@ namespace Nop.Web.Controllers
             //        .ToList();
             //}
 
-            //toma aleatoriamente un numero de productos
-            products = products
-                .OrderBy(p => Guid.NewGuid())
-                .OrderByDescending(p => p.FeaturedBySpecialCategory)
-                .Take(_catalogSettings.NumberOfBestsellersOnHomepage)
-                .ToList();
-            
-
             if (products.Count == 0)
                 return Content("");
 
             //prepare model
-            var model = PrepareProductOverviewModels(products, true, true, productThumbPictureSize).ToList();
+            //toma aleatoriamente un numero de productos
+            var model =  products
+                .OrderBy(p => Guid.NewGuid())
+                .OrderByDescending(p => p.FeaturedBySpecialCategory)
+                .Take(_catalogSettings.NumberOfBestsellersOnHomepage)
+                .ToList();
+
             return PartialView(model);
         }
 

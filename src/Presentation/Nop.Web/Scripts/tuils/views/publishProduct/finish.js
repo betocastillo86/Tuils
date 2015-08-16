@@ -1,6 +1,6 @@
-﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'accounting'],
-    function ($,_, Backbone, Handlebars, accounting) {
-    var PublishFinishedView = Backbone.View.extend({
+﻿define(['jquery', 'underscore', 'baseView', 'handlebars', 'accounting'],
+    function ($,_, BaseView, Handlebars, accounting) {
+    var PublishFinishedView = BaseView.extend({
 
         images : undefined,
 
@@ -17,6 +17,8 @@
                     Name: this.model.get('Name'),
                     Price: accounting.formatMoney(this.model.get('Price'), { precision: 0 })
                 }));
+
+            this.scrollFocusObject(this.el, -50);
             return this;
         }
     }); 

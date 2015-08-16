@@ -531,7 +531,72 @@ namespace Nop.Core
             {
                 str2 = anchor;
             }
-            return (url + (string.IsNullOrEmpty(str) ? "" : ("?" + str)) + (string.IsNullOrEmpty(str2) ? "" : ("#" + str2))).ToLowerInvariant();
+            return (url + (string.IsNullOrEmpty(str) ? string.Empty : ("?" + str)) + (string.IsNullOrEmpty(str2) ? string.Empty : ("#" + str2))).ToLowerInvariant();
+        }
+
+        /// <summary>
+        /// Agrega al final de la url ANTES del querystring un valor más para completar la ruta
+        /// ejemplo: 
+        /// -----Url: http://a.com/buscar?a=1&b=2   newRouteValue: "Abatible"  return: http://a.com/buscar/Abatible?a=1&b=2
+        /// </summary>
+        /// <param name="url">url que se quiere modificae</param>
+        /// <param name="newRouteValue">complemento que se va agregar a la url</param>
+        /// <returns></returns>
+        public virtual string AddToRouteValues(string url, string newRouteValue)
+        { 
+            if(url == null)
+                throw new ArgumentNullException("url");
+  
+            if(newRouteValue == null)
+                throw new ArgumentNullException("newRouteValue");
+            
+            //Expresion regular para validar si la nueva ruta ya hace parte o no del query string
+            //debe estar o antes de un / o antes de ? o al final de toda la Url
+            var regex = new System.Text.RegularExpressions.Regex(string.Format(@"\/{0}(\/|\?|$)", newRouteValue));
+            //Valida que no pase la expresion regular, si la pasa es porque ya estaba en la URL
+            if (!regex.IsMatch(url))
+            {
+                
+                string[] urlParts = url.Split(new char[] { '?' });
+                string urlWithoutQuerystring = urlParts[0];
+                string queryString = string.Empty;
+
+                //Valida si tiene querystring
+                if(urlParts.Length > 1)
+                    queryString = "?"+string.Join("?", urlParts.Skip(1));
+
+                //Si ya tiene slash no lo agrega al final
+                bool addSlash = !urlWithoutQuerystring.Last().Equals('/');
+                url = string.Format("{0}{1}{2}{3}", urlWithoutQuerystring, addSlash ? "/" : string.Empty, newRouteValue, queryString);
+            }
+
+            return url;
+        }
+
+        public virtual string RemoveRouteValues(string url, params string[] routeToRemove)
+        {
+            foreach (var param in routeToRemove)
+            {
+                //Expresion regular para validar si la nueva ruta ya hace parte o no del query string
+                //debe estar o antes de un / o antes de ? o al final de toda la Url
+                var regex = new System.Text.RegularExpressions.Regex(string.Format(@"\/{0}(\/|\?|$)", param));
+                var resultRegex = regex.Match(url);
+
+                if (resultRegex.Success)
+                {
+                    var replaceFor = resultRegex.Value;
+                    //No debe limpiar el caracter "?" ni "/" ya que hace parte del querystring
+                    //Asi que elimina el ultimo caracter de la cadena
+                    if (replaceFor.Last().Equals('?') || replaceFor.Last().Equals('/'))
+                        replaceFor = replaceFor.Substring(0, replaceFor.Length - 1);
+
+                    
+                    //Reemplaza el valor de la cadena coincidente, por vacio, con esto se limpia la URL
+                    url = url.Replace(replaceFor, string.Empty);
+                }
+            }
+
+            return url;
         }
 
         /// <summary>
@@ -540,7 +605,23 @@ namespace Nop.Core
         /// <param name="url">Url to modify</param>
         /// <param name="queryString">Query string to remove</param>
         /// <returns>New url</returns>
-        public virtual string RemoveQueryString(string url, string queryString)
+        public virtual string RemoveQueryString(string url, params string[] queryString)
+        {
+            foreach (var param in queryString)
+            {
+                url = RemoveSingleQueryString(url, param);
+            }
+
+            return url;
+        }
+
+        /// <summary>
+        /// Elimina solo una variable del query string
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="queryString"></param>
+        /// <returns></returns>
+        private string RemoveSingleQueryString(string url, string queryString)
         {
             if (url == null)
                 url = string.Empty;
@@ -562,11 +643,11 @@ namespace Nop.Core
                 if (!string.IsNullOrEmpty(str))
                 {
                     var dictionary = new Dictionary<string, string>();
-                    foreach (string str3 in str.Split(new [] { '&' }))
+                    foreach (string str3 in str.Split(new[] { '&' }))
                     {
                         if (!string.IsNullOrEmpty(str3))
                         {
-                            string[] strArray = str3.Split(new [] { '=' });
+                            string[] strArray = str3.Split(new[] { '=' });
                             if (strArray.Length == 2)
                             {
                                 dictionary[strArray[0]] = strArray[1];

@@ -1,5 +1,7 @@
-﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'baseView', 'tuils/models/userRegister', 'resources'],
-    function ($, _, Backbone, Handlebars, BaseView, UserRegisterModel, Resources) {
+﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'baseView', 'tuils/models/userRegister',
+    'resources', 'storage', 'util'],
+    function ($, _, Backbone, Handlebars, BaseView, UserRegisterModel,
+        Resources, TuilsStorage, TuilsUtil) {
     var CreateUserView = BaseView.extend({
 
         userType : undefined,
@@ -12,18 +14,28 @@
         },
 
         bindings: {
-            "#txtName": "Name",
+            //"#txtName": "Name",
             "#txtCompanyName": "CompanyName",
             "#txtEmail": "Email",
-            "#txtPassword": "Password",
+            '#txtBike': {
+                observe: 'Bike',
+                controlToMark: '.tagit-new input[type="text"]'
+            },
+            //"#txtPassword": "Password",
             "#chkTerms": "TermsOfUse"
         },
-
+        intervalAuthentication: undefined,
         initialize: function (args) {
 
             var that = this;
             this.loadModel();
-            this.$el.fixedDialog(this.dialogBasicOptions);
+
+            if (this.isMobile()) {
+                this.$el.dialog(this.dialogBasicOptions);
+                this.trigger('close-menu-responsive');
+            }
+            else
+                this.$el.fixedDialog(this.dialogBasicOptions);
 
             require(['text!/Customer/CreateUser'], function (template) {
                 that.template = Handlebars.compile(template);
@@ -69,16 +81,18 @@
             this.showForm();
         },
         createUser: function () {
-            this.validateControls();
+            this.validateControls(undefined, false);
            
             if (this.model.isValid())
             {
                 this.model.register();
             }
         },
-        userCreated : function(model){
+        userCreated: function (model) {
+            this.alert(Resources.confirm.userRegistered);
             this.trigger("user-authenticated", this.model);
             this.close();
+
         },
         errorCreating: function (model, exception) {
             alert(exception.responseJSON.Message);
@@ -88,11 +102,13 @@
             this.model.set('VendorType', parseInt(this.userType));
 
             //Si es de tipo almacen muestra los datos
-            if (this.userType != 0) {
-                this.$("[tuils-for='establecimiento']").show();
+            if (this.userType == 0) {
+                this.$("[tuils-for='company']").hide();
+                this.$("[tuils-for='user']").show();
             }
             else {
-                this.$("[tuils-for='establecimiento']").hide();
+                this.$("[tuils-for='company']").show();
+                this.$("[tuils-for='user']").hide();
             }
         },
         back: function () {
@@ -101,10 +117,49 @@
         },
         show: function () {
             this.$el.dialog({
-                width: 365,
+                width: window.innerWidth < 365 ? 300 : 365,
                 title: Resources.account.newCustomer,
                 modal:true
             });
+        },
+        tagBikeReferences: function () {
+
+            if (TuilsStorage.bikeReferences) {
+                var tagReferences = [];
+
+                var addTag = function (element) {
+                    tagReferences.push({ label: element.Name, value: element.Id });
+                };
+                _.each(TuilsStorage.bikeReferences, function (element, index) {
+                    _.each(element.ChildrenCategories, function (child, index) {
+                        addTag(child);
+                    });
+                });
+
+                var that = this;
+                this.$("#txtBike")
+                    .tagit({
+                        availableTags: tagReferences,
+                        allowOnlyAvailableTags: true,
+                        tagLimit: 1,
+                        autocomplete: {
+                            source: TuilsUtil.tagItAutocomplete
+                        },
+                        placeholderText : this.$("#txtBike").attr('placeholder'),
+                        allowSpaces: true,
+                        afterTagAdded: function () {
+                            //Cuando se agrega el tag se oculta la caja de texto
+                            that.$('.tagit-new input[type="text"]').hide();
+                        },
+                        afterTagRemoved: function () {
+                            //Muestra la caja de texto nuevamente
+                            that.$('.tagit-new input[type="text"]').show();
+                        }
+                    });
+            }
+            else {
+                TuilsStorage.loadBikeReferences(this.tagBikeReferences, this);
+            }
         },
         close: function () {
             this.$el.dialog('close');
@@ -112,6 +167,7 @@
         render: function () {
             this.$el.html(this.template());
             this.show();
+            this.tagBikeReferences();
 
             Backbone.Validation.bind(this);
             this.stickit();
