@@ -18,7 +18,7 @@
         
     </form>
     <div class="external-authentication">
-        @Html.Action("ExternalMethods", "ExternalAuthentication", new { BlankWindow = true, ReturnUrl = "http://local.tuils.com/home/close" })
+        @Html.Action("ExternalMethods", "ExternalAuthentication", new { BlankWindow = true, ReturnUrl = Url.Action("Close", "Home") })
     </div>
     <a id="btnRegister" class="rgt-login" href="javascript:;">@T("Login.RegisterButton")</a>
     <div class="rgt-login">

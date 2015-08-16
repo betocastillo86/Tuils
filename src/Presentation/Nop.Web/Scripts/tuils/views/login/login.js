@@ -68,7 +68,7 @@
         },
         show: function () {
             this.$el.dialog({
-                width: 365,
+                width: window.innerWidth < 365 ? 300 : 365,
                 title : Resources.account.login,
                 modal : true
             });

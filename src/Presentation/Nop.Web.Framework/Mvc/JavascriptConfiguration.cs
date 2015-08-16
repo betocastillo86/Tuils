@@ -67,7 +67,8 @@ namespace Nop.Web.Framework.Mvc
                 {
                     productImageMaxSizeResize = mediaSettings.ProductImageMaxSizeResize,
                     coverImageMaxSizeResize = mediaSettings.CoverImageMaxSizeResize,
-                    logoImageMaxSizeResize = mediaSettings.LogoImageMaxSizeResize
+                    logoImageMaxSizeResize = mediaSettings.LogoImageMaxSizeResize,
+                    vendorBackgroundThumbPictureSize = mediaSettings.VendorBackgroundThumbPictureSize
                 },
                 vendor = new
                 {

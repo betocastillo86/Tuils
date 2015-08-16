@@ -37,7 +37,7 @@ namespace Nop.Data.Migrations
             bool runSettings = true;
             bool runTemplatesEmails = false;
             bool runUrls = false;
-            bool runTasks = true;
+            bool runTasks = false;
 
             #region Specification Attribute
 

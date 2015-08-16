@@ -135,6 +135,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                 Accesories: 'Accesorios',
                 IsNew: 'Estado',
                 StateProvinceId: 'Ubicación',
+                StateProvince: 'Ubicación',
                 DetailShipping: 'Cobertura',
                 IncludeSupplies : 'Incluye los insumos',
                 SuppliesValue: 'Valor de Insumos',

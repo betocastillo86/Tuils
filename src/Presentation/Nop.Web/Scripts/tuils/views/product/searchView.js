@@ -18,6 +18,7 @@
             },
             showFilter: function () {
                 $(".filters-main").show();
+                $(".filters-main").focus();
                 window.scrollTo(0, 0);
             },
             render: function () {

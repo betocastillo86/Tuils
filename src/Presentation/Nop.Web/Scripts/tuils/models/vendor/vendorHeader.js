@@ -38,15 +38,15 @@
         },
         saveBackground: function (file)
         {
-            this.saveImage(file, 'backgroundPicture', TuilsConfiguration.media.coverImageMaxSizeResize, TuilsConfiguration.media.coverImageMaxSizeResize);
+            this.saveImage(file, 'backgroundPicture', TuilsConfiguration.media.vendorBackgroundThumbPictureSize, TuilsConfiguration.media.coverImageMaxSizeResize, false);
         },
         saveLogo: function (file) {
-            this.saveImage(file, 'picture', 800, TuilsConfiguration.media.logoImageMaxSizeResize);
+            this.saveImage(file, 'picture', 800, TuilsConfiguration.media.logoImageMaxSizeResize, true);
         },
-        saveImage: function (file, type, sizeMini, sizeBig)
+        saveImage: function (file, type, sizeMini, sizeBig, crop)
         {
             var that = this;
-            this.resizer.photoCrop(file, sizeBig, 'file', function (resizedFile) {
+            this.resizer[crop ? 'photoCrop' : 'photo'](file, sizeBig, 'file', function (resizedFile) {
                 that.resizer.photo(resizedFile, sizeMini, 'dataURL', function (thumbnail) {
                     that.fileModel.set({ src: thumbnail, file: resizedFile });
                     that.fileModel.upload({ saveUrl: '/api/vendors/' + that.get('Id') + '/' + type });

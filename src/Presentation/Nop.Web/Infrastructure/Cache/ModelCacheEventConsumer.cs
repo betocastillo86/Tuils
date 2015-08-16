@@ -808,10 +808,7 @@ namespace Nop.Web.Infrastructure.Cache
              _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
              _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_BIKEREFERENCES);
              _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_SERVICES);
-             _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);
-
-
-             
+             _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);          
         }
         public void HandleEvent(EntityUpdated<Category> eventMessage)
         {
@@ -825,7 +822,7 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
             _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_BIKEREFERENCES);
             _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_SERVICES);
-            _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);   
+            _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);
         }
         public void HandleEvent(EntityDeleted<Category> eventMessage)
         {
