@@ -17,7 +17,7 @@ namespace Nop.Web.Infrastructure
                 .Include("~/Scripts/backbone/tuils.app.js",
                          "~/Scripts/backbone/tuils.router.js",
                          "~/Scripts/underscore.js",
-                         "~/Scripts/backbone.js"
+                         "~/Scripts/backbone.js" 
                 ));
         }
     }
