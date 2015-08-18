@@ -95,7 +95,46 @@ namespace Nop.Web.Framework.Mvc
             }
         }
 
-        
+        public static void CreateJavascriptResourcesFile()
+        {
+            var _localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+            //Se quema idioma en el que debe generar el archivo de resources
+            //ya que desde el global.asax no puede acceder al request
+            int languageId = 2;
+            var Resources = new
+            {
+                account = new
+                {
+                    login = _localizationService.GetResource("account.login", languageId),
+                    newCustomer = _localizationService.GetResource("account.login.newcustomer", languageId)
+                },
+                products = new
+                {
+                    confirmBuy = _localizationService.GetResource("products.confirmBuy", languageId)
+                },
+                loginMessages = new
+                {
+                    publishProduct = _localizationService.GetResource("LoginMessage.PublishProduct", languageId),
+                    showVendor = _localizationService.GetResource("LoginMessage.ShowVendor", languageId),
+                    askQuestion = _localizationService.GetResource("LoginMessage.AskQuestion", languageId)
+                },
+                confirm = new
+                {
+                    myAccount = _localizationService.GetResource("MyAccount.Confirm", languageId),
+                    offices = _localizationService.GetResource("MyOffices.Confirm", languageId),
+                    closeButton = _localizationService.GetResource("Common.CloseButtonDialog", languageId),
+                    userRegistered = _localizationService.GetResource("createuser.ConfirmMessage", languageId)
+                }
+            };
+
+            //Convierte el valor del json a un string
+            var jsonString = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Resources);
+            using (var sw = new System.IO.StreamWriter(HttpContext.Current.Server.MapPath("~/Scripts/tuils/resources.js")))
+            {
+                sw.Write("define([], function(){var TuilsResources = {0}; return TuilsResources; });".Replace("{0}", jsonString));
+                sw.Close();
+            }
+        }
         #endregion
 
     }

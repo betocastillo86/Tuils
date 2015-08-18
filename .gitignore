@@ -210,5 +210,8 @@ src/Presentation/Nop.Web/TempFiles/*
 #JS de configuracion generado automaticamente
 src/Presentation/Nop.Web/Scripts/tuils/configuration.js
 
+#JS de recursos generado automaticamente
+src/Presentation/Nop.Web/Scripts/tuils/resources.js
+
 #JS de compilado de RequireJS
 src/Presentation/Nop.Web/Scripts/tuils/built.js

@@ -119,7 +119,7 @@
         //Basic Tuils
         router: 'tuils/router',
         configuration: 'tuils/configuration',
-        resources: 'tuils/resources?noext=1',
+        resources: 'tuils/resources',
         storage: 'tuils/storage',
         util: 'tuils/utilities',
         //Modelos

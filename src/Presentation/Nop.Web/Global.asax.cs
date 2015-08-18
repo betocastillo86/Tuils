@@ -68,6 +68,7 @@ namespace Nop.Web
 
             //Se genera javascript de configuración
             JavascriptConfiguration.CreateJavascriptConfigurationFile(EngineContext.Current.Resolve<TuilsSettings>());
+            JavascriptConfiguration.CreateJavascriptResourcesFile();
 
 
             //start scheduled tasks

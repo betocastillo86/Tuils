@@ -539,6 +539,7 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             Nop.Web.Framework.Mvc.JavascriptConfiguration.CreateJavascriptConfigurationFile(_tuilsSettings);
+            Nop.Web.Framework.Mvc.JavascriptConfiguration.CreateJavascriptResourcesFile();
             return RedirectToAction("Index", "Home", new { updated = 1 });
         }
 

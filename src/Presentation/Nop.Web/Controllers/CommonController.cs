@@ -816,36 +816,37 @@ namespace Nop.Web.Controllers
         /// Este no se deja en la clas JavascriptConfiguration ya que necesita el request para saber cual es el idioma del usuario
         /// </summary>
         /// <returns></returns>
-        public JavaScriptResult JsResources()
-        {
-            var Resources = new
-            {
-                account = new
-                {
-                    login = _localizationService.GetResource("account.login"),
-                    newCustomer = _localizationService.GetResource("account.login.newcustomer")
-                },
-                products = new
-                {
-                    confirmBuy = _localizationService.GetResource("products.confirmBuy")
-                },
-                loginMessages = new {
-                    publishProduct = _localizationService.GetResource("LoginMessage.PublishProduct"),
-                    showVendor = _localizationService.GetResource("LoginMessage.ShowVendor"),
-                    askQuestion = _localizationService.GetResource("LoginMessage.AskQuestion")
-                },
-                confirm = new {
-                    myAccount = _localizationService.GetResource("MyAccount.Confirm"),
-                    offices = _localizationService.GetResource("MyOffices.Confirm"),
-                    closeButton = _localizationService.GetResource("Common.CloseButtonDialog"),
-                    userRegistered = _localizationService.GetResource("createuser.ConfirmMessage")
-                }
-            };
+        //[OutputCache(Duration=24*60*60)]
+        //public JavaScriptResult JsResources()
+        //{
+        //    var Resources = new
+        //    {
+        //        account = new
+        //        {
+        //            login = _localizationService.GetResource("account.login"),
+        //            newCustomer = _localizationService.GetResource("account.login.newcustomer")
+        //        },
+        //        products = new
+        //        {
+        //            confirmBuy = _localizationService.GetResource("products.confirmBuy")
+        //        },
+        //        loginMessages = new {
+        //            publishProduct = _localizationService.GetResource("LoginMessage.PublishProduct"),
+        //            showVendor = _localizationService.GetResource("LoginMessage.ShowVendor"),
+        //            askQuestion = _localizationService.GetResource("LoginMessage.AskQuestion")
+        //        },
+        //        confirm = new {
+        //            myAccount = _localizationService.GetResource("MyAccount.Confirm"),
+        //            offices = _localizationService.GetResource("MyOffices.Confirm"),
+        //            closeButton = _localizationService.GetResource("Common.CloseButtonDialog"),
+        //            userRegistered = _localizationService.GetResource("createuser.ConfirmMessage")
+        //        }
+        //    };
 
-            //Convierte el valor del json a un string
-            var jsonString = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Resources);
-            return JavaScript("define([], function(){var TuilsResources = {0}; return TuilsResources; });".Replace("{0}", jsonString));
-        }
+        //    //Convierte el valor del json a un string
+        //    var jsonString = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Resources);
+        //    return JavaScript("define([], function(){var TuilsResources = {0}; return TuilsResources; });".Replace("{0}", jsonString));
+        //}
 
         public ActionResult GenericUrl()
         {
