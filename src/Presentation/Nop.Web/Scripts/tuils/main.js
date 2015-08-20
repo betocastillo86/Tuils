@@ -126,6 +126,7 @@
         _authenticationModel: 'tuils/models/_authentication',
         productModel: 'tuils/models/product',
         categoryModel: 'tuils/models/category',
+        baseModel: 'tuils/models/baseModel',
         manufacturerModel: 'tuils/models/manufacturer',
         fileModel: 'tuils/models/file',
         specificationAttributeModel: 'tuils/models/specificationAttribute',

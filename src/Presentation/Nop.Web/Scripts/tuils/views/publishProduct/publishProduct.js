@@ -243,7 +243,8 @@
                 this.viewProductDetail.remove();
                 this.viewSummary.remove();
                 this.showFinish();
-                Backbone.history.navigate("quiero-vender/publicacion-exitosa/" + model.get('Id'));
+                this.trackGAEvent('Publicacion', 'Exitosa');
+                Backbone.history.navigate("quiero-vender/publicacion-exitosa");
                 TuilsStorage.setPublishProduct(undefined);
             },
             save: function () {

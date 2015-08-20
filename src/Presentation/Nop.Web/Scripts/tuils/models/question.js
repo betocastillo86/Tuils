@@ -23,6 +23,8 @@
         {
             var that = this;
             this.set('message_login', TuilsResources.loginMessages.askQuestion);
+            //Agrega la llave de Google Analytics para registrar el evento de registro cuando se realiza una pregunta
+            this.set('ga_action', 'Pregunta');
             this.url = this.baseUrl;
             this.save({}, {
                 beforeSend: function (xhr)

@@ -79,7 +79,8 @@ namespace Nop.Web.Framework.Mvc
                     limitOfSpecialCategories = catalogSettings.LimitOfSpecialCategories,
                     limitDaysOfProductPublished = catalogSettings.LimitDaysOfProductPublished
                 },
-                errorCodes = new {
+                errorCodes = new
+                {
                     publishInvalidCategory = (int)CodeNopException.UserTypeNotAllowedPublishProductType
                 }
             };

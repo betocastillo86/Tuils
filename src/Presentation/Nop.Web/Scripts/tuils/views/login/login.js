@@ -45,7 +45,7 @@
             });
         },
         register: function () {
-            this.trigger("register");
+            this.trigger("register", this.sourceModel);
             this.close();
         },
         validateEnter: function (e) {

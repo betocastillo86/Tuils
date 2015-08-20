@@ -13,6 +13,8 @@
             "click #btnBack": "back"
         },
 
+        sourceModel : undefined,
+
         bindings: {
             //"#txtName": "Name",
             "#txtCompanyName": "CompanyName",
@@ -37,12 +39,13 @@
             else
                 this.$el.fixedDialog(this.dialogBasicOptions);
 
+            if (args.sourceModel)
+                this.sourceModel = args.sourceModel;
+
             require(['text!/Customer/CreateUser'], function (template) {
                 that.template = Handlebars.compile(template);
                 that.render();
             });
-            
-            
         },
         loadModel: function () {
             this.model = new UserRegisterModel();
@@ -68,6 +71,17 @@
                 this.userAuthenticated(model);
             }
         },
+        trackGA: function () {
+            //Valida que tenga source Model
+            if (this.sourceModel && this.sourceModel.get && this.sourceModel.get('ga_action')) {
+                this.trackGAEvent('Registro', this.sourceModel.get('ga_action'));
+            }
+            else {
+                //Si no hay un source model registrado debe mostrar una alerta para programarla
+                //ya que la idea es registrar exactamente desde donde se registró un usuario
+                alert('No hay source model registrado para este evento');
+            }
+        },
         userAuthenticated: function (model) {
             this.trigger("user-authenticated", model);
             this.$el.dialog('close');
@@ -89,6 +103,7 @@
             }
         },
         userCreated: function (model) {
+            this.trackGA();
             this.alert(Resources.confirm.userRegistered);
             this.trigger("user-authenticated", this.model);
             this.close();

@@ -1,5 +1,7 @@
-﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'tuils/views/login/login', 'tuils/views/login/createUser', 'tuils/views/common/topMenuView', 'baseView'],
-    function ($,_, Backbone, Handlebars, LoginView, CreateUserView, TopMenuView, BaseView) {
+﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'tuils/views/login/login', 'tuils/views/login/createUser',
+    'tuils/views/common/topMenuView', 'baseView', 'baseModel'],
+    function ($, _, Backbone, Handlebars, LoginView, CreateUserView,
+        TopMenuView, BaseView, BaseModel) {
     var HeaderView = BaseView.extend({
 
         el: ".header-links",
@@ -12,7 +14,7 @@
 
         events : {
             'click #liLogin': 'showLogin',
-            'click #liRegister': 'showRegister'
+            'click #liRegister': 'loadRegisterForm'
         },
         initialize: function () {
             this.render();
@@ -30,16 +32,22 @@
                 this.viewLogin.show();
             }
         },
-        showRegister : function(){
+        loadRegisterForm : function(e){
+            var sourceModel = new BaseModel();
+            sourceModel.set('ga_action', 'Registro');
+            this.showRegister(sourceModel);
+        },
+        showRegister : function(sourceModel){
             var that = this;
 
             if (!this.viewRegister) {
-                that.viewRegister = new CreateUserView({ $el: that.$('#divRegisterUser') });
+                that.viewRegister = new CreateUserView({ $el: that.$('#divRegisterUser'), sourceModel : sourceModel });
                 that.viewRegister.on("user-authenticated", that.showUserAuthenticated, that);
                 that.viewRegister.on("login", that.showLogin, that);
                 that.viewRegister.on("close-menu-responsive", that.closeMenuResponsive, that);
             }
             else {
+                this.viewRegister.sourceModel = sourceModel;
                 this.viewRegister.show();
             }
         },

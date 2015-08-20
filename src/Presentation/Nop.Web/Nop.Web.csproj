@@ -1100,6 +1100,7 @@
     <Content Include="Scripts\tuils\collections\specificationAttribute.js" />
     <Content Include="Scripts\tuils\extensions\numbers.js" />
     <Content Include="Scripts\tuils\models\address.js" />
+    <Content Include="Scripts\tuils\models\baseModel.js" />
     <Content Include="Scripts\tuils\models\question.js" />
     <Content Include="Scripts\tuils\models\review.js" />
     <Content Include="Scripts\tuils\models\newsletter.js" />

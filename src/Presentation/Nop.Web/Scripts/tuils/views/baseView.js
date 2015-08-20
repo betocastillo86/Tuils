@@ -194,6 +194,18 @@
                 scrollTop: position + addPixels
             }, 500);
         },
+        //Realiza track de algunas acciones de google analytics
+        trackGAEvent: function (category, action, label, value) {
+            //Valida que exista el metodo
+            if (ga)
+            {
+                if (!label)
+                    label = document.location.pathname;
+
+                console.log('Evento trackeado CAT:' + category + ' - ACTION:' + action + ' - LABEL:' + label);
+                ga('send', 'event', category, action, label);
+            }
+        },
         isMobile: function ()
         {
             if (this._isMobile === undefined)

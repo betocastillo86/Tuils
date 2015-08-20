@@ -10,7 +10,8 @@
     paths: {
         //No agrega al bundle
         maps: 'empty:',
-        configuration: 'empty:'
+        configuration: 'empty:',
+        resources : 'empty:'
        //, backbone: 'empty:',
        // underscore: 'empty:',
        // stickit: 'empty:',

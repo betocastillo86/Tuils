@@ -84,6 +84,8 @@
                     var obj = $(e.target);
                     this.disableButtonForSeconds(obj);
                     this.vendorUrl = obj.attr('data-vendorUrl');
+                    //Traquea que un usuario a intentado comprar un producto
+                    this.trackGAEvent('Compra', 'Intento');
                 }
                 
                 this.validateAuthorization();
@@ -99,6 +101,8 @@
             //   // }
             //},
             redirectToVendor: function () {
+                //Traquea que un usuario a intentado comprar un producto
+                this.trackGAEvent('Compra', 'Exitosa');
                 document.location.href = this.vendorUrl;
             }
         });

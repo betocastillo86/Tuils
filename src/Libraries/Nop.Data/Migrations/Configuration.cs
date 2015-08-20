@@ -2253,6 +2253,9 @@ namespace Nop.Data.Migrations
                 settings.Add("tuilssettings.specificationattributeOptionIsNewYes", "1");
                 settings.Add("tuilssettings.specificationattributeOptionIsNewNo", "2");
                 settings.Add("catalogSettings.NumberOfProductsVendorProductsProductPage", "6");
+
+
+                settings.Add("catalogSettings.NumberOfProductsVendorProductsProductPage", "6");
                 
                 
                 

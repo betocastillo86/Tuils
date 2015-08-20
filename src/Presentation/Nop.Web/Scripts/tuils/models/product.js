@@ -145,6 +145,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
             },
             publish: function () {
                 this.set('message_login', TuilsResources.loginMessages.publishProduct);
+                this.set('ga_action', 'Publicacion');
                 this.save();
             }
         });
