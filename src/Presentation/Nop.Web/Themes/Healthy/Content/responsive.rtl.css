@@ -206,7 +206,7 @@
     .order-summary-content .cart .cart-item-row td, .wishlist-content .cart .cart-item-row td { border-bottom: 1px solid #C5C5C5; line-height: 15px; padding: 10px 0; }
     .order-summary-content .coupon-box .discount-coupon-code, .order-summary-content .giftcard-box .gift-card-coupon-code { height: 21px; }
     .shopping-cart-page .cart-footer .totals { width: 40%; padding: 10px 10px 0; }
-    .order-summary-content .checkout-buttons .checkout-button { border: 0 none; text-shadow: none; border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -icab-border-radius: 2px; -khtml-border-radius: 2px; /*background:#7DB72F;*/ }
+    .order-summary-content .checkout-buttons .checkout-button { border: 0 none; text-shadow: none; border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; -icab-border-radius: 3px; -khtml-border-radius: 3px; /*background:#7DB72F;*/ }
     .order-summary-content .cart .cart-item-row td.product, .wishlist-content .cart .cart-item-row td.product { padding: 0 5px; }
     .cart-footer .totals { width: 50%; }
     .order-progress { height: auto; border-bottom: 1px solid #C5C5C5; }

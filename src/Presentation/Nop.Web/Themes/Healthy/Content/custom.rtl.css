@@ -155,7 +155,7 @@ legend { font-size: 15px; font-weight: normal; line-height: 20px; color: #444444
 .opc .active .step-title h2 { color: #444444; }
 .checkout-data .order-completed a { color: #D61323; }
 .pager a:hover { border: 1px solid #C6C6C6; color: #fff; -webkit-transition: all 0.0s; -moz-transition: all 0.0s; -ms-transition: all 0.0s; -o-transition: all 0.0s; transition: all 0.0s; background-color: #969696; -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.1); -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.1); box-shadow: 0 1px 1px rgba(0,0,0,0.1); text-decoration: none; }
-.pager a, .pager span { -moz-user-select: none; background-color: whiteSmoke; border: 1px solid rgba(0, 0, 0, 0.1);border-radius:2px;-webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius:2px;-icab-border-radius:2px;-khtml-border-radius:2px;color: #000000; }
+.pager a, .pager span { -moz-user-select: none; background-color: whiteSmoke; border: 1px solid rgba(0, 0, 0, 0.1);border-radius:2px;-webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius:2px;-icab-border-radius:2px;-khtml-border-radius:2px;color: #000000; }
 .tier-prices .prices-header { background: none repeat scroll 0 0 #3A3A3A; }
 sitemap-page .topic-box .item, .sitemap-page .manufacturer-box .item, .sitemap-page .category-box .item, .sitemap-page .product-box .item { border-bottom: 1px dashed #CDD4E3; }
 .opc .step { background: none repeat-x scroll 0 0 #FFFFFF; }

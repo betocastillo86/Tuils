@@ -61,9 +61,9 @@ Supports Thumbs: true
 }
 .theme-dark .nivo-directionNav a:hover {
     background-color: #333;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }
 .theme-dark a.nivo-nextNav {
 	background-position:-16px 50%;
