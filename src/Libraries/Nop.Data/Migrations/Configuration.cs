@@ -2254,14 +2254,6 @@ namespace Nop.Data.Migrations
                 settings.Add("tuilssettings.specificationattributeOptionIsNewNo", "2");
                 settings.Add("catalogSettings.NumberOfProductsVendorProductsProductPage", "6");
 
-
-                settings.Add("catalogSettings.NumberOfProductsVendorProductsProductPage", "6");
-                
-                
-                
-                
-                
-
                 //Recorre todas las llaves que desea adicional
                 foreach (var setting in settings)
                 {
