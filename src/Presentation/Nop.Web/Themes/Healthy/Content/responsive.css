@@ -70,7 +70,7 @@
     .product-title { height: auto; text-align: center; }
     .product-viewmode, .product-page-size { display: none; }
     .product-sorting { float: none; margin: 0 auto 10px; text-align: center; }
-    .home-page-product-grid .title, .related-products-grid .title, .also-purchased-products-grid .title { text-align: left; font-weight: 700; /*padding: 10px;*/ font-size: 18px; color: #3A5983;}
+    .home-page-product-grid .title, .related-products-grid .title, .also-purchased-products-grid .title, .conte_categories .title{ text-align: left; font-weight: 700; /*padding: 10px;*/ font-size: 18px; color: #3A5983;}
     .product-tags-box .title { text-align: left; }
     .product-grid .product-item .product-title a { font-size: 16px; }
     .product-grid .product-item .prices .actual-price { font-size: 16px; text-align: center; }
