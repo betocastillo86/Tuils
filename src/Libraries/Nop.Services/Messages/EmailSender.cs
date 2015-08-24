@@ -123,6 +123,8 @@ namespace Nop.Services.Messages
                 smtpClient.Host = emailAccount.Host;
                 smtpClient.Port = emailAccount.Port;
                 smtpClient.EnableSsl = emailAccount.EnableSsl;
+
+                
                 if (emailAccount.UseDefaultCredentials)
                     smtpClient.Credentials = CredentialCache.DefaultNetworkCredentials;
                 else

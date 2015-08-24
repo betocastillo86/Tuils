@@ -196,8 +196,9 @@
         },
         //Realiza track de algunas acciones de google analytics
         trackGAEvent: function (category, action, label, value) {
+            var ga = ga;
             //Valida que exista el metodo
-            if (ga)
+            if (ga != undefined)
             {
                 if (!label)
                     label = document.location.pathname;

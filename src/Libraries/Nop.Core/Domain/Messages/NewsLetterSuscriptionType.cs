@@ -21,6 +21,21 @@ namespace Nop.Core.Domain.Messages
         /// <summary>
         /// Suscripción a las noticias de la referencia de moto del usuario
         /// </summary>
-        MyReference = 3
+        MyReference = 3,
+
+        /// <summary>
+        /// Suscripciones de usuarios de tipo tienda
+        /// </summary>
+        User = 4,
+
+        /// <summary>
+        /// Suscripciones de usuarios de tipo tienda
+        /// </summary>
+        Shop = 5,
+
+        /// <summary>
+        /// Suscripciones de usuarios de tipo taller
+        /// </summary>
+        RepairShop = 6
     }
 }

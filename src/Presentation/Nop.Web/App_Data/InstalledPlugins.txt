@@ -29,3 +29,4 @@ Widgets.MegaMenu
 Widgets.ResponsiveSlider
 RequestQuote.PriceMatch
 RequestQuote.ContactUs
+Misc.MailChimp

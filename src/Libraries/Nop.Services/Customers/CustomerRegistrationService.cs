@@ -508,8 +508,27 @@ namespace Nop.Services.Customers
                         _genericAttributeService.SaveAttribute(customer, attribute.Key, attribute.Value);
                     }
 
-                    //Lo suscribe a los newsletters
-                    _newsLetterSubscriptionService.InsertNewsLetterSubscription(customer.Email, true, Core.Domain.Messages.NewsLetterSuscriptionType.General);
+                    //Lo suscribe a los newsletters como usuario general registrado
+                    _newsLetterSubscriptionService.InsertNewsLetterSubscription(customer.Email, true, Core.Domain.Messages.NewsLetterSuscriptionType.General, customer.GetFullName());
+
+                    //Valida cual es el tipo de sucripción adicional por tipo de usuario
+                    var newSuscription = Core.Domain.Messages.NewsLetterSuscriptionType.General;
+                    switch (vendorType)
+                    {
+                        case VendorType.User:
+                            newSuscription = Core.Domain.Messages.NewsLetterSuscriptionType.User;
+                            break;
+                        case VendorType.Market:
+                            newSuscription = Core.Domain.Messages.NewsLetterSuscriptionType.Shop;
+                            break;
+                        case VendorType.RepairShop:
+                            newSuscription = Core.Domain.Messages.NewsLetterSuscriptionType.RepairShop;
+                            break;
+                        default:
+                            break;
+                    }
+                    //suscribe al usuario
+                    _newsLetterSubscriptionService.InsertNewsLetterSubscription(customer.Email, true, newSuscription, customer.GetFullName());
 
                     //Intenta envíar el correo al usuario
                     _workflowMessageService.SendCustomerWelcomeMessage(customer, _workContext.WorkingLanguage.Id, createPassword ? autoPassword : null);

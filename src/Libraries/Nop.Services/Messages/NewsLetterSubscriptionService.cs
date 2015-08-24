@@ -51,7 +51,7 @@ namespace Nop.Services.Messages
             //Publish the subscription event 
             if (newsLetterSubscription.Active)
             {
-                PublishSubscriptionEvent(newsLetterSubscription.Email, true, publishSubscriptionEvents);
+                PublishSubscriptionEvent(newsLetterSubscription.Email, true, publishSubscriptionEvents, newsLetterSubscription.SuscriptionType, newsLetterSubscription.AdditionalInfo);
             }
 
             //Publish event
@@ -85,20 +85,20 @@ namespace Nop.Services.Messages
                 (newsLetterSubscription.Active && (originalSubscription.Email != newsLetterSubscription.Email)))
             {
                 //If the previous entry was false, but this one is true, publish a subscribe.
-                PublishSubscriptionEvent(newsLetterSubscription.Email, true, publishSubscriptionEvents);
+                PublishSubscriptionEvent(newsLetterSubscription.Email, true, publishSubscriptionEvents, newsLetterSubscription.SuscriptionType, newsLetterSubscription.AdditionalInfo);
             }
 
             if ((originalSubscription.Active && newsLetterSubscription.Active) &&
                 (originalSubscription.Email != newsLetterSubscription.Email))
             {
                 //If the two emails are different publish an unsubscribe.
-                PublishSubscriptionEvent(originalSubscription.Email, false, publishSubscriptionEvents);
+                PublishSubscriptionEvent(originalSubscription.Email, false, publishSubscriptionEvents, newsLetterSubscription.SuscriptionType, newsLetterSubscription.AdditionalInfo);
             }
 
             if ((originalSubscription.Active && !newsLetterSubscription.Active))
             {
                 //If the previous entry was true, but this one is false
-                PublishSubscriptionEvent(originalSubscription.Email, false, publishSubscriptionEvents);
+                PublishSubscriptionEvent(originalSubscription.Email, false, publishSubscriptionEvents, newsLetterSubscription.SuscriptionType, newsLetterSubscription.AdditionalInfo);
             }
 
             //Publish event
@@ -117,7 +117,7 @@ namespace Nop.Services.Messages
             _subscriptionRepository.Delete(newsLetterSubscription);
 
             //Publish the unsubscribe event 
-            PublishSubscriptionEvent(newsLetterSubscription.Email, false, publishSubscriptionEvents);
+            PublishSubscriptionEvent(newsLetterSubscription.Email, false, publishSubscriptionEvents, newsLetterSubscription.SuscriptionType, newsLetterSubscription.AdditionalInfo);
 
             //event notification
             _eventPublisher.EntityDeleted(newsLetterSubscription);
@@ -211,17 +211,17 @@ namespace Nop.Services.Messages
         /// <param name="email">The email.</param>
         /// <param name="isSubscribe">if set to <c>true</c> [is subscribe].</param>
         /// <param name="publishSubscriptionEvents">if set to <c>true</c> [publish subscription events].</param>
-        private void PublishSubscriptionEvent(string email, bool isSubscribe, bool publishSubscriptionEvents)
+        private void PublishSubscriptionEvent(string email, bool isSubscribe, bool publishSubscriptionEvents, NewsLetterSuscriptionType suscriptionType, string additionalInfo)
         {
             if (publishSubscriptionEvents)
             {
                 if (isSubscribe)
                 {
-                    _eventPublisher.PublishNewsletterSubscribe(email);
+                    _eventPublisher.PublishNewsletterSubscribe(email, suscriptionType, additionalInfo);
                 }
                 else
                 {
-                    _eventPublisher.PublishNewsletterUnsubscribe(email);
+                    _eventPublisher.PublishNewsletterUnsubscribe(email, suscriptionType);
                 }
             }
         }
@@ -232,7 +232,7 @@ namespace Nop.Services.Messages
         /// <param name="email">correo que se desea actualizar</param>
         /// <param name="type">tipo de notificación</param>
         /// <param name="storeId">Tienda es opcional, por defecto es 1</param>
-        public bool SwitchNewsletterByEmail(string email, bool active, NewsLetterSuscriptionType type, int storeId = 1)
+        public bool SwitchNewsletterByEmail(string email, bool active, NewsLetterSuscriptionType type, string additionalInfo, int storeId = 1)
         {
 
             try
@@ -278,7 +278,7 @@ namespace Nop.Services.Messages
         /// <param name="active">activo</param>
         /// <param name="type">tipo de correo enviado</param>
         /// <param name="storeId">tienda, por defecto es la 1</param>
-        public void InsertNewsLetterSubscription(string email, bool active, NewsLetterSuscriptionType type, int storeId = 1)
+        public void InsertNewsLetterSubscription(string email, bool active, NewsLetterSuscriptionType type, string additionalInfo, int storeId = 1)
         {
             InsertNewsLetterSubscription(new NewsLetterSubscription()
             {
@@ -287,6 +287,7 @@ namespace Nop.Services.Messages
                 Email = email,
                 SuscriptionTypeId = (int)type,
                 StoreId = storeId,
+                AdditionalInfo = additionalInfo,
                 CreatedOnUtc = DateTime.Now
             });
         }
@@ -302,5 +303,7 @@ namespace Nop.Services.Messages
             var news = GetNewsLetterSubscriptionByEmailAndStoreId(email, storeId, type);
             return news != null ? news.Active : false;
         }
+
+
     }
 }

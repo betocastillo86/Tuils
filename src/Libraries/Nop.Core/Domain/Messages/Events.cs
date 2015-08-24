@@ -5,10 +5,14 @@ namespace Nop.Core.Domain.Messages
     public class EmailSubscribedEvent
     {
         private readonly string _email;
+        private readonly NewsLetterSuscriptionType _suscriptionType;
+        private readonly string _additionalInfo;
 
-        public EmailSubscribedEvent(string email)
+        public EmailSubscribedEvent(string email, NewsLetterSuscriptionType suscriptionType, string additionalInfo)
         {
             _email = email;
+            _suscriptionType = suscriptionType;
+            _additionalInfo = additionalInfo;
         }
 
         public string Email
@@ -16,11 +20,21 @@ namespace Nop.Core.Domain.Messages
             get { return _email; }
         }
 
+        public NewsLetterSuscriptionType SuscriptionType
+        {
+            get { return _suscriptionType; }
+        }
+
+        public string AdditionalInfo
+        {
+            get { return _additionalInfo; }
+        }
+
         public bool Equals(EmailSubscribedEvent other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(other._email, _email);
+            return Equals(other._email, _email) && Equals(other._suscriptionType, _suscriptionType);
         }
 
         public override bool Equals(object obj)
@@ -33,17 +47,20 @@ namespace Nop.Core.Domain.Messages
 
         public override int GetHashCode()
         {
-            return (_email != null ? _email.GetHashCode() : 0);
+            return (_email != null ? string.Concat(_email, _suscriptionType).GetHashCode() : 0);
         }
     }
 
     public class EmailUnsubscribedEvent
     {
         private readonly string _email;
+        private readonly NewsLetterSuscriptionType _suscriptionType;
+        
 
-        public EmailUnsubscribedEvent(string email)
+        public EmailUnsubscribedEvent(string email, NewsLetterSuscriptionType suscriptionType)
         {
             _email = email;
+            _suscriptionType = suscriptionType;
         }
 
         public string Email
@@ -51,11 +68,16 @@ namespace Nop.Core.Domain.Messages
             get { return _email; }
         }
 
+        public NewsLetterSuscriptionType SuscriptionType
+        {
+            get { return _suscriptionType; }
+        }
+
         public bool Equals(EmailUnsubscribedEvent other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(other._email, _email);
+            return Equals(other._email, _email) && Equals(other._suscriptionType, _suscriptionType);
         }
 
         public override bool Equals(object obj)
@@ -68,7 +90,7 @@ namespace Nop.Core.Domain.Messages
 
         public override int GetHashCode()
         {
-            return (_email != null ? _email.GetHashCode() : 0);
+            return (_email != null ? string.Concat(_email, _suscriptionType).GetHashCode() : 0);
         }
     }
 

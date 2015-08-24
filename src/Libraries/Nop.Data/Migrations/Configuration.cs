@@ -951,8 +951,11 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("PublishProduct.AccesoriesOptions.Alt", "Accesorios con los que cuenta tu moto");
                 newLocaleStringResources.Add("PublishProduct.Manufacturer.Alt", "Escoge la marca de el producto que deseas vender. Si no está en la lista selecciona \"Otro\"");
                 newLocaleStringResources.Add("createuser.ConfirmMessage", "Has sido registrado correctamente. Tu clave ha sido enviada a tu correo");
-
-                
+                newLocaleStringResources.Add("Plugin.Misc.MailChimp.GeneralSuscriptionListId", "Id de lista general de newsletter");
+                newLocaleStringResources.Add("Plugin.Misc.MailChimp.UserSuscriptionListId", "Id de lista usuarios registrados de tipo usuario");
+                newLocaleStringResources.Add("Plugin.Misc.MailChimp.ShopSuscriptionListId", "Id de lista usuarios registrados de tipo tienda");
+                newLocaleStringResources.Add("Plugin.Misc.MailChimp.RepairShopSuscriptionListId", "Id de lista usuarios registrados de tipo taller");
+                newLocaleStringResources.Add("Plugin.Misc.MailChimp.DoubleOptin", "Habilitar doble opt-in");
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)

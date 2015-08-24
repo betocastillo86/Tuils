@@ -37,6 +37,11 @@ namespace Nop.Core.Domain.Messages
         /// </summary>
         public int SuscriptionTypeId { get; set; }
 
+        /// <summary>
+        /// Informacion adicional de la suscripción
+        /// </summary>
+        public string AdditionalInfo { get; set; }
+
         public NewsLetterSuscriptionType SuscriptionType { get { return (NewsLetterSuscriptionType)SuscriptionTypeId; } }
     }
 }

@@ -23,7 +23,7 @@ namespace Nop.Services.Messages
         /// <param name="active">activo</param>
         /// <param name="type">tipo de correo enviado</param>
         /// <param name="storeId">tienda, por defecto es la 1</param>
-        void InsertNewsLetterSubscription(string email, bool active, NewsLetterSuscriptionType type, int storeId = 1);
+        void InsertNewsLetterSubscription(string email, bool active, NewsLetterSuscriptionType type, string additionalInfo, int storeId = 1);
         
         /// <summary>
         /// Updates a newsletter subscription
@@ -45,7 +45,7 @@ namespace Nop.Services.Messages
         /// <param name="email">correo que se desea actualizar</param>
         /// <param name="type">tipo de notificación</param>
         /// <param name="storeId">Tienda es opcional, por defecto es 1</param>
-        bool SwitchNewsletterByEmail(string email, bool active,  NewsLetterSuscriptionType type, int storeId = 1);
+        bool SwitchNewsletterByEmail(string email, bool active,  NewsLetterSuscriptionType type, string additionalInfo, int storeId = 1);
 
         /// <summary>
         /// Gets a newsletter subscription by newsletter subscription identifier

@@ -11,9 +11,9 @@ namespace Nop.Services.Messages
         /// </summary>
         /// <param name="eventPublisher">The event publisher.</param>
         /// <param name="email">The email.</param>
-        public static void PublishNewsletterSubscribe(this IEventPublisher eventPublisher, string email)
+        public static void PublishNewsletterSubscribe(this IEventPublisher eventPublisher, string email, NewsLetterSuscriptionType suscriptionType, string additionalInfo)
         {
-            eventPublisher.Publish(new EmailSubscribedEvent(email));
+            eventPublisher.Publish(new EmailSubscribedEvent(email, suscriptionType, additionalInfo));
         }
 
         /// <summary>
@@ -21,9 +21,9 @@ namespace Nop.Services.Messages
         /// </summary>
         /// <param name="eventPublisher">The event publisher.</param>
         /// <param name="email">The email.</param>
-        public static void PublishNewsletterUnsubscribe(this IEventPublisher eventPublisher, string email)
+        public static void PublishNewsletterUnsubscribe(this IEventPublisher eventPublisher, string email, NewsLetterSuscriptionType suscriptionType)
         {
-            eventPublisher.Publish(new EmailUnsubscribedEvent(email));
+            eventPublisher.Publish(new EmailUnsubscribedEvent(email, suscriptionType));
         }
 
         public static void EntityTokensAdded<T, U>(this IEventPublisher eventPublisher, T entity, System.Collections.Generic.IList<U> tokens) where T : BaseEntity
