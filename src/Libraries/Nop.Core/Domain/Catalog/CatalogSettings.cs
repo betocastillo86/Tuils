@@ -376,5 +376,15 @@ namespace Nop.Core.Domain.Catalog
         /// Opción por defecto seleccinada por tipo de producto
         /// </summary>
         public int DefaultSpecificationAttributeTopMenu { get; set; }
+        
+        /// <summary>
+        /// Estructura de menus en el home 
+        /// </summary>
+        public string CategoryOrganizationHomeMenu { get; set; }
+
+        /// <summary>
+        /// Numero maximo de columnas que deben haber en el home
+        /// </summary>
+        public int MaxColumnsCategoriesHome { get; set; }
     }
 }

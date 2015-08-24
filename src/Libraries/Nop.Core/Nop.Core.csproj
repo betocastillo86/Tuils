@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComponentModel\WriteLockDisposable.cs" />
+    <Compile Include="Domain\Catalog\CategoryOrganizationHomeMenu.cs" />
     <Compile Include="Domain\Catalog\ManufacturerCategory.cs" />
     <Compile Include="Domain\Catalog\ProductQuestion.cs" />
     <Compile Include="Domain\Catalog\QuestionStatus.cs" />

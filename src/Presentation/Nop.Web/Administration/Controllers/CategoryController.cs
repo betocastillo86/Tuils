@@ -22,6 +22,7 @@ using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Mvc;
 using Nop.Core.Domain.Common;
+using Nop.Services.Configuration;
 
 namespace Nop.Admin.Controllers
 {
@@ -48,6 +49,7 @@ namespace Nop.Admin.Controllers
         private readonly ICustomerActivityService _customerActivityService;
         private readonly IVendorService _vendorService;
         private readonly ISpecificationAttributeService _specificationAttributeService;
+        private readonly ISettingService _settingService;
         private readonly CatalogSettings _catalogSettings;
         private readonly TuilsSettings _tuilsSettings;
 
@@ -75,7 +77,8 @@ namespace Nop.Admin.Controllers
             ICustomerActivityService customerActivityService,
             CatalogSettings catalogSettings,
             TuilsSettings tuilsSettings,
-            ISpecificationAttributeService specificationAttributeService)
+            ISpecificationAttributeService specificationAttributeService,
+            ISettingService settingService)
         {
             this._categoryService = categoryService;
             this._categoryTemplateService = categoryTemplateService;
@@ -98,6 +101,7 @@ namespace Nop.Admin.Controllers
             this._catalogSettings = catalogSettings;
             this._tuilsSettings = tuilsSettings;
             this._specificationAttributeService = specificationAttributeService;
+            this._settingService = settingService;
         }
 
         #endregion
@@ -805,6 +809,44 @@ namespace Nop.Admin.Controllers
             return View(model);
         }
 
+        #endregion
+
+        #region MenuHome
+
+        public ActionResult HomeMenu()
+        {
+            var model = new CategoryOrganizationHomeMenuModel();
+            PrepareHomeMenuModel(model);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult HomeMenu(CategoryOrganizationHomeMenuModel model)
+        {
+            if (!string.IsNullOrEmpty(model.JsonObject))
+            {
+                _catalogSettings.CategoryOrganizationHomeMenu = model.JsonObject;
+                _settingService.SaveSetting(_catalogSettings);
+                _categoryService.RemoveCachePattern();
+            }
+            
+            PrepareHomeMenuModel(model);
+            return View(model);
+        }
+
+        
+
+
+        public void PrepareHomeMenuModel(CategoryOrganizationHomeMenuModel model)
+        {
+            model.AvailableCategories = new List<SelectListItem>();
+            model.MaxColumns = _catalogSettings.MaxColumnsCategoriesHome;
+            model.Organization = _categoryService.GetCategoryOrganizationHomeMenu();
+            var categories = _categoryService.GetAllCategories(showHidden: true);
+            
+            foreach (var c in categories)
+                model.AvailableCategories.Add(new SelectListItem { Text = c.GetFormattedBreadCrumb(categories), Value = c.Id.ToString() });
+        }
         #endregion
     }
 }

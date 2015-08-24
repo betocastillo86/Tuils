@@ -1,11 +1,14 @@
 ﻿
-define(['jquery', 'underscore', 'baseView','jqueryui', 'slide'],
-    function ($, _, BaseView) {
+define(['jquery', 'underscore', 'baseView','tuils/views/home/categoriesHomeView', 'jqueryui', 'slide'],
+    function ($, _, BaseView, CategoriesHomeView) {
 
     var HomeView = BaseView.extend({
         initialize: function (args) {
             this.loadSlider();
+            this.loadCategories();
         },
+
+        viewCategories : undefined,
         loadSlider : function()
         {
             var totalSlides = $(".rslides li").length;
@@ -31,6 +34,12 @@ define(['jquery', 'underscore', 'baseView','jqueryui', 'slide'],
             this.on("window-resized-max", this.resizeBanner, this);
             this.on("window-resized-min", this.resizeBanner, this);
             this.resizeBanner();
+        },
+        loadCategories: function () {
+            if (this.isMobile())
+            {
+                this.viewCategories = new CategoriesHomeView({ el: '.conte_categories' });
+            }
         },
         resizeBanner: function () {
             //Si es pantalla pequeña recalcula el alto del banner

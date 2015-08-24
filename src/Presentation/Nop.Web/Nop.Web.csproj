@@ -295,6 +295,7 @@
     <Compile Include="Models\Boards\SearchModel.cs" />
     <Compile Include="Models\Boards\TopicMoveModel.cs" />
     <Compile Include="Models\Catalog\BackInStockSubscribeModel.cs" />
+    <Compile Include="Models\Catalog\CategoriesHomePageModel.cs" />
     <Compile Include="Models\Catalog\CategorySimpleModel.cs" />
     <Compile Include="Models\Catalog\CompareProductsModel.cs" />
     <Compile Include="Models\Catalog\IComparableModel.cs" />
@@ -1126,6 +1127,7 @@
     <Content Include="Scripts\tuils\views\common\newsletterView.js" />
     <Content Include="Scripts\tuils\views\common\searcherView.js" />
     <Content Include="Scripts\tuils\views\common\topMenuView.js" />
+    <Content Include="Scripts\tuils\views\home\categoriesHomeView.js" />
     <Content Include="Scripts\tuils\views\home\homeView.js" />
     <Content Include="Scripts\tuils\views\login\createUser.js" />
     <Content Include="Scripts\tuils\views\login\login.js" />
@@ -2557,6 +2559,7 @@
     <Content Include="Views\Product\_ProductCreditcard.cshtml" />
     <Content Include="Views\Product\_ProductSupplies.cshtml" />
     <Content Include="Views\Product\ProductsSameVendor.cshtml" />
+    <Content Include="Views\Catalog\CategoriesHomePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

@@ -1,0 +1,150 @@
+﻿@model Nop.Admin.Controllers.CategoryOrganizationHomeMenuModel
+@{
+    ViewBag.Title = "Organizar el menú del home";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@Html.DropDownList("BaseSelect", Model.AvailableCategories, new { style="display:none" })
+<div id="completeContent">
+    @for (int i = 1; i < Model.MaxColumns + 1; i++)
+    {
+        <div class="columnCategory" style="float:left">
+            <h2>Columna @i</h2>
+
+            @{
+        //Filtra por columna y ordena por orden
+        var categoriesCurrentColumn = Model.Organization.Where(c => c.ColumnId == i).OrderBy(c => c.Order);
+
+            }
+
+            @for (int j = 0; j < Model.MaxColumns; j++)
+            {
+                var item = categoriesCurrentColumn.Count() > j ? categoriesCurrentColumn.ElementAt(j) : new Nop.Core.Domain.Catalog.CategoryOrganizationHomeMenu();
+
+                <div class="parentCategory" data-column="@item.ColumnId">
+                    <table>
+                        <tr>
+                            <td class="adminData">
+                                CATEGORIA PADRE Y ORDEN:<br />
+                                <select class="ddlParent" data-column="@item.ColumnId" data-categoryId="@item.CategoryId" style="width: 250px; max-width: 250px; ">
+                                    <option value="-1">-</option>
+                                </select>
+                                <input class="order" type="text" data-column="@item.ColumnId" data-categoryid="@item.CategoryId" data-order="@item.Order" maxlength="2" style="width:15px" value="@item.Order" />
+                                <input class="column" type="text" data-categoryid="@item.CategoryId" value="@i" maxlength="2" style="width:15px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td >
+                                <div>Categorias hijas y orden</div>
+                                <div class="childrenCategories">
+                                    <table>
+                                        @{
+                                            var orderedChildren = item.ChildrenCategories != null ? item.ChildrenCategories.OrderBy(c => c.Order).ToList() : new List<Nop.Core.Domain.Catalog.CategoryOrganizationHomeMenu>();
+                                        }
+                                        @for (int iChildren = 0; iChildren < 10; iChildren++)
+                                        {
+                                            var childItem = orderedChildren.Count > iChildren ? orderedChildren.ElementAt(iChildren) : new Nop.Core.Domain.Catalog.CategoryOrganizationHomeMenu();
+                                            <tr class="adminData">
+                                                <td>
+                                                    <select data-column="@item.ColumnId" data-parent="@item.CategoryId" data-categoryid="@childItem.CategoryId" style="width: 270px; max-width: 270px; ">
+                                                        <option value="-1">-</option>
+                                                    </select>
+                                                    <input class="order" type="text" data-column="@item.ColumnId" data-parent="@item.CategoryId" data-categoryid="@childItem.CategoryId" data-order="@childItem.Order" maxlength="2" style="width:15px" value="@childItem.Order" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+
+                                </div>
+
+
+                            </td>
+
+                        </tr>
+                    </table>
+
+                </div>
+            }
+        </div>
+    }
+
+
+    <div style="clear:both"></div>
+    @using (Html.BeginForm())
+    {
+        <input type="submit" id="btnEnviar" value="Guardar"  />    
+        @Html.HiddenFor(model => model.JsonObject)
+    }
+    
+</div>
+
+<script>
+
+    $(document).on("ready", function () {
+        var optionsBase = $("#BaseSelect option");
+
+        $.each($("#completeContent select"), function (index, element) {
+            var column = $(element).attr("data-column");
+            var category = $(element).attr("data-categoryId");
+            element = $(element);
+            if (category > 0) {
+                loadCategories(element, category);
+            }
+            else {
+                element.one("click", function () {
+                    loadCategories(element, 0);
+                });
+            }
+
+        });
+
+        function loadCategories(element, category)
+        {
+            $.each(optionsBase, function (indexOption, elementOption) {
+                element
+                .append($("<option></option>")
+                .attr("value", elementOption.value)
+                .prop("selected", category == elementOption.value ? "selected" : "")
+                .text(elementOption.text));
+            });
+        }
+
+        $("#btnEnviar").click(validateSubmit);
+
+        function validateSubmit() {
+            
+            var categories = [];
+
+            $.each($(".parentCategory"), function (index, element) {
+                var ddl = $(element).find(".ddlParent");
+                if (ddl.val() > -1)
+                {
+                    var order = $(element).find(".order").val();
+                    var category = ddl.val();
+                    var column = $(element).find(".column").val();
+                    var children = [];
+
+                    $.each($(element).find(".childrenCategories select"), function(childIndex, childElement){
+                        var ddlChild = $(childElement);
+                        if (ddlChild.val() > -1)
+                        {
+                            children.push({
+                                categoryId: ddlChild.val(),
+                                order: $(childElement).parent().find(".order").val()
+                            });
+                        }
+                    });
+
+                    categories.push({
+                        order: order,
+                        categoryId: category,
+                        column: column,
+                        children : children
+                    });
+                }
+
+            });
+
+            $("#JsonObject").val(JSON.stringify(categories));
+        }
+    });
+</script>

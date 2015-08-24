@@ -136,6 +136,7 @@
     <Compile Include="Controllers\BaseAdminController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\AddressAttributeController.cs" />
+    <Compile Include="Models\Catalog\CategoryHomeMenuModel.cs" />
     <Compile Include="Controllers\CustomerAttributeController.cs" />
     <Compile Include="Controllers\CheckoutAttributeController.cs" />
     <Compile Include="Controllers\AffiliateController.cs" />
@@ -430,6 +431,7 @@
     </Content>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Manufacturer\_CreateOrUpdate.Categories.cshtml" />
+    <Content Include="Views\Category\HomeMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Category\Create.cshtml" />

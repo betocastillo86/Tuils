@@ -161,5 +161,16 @@ namespace Nop.Services.Catalog
         /// <param name="categoryId">Categoria que se desea buscar el padre</param>
         /// <returns></returns>
         Category GetRootCategoryByCategoryId(int categoryId);
+
+        /// <summary>
+        /// Retorna el orden en el que se deben mostrar las categorias en el home
+        /// </summary>
+        /// <returns></returns>
+        List<CategoryOrganizationHomeMenu> GetCategoryOrganizationHomeMenu();
+        /// <summary>
+        /// Limpia el cache con el patron de categorias
+        /// </summary>
+        void RemoveCachePattern();
+
     }
 }

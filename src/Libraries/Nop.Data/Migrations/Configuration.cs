@@ -956,6 +956,11 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Plugin.Misc.MailChimp.ShopSuscriptionListId", "Id de lista usuarios registrados de tipo tienda");
                 newLocaleStringResources.Add("Plugin.Misc.MailChimp.RepairShopSuscriptionListId", "Id de lista usuarios registrados de tipo taller");
                 newLocaleStringResources.Add("Plugin.Misc.MailChimp.DoubleOptin", "Habilitar doble opt-in");
+                newLocaleStringResources.Add("Admin.Common.CategoriesHome", "Categorias del menu del home");
+                newLocaleStringResources.Add("Homepage.Categories", "Categorías");
+                
+
+                
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)
@@ -2256,6 +2261,10 @@ namespace Nop.Data.Migrations
                 settings.Add("tuilssettings.specificationattributeOptionIsNewYes", "1");
                 settings.Add("tuilssettings.specificationattributeOptionIsNewNo", "2");
                 settings.Add("catalogSettings.NumberOfProductsVendorProductsProductPage", "6");
+                settings.Add("catalogSettings.CategoryOrganizationHomeMenu", "");
+                settings.Add("catalogSettings.MaxColumnsCategoriesHome", "4");
+                
+                
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var setting in settings)

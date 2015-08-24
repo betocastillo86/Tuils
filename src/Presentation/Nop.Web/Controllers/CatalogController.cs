@@ -925,6 +925,72 @@ namespace Nop.Web.Controllers
 
         #endregion
 
+        #region CategoriesHomePage
+
+        [ChildActionOnly]
+        public ActionResult CategoriesHomePage()
+        {
+            var cacheKey = ModelCacheEventConsumer.CATEGORIES_HOMEPAGE;
+
+            var cachedCategories = _cacheManager.Get(cacheKey, () => {
+
+                var model = new CategoriesHomePageModel();
+                model.Categories = new List<CategoriesHomePageModel.CategoryHomePageModel>();
+
+                ///Consulta las categorias que van en el home y las organiza por columna y despues por orden
+                var categoriesHomePage = _categoryService.GetCategoryOrganizationHomeMenu()
+                    .OrderBy(c => c.ColumnId)
+                    .OrderBy(c => c.Order);
+                
+                int column = 0;
+                foreach (var parentCategory in categoriesHomePage)
+                {
+                    //Consulta el detalle de la categoria
+                    var category = _categoryService.GetCategoryById(parentCategory.CategoryId);
+
+                    //Inicial el modelo con los datos de la categoría
+                    var categoryModel = new CategoriesHomePageModel.CategoryHomePageModel() { 
+                        CategoryId = parentCategory.CategoryId,
+                        Name = category.Name,
+                        SeName = category.GetSeName(),
+                        Order = parentCategory.Order,
+                        PictureModel = category.GetPicture(_localizationService, _mediaSettings, _pictureService),
+                        Column = parentCategory.ColumnId
+                    };
+
+                    
+
+                    //recorre los hijos y los agrega a la lista
+                    categoryModel.ChildrenCategories = new List<CategoriesHomePageModel.CategoryHomePageModel>();
+                    foreach (var childCategory in parentCategory.ChildrenCategories)
+	                {
+		                var child = _categoryService.GetCategoryById(childCategory.CategoryId);
+                        categoryModel.ChildrenCategories.Add(new CategoriesHomePageModel.CategoryHomePageModel(){
+                           CategoryId = child.Id,
+                            Name = child.Name,
+                            SeName = child.GetSeName(),
+                            Order = childCategory.Order 
+                        });
+	                }
+
+
+                    model.Categories.Add(categoryModel);
+                }
+
+
+                model.NumColumns = model.Categories.Max(c => c.Column);
+
+                return model;
+            });
+
+            cachedCategories.IsMobileDevice = Request.Browser.IsMobileDevice;
+
+            return View(cachedCategories);
+        }
+
+        
+        #endregion
+
         #region Manufacturers
 
         [NopHttpsRequirement(SslRequirement.No)]

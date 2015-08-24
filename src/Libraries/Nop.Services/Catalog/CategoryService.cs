@@ -11,6 +11,7 @@ using Nop.Services.Events;
 using Nop.Services.Security;
 using Nop.Services.Stores;
 using Nop.Core.Domain.Common;
+using Newtonsoft.Json.Linq;
 
 namespace Nop.Services.Catalog
 {
@@ -458,6 +459,14 @@ namespace Nop.Services.Catalog
             //event notification
             _eventPublisher.EntityUpdated(category);
         }
+
+        /// <summary>
+        /// Elimina del cache el patrón para poder ser actualizado de nuevo
+        /// </summary>
+        public virtual void RemoveCachePattern()
+        {
+            _cacheManager.RemoveByPattern(CATEGORIES_PATTERN_KEY);
+        }
         
         /// <summary>
         /// Update HasDiscountsApplied property (used for performance optimization)
@@ -724,6 +733,40 @@ namespace Nop.Services.Catalog
                 category = GetCategoryById(category.ParentCategoryId);
             }
             return category;
+        }
+
+        /// <summary>
+        /// Consulta una cadena de configuración y mapea la estructura en un objeto
+        /// </summary>
+        /// <returns></returns>
+        public List<CategoryOrganizationHomeMenu> GetCategoryOrganizationHomeMenu()
+        {
+            var categories = new List<CategoryOrganizationHomeMenu>();
+            if (!string.IsNullOrEmpty(_catalogSettings.CategoryOrganizationHomeMenu))
+            {
+                var jsonArray = JArray.Parse(_catalogSettings.CategoryOrganizationHomeMenu);
+
+                foreach (var jsonObject in jsonArray)
+                {
+                    var category = new CategoryOrganizationHomeMenu();
+                    category.ColumnId = (int)jsonObject["column"];
+                    category.Order = (int)jsonObject["order"];
+                    category.CategoryId = (int)jsonObject["categoryId"];
+                    category.ChildrenCategories = new List<CategoryOrganizationHomeMenu>();
+
+                    foreach (var children in jsonObject["children"].ToArray())
+                    {
+                        category.ChildrenCategories.Add(new CategoryOrganizationHomeMenu() { 
+                            Order = children["order"] != null ? (int)children["order"] : 0,
+                            CategoryId = (int)children["categoryId"]
+                        });
+                    }
+                    categories.Add(category);
+                }
+
+            }
+            
+            return categories;
         }
     }
 }
