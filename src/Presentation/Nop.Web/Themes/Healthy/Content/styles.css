@@ -193,7 +193,7 @@ nav:not(.mm-menu, .nav-category) {display: none;}
 		.nav-menu .mm-menu ul li ul li{border-left: 1px solid #C6CDDB; margin: 0; width: auto;}
 		.nav-menu .mm-menu ul li ul li:first-child{ border: none;}
 			.nav-menu .mm-menu ul li ul li a{color:#3B5A83; font-size: 14px; font-weight: 500; text-transform: uppercase; padding: 11px 15px 12px; display: block; transition:ease all 0.4s;}
-				.nav-menu .mm-menu ul li ul li a:hover, .nav-menu .mm-menu ul li ul li a:focus, .mm-menu ul li ul li a.active{background:#3B5A83 !important; color:#D8DEE6;}
+				.nav-menu .mm-menu ul li ul li a:hover, .nav-menu .mm-menu ul li ul li a:focus, .mm-menu ul li ul li a.active{background:#3B5A83 !important; color:#D8DEE6; border-radius: 0;}
 		.childrenOptions li:first-child{margin-left: 15% !important;}
 
 
@@ -642,6 +642,16 @@ td.fieldname{font-size:12px;}
 .bestsellers{margin-left:auto;margin-right:auto;width:auto;}
 .bestsellers .title{padding:10px 10px 10px 0;margin:0 0 0 10px;font-weight:700;text-transform:uppercase;font-size:1.1em;color:#3a3a3a;text-align:center;}
 
+/*CATEGORIAS*/
+.conte_categories{margin: 20px 0 0;}
+	.col_category{float: left; width: 25%;}
+	.col_category ul{padding: 0 0 5px; margin: 20px 20px 5px 0; list-style: none; border-bottom: solid 3px #fedbd4;}
+	.col_category ul a:hover{text-decoration: underline;}
+	.col_category ul li{padding: 5px 0;}
+	.col_category ul li a{color: #627b9c;}
+	.tit_category{color:#fa4c2a; font-size: 16px; font-weight: 700;}
+	.tit_category span{background:#d8dee6; width: 50px; height: 50px; border-radius: 25px; display:block; float: left;}
+	.tit_category a{color:#fa4c2a; display: block; float: left; padding: 15px 5px;}
 /*MARCAS*/
 .conte_marcas{list-style: none; margin: 0; padding:10px 0; border-bottom: #E5E5E5 solid 1px;}
 	.conte_marcas li{float: left; border-left:solid 1px #E5E5E5; width:calc(16.6% - 1px); cursor:pointer;}

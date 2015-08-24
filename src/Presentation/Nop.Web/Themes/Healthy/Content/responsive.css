@@ -70,7 +70,7 @@
     .product-title { height: auto; text-align: center; }
     .product-viewmode, .product-page-size { display: none; }
     .product-sorting { float: none; margin: 0 auto 10px; text-align: center; }
-    .home-page-product-grid .title, .related-products-grid .title, .also-purchased-products-grid .title { text-align: left; font-weight: 700; /*padding: 10px;*/ font-size: 18px; color: #3A5983;}
+    .home-page-product-grid .title, .related-products-grid .title, .also-purchased-products-grid .title, .conte_categories .title{ text-align: left; font-weight: 700; /*padding: 10px;*/ font-size: 18px; color: #3A5983;}
     .product-tags-box .title { text-align: left; }
     .product-grid .product-item .product-title a { font-size: 16px; }
     .product-grid .product-item .prices .actual-price { font-size: 16px; text-align: center; }
@@ -904,6 +904,10 @@ html.oldie .container { width: 940px; }
     
     /*HOME*/
     .product-grid .product-item .picture, .item .picture{height: 117px;}
+    /*CATEGORIAS*/
+    .tit_category{font-size: 15px;}
+    .tit_category span{width: 40px; height: 40px;}
+    .tit_category a{padding:10px 5px;}
 
     /* PRODUCT DETAILS PAGE */
     .product-details-page .gallery .picture a{height:235px;}
@@ -988,6 +992,12 @@ html.oldie .container { width: 940px; }
     /*HOME*/
     .product-grid .product-item .picture, .item .picture{height: 145px;}
     .product-grid .product-item .picture img{width: 100%; height: auto;}
+    /*CATEGORIAS*/
+    .tit_category{font-size: 16px;}
+    .tit_category span{display: none;}
+    .tit_category a{padding:0; float: none;}
+    .tit_category br{display: none;}
+    .col_category ul li{padding: 3px 0;}
 
     /* PRODUCT DETAILS PAGE */
     .product-details-page .gallery{float: none; width:100%; margin: 0 auto;}
@@ -1062,6 +1072,14 @@ html.oldie .container { width: 940px; }
     .product-grid .product-item .picture, .item .picture{height: 145px;}
     .product-grid .product-item .picture img{width:auto; height: 100%;}
     .product-list .product-item .product-title a{font-size: 14px; text-align: left;}
+    /*CATEGORIAS*/
+    .col_category{width: 100%;}
+    .col_category ul{margin: 0; border-bottom:solid 1px #fedbd4; padding: 5px 0;}
+    .col_category ul li{display: none;}
+    .tit_category{cursor: pointer; font-weight: 500; font-size: 15px;}
+    .tit_category span{display: block;}
+    .tit_category a{float: left; padding: 10px 0 10px 10px;}
+    .tit_category br{display: inherit;}
 
     /* PRODUCT DETAILS PAGE */
     .product-review-list .product-review-item .review-info{float: none; width: 100%;}
