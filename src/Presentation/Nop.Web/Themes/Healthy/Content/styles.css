@@ -57,6 +57,16 @@ input[type="text"]:disabled{background:none repeat scroll 0 0 #FFF;}
 
 [class^="icon-"], [class*=" icon-"] { font-family: 'icomoon'; speak: none; font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; /* Better Font Rendering =========== */ -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
 
+.icon-accesorio:before {content: "\e639";}
+.icon-chaqueta:before {content: "\e63a";}
+.icon-equip:before {content: "\e63b";}
+.icon-gota:before {content: "\e63c";}
+.icon-llanta:before {content: "\e63d";}
+.icon-mas:before {content: "\e63e";}
+.icon-menos:before {content: "\e63f";}
+.icon-mujer:before {content: "\e640";}
+.icon-regalo:before {content: "\e641";}
+.icon-repuesto:before {content: "\e642";}
 .icon-pint:before {content: "\e636";}
 .icon-whatsapp:before {content: "\e637";}
 .icon-ytb:before {content: "\e638";}
@@ -645,13 +655,21 @@ td.fieldname{font-size:12px;}
 /*CATEGORIAS*/
 .conte_categories{margin: 20px 0 0;}
 	.col_category{float: left; width: 25%;}
-	.col_category ul{padding: 0 0 5px; margin: 20px 20px 5px 0; list-style: none; border-bottom: solid 3px #fedbd4;}
-	.col_category ul a:hover{text-decoration: underline;}
-	.col_category ul li{padding: 5px 0;}
-	.col_category ul li a{color: #627b9c;}
+	.box_category{padding: 0 0 5px; margin: 20px 20px 5px 0; list-style: none; border-bottom: solid 3px #fedbd4;}
+	.box_category a:hover{text-decoration: underline;}
+	.box_category li{padding: 5px 0;}
+	.box_category li a{color: #627b9c;}
 	.tit_category{color:#fa4c2a; font-size: 16px; font-weight: 700;}
 	.tit_category span{background:#d8dee6; width: 50px; height: 50px; border-radius: 25px; display:block; float: left;}
 	.tit_category a{color:#fa4c2a; display: block; float: left; padding: 15px 5px;}
+	/*movil*/
+	.tit_category_m{color:#fa4c2a; font-size: 14px; font-weight: 500; padding: 6px 0; border-bottom: 1px solid #fedbd4;}
+	.tit_category_m span{background:#d8dee6; width: 40px; height: 40px; border-radius: 20px; display:block; float: left;}
+	.tit_category_m a{color:#fa4c2a; display: block; float: left; padding: 10px 5px;}
+	.tit_category_m i{font-style: inherit; float: right; font-size: 20px; margin: 10px 0;}
+	.box_category_m{padding: 0 0 5px; margin: 20px 20px 5px 0; list-style: none; border-bottom: solid 3px #fedbd4; display: none;}
+	.box_category_m li{padding: 5px 0;}
+	.box_category_m li a{color: #627b9c;}
 /*MARCAS*/
 .conte_marcas{list-style: none; margin: 0; padding:10px 0; border-bottom: #E5E5E5 solid 1px;}
 	.conte_marcas li{float: left; border-left:solid 1px #E5E5E5; width:calc(16.6% - 1px); cursor:pointer;}
