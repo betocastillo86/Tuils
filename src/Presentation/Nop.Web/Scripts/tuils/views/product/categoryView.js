@@ -8,6 +8,7 @@
             loadControls : function()
             {
                 this.viewFilter = new FilterSearchView({ el: '.content-filter' });
+                this.$('div.product-list').length ? $('.fontawesome-reorder').addClass('active') : $('.fontawesome-th').addClass('active');
             },
             render: function () {
 

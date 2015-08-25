@@ -41,7 +41,7 @@
                 "comparar": 'compare',
                 "customer/changepassword" : "changePassword",
                 "v/:query": "vendor",
-                "c/:categoryName(/:attribute)(/:query)": "category",
+                "c/:categoryName(/*query)": "category",
                 "m/:query":"manufacturer",
                 "p/:query": "product",
                 'entrar' : 'login',

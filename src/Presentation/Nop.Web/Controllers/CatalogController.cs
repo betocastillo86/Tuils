@@ -638,7 +638,10 @@ namespace Nop.Web.Controllers
                 filteredSpecs: alreadyFilteredSpecOptionIds,
                 orderBy: (ProductSortingEnum)command.OrderBy,
                 pageIndex: command.PageNumber - 1,
-                pageSize: command.PageSize);
+                pageSize: command.PageSize,
+                manufacturerId:manufacturerId ?? 0,
+                stateProvinceId: stateProvinceId,
+                specialCategoryId:specialCategoryId);
             model.Products = PrepareProductOverviewModels(products).ToList();
 
             model.PagingFilteringContext.LoadPagedList(products);
@@ -649,28 +652,28 @@ namespace Nop.Web.Controllers
             //specs
             model.PagingFilteringContext.SpecificationFilter.PrepareSpecsFilters(alreadyFilteredSpecOptionIds,
         filterableSpecificationAttributeOptionIds,
-        _specificationAttributeService, _webHelper, _workContext, false);
+        _specificationAttributeService, _webHelper, _workContext, true);
 
             //categories
             model.PagingFilteringContext.CategoryFilter.PrepareCategoriesFilters(alreadyFilteredCategoryIds,
         filterableCategoryIds,
-        _categoryService, _webHelper, _workContext, false);
+        _categoryService, _webHelper, _workContext, true);
 
             //state provinces
             model.PagingFilteringContext.StateProvinceFilter.PrepareStateProvinceFilters(stateProvinceId,
         filterableStateProvinceIds,
-        _stateProvinceService, _webHelper, _workContext, false);
+        _stateProvinceService, _webHelper, _workContext, true);
 
             //manufacturer
             model.PagingFilteringContext.ManufacturerFilter.PrepareFilters(manufacturerId,
         filterableManufacturerIds,
-        _manufacturerService, _webHelper, _workContext, false);
+        _manufacturerService, _webHelper, _workContext, true);
 
 
             //bike references
             model.PagingFilteringContext.BikeReferenceFilter.PrepareFilters(specialCategoryId,
         filterableSpecialCategoryIds,
-        _categoryService, _webHelper, _workContext, false);
+        _categoryService, _webHelper, _workContext, true);
 
             //template
             var templateCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_TEMPLATE_MODEL_KEY, category.CategoryTemplateId);
