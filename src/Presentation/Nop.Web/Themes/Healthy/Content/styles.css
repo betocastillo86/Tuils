@@ -659,12 +659,12 @@ td.fieldname{font-size:12px;}
 	.box_category a:hover{text-decoration: underline;}
 	.box_category li{padding: 5px 0;}
 	.box_category li a{color: #627b9c;}
-	.tit_category{color:#fa4c2a; font-size: 16px; font-weight: 700;}
+	.tit_category{color:#fa4c2a; font-size: 16px; font-weight: 700; text-transform: uppercase;}
 	.tit_category span{background:#d8dee6; width: 50px; height: 50px; border-radius: 25px; display:block; float: left;}
-    .img-cat {width:35px; height:35px; margin:7px ; border-radius:15px}
+    .img-cat {width:35px; height:35px; margin:7px ;}
 	.tit_category a{color:#fa4c2a; display: block; float: left; padding: 15px 5px;}
 	/*movil*/
-	.tit_category_m{color:#fa4c2a; font-size: 14px; font-weight: 500; padding: 6px 10px; border-bottom: 1px solid #fedbd4;}
+	.tit_category_m{color:#fa4c2a; font-size: 14px; font-weight: 500; padding: 6px 10px; border-bottom: 1px solid #fedbd4; text-transform: uppercase;}
 	.tit_category_m span{background:#d8dee6; width: 40px; height: 40px; border-radius: 20px; display:block; float: left;}
 	.tit_category_m a{color:#fa4c2a; display: block; float: left; padding: 10px 5px;}
 	.tit_category_m i{font-style: inherit; float: right; margin: 10px 0;}

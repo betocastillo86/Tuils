@@ -908,6 +908,8 @@ html.oldie .container { width: 940px; }
     .tit_category{font-size: 15px;}
     .tit_category span{width: 40px; height: 40px;}
     .tit_category a{padding:10px 5px;}
+    .img-cat{width: 25px; height: 25px;}
+    .paraMujer{}
 
     /* PRODUCT DETAILS PAGE */
     .product-details-page .gallery .picture a{height:235px;}
