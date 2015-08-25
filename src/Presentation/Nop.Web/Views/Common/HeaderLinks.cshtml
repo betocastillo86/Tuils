@@ -92,11 +92,9 @@
         </script>
     }
     
-    <script id="templateLinksResponsiveMenu" type="text/x-handlebars-template">
+    @*<script id="templateLinksResponsiveMenu" type="text/x-handlebars-template">
 
-        @*<div class="main-anuncia">
-            @Html.ActionLink(T("header.publishproduct").Text, "Index", "Sales", new { }, new { @class = "main-btn_anuncia" })
-        </div>*@
+
 
         @if (Model.IsAuthenticated)
         {
@@ -123,16 +121,16 @@
         }
         <br />
 
-    </script>
+    </script>*@
 
     <script id="templateLoggedInResponsive" type="text/x-handlebars-template">
         <div class="user-li"><a href="@Url.RouteUrl("ControlPanel")"><img src="/Themes/Healthy/Content/images/img_user.svg"/> <p>{{Name}}</p><br/></a></div>
     </script>
 
-    <script id="templateLogoutResponsiveMenu" type="text/x-handlebars">
+    @*<script id="templateLogoutResponsiveMenu" type="text/x-handlebars">
         @if (Model.IsAuthenticated)
         {
             <div><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></div>
         }
-    </script>
+    </script>*@
 </div>

@@ -11,23 +11,7 @@
     Html.AddCssFileParts(ResourceLocation.Foot, "~/Content/simpleMenu/simpleMenu.css");
 }
 
-@helper RenderCategoryLine(CategorySimpleModel category, TopMenuModel.SpecificationAttributeOptionModel attribute)
-{
-    <li>
-        <a title="@category.Name para @attribute.Name" href="@Url.RouteUrl("Category", new { SeName = category.SeName, specsFilter = attribute.SeName, specs = attribute.Id })" class="@(category.Id == Model.SelectedCategory ? "active" : string.Empty)">@category.Name</a>
-        @{
-            if (category.SubCategories.Count > 0)
-            {
-                <ul>
-                    @foreach (var subCategory in category.SubCategories)
-                    {
-                        @RenderCategoryLine(subCategory, attribute)
-                    }
-                </ul>
-            }
-        }
-    </li>
-}
+
 @if (Model.Categories.Count > 0)
 {
     <div id="nav-open-btn" class="headerButtonMenuResponsive">
@@ -46,6 +30,15 @@
                     @:<li class="ico-register">@T("Account.Register")</li>
                     @:<li class="ico-login">@T("Account.Login")</li>
                 }
+
+
+                @foreach (var category in Model.Categories)
+                { 
+                    <li style="display:none">
+                        <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name</a>
+                    </li>
+                }
+
 
                 @if (Model.WishlistEnabled)
                 {
