@@ -107,6 +107,12 @@
             });
         </script>
     }
+    
+    @if (!Model.IsAuthenticated)
+    { 
+        <script id="templateLogin" type="text/x-handlebars-template">@Html.Partial("~/Views/Customer/_Login.cshtml")</script>
+        <script id="templateCreateUser" type="text/x-handlebars-template">@Html.Partial("~/Views/Customer/_CreateUser.cshtml")</script>
+    }
 
     @*<script id="templateLinksResponsiveMenu" type="text/x-handlebars-template">
 

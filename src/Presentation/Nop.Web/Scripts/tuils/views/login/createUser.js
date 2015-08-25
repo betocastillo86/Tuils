@@ -13,6 +13,8 @@
             "click #btnBack": "back"
         },
 
+        template : Handlebars.compile($("#templateCreateUser").html()) ,
+
         sourceModel : undefined,
 
         bindings: {
@@ -29,7 +31,7 @@
         intervalAuthentication: undefined,
         initialize: function (args) {
 
-            var that = this;
+            //var that = this;
             this.loadModel();
 
             if (this.isMobile()) {
@@ -42,10 +44,10 @@
             if (args.sourceModel)
                 this.sourceModel = args.sourceModel;
 
-            require(['text!/Customer/CreateUser'], function (template) {
-                that.template = Handlebars.compile(template);
-                that.render();
-            });
+            //require(['text!/Customer/CreateUser'], function (template) {
+                //that.template = Handlebars.compile(thistemplate);
+                this.render();
+            //});
         },
         loadModel: function () {
             this.model = new UserRegisterModel();

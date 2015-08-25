@@ -14,12 +14,12 @@
             'keypress form input' : 'validateEnter'
         },
 
+        template: Handlebars.compile($("#templateLogin").html()),
+
         bindings: {
             "#txtEmail": "Email",
             "#txtPassword": "Password"
         },
-
-        template : undefined,
 
         initialize: function (args) {
 
@@ -38,11 +38,11 @@
             else
                 this.$el.fixedDialog(this.dialogBasicOptions);
 
-            var that = this;
-            require(['text!/Customer/FastLogin'], function (template) {
-                that.template = Handlebars.compile(template);
-                that.render();
-            });
+            //var that = this;
+            //require(['text!/Customer/FastLogin'], function (template) {
+                //that.template = Handlebars.compile(template);
+                this.render();
+            //});
         },
         register: function () {
             this.trigger("register", this.sourceModel);
