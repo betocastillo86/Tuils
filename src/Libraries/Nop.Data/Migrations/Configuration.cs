@@ -958,6 +958,8 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Plugin.Misc.MailChimp.DoubleOptin", "Habilitar doble opt-in");
                 newLocaleStringResources.Add("Admin.Common.CategoriesHome", "Categorias del menu del home");
                 newLocaleStringResources.Add("Homepage.Categories", "Categorías");
+                newLocaleStringResources.Add("Admin.Catalog.Categories.Fields.NotAllowedToPublishProduct", "No permitir publicar productos con esta categoría");
+                
                 
 
                 

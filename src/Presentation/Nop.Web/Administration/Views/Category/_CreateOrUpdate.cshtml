@@ -236,6 +236,15 @@
         </tr>
         <tr>
             <td class="adminTitle">
+                @Html.NopLabelFor(model => model.NotAllowedToPublishProduct):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(x => x.NotAllowedToPublishProduct)
+                @Html.ValidationMessageFor(model => model.NotAllowedToPublishProduct)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
                 @Html.NopLabelFor(model => model.Published):
             </td>
             <td class="adminData">

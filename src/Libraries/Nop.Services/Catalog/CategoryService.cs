@@ -27,8 +27,9 @@ namespace Nop.Services.Catalog
         /// <remarks>
         /// {0} : category ID
         /// {1} : include subcategories
+        /// {2} : exclude NotAllowedToPublishCategories
         /// </remarks>
-        private const string CATEGORIES_BY_ID_KEY = "Nop.category.id-{0}-{1}";
+        private const string CATEGORIES_BY_ID_KEY = "Nop.category.id-{0}-{1}-{2}";
         /// <summary>
         /// Key for caching
         /// </summary>
@@ -37,8 +38,9 @@ namespace Nop.Services.Catalog
         /// {1} : show hidden records?
         /// {2} : current customer ID
         /// {3} : store ID
+        /// {4} : exclude NotAllowedToPublishCategories
         /// </remarks>
-        private const string CATEGORIES_BY_PARENT_CATEGORY_ID_KEY = "Nop.category.byparent-{0}-{1}-{2}-{3}";
+        private const string CATEGORIES_BY_PARENT_CATEGORY_ID_KEY = "Nop.category.byparent-{0}-{1}-{2}-{3}-{4}";
         /// <summary>
         /// Key for caching
         /// </summary>
@@ -242,9 +244,9 @@ namespace Nop.Services.Catalog
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Category collection</returns>
         public virtual IList<Category> GetAllCategoriesByParentCategoryId(int parentCategoryId,
-            bool showHidden = false, bool includeSubcategories = false)
+            bool showHidden = false, bool includeSubcategories = false, bool excludeNotAllowedToPublishCategories = false)
         {
-            string key = string.Format(CATEGORIES_BY_PARENT_CATEGORY_ID_KEY, parentCategoryId, showHidden, _workContext.CurrentCustomer.Id, _storeContext.CurrentStore.Id);
+            string key = string.Format(CATEGORIES_BY_PARENT_CATEGORY_ID_KEY, parentCategoryId, showHidden, _workContext.CurrentCustomer.Id, _storeContext.CurrentStore.Id, excludeNotAllowedToPublishCategories);
             return _cacheManager.Get(key, () =>
             {
                 var query = _categoryRepository.Table;
@@ -253,6 +255,9 @@ namespace Nop.Services.Catalog
                 query = query.Where(c => c.ParentCategoryId == parentCategoryId);
                 query = query.Where(c => !c.Deleted);
                 query = query.OrderBy(c => c.DisplayOrder);
+
+                if (excludeNotAllowedToPublishCategories)
+                    query = query.Where(c => !c.NotAllowedToPublishProduct);
 
                 if (!showHidden && (!_catalogSettings.IgnoreAcl || !_catalogSettings.IgnoreStoreLimitations))
                 {
@@ -376,17 +381,18 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
         /// <param name="includeSubCategories">Permite cargar las subcategorias o no </param>
+        /// <param name="excludeNotAllowedToPublishCategories">Excluye las categorias para ser publicadas</param>
         /// <returns>Category</returns>
-        public virtual Category GetCategoryById(int categoryId, bool includeSubCategories = false)
+        public virtual Category GetCategoryById(int categoryId, bool includeSubCategories = false, bool excludeNotAllowedToPublishCategories = false)
         {
             if (categoryId == 0)
                 return null;
-            
-            string key = string.Format(CATEGORIES_BY_ID_KEY, categoryId, includeSubCategories);
+
+            string key = string.Format(CATEGORIES_BY_ID_KEY, categoryId, includeSubCategories, excludeNotAllowedToPublishCategories);
             return _cacheManager.Get(key, () => {
                 var category = _categoryRepository.GetById(categoryId);
                 if (category != null && includeSubCategories)
-                    category.SubCategories = GetAllCategoriesByParentCategoryId(categoryId, false);
+                    category.SubCategories = GetAllCategoriesByParentCategoryId(categoryId, false, excludeNotAllowedToPublishCategories: excludeNotAllowedToPublishCategories);
                 return category;
             });
         }

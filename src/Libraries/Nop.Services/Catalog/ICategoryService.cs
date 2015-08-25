@@ -36,7 +36,7 @@ namespace Nop.Services.Catalog
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Category collection</returns>
         IList<Category> GetAllCategoriesByParentCategoryId(int parentCategoryId,
-            bool showHidden = false, bool includeSubcategories = false);
+            bool showHidden = false, bool includeSubcategories = false, bool excludeNotAllowedToPublishCategories = false);
 
         /// <summary>
         /// Actualiza la columna ChildrenCategories de una categoria especifica, o de todas
@@ -57,7 +57,7 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
         /// <returns>Category</returns>
-        Category GetCategoryById(int categoryId, bool includeSubcategories = false);
+        Category GetCategoryById(int categoryId, bool includeSubcategories = false, bool excludeNotAllowedToPublishCategories = false);
 
         /// <summary>
         /// Retorna el listado de Ids de una categoria

@@ -188,6 +188,9 @@ namespace Nop.Admin.Models.Catalog
         }
 
         #endregion
+
+        [NopResourceDisplayName("Admin.Catalog.Categories.Fields.NotAllowedToPublishProduct")]
+        public bool NotAllowedToPublishProduct { get; set; }
     }
 
     public partial class CategoryLocalizedModel : ILocalizedModelLocal

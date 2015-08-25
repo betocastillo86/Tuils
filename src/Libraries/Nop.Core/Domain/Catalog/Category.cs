@@ -126,6 +126,12 @@ namespace Nop.Core.Domain.Catalog
         public int DisplayOrder { get; set; }
 
         /// <summary>
+        /// False: Permite publicar productos de este tipo de categoría
+        /// True: No permite publicar produtos de este tipo de categorua
+        /// </summary>
+        public bool NotAllowedToPublishProduct { get; set; }
+
+        /// <summary>
         /// Gets or sets the date and time of instance creation
         /// </summary>
         public DateTime CreatedOnUtc { get; set; }

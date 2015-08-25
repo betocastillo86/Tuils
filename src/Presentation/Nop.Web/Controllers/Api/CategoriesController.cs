@@ -68,7 +68,7 @@ namespace Nop.Web.Controllers.Api
             var category = _cacheManager.Get(cacheKey, () =>
             {
 
-                var entityCategory = _categoryService.GetCategoryById(id, true);
+                var entityCategory = _categoryService.GetCategoryById(id, true, true);
                 var model = entityCategory.ToModel();
 
                 //Si debe retornar la imagen la carga en el modelo

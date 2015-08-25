@@ -6,9 +6,7 @@
                 'click .tit_category_m' : 'showCategories'
             },
             initialize: function (args) {
-               // this.loadControls();
             },
-
             showCategories: function (obj) {
                 obj = $(obj.target);
 
@@ -18,16 +16,6 @@
                 $('.box_category_m').slideUp('normal');
                 if (show)
                     obj.next().slideDown('normal');
-            },
-            loadControls: function () {
-                this.$el.accordion(
-                {
-                    header: '.tit_category_m',
-                    heightStyle: 'content',
-                    collapsible: true,
-                    active: true,
-                    icons: false
-                });
             }
         });
 
