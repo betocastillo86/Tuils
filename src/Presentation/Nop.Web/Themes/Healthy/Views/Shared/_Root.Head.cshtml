@@ -86,7 +86,12 @@
     <![endif]-->
 </head>
 <body>
-    @RenderBody()
+    <div id="outer-wrap">
+        <div id="inner-wrap">
+            @RenderBody()
+        </div>
+    </div>
+    
     @Html.NopCssFiles(this.Url, ResourceLocation.Foot)
     @Html.NopScripts(this.Url, ResourceLocation.Foot)
     @RenderSection("ScriptsFooter", required: false)

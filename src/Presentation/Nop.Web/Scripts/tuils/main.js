@@ -24,9 +24,13 @@
             deps: ['backbone'],
             exports: 'Backbone'
         },
-        mmenunav: {
-            deps : ['mmenu']
-        }
+        simpleMenu: {
+            deps: ['modernizr'],
+            exports: 'simpleMenu'
+        },
+        //mmenunav: {
+        //    deps : ['mmenu']
+        //}
         //stickit: {
         //    deps: ['backbone']
         //},
@@ -109,10 +113,12 @@
         stickit: 'backbone.stickit.min',
         validations:'backbone-validation.min',
         handlebars: 'handlebars.min',
-        accounting : 'accounting.min',
+        accounting: 'accounting.min',
+        
 
 
-
+        modernizr: 'modernizr.custom.min',
+        simpleMenu: 'simpleMenu',
 
         handlebarsh: 'handelbars.helpers',
         maps: 'http://maps.google.com/maps/api/js?sensor=false',
@@ -160,8 +166,8 @@
         //Tuils Extensions
         extensionNumbers: 'tuils/extensions/numbers',
         //Externas
-        mmenu: 'mmenu/js_umd/jquery.mmenu.umd',
-        mmenunav: 'mmenu/js_umd/addons/jquery.mmenu.navbars.umd',
+        //mmenu: 'mmenu/js_umd/jquery.mmenu.umd',
+        //mmenunav: 'mmenu/js_umd/addons/jquery.mmenu.navbars.umd',
         tagit: 'tag-it',
         wysihtml5: 'wysihtml5-0.3.0.min',
         resize: 'resize',

@@ -382,11 +382,11 @@ namespace Nop.Web.Controllers
             //performance optimization (use "HasShoppingCartItems" property)
             if (customer.HasShoppingCartItems)
             {
-                model.ShoppingCartItems = customer.ShoppingCartItems
-                    .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
-                    .LimitPerStore(_storeContext.CurrentStore.Id)
-                    .ToList()
-                    .GetTotalProducts();
+                //model.ShoppingCartItems = customer.ShoppingCartItems
+                //    .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
+                //    .LimitPerStore(_storeContext.CurrentStore.Id)
+                //    .ToList()
+                //    .GetTotalProducts();
                 model.WishlistItems = customer.ShoppingCartItems
                     .Where(sci => sci.ShoppingCartType == ShoppingCartType.Wishlist)
                     .LimitPerStore(_storeContext.CurrentStore.Id)

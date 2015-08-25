@@ -37,5 +37,13 @@ namespace Nop.Web.Models.Catalog
             public string SeName { get; set; }
         }
         #endregion
+
+        public bool WishlistEnabled { get; set; }
+
+        public bool IsAuthenticated { get; set; }
+
+        public int WishlistItems { get; set; }
+
+        public string CustomerEmailUsername { get; set; }
     }
 }

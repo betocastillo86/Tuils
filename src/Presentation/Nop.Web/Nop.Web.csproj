@@ -946,6 +946,7 @@
     <Content Include="Content\Roxy_Fileman\lang\de.json" />
     <Content Include="Content\Roxy_Fileman\lang\en.json" />
     <Content Include="Content\Roxy_Fileman\LICENSE.txt" />
+    <Content Include="Content\simpleMenu\simpleMenu.css" />
     <Content Include="Content\tinymce\license.txt" />
     <Content Include="Content\tinymce\plugins\advlist\plugin.min.js" />
     <Content Include="Content\tinymce\plugins\anchor\plugin.min.js" />
@@ -1089,8 +1090,10 @@
     <Content Include="Scripts\mmenu\js_umd\jquery.mmenu.umd.js" />
     <Content Include="Scripts\mmenu\js_umd\_inc\affix.js" />
     <Content Include="Scripts\mmenu\js_umd\_inc\prefix.js" />
+    <Content Include="Scripts\modernizr.custom.min.js" />
     <Content Include="Scripts\owl.carousel.js" />
     <Content Include="Scripts\owl.carousel.min.js" />
+    <Content Include="Scripts\simpleMenu.js" />
     <Content Include="Scripts\tuils\build.js" />
     <Content Include="Scripts\tuils\collections\addresses.js" />
     <Content Include="Scripts\tuils\collections\categories.js" />

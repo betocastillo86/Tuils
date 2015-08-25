@@ -62,8 +62,8 @@
             if (this.isMinSize())
             {
                 var templateLoggedInResponsive = Handlebars.compile(this.$("#templateLoggedInResponsive").html());
-                $(".main-registro").parent().prepend(templateLoggedInResponsive(model.toJSON()));
-                $(".main-registro").hide();
+                $("#nav ul").parent().prepend(templateLoggedInResponsive(model.toJSON()));
+                $("#nav ul").hide();
             }
         },
         loadTopMenu: function () {
