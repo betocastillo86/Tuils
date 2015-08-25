@@ -9,15 +9,15 @@
                 this.render();
             },
             loadControls: function () {
-                this.$('.footer div > h3').append('<span class="fontawesome-plus"></span>');
+                this.$('.footer div > h3').append('<span class="icon-mas"></span>');
             },
             showFooter: function (obj) {
                 obj = obj.target;
-                if ($(obj).find('span').attr('class') == 'fontawesome-minus') {
-                    $(obj).find('span').addClass('fontawesome-plus').removeClass('fontawesome-minus').parents('.footer-menu').find('ul.footer-list').slideToggle();
+                if ($(obj).find('span').attr('class') == 'icon-menos') {
+                    $(obj).find('span').addClass('icon-mas').removeClass('icon-menos').parents('.footer-menu').find('ul.footer-list').slideToggle();
                 }
                 else {
-                    $(obj).find('span').addClass('fontawesome-minus').removeClass('fontawesome-plus').parents('.footer-menu').find('ul.footer-list').slideToggle();
+                    $(obj).find('span').addClass('icon-menos').removeClass('icon-mas').parents('.footer-menu').find('ul.footer-list').slideToggle();
                 }
             },
             render: function () {
