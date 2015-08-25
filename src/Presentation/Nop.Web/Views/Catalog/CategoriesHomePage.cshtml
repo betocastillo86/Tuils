@@ -16,7 +16,7 @@
                 @foreach (var parent in Model.Categories.Where(c => c.Column == i + 1))
                 {
                     <ul class="box_category">
-                        <h4 class="tit_category"><span class="icon-moto"></span><a href="@Url.Action("Category", "Catalog", new { seName = parent.SeName })">@parent.Name</a><br /></h4>
+                        <h4 class="tit_category"><span><img class="img-cat" src="@parent.PictureModel.ImageUrl" /></span><a href="@Url.Action("Category", "Catalog", new { seName = parent.SeName })">@parent.Name</a><br /></h4>
                         @foreach (var children in parent.ChildrenCategories)
                         {
                             <li><a href="@Url.Action("Category", "Catalog", new { seName = children.SeName })">@children.Name</a></li>
@@ -36,7 +36,7 @@ else
         <h3 class="title">@T("Homepage.Categories")</h3>
         @foreach (var category in Model.Categories)
         {
-            <h4 class="tit_category_m"><span></span><a href="@Url.Action("Category", "Catalog", new { seName = category.SeName })">@category.Name</a><i class="icon-mas"></i><br /></h4>
+            <h4 class="tit_category_m"><span><img class="img-cat" src="@category.PictureModel.ImageUrl" /></span><a href="@Url.Action("Category", "Catalog", new { seName = category.SeName })">@category.Name</a><i class="icon-mas"></i><br /></h4>
             <ul class="box_category_m">
                 @foreach (var children in category.ChildrenCategories)
                 {
