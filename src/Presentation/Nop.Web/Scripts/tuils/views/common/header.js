@@ -1,7 +1,7 @@
 ﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'tuils/views/login/login', 'tuils/views/login/createUser',
-    'tuils/views/common/topMenuView', 'baseView', 'baseModel'],
+    'baseView', 'baseModel', 'simpleMenu'],
     function ($, _, Backbone, Handlebars, LoginView, CreateUserView,
-        TopMenuView, BaseView, BaseModel) {
+        BaseView, BaseModel) {
     var HeaderView = BaseView.extend({
 
         el: ".header-links",
@@ -66,16 +66,16 @@
                 $("#nav ul").hide();
             }
         },
-        loadTopMenu: function () {
-            this.viewTopMenu = new TopMenuView({ el: '.header-menu' });
-            this.viewTopMenu.on("register", this.showRegister, this);
-            this.viewTopMenu.on("login", this.showLogin, this);
-        },
+        //loadTopMenu: function () {
+        //    this.viewTopMenu = new TopMenuView({ el: '.header-menu' });
+        //    this.viewTopMenu.on("register", this.showRegister, this);
+        //    this.viewTopMenu.on("login", this.showLogin, this);
+        //},
         closeMenuResponsive: function () {
             this.viewTopMenu.hideMenuResponsive();
         },
         loadControls: function () {
-            this.loadTopMenu();
+            //this.loadTopMenu();
         },
         render: function () {
             this.loadControls();

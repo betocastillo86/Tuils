@@ -379,6 +379,23 @@ namespace Nop.Web.Controllers
                 AlertMessage = alertMessage,
                 UnansweredQuestions = _workContext.CurrentVendor != null ? _workContext.CurrentVendor.UnansweredQuestions : 0
             };
+
+
+            //Carga todas las categorias que van en el menú principal
+            #region Categories
+            var customerRolesIds = _workContext.CurrentCustomer.CustomerRoles
+                .Where(cr => cr.Active).Select(cr => cr.Id).ToList();
+
+            string categoryCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_MENU_MODEL_KEY, _workContext.WorkingLanguage.Id,
+                string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id);
+            var cachedCategoriesModel = _cacheManager.Get(categoryCacheKey, () =>
+                PrepareCategoryTopMenuSimpleModels().ToList()
+            );
+
+            model.Categories = cachedCategoriesModel;
+            #endregion
+            
+
             //performance optimization (use "HasShoppingCartItems" property)
             if (customer.HasShoppingCartItems)
             {
@@ -396,6 +413,27 @@ namespace Nop.Web.Controllers
 
             return PartialView(model);
         }
+
+        [NonAction]
+        protected virtual IList<CategorySimpleModel> PrepareCategoryTopMenuSimpleModels()
+        {
+            var result = new List<CategorySimpleModel>();
+
+            foreach (var category in _categoryService.GetAllCategories(includeInTopMenu: true))
+            {
+                var categoryModel = new CategorySimpleModel
+                {
+                    Id = category.Id,
+                    Name = category.GetLocalized(x => x.Name),
+                    SeName = category.GetSeName()
+                };
+                result.Add(categoryModel);
+            }
+
+            return result;
+        }
+
+
         [ChildActionOnly]
         public ActionResult AdminHeaderLinks()
         {

@@ -328,33 +328,7 @@ namespace Nop.Web.Controllers
             });
         }
 
-        /// <summary>
-        /// Prepare category (simple) models
-        /// </summary>
-        /// <param name="rootCategoryId">Root category identifier</param>
-        /// <param name="loadSubCategoriesForIds">Load subcategories only for the specified category IDs; pass null to load subcategories for all categories</param>
-        /// <param name="level">Current level</param>
-        /// <param name="levelsToLoad">A value indicating how many levels to load (max)</param>
-        /// <param name="validateIncludeInTopMenu">A value indicating whether we should validate "include in top menu" property</param>
-        /// <returns>Category models</returns>
-        [NonAction]
-        protected virtual IList<CategorySimpleModel> PrepareCategoryTopMenuSimpleModels()
-        {
-            var result = new List<CategorySimpleModel>();
-
-            foreach (var category in _categoryService.GetAllCategories(includeInTopMenu: true))
-            {
-                var categoryModel = new CategorySimpleModel
-                {
-                    Id = category.Id,
-                    Name = category.GetLocalized(x => x.Name),
-                    SeName = category.GetSeName()
-                };
-                result.Add(categoryModel);
-            }
-
-            return result;
-        }
+       
 
 
         [NonAction]
@@ -791,75 +765,106 @@ namespace Nop.Web.Controllers
             return PartialView(new TopMenuModel());
         }
 
-        [ChildActionOnly]
-        public ActionResult TopMenuNavigation()
-        {
-            var customerRolesIds = _workContext.CurrentCustomer.CustomerRoles
-                .Where(cr => cr.Active).Select(cr => cr.Id).ToList();
+        #region TopNavigation Menu ELIMINADO
+        ////////[ChildActionOnly]
+        ////////public ActionResult TopMenuNavigation()
+        ////////{
+        ////////    var customerRolesIds = _workContext.CurrentCustomer.CustomerRoles
+        ////////        .Where(cr => cr.Active).Select(cr => cr.Id).ToList();
 
-            //Carga todas las categorias que van en el menú principal
-            string categoryCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_MENU_MODEL_KEY, _workContext.WorkingLanguage.Id,
-                string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id);
-            var cachedCategoriesModel = _cacheManager.Get(categoryCacheKey, () =>
-                PrepareCategoryTopMenuSimpleModels().ToList()
-            );
+        ////////    //Carga todas las categorias que van en el menú principal
+        ////////    string categoryCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_MENU_MODEL_KEY, _workContext.WorkingLanguage.Id,
+        ////////        string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id);
+        ////////    var cachedCategoriesModel = _cacheManager.Get(categoryCacheKey, () =>
+        ////////        PrepareCategoryTopMenuSimpleModels().ToList()
+        ////////    );
 
-            //Consulta los atributos que sirven como filro para las categorias en el home
-            string attributesCacheKey = string.Format(ModelCacheEventConsumer.TOPIC_TOP_MENU_ATTRIBUTES_KEY);
-            var cachedMenuAttributes = _cacheManager.Get(attributesCacheKey, () =>
-                {
-                    var attributes = new List<TopMenuModel.SpecificationAttributeOptionModel>();
-                    foreach (var attribute in _specificationAttributeService
-                    .GetSpecificationAttributeOptionsBySpecificationAttribute(_tuilsSettings.specificationAttributeBikeType))
-                    {
-                        attributes.Add(new TopMenuModel.SpecificationAttributeOptionModel()
-                        {
-                            Id = attribute.Id,
-                            Name = attribute.Name,
-                            SeName = attribute.GetSeName(_workContext.WorkingLanguage.Id, ensureTwoPublishedLanguages: false)
-                        });
-                    }
-                    return attributes;
-                }
+        ////////    //Consulta los atributos que sirven como filro para las categorias en el home
+        ////////    string attributesCacheKey = string.Format(ModelCacheEventConsumer.TOPIC_TOP_MENU_ATTRIBUTES_KEY);
+        ////////    var cachedMenuAttributes = _cacheManager.Get(attributesCacheKey, () =>
+        ////////    {
+        ////////        var attributes = new List<TopMenuModel.SpecificationAttributeOptionModel>();
+        ////////        foreach (var attribute in _specificationAttributeService
+        ////////        .GetSpecificationAttributeOptionsBySpecificationAttribute(_tuilsSettings.specificationAttributeBikeType))
+        ////////        {
+        ////////            attributes.Add(new TopMenuModel.SpecificationAttributeOptionModel()
+        ////////            {
+        ////////                Id = attribute.Id,
+        ////////                Name = attribute.Name,
+        ////////                SeName = attribute.GetSeName(_workContext.WorkingLanguage.Id, ensureTwoPublishedLanguages: false)
+        ////////            });
+        ////////        }
+        ////////        return attributes;
+        ////////    }
 
-            );
+        ////////    );
 
-            int idSelectedAttribute = 0;
-            //Valida en que categoría se encuentra para así seleccionar el attributo especificado en el menú
-            if (RouteData.Values["specsFilter"] != null)
-            {
-                var attributeSelected = cachedMenuAttributes.FirstOrDefault(a => a.SeName.Equals(RouteData.Values["specsFilter"]));
-                idSelectedAttribute = attributeSelected != null ? attributeSelected.Id : 0;
-            }
+        ////////    int idSelectedAttribute = 0;
+        ////////    //Valida en que categoría se encuentra para así seleccionar el attributo especificado en el menú
+        ////////    if (RouteData.Values["specsFilter"] != null)
+        ////////    {
+        ////////        var attributeSelected = cachedMenuAttributes.FirstOrDefault(a => a.SeName.Equals(RouteData.Values["specsFilter"]));
+        ////////        idSelectedAttribute = attributeSelected != null ? attributeSelected.Id : 0;
+        ////////    }
 
-            var customer = _workContext.CurrentCustomer;
-            var model = new TopMenuModel
-            {
-                Categories = cachedCategoriesModel,
-                Topics = new List<TopMenuModel.TopMenuTopicModel>(),
-                SpecificationAttributesFilter = cachedMenuAttributes,
-                //Si no viene filtrado por atributo tipo moto, selecciona la primera de la lista
-                SelectedSpecificationAttribute = idSelectedAttribute > 0 ? idSelectedAttribute : _catalogSettings.DefaultSpecificationAttributeTopMenu,
-                SelectedCategory = RouteData.Values["categoryId"] != null ? (int)RouteData.Values["categoryId"] : 0,
-                IsAuthenticated = customer.IsRegistered(),
-                CustomerEmailUsername = customer.IsRegistered() ? (customer.GetFullName()) : "",
-                WishlistEnabled = _permissionService.Authorize(StandardPermissionProvider.EnableWishlist) && !_workContext.CurrentCustomer.IsGuest() ,
-            };
+        ////////    var customer = _workContext.CurrentCustomer;
+        ////////    var model = new TopMenuModel
+        ////////    {
+        ////////        Categories = cachedCategoriesModel,
+        ////////        Topics = new List<TopMenuModel.TopMenuTopicModel>(),
+        ////////        SpecificationAttributesFilter = cachedMenuAttributes,
+        ////////        //Si no viene filtrado por atributo tipo moto, selecciona la primera de la lista
+        ////////        SelectedSpecificationAttribute = idSelectedAttribute > 0 ? idSelectedAttribute : _catalogSettings.DefaultSpecificationAttributeTopMenu,
+        ////////        SelectedCategory = RouteData.Values["categoryId"] != null ? (int)RouteData.Values["categoryId"] : 0,
+        ////////        IsAuthenticated = customer.IsRegistered(),
+        ////////        CustomerEmailUsername = customer.IsRegistered() ? (customer.GetFullName()) : "",
+        ////////        WishlistEnabled = _permissionService.Authorize(StandardPermissionProvider.EnableWishlist) && !_workContext.CurrentCustomer.IsGuest(),
+        ////////    };
 
-            //performance optimization (use "HasShoppingCartItems" property)
-            if (customer.HasShoppingCartItems)
-            {
-                model.WishlistItems = customer.ShoppingCartItems
-                    .Where(sci => sci.ShoppingCartType == ShoppingCartType.Wishlist)
-                    .LimitPerStore(_storeContext.CurrentStore.Id)
-                    .ToList()
-                    .GetTotalProducts();
-            }
+        ////////    //performance optimization (use "HasShoppingCartItems" property)
+        ////////    if (customer.HasShoppingCartItems)
+        ////////    {
+        ////////        model.WishlistItems = customer.ShoppingCartItems
+        ////////            .Where(sci => sci.ShoppingCartType == ShoppingCartType.Wishlist)
+        ////////            .LimitPerStore(_storeContext.CurrentStore.Id)
+        ////////            .ToList()
+        ////////            .GetTotalProducts();
+        ////////    }
 
 
 
-            return PartialView(model);
-        }
+        ////////    return PartialView(model);
+        ////////}
+
+        /////////// <summary>
+        /////////// Prepare category (simple) models
+        /////////// </summary>
+        /////////// <param name="rootCategoryId">Root category identifier</param>
+        /////////// <param name="loadSubCategoriesForIds">Load subcategories only for the specified category IDs; pass null to load subcategories for all categories</param>
+        /////////// <param name="level">Current level</param>
+        /////////// <param name="levelsToLoad">A value indicating how many levels to load (max)</param>
+        /////////// <param name="validateIncludeInTopMenu">A value indicating whether we should validate "include in top menu" property</param>
+        /////////// <returns>Category models</returns>
+        ////////[NonAction]
+        ////////protected virtual IList<CategorySimpleModel> PrepareCategoryTopMenuSimpleModels()
+        ////////{
+        ////////    var result = new List<CategorySimpleModel>();
+
+        ////////    foreach (var category in _categoryService.GetAllCategories(includeInTopMenu: true))
+        ////////    {
+        ////////        var categoryModel = new CategorySimpleModel
+        ////////        {
+        ////////            Id = category.Id,
+        ////////            Name = category.GetLocalized(x => x.Name),
+        ////////            SeName = category.GetSeName()
+        ////////        };
+        ////////        result.Add(categoryModel);
+        ////////    }
+
+        ////////    return result;
+        ////////}
+        #endregion
+        
 
 
         [ChildActionOnly]

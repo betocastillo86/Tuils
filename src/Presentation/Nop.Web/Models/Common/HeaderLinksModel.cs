@@ -1,4 +1,6 @@
 ﻿using Nop.Web.Framework.Mvc;
+using Nop.Web.Models.Catalog;
+using System.Collections.Generic;
 
 namespace Nop.Web.Models.Common
 {
@@ -18,5 +20,8 @@ namespace Nop.Web.Models.Common
         public string AlertMessage { get; set; }
 
         public int UnansweredQuestions { get; set; }
+
+        public List<CategorySimpleModel> Categories { get; set; }
+
     }
 }
