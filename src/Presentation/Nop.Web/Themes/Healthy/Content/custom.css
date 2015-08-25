@@ -175,7 +175,6 @@ a.facebook, a.twitter, a.youtube{color: #FFF; font-size: 25px; text-align: cente
 .footer .topic-html-content {padding-top: 10px; }
 .footer-menu-1 { margin-left: 15px; float: left; text-align: left; }
 .footer-menu { float: left; margin-left: 70px; text-align: left; }
-.footer-menu h3, .footer-menu-1 h3 { font-size: 16px; }
 .footer-menu ul, .footer-menu-1 ul { margin: 15px 0; padding: 0; list-style: none outside none; }
 .footer-menu ul li, .footer-menu-1 ul { line-height: 150%; }
 .block-newsletter { margin-top: 20px; }
@@ -252,7 +251,8 @@ ul.top-menu { margin: 0;}
 .sub-category-grid .sub-category-item, .manufacturer-grid .manufacturer-item { height: 240px; width: 180px; }
 .product-details-page .add-to-cart .qty-input { height: 27px; text-align: center; }
 .order-summary-content .cart .cart-item-row .qty-input, .wishlist-content .cart .cart-item-row .qty-input { text-align: center; }
-.footer-menu h3, .footer-menu-1 h3 {color: #617A9B; font-family: 'Ubuntu', sans-serif; font-size: 17px; font-weight: normal; line-height: 23px; text-transform: uppercase; }
+.footer-menu h3, .footer-menu-1 h3 {color: #617A9B; font-family: 'Ubuntu', sans-serif; font-size: 18px; font-weight: normal; line-height: 23px; text-transform: uppercase; position: relative;}
+.footer-menu h3 .icon-mas, .footer-menu h3 .icon-menos{display: none;}
 .master-wrapper-main .center-2 { padding-top: 0; }
 .block-newsletter { margin-top: 5px; }
 .block-newsletter .buttons {float: right;margin-left: 5px;margin-top: 0;}
@@ -299,7 +299,6 @@ h2, h3 { font-size: 14px; }
 .product-details-page .stock{font-size: 16px; color: #525259;}
 .product-details-page .stock b{font-weight: 500;}
 .product-viewmode { margin: -5px 0 0; }
-.footer-menu h3, .footer-menu-1 h3 {font-size: 1.3em; }
 
 #social p {margin:0 }
 #social p > a {width:auto;height:auto;}

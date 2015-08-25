@@ -663,12 +663,12 @@ td.fieldname{font-size:12px;}
 	.tit_category span{background:#d8dee6; width: 50px; height: 50px; border-radius: 25px; display:block; float: left;}
 	.tit_category a{color:#fa4c2a; display: block; float: left; padding: 15px 5px;}
 	/*movil*/
-	.tit_category_m{color:#fa4c2a; font-size: 14px; font-weight: 500; padding: 6px 0; border-bottom: 1px solid #fedbd4;}
+	.tit_category_m{color:#fa4c2a; font-size: 14px; font-weight: 500; padding: 6px 10px; border-bottom: 1px solid #fedbd4;}
 	.tit_category_m span{background:#d8dee6; width: 40px; height: 40px; border-radius: 20px; display:block; float: left;}
 	.tit_category_m a{color:#fa4c2a; display: block; float: left; padding: 10px 5px;}
-	.tit_category_m i{font-style: inherit; float: right; font-size: 20px; margin: 10px 0;}
-	.box_category_m{padding: 0 0 5px; margin: 20px 20px 5px 0; list-style: none; border-bottom: solid 3px #fedbd4; display: none;}
-	.box_category_m li{padding: 5px 0;}
+	.tit_category_m i{font-style: inherit; float: right; margin: 10px 0;}
+	.box_category_m{padding: 0 0 5px; margin:0; list-style: none; display: none;}
+	.box_category_m li{padding: 7px;}
 	.box_category_m li a{color: #627b9c;}
 /*MARCAS*/
 .conte_marcas{list-style: none; margin: 0; padding:10px 0; border-bottom: #E5E5E5 solid 1px;}

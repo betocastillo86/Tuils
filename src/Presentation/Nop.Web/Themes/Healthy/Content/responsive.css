@@ -254,8 +254,9 @@
         .footer-menu ul.footer-list li { /*padding: 5px 0;*/ }
     .footer .footer-menu, .footer .footer-menu-1 { text-align: left; }
     .footer-menu.last > h3 { display: none; }
-    .footer-menu.last > div#social { margin-top: 30px; }
-    .footer-menu h3, .footer-menu-1 h3 { border-bottom: 1px solid #DDDDDD; display: block; padding: 5px 0; margin-left: 5px; cursor: pointer; }
+    .footer-menu.last > div#social { margin-top: 30px;}
+    .footer-menu h3, .footer-menu-1 h3 { border-bottom: 1px solid #DDDDDD; display: block; padding: 5px 0; margin-left: 5px; cursor: pointer;}
+    .footer-menu h3 .icon-mas, .footer-menu h3 .icon-menos{ display: inline-block; position: absolute; right: 10px; font-size: 16px; padding: 3px 0 0;}
     /*@toogle*/
 
     .estimate-shipping { height: auto; }
@@ -475,7 +476,6 @@
         .footer .footer-menu:nth-child(4) { margin-left:20px; width: 289px;}
 
     /*#social ul li { padding-left: 10px; }*/
-    /*.block .listbox span.fontawesome-plus, .block .listbox span.fontawesome-minus, .footer-menu span.fontawesome-plus, .footer-menu span.fontawesome-minus{display:none; }*/
     .fontawesome-plus, .fontawesome-minus { display: none; }
     .footer-menu ul.footer-list li { padding: 5px; }
     ul.top-menu { margin-left: 5px; }
