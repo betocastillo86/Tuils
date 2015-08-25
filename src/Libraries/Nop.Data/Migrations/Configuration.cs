@@ -959,6 +959,8 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Common.CategoriesHome", "Categorias del menu del home");
                 newLocaleStringResources.Add("Homepage.Categories", "Categorías");
                 newLocaleStringResources.Add("Admin.Catalog.Categories.Fields.NotAllowedToPublishProduct", "No permitir publicar productos con esta categoría");
+                newLocaleStringResources.Add("Plugins.ExternalAuth.Facebook.Login", "Inicia sesión con Facebook");
+                newLocaleStringResources.Add("CreateUser.Back.Before", "Si ya tienes cuenta en Tuils");
                 
                 
 

@@ -165,7 +165,7 @@ namespace Nop.Web.Extensions.Api
             attributes = new Dictionary<string, object>();
             //Agrega los atributos básicos del registro
             //Ya que se eliminó el nombre, queda el mismo correo
-            attributes.Add(SystemCustomerAttributeNames.FirstName, model.Email);
+            attributes.Add(SystemCustomerAttributeNames.FirstName, model.Name);
 
             if (model.VendorType != Core.Domain.Vendors.VendorType.User)
                 attributes.Add(SystemCustomerAttributeNames.Company, model.CompanyName);

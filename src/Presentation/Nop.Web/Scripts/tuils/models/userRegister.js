@@ -10,9 +10,13 @@
 
             },
             Bike: {
-                required: function (val, attr, computed) {
-                    return computed.VendorType == 0;
-                }
+                //required: function (val, attr, computed) {
+                //    return computed.VendorType == 0;
+                //}
+                required : false
+            },
+            Name: {
+                required: true
             },
             Email: {
                 required: true,
@@ -28,10 +32,10 @@
                 required: function (val, attr, computed) {
                     return computed.VendorType != 0 && computed.IsRegister;
                 }
-            },
-            TermsOfUse: {
-                acceptance: true
             }
+            //TermsOfUse: {
+            //    acceptance: true
+            //}
         },
         labels: {
             Name: "Nombres",

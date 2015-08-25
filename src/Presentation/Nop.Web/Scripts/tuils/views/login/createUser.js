@@ -18,15 +18,15 @@
         sourceModel : undefined,
 
         bindings: {
-            //"#txtName": "Name",
+            "#txtName": "Name",
             "#txtCompanyName": "CompanyName",
             "#txtEmail": "Email",
             '#txtBike': {
                 observe: 'Bike',
                 controlToMark: '.tagit-new input[type="text"]'
-            },
+            }
             //"#txtPassword": "Password",
-            "#chkTerms": "TermsOfUse"
+            //"#chkTerms": "TermsOfUse"
         },
         intervalAuthentication: undefined,
         initialize: function (args) {

@@ -8,7 +8,7 @@
             <li>
                 <a class="active" href="javascript:;" tuils-action="@Convert.ToInt32(Nop.Core.Domain.Vendors.VendorType.User)">
                     <span class="icon-user"></span>
-                    <p>Personal</p>
+                    <p>Persona</p>
                 </a>
             </li>
             <li>
@@ -24,24 +24,24 @@
                 </a>
             </li>
         </ul>
-        
-
+        <div class="inputs">
+            <input id="txtName" type="text" placeholder="@T("CreateUser.Name")">
+            <span class="field-validation-error" tuils-val-for="Name"></span>
+        </div>
+        <div class="inputs" style="display:none" tuils-for="company">
+            <input id="txtCompanyName" type="text" placeholder="@T("CreateUser.CompanyName")">
+            <span class="field-validation-error" tuils-val-for="CompanyName"></span>
+        </div>
         <div class="inputs">
             <input id="txtEmail" type="text" placeholder="@T("CreateUser.Email")">
             <span class="field-validation-error" tuils-val-for="Email"></span>
-        </div>
-        <div class="inputs" tuils-for="company" style="display:none">
-            <input id="txtCompanyName" type="text" placeholder="@T("CreateUser.CompanyName")">
-            <span class="field-validation-error" tuils-val-for="CompanyName"></span>
         </div>
         <div class="inputs" tuils-for="user">
             <input id="txtBike" type="text" placeholder="@T("CreateUser.Bike")">
             <span class="field-validation-error" tuils-val-for="Bike"></span>
         </div>
         <div class="terminos">
-            <input type="checkbox" id="chkTerms" />
-            <span>Acepto <a href="/condiciones-de-uso" target="_blank">terminos y condiciones</a></span>
-            <span class="field-validation-error" tuils-val-for="TermsOfUse"></span>
+            <span>Con el registro aceptas las <a href="/condiciones-de-uso" target="_blank">condiciones del servicio</a> de Tuils.</span>
         </div>
         <input id="btnCreateUser" type="button" value="@T("CreateUser.Save")" class="button-1 btn_register" />
 
@@ -49,6 +49,6 @@
     <div class="external-authentication">
         @Html.Action("ExternalMethods", "ExternalAuthentication", new { BlankWindow = true, ReturnUrl = Url.Action("Close", "Home") })
     </div>
-    <a id="btnBack" href="javsacript:void(0);" class="rgt-login">@T("CreateUser.Back")</a>
+    @T("CreateUser.Back.Before") <a id="btnBack" href="javsacript:void(0);" >@T("CreateUser.Back")</a>.
 </div>
 

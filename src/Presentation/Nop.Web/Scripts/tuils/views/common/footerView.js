@@ -1,7 +1,7 @@
-﻿define(['jquery', 'underscore', 'baseView'],
-    function ($, _, BaseView) {
+﻿define(['jquery', 'underscore', 'baseView', 'tuils/views/common/backTopView'],
+    function ($, _, BaseView, BackTopView) {
         var FooterView = BaseView.extend({
-
+            viewBackTop :undefined,
             events: {
                 'click .footer h3' : 'showFooter'
             },
@@ -10,6 +10,7 @@
             },
             loadControls: function () {
                 this.$('.footer div > h3').append('<span class="icon-mas"></span>');
+                this.viewBackTop = new BackTopView();
             },
             showFooter: function (obj) {
                 obj = obj.target;
@@ -21,6 +22,7 @@
                 }
             },
             render: function () {
+                
                 this.loadControls();
                 return this;
             }
