@@ -171,5 +171,11 @@ namespace Nop.Services.Media
         /// <param name="fileExtension">extension del archivo</param>
         /// <returns>tpo de contenido</returns>
         string GetContentTypeFromExtension(string fileExtension);
+
+        /// <summary>
+        /// retorna la ruta de un cover por defecto
+        /// </summary>
+        /// <returns></returns>
+        string GetDefaultCoverLocation();
     }
 }

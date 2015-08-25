@@ -38,7 +38,7 @@ namespace Nop.Services.Vendors
         /// Inserts a vendor
         /// </summary>
         /// <param name="vendor">Vendor</param>
-        void InsertVendor(Vendor vendor);
+        void InsertVendor(Vendor vendor, bool loadDefaultCover = true, bool loadDefaultLogo = true);
 
         /// <summary>
         /// Updates the vendor

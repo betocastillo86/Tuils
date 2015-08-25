@@ -13,7 +13,7 @@
             "click #btnBack": "back"
         },
 
-        template : Handlebars.compile($("#templateCreateUser").html()) ,
+        template : undefined ,
 
         sourceModel : undefined,
 
@@ -30,7 +30,7 @@
         },
         intervalAuthentication: undefined,
         initialize: function (args) {
-
+            this.template = Handlebars.compile($("#templateCreateUser").html());
             //var that = this;
             this.loadModel();
 

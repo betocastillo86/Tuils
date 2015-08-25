@@ -10,6 +10,7 @@ using Nop.Services.Seo;
 using Nop.Services.Vendors;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
+using Nop.Services.Configuration;
 
 namespace Nop.Admin.Controllers
 {
@@ -24,6 +25,7 @@ namespace Nop.Admin.Controllers
         private readonly IUrlRecordService _urlRecordService;
         private readonly ILanguageService _languageService;
         private readonly ILocalizedEntityService _localizedEntityService;
+        private readonly ISettingService _settingService;
         private readonly VendorSettings _vendorSettings;
 
         #endregion
@@ -37,7 +39,8 @@ namespace Nop.Admin.Controllers
             IUrlRecordService urlRecordService,
             ILanguageService languageService,
             ILocalizedEntityService localizedEntityService,
-            VendorSettings vendorSettings)
+            VendorSettings vendorSettings,
+            ISettingService settingService)
         {
             this._customerService = customerService;
             this._localizationService = localizationService;
@@ -47,6 +50,7 @@ namespace Nop.Admin.Controllers
             this._languageService = languageService;
             this._localizedEntityService = localizedEntityService;
             this._vendorSettings = vendorSettings;
+            this._settingService = settingService;
         }
 
         #endregion
@@ -266,6 +270,50 @@ namespace Nop.Admin.Controllers
             return RedirectToAction("List");
         }
 
+        #endregion
+
+        #region deFault Covers
+        
+        public ActionResult DefaultCovers()
+        {
+            var model = new DefaultCoversModel();
+
+            model.Picture1 = _vendorSettings.DefaultPicture1;
+            model.Picture2 = _vendorSettings.DefaultPicture2;
+            model.Picture3 = _vendorSettings.DefaultPicture3;
+            model.Picture4 = _vendorSettings.DefaultPicture4;
+            model.Picture5 = _vendorSettings.DefaultPicture5;
+            model.Picture6 = _vendorSettings.DefaultPicture6;
+            model.Picture7 = _vendorSettings.DefaultPicture7;
+            model.Picture8 = _vendorSettings.DefaultPicture8;
+            
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult DefaultCovers(DefaultCoversModel model)
+        {
+            if (model.Picture1 > 0)
+                _vendorSettings.DefaultPicture1 = model.Picture1;
+            if (model.Picture2 > 0)
+                _vendorSettings.DefaultPicture2 = model.Picture2;
+            if (model.Picture3 > 0)
+                _vendorSettings.DefaultPicture3 = model.Picture3;
+            if (model.Picture4 > 0)
+                _vendorSettings.DefaultPicture4 = model.Picture4;
+            if (model.Picture5 > 0)
+                _vendorSettings.DefaultPicture5 = model.Picture5;
+            if (model.Picture6 > 0)
+                _vendorSettings.DefaultPicture6 = model.Picture6;
+            if (model.Picture7 > 0)
+                _vendorSettings.DefaultPicture7 = model.Picture7;
+            if (model.Picture8 > 0)
+                _vendorSettings.DefaultPicture8 = model.Picture8;
+
+            _settingService.SaveSetting(_vendorSettings);
+
+            return View(model);
+        }
         #endregion
     }
 }

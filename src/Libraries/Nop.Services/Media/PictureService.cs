@@ -417,6 +417,16 @@ namespace Nop.Services.Media
         }
 
         /// <summary>
+        /// Retorna un cover por defecto para una tienda, el numero lo toma aleatoreo
+        /// </summary>
+        /// <returns></returns>
+        public virtual string GetDefaultCoverLocation()
+        {
+            return GetPictureLocalPath(string.Format("defaultCovers\\{0}.jpg", new Random().Next(1,8)),
+                imagesDirectoryPath: _settingService.GetSettingByKey<string>("Media.DefaultImageDirectoryPath"));
+        }
+
+        /// <summary>
         /// Get a picture URL
         /// </summary>
         /// <param name="pictureId">Picture identifier</param>

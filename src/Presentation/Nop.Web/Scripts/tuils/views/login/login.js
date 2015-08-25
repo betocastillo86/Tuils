@@ -13,8 +13,7 @@
             'click .fb-btn': 'externalAuthentication',
             'keypress form input' : 'validateEnter'
         },
-
-        template: Handlebars.compile($("#templateLogin").html()),
+        template : undefined,
 
         bindings: {
             "#txtEmail": "Email",
@@ -22,6 +21,9 @@
         },
 
         initialize: function (args) {
+
+
+            this.template = Handlebars.compile($("#templateLogin").html());
 
             this.model = new UserRegisterModel({ TermsOfUse: true });
             this.model.on("sync", this.userAuthenticated, this);

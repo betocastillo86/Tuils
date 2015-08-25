@@ -135,13 +135,16 @@ namespace Nop.Services.Vendors
         /// Inserts a vendor
         /// </summary>
         /// <param name="vendor">Vendor</param>
-        public virtual void InsertVendor(Vendor vendor)
+        public virtual void InsertVendor(Vendor vendor, bool loadDefaultCover = true, bool loadDefaultLogo = true)
         {
             if (vendor == null)
                 throw new ArgumentNullException("vendor");
 
             if (vendor.PageSize == 0)
                 vendor.PageSize = _vendorSettings.DefaultPageSize;
+
+            if (loadDefaultCover)
+                vendor.BackgroundPictureId = _vendorSettings.GetRandomCover();
 
             _vendorRepository.Insert(vendor);
 

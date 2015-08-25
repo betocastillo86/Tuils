@@ -1,0 +1,86 @@
+﻿@model DefaultCoversModel
+@{
+    ViewBag.Title = "Covers por defecto para los vendedores";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{ 
+    <h2>Covers por defecto</h2>
+<table>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Picture1)
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Picture1)
+            @Html.ValidationMessageFor(model => model.Picture1)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Picture2)
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Picture2)
+            @Html.ValidationMessageFor(model => model.Picture2)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Picture3)
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Picture3)
+            @Html.ValidationMessageFor(model => model.Picture3)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Picture4)
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Picture4)
+            @Html.ValidationMessageFor(model => model.Picture4)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Picture5)
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Picture5)
+            @Html.ValidationMessageFor(model => model.Picture5)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Picture6)
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Picture6)
+            @Html.ValidationMessageFor(model => model.Picture6)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Picture7)
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Picture7)
+            @Html.ValidationMessageFor(model => model.Picture7)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Picture8)
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Picture8)
+            @Html.ValidationMessageFor(model => model.Picture8)
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><input type="submit" value="Guardar" /></td>
+    </tr>
+</table>
+}

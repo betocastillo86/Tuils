@@ -512,6 +512,14 @@
     <Content Include="Content\farbtastic\wheel.png" />
     <Content Include="Content\files\ExportImport\Index.htm" />
     <Content Include="Content\files\Index.htm" />
+    <Content Include="Content\Images\defaultCovers\1.jpg" />
+    <Content Include="Content\Images\defaultCovers\2.jpg" />
+    <Content Include="Content\Images\defaultCovers\3.jpg" />
+    <Content Include="Content\Images\defaultCovers\4.jpg" />
+    <Content Include="Content\Images\defaultCovers\5.jpg" />
+    <Content Include="Content\Images\defaultCovers\6.jpg" />
+    <Content Include="Content\Images\defaultCovers\7.jpg" />
+    <Content Include="Content\Images\defaultCovers\8.jpg" />
     <Content Include="Content\kendo\2014.1.318\Black\editor.png" />
     <Content Include="Content\kendo\2014.1.318\Black\imagebrowser.png" />
     <Content Include="Content\kendo\2014.1.318\Black\indeterminate.gif" />

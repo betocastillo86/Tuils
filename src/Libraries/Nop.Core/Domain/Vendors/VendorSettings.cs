@@ -31,5 +31,21 @@ namespace Nop.Core.Domain.Vendors
         /// Tamaño por defecto de los resultados por pagina de los vendedores
         /// </summary>
         public int DefaultReviewsPageSize { get; set; }
+
+        public int DefaultPicture1 { get; set; }
+        public int DefaultPicture2 { get; set; }
+        public int DefaultPicture3 { get; set; }
+        public int DefaultPicture4 { get; set; }
+        public int DefaultPicture5 { get; set; }
+        public int DefaultPicture6 { get; set; }
+        public int DefaultPicture7 { get; set; }
+        public int DefaultPicture8 { get; set; }
+
+        public int GetRandomCover()
+        {
+            int i = new System.Random().Next(1,8);
+            return (int) this.GetType().GetProperty("DefaultPicture" +i).GetValue(this);
+        }
+
     }
 }

@@ -13,6 +13,7 @@ using Nop.Core.Domain.Vendors;
 using Nop.Services.Vendors;
 using System.Net.Mail;
 using Nop.Services.Seo;
+using Nop.Services.Media;
 
 namespace Nop.Services.Customers
 {
@@ -38,6 +39,7 @@ namespace Nop.Services.Customers
         private readonly IUrlRecordService _urlRecordService;
         private readonly ILanguageService _languageService;
         private readonly ILocalizedEntityService _localizedEntityService;
+        private readonly IPictureService _pictureService;
 
         #endregion
 
@@ -67,7 +69,8 @@ namespace Nop.Services.Customers
             IVendorService vendorService,
             IUrlRecordService urlRecordService,
             ILanguageService languageService,
-            ILocalizedEntityService localizedEntityService)
+            ILocalizedEntityService localizedEntityService,
+            IPictureService pictureService)
         {
             this._customerService = customerService;
             this._encryptionService = encryptionService;
@@ -84,6 +87,7 @@ namespace Nop.Services.Customers
             this._urlRecordService = urlRecordService;
             this._languageService = languageService;
             this._localizedEntityService = localizedEntityService;
+            this._pictureService = pictureService;
         }
 
         #endregion
