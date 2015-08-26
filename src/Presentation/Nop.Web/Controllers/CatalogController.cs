@@ -690,6 +690,8 @@ namespace Nop.Web.Controllers
             //activity log
             _customerActivityService.InsertActivity("PublicStore.ViewCategory", _localizationService.GetResource("ActivityLog.PublicStore.ViewCategory"), category.Name);
 
+            model.IsMobileDevice = Request.Browser.IsMobileDevice;
+
             return View(templateViewPath, model);
         }
 

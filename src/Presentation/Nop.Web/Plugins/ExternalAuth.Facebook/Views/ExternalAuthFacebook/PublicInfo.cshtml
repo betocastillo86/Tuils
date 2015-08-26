@@ -5,7 +5,7 @@
 
     Html.AddCssFileParts("~/Plugins/ExternalAuth.Facebook/Content/facebookstyles.css");    
 }
-<a href="@Url.RouteUrl("Plugin.ExternalAuth.Facebook.Login", new { ReturnUrl = Model.ReturnUrl })" class="fb-btn" target="@(Model.BlankWindow ? "_blank" : "_self")" >Entrar con facebook</a>
+<a href="@Url.RouteUrl("Plugin.ExternalAuth.Facebook.Login", new { ReturnUrl = Model.ReturnUrl })" class="fb-btn" target="@(Model.BlankWindow ? "_blank" : "_self")" >@T("Plugins.ExternalAuth.Facebook.Login")</a>
 @*<fieldset class="facebook-login-block">
     <legend>@T("Plugins.ExternalAuth.Facebook.Login")</legend>
     <a href="@Url.RouteUrl("Plugin.ExternalAuth.Facebook.Login", new { ReturnUrl = Model.ReturnUrl })" class="facebook-btn" target="@(Model.BlankWindow ? "_blank" : "_self")" >Entrar con facebook</a>

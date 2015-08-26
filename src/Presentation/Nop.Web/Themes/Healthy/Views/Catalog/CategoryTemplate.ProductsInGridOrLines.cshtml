@@ -45,11 +45,11 @@
     </div>
     @Html.Widget("categorydetails_after_breadcrumb", Model.Id)
 }
-<div class="page category-page">
+<div class="page category-page" id="divMainSection">
     <div class="page-title">
         <h1>@Model.Name</h1>
     </div>
-    
+
     <div class="page-body">
         @*@Html.Widget("categorydetails_top", Model.Id)*@
         @*description*@
@@ -65,23 +65,23 @@
         @if (Model.SubCategories.Count > 0)
         {
             @*<div class="sub-category-grid">
-                @foreach (var item in Model.SubCategories)
-                {
-                    <div class="item-box">
-                        <div class="sub-category-item">
-                            <h2 class="title">
-                                <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
-                                    @item.Name</a>
-                            </h2>
-                            <div class="picture">
-                                <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
-                                    <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl"
-                                         title="@item.PictureModel.Title" /></a>
+                    @foreach (var item in Model.SubCategories)
+                    {
+                        <div class="item-box">
+                            <div class="sub-category-item">
+                                <h2 class="title">
+                                    <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                                        @item.Name</a>
+                                </h2>
+                                <div class="picture">
+                                    <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                                        <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl"
+                                             title="@item.PictureModel.Title" /></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
-            </div>*@
+                    }
+                </div>*@
         }
         @Html.Widget("categorydetails_before_featured_products", Model.Id)
         @*featured products*@
@@ -106,100 +106,107 @@
             @*view mode*@
             @if (Model.PagingFilteringContext.AllowProductViewModeChanging && Model.Products.Count > 0)
             {
-                 @*edited*@
-                 <div class="product-viewmode">
-                   <a rel="nofollow" class="fontawesome-th" href="@Model.PagingFilteringContext.AvailableViewModes.First().Value"></a>
+                @*edited*@
+                <div class="product-viewmode">
+                    <a rel="nofollow" class="fontawesome-th" href="@Model.PagingFilteringContext.AvailableViewModes.First().Value"></a>
                     <a rel="nofollow" class="fontawesome-reorder" href="@Model.PagingFilteringContext.AvailableViewModes.Last().Value"></a>
-                </div> 
+                </div>
                 @*<script>
-                    $( document ).ready(function() {
-                        $('div.product-list').length ? $('.fontawesome-reorder').addClass('active') : $('.fontawesome-th').addClass('active');
-                    });
-                </script>*@
+                        $( document ).ready(function() {
+                            $('div.product-list').length ? $('.fontawesome-reorder').addClass('active') : $('.fontawesome-th').addClass('active');
+                        });
+                    </script>*@
                 @*edited*@
 
                 @*<div class="product-viewmode">
-                    <span>@T("Catalog.ViewMode")</span>
-                    @Html.DropDownList("products-viewmode", Model.PagingFilteringContext.AvailableViewModes, new { onchange = "setLocation(this.value);" })
-                </div>*@
+                        <span>@T("Catalog.ViewMode")</span>
+                        @Html.DropDownList("products-viewmode", Model.PagingFilteringContext.AvailableViewModes, new { onchange = "setLocation(this.value);" })
+                    </div>*@
             }
             @*sorting*@
             @if (Model.PagingFilteringContext.AllowProductSorting && Model.Products.Count > 0)
             {
                 <div class="product-sorting">
-                    <span>@T("Catalog.OrderBy")</span>
-                    @Html.DropDownList("products-orderby", Model.PagingFilteringContext.AvailableSortOptions, new { onchange = "setLocation(this.value);" })
+                        <span class="text-orde">@T("Catalog.OrderBy")</span>
+                        <a class="btn_ordena" href="javascript:;">Ordenar</a>
+                        @Html.DropDownList("products-orderby", Model.PagingFilteringContext.AvailableSortOptions, new { onchange = "setLocation(this.value);" })
+                    </div>
+            }
+            @if (Model.IsMobileDevice)
+            {
+                <div id="product-filter-mobile">
+                    <a id="btnFilterByMobile" class="btn_filter">@T("Catalog.FilterBy")</a>
                 </div>
             }
             @*page size*@
-            @*@if (Model.PagingFilteringContext.AllowCustomersToSelectPageSize && Model.Products.Count > 0)
+                @*@if (Model.PagingFilteringContext.AllowCustomersToSelectPageSize && Model.Products.Count > 0)
+                    {
+                        <div class="product-page-size">
+                            <span>@T("Catalog.PageSize")</span>
+                            @Html.DropDownList("products-pagesize", Model.PagingFilteringContext.PageSizeOptions, new { onchange = "setLocation(this.value);" })
+                            <span>@T("Catalog.PageSize.PerPage")</span>
+                        </div>
+                    }*@
+            </div>
+            @*added*@
+            @if (Model.PagingFilteringContext.AllowCustomersToSelectPageSize && Model.Products.Count > 0)
             {
                 <div class="product-page-size">
-                    <span>@T("Catalog.PageSize")</span> 
-                    @Html.DropDownList("products-pagesize", Model.PagingFilteringContext.PageSizeOptions, new { onchange = "setLocation(this.value);" })
+                    <span>@T("Catalog.PageSize")</span>
+                    @foreach (var per in Model.PagingFilteringContext.PageSizeOptions)
+                    {
+                        <a href="@per.Value" rel="nofollow">@per.Text</a>
+                    }
                     <span>@T("Catalog.PageSize.PerPage")</span>
                 </div>
-            }*@
-        </div>
-        @*added*@
-        @if (Model.PagingFilteringContext.AllowCustomersToSelectPageSize && Model.Products.Count > 0)
-        {
-            <div class="product-page-size">
-                <span>@T("Catalog.PageSize")</span>
-                @foreach (var per in Model.PagingFilteringContext.PageSizeOptions)
-                {
-                    <a href="@per.Value" rel="nofollow">@per.Text</a>
-                }
-                <span>@T("Catalog.PageSize.PerPage")</span>
-            </div>
-        }
-        @*@added*@
+            }
+            @*@added*@
 
-    @*@added*@
-    @section left {
-       @Html.Partial("_FilterSearches", Model.PagingFilteringContext)
-    }
-        @Html.Widget("categorydetails_before_product_list", Model.Id)
-        @*product list*@
-        @if (Model.Products.Count > 0)
-        {
-            if (Model.PagingFilteringContext.ViewMode == "list")
-            {
-            @*list mode*@
-            <div class="product-list">
-                @foreach (var product in Model.Products)
+                @*@added*@
+                @section left {
+                    @Html.Partial("_FilterSearches", Model.PagingFilteringContext)
+                }
+                @Html.Widget("categorydetails_before_product_list", Model.Id)
+                @*product list*@
+                @if (Model.Products.Count > 0)
                 {
-                    <div class="item-box">
-                        @Html.Partial("_ProductBox", product)
+                    if (Model.PagingFilteringContext.ViewMode == "list")
+                    {
+                        @*list mode*@
+                        <div class="product-list">
+                            @foreach (var product in Model.Products)
+                            {
+                                <div class="item-box">
+                                    @Html.Partial("_ProductBox", product)
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        @*grid mode*@
+                        <div class="product-grid">
+                            @foreach (var product in Model.Products)
+                            {
+                                <div class="item-box">
+                                    @Html.Partial("_ProductBox", product)
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="no-result">
+                        @T("Category.NoRows")
                     </div>
                 }
-            </div>       
-            }
-            else
-            {
-            @*grid mode*@
-            <div class="product-grid">
-                @foreach (var product in Model.Products)
-                {
-                    <div class="item-box">
-                        @Html.Partial("_ProductBox", product)
-                    </div>
-                }
-            </div>
-            }
-        }
-        else
-        { 
-            <div class="no-result">
-                @T("Category.NoRows")
-            </div>
-        }
-        
 
-        
-        <div class="pager">
-            @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
+
+
+                <div class="pager">
+                    @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
+                </div>
+                @Html.Widget("categorydetails_bottom", Model.Id)
+            </div>
         </div>
-        @Html.Widget("categorydetails_bottom", Model.Id)
-    </div>
-</div>
