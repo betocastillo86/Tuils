@@ -20,7 +20,7 @@
             {
                 <img alt="@title" data-src="@pictureUrl" src="@(slideNumber == 1 ? pictureUrl : string.Empty)" />
             }
-            @titleEffects
+            @Html.Raw(titleEffects)
         </li>    
     }
 }
