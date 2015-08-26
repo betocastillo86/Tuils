@@ -10,6 +10,7 @@
 <nav id="nav" class="header-links" role="navigation">
     <ul>
         @*@Html.Widget("header_links_before")*@
+        <li class="btn_home"><a href="@Url.RouteUrl("HomePage")">Inicio</a></li>
         @if (Model.UnansweredQuestions > 0)
         {
             <li class="btn_noti"><a href="@Url.Action("Questions", "ControlPanel")" class="icon-camp" title="@T("Account.UnansweredQuestions.Alt", Model.UnansweredQuestions)"></a><span>@Model.UnansweredQuestions</span></li>
