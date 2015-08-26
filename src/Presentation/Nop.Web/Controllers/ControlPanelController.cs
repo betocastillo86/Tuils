@@ -625,6 +625,7 @@ namespace Nop.Web.Controllers
             string parentModule = string.Empty;
             model.SelectedModule = GetCurrentModule(model.Modules, ref parentModule);
             model.SelectedParentModule = parentModule;
+            model.IsMobileDevice = Request.Browser.IsMobileDevice;
 
             return PartialView("_Menu", model);
         }

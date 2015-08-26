@@ -16,7 +16,9 @@
                 required : false
             },
             Name: {
-                required: true
+                required: function (val, attr, computed) {
+                    return computed.IsRegister;
+                },
             },
             Email: {
                 required: true,

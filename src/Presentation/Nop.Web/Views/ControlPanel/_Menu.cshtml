@@ -1,15 +1,20 @@
 ﻿@model Nop.Web.Models.ControlPanel.MenuModel
 @{
-    Html.AddCssFileParts(ResourceLocation.Foot, "~/Scripts/mmenu/css/jquery.mmenu.all.css");
+    Html.AddCssFileParts(ResourceLocation.Foot, "~/Content/simpleMenu/simpleMenu.css");
 }
-<div class="headerButtonMenuResponsive">
-    <a href="#mainMenu" class="icon-menu"></a>
+<div id="nav-open-btn" class="headerButtonMenuResponsive">
+    <a class="icon-menu"></a>
 </div>
-<div class="side-2 columns two" id="divPanelMenu">
-    <nav class="block block-category-navigation">
-        <div class="title">@Html.ActionLink(@T("controlpanel.menutitle").Text, "Index", "ControlPanel") </div>
-        <div class="listbox">
-            <div id="mainMenu">
+<div id="divPanelMenu" class="side-2 columns two">
+    <nav id="nav" class="@(!Model.IsMobileDevice ? "block block-category-navigation" : string.Empty )" role="navigation">
+        @if (!Model.IsMobileDevice)
+        { 
+            @:<div class="title">@Html.ActionLink(@T("controlpanel.menutitle").Text, "Index", "ControlPanel") </div>
+         @: <div class="listbox">
+        }
+        
+        
+            
                 <ul class="menu-panel">
 
 
@@ -36,10 +41,13 @@
 
                         </li>
                     }
+
+                    <li id="nav-close-btn">Cerrar</li>
                 </ul>
-            </div>
-
-
-        </div>
+            @if (!Model.IsMobileDevice)
+            {
+                 @:</div>
+            }
+       
     </nav>
 </div>
