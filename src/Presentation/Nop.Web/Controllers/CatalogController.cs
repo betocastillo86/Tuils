@@ -1584,6 +1584,7 @@ namespace Nop.Web.Controllers
                 filtersUrl = string.Join(" ", this.RouteData.Values["query"].ToString().Replace("-", " ").Split(new char[] { '/' }));
 
             model.Title = string.Format(_localizationService.GetResource("PageTitle.Search"), command.q, filtersUrl);
+            model.Description = string.Format(_localizationService.GetResource("Search.Metadescription"), command.q, filtersUrl);
 
             if (model.Q == null)
                 model.Q = "";

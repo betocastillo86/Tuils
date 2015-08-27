@@ -961,6 +961,9 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Catalog.Categories.Fields.NotAllowedToPublishProduct", "No permitir publicar productos con esta categoría");
                 newLocaleStringResources.Add("Plugins.ExternalAuth.Facebook.Login", "Inicia sesión con Facebook");
                 newLocaleStringResources.Add("CreateUser.Back.Before", "Si ya tienes cuenta en Tuils");
+                newLocaleStringResources.Add("Search.Metadescription", "Te gustan las motos y no has encontrado cosas como: {0} {1}. Solo tienes que venir a Tuils y encontrarás los mejores accesorios, cascos, respuestos y motos.");
+                newLocaleStringResources.Add("Account.PasswordRecovery.Back", "Volver al inicio");
+                
                 
                 
 
@@ -2267,6 +2270,8 @@ namespace Nop.Data.Migrations
                 settings.Add("catalogSettings.NumberOfProductsVendorProductsProductPage", "6");
                 settings.Add("catalogSettings.CategoryOrganizationHomeMenu", "");
                 settings.Add("catalogSettings.MaxColumnsCategoriesHome", "4");
+                
+                
                 
                 
 

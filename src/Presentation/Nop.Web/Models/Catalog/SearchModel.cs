@@ -22,6 +22,8 @@ namespace Nop.Web.Models.Catalog
 
         public string Title { get; set; }
 
+        public string Description { get; set; }
+
         /// <summary>
         /// Query string
         /// </summary>

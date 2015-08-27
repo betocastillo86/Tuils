@@ -50,8 +50,8 @@
                 'mapa-del-sitio': 'sitemap',
                 'condiciones-de-uso': 'useConditions',
                 'contacto': 'contactUs',
-                'acerca-de-nosotros' : 'aboutUs'
-
+                'quienes-somos': 'aboutUs',
+                'tarifas-y-precios': 'aboutUs'
             },
             home : function()
             {

@@ -699,6 +699,7 @@ namespace Nop.Web.Controllers
                     _workflowMessageService.SendCustomerPasswordRecoveryMessage(customer, _workContext.WorkingLanguage.Id);
 
                     model.Result = _localizationService.GetResource("Account.PasswordRecovery.EmailHasBeenSent");
+                    model.Success = true;
                 }
                 else
                     model.Result = _localizationService.GetResource("Account.PasswordRecovery.EmailNotFound");
