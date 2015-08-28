@@ -2426,19 +2426,20 @@ namespace Nop.Services.Catalog
         #endregion
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
+        /// <summary>
+        /// Valida si un vendedor ha alcanzado el limite d eproductos para vender
+        /// </summary>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        public bool HasReachedLimitOfProducts(int vendorId)
+        {
+            //Si hay limite realiza la validación
+            if (_catalogSettings.ProductLimitPublished > 0)
+            {
+                var products = SearchProducts(vendorId: vendorId, pageIndex: 0, pageSize: 0);
+                return products.TotalCount >= _catalogSettings.ProductLimitPublished;
+            }
+            return false;
+        }
     }
 }

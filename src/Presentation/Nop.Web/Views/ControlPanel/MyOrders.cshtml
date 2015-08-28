@@ -42,7 +42,7 @@
                 @*<span>@item.Vendor.num</span>*@
             </div>
             <div class="td-cal">
-                @if (item.Rating.HasValue)
+                @if (item.ShowRating)
                 { 
                     @Html.RatingControl(item.Rating.Value)
                 }

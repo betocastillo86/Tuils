@@ -386,5 +386,9 @@ namespace Nop.Core.Domain.Catalog
         /// Numero maximo de columnas que deben haber en el home
         /// </summary>
         public int MaxColumnsCategoriesHome { get; set; }
+        /// <summary>
+        /// Limite de productos publicados por usuario
+        /// </summary>
+        public int ProductLimitPublished { get; set; }
     }
 }

@@ -405,6 +405,8 @@ namespace Nop.Admin.Models.Catalog
 
         //copy product
         public CopyProductModel CopyProductModel { get; set; }
+
+        public bool HasReachedLimitOfProducts { get; set; }
         
         #region Nested classes
 
@@ -907,6 +909,7 @@ namespace Nop.Admin.Models.Catalog
 
             [NopResourceDisplayName("Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.NotifyAdminForQuantityBelow")]
             public int NotifyAdminForQuantityBelow { get; set; }
+
 
         }
 

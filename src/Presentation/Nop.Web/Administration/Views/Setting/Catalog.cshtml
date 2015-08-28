@@ -350,6 +350,16 @@
         </tr>
         <tr>
             <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.ProductLimitPublished_OverrideForStore, model => model.ProductLimitPublished, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.ProductLimitPublished):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.ProductLimitPublished)
+                @Html.ValidationMessageFor(model => model.ProductLimitPublished)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
                 @Html.OverrideStoreCheckboxFor(model => model.EmailAFriendEnabled_OverrideForStore, model => model.EmailAFriendEnabled, Model.ActiveStoreScopeConfiguration)
                 @Html.NopLabelFor(model => model.EmailAFriendEnabled):
             </td>

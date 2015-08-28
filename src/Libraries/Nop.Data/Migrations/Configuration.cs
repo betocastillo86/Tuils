@@ -963,11 +963,10 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("CreateUser.Back.Before", "Si ya tienes cuenta en Tuils");
                 newLocaleStringResources.Add("Search.Metadescription", "Te gustan las motos y no has encontrado cosas como: {0} {1}. Solo tienes que venir a Tuils y encontrarás los mejores accesorios, cascos, respuestos y motos.");
                 newLocaleStringResources.Add("Account.PasswordRecovery.Back", "Volver al inicio");
-
                 newLocaleStringResources.Add("Admin.Configuration.Settings.GeneralCommon.DisableRobotsForTestingSite", "Este sitio es de pruebas y es necesario deshabilitarle el robots.txt");
-                
-
-                
+                newLocaleStringResources.Add("MySales.Date", "Fecha compra");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.ProductLimit", "Limite de productos publicados por usuario");
+                newLocaleStringResources.Add("PublishProduct.HasReachedLimitOfProducts", "Has alcanzado el limite de publicaciones, es posible que tu producto no sea publicado. Si quieres realizar más publicaciones contactate con nosotros {0}");
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)
@@ -2271,6 +2270,7 @@ namespace Nop.Data.Migrations
                 settings.Add("catalogSettings.CategoryOrganizationHomeMenu", "");
                 settings.Add("catalogSettings.MaxColumnsCategoriesHome", "4");
                 settings.Add("seoSettings.DisableRobotsForTestingSite", "False");
+                settings.Add("catalogSettings.ProductLimitPublished", "3");
                 
                 
                 

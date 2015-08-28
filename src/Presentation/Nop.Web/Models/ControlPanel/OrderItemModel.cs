@@ -12,6 +12,11 @@ namespace Nop.Web.Models.ControlPanel
     {
         public string Price { get; set; }
         public double? Rating { get; set; }
+
+        public bool RatingApproved { get; set; }
+
+        public bool ShowRating { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public CustomerInfoModel Customer { get; set; }

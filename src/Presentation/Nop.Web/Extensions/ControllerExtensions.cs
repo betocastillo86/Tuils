@@ -341,7 +341,7 @@ namespace Nop.Web.Extensions
                         var picture = pictureService.GetPicturesByProductId(product.Id, 1).FirstOrDefault();
                         var pictureModel = new PictureModel
                         {
-                            ImageUrl = pictureService.GetPictureUrl(picture, pictureSize, crop:true),
+                            ImageUrl = pictureService.GetPictureUrl(picture, pictureSize, crop:false),
                             FullSizeImageUrl = pictureService.GetPictureUrl(picture),
                             Title = string.Format(localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), model.Name),
                             AlternateText = string.Format(localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), model.Name)

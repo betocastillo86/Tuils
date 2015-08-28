@@ -14,6 +14,7 @@ using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Common;
 using Nop.Services.Common;
 using Nop.Core.Domain.Customers;
+using Nop.Services.Localization;
 
 
 namespace Nop.Web.Controllers.Api
@@ -29,6 +30,7 @@ namespace Nop.Web.Controllers.Api
         private readonly CatalogSettings _catalogSettings;
         private readonly TuilsSettings _tuilsSettings;
         private readonly IGenericAttributeService _genericAttributeService;
+        private readonly ILocalizationService _localizationService;
         #endregion
 
         #region Ctor
@@ -38,7 +40,8 @@ namespace Nop.Web.Controllers.Api
             ICategoryService categoryService,
             CatalogSettings catalogSettings,
             TuilsSettings tuilsSettings,
-            IGenericAttributeService genericAttributeService)
+            IGenericAttributeService genericAttributeService,
+            ILocalizationService localizationService)
         {
             this._productService = productService;
             this._workContext = workContext;
@@ -47,6 +50,7 @@ namespace Nop.Web.Controllers.Api
             this._catalogSettings = catalogSettings;
             this._tuilsSettings = tuilsSettings;
             this._genericAttributeService = genericAttributeService;
+            this._localizationService = localizationService;
         }
         #endregion
         [Route("api/products")]
@@ -56,32 +60,37 @@ namespace Nop.Web.Controllers.Api
         {
             if (ModelState.IsValid && model.Validate())
             {
-                //Si llegan más valores de los posibles para categorias especiales, toma solo los permitidos
-                if (model.SpecialCategories != null && model.SpecialCategories.Where(s => s.SpecialType == SpecialCategoryProductType.BikeBrand).Count() > _catalogSettings.LimitOfSpecialCategories)
-                    model.SpecialCategories = model.SpecialCategories.Take(_catalogSettings.LimitOfSpecialCategories).ToList();
-
-                
-                var product = model.ToEntity(_categoryService);
-
-                //Si el vendor no existe, es necesario crearlo con base en el usuario
-                if (_workContext.CurrentVendor == null || _workContext.CurrentVendor.Id == 0)
-                {
-                    //Consulta el vendor y lo crea si es necesario
-                    var vendor = _vendorService.GetVendorByCustomerId(_workContext.CurrentCustomer.Id, true);
-                    product.VendorId = vendor.Id;
-                }
-                else
-                {
-                    product.VendorId = _workContext.CurrentVendor.Id;
-                }
-                
-                //Guarda el número telefónico de contacto
-                _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, SystemCustomerAttributeNames.Phone, model.PhoneNumber);
-                _workContext.CurrentVendor.PhoneNumber = model.PhoneNumber;
-                _vendorService.UpdateVendor(_workContext.CurrentVendor);
+               
 
                 try
                 {
+                    //Si llegan más valores de los posibles para categorias especiales, toma solo los permitidos
+                    if (model.SpecialCategories != null && model.SpecialCategories.Where(s => s.SpecialType == SpecialCategoryProductType.BikeBrand).Count() > _catalogSettings.LimitOfSpecialCategories)
+                        model.SpecialCategories = model.SpecialCategories.Take(_catalogSettings.LimitOfSpecialCategories).ToList();
+
+
+                    var product = model.ToEntity(_categoryService);
+
+                    //Si el vendor no existe, es necesario crearlo con base en el usuario
+                    if (_workContext.CurrentVendor == null || _workContext.CurrentVendor.Id == 0)
+                    {
+                        //Consulta el vendor y lo crea si es necesario
+                        var vendor = _vendorService.GetVendorByCustomerId(_workContext.CurrentCustomer.Id, true);
+                        product.VendorId = vendor.Id;
+                    }
+                    else
+                    {
+                        product.VendorId = _workContext.CurrentVendor.Id;
+                        if(_productService.HasReachedLimitOfProducts(_workContext.CurrentVendor.Id))
+                            throw new NopException(CodeNopException.UserHasReachedLimitOfProducts, _localizationService.GetResource("PublishProduct.HasReachedLimitOfProducts"));
+                    }
+
+                    //Guarda el número telefónico de contacto
+                    _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, SystemCustomerAttributeNames.Phone, model.PhoneNumber);
+                    _workContext.CurrentVendor.PhoneNumber = model.PhoneNumber;
+                    _vendorService.UpdateVendor(_workContext.CurrentVendor);
+                    
+                    
                     //Crea el producto en un estado inactivo 
                     _productService.PublishProduct(product);
                     return Ok(new { Id = product.Id });

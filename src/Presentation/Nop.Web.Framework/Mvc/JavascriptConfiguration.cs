@@ -81,7 +81,8 @@ namespace Nop.Web.Framework.Mvc
                 },
                 errorCodes = new
                 {
-                    publishInvalidCategory = (int)CodeNopException.UserTypeNotAllowedPublishProductType
+                    publishInvalidCategory = (int)CodeNopException.UserTypeNotAllowedPublishProductType,
+                    hasReachedLimitOfProducts = (int)CodeNopException.UserHasReachedLimitOfProducts
                 }
             };
 

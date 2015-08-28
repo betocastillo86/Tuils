@@ -61,6 +61,8 @@ namespace Nop.Web.Models.Sales
         /// Número telefónico del vendedor
         /// </summary>
         public string PhoneNumber { get; set; }
+
+        public bool HasReachedLimitOfProducts { get; set; }
     }
 
     

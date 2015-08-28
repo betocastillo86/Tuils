@@ -963,6 +963,7 @@ namespace Nop.Admin.Controllers
                 return RedirectToAction("List");
 
             var model = product.ToModel();
+            
             PrepareProductModel(model, product, false, false);
             AddLocales(_languageService, model.Locales, (locale, languageId) =>
                 {
@@ -974,6 +975,10 @@ namespace Nop.Admin.Controllers
                     locale.MetaTitle = product.GetLocalized(x => x.MetaTitle, languageId, false, false);
                     locale.SeName = product.GetSeName(languageId, false, false);
                 });
+
+
+            if (model.VendorId > 0)
+                model.HasReachedLimitOfProducts = _productService.HasReachedLimitOfProducts(model.VendorId);
 
             PrepareAclModel(model, product, false);
             PrepareStoresMappingModel(model, product, false);

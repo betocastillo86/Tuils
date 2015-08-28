@@ -1314,6 +1314,10 @@
         <td class="adminData">
             @Html.EditorFor(model => model.Published)
             @Html.ValidationMessageFor(model => model.Published)
+            @if (Model.HasReachedLimitOfProducts && !Model.Published)
+            { 
+                <div style="color:red">Este vendedor ha alcanzado el limite de productos. Validar si se puede publicar o no.</div>    
+            }
         </td>
     </tr>
     @if (Model.CreatedOn.HasValue)

@@ -219,5 +219,11 @@ namespace Nop.Admin.Models.Settings
         [NopResourceDisplayName("Admin.Configuration.Settings.Catalog.DisplayTaxShippingInfoOrderDetailsPage")]
         public bool DisplayTaxShippingInfoOrderDetailsPage { get; set; }
         public bool DisplayTaxShippingInfoOrderDetailsPage_OverrideForStore { get; set; }
+
+
+        [NopResourceDisplayName("Admin.Configuration.Settings.Catalog.ProductLimit")]
+        public int ProductLimitPublished { get; set; }
+        public bool ProductLimitPublished_OverrideForStore { get; set; }
+
     }
 }

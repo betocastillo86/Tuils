@@ -213,9 +213,15 @@ namespace Nop.Services.Orders
             //Valida si muestra solo los productos publicados o no
             if (publishedProducts.HasValue)
             {
-                    query = query
-                           .Where(o => o.OrderItems
-                               .Any(i => i.Product.Published == publishedProducts.Value));
+                query = query
+                        .Where(o => o.OrderItems
+                            .Any(i => i.Product.Published == publishedProducts.Value));
+
+                //Si el producto debe estar publicado, debe validar también la fecha de finalización
+                if (publishedProducts.Value)
+                {
+                    query = query.Where(o => o.OrderItems.Any(p => p.Product.AvailableEndDateTimeUtc > DateTime.UtcNow));
+                }
             }
 
                 

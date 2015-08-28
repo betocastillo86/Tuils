@@ -87,6 +87,11 @@ namespace Nop.Core
         /// Categoría en la que se está intentando crear un prodcuto no existe
         /// </summary>
         CategoryDoesntExist = 101,
+
+        /// <summary>
+        /// El vendedor a alcanzado el limite de productos permitidos para vender
+        /// </summary>
+        UserHasReachedLimitOfProducts = 102,
         #endregion
 
         #region User

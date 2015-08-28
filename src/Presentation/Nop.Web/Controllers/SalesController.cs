@@ -10,6 +10,7 @@ using Nop.Web.Extensions;
 using Nop.Services.Directory;
 using Nop.Core;
 using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Customers;
 
 namespace Nop.Web.Controllers
 {
@@ -23,6 +24,7 @@ namespace Nop.Web.Controllers
         private TuilsSettings _tuilsSettings;
         private CatalogSettings _catalogSettings;
         private IWorkContext _workContext;
+        private IProductService _productService;
         #endregion
 
         #region Ctor
@@ -32,7 +34,8 @@ namespace Nop.Web.Controllers
             IStateProvinceService stateProvinceService,
             TuilsSettings tuilsSettings,
             IWorkContext workContext,
-            CatalogSettings catalogSettings)
+            CatalogSettings catalogSettings,
+            IProductService productService)
         {
             this._categoryService = categoryService;
             this._tuilsSettings = tuilsSettings;
@@ -40,6 +43,7 @@ namespace Nop.Web.Controllers
             this._stateProvinceService = stateProvinceService;
             this._workContext = workContext;
             this._catalogSettings = catalogSettings;
+            this._productService = productService;
         }
         #endregion
 
@@ -53,9 +57,21 @@ namespace Nop.Web.Controllers
             var model = new SelectPublishCategoryModel();
             //Solo los talleres pueden publicar servicios
             if (_workContext.CurrentVendor != null)
+            {
                 model.CanSelectService = _workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.RepairShop;
+                //Si el usuario tiene más productos publicados que el limite, muestra un mensaje de advertencia
+                model.HasReachedLimitOfProducts = HasReachedLimitOfProducts();
+            }
 
             return View(model);
+        }
+
+        private bool HasReachedLimitOfProducts()
+        {
+            if (_workContext.CurrentVendor != null)
+                //Si el usuario tiene más productos publicados que el limite, muestra un mensaje de advertencia
+                return  _productService.HasReachedLimitOfProducts(_workContext.CurrentVendor.Id);
+            return false;
         }
 
         /// <summary>
@@ -80,6 +96,7 @@ namespace Nop.Web.Controllers
         public ActionResult PublishProductBike(int? id)
         {
             var model = GetPublishModel();
+
             //Caga los colores existentes
             model.ColorOptions = new SelectList(
                 _specificationAttributeService
@@ -132,6 +149,7 @@ namespace Nop.Web.Controllers
             model.LimitDaysOfProductPublished = _catalogSettings.LimitDaysOfProductPublished;
             model.StateProvinces = new SelectList(_stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry), "Id", "Name");
             model.IsMobileDevice = Request.Browser.IsMobileDevice;
+            model.HasReachedLimitOfProducts = HasReachedLimitOfProducts();
             if (_workContext.CurrentVendor != null)
                 model.PhoneNumber = _workContext.CurrentVendor.PhoneNumber;
             return model;

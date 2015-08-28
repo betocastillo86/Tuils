@@ -52,8 +52,8 @@
             loadControls: function () {
                 this.model = new ProductModel({ 'ProductTypeId': this.productType });
                 this.on("user-authenticated", this.save, this);
-                this.model.once('sync', this.productSaved, this);
-                this.model.once('error', this.errorOnSaving, this);
+                this.model.on('sync', this.productSaved, this);
+                this.model.on('error', this.errorOnSaving, this);
 
                 if (this.hasPreviousProductStorage()) {
                     this.showPreviousProductCreated();
@@ -227,7 +227,9 @@
                 this.stepFinished = this.currentStep;
             },
             errorOnSaving: function (model, response) {
-                if (response.responseJSON.ModelState && response.responseJSON.ModelState.ErrorCode == TuilsConfiguration.errorCodes.publishInvalidCategory)
+                if (response.responseJSON.ModelState &&
+                    (response.responseJSON.ModelState.ErrorCode == TuilsConfiguration.errorCodes.publishInvalidCategory
+                        || response.responseJSON.ModelState.ErrorCode == TuilsConfiguration.errorCodes.hasReachedLimitOfProducts))
                     alert(response.responseJSON.ModelState.ErrorMessage);
                 else
                     alert("Ocurrió un error, intentalo de nuevo");

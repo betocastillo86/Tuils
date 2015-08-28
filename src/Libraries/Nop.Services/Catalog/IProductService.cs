@@ -582,5 +582,7 @@ namespace Nop.Services.Catalog
 
 
         IList<SpecialCategoryProduct> GetSpecialCategoriesByProductId(int productId);
+
+        bool HasReachedLimitOfProducts(int vendorId);
     }
 }

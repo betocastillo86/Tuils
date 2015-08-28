@@ -427,7 +427,13 @@ namespace Nop.Web.Controllers
                     //Consulta el review de una orden
                     var review = _productService.GetAllProductReviews(orderItemId: item.Id, approved: isMyOrders ? (bool?)null : true).FirstOrDefault();
                     if (review != null)
+                    {
                         orderModel.Rating = review.Rating;
+                        orderModel.RatingApproved = review.IsApproved;
+                        //Solo muestra la calificacion si ya fue aprobada
+                        //Con excepción que si son "Mis Compras" si muesta que ya fue calificado
+                        orderModel.ShowRating = (review.IsApproved && !isMyOrders) || isMyOrders;
+                    }
 
                     orderModel.Product = new Models.Catalog.ProductOverviewModel()
                     {
@@ -520,9 +526,9 @@ namespace Nop.Web.Controllers
                 if (command.pt.HasValue)
                     categoriesIds = GetChildCategoryIds(command.pt.Value);
 
-                var products = _productService.SearchProducts(showHidden: true, categoryIds: categoriesIds, vendorId: _workContext.CurrentVendor.Id,
+                var products = _productService.SearchProducts(showHidden: !command.p, categoryIds: categoriesIds, vendorId: _workContext.CurrentVendor.Id,
                     pageSize: command.PageSize, pageIndex: command.PageIndex, keywords: keywordsSearch,
-                    orderBy: ProductSortingEnum.UpdatedOn, published: command.p);
+                    orderBy: ProductSortingEnum.UpdatedOn, published:command.p);
 
                 model.Products = products.Select(p => new ProductOverviewModel()
                 {
@@ -533,9 +539,9 @@ namespace Nop.Web.Controllers
                     UnansweredQuestions = p.UnansweredQuestions,
                     ApprovedTotalReviews = p.ApprovedTotalReviews,
                     TotalSales = p.TotalSales,
-                    AvailableStartDate = p.AvailableStartDateTimeUtc ?? DateTime.Now,
-                    AvailableEndDate = p.AvailableEndDateTimeUtc ?? DateTime.Now,
-                    Published = p.Published,
+                    AvailableStartDate = p.AvailableStartDateTimeUtc ?? DateTime.UtcNow,
+                    AvailableEndDate = p.AvailableEndDateTimeUtc ?? DateTime.UtcNow,
+                    Published = p.Published && p.AvailableEndDateTimeUtc > DateTime.UtcNow,
                     DefaultPictureModel = p.GetPicture(_localizationService, _mediaSettings, _pictureService)
                 }).ToList();
 

@@ -540,7 +540,8 @@ namespace Nop.Services.Media
                                 {
                                     Width = newSize.Width,
                                     Height = newSize.Width,
-                                    Mode = FitMode.Crop
+                                    Mode = FitMode.Crop,
+                                    Quality = _mediaSettings.DefaultImageQuality
                                 };
                             else
                                 settings = new ResizeSettings

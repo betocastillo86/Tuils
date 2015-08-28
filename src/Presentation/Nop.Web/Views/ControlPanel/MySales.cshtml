@@ -16,7 +16,7 @@
             <div class="td-img">img</div>
             <div class="td-pdt">@T("MyOrders.Product")</div>
             <div class="td-vend">@T("MySales.Customer")</div>
-            <div class="td-cal">@T("MyOrders.Rating") / @T("MyOrders.Date")</div>
+            <div class="td-cal">@T("MyOrders.Rating") / @T("MySales.Date")</div>
             <div class="td-prec">@T("MyOrders.Price")</div>
             <br />
         </div>
@@ -42,7 +42,7 @@
                 <span>@item.Customer.Phone</span>
             </div>
             <div class="td-cal">
-                @if (item.Rating.HasValue)
+                @if (item.ShowRating)
                 { 
                     @Html.RatingControl(item.Rating.Value)
                 }

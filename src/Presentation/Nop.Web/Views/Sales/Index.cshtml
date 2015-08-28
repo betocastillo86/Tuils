@@ -11,6 +11,11 @@
 <div class="master-wrapper-page container hd">
     <div class="master-wrapper-content">
         <div class="master-wrapper-main">
+            @if (Model.HasReachedLimitOfProducts)
+            { 
+                <div style="color:red">@T("PublishProduct.HasReachedLimitOfProducts")</div>
+            }
+            
             <div class="product-public">
                 <ol class="wizard-breadcrumb">
                     <li id="btnPublishProductStep1" class="wizard-current"><b>PASO 1</b><div>@T("PublishProduct.StepMenu1")</div></li>
