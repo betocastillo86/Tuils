@@ -1,4 +1,5 @@
 ﻿using Nop.Core.Domain.ControlPanel;
+using Nop.Core.Domain.Vendors;
 using Nop.Web.Models.Customer;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,9 @@ namespace Nop.Web.Models.ControlPanel
 
         public int UnansweredQuestions { get; set; }
 
+        public bool ShowWelcomeMessage { get; set; }
+
+        public VendorType VendorType { get; set; }
 
         public MyAccountModel    Customer { get; set; }
 

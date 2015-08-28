@@ -14,6 +14,22 @@
  */
 /* normalize.css v2.0.1 | MIT License | git.io/normalize */
 
+
+#outer-wrap {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  z-index:1;
+}
+
+body {
+  color: #333;
+  position: relative;
+  width: 100%;
+  min-width:320px;
+}
+
+
 @media screen and (min-width: 1025px) {
   #top .nav-btn {
     border: 0;
@@ -147,11 +163,11 @@
   }
   .csstransforms3d.csstransitions.js-ready #inner-wrap {
     left: 0 !important;
-    -webkit-transform: translate3d(0, 0, 0);
+    /*-webkit-transform: translate3d(0, 0, 0);*/
     -moz-transform: translate3d(0, 0, 0);
     -ms-transform: translate3d(0, 0, 0);
     -o-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
+    /*transform: translate3d(0, 0, 0);*/
     -webkit-transition: -webkit-transform 500ms ease;
     -moz-transition: -moz-transform 500ms ease;
     -o-transition: -o-transform 500ms ease;

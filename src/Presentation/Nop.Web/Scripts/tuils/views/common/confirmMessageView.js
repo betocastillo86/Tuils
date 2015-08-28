@@ -6,11 +6,16 @@
 
             message: undefined,
 
-            autoclose : true,
+            autoclose: true,
+
+            duration:3000,
 
             initialize: function (args) {
                 if (args && args.autoclose)
                     this.autoclose = args.autoclose;
+
+                if (args && args.duration)
+                    this.duration = args.duration;
 
                 this.render();
             },
@@ -34,7 +39,7 @@
                             {
                                 setTimeout(function () {
                                     that.$el.dialog('close');
-                                }, 1000);
+                                }, that.duration);
                             }
                         }
                     });

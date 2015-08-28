@@ -63,6 +63,8 @@ namespace Nop.Web.Models.Sales
         public string PhoneNumber { get; set; }
 
         public bool HasReachedLimitOfProducts { get; set; }
+
+        public long MaxSizeFileUpload { get; set; }
     }
 
     

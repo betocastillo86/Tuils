@@ -1,4 +1,4 @@
-﻿define(['jquery', 'underscore', 'backbone', 'baseView', 'simpleMenu'],
+﻿define(['jquery', 'underscore', 'backbone', 'baseView'],
     function ($, _, Backbone, BaseView) {
     var TopMenuView = BaseView.extend({
         events: {

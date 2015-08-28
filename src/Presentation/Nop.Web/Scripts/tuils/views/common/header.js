@@ -1,5 +1,5 @@
 ﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'tuils/views/login/login', 'tuils/views/login/createUser',
-    'baseView', 'baseModel', 'simpleMenu'],
+    'baseView', 'baseModel'],
     function ($, _, Backbone, Handlebars, LoginView, CreateUserView,
         BaseView, BaseModel) {
     var HeaderView = BaseView.extend({
@@ -58,7 +58,7 @@
         refreshUserData: function (model) {
             this.templateUserAuthenticated = Handlebars.compile(this.$("#templateLoggedUser").html());
             this.$(".preLogin").hide();
-            this.$("ul").prepend(this.templateUserAuthenticated(model.toJSON()));
+            this.$("ul").append(this.templateUserAuthenticated(model.toJSON()));
             if (this.isMinSize())
             {
                 var templateLoggedInResponsive = Handlebars.compile(this.$("#templateLoggedInResponsive").html());

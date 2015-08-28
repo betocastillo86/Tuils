@@ -53,22 +53,6 @@
             @Html.EditorFor(model => model.Phone, new { tuils_val = "int" })
             @Html.ValidationMessageFor(model => model.Phone)
         </div>
-        <div class="inputs">
-            @Html.LabelFor(model => model.Newsletter, new { }, ":")
-            @Html.EditorFor(model => model.Newsletter)
-            @Html.ValidationMessageFor(model => model.Newsletter)
-        </div>
-
-    <div class="inputs_date" id="divDateOfBirth">
-        @Html.LabelFor(model => model.DateOfBirth, new { }, ":")
-        <div class="date">
-            @Html.TextBoxFor(model => model.DateOfBirth, new { tuils_val = "none" })
-            <span class="icon-calendar datepickerButton"></span>
-        </div>
-        @Html.RequiredHint()
-        @Html.ValidationMessageFor(model => model.DateOfBirth)
-    </div>
-
         <div class="inputs_date">
             <label class="label">@T("Account.Fields.Gender")</label>
             <div class="onoffswitch">
@@ -79,8 +63,27 @@
                 </label>
             </div>
         </div>
+        <br />
+        <div class="inputs_date" id="divDateOfBirth">
+            @Html.LabelFor(model => model.DateOfBirth, new { }, ":")
+            <div class="date">
+                @Html.TextBoxFor(model => model.DateOfBirth, new { tuils_val = "none" })
+                <span class="icon-calendar datepickerButton"></span>
+            </div>
+            @Html.RequiredHint()
+            @Html.ValidationMessageFor(model => model.DateOfBirth)
+        </div>
+        <div class="inputs">
+            @Html.LabelFor(model => model.Newsletter, new { }, ":")
+            @Html.EditorFor(model => model.Newsletter)
+            @Html.ValidationMessageFor(model => model.Newsletter)
+        </div>
 
-        @Html.ActionLink(T("account.changepassword").Text, "ChangePassword", "Customer", new { }, new { @class = "btn_password" })
+    
+
+        
+
+        @*@Html.ActionLink(T("account.changepassword").Text, "ChangePassword", "Customer", new { }, new { @class = "btn_password" })*@
         <br>
 
 
@@ -117,8 +120,8 @@
             <br>
         </div>
         <div class="conte_check">
-            @Html.EditorFor(model => model.NewsletterBrand) @Html.LabelFor(model => model.NewsletterBrand, new { }, ":")
-            @Html.EditorFor(model => model.NewsletterReference) @Html.LabelFor(model => model.NewsletterReference, new { }, ":")
+            @Html.EditorFor(model => model.NewsletterBrand) @Html.LabelFor(model => model.NewsletterBrand, new { }, "")
+            @Html.EditorFor(model => model.NewsletterReference) @Html.LabelFor(model => model.NewsletterReference, new { }, "")
         </div>
 
 

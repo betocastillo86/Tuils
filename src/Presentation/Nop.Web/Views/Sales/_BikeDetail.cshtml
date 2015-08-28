@@ -8,12 +8,6 @@
 
     <div class="form-public">
            @Html.Partial("_CommonFieldsProductBikeDetail", Model)  
-
-        <div class="inputs" title="@T("PublishProduct.CarriagePlate.Alt")">
-            @Html.LabelT("PublishProduct.CarriagePlate")
-            <input id="txtCarriagePlate" type="text" placeholder="@T("PublishProduct.CarriagePlateExample")" maxlength="7" />
-            @ShowRequired("CarriagePlate")
-        </div>
         <div class="inputs" title="@T("PublishProduct.Kms.Alt")">
             @Html.LabelT("PublishProduct.Kms")
             <input id="txtKms" type="text" tuils-val="int" maxlength="10" />
@@ -30,16 +24,28 @@
             </select>
             @ShowRequired("Year")
         </div>
+        <div class="inputs" title="@T("PublishProduct.CarriagePlate.Alt")">
+            @Html.LabelT("PublishProduct.CarriagePlate")
+            <input id="txtCarriagePlate" type="text" placeholder="@T("PublishProduct.CarriagePlateExample")" maxlength="7" />
+            @ShowRequired("CarriagePlate")
+        </div>
+        
+        
 
-        <div class="inputs" title="@T("PublishProduct.Color.Alt")">
+        @*<div class="inputs" title="@T("PublishProduct.Color.Alt")">
             @Html.LabelT("PublishProduct.Color")
             @Html.DropDownList("ddlColor", Model.ColorOptions, "-")
-            @*@ShowRequired("Color")*@
+            
         </div>
         <div class="inputs" title="@T("PublishProduct.Condition.Alt")">
             @Html.LabelT("PublishProduct.Codition")
             @Html.DropDownList("ddlCondition", Model.ConditionOptions, "-")
-            @*@ShowRequired("Condition")*@
+            
+        </div>*@
+        <div class="inputs" title="@T("PublishProduct.StateProvince.Alt")">
+            @Html.LabelT("PublishProduct.StateProvince")
+            @Html.DropDownList("ddlStateProvince", Model.StateProvinces, "-")
+            @ShowRequired("StateProvince")
         </div>
 
             <br />
@@ -66,8 +72,10 @@
             </div>
         }
     </div>
-    <div class="descript_crea" title="@T("PublishProduct.FullDescriptionBike.Alt")">
-        @Html.TextAreaRequired("FullDescription", labelResource: "PublishProduct.Product.Html")
+    <br />
+    <div class="title" >@T("PublishProduct.Product.Html")</div>
+    <div class="descript_crea" >
+        @Html.TextAreaRequired("FullDescription", labelText:string.Empty)
     </div>
 
 </form>

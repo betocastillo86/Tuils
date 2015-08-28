@@ -134,6 +134,7 @@ namespace Nop.Web.Controllers
             var model = new ControlPanelModel();
             model.Modules = this._controlPanelService.GetModulesActiveUser();
             model.Customer = _workContext.CurrentCustomer.ToMyAccountModel();
+            model.ShowWelcomeMessage = !string.IsNullOrEmpty(Request.QueryString["w"]);
 
             if (_workContext.CurrentVendor != null)
             {
@@ -151,7 +152,10 @@ namespace Nop.Web.Controllers
                     //Suma el numero de preguntas sin responder
                     model.UnansweredQuestions = _productService.CountUnansweredQuestionsByVendorId(_workContext.CurrentVendor.Id);
 
+                model.VendorType = _workContext.CurrentVendor.VendorType;
             }
+
+            
 
             return model;
 
