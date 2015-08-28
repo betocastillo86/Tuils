@@ -860,7 +860,7 @@ html.oldie .container { width: 940px; }
         .header .search-box form .btn_search{display: none;}
     .main-search-box{display: block; z-index: 2; border-radius: 0 0 0 30px;}
 
-        .top-menu, .header-links-wrapper{}
+        .top-menu, .header-links-wrapper{height:inherit; background:none; position: inherit; width: inherit;}
     .header-logo{position:absolute; top: 10px; left: 80px; z-index:3; margin: 0;}
     .btn_anuncia{position: absolute; z-index: 2; top:10px; right:80px; padding: 10px 15px; margin:0;}
         .btn_anuncia i{display: none;}
@@ -872,10 +872,6 @@ html.oldie .container { width: 940px; }
         /*segundo nivel*/
         .childrenOptions li:first-child{margin-left:220px !important;}
     
-    .main-registro{background: #3E3C47 !important; width: 100% !important; padding: 20px 0;}
-    .main-registro a{color: #FFF; display: block; float: left; width: 50%;}
-    .main-wishlist{background: #3E3C47 !important; width: 100% !important; clear: both !important;}
-        .main-wishlist .icon-corazon{color: #FFF; font-size: 25px;} 
     .user-li{background:#3e3c47; padding: 10px 20px !important;}
     .user-li a{font-size: 16px;}
     .user-li a img{width: 40px; height: 40px; border-radius:2px;}  
