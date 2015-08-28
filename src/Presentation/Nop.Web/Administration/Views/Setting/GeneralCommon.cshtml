@@ -354,6 +354,17 @@
                 @Html.ValidationMessageFor(model => model.SeoSettings.WwwRequirement)
             </td>
         </tr>
+
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.SeoSettings.DisableRobotsForTestingSite_OverrideForStore, model => model.SeoSettings.DisableRobotsForTestingSite, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.SeoSettings.DisableRobotsForTestingSite):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SeoSettings.DisableRobotsForTestingSite)
+                @Html.ValidationMessageFor(model => model.SeoSettings.DisableRobotsForTestingSite)
+            </td>
+        </tr>
         <tr>
             <td class="adminTitle">
                 @Html.OverrideStoreCheckboxFor(model => model.SeoSettings.EnableJsBundling_OverrideForStore, model => model.SeoSettings.EnableJsBundling, Model.ActiveStoreScopeConfiguration)

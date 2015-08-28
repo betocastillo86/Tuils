@@ -11,6 +11,8 @@
         var manufacturerUrl = Url.RouteUrl("Manufacturer", new { SeName = Model.SeName }, this.Request.Url.Scheme);
         Html.AddCanonicalUrlParts(manufacturerUrl);
     }
+
+    Html.AddHeadPreviousNextPage(Model.PagingFilteringContext);
 }
 @using Nop.Core.Domain.Seo;
 @using Nop.Core.Infrastructure;

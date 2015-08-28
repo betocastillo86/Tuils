@@ -4,7 +4,8 @@
         events: {
             'click .icon-lupa': 'showSearchBox',
             'click .closeSearchResponsive': 'hideResponsiveSearch',
-            'submit form' : 'search'
+            'submit form' : 'search',
+            'keyup #small-searchterms' : 'refreshSubmitForm'
         },
 
         autocompleteUrl: undefined,
@@ -21,6 +22,9 @@
             this.autocompleteUrl = this.searchBox.attr("data-url");
             this.minLengthAutocomplete = this.searchBox.attr("data-minlength");
             this.loadAutoComplete();
+        },
+        refreshSubmitForm: function () {
+            this.$("form").attr('action', '/buscar/' + this.searchBox.val());
         },
         search: function () {
             if (this.searchBox.val() == "") {

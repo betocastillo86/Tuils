@@ -155,6 +155,10 @@ namespace Nop.Admin.Models.Settings
             [NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.OpenGraphMetaTags")]
             public bool OpenGraphMetaTags { get; set; }
             public bool OpenGraphMetaTags_OverrideForStore { get; set; }
+            [NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.DisableRobotsForTestingSite")]
+            public bool DisableRobotsForTestingSite { get; set; }
+
+            public bool DisableRobotsForTestingSite_OverrideForStore { get; set; }
         }
 
         public partial class SecuritySettingsModel : BaseNopModel

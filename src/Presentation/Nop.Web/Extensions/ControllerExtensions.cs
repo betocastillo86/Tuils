@@ -370,7 +370,8 @@ namespace Nop.Web.Extensions
                     RatingSum = product.ApprovedRatingSum,
                     TotalReviews = product.ApprovedTotalReviews,
                     AllowCustomerReviews = product.AllowCustomerReviews,
-                    ProductSeName = model.SeName
+                    ProductSeName = model.SeName,
+                    ShowSnippets = false
                 };
 
                 models.Add(model);

@@ -68,5 +68,10 @@ namespace Nop.Core.Domain.Seo
         /// Slugs (sename) reserved for some other needs
         /// </summary>
         public List<string> ReservedUrlRecordSlugs { get; set; }
+
+        /// <summary>
+        /// True: Deja el sitio como no rasteable en el archivo robots.txt
+        /// </summary>
+        public bool DisableRobotsForTestingSite { get; set; }
     }
 }

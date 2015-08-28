@@ -39,6 +39,7 @@ using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Common;
 using Nop.Web.Models.Topics;
 using Nop.Core.Domain.Vendors;
+using Nop.Core.Domain.Seo;
 
 namespace Nop.Web.Controllers
 {
@@ -79,6 +80,7 @@ namespace Nop.Web.Controllers
         private readonly LocalizationSettings _localizationSettings;
         private readonly CaptchaSettings _captchaSettings;
         private readonly TuilsSettings _tuilsSettings;
+        private readonly SeoSettings _seoSettings;
 
         #endregion
 
@@ -115,7 +117,8 @@ namespace Nop.Web.Controllers
             ForumSettings forumSettings,
             LocalizationSettings localizationSettings, 
             CaptchaSettings captchaSettings,
-            TuilsSettings tuilsSettings)
+            TuilsSettings tuilsSettings,
+            SeoSettings seoSettings)
         {
             this._categoryService = categoryService;
             this._productService = productService;
@@ -150,6 +153,7 @@ namespace Nop.Web.Controllers
             this._localizationSettings = localizationSettings;
             this._captchaSettings = captchaSettings;
             this._tuilsSettings = tuilsSettings;
+            this._seoSettings = seoSettings;
         }
 
         #endregion
@@ -739,16 +743,28 @@ namespace Nop.Web.Controllers
 
         public ActionResult RobotsTextFile()
         {
-            var disallowPaths = new List<string>
+            List<string> disallowPaths;
+            List<string> localizableDisallowPaths;
+
+            //Si debe deshabilitar 
+            //deshabilita todos los paths del sitio
+            if (_seoSettings.DisableRobotsForTestingSite)
+            {
+                disallowPaths = new List<string> { "/" };
+                localizableDisallowPaths = new List<string>();
+            }
+            else
+            {
+                disallowPaths = new List<string>
                                     {
                                         "/bin/",
                                         "/content/files/",
                                         "/content/files/exportimport/",
                                         "/country/getstatesbycountryid",
                                         "/install",
-                                        "/setproductreviewhelpfulness",
-                                    };
-            var localizableDisallowPaths = new List<string>
+                                        "/setproductreviewhelpfulness"};
+
+                localizableDisallowPaths = new List<string>
                                                {
                                                    "/addproducttocart/catalog/",
                                                    "/addproducttocart/details/",
@@ -804,6 +820,8 @@ namespace Nop.Web.Controllers
                                                    "/uploadfilecheckoutattribute",
                                                    "/wishlist",
                                                };
+                
+            }
 
 
             const string newLine = "\r\n"; //Environment.NewLine

@@ -9,11 +9,11 @@
 }
 @*edited*@
 @*<div class="page product-reviews-page">*@
-<div class="page product-reviews-page" id="product-reviews-page">
+<div class="page product-reviews-page" id="product-reviews-page" itemscope itemtype="http://schema.org/Review">
     @*edited*@
-    @*<div class="page-title">
-            <h1>@T("Reviews.ProductReviewsFor") <a href="@Url.RouteUrl("Product", new { SeName = Model.ProductSeName })">@Model.ProductName</a></h1>
-        </div>*@
+    <div class="page-title" itemprop="itemReviewed" itemscope itemtype="http://schema.org/Product">
+        <h1>@T("Reviews.ProductReviewsFor") <a href="@Url.RouteUrl("Product", new { SeName = Model.ProductSeName })">@Model.ProductName</a></h1>
+    </div>
     <div class="page-body">
 
 
@@ -43,7 +43,7 @@
 
                                 @*<div class="text-character">Restan 140 caracteres</div>*@
                             </div>
-                            <div class="review-rating">
+                            <div class="review-rating" >
                                 @Html.LabelFor(model => model.AddProductReview.Rating, new { }, ":")
                                 <ul>
                                     <li class="first">@T("Reviews.Fields.Rating.Bad")</li>
@@ -112,15 +112,16 @@
                                 @review.WrittenOnStr
                             </div>
                         </div>
-                        <div class="product-review-box">
+                        <div class="product-review-box" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
                             <div class="rating">
                                 <div style="width: @(ratingPercent)%">
                                 </div>
+                                <span itemprop="ratingValue" style="display:none">@review.Rating</span>
                             </div>
                         </div>
                         <div class="clear">
                         </div>
-                        <div class="review-text">
+                        <div class="review-text" itemprop="reviewBody">
                             @Html.Raw(Nop.Core.Html.HtmlHelper.FormatText(review.ReviewText, false, true, false, false, false, false))
                         </div>
                         <div class="clear">
@@ -136,6 +137,6 @@
         }
 
 
-       
+
     </div>
 </div>

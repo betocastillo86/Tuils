@@ -974,7 +974,7 @@ namespace Nop.Web.Models.Catalog
                 IWebHelper webHelper,
                 IWorkContext workContext,
                 //Valida si debe agregar el filtro del nombre a las URL
-                bool addFilterNameToUrl = true)
+                bool addFilterNameToUrl = false)
             {
                 this.ShowFilterNameInUrl = addFilterNameToUrl;
                 

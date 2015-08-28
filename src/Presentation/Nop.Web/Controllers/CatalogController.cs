@@ -673,7 +673,7 @@ namespace Nop.Web.Controllers
             //bike references
             model.PagingFilteringContext.BikeReferenceFilter.PrepareFilters(specialCategoryId,
         filterableSpecialCategoryIds,
-        _categoryService, _webHelper, _workContext, true);
+        _categoryService, _webHelper, _workContext);
 
             //template
             var templateCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_TEMPLATE_MODEL_KEY, category.CategoryTemplateId);
@@ -1206,6 +1206,7 @@ namespace Nop.Web.Controllers
 
             //activity log
             _customerActivityService.InsertActivity("PublicStore.ViewManufacturer", _localizationService.GetResource("ActivityLog.PublicStore.ViewManufacturer"), manufacturer.Name);
+            model.IsMobileDevice = Request.Browser.IsMobileDevice;
 
             return View(templateViewPath, model);
         }
@@ -1668,7 +1669,8 @@ namespace Nop.Web.Controllers
             IPagedList<Product> products = new PagedList<Product>(new List<Product>(), 0, 1);
             // only search if query string search keyword is set (used to avoid searching or displaying search term min length error message on /search page load)
             //Se agrega validación de specs para poder realizar filtro desde el menu
-            if (Request.Params["Q"] != null || (Request.Params["Q"] == null && Request["specs"] != null))
+            //if (Request.Params["Q"] != null || (Request.Params["Q"] == null && Request["specs"] != null))
+            if (!string.IsNullOrEmpty(model.Q))
             {
                 //Solo si tiene un filto por speficicación puede buscar
                 if (model.Q.Length < _catalogSettings.ProductSearchTermMinimumLength && Request["specs"] == null)

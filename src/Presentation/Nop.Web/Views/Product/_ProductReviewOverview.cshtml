@@ -10,7 +10,13 @@
 }
 @if (Model.AllowCustomerReviews)
 {
-    <div class="product-reviews-overview" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+    <div class="product-reviews-overview" 
+         @if (Model.ShowSnippets)
+         { 
+            @:itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating"
+         }
+
+         >
         <div class="product-review-box">
             <div class="rating">
                 <div style="width: @(ratingPercent)%">
@@ -26,8 +32,14 @@
             </div>
             @*hidden microdata info*@
             decimal ratingValue = ratingPercent / (decimal)20;
-            <span itemprop="ratingValue" style="display: none;">@ratingValue.ToString("0.0", new CultureInfo("en-US"))</span>
-            <span itemprop="reviewCount" style="display: none;">@Model.TotalReviews</span>
+            
+            if (Model.ShowSnippets)
+            { 
+                <span style="display: none;">@ratingValue.ToString("0.0", new CultureInfo("en-US"))</span>
+                <span style="display: none;">@Model.TotalReviews</span>
+            }
+            
+            
         }
         else
         {

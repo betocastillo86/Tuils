@@ -193,7 +193,7 @@ namespace Nop.Web.Controllers
 
         [NonAction]
         protected virtual ProductDetailsModel PrepareProductDetailsPageModel(Product product, 
-            ShoppingCartItem updatecartitem = null, bool isAssociatedProduct = false)
+            ShoppingCartItem updatecartitem = null, bool isAssociatedProduct = false, bool showRichSnippets = false)
         {
             if (product == null)
                 throw new ArgumentNullException("product");
@@ -445,6 +445,7 @@ namespace Nop.Web.Controllers
 
             model.ProductPrice.ProductId = product.Id;
             model.ProductPrice.Price = _priceFormatter.FormatPrice(product.Price);
+            model.ProductPrice.ShowSnippets = showRichSnippets;
             if (product.SuppliesValue > 0)
             {
                 model.SuppliesValue = product.SuppliesValue;
@@ -780,7 +781,8 @@ namespace Nop.Web.Controllers
                 RatingSum = product.ApprovedRatingSum,
                 TotalReviews = product.ApprovedTotalReviews,
                 AllowCustomerReviews = product.AllowCustomerReviews,
-                IsProductDetail = true
+                IsProductDetail = true,
+                ShowSnippets = showRichSnippets
             };
 
             #endregion
@@ -977,13 +979,15 @@ namespace Nop.Web.Controllers
             }
 
             //prepare the model
-            var model = PrepareProductDetailsPageModel(product, updatecartitem, false);
+            var model = PrepareProductDetailsPageModel(product, updatecartitem, false, true);
 
             //save as recently viewed
             _recentlyViewedProductsService.AddProductToRecentlyViewedList(product.Id);
 
             //activity log
             _customerActivityService.InsertActivity("PublicStore.ViewProduct", _localizationService.GetResource("ActivityLog.PublicStore.ViewProduct"), product.Name);
+
+            model.IsMobileDevice = Request.Browser.IsMobileDevice;
 
             return View(model.ProductTemplateViewPath, model);
         }

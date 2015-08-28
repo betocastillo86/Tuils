@@ -2042,6 +2042,7 @@ namespace Nop.Admin.Controllers
             model.SeoSettings.EnableCssBundling = seoSettings.EnableCssBundling;
             model.SeoSettings.TwitterMetaTags = seoSettings.TwitterMetaTags;
             model.SeoSettings.OpenGraphMetaTags = seoSettings.OpenGraphMetaTags;
+            model.SeoSettings.DisableRobotsForTestingSite = seoSettings.DisableRobotsForTestingSite;
             //override settings
             if (storeScope > 0)
             {
@@ -2058,6 +2059,7 @@ namespace Nop.Admin.Controllers
                 model.SeoSettings.EnableCssBundling_OverrideForStore = _settingService.SettingExists(seoSettings, x => x.EnableCssBundling, storeScope);
                 model.SeoSettings.TwitterMetaTags_OverrideForStore = _settingService.SettingExists(seoSettings, x => x.TwitterMetaTags, storeScope);
                 model.SeoSettings.OpenGraphMetaTags_OverrideForStore = _settingService.SettingExists(seoSettings, x => x.OpenGraphMetaTags, storeScope);
+                model.SeoSettings.DisableRobotsForTestingSite_OverrideForStore = _settingService.SettingExists(seoSettings, x => x.DisableRobotsForTestingSite, storeScope);
             }
             
             //security settings
@@ -2218,6 +2220,7 @@ namespace Nop.Admin.Controllers
             seoSettings.EnableCssBundling = model.SeoSettings.EnableCssBundling;
             seoSettings.TwitterMetaTags = model.SeoSettings.TwitterMetaTags;
             seoSettings.OpenGraphMetaTags = model.SeoSettings.OpenGraphMetaTags;
+            seoSettings.DisableRobotsForTestingSite = model.SeoSettings.DisableRobotsForTestingSite;
 
             /* We do not clear cache after each setting update.
              * This behavior can increase performance because cached settings will not be cleared 
@@ -2286,6 +2289,11 @@ namespace Nop.Admin.Controllers
                 _settingService.SaveSetting(seoSettings, x => x.OpenGraphMetaTags, storeScope, false);
             else if (storeScope > 0)
                 _settingService.DeleteSetting(seoSettings, x => x.OpenGraphMetaTags, storeScope);
+
+            if (model.SeoSettings.DisableRobotsForTestingSite_OverrideForStore || storeScope == 0)
+                _settingService.SaveSetting(seoSettings, x => x.DisableRobotsForTestingSite, storeScope, false);
+            else if (storeScope > 0)
+                _settingService.DeleteSetting(seoSettings, x => x.DisableRobotsForTestingSite, storeScope);
 
             //now clear settings cache
             _settingService.ClearCache();

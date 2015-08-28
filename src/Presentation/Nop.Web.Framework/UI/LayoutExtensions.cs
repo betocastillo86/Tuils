@@ -297,6 +297,7 @@ namespace Nop.Web.Framework.UI
             var pageHeadBuilder = EngineContext.Current.Resolve<IPageHeadBuilder>();
             pageHeadBuilder.AddHeadCustomParts(part);
         }
+
         /// <summary>
         /// Append any custom element to the <![CDATA[<head>]]>
         /// </summary>

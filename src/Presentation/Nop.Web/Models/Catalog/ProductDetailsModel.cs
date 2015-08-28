@@ -202,6 +202,8 @@ namespace Nop.Web.Models.Catalog
 
             public bool HidePrices { get; set; }
 
+            public bool ShowSnippets { get; set; }
+
             //rental
             public bool IsRental { get; set; }
             public string RentalPrice { get; set; }

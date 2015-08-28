@@ -13,6 +13,8 @@
     }
 
     var breadcrumbDelimiter = EngineContext.Current.Resolve<CommonSettings>().BreadcrumbDelimiter;
+
+    Html.AddHeadPreviousNextPage(Model.PagingFilteringContext);
 }
 @using Nop.Core.Domain.Common;
 @using Nop.Core.Domain.Seo;

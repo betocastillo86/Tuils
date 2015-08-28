@@ -30,11 +30,11 @@
             <div class="filt-inputs priceFilter">
                 <input id="fromFilter" type="text" placeholder="Desde" tuils-val="int" /> &#45;
                 <input id="toFilter" type="text" placeholder="Hasta" tuils-val="int" />
-                <a id="aCustomFilterPrice" href="" class="btn_fil icon-next" data-url="@Model.CustomFilterUrl"></a>
+                <a id="aCustomFilterPrice" href="" class="btn_fil icon-next" data-url="@Model.CustomFilterUrl" rel="nofollow"></a>
             </div>
             @foreach (var item in Model.Items)
             {
-                <li><a href="@item.FilterUrl">@FormatPriceRangeText(item)</a></li>
+                <li><a href="@item.FilterUrl" rel="nofollow">@FormatPriceRangeText(item)</a></li>
             }
         </ul>
     }

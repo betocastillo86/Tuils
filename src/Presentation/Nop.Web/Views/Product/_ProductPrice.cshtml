@@ -1,9 +1,19 @@
 ﻿@model ProductDetailsModel.ProductPriceModel
 @using Nop.Web.Models.Catalog
-<div class="prices" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+
+<div class="prices">
+
+
     <div class="product-price">
         <span itemprop="price" class="price-value-@(Model.ProductId)">
             @Html.Raw(Model.Price)
         </span>
+        
     </div>
+    @if (!String.IsNullOrEmpty(Model.CurrencyCode))
+    {
+        <meta itemprop="priceCurrency" content="@Model.CurrencyCode" />
+    }
+    <meta itemprop="price" content="@Model.PriceValue" />
+
 </div>

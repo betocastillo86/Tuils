@@ -1,24 +1,18 @@
 ﻿@model ProductDetailsModel
 @using Nop.Web.Models.Catalog;
-@if (Model.ProductAlreadyBought)
-{
-    /*Si el usuario ya compró el producto se muestra el link al vendedor*/
-    if (Model.ShowVendor)
+
+    @*Si el usuario ya compró el producto se muestra el link al vendedor*@
+    @if (Model.ShowVendor)
     {
-        <div class="product-vendor">
+        <div class="product-vendor" itemprop="seller" itemscope itemtype="http://schema.org/Organization" style="display:@(!Model.ProductAlreadyBought ? "none" : string.Empty)">
             <h3>Informaci&oacute;n del vendedor</h3>
-            <span class="label">@T("Products.Vendor"): </span><span class="value"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">@Model.VendorModel.Name</a></span>
+            <span class="label">@T("Products.Vendor"): </span><span class="value"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })" itemprop="name">@Model.VendorModel.Name</a></span>
             @if (Model.VendorModel.VendorType == Nop.Core.Domain.Vendors.VendorType.User)
-            { 
+            {
                 <br />
                 <span class="label">@T("Products.Vendor.PhoneNumber"): </span><span class="value">@Model.VendorModel.PhoneNumber</span>
             }
         </div>
     }
-}
-else
-{
-    <input type="button" value="@T("Products.SeeVendor")" id="btnShowVendor" data-productid="@Model.Id" data-vendorurl="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })" class="button-2">
-}
 
 

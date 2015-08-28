@@ -227,6 +227,28 @@ namespace Nop.Web.Framework.UI.Paging
             return liBuilder.ToString(TagRenderMode.Normal);
 		}
 
+        /// <summary>
+        /// Retorna la url de la siguiente pagina
+        /// </summary>
+        /// <returns></returns>
+        public string GetNextUrl()
+        {
+            if (model.HasNextPage)
+                return CreateDefaultUrl(model.PageNumber + 1);
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Retorna la Url de la pagina anterior
+        /// </summary>
+        /// <returns></returns>
+        public string GetPreviousUrl()
+        {
+            if (model.PageNumber > 1)
+                return CreateDefaultUrl(model.PageNumber - 1);
+            return string.Empty;
+        }
+
         protected virtual string CreateDefaultUrl(int pageNumber)
 		{
 			var routeValues = new RouteValueDictionary();

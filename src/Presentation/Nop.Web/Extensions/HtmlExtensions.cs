@@ -12,6 +12,8 @@ using Nop.Web.Framework.UI.Paging;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Boards;
 using Nop.Web.Models.Common;
+using Nop.Web.Models.Catalog;
+using Nop.Web.Framework.UI;
 
 
 namespace Nop.Web.Extensions
@@ -236,6 +238,16 @@ namespace Nop.Web.Extensions
             }
 
             return helper.Pager(dataSource);
+        }
+
+        public static void AddHeadPreviousNextPage(this HtmlHelper html, CatalogPagingFilteringModel pagingModel)
+        {
+            var pager = new Pager(pagingModel, html.ViewContext).QueryParam("pagenumber");
+            if (pagingModel.HasNextPage)
+                html.AddHeadCustomParts(string.Format("<link rel=\"next\" href=\"{0}\" />", pager.GetNextUrl()));
+
+            if(pagingModel.PageNumber > 1)
+                html.AddHeadCustomParts(string.Format("<link rel=\"prev\" href=\"{0}\" />", pager.GetPreviousUrl()));
         }
 
         /// <summary>

@@ -52,12 +52,12 @@
 <!--product breadcrumb-->
 @if (!Model.IsMobileDevice)
 {
-    Html.Partial("_ProductBreadcrumb", Model.Breadcrumb);    
+    @Html.Partial("_ProductBreadcrumb", Model.Breadcrumb);    
 }
 
 @Html.Widget("productdetails_after_breadcrumb", Model.Id)
 <div id="divMainSection">
-    <div class="page product-details-page">
+    <div class="page product-details-page" itemscope itemtype="http://schema.org/Product">
         <div class="page-body">
             @Html.Widget("productdetails_top", Model.Id)
             @*added*@
@@ -70,7 +70,7 @@
 
             </div>
 
-            <div itemscope itemtype="http://schema.org/Product" data-productid="@Model.Id">
+            <div data-productid="@Model.Id">
                 <div class="product-essential">
 
                     <!--product pictures-->
@@ -78,11 +78,18 @@
 
                     <div class="overview">
                         <!--product price-->
-                        @{
-                            var dataDictPrice = new ViewDataDictionary();
-                            dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
-                            @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
-                        }
+
+                        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+
+                            @{
+                                var dataDictPrice = new ViewDataDictionary();
+                                dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
+                                @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
+                            }
+
+                            @Html.Partial("_ProductVendor", Model)
+
+                        </div>
                         <!--product reviews-->
                         @Html.Partial("_ProductReviewOverview", Model.ProductReviewOverview)
                         <!--product creditcard-->
@@ -107,13 +114,17 @@
                             @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
                         </div>
                         <!--vendor info-->
-                        @Html.Partial("_ProductVendor", Model)
+                        <!---Muesta el botón de comprar-->
+                        @if (!Model.ProductAlreadyBought)
+                        {
+                            <input type="button" value="@T("Products.SeeVendor")" id="btnShowVendor" data-productid="@Model.Id" data-vendorurl="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })" class="button-2">
+                        }
 
 
 
                         @Html.Partial("_AddToWishlist")
 
-                        
+
 
                         @Html.Partial("_CompareProductsButton", Model)
                         @Html.Partial("_ShareButton", Model)
@@ -127,6 +138,7 @@
         </div>
         <br />
     </div>
+
     <div class="product-collateral">
         <div id="tab-container" class="tab-container">
             <ul class="etabs">

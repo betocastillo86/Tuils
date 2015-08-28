@@ -1,4 +1,6 @@
 ﻿@model Nop.Web.Models.Sales.PublishProductModel
+@using Nop.Core.Domain.Seo;
+
 @{
     if(Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Bike)
     {
@@ -20,6 +22,7 @@
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
     Html.AppendCssFileParts("~/Content/tagit/jquery.tagit.css");
+
 }
 
 <div id="divMainSection">
