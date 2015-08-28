@@ -692,6 +692,24 @@ namespace Nop.Web.Controllers
 
             model.IsMobileDevice = Request.Browser.IsMobileDevice;
 
+
+            string filtersUrl = string.Empty;
+                if (this.RouteData.Values["query"] != null)
+                    filtersUrl = string.Join(" ", this.RouteData.Values["query"].ToString().Replace("-", " ").Split(new char[] { '/' }));
+
+            if (!string.IsNullOrEmpty(model.MetaTitle))
+            {
+                model.MetaTitle = string.Format(model.MetaTitle,  filtersUrl);
+            }
+            else
+            {
+                model.MetaTitle = string.Concat(model.Name, " ", filtersUrl);
+            }
+
+            
+            
+
+
             return View(templateViewPath, model);
         }
 
