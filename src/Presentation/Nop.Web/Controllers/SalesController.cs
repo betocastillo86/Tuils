@@ -150,6 +150,7 @@ namespace Nop.Web.Controllers
             model.StateProvinces = new SelectList(_stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry), "Id", "Name");
             model.IsMobileDevice = Request.Browser.IsMobileDevice;
             model.HasReachedLimitOfProducts = HasReachedLimitOfProducts();
+            model.MaxSizeFileUpload = _tuilsSettings.maxFileUploadSize;
             if (_workContext.CurrentVendor != null)
                 model.PhoneNumber = _workContext.CurrentVendor.PhoneNumber;
             return model;

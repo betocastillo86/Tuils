@@ -32,10 +32,13 @@
     @:@style
 }
 <div id="divContentImages">
-
+    @T("PublishProduct.SelectImagesExtensions", Model.MaxSizeFileUpload / 1024000)
     <div class="content-public">
 
         <ul class="picture-uploader">
+
+            
+
             @for (int i = 0; i < 7; i++)
             {
                 <li class="addImageGalery @(i==0 ? "picture_principal" : string.Empty )">
@@ -47,7 +50,7 @@
 
             }
             <br />
-            @T("PublishProduct.SelectImagesExtensions")
+            
         </ul>
     </div>
     <input type="file" style="display:none" />

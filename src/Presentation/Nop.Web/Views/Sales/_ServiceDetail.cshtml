@@ -55,6 +55,11 @@
             <input id="txtSuppliesValue" type="text" tuils-val="int" />
             @ShowRequired("SuppliesValue")
         </div>
+        <div class="inputs" title="@T("PublishProduct.StateProvince.Alt")">
+            @Html.LabelT("PublishProduct.StateProvince")
+            @Html.DropDownList("ddlStateProvince", Model.StateProvinces, "-")
+            @ShowRequired("StateProvince")
+        </div>
         
         <br />
         <div class="descript_crea" title="@T("PublishProduct.FullDescription.Alt")">

@@ -58,10 +58,11 @@ define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars
                 }
                 else if (this.productType == TuilsConfiguration.productBaseTypes.bike) {
                     pushProperty(this, "CarriagePlate");
-                    pushProperty(this, "Condition", true);
-                    pushProperty(this, "Color", true);
+                    //pushProperty(this, "Condition", true);
+                    //pushProperty(this, "Color", true);
+                    this.productProperties.push({ name: this.model.labels.Kms, value: parseInt(this.model.get('Kms')).toKms() + ' Kms.' });
                     pushProperty(this, "Year");
-                    pushProperty(this, "Kms");
+                    //pushProperty(this, "Kms");
                     this.productProperties.push({ name: this.model.labels.Accesories, value: TuilsUtil.toStringWithSeparator(this.model.get('AccesoriesName'), ',') });
                     this.productProperties.push({ name: this.model.labels.Negotiation, value: TuilsUtil.toStringWithSeparator(this.model.get('NegotiationName'), ',') });
                 }
@@ -122,7 +123,7 @@ define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars
                     this.trigger("summary-save");
                 }
                 else {
-                    alert("Debes aceptar terminos y condiciones");
+                    this.alert("Para publicar tu anuncio debes aceptar nuestros Términos y Condiciones.");
                 }
             },
             back: function () {

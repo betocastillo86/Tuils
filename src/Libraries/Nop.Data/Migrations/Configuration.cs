@@ -968,6 +968,10 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.ProductLimit", "Limite de productos publicados por usuario");
                 newLocaleStringResources.Add("PublishProduct.HasReachedLimitOfProducts", "Has alcanzado el limite de publicaciones, es posible que tu producto no sea publicado. Si quieres realizar más publicaciones contactate con nosotros {0}");
 
+                newLocaleStringResources.Add("controlpanelindex.greeting.complement", "Para nosotros es un gusto recibirte en esta gran plataforma. Recuerda que aquí puedes publicar productos de forma GRATUITA para que logres hacer negocios como compras, ventas, adquisición de servicios, y mucho más.");
+                newLocaleStringResources.Add("controlpanelindex.greeting.complement.shops", "Para nosotros es un gusto recibirte en esta gran plataforma. Recuerda que aquí puedes publicar productos para que logres hacer negocios como compras, ventas, adquisición de servicios, y mucho más.");
+                
+
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)
                 {

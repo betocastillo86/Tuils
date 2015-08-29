@@ -230,9 +230,9 @@
                 if (response.responseJSON.ModelState &&
                     (response.responseJSON.ModelState.ErrorCode == TuilsConfiguration.errorCodes.publishInvalidCategory
                         || response.responseJSON.ModelState.ErrorCode == TuilsConfiguration.errorCodes.hasReachedLimitOfProducts))
-                    alert(response.responseJSON.ModelState.ErrorMessage);
+                    this.alert(response.responseJSON.ModelState.ErrorMessage[0]);
                 else
-                    alert("Ocurrió un error, intentalo de nuevo");
+                    this.alert("Ocurrió un error, intentalo de nuevo");
             },
             showFinish: function () {
                 this.showNextStep();

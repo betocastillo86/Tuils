@@ -7,11 +7,14 @@
 
 <div class="panel-control">
     <h2 class="tit_sec tit_name">@T("controlpanelindex.greeting", Model.Customer.FullName)</h2>
+    <h3 class="tit_sec tit_name">
+        @T(string.Format("controlpanelindex.greeting.complement{0}", Model.VendorType != Nop.Core.Domain.Vendors.VendorType.User ? ".shop" : string.Empty))
+    </h3>
     <div class="cant_art">
         @T("controlpanelindex.publishedproducts") <span><i>@Model.PublishedProducts</i></span>
     </div>
     <br />
-    @T("controlpanelindex.description")
+    @*@T("controlpanelindex.description")*@
 
     <ul class="items-ctl">
 

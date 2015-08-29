@@ -40,7 +40,7 @@
             //}
         },
         labels: {
-            Name: "Nombres",
+            Name: "Nombre",
             Email: "Correo electrónico",
             Password: "Clave",
             CompanyName : "Nombre establecimiento",

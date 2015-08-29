@@ -137,13 +137,13 @@
                         });
                     }
                     else {
-                        alert("La extensión del archivo no es valida");
+                        this.alert("Las imágenes tienen que estar en formatos .jpg, .gif o .png.");
                         return false;
                     }
 
                 }
                 else {
-                    alert("El tamaño excede el limite");
+                    this.alert("El tamaño máximo permitidopar tus archivos es de " + TuilsConfiguration.maxFileUploadSize / 1024000 + "Mb");
                     return false;
                 }
 
@@ -178,7 +178,7 @@
                 this.trigger("images-save", this.collection);
             }
             else {
-                alert("Debe seleccionar por lo menos "+this.minFilesUploaded+" imagen" + (this.minFilesUploaded > 1 ? "es" : ""));
+                this.alert("Para publicar tu anuncio debes subir por lo menos " + this.minFilesUploaded + " imágen" + (this.minFilesUploaded > 1 ? "es" : ""));
             }
         },
         back: function () {
