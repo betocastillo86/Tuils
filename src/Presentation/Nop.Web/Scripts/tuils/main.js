@@ -5,9 +5,9 @@
         //    deps :['jquery', 'jqueryui'],
         //    exports: 'tagit'
         //},
-        //jquery: {
-        //    exports: ['jQuery']
-        //},
+        jquery: {
+            exports: ['jQuery', '$']
+        },
         //backbone: {
         //    deps: ['underscore', 'jquery'],
         //    exports: 'Backbone'
@@ -25,7 +25,7 @@
             exports: 'Backbone'
         },
         simpleMenu: {
-            deps: ['modernizr'],
+            deps: ['modernizr', 'jquery'],
             exports: 'simpleMenu'
         },
         //mmenunav: {
@@ -64,14 +64,14 @@
     },
     paths: {
         //Externas
-        //jquery: [
-        //    'https://code.jquery.com/jquery-1.10.2.min',
-        //    'jquery-1.10.2'
-        //],
-        //jqueryui: [
-        //    'http://code.jquery.com/ui/1.11.4/jquery-ui.min',
-        //    'jquery-ui-1.10.3.custom.min'
-        //],
+        jquery: [
+            'https://code.jquery.com/jquery-1.10.2.min',
+            'jquery-1.10.2'
+        ],
+        jqueryui: [
+            'http://code.jquery.com/ui/1.11.4/jquery-ui.min',
+            'jquery-ui-1.10.3.custom.min'
+        ],
         //jqueryunobtrusive: [
         //    'http://ajax.aspnetcdn.com/ajax/mvc/5.0/jquery.validate.unobtrusive.min',
         //    'jquery.validate.unobtrusive.min'
@@ -96,23 +96,25 @@
         //    'http://cdnjs.cloudflare.com/ajax/libs/backbone.validation/0.11.5/backbone-validation-min',
         //    'backbone-validation.min'
         //],
-        //handlebars: [
-        //    'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.amd.min',
-        //    'handlebars.min'
-        //],
+        handlebars: [
+            'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.amd.min',
+            'handlebars.min'
+        ],
         //accounting: [
         //    'https://cdnjs.cloudflare.com/ajax/libs/accounting.js/0.4.1/accounting.min',
         //    'accounting.min'
         //],
-        jquery:  'jquery-1.10.2',
-        jqueryui: 'jquery-ui-1.10.3.custom.min',
+
+
+        //jquery: 'jquery-1.10.2',
+        //jqueryui: 'jquery-ui-1.10.3.custom.min',
         jqueryunobtrusive: 'jquery.validate.unobtrusive.min',
         jqueryvalidate: 'jquery.validate.min',
         underscore: 'underscore-min',
         backbone : 'backbone-min',
         stickit: 'backbone.stickit.min',
         validations:'backbone-validation.min',
-        handlebars: 'handlebars.min',
+        //handlebars: 'handlebars.min',
         accounting: 'accounting.min',
         
 

@@ -177,7 +177,7 @@ ul.language-list li:hover{cursor:pointer;}
 	.main-search-box a{height: 40px; width: 40px; display: block; padding: 10px; color: #FFF;}
 
 /* top menu */
-nav:not(.mm-menu, .nav-category) {display: none;}
+/*nav:not(.nav-category) {display: none;}*/
     .headerButtonMenuResponsive {display:none; background:#282631;  font-size: 30px; font-weight: bold; text-align: center; color: #fff; -moz-box-sizing: border-box; box-sizing: border-box; width: 60px; height: 60px; padding:0; line-height: 60px; position: absolute; top: 0; left: 0;}
         .headerButtonMenuResponsive.fixed {position: fixed; top: 0; left: 0;}
         .headerButtonMenuResponsive.fixed {position: fixed; bottom: 0; left: 0;}
