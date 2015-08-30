@@ -111,9 +111,6 @@ body {
     border-bottom: 0.625em transparent solid;
     border-right: 0.625em white solid;
   }
-  #nav li a {
-    padding: 0.85714em 2.14286em;
-  }
 
   .js-ready #nav {
     height: 100%;

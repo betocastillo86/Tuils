@@ -1593,6 +1593,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .content-public{}
     .content-public .title{color:#F84C2A; font-size: 16px; font-weight: 500; margin: 0 0 10px;}
     .form-public{padding: 7px 0 0;}
+    	.form-public #imgBrand{ display: block; margin: 0 auto;}
     .input-validation-error{background:#FFF1EE !important; border-color: #FD562C !important;}
     .text-character{float: left; margin:0 0 0 160px; color: #889BB4; font-size: 12px;}
     .tipo-marca{margin: 2px 0; min-width: 100%; font-size: 14px; min-height: 54px; margin:0 0 12px;}
@@ -1652,8 +1653,9 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 .tit_sec{color:#395983; font-size: 20px; font-weight: 500; padding:9px 0;}
     .img_pf img{width: 100%; height: 100%;}
 .panel-control{padding: 25px 0 30px;}
-    .tit_name{float:left;}
-    .cant_art{float: left; color: #F94C2A; font-weight: 500; margin:0 0 20px 30px;}
+    .tit_name{float: left;}
+    .welcome_panel{font-weight: 400; font-size: 16px; margin:0 0 15px; color:#292732;}
+    .cant_art{float: left; color: #F94C2A; font-weight: 500; margin:0 0 5px 30px;}
         .cant_art span{background:#FB7055; color: #FFF; font-size: 20px; text-align: center; font-weight: 400; position: relative; box-sizing:border-box; border-radius: 20px; min-width:40px; height: 40px; padding: 9px; display: inline-block; margin: 0 0 0 10px;}
         .cant_art span:before{border-bottom:solid 10px #FB7055; border-left:solid 12px transparent; position: absolute; content: ""; top: 15px; left: -10px;}
     .items-ctl{margin:0; list-style: none; color: #395983; background:#F9FAFB; padding:7px;}
