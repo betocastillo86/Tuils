@@ -88,6 +88,11 @@ namespace Nop.Web.Models.Catalog
 
         public string q { get; set; }
 
+        /// <summary>
+        /// Id del producto especifico por el que se quiere filtrar
+        /// </summary>
+        public int pid { get; set; }
+
 
         #endregion
 

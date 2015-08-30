@@ -1336,15 +1336,40 @@ namespace Nop.Web.Controllers
                 vendor.PageSize);
 
             //products
+
+            
             Dictionary<int, int> filterableSpecificationAttributeOptionIds;
-            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, false,
-                vendorId: vendor.Id,
-                storeId: _storeContext.CurrentStore.Id,
-                visibleIndividuallyOnly: true,
-                orderBy: (ProductSortingEnum)command.OrderBy,
-                pageIndex: command.PageNumber - 1,
-                pageSize: command.PageSize,
-                keywords: string.IsNullOrWhiteSpace(command.q) ? null : command.q);
+            IPagedList<Product> products = null;
+
+            //Si viene filtro por id de producto intenta realizar el filtro
+            //Si  no encuentra ningún resultado trae todos los productos del vendedor
+            if (command.pid > 0)
+            {
+                //Consulta el producto por el id
+                var product = _productService.GetProductById(command.pid);
+                //Valida que el producto exista y que este asociado al vendedor
+                if (product != null && product.VendorId == vendor.Id)
+                {
+                    model.FilteredByProduct = true;
+                    products = new PagedList<Product>(new List<Product>() { product }, 0, 1, 1);
+                }
+            }
+
+            //Si no hay productos, realiza la busqueda por los productos del vendedor
+            //Esta busqueda se hace por fuera del else de command.pid > 0 ya que si el producto no existe o no es del vendedor lista todos los demás
+            if (products == null)
+            {
+                products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, false,
+                    vendorId: vendor.Id,
+                    storeId: _storeContext.CurrentStore.Id,
+                    visibleIndividuallyOnly: true,
+                    orderBy: (ProductSortingEnum)command.OrderBy,
+                    pageIndex: command.PageNumber - 1,
+                    pageSize: command.PageSize,
+                    keywords: string.IsNullOrWhiteSpace(command.q) ? null : command.q);
+            }
+
+            
             model.Products = PrepareProductOverviewModels(products).ToList();
 
             model.TotalActiveProducts = _productService.CountActiveProductsByVendorId(vendor.Id);
