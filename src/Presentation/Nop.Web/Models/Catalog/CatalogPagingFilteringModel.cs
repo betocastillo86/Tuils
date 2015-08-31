@@ -96,6 +96,8 @@ namespace Nop.Web.Models.Catalog
 
         #endregion
 
+
+
         #region Nested classes
 
 

@@ -35,9 +35,9 @@ namespace Nop.Data.Migrations
             bool runManufacturers = false;
             bool runManufacturersCategories = false;
             bool runSettings = true;
-            bool runTemplatesEmails = true;
+            bool runTemplatesEmails = false;
             bool runUrls = false;
-            bool runTasks = true;
+            bool runTasks = false;
 
             #region Specification Attribute
 
@@ -970,6 +970,10 @@ namespace Nop.Data.Migrations
 
                 newLocaleStringResources.Add("controlpanelindex.greeting.complement", "Para nosotros es un gusto recibirte en esta gran plataforma. Recuerda que aquí puedes publicar productos de forma GRATUITA para que logres hacer negocios como compras, ventas, adquisición de servicios, y mucho más.");
                 newLocaleStringResources.Add("controlpanelindex.greeting.complement.shops", "Para nosotros es un gusto recibirte en esta gran plataforma. Recuerda que aquí puedes publicar productos para que logres hacer negocios como compras, ventas, adquisición de servicios, y mucho más.");
+                newLocaleStringResources.Add("vendor.noEditedDescription", "Agregue una breve descripción de su tienda");
+                newLocaleStringResources.Add("pageTitle.categoryDefault", "¿Donde comprar {0} {1}?");
+                
+
                 
 
                 //Recorre todas las llaves que desea adicional
@@ -2538,15 +2542,6 @@ namespace Nop.Data.Migrations
                         Enabled = true,
                         StopOnError = false,
                         Type = "Nop.Services.Common.LoadBikesCacheTask, Nop.Services"
-                    },
-                    new ScheduleTask()
-                    {
-                        Id = 8,
-                        Name = "Vencimiento de publicaciones",
-                        Seconds = 14400,
-                        Enabled = true,
-                        StopOnError = false,
-                        Type = "Nop.Services.Common.PublishingAlmostFinishedTask, Nop.Services"
                     },
                     new ScheduleTask()
                     {

@@ -752,7 +752,7 @@ namespace Nop.Services.Messages
                 tokens.Add(new Token("Product.AvailableEndDateTimeUtc", product.AvailableEndDateTimeUtc.Value.ToShortDateString()));
 
             //TODO add a method for getting URL (use routing because it handles all SEO friendly URLs)
-            var productUrl = string.Format("{0}{1}", GetStoreUrl(), product.GetSeName());
+            var productUrl = string.Format("{0}p/{1}", GetStoreUrl(), product.GetSeName());
             tokens.Add(new Token("Product.ProductURLForCustomer", productUrl, true));
 
             //event notification
