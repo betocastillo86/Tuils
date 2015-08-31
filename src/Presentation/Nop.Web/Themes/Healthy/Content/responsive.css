@@ -852,7 +852,8 @@ html.oldie .container { width: 940px; }
 }
 @media screen and (max-width:1024px){
     /*Header*/
-    .header{padding: 0; position: absolute; width: 100%; left: 0; top: 0;}
+    /*Header*/
+    .header{padding: 0; width: 100%; height: 60px;}
         .divSearchTextResponsive{display: block;}
 
         #small-searchterms{display: none; width:calc(100% - 70px); margin: 10px; border-radius: 3px;}
@@ -865,17 +866,20 @@ html.oldie .container { width: 940px; }
     .btn_anuncia{position: absolute; z-index: 2; top:10px; right:80px; padding: 10px 15px; margin:0;}
         .btn_anuncia i{display: none;}
         .btn_anuncia b{display: block;}
+    .header-links ul{float: none;}
+    .header-links ul li{display: block; width: 100%; box-sizing:border-box; text-align: left; font-size: 16px; padding: 20px;}
+        .btn_home{margin:0; border-right: 0px; padding:20px !important;}
+        .btn_home h2{font-size: 16px;}
+        .user-li{background:#3e3c47; padding: 10px 20px;}
+        .user-li a{font-size: 16px; padding: 0;}
+        .user-li a img{width: 40px; height: 40px; border-radius:2px;}  
+        .user-li a p{padding: 10px;}
     /*top menu*/
     .headerButtonMenuResponsive{display:block; z-index: 2; border-radius: 0 0 30px;}
     .nav-menu{top:10px; height: 100px;}
         .nav-menu .mm-menu ul li:first-child{margin-left: 260px;}
         /*segundo nivel*/
         .childrenOptions li:first-child{margin-left:220px !important;}
-    
-    .user-li{background:#3e3c47; padding: 10px 20px !important;}
-    .user-li a{font-size: 16px;}
-    .user-li a img{width: 40px; height: 40px; border-radius:2px;}  
-    .user-li a p{padding: 10px;} 
 }
 
 @media screen and (max-width:960px) {
@@ -965,6 +969,8 @@ html.oldie .container { width: 940px; }
         .conte-spc{float: left; margin: 0 0 0 20px; width:calc(50% - 10px); height: 460px;}
     .col-producto{float:none; width: 100%;}
         .col-producto .product-grid .item-box{width:calc(25% - 15px);}
+        .col-producto .product-grid .item-box:nth-child(3n){margin-right: 20px;}
+        .col-producto .product-grid .item-box:nth-child(2n){margin-right: 0;}
         .col-producto .title{padding: 10px 10px 10px 0;}
         .search-pdt{width: calc(70% - 14px)}
     /*Mis productos*/

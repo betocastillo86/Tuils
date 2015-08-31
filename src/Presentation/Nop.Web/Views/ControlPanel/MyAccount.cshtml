@@ -99,6 +99,7 @@
             {
                 <img id="imgBrand" />
             }
+            <br/>
             <div class="inputs">
                 @Html.LabelFor(model => model.BikeBrand.CategoryId, new { }, ":")
                 @Html.DropDownListFor(model => model.BikeBrand.CategoryId, new SelectList(Model.BikeBrands, "Id", "Name"), "-")
