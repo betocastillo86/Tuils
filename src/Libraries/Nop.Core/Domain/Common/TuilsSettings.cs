@@ -106,6 +106,8 @@ namespace Nop.Core.Domain.Common
 
         public int defaultStockQuantity { get; set; }
 
+        public int SendMessageExpirationProductDaysBefore { get; set; }
+
         #endregion
 
 

@@ -584,5 +584,23 @@ namespace Nop.Services.Catalog
         IList<SpecialCategoryProduct> GetSpecialCategoriesByProductId(int productId);
 
         bool HasReachedLimitOfProducts(int vendorId);
+
+        /// <summary>
+        /// Trae los productos que están a punto de finalizar dependiendo de un numero de dias previos
+        /// </summary>
+        /// <param name="daysBefore"></param>
+        /// <param name="withMessageSent">Si el mensaje de notificacion fue enviado o no</param>
+        /// <returns></returns>
+        IList<Product> GetProductsAlmostToFinishPublishing(int daysBefore, bool? withMessageSent);
+        
+        /// <summary>
+        /// Trae los productos que ya finalizaron publicación pero que no se les ha enviado el correo
+        /// </summary>
+        /// <returns></returns>
+        IList<Product> GetProductsFinishedPublishing();
+
+
+
+
     }
 }

@@ -104,7 +104,7 @@
                 //Traquea que un usuario a intentado comprar un producto
                 this.trackGAEvent('Compra', 'Exitosa');
                 if (this.vendorUrl) {
-                    this.showLoadingAll();
+                    displayAjaxLoading(true);
                     document.location.href = this.vendorUrl;
                 }
                 else {

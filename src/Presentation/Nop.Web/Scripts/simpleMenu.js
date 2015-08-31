@@ -5,7 +5,7 @@
  *  Copyright (c) David Bushell | http://dbushell.com/
  *
  */
-//define(['jquery'], function ($) {
+define(['jquery'], function ($) {
     (function (window, document, undefined) {
 
         // helper functions
@@ -147,4 +147,4 @@
     })(window, window.document);
 
 
-//});
+});

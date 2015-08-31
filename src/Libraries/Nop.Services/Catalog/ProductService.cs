@@ -2441,5 +2441,40 @@ namespace Nop.Services.Catalog
             }
             return false;
         }
+
+        #region Publishing almost finished and finished
+        public IList<Product> GetProductsAlmostToFinishPublishing(int daysBefore, bool? withMessageSent)
+        {
+            if (daysBefore <= 0)
+                throw new ArgumentNullException("daysBefore");
+
+            //Calcula la fecha desde las que debe tomar los correos sin enviar
+            var lastDate = DateTime.UtcNow.AddDays(daysBefore);
+
+            var query = _productRepository.Table.Where(p => p.Published
+                //Productos publicados que su fecha de vencimiento sea mayor a hoy 
+                //y menor  a los siguientes 5 dias
+                && p.AvailableEndDateTimeUtc > DateTime.UtcNow 
+                && p.AvailableEndDateTimeUtc < lastDate);
+
+            if (withMessageSent.HasValue)
+                query = query.Where(p => p.ExpirationMessageSent == withMessageSent.Value);
+
+            return query.ToList();
+        }
+        
+        /// <summary>
+        /// Trae todos los productos que finalizaron publicacción y que el correo no ha sido enviado
+        /// </summary>
+        /// <returns></returns>
+        public IList<Product> GetProductsFinishedPublishing()
+        {
+            var query = _productRepository.Table.Where(p => p.Published &&
+                p.AvailableEndDateTimeUtc < DateTime.UtcNow &&
+                !p.PublishingFinishedMessageSent);
+            return query.ToList();
+        }
+        #endregion
+       
     }
 }

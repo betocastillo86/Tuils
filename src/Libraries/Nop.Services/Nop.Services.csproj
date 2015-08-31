@@ -183,6 +183,7 @@
     <Compile Include="Common\IAddressAttributeService.cs" />
     <Compile Include="Common\ISearchTermService.cs" />
     <Compile Include="Common\LoadBikesCacheTask.cs" />
+    <Compile Include="Common\PublishingAlmostFinishedTask.cs" />
     <Compile Include="Common\SearchTermService.cs" />
     <Compile Include="Common\AddressService.cs" />
     <Compile Include="Common\AddressExtensions.cs" />
