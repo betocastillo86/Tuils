@@ -969,6 +969,8 @@ html.oldie .container { width: 940px; }
         .conte-spc{float: left; margin: 0 0 0 20px; width:calc(50% - 10px); height: 460px;}
     .col-producto{float:none; width: 100%;}
         .col-producto .product-grid .item-box{width:calc(25% - 15px);}
+        .col-producto .product-grid .item-box:nth-child(3n){margin-right: 20px;}
+        .col-producto .product-grid .item-box:nth-child(2n){margin-right: 0;}
         .col-producto .title{padding: 10px 10px 10px 0;}
         .search-pdt{width: calc(70% - 14px)}
     /*Mis productos*/
