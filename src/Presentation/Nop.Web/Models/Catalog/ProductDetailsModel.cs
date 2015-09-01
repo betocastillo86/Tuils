@@ -66,7 +66,7 @@ namespace Nop.Web.Models.Catalog
         public bool FreeShippingNotificationEnabled { get; set; }
         public string DeliveryDate { get; set; }
 
-
+        public bool IsAvailable { get; set; }
         public bool IsRental { get; set; }
         public DateTime? RentalStartDate { get; set; }
         public DateTime? RentalEndDate { get; set; }
@@ -312,5 +312,7 @@ namespace Nop.Web.Models.Catalog
 		#endregion
 
 
+
+        
     }
 }

@@ -64,6 +64,12 @@
         userAuthenticated : function(model){
             this.trigger("user-authenticated", model);
             this.$el.dialog('close');
+
+            //Si el origen del registro es por darle clic en el boton registro
+            //cuando termine lo redirecciona al panel de control
+            if (this.sourceModel.get('ga_action') == 'Registro' )
+                document.location.href = '/mi-cuenta';
+
         },
         errorAuthenticated: function (model, error) {
             alert(error.responseJSON.ModelState ? error.responseJSON.ModelState.errorMessage : error.responseJSON.Message);

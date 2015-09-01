@@ -1412,7 +1412,7 @@ namespace Nop.Services.Messages
             //tokens
             var tokens = new List<Token>();
             _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
-            _messageTokenProvider.AddProductTokens(tokens, product, languageId);
+            _messageTokenProvider.AddProductTokens(tokens, product, languageId, true);
 
             //event notification
             _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
@@ -1450,7 +1450,7 @@ namespace Nop.Services.Messages
             //tokens
             var tokens = new List<Token>();
             _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
-            _messageTokenProvider.AddProductTokens(tokens, product, languageId);
+            _messageTokenProvider.AddProductTokens(tokens, product, languageId, true);
 
             //event notification
             _eventPublisher.MessageTokensAdded(messageTemplate, tokens);

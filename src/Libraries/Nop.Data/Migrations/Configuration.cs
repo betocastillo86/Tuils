@@ -972,6 +972,10 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("controlpanelindex.greeting.complement.shops", "Para nosotros es un gusto recibirte en esta gran plataforma. Recuerda que aquí puedes publicar productos para que logres hacer negocios como compras, ventas, adquisición de servicios, y mucho más.");
                 newLocaleStringResources.Add("vendor.noEditedDescription", "Agregue una breve descripción de su tienda");
                 newLocaleStringResources.Add("pageTitle.categoryDefault", "¿Donde comprar {0} {1}?");
+                newLocaleStringResources.Add("Category.DefaultMetadescription", "Compra y vende {0} facilmente en tuils. Tenemos para ti los mejores productos relacionados con el mundo de las motos.");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.ExpirationBikeReferencesKey", "Llave que valida en el cliente si se deben recargar las marcas de motos");
+                
+                
                 
 
                 

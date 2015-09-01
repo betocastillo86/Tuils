@@ -227,7 +227,8 @@ namespace Nop.Web.Controllers
                 StateProvinceName = product.StateProvince != null ? product.StateProvince.Name : string.Empty,
                 DetailShipping = product.DetailShipping,
                 IncludeSupplies = product.IncludeSupplies,
-                IsMobileDevice = Request.Browser.IsMobileDevice
+                IsMobileDevice = Request.Browser.IsMobileDevice,
+                IsAvailable = product.IsAvailable()
             };
             
             //automatically generate product description?
@@ -934,17 +935,17 @@ namespace Nop.Web.Controllers
             if (!product.Published && !_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return InvokeHttp404();
 
-            //ACL (access control list)
-            if (!_aclService.Authorize(product))
-                return InvokeHttp404();
+            ////ACL (access control list)
+            //if (!_aclService.Authorize(product))
+            //    return InvokeHttp404();
 
-            //Store mapping
-            if (!_storeMappingService.Authorize(product))
-                return InvokeHttp404();
+            ////Store mapping
+            //if (!_storeMappingService.Authorize(product))
+            //    return InvokeHttp404();
 
-            //availability dates
-            if (!product.IsAvailable())
-                return InvokeHttp404();
+            ////availability dates
+            //if (!product.IsAvailable())
+            //    return InvokeHttp404();
             
             //visible individually?
             if (!product.VisibleIndividually)
@@ -1549,6 +1550,7 @@ namespace Nop.Web.Controllers
             var model = new QuestionsModel();
             model.Questions = _productService.GetProductQuestions(productId).ToModels(_dateTimeHelper);
             model.ShowCaptcha = _captchaSettings.ShowOnProductQuestions;
+            model.IsAvailable = product.IsAvailable();
             
             return PartialView(model);
         }

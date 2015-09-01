@@ -220,6 +220,16 @@
         </tr>
         <tr>
             <td class="adminTitle">
+                @Html.NopLabelFor(model => model.ExpirationBikeReferencesKey):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.ExpirationBikeReferencesKey)
+                Si desea actualizar, ponga la siguiente llave ->  @Guid.NewGuid()
+                @Html.ValidationMessageFor(model => model.ExpirationBikeReferencesKey)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
                 @Html.OverrideStoreCheckboxFor(model => model.ShowGtin_OverrideForStore, model => model.ShowGtin, Model.ActiveStoreScopeConfiguration)
                 @Html.NopLabelFor(model => model.ShowGtin):
             </td>

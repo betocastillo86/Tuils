@@ -8,8 +8,9 @@
 
     <div class="page-body">
         
-
-        <div class="write-review" id="question-form" >
+        @if (Model.IsAvailable)
+        { 
+            <div class="write-review" id="question-form" >
             
                 <div class="message-error">@Html.ValidationSummary(true)</div>
                 <div class="form-fields">
@@ -29,7 +30,9 @@
                     <input type="button" name="add-question" class="button-1 write-product-review-button" value="@T("Questions.SubmitButton")" />
                 </div>
             
-        </div>
+         </div>
+        }
+        
         <div id="divQuestionPublished" style="display:none">
           <span>@T("Questions.QuestionPublished")</span>  
         </div>

@@ -24,7 +24,7 @@
     @Html.Partial("_ExternalAuthentication.Errors")
     <div class="page-body">
         <div class="customer-blocks">
-            @if (Model.CheckoutAsGuest)
+            @*@if (Model.CheckoutAsGuest)
             {
                 <div class="new-wrapper checkout-as-guest-or-register-block">
                     <div class="title">
@@ -52,7 +52,7 @@
                         <input type="button" class="button-1 register-button" onclick="location.href='@registerUrl'" value="@T("Account.Register")" />
                     </div>
                 </div>
-            }
+            }*@
             <div class="returning-wrapper">
                 <div class="title">
                     <strong>@T("Account.Login.ReturningCustomer")</strong>
@@ -108,6 +108,6 @@
         <div class="external-authentication">
             @Html.Action("ExternalMethods", "ExternalAuthentication")
         </div>
-        @Html.Action("TopicBlock", "Topic", new { systemName = "LoginRegistrationInfo" })
+        @*@Html.Action("TopicBlock", "Topic", new { systemName = "LoginRegistrationInfo" })*@
     </div>
 </div>

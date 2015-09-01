@@ -14,6 +14,8 @@ namespace Nop.Web.Models.Catalog
         public List<ProductQuestionModel> Questions { get; set; }
         public ProductOverviewModel Product { get; set; }
 
+        public bool IsAvailable { get; set; }
+
         public bool ShowCaptcha { get; set; }
 
     }

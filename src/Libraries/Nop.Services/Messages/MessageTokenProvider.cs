@@ -30,6 +30,7 @@ using Nop.Services.Orders;
 using Nop.Services.Payments;
 using Nop.Services.Seo;
 using Nop.Services.Stores;
+using Nop.Core.Domain.Media;
 
 namespace Nop.Services.Messages
 {
@@ -50,10 +51,12 @@ namespace Nop.Services.Messages
         private readonly IAddressAttributeFormatter _addressAttributeFormatter;
         private readonly IStoreService _storeService;
         private readonly IStoreContext _storeContext;
+        private readonly IPictureService _pictureService;
 
         private readonly MessageTemplatesSettings _templatesSettings;
         private readonly CatalogSettings _catalogSettings;
         private readonly TaxSettings _taxSettings;
+        private readonly MediaSettings _mediaSettings;
 
         private readonly IEventPublisher _eventPublisher;
 
@@ -77,7 +80,9 @@ namespace Nop.Services.Messages
             MessageTemplatesSettings templatesSettings,
             CatalogSettings catalogSettings,
             TaxSettings taxSettings, 
-            IEventPublisher eventPublisher)
+            IEventPublisher eventPublisher,
+            MediaSettings mediaSettings,
+            IPictureService pictureService)
         {
             this._languageService = languageService;
             this._localizationService = localizationService;
@@ -97,6 +102,8 @@ namespace Nop.Services.Messages
             this._catalogSettings = catalogSettings;
             this._taxSettings = taxSettings;
             this._eventPublisher = eventPublisher;
+            this._mediaSettings = mediaSettings;
+            this._pictureService = pictureService;
         }
 
         #endregion
@@ -741,10 +748,11 @@ namespace Nop.Services.Messages
             _eventPublisher.EntityTokensAdded(newsComment, tokens);
         }
 
-        public virtual void AddProductTokens(IList<Token> tokens, Product product, int languageId)
+        public virtual void AddProductTokens(IList<Token> tokens, Product product, int languageId, bool loadImages = false)
         {
             tokens.Add(new Token("Product.ID", product.Id.ToString()));
             tokens.Add(new Token("Product.Name", product.GetLocalized(x => x.Name, languageId)));
+            tokens.Add(new Token("Product.Price", _priceFormatter.FormatPrice(product.Price)));
             tokens.Add(new Token("Product.ShortDescription", product.GetLocalized(x => x.ShortDescription, languageId), true));
             tokens.Add(new Token("Product.SKU", product.Sku));
             tokens.Add(new Token("Product.StockQuantity", product.GetTotalStockQuantity().ToString()));
@@ -754,6 +762,13 @@ namespace Nop.Services.Messages
             //TODO add a method for getting URL (use routing because it handles all SEO friendly URLs)
             var productUrl = string.Format("{0}p/{1}", GetStoreUrl(), product.GetSeName());
             tokens.Add(new Token("Product.ProductURLForCustomer", productUrl, true));
+
+
+            if (loadImages)
+            {
+                var url = _pictureService.GetPictureUrl(product.ProductPictures.FirstOrDefault().PictureId, _mediaSettings.ProductDetailsPictureSize, false);
+                tokens.Add(new Token("Product.ProductPictureURL", url));
+            }
 
             //event notification
             _eventPublisher.EntityTokensAdded(product, tokens);

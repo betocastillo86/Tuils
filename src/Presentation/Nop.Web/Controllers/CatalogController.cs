@@ -700,6 +700,9 @@ namespace Nop.Web.Controllers
             else
                 model.MetaTitle = string.Format(_localizationService.GetResource("PageTitle.Search"), model.Name, filtersUrl);
 
+            if (string.IsNullOrEmpty(model.MetaDescription))
+                model.MetaDescription = string.Format(_localizationService.GetResource("Category.DefaultMetadescription"), model.Name, filtersUrl);
+
             return View(templateViewPath, model);
         }
 
@@ -1452,6 +1455,8 @@ namespace Nop.Web.Controllers
 
             //Carga las categorias especiales
             model.SpecialCategories = _vendorService.GetSpecialCategoriesByVendorId(vendor.Id).ToModels();
+
+            model.MetaDescription = model.MetaDescription ?? model.Description;
 
             return model;
         }

@@ -87,6 +87,13 @@
         userAuthenticated: function (model) {
             this.trigger("user-authenticated", model);
             this.$el.dialog('close');
+            this.validateRedirect();
+        },
+        validateRedirect: function () {
+            //Si el origen del registro es por darle clic en el boton registro
+            //cuando termine lo redirecciona al panel de control
+            if (this.sourceModel.get('ga_action') == 'Registro')
+                document.location.href = '/mi-cuenta';
         },
         selectType: function (obj) {
             
@@ -109,7 +116,7 @@
             this.alert(Resources.confirm.userRegistered);
             this.trigger("user-authenticated", this.model);
             this.close();
-
+            this.validateRedirect();
         },
         errorCreating: function (model, exception) {
             alert(exception.responseJSON.Message);
