@@ -720,7 +720,7 @@ td.fieldname{font-size:12px;}
 .product-list .product-item .details .serv_espec{right: 10px; left: auto; font-size: 11px; background: none; color: #3b5a83; box-shadow: none; padding: 0; text-align: right;}
 .product-list .product-item .details .serv_espec::after{display: none;}
 .product-list .product-item .product-rating-box{padding:0 0 0 10px;margin:0px 100px 0 140px;}
-.product-list .product-item .picture{float:left; width: 100px; height: 100px; background:#FFF; margin: 10px;}
+.product-list .product-item .picture{float:left; width: 100px; height: 100px; background:#FFF; margin: 10px; overflow: hidden;}
 .product-list .product-item .description{display: none;}
 .product-list .product-item .add-info{float:right;text-align:right; width: 160px; margin: 10px; font-size: 11px;}
 .product-list .product-item .prices{}
@@ -1871,6 +1871,12 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
         .caja-comment h4{font-weight: 500; padding:6px 0 0;}
         .caja-comment h4 .fecha{float: right;}
         .caja-comment p{text-align: justify; padding: 8px 0;}
+
+    .product-sale{background:#f3f5f7; border-radius: 3px; box-sizing:border-box; padding: 15px;}
+    .product-sale h1{color: #292732; font-size: 20px; font-weight: 700; width: 100%;}
+    .product-sale .picture{background: #FFF; float: left; width: 200px; height: 150px; overflow:hidden; margin: 10px 0 0;}
+    .descript_pro{float: left; width:calc(100% - 220px); margin:0 0 0 20px;}
+    .descript_pro .product-price{color: #f94c2a; font-size: 40px;}
 /*MODAL*/
 .modal{font-family: 'Ubuntu', sans-serif; padding:10px 20px 20px; position: relative; margin: 0 auto;}
 .modal-btn-close{background:#FB7055; color:#FFF !important; display: block; transition:ease all 0.4s; position: absolute; top: 10px; right: 10px; color:#FFF; padding:3px;}
