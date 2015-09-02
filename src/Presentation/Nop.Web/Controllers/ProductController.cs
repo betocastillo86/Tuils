@@ -227,7 +227,8 @@ namespace Nop.Web.Controllers
                 StateProvinceName = product.StateProvince != null ? product.StateProvince.Name : string.Empty,
                 DetailShipping = product.DetailShipping,
                 IncludeSupplies = product.IncludeSupplies,
-                IsMobileDevice = Request.Browser.IsMobileDevice
+                IsMobileDevice = Request.Browser.IsMobileDevice,
+                IsAvailable = product.IsAvailable()
             };
             
             //automatically generate product description?
@@ -934,17 +935,17 @@ namespace Nop.Web.Controllers
             if (!product.Published && !_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return InvokeHttp404();
 
-            //ACL (access control list)
-            if (!_aclService.Authorize(product))
-                return InvokeHttp404();
+            ////ACL (access control list)
+            //if (!_aclService.Authorize(product))
+            //    return InvokeHttp404();
 
-            //Store mapping
-            if (!_storeMappingService.Authorize(product))
-                return InvokeHttp404();
+            ////Store mapping
+            //if (!_storeMappingService.Authorize(product))
+            //    return InvokeHttp404();
 
-            //availability dates
-            if (!product.IsAvailable())
-                return InvokeHttp404();
+            ////availability dates
+            //if (!product.IsAvailable())
+            //    return InvokeHttp404();
             
             //visible individually?
             if (!product.VisibleIndividually)
@@ -995,23 +996,37 @@ namespace Nop.Web.Controllers
         [ChildActionOnly]
         public ActionResult RelatedProducts(int productId, int? productThumbPictureSize)
         {
+            //Consulta la categoría principal del producto
+            var mainCategory = _categoryService.GetProductCategoriesByProductId(productId).FirstOrDefault();
+            
             //load and cache report
-            var productIds = _cacheManager.Get(string.Format(ModelCacheEventConsumer.PRODUCTS_RELATED_IDS_KEY, productId, _storeContext.CurrentStore.Id),
-                () => 
-                    _productService.GetRelatedProductsByProductId1(productId).Select(x => x.ProductId2).ToArray()
-                    );
+            //var productIds = _cacheManager.Get(string.Format(ModelCacheEventConsumer.PRODUCTS_RELATED_IDS_KEY, productId, _storeContext.CurrentStore.Id),
+            //Se cambia para que el cache sea por la categoría
+            var model = _cacheManager.Get(string.Format(ModelCacheEventConsumer.PRODUCTS_RELATED_IDS_KEY, mainCategory.CategoryId, _storeContext.CurrentStore.Id),
+                () => {
+                    var products = _productService.SearchProducts(categoryIds: new List<int>() { mainCategory.CategoryId }, pageIndex: 0, pageSize: 20, orderBy:ProductSortingEnum.Random);
+                    return PrepareProductOverviewModels(products, true, true, productThumbPictureSize).ToList();
+                }
+                    //_productService.GetRelatedProductsByProductId1(productId).Select(x => x.ProductId2).ToArray()
+                    //Se cambia funcionalidad para que retorne solo los productos de esa categoría
+                    
+             );
 
             //load products
-            var products = _productService.GetProductsByIds(productIds);
-            //ACL and store mapping
-            products = products.Where(p => _aclService.Authorize(p) && _storeMappingService.Authorize(p)).ToList();
-            //availability dates
-            products = products.Where(p => p.IsAvailable()).ToList();
+            //var products = _productService.GetProductsByIds(productIds);
+            ////ACL and store mapping
+            //products = products.Where(p => _aclService.Authorize(p) && _storeMappingService.Authorize(p)).ToList();
+            ////availability dates
+            //products = products.Where(p => p.IsAvailable()).ToList();
             
-            if (products.Count == 0)
+            if (model.Count == 0)
                 return Content("");
 
-            var model = PrepareProductOverviewModels(products, true, true, productThumbPictureSize).ToList();
+            //Toma un numero aleatorio de resultados
+            model = model.OrderBy(p => Guid.NewGuid())
+                .Take(_catalogSettings.NumberOfProductsVendorProductsProductPage)
+                .ToList();
+
             return PartialView(model);
         }
 
@@ -1535,6 +1550,7 @@ namespace Nop.Web.Controllers
             var model = new QuestionsModel();
             model.Questions = _productService.GetProductQuestions(productId).ToModels(_dateTimeHelper);
             model.ShowCaptcha = _captchaSettings.ShowOnProductQuestions;
+            model.IsAvailable = product.IsAvailable();
             
             return PartialView(model);
         }

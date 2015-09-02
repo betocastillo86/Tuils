@@ -202,7 +202,7 @@ namespace Nop.Services.Messages
         /// <param name="languageId">Message language identifier</param>
         /// <param name="autoPassword">Password generado automáticamente para el suuario, cuando viene nulo no lo envía</param>
         /// <returns>Queued email identifier</returns>
-        public virtual int SendCustomerWelcomeMessage(Customer customer, int languageId, string autoPassword = null)
+        public virtual int SendCustomerWelcomeMessage(Customer customer, VendorType vendorType, int languageId, string autoPassword = null)
         {
             if (customer == null)
                 throw new ArgumentNullException("customer");
@@ -210,7 +210,8 @@ namespace Nop.Services.Messages
             var store = _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
-            var messageTemplate = GetActiveMessageTemplate("Customer.WelcomeMessage", store.Id);
+
+            var messageTemplate = GetActiveMessageTemplate(string.Concat("Customer.WelcomeMessage", vendorType != VendorType.User ? vendorType.ToString() : string.Empty ), store.Id);
             if (messageTemplate == null)
                 return 0;
 
@@ -1226,6 +1227,85 @@ namespace Nop.Services.Messages
                 toEmail, toName);
         }
 
+        /// <summary>
+        /// Envia notifcación que el producto que está subiendo está a punto de expirar
+        /// </summary>
+        /// <param name="product">datos del producto</param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        public virtual int SendProductExpirationNotificationMessage(Product product, int expirationDays, int languageId)
+        {
+            if (product == null)
+                throw new ArgumentNullException("product");
+
+            var store = _storeContext.CurrentStore;
+            languageId = EnsureLanguageIsActive(languageId, store.Id);
+
+            var vendorType = product.Vendor.VendorType != VendorType.User ? product.Vendor.VendorType.ToString() : string.Empty;
+            var messageTemplate = GetActiveMessageTemplate(string.Concat("Product.ExpirationProduct", vendorType), store.Id);
+            if (messageTemplate == null)
+                return 0;
+
+            //email account
+            var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);
+
+            //tokens
+            var tokens = new List<Token>();
+            _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
+            _messageTokenProvider.AddProductTokens(tokens, product, languageId);
+
+            //Agrega los dias para que el producto finalice la publicación
+            tokens.Add(new Token("Common.ExpirationLimitDays", expirationDays.ToString()));
+
+            //event notification
+            _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
+
+            var toEmail = product.Vendor.Email;
+            var toName = emailAccount.DisplayName;
+            return SendNotification(messageTemplate, emailAccount,
+                languageId, tokens,
+                toEmail, toName);
+        }
+
+
+        // <summary>
+        /// Envia notifcación que el producto que publicó ya finalizó la publicación por tiempo
+        /// </summary>
+        /// <param name="product">datos del producto</param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        public virtual int SendProductFinishedNotificationMessage(Product product, int languageId)
+        {
+            if (product == null)
+                throw new ArgumentNullException("product");
+
+            var store = _storeContext.CurrentStore;
+            languageId = EnsureLanguageIsActive(languageId, store.Id);
+
+
+            var vendorType = product.Vendor.VendorType != VendorType.User ? product.Vendor.VendorType.ToString() : string.Empty;
+
+            var messageTemplate = GetActiveMessageTemplate(string.Concat("Product.ExpirationProductFinished", vendorType), store.Id);
+            if (messageTemplate == null)
+                return 0;
+
+            //email account
+            var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);
+
+            //tokens
+            var tokens = new List<Token>();
+            _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
+            _messageTokenProvider.AddProductTokens(tokens, product, languageId);
+
+            //event notification
+            _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
+
+            var toEmail = product.Vendor.Email;
+            var toName = emailAccount.DisplayName;
+                return SendNotification(messageTemplate, emailAccount,
+                    languageId, tokens,
+                    toEmail, toName);
+        }
 
         /// <summary>
         /// Envia la notificacion de que un correo ha sido respondido
@@ -1279,7 +1359,10 @@ namespace Nop.Services.Messages
             var store = _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
-            var messageTemplate = GetActiveMessageTemplate("Product.NewQuestion", store.Id);
+
+            var vendorType = productQuestion.Product.Vendor.VendorType != VendorType.User ? productQuestion.Product.Vendor.VendorType.ToString() : string.Empty;
+
+            var messageTemplate = GetActiveMessageTemplate(string.Concat("Product.NewQuestion", vendorType), store.Id);
             if (messageTemplate == null)
                 return 0;
 
@@ -1317,7 +1400,9 @@ namespace Nop.Services.Messages
             var store = _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
-            var messageTemplate = GetActiveMessageTemplate("Product.Published", store.Id);
+            var vendorType = product.Vendor.VendorType != VendorType.User ? product.Vendor.VendorType.ToString() : string.Empty;
+
+            var messageTemplate = GetActiveMessageTemplate(string.Concat("Product.Published", vendorType), store.Id);
             if (messageTemplate == null)
                 return 0;
 
@@ -1327,7 +1412,7 @@ namespace Nop.Services.Messages
             //tokens
             var tokens = new List<Token>();
             _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
-            _messageTokenProvider.AddProductTokens(tokens, product, languageId);
+            _messageTokenProvider.AddProductTokens(tokens, product, languageId, true);
 
             //event notification
             _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
@@ -1353,7 +1438,9 @@ namespace Nop.Services.Messages
             var store = _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
-            var messageTemplate = GetActiveMessageTemplate("Product.PublishApproved", store.Id);
+            var vendorType = product.Vendor.VendorType != VendorType.User ? product.Vendor.VendorType.ToString() : string.Empty;
+
+            var messageTemplate = GetActiveMessageTemplate(string.Concat("Product.PublishApproved", vendorType), store.Id);
             if (messageTemplate == null)
                 return 0;
 
@@ -1363,7 +1450,7 @@ namespace Nop.Services.Messages
             //tokens
             var tokens = new List<Token>();
             _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
-            _messageTokenProvider.AddProductTokens(tokens, product, languageId);
+            _messageTokenProvider.AddProductTokens(tokens, product, languageId, true);
 
             //event notification
             _eventPublisher.MessageTokensAdded(messageTemplate, tokens);

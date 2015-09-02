@@ -624,7 +624,7 @@ namespace Nop.Web.Controllers
                 out filterableSpecialCategoryIds,
                 out minMaxPrice,
                 true,
-                loadFilterableCategoryIds: categoryIds.Count == 0,  //Solo realiza conteo de categorias si no está filtrando por categoria
+                loadFilterableCategoryIds: true,  //Realiza busqueda de categorías porque posiblemente puede estar en una categoría hija
                 loadFilterableStateProvinceIds: !stateProvinceId.HasValue, //Solo realiza conteo de ciudaddes si no está filtrando por ciudad,
                 loadPriceRange: !minPriceConverted.HasValue && !maxPriceConverted.HasValue, //Solo realiza conteo de precios si no está filtrando por precio
                 loadFilterableManufacturerIds: !manufacturerId.HasValue, //Solo realiza conteo de marcas si no está filtrando por marca
@@ -693,24 +693,45 @@ namespace Nop.Web.Controllers
             model.IsMobileDevice = Request.Browser.IsMobileDevice;
 
 
-            string filtersUrl = string.Empty;
-                if (this.RouteData.Values["query"] != null)
-                    filtersUrl = string.Join(" ", this.RouteData.Values["query"].ToString().Replace("-", " ").Split(new char[] { '/' }));
+            string filtersUrl = GetTitleParts(model.PagingFilteringContext);
 
             if (!string.IsNullOrEmpty(model.MetaTitle))
-            {
                 model.MetaTitle = string.Format(model.MetaTitle,  filtersUrl);
-            }
             else
-            {
-                model.MetaTitle = string.Concat(model.Name, " ", filtersUrl);
-            }
+                model.MetaTitle = string.Format(_localizationService.GetResource("PageTitle.Search"), model.Name, filtersUrl);
 
-            
-            
-
+            if (string.IsNullOrEmpty(model.MetaDescription))
+                model.MetaDescription = string.Format(_localizationService.GetResource("Category.DefaultMetadescription"), model.Name, filtersUrl);
 
             return View(templateViewPath, model);
+        }
+
+        [NonAction]
+        /// <summary>
+        /// Genera un string que va ser complemento del titulo en las consultas
+        /// </summary>
+        /// <returns></returns>
+        public string GetTitleParts(CatalogPagingFilteringModel command)
+        {
+            string stateProvincePart = string.Empty;
+            if (command.StateProvinceFilter.FilteredItem != null)
+            {
+                stateProvincePart = string.Format(" en {0}", command.StateProvinceFilter.FilteredItem.Name);
+            }
+
+            string categoryPart = string.Empty;
+            if (command.CategoryFilter.AlreadyFilteredItems != null && command.CategoryFilter.AlreadyFilteredItems.Count > 0)
+            {
+                categoryPart = string.Format(" {0}", command.CategoryFilter.AlreadyFilteredItems.FirstOrDefault().Name);
+            }
+
+            string manufacturerPart = string.Empty;
+            if (command.ManufacturerFilter.FilteredItem != null)
+            {
+                manufacturerPart = string.Format(" marca {0}", command.ManufacturerFilter.FilteredItem.Name);
+            }
+
+            return string.Concat(categoryPart, manufacturerPart, stateProvincePart);
         }
 
         [ChildActionOnly]
@@ -1226,6 +1247,14 @@ namespace Nop.Web.Controllers
             _customerActivityService.InsertActivity("PublicStore.ViewManufacturer", _localizationService.GetResource("ActivityLog.PublicStore.ViewManufacturer"), manufacturer.Name);
             model.IsMobileDevice = Request.Browser.IsMobileDevice;
 
+            //Actualiza el titulo
+            string filtersUrl = GetTitleParts(model.PagingFilteringContext);
+
+            if (!string.IsNullOrEmpty(model.MetaTitle))
+                model.MetaTitle = string.Format(model.MetaTitle, filtersUrl);
+            else
+                model.MetaTitle = string.Concat(model.Name, " ", filtersUrl);
+
             return View(templateViewPath, model);
         }
 
@@ -1336,15 +1365,40 @@ namespace Nop.Web.Controllers
                 vendor.PageSize);
 
             //products
+
+            
             Dictionary<int, int> filterableSpecificationAttributeOptionIds;
-            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, false,
-                vendorId: vendor.Id,
-                storeId: _storeContext.CurrentStore.Id,
-                visibleIndividuallyOnly: true,
-                orderBy: (ProductSortingEnum)command.OrderBy,
-                pageIndex: command.PageNumber - 1,
-                pageSize: command.PageSize,
-                keywords: string.IsNullOrWhiteSpace(command.q) ? null : command.q);
+            IPagedList<Product> products = null;
+
+            //Si viene filtro por id de producto intenta realizar el filtro
+            //Si  no encuentra ningún resultado trae todos los productos del vendedor
+            if (command.pid > 0)
+            {
+                //Consulta el producto por el id
+                var product = _productService.GetProductById(command.pid);
+                //Valida que el producto exista y que este asociado al vendedor
+                if (product != null && product.VendorId == vendor.Id)
+                {
+                    model.FilteredByProduct = true;
+                    products = new PagedList<Product>(new List<Product>() { product }, 0, 1, 1);
+                }
+            }
+
+            //Si no hay productos, realiza la busqueda por los productos del vendedor
+            //Esta busqueda se hace por fuera del else de command.pid > 0 ya que si el producto no existe o no es del vendedor lista todos los demás
+            if (products == null)
+            {
+                products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, false,
+                    vendorId: vendor.Id,
+                    storeId: _storeContext.CurrentStore.Id,
+                    visibleIndividuallyOnly: true,
+                    orderBy: (ProductSortingEnum)command.OrderBy,
+                    pageIndex: command.PageNumber - 1,
+                    pageSize: command.PageSize,
+                    keywords: string.IsNullOrWhiteSpace(command.q) ? null : command.q);
+            }
+
+            
             model.Products = PrepareProductOverviewModels(products).ToList();
 
             model.TotalActiveProducts = _productService.CountActiveProductsByVendorId(vendor.Id);
@@ -1401,6 +1455,8 @@ namespace Nop.Web.Controllers
 
             //Carga las categorias especiales
             model.SpecialCategories = _vendorService.GetSpecialCategoriesByVendorId(vendor.Id).ToModels();
+
+            model.MetaDescription = model.MetaDescription ?? model.Description;
 
             return model;
         }
@@ -1598,12 +1654,7 @@ namespace Nop.Web.Controllers
 
             model.IsMobileDevice = Request.Browser.IsMobileDevice;
             
-            string filtersUrl = string.Empty;
-            if(this.RouteData.Values["query"] != null)
-                filtersUrl = string.Join(" ", this.RouteData.Values["query"].ToString().Replace("-", " ").Split(new char[] { '/' }));
-
-            model.Title = string.Format(_localizationService.GetResource("PageTitle.Search"), command.q, filtersUrl);
-            model.Description = string.Format(_localizationService.GetResource("Search.Metadescription"), command.q, filtersUrl);
+           
 
             if (model.Q == null)
                 model.Q = "";
@@ -1854,6 +1905,14 @@ namespace Nop.Web.Controllers
             }
 
             model.PagingFilteringContext.LoadPagedList(products);
+
+
+
+            string filtersUrl = GetTitleParts(model.PagingFilteringContext);
+
+            model.Title = string.Format(_localizationService.GetResource("PageTitle.Search"), command.q, filtersUrl);
+            model.Description = string.Format(_localizationService.GetResource("Search.Metadescription"), command.q, filtersUrl);
+
             return View(model);
         }
 

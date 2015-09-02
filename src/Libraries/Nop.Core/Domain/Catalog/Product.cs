@@ -462,6 +462,16 @@ namespace Nop.Core.Domain.Catalog
         public int StateProvinceId { get; set; }
 
         /// <summary>
+        /// True: Se envío mensaje advirtiendo de expriación de la publicación
+        /// </summary>
+        public bool ExpirationMessageSent { get; set; }
+
+        /// <summary>
+        /// True: Se envío mensaje advirtiendo que su publicación finalizó
+        /// </summary>
+        public bool PublishingFinishedMessageSent { get; set; }
+
+        /// <summary>
         /// Productos destacados en el menú izquierdo
         /// </summary>
         public Nullable<bool> LeftFeatured { get; set; }

@@ -225,5 +225,12 @@ namespace Nop.Admin.Models.Settings
         public int ProductLimitPublished { get; set; }
         public bool ProductLimitPublished_OverrideForStore { get; set; }
 
+        [NopResourceDisplayName("Admin.Configuration.Settings.Catalog.ExpirationBikeReferencesKey")]
+        public string ExpirationBikeReferencesKey { get; set; }
+        public bool ExpirationBikeReferencesKey_OverrideForStore { get; set; }
+
+
+        
+
     }
 }

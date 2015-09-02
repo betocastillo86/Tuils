@@ -36,6 +36,8 @@ namespace Nop.Web.Models.Catalog
 
         public bool EnableCreditCardPayment { get; set; }
 
+        public bool FilteredByProduct { get; set; }
+
         public PictureModel Picture { get; set; }
 
         public PictureModel BackgroundPicture { get; set; }

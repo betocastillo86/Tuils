@@ -98,13 +98,19 @@ namespace Nop.Core.Domain.Common
         /// </summary>
         public int specificationattributeOptionIsNewNo { get; set; }
 
-
+        /// <summary>
+        // Cada vez que se recargue la información del javascript los clientes
+        // deben eliminar del localstorage las referencias de motos que tienen
+        /// </summary>
+        public string ExpirationBikeReferencesKey { get; set; }
 
         #endregion
 
         #region Productos
 
         public int defaultStockQuantity { get; set; }
+
+        public int SendMessageExpirationProductDaysBefore { get; set; }
 
         #endregion
 

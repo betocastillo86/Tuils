@@ -183,6 +183,10 @@
     <Compile Include="Migrations\201508250215236_AlterColumn_Value_Table_Setting.Designer.cs">
       <DependentUpon>201508250215236_AlterColumn_Value_Table_Setting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508302003138_AddColumn_ExpirationMessageSent_Table_Product.cs" />
+    <Compile Include="Migrations\201508302003138_AddColumn_ExpirationMessageSent_Table_Product.Designer.cs">
+      <DependentUpon>201508302003138_AddColumn_ExpirationMessageSent_Table_Product.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -391,6 +395,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508250215236_AlterColumn_Value_Table_Setting.resx">
       <DependentUpon>201508250215236_AlterColumn_Value_Table_Setting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508302003138_AddColumn_ExpirationMessageSent_Table_Product.resx">
+      <DependentUpon>201508302003138_AddColumn_ExpirationMessageSent_Table_Product.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -69,6 +69,7 @@ namespace Nop.Admin.Controllers
         private readonly IStoreService _storeService;
         private readonly IWorkContext _workContext;
         private readonly IGenericAttributeService _genericAttributeService;
+        private readonly TuilsSettings _tuilsSettings;
 
 		#endregion
 
@@ -93,7 +94,8 @@ namespace Nop.Admin.Controllers
             IMaintenanceService maintenanceService,
             IStoreService storeService,
             IWorkContext workContext, 
-            IGenericAttributeService genericAttributeService)
+            IGenericAttributeService genericAttributeService,
+            TuilsSettings tuilsSettings)
         {
             this._settingService = settingService;
             this._countryService = countryService;
@@ -115,6 +117,7 @@ namespace Nop.Admin.Controllers
             this._storeService = storeService;
             this._workContext = workContext;
             this._genericAttributeService = genericAttributeService;
+            this._tuilsSettings = tuilsSettings;
         }
 
 		#endregion 
@@ -1011,6 +1014,9 @@ namespace Nop.Admin.Controllers
                 model.DisplayTaxShippingInfoOrderDetailsPage_OverrideForStore = _settingService.SettingExists(catalogSettings, x => x.DisplayTaxShippingInfoOrderDetailsPage, storeScope);
                 model.ProductLimitPublished_OverrideForStore = _settingService.SettingExists(catalogSettings, x => x.ProductLimitPublished, storeScope);
             }
+
+            model.ExpirationBikeReferencesKey = _tuilsSettings.ExpirationBikeReferencesKey;
+
             return View(model);
         }
         [HttpPost]
@@ -1023,6 +1029,7 @@ namespace Nop.Admin.Controllers
             //load settings for a chosen store scope
             var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
             var catalogSettings = _settingService.LoadSetting<CatalogSettings>(storeScope);
+            var tuilsSettings = _settingService.LoadSetting<TuilsSettings>(storeScope);
             catalogSettings = model.ToEntity(catalogSettings);
 
             /* We do not clear cache after each setting update.
@@ -1292,6 +1299,10 @@ namespace Nop.Admin.Controllers
                 _settingService.SaveSetting(catalogSettings, x => x.ProductLimitPublished, storeScope, false);
             else if (storeScope > 0)
                 _settingService.DeleteSetting(catalogSettings, x => x.ProductLimitPublished, storeScope);
+
+
+            _tuilsSettings.ExpirationBikeReferencesKey = model.ExpirationBikeReferencesKey;
+            _settingService.SaveSetting<TuilsSettings>(_tuilsSettings);
 
             //now clear settings cache
             _settingService.ClearCache();

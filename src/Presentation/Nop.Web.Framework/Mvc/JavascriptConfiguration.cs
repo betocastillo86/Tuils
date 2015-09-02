@@ -83,8 +83,12 @@ namespace Nop.Web.Framework.Mvc
                 {
                     publishInvalidCategory = (int)CodeNopException.UserTypeNotAllowedPublishProductType,
                     hasReachedLimitOfProducts = (int)CodeNopException.UserHasReachedLimitOfProducts
-                }
+                },  
+                //Cada vez que se recargue la información del javascript los clientes
+                //deben eliminar del localstorage las referencias de motos que tienen
+                expirationBikeReferencesKey = tuilsSettings.ExpirationBikeReferencesKey
             };
+
 
             //Convierte el valor del json a un string
             var jsonString = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(config);

@@ -970,6 +970,14 @@ namespace Nop.Data.Migrations
 
                 newLocaleStringResources.Add("controlpanelindex.greeting.complement", "Para nosotros es un gusto recibirte en esta gran plataforma. Recuerda que aquí puedes publicar productos de forma GRATUITA para que logres hacer negocios como compras, ventas, adquisición de servicios, y mucho más.");
                 newLocaleStringResources.Add("controlpanelindex.greeting.complement.shops", "Para nosotros es un gusto recibirte en esta gran plataforma. Recuerda que aquí puedes publicar productos para que logres hacer negocios como compras, ventas, adquisición de servicios, y mucho más.");
+                newLocaleStringResources.Add("vendor.noEditedDescription", "Agregue una breve descripción de su tienda");
+                newLocaleStringResources.Add("pageTitle.categoryDefault", "¿Donde comprar {0} {1}?");
+                newLocaleStringResources.Add("Category.DefaultMetadescription", "Compra y vende {0} facilmente en tuils. Tenemos para ti los mejores productos relacionados con el mundo de las motos.");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.ExpirationBikeReferencesKey", "Llave que valida en el cliente si se deben recargar las marcas de motos");
+                
+                
+                
+
                 
 
                 //Recorre todas las llaves que desea adicional
@@ -2275,6 +2283,8 @@ namespace Nop.Data.Migrations
                 settings.Add("catalogSettings.MaxColumnsCategoriesHome", "4");
                 settings.Add("seoSettings.DisableRobotsForTestingSite", "False");
                 settings.Add("catalogSettings.ProductLimitPublished", "3");
+                settings.Add("tuilsSettings.SendMessageExpirationProductDaysBefore", "5");
+                
                 
                 
                 
@@ -2342,10 +2352,144 @@ namespace Nop.Data.Migrations
                         Body = "<p>Acabamos de aprobar la publicación del producto <b>%Product.Name%</b>. Miles de personas lo estan viendo desede este momento </p>",
                         IsActive = true,
                         EmailAccountId = 1
-                    }
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 37,
+                        Name = "Product.ExpirationProduct",
+                        Subject = "%Store.Name%. La publicación de %Product.Name% está a punto de expirar",
+                        Body = "<p>Tu producto  <b>%Product.Name%</b> expirará muy pronto en %Product.AvailableEndDateTimeUtc%. Si no lo has vendido y tu plan lo permite, activalo de nuevo </p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 38,
+                        Name = "Product.ExpirationProductFinished",
+                        Subject = "%Store.Name%. La publicación de %Product.Name% finalizó",
+                        Body = "<p>Tu producto  <b>%Product.Name%</b> finalizó la publicación. Si no lo has vendido y tu plan lo permite, activalo de nuevo </p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 39,
+                        Name = "Customer.WelcomeMessageMarket",
+                        Subject = "Nos alegra mucho que su tienda se haya unido a Tuils",
+                        Body = "Queremos comunicarle que el perfil ya está creado en nuestra plataforma y hemos generado una clave de forma automática XvhAMk. Si desea cambiarla ingrese y modifíquela en el perfil",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 40,
+                        Name = "Customer.WelcomeMessageRepairShop",
+                        Subject = "Nos alegra mucho que su taller se haya unido a Tuils",
+                        Body = "Queremos comunicarle que el perfil ya está creado en nuestra plataforma y hemos generado una clave de forma automática XvhAMk. Si desea cambiarla ingrese y modifíquela en el perfil",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 41,
+                        Name = "Product.PublishedMarket",
+                        Subject = "Su tienda ha creado un nuevo anuncio en Tuils",
+                        Body = "La información de Casco HJC Original está en proceso de validación y en las próximas horas le confirmaremos su aprobación.",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 42,
+                        Name = "Product.PublishedRepairShop",
+                        Subject = "Su taller ha creado un nuevo anuncio en Tuils",
+                        Body = "La información de Casco HJC Original está en proceso de validación y en las próximas horas le confirmaremos su aprobación.",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 43,
+                        Name = "Product.PublishApprovedMarket",
+                        Subject = "Su anuncio ha sido aprobado",
+                        Body = "Ahora puede comenzar a compartir esta información a través de sus redes sociales para que tenga más ofertas. ",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 44,
+                        Name = "Product.PublishApprovedRepairShop",
+                        Subject = "Su anuncio ha sido aprobado",
+                        Body = "Ahora puede comenzar a compartir esta información a través de sus redes sociales para que tenga más ofertas. ",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 45,
+                        Name = "Product.NewQuestionMarket",
+                        Subject = "Han dejado una pregunta en su anuncio",
+                        Body = "Responda la preguntas de los usuarios interesados en sus publicaciones",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 46,
+                        Name = "Product.NewQuestionRepairShop",
+                        Subject = "Han dejado una pregunta en su anuncio",
+                        Body = "Responda la preguntas de los usuarios interesados en sus publicaciones",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 47,
+                        Name = "Product.ExpirationProductMarket",
+                        Subject = "Su anuncio se vencerá próximamente.",
+                        Body = "Su anuncio se vencerá próximamente.",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 48,
+                        Name = "Product.ExpirationProductRepairShop",
+                        Subject = "Su anuncio se vencerá próximamente.",
+                        Body = "Su anuncio se vencerá próximamente.",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 49,
+                        Name = "Product.ExpirationProductFinishedMarket",
+                        Subject = "%Store.Name%. La publicación de %Product.Name% finalizó",
+                        Body = "<p>Tu producto  <b>%Product.Name%</b> finalizó la publicación. Si no lo has vendido y tu plan lo permite, activalo de nuevo </p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 50,
+                        Name = "Product.ExpirationProductFinishedRepairShop",
+                        Subject = "%Store.Name%. La publicación de %Product.Name% finalizó",
+                        Body = "<p>Tu producto  <b>%Product.Name%</b> finalizó la publicación. Si no lo has vendido y tu plan lo permite, activalo de nuevo </p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    
                 };
 
-                templatesTable.AddOrUpdate(t => t.Id, templates.ToArray());
+                foreach (var template in templates)
+                {
+                    var exists = templatesTable.FirstOrDefault(t => t.Name == template.Name);
+                    if (exists == null)
+                    {
+                        context.Set<MessageTemplate>().Add(template);
+                    }
+                }
             }
 
             #endregion
@@ -2402,10 +2546,25 @@ namespace Nop.Data.Migrations
                         Enabled = true,
                         StopOnError = false,
                         Type = "Nop.Services.Common.LoadBikesCacheTask, Nop.Services"
+                    },
+                    new ScheduleTask()
+                    {
+                        Id = 8,
+                        Name = "Vencimiento de publicaciones",
+                        Seconds = 14400,
+                        Enabled = true,
+                        StopOnError = false,
+                        Type = "Nop.Services.Common.PublishingAlmostFinishedTask, Nop.Services"
                     }
+
                 };
 
-                tasksTable.AddOrUpdate(t => t.Id, tasks.ToArray());
+                foreach (var task in tasks)
+                {
+                    var exists = tasksTable.FirstOrDefault(t => t.Id == task.Id);
+                    if (exists == null)
+                        context.Set<ScheduleTask>().Add(task);
+                }
             }
             #endregion
         }

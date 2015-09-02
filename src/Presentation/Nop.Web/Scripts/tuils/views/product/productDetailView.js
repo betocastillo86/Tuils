@@ -103,7 +103,14 @@
             redirectToVendor: function () {
                 //Traquea que un usuario a intentado comprar un producto
                 this.trackGAEvent('Compra', 'Exitosa');
-                document.location.href = this.vendorUrl;
+                if (this.vendorUrl) {
+                    displayAjaxLoading(true);
+                    document.location.href = this.vendorUrl;
+                }
+                else {
+                    this.$('#btnShowVendor').hide();
+                    this.$('.product-vendor').show();
+                }  
             }
         });
 

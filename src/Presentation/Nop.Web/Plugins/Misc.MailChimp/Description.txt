@@ -1,4 +1,4 @@
-Group: Misc
+﻿Group: Misc
 FriendlyName: MailChimp e-mail synchronization
 SystemName: Misc.MailChimp
 Version: 1.17

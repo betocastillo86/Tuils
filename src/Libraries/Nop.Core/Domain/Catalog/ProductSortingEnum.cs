@@ -10,6 +10,10 @@
         /// </summary>
         Position = 0,
         /// <summary>
+        /// Aleatoreamente
+        /// </summary>
+        Random = 1,
+        /// <summary>
         /// Name: A to Z
         /// </summary>
         NameAsc = 5,

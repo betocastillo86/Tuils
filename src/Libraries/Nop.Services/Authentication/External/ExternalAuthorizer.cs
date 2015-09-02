@@ -170,7 +170,7 @@ namespace Nop.Services.Authentication.External
                             case UserRegistrationType.Standard:
                                 {
                                     //send customer welcome message
-                                    _workflowMessageService.SendCustomerWelcomeMessage(currentCustomer, _workContext.WorkingLanguage.Id);
+                                    _workflowMessageService.SendCustomerWelcomeMessage(currentCustomer, Core.Domain.Vendors.VendorType.User, _workContext.WorkingLanguage.Id);
 
                                     //result
                                     return new AuthorizationResult(OpenAuthenticationStatus.AutoRegisteredStandard);

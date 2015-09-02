@@ -1,5 +1,6 @@
 ﻿require.config({
     baseUrl: '/Scripts',
+    waitSeconds : 15,
     shim: {
         //tagit: {
         //    deps :['jquery', 'jqueryui'],

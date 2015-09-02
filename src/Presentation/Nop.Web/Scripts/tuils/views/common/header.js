@@ -13,7 +13,7 @@
         templateUserAuthenticated :undefined,
 
         events : {
-            'click #liLogin': 'showLogin',
+            'click #liLogin': 'loadLoginForm',
             'click #liRegister': 'loadRegisterForm'
         },
         initialize: function () {
@@ -23,19 +23,27 @@
             var that = this;
             if (!this.viewLogin) {
                 //Debe validar si el modelo es un evento o un modelo, si es evento no lo envía
-                that.viewLogin = new LoginView({ $el: that.$('#divLoginUser'), sourceModel: model && !model.type ? model : undefined });
+                that.viewLogin = new LoginView({ $el: that.$('#divLoginUser'), sourceModel: model });
                 that.viewLogin.on("register", that.showRegister, that);
                 that.viewLogin.on("user-authenticated", that.showUserAuthenticated, that);
                 that.viewLogin.on("close-menu-responsive", that.closeMenuResponsive, that);
             }
             else {
+                this.viewLogin.sourceModel = model;
                 this.viewLogin.show();
             }
         },
-        loadRegisterForm : function(e){
+        getNewSourceModel: function () {
             var sourceModel = new BaseModel();
             sourceModel.set('ga_action', 'Registro');
-            this.showRegister(sourceModel);
+            return sourceModel;
+        },
+        loadLoginForm : function()
+        {
+            this.showLogin(this.getNewSourceModel());
+        },
+        loadRegisterForm : function(e){
+            this.showRegister(this.getNewSourceModel());
         },
         showRegister : function(sourceModel){
             var that = this;

@@ -535,7 +535,7 @@ namespace Nop.Services.Customers
                     _newsLetterSubscriptionService.InsertNewsLetterSubscription(customer.Email, true, newSuscription, customer.GetFullName());
 
                     //Intenta envíar el correo al usuario
-                    _workflowMessageService.SendCustomerWelcomeMessage(customer, _workContext.WorkingLanguage.Id, createPassword ? autoPassword : null);
+                    _workflowMessageService.SendCustomerWelcomeMessage(customer, vendorType, _workContext.WorkingLanguage.Id, createPassword ? autoPassword : null);
 
                     //Si tiene un vendor asociado actualiza el cliente
                     if(customer.VendorId > 0)

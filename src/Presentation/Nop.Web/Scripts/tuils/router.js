@@ -42,7 +42,7 @@
                 "customer/changepassword" : "changePassword",
                 "v/:query": "vendor",
                 "c/:categoryName(/*query)": "category",
-                "m/:query":"manufacturer",
+                "m/:manufacturerName(/*query)": "manufacturer",
                 "p/:query": "product",
                 'entrar' : 'login',
                 'buscar(/*query)': 'search',

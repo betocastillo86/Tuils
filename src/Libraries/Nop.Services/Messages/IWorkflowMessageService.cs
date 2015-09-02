@@ -28,7 +28,7 @@ namespace Nop.Services.Messages
         /// <param name="customer">Customer instance</param>
         /// <param name="languageId">Message language identifier</param>
         /// <returns>Queued email identifier</returns>
-        int SendCustomerWelcomeMessage(Customer customer, int languageId, string autoPassword = null);
+        int SendCustomerWelcomeMessage(Customer customer, VendorType vendorType, int languageId, string autoPassword = null);
 
         /// <summary>
         /// Sends an email validation message to a customer
@@ -354,6 +354,23 @@ namespace Nop.Services.Messages
         /// <param name="languageId"></param>
         /// <returns></returns>
         int SendPublishApprovedNotificationMessage(Product product, int languageId);
+
+        /// <summary>
+        /// Envia notifcación que el producto que está subiendo está a punto de expirar
+        /// </summary>
+        /// <param name="product">datos del producto</param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        int SendProductExpirationNotificationMessage(Product product, int expirationDays, int languageId);
+
+
+        // <summary>
+        /// Envia notifcación que el producto que publicó ya finalizó la publicación por tiempo
+        /// </summary>
+        /// <param name="product">datos del producto</param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        int SendProductFinishedNotificationMessage(Product product, int languageId);
         #endregion
     }
 }

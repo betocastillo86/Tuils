@@ -91,6 +91,10 @@
                             <input type="text" class="searchinput" value="@Model.PagingFilteringContext.q" />
                             <a class="btn_search"><span class="icon-lupa"></span></a>
                         </div>
+                        @if (Model.FilteredByProduct)
+                        { 
+                            <div>Si quieres ver todos los productos de <b>@Model.Name</b> da clic @Html.ActionLink("aquí", "Vendor") </div>
+                        }
 
 
                         @if (Model.Products.Count > 0)

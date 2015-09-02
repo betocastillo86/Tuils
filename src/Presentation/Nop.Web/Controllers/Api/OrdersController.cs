@@ -76,8 +76,9 @@ namespace Nop.Web.Controllers.Api
             var processPaymentRequest = new Nop.Services.Payments.ProcessPaymentRequest();
 
             //prevent 2 orders being placed within an X seconds time frame
-            if (!_orderService.IsMinimumOrderPlacementIntervalValid(_workContext.CurrentCustomer))
-                throw new Exception(_localizationService.GetResource("Checkout.MinOrderPlacementInterval"));
+            //Se elimina validacion ya que el anterior cumple con la condicion if (_orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, model.ProductId))
+            //if (!_orderService.IsMinimumOrderPlacementIntervalValid(_workContext.CurrentCustomer))
+            //    throw new Exception(_localizationService.GetResource("Checkout.MinOrderPlacementInterval"));
 
             //place order
             processPaymentRequest.StoreId = _storeContext.CurrentStore.Id;

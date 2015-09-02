@@ -716,38 +716,42 @@ namespace Nop.Services.Orders
                     }
                 }
                 #endregion
-                
 
+                #region Codigo Eliminado Stock (Como no hay stock no hay necesidad de contar)
                 //min totals validation
-                if (!processPaymentRequest.IsRecurringPayment)
-                {
-                    bool minOrderSubtotalAmountOk = ValidateMinOrderSubtotalAmount(cart);
-                    if (!minOrderSubtotalAmountOk)
-                    {
-                        decimal minOrderSubtotalAmount = _currencyService.ConvertFromPrimaryStoreCurrency(_orderSettings.MinOrderSubtotalAmount, _workContext.WorkingCurrency);
-                        throw new NopException(string.Format(_localizationService.GetResource("Checkout.MinOrderSubtotalAmount"), _priceFormatter.FormatPrice(minOrderSubtotalAmount, true, false)));
-                    }
-                    bool minOrderTotalAmountOk = ValidateMinOrderTotalAmount(cart);
-                    if (!minOrderTotalAmountOk)
-                    {
-                        decimal minOrderTotalAmount = _currencyService.ConvertFromPrimaryStoreCurrency(_orderSettings.MinOrderTotalAmount, _workContext.WorkingCurrency);
-                        throw new NopException(string.Format(_localizationService.GetResource("Checkout.MinOrderTotalAmount"), _priceFormatter.FormatPrice(minOrderTotalAmount, true, false)));
-                    }
-                }
+                //if (!processPaymentRequest.IsRecurringPayment)
+                //{
+                //    bool minOrderSubtotalAmountOk = ValidateMinOrderSubtotalAmount(cart);
+                //    if (!minOrderSubtotalAmountOk)
+                //    {
+                //        decimal minOrderSubtotalAmount = _currencyService.ConvertFromPrimaryStoreCurrency(_orderSettings.MinOrderSubtotalAmount, _workContext.WorkingCurrency);
+                //        throw new NopException(string.Format(_localizationService.GetResource("Checkout.MinOrderSubtotalAmount"), _priceFormatter.FormatPrice(minOrderSubtotalAmount, true, false)));
+                //    }
+                //    bool minOrderTotalAmountOk = ValidateMinOrderTotalAmount(cart);
+                //    if (!minOrderTotalAmountOk)
+                //    {
+                //        decimal minOrderTotalAmount = _currencyService.ConvertFromPrimaryStoreCurrency(_orderSettings.MinOrderTotalAmount, _workContext.WorkingCurrency);
+                //        throw new NopException(string.Format(_localizationService.GetResource("Checkout.MinOrderTotalAmount"), _priceFormatter.FormatPrice(minOrderTotalAmount, true, false)));
+                //    }
+                //}
+                #endregion
 
+                #region Codigo Eliminado Taxes no aplican
                 //tax display type
                 var customerTaxDisplayType = TaxDisplayType.IncludingTax;
-                if (!processPaymentRequest.IsRecurringPayment)
-                {
-                    if (_taxSettings.AllowCustomersToSelectTaxDisplayType)
-                        customerTaxDisplayType = (TaxDisplayType)customer.GetAttribute<int>(SystemCustomerAttributeNames.TaxDisplayTypeId, processPaymentRequest.StoreId);
-                    else
-                        customerTaxDisplayType = _taxSettings.TaxDisplayType;
-                }
-                else
-                {
-                    customerTaxDisplayType = initialOrder.CustomerTaxDisplayType;
-                }
+                //if (!processPaymentRequest.IsRecurringPayment)
+                //{
+                //    if (_taxSettings.AllowCustomersToSelectTaxDisplayType)
+                //        customerTaxDisplayType = (TaxDisplayType)customer.GetAttribute<int>(SystemCustomerAttributeNames.TaxDisplayTypeId, processPaymentRequest.StoreId);
+                //    else
+                //        customerTaxDisplayType = _taxSettings.TaxDisplayType;
+                //}
+                //else
+                //{
+                //    customerTaxDisplayType = initialOrder.CustomerTaxDisplayType;
+                //}
+                #endregion
+                
 
                 //applied discount (used to store discount usage history)
                 var appliedDiscounts = new List<Discount>();
