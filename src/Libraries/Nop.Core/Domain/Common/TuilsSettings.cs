@@ -119,7 +119,7 @@ namespace Nop.Core.Domain.Common
         public string Url_OG_ImageHome { get; set; }
 
         public string Url_OG_ImageSellBike { get; set; }
-        public string Url_OG_ImageSellMarket { get; set; }
-        public string Url_OG_ImageSellRepairShop { get; set; }
+        public string Url_OG_ImageSellProduct { get; set; }
+        public string Url_OG_ImageSellService { get; set; }
     }
 }
