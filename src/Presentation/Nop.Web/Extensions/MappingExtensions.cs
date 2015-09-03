@@ -69,7 +69,12 @@ namespace Nop.Web.Extensions
 
         #region Category
         //category
-        public static CategoryModel ToModel(this Category entity)
+        public static CategoryModel ToModel(this Category entity,
+            bool loadPictures = false,
+            ILocalizationService localizationService = null,
+            MediaSettings mediaSettings = null,
+            IPictureService pictureService = null,
+            int? pictureSize = null)
         {
             if (entity == null)
                 return null;
@@ -88,6 +93,20 @@ namespace Nop.Web.Extensions
                                             .ToList()
                                             .ToBaseModels()
             };
+
+
+            if (loadPictures)
+            {
+                if (localizationService == null)
+                    localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+                if (mediaSettings == null)
+                    mediaSettings = EngineContext.Current.Resolve<MediaSettings>();
+                if (pictureService == null)
+                    pictureService = EngineContext.Current.Resolve<IPictureService>();
+
+                model.PictureModel = entity.GetPicture(localizationService, mediaSettings, pictureService);
+            }
+
             return model;
         }
 
@@ -111,13 +130,28 @@ namespace Nop.Web.Extensions
             return model;
         }
 
-        public static List<CategoryModel> ToModels(this IList<Category> entities)
+        public static List<CategoryModel> ToModels(this IList<Category> entities, 
+            bool loadPictures = false,
+            ILocalizationService localizationService = null,
+            MediaSettings mediaSettings = null,
+            IPictureService pictureService = null,
+            int? pictureSize = null)
         {
             var models = new List<CategoryModel>();
 
+            if (loadPictures)
+            {
+                if (localizationService == null)
+                    localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+                if (mediaSettings == null)
+                    mediaSettings = EngineContext.Current.Resolve<MediaSettings>();
+                if (pictureService == null)
+                    pictureService = EngineContext.Current.Resolve<IPictureService>();
+            }
+
             foreach (var entity in entities)
             {
-                models.Add(entity.ToModel());
+                models.Add(entity.ToModel(loadPictures, localizationService, mediaSettings, pictureService, pictureSize));
             }
             return models;
         }
@@ -147,10 +181,9 @@ namespace Nop.Web.Extensions
         //    return models;
         //}
 
-
-
+        #region manufacturer
         //manufacturer
-        public static ManufacturerModel ToModel(this Manufacturer entity, 
+        public static ManufacturerModel ToModel(this Manufacturer entity,
             bool loadPictures = false,
             ILocalizationService localizationService = null,
             MediaSettings mediaSettings = null,
@@ -179,15 +212,15 @@ namespace Nop.Web.Extensions
                     mediaSettings = EngineContext.Current.Resolve<MediaSettings>();
                 if (pictureService == null)
                     pictureService = EngineContext.Current.Resolve<IPictureService>();
-                
+
                 model.PictureModel = entity.GetPicture(localizationService, mediaSettings, pictureService, pictureSize);
             }
-                
+
 
             return model;
         }
 
-        public static List<ManufacturerModel> ToModels(this IList<Manufacturer> entities, 
+        public static List<ManufacturerModel> ToModels(this IList<Manufacturer> entities,
             bool loadPictures = false,
             ILocalizationService localizationService = null,
             MediaSettings mediaSettings = null,
@@ -212,6 +245,9 @@ namespace Nop.Web.Extensions
             }
             return models;
         }
+        #endregion
+
+        
 
 
         //address

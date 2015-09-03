@@ -141,6 +141,11 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public DateTime UpdatedOnUtc { get; set; }
 
+        /// <summary>
+        /// Muestra o no la categoría con las marcas en el home
+        /// </summary>
+        public bool ShowWithManufacturers { get; set; }
+
 
         /// <summary>
         /// Categorias hijas separadas por comas

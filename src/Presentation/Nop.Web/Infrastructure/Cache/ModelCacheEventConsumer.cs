@@ -175,6 +175,7 @@ namespace Nop.Web.Infrastructure.Cache
         public const string MANUFACTURER_HAS_FEATURED_PRODUCTS_KEY = "Nop.pres.manufacturer.hasfeaturedproducts-{0}-{1}-{2}";
         public const string MANUFACTURER_HAS_FEATURED_PRODUCTS_PATTERN_KEY = "Nop.pres.manufacturer.hasfeaturedproducts";
         public const string MANUFACTURER_ON_HOMEPAGE = "Nop.pres.manufacturer.onhomepage";
+        public const string MANUFACTURER_AS_CATEGORIES_ON_HOMEPAGE = "Nop.pres.category.asmanufacturesonhomepage";
         
         /// <summary>
         /// Key for CategoryNavigationModel caching

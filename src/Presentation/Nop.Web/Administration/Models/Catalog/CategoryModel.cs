@@ -191,6 +191,9 @@ namespace Nop.Admin.Models.Catalog
 
         [NopResourceDisplayName("Admin.Catalog.Categories.Fields.NotAllowedToPublishProduct")]
         public bool NotAllowedToPublishProduct { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Categories.Fields.ShowWithManufacturers")]
+        public bool ShowWithManufacturers { get; set; }
     }
 
     public partial class CategoryLocalizedModel : ILocalizedModelLocal

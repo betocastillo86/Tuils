@@ -375,6 +375,22 @@ namespace Nop.Services.Catalog
 
             return categories;
         }
+
+        /// <summary>
+        /// Lista las categorías que deben ser mostradas en el home ccon las marcas
+        /// </summary>
+        /// <returns></returns>
+        public virtual IList<Category> GetAllCategoriesDisplayedWithManufacturers()
+        {
+            var query = from c in _categoryRepository.Table
+                        orderby c.DisplayOrder
+                        where c.Published &&
+                        !c.Deleted &&
+                        c.ShowWithManufacturers
+                        select c;
+
+            return query.ToList();
+        }
                 
         /// <summary>
         /// Gets a category

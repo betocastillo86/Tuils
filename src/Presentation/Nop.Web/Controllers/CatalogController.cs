@@ -933,11 +933,26 @@ namespace Nop.Web.Controllers
                     .ToModels(true, _localizationService, _mediaSettings, _pictureService);
             });
 
-            //Toma aleatoreamente un número de registros para ser mostrados
+
+            string cacheKeyCategories = string.Format(ModelCacheEventConsumer.MANUFACTURER_AS_CATEGORIES_ON_HOMEPAGE);
+            var cachedCategories = _cacheManager.Get(cacheKeyCategories, () =>
+            {
+                return _categoryService
+                    .GetAllCategoriesDisplayedWithManufacturers()
+                    .ToModels(true, _localizationService, _mediaSettings, _pictureService);
+            });
+
+            //Toma aleatoreamente un número de registros para ser mostrados dividido entre dos
             model.Manufacturers = cachedManufacturers
                 .OrderBy(elem => Guid.NewGuid())
-                .Take(_catalogSettings.NumberManufacturersOnHome)
+                .Take(_catalogSettings.NumberManufacturersOnHome/2)
                 .ToList();
+
+            //Toma aleatoreamente un número de registros para ser mostrados dividido entre dos
+            model.Categories = cachedCategories
+               .OrderBy(elem => Guid.NewGuid())
+               .Take(_catalogSettings.NumberManufacturersOnHome/2)
+               .ToList();
 
             return View(model);
         }

@@ -6,6 +6,15 @@
 @if (Model.Enable)
 { 
     <ul class="conte_marcas">
+        @foreach (var category in Model.Categories)
+        {
+            <li>
+                <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
+                    <img alt="@category.PictureModel.AlternateText" src="@category.PictureModel.ImageUrl" />
+                    <span>@category.Name</span>
+                </a>
+            </li>
+        }
         @foreach (var manufacturer in Model.Manufacturers)
         {
             <li>

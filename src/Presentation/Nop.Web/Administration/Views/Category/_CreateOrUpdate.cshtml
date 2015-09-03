@@ -200,6 +200,15 @@
         </tr>
         <tr>
             <td class="adminTitle">
+                @Html.NopLabelFor(model => model.ShowWithManufacturers):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(x => x.ShowWithManufacturers)
+                @Html.ValidationMessageFor(model => model.ShowWithManufacturers)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
                 @Html.NopLabelFor(model => model.IncludeInTopMenu):
             </td>
             <td class="adminData">

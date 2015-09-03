@@ -51,6 +51,12 @@ namespace Nop.Services.Catalog
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Categories</returns>
         IList<Category> GetAllCategoriesDisplayedOnHomePage(bool showHidden = false);
+
+        /// <summary>
+        /// Lista las categorías que deben ser mostradas en el home ccon las marcas
+        /// </summary>
+        /// <returns></returns>
+        IList<Category> GetAllCategoriesDisplayedWithManufacturers();
                 
         /// <summary>
         /// Gets a category
