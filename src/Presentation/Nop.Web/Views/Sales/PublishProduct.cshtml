@@ -22,8 +22,9 @@
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
     Html.AppendCssFileParts("~/Content/tagit/jquery.tagit.css");
-
 }
+
+@Html.Partial("_OpenGraph", string.Concat("Url_OG_ImageSell", Model.ProductType.ToString()))
 
 <div id="divMainSection">
     <div class="master-wrapper-page container hd">

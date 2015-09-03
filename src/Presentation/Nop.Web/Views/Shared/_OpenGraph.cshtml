@@ -1,0 +1,15 @@
+﻿@model string
+@using Nop.Core.Infrastructure
+@using Nop.Core.Domain.Common
+@{
+    var tuilsSettings = EngineContext.Current.Resolve<TuilsSettings>();
+    var valueUrl = typeof(TuilsSettings).GetProperty(Model).GetValue(tuilsSettings);
+
+    Html.AddHeadCustomParts("<meta property=\"og:type\" content=\"article\" />");
+    Html.AddHeadCustomParts("<meta property=\"og:image\" content=\"" + valueUrl + "\" />");
+    Html.AddHeadCustomParts("<meta property=\"og:url\" content=\"" + Request.Url.AbsoluteUri + "\" />");
+    Html.AddHeadCustomParts("<meta property=\"og:site_name\" content=\"Tuils\" />");
+
+    Html.AddHeadCustomParts("<meta property=\"twitter:image\" content=\"" + valueUrl + "\" />");
+               
+}

@@ -2562,6 +2562,7 @@
     <Content Include="Views\Product\_ProductSupplies.cshtml" />
     <Content Include="Views\Product\ProductsSameVendor.cshtml" />
     <Content Include="Views\Catalog\CategoriesHomePage.cshtml" />
+    <Content Include="Views\Shared\_OpenGraph.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

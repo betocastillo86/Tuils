@@ -113,10 +113,13 @@ namespace Nop.Core.Domain.Common
         public int SendMessageExpirationProductDaysBefore { get; set; }
 
         #endregion
+        /// <summary>
+        /// Url de la imagen de open graph para facebook
+        /// </summary>
+        public string Url_OG_ImageHome { get; set; }
 
-
-
-
-
+        public string Url_OG_ImageSellBike { get; set; }
+        public string Url_OG_ImageSellMarket { get; set; }
+        public string Url_OG_ImageSellRepairShop { get; set; }
     }
 }

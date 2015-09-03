@@ -2285,6 +2285,10 @@ namespace Nop.Data.Migrations
                 settings.Add("seoSettings.DisableRobotsForTestingSite", "False");
                 settings.Add("catalogSettings.ProductLimitPublished", "3");
                 settings.Add("tuilsSettings.SendMessageExpirationProductDaysBefore", "5");
+                settings.Add("tuilssettings.Url_OG_ImageHome", "http://tuils.com/Content/images/ogHome.jpg");
+                settings.Add("tuilssettings.Url_OG_ImageSellBike", "http://tuils.com/Content/images/ogBike.jpg");
+                settings.Add("tuilssettings.Url_OG_ImageSellMarket", "http://tuils.com/Content/images/ogMarket.jpg");
+                settings.Add("tuilssettings.Url_OG_ImageSellRepairShop", "http://tuils.com/Content/images/ogRepairShop.jpg");
                 
                 
                 

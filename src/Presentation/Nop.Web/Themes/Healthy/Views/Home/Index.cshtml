@@ -2,7 +2,9 @@
     
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
     Html.AddTitleParts(T("PageTitle.Home").Text);
+    
 }
+@Html.Partial("_OpenGraph", "Url_OG_ImageHome")
 @*added*@
 @section slider {
     @*@Html.Widget("home_page_top")*@
