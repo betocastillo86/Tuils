@@ -1235,6 +1235,10 @@ td.fieldname{font-size:12px;}
 .product-details-page .attributes textarea{width:300px;height:150px;}
 .product-vendor{background:#fedbd4; padding: 10px; border-radius: 3px; margin: 0 0 20px;}
 .product-vendor h3{color: #395983; font-size: 16px; margin: 0 0 5px;}
+.product-vendor p{padding: 5px 0;}
+.product-vendor p .label{font-weight: 500;}
+.product-vendor .icon-tel{font-size:16px; color:#f94c2a; }
+.tel-vendor{font-weight:500; font-size: 15px; color: #f94c2a;} 
 
 .product-cardShip{width: 100%; padding: 10px 0;}
 .product-cardShip [class^="icon-"]{color: #3B5A83; font-size: 35px; text-align: center; width: 35px; height: 35px; margin: 0 15px 0 0; display: inline-block;}
