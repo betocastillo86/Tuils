@@ -512,6 +512,10 @@
     <Content Include="Content\farbtastic\wheel.png" />
     <Content Include="Content\files\ExportImport\Index.htm" />
     <Content Include="Content\files\Index.htm" />
+    <Content Include="Content\Images\ogBike.jpg" />
+    <Content Include="Content\Images\ogHome.jpg" />
+    <Content Include="Content\Images\ogProduct.jpg" />
+    <Content Include="Content\Images\ogService.jpg" />
     <Content Include="Content\kendo\2014.1.318\Black\editor.png" />
     <Content Include="Content\kendo\2014.1.318\Black\imagebrowser.png" />
     <Content Include="Content\kendo\2014.1.318\Black\indeterminate.gif" />
