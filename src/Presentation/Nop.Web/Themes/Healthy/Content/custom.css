@@ -91,7 +91,7 @@ a:hover { text-decoration: none; }
 .product-grid .item-box { background:#fff; box-shadow:0 2px 4px rgba(0, 0, 0, 0.1); border-radius: 3px; float: left; height: 347px; width: calc(25% - 15px); margin: 0 20px 20px 0; position: relative; text-align: center; vertical-align: text-top; border-bottom: solid 3px #fff; display: inline-block; padding: 0;}
 
 .product-grid.home-page-product-grid .item-box:nth-child(4n+1){margin-right: 0;}
-.search-results .product-grid .item-box:nth-child(4n){margin-right: 0;}
+.search-results .product-grid .item-box:nth-child(4n), .category-results .product-grid .item-box:nth-child(4n){margin-right: 0;}
 .block,.news-list-homepage .item,.search-panel .search-input,.product-filters,fieldset,.product-list .product-item,.product-list .product-item .picture{border-radius:0;-webkit-border-radius: 0; -moz-border-radius: 0; -o-border-radius:0;-icab-border-radius:0;-khtml-border-radius:0;}
 
 .add-to-cart-button {border: 0 none; color: #FFFFFF; cursor: pointer; font-size: 13px;font-family: 'Ubuntu', sans-serif; font-weight: 400; margin: 0 2px; padding: 3px 3px 6px; text-shadow: none; filter: none; }

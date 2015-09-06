@@ -577,15 +577,6 @@ namespace Nop.Web.Controllers
             }
 
 
-            var categoryIds = new List<int>();
-            categoryIds.Add(category.Id);
-            if (_catalogSettings.ShowProductsFromSubcategories)
-            {
-                //include subcategories
-                categoryIds.AddRange(GetChildCategoryIds(category.Id));
-            }
-
-
             decimal? minPriceConverted = null;
             decimal? maxPriceConverted = null;
             //Valida el rango de precios
@@ -607,6 +598,21 @@ namespace Nop.Web.Controllers
             int? manufacturerId = model.PagingFilteringContext.ManufacturerFilter.GetAlreadyFilteredId(_webHelper);
             //Categoria especial seleccionada (Marca de la moto)
             int? specialCategoryId = model.PagingFilteringContext.BikeReferenceFilter.GetAlreadyFilteredId(_webHelper);
+
+            //Ya que la pagina es de una categoría, muestra adicionalmente todas las categorías hijas que
+            //tienen productos en el filtro. Y toma el valor.
+            int? newFilterCategory = model.PagingFilteringContext.CategoryFilter.GetAlreadyFilteredId(_webHelper);
+
+            //Agrega la categoría nueva si viene filtrada, sino agrega la Padre
+            var categoryIds = new List<int>();
+            categoryIds.Add(newFilterCategory ?? category.Id);
+
+            if (_catalogSettings.ShowProductsFromSubcategories)
+            {
+                //include subcategories
+                categoryIds.AddRange(GetChildCategoryIds(newFilterCategory ?? category.Id));
+            }
+
 
             Dictionary<int, int> filterableSpecificationAttributeOptionIds;
             Dictionary<int, int> filterableCategoryIds;

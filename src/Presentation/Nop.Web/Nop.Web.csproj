@@ -512,10 +512,15 @@
     <Content Include="Content\farbtastic\wheel.png" />
     <Content Include="Content\files\ExportImport\Index.htm" />
     <Content Include="Content\files\Index.htm" />
+    <Content Include="Content\Images\ajax-loader.gif" />
     <Content Include="Content\Images\ogBike.jpg" />
+    <Content Include="Content\Images\ogBike.png" />
     <Content Include="Content\Images\ogHome.jpg" />
+    <Content Include="Content\Images\ogHome.png" />
     <Content Include="Content\Images\ogProduct.jpg" />
+    <Content Include="Content\Images\ogProduct.png" />
     <Content Include="Content\Images\ogService.jpg" />
+    <Content Include="Content\Images\ogService.png" />
     <Content Include="Content\kendo\2014.1.318\Black\editor.png" />
     <Content Include="Content\kendo\2014.1.318\Black\imagebrowser.png" />
     <Content Include="Content\kendo\2014.1.318\Black\indeterminate.gif" />
@@ -2169,13 +2174,9 @@
     <Content Include="Themes\Healthy\Content\images\bg_search.png" />
     <Content Include="Themes\Healthy\Content\images\bg_slider.png" />
     <Content Include="Themes\Healthy\Content\images\bkg_header.jpg" />
-    <Content Include="Themes\Healthy\Content\images\bkg_tooltip.png" />
-    <Content Include="Themes\Healthy\Content\images\bkg_tooltip_af.png" />
-    <Content Include="Themes\Healthy\Content\images\bkg_tooltip_be.png" />
     <Content Include="Themes\Healthy\Content\images\box-header-left.gif" />
     <Content Include="Themes\Healthy\Content\images\box-header-right.gif" />
     <Content Include="Themes\Healthy\Content\images\browsers.png" />
-    <Content Include="Themes\Healthy\Content\images\btn-search.png" />
     <Content Include="Themes\Healthy\Content\images\btn_download_bg.gif" />
     <Content Include="Themes\Healthy\Content\images\btn_left.gif" />
     <Content Include="Themes\Healthy\Content\images\btn_right.gif" />
@@ -2242,7 +2243,6 @@
     <Content Include="Themes\Healthy\Content\images\ImageAttribution.txt" />
     <Content Include="Themes\Healthy\Content\images\img_categorias.svg" />
     <Content Include="Themes\Healthy\Content\images\img_categorias_gris.svg" />
-    <Content Include="Themes\Healthy\Content\images\img_prueba.png" />
     <Content Include="Themes\Healthy\Content\images\img_user.jpg" />
     <Content Include="Themes\Healthy\Content\images\loading.gif" />
     <Content Include="Themes\Healthy\Content\images\logo.gif" />
@@ -2570,6 +2570,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
+    <Folder Include="TempFiles\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Nop.Core\Nop.Core.csproj">

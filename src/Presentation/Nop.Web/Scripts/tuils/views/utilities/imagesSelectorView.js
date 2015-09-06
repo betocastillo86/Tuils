@@ -63,9 +63,9 @@
                 //Busca la imagen en orden y la empieza a cargar una a una
                 that.currentControlImage = that.$('.addImageGalery:eq(' + index + ')');
                 var fileName = '/TempFiles/' + element;
-                var currentModel = new FileModel({ guid: element, src: fileName });
+                var currentModel = new FileModel({ guid: element, src: fileName, control : that.currentControlImage });
                 that.fileUploaded(currentModel);
-                that.switchImage(fileName);
+                that.switchImage(fileName, that.currentControlImage);
             });
         },
         addImage: function (obj) {
@@ -102,7 +102,7 @@
                 //Quita la imagen de la lista y la desvincula del control
                 var fileToRemove = obj.attr(this.attributeFile);
                 this.collection.remove(this.collection.findWhere({ guid: fileToRemove }))
-                this.switchImage();
+                this.switchImage(undefined, this.currentControlImage);
                 //Elimina la imagen del servidor
                 var fileModel = new FileModel({ fileGuid: fileToRemove });
                 fileModel.remove();
@@ -120,7 +120,9 @@
                 if (TuilsUtilities.isValidSize(obj.target)) {
                     if (TuilsUtilities.isValidExtension(obj.target, 'image')) {
                         var fileModel = new FileModel();
-                        this.showLoadingBack(fileModel, this.currentControlImage);
+                        var controlImage = this.currentControlImage;
+                        fileModel.set('control', controlImage);
+                        this.showLoadingBack(fileModel, controlImage);
                         fileModel.on("file-saved", this.fileUploaded, this);
                         fileModel.on("file-error", this.fileErrorUpload, this)
                         this.resizer.photo(file, TuilsConfiguration.media.productImageMaxSizeResize, 'file', function (resizedFile) {
@@ -129,7 +131,7 @@
                                 fileModel.set({ src: thumbnail, file: resizedFile });
                                 //Hasta que la imagen no haya sido subida 
                                 fileModel.on('sync', function () {
-                                    that.switchImage(thumbnail);
+                                    that.switchImage(thumbnail, controlImage);
                                 });
                                 fileModel.upload({ saveUrl: that.urlSave });
 
@@ -150,28 +152,29 @@
             }
 
         },
-        switchImage : function(urlImage)
+        switchImage : function(urlImage, ctrl)
         {
             if (urlImage) {
-                this.currentControlImage.find("img").attr("src", urlImage).show();
-                this.currentControlImage.find("span").hide();
+                ctrl.find("img").attr("src", urlImage).show();
+                ctrl.find("span").hide();
             }
             else {
-                this.currentControlImage.find("img").removeAttr("src").hide();
-                this.currentControlImage.removeAttr(this.attributeFile);
-                this.currentControlImage.find("span").show();
+                ctrl.find("img").removeAttr("src").hide();
+                ctrl.removeAttr(this.attributeFile);
+                ctrl.find("span").show();
             }
 
-            this.currentControlImage.find(".icon-delete").css('display', urlImage ? 'block' : 'none');
+            ctrl.find(".icon-delete").css('display', urlImage ? 'block' : 'none');
         },
         fileUploaded: function (model) {
             //var srcImage = this.currentControlImage.find("img", "src");
             var guidImage = model.get('guid');
             this.collection.add(model);
-            this.currentControlImage.attr(this.attributeFile, guidImage);
+            var control = model.get('control');
+            control.attr(this.attributeFile, guidImage);
         },
         fileErrorUpload: function (resp) {
-            this.switchImage();
+            this.switchImage(undefined, resp.get('control'));
         },
         save: function () {
             if (this.collection.length >=  this.minFilesUploaded) {

@@ -51,7 +51,8 @@
                 'condiciones-de-uso': 'useConditions',
                 'contacto': 'contactUs',
                 'quienes-somos': 'aboutUs',
-                'tarifas-y-precios': 'aboutUs'
+                'tarifas-y-precios': 'aboutUs',
+                'passwordrecovery/confirm(/*query)' : 'passwordRecovery'
             },
             home : function()
             {
@@ -153,6 +154,9 @@
                 this.loadTwoColumns();
             },
             aboutUs: function () {
+                this.loadTwoColumns();
+            },
+            passwordRecovery: function () {
                 this.loadTwoColumns();
             },
             login: function () {

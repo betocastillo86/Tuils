@@ -169,40 +169,48 @@
                     @Html.Partial("_FilterSearches", Model.PagingFilteringContext)
                 }
                 @Html.Widget("categorydetails_before_product_list", Model.Id)
-                @*product list*@
-                @if (Model.Products.Count > 0)
+
+
+        <div class="category-results">
+
+            @*product list*@
+            @if (Model.Products.Count > 0)
+            {
+                if (Model.PagingFilteringContext.ViewMode == "list")
                 {
-                    if (Model.PagingFilteringContext.ViewMode == "list")
-                    {
-                        @*list mode*@
-                        <div class="product-list">
-                            @foreach (var product in Model.Products)
-                            {
-                                <div class="item-box">
-                                    @Html.Partial("_ProductBox", product)
-                                </div>
-                            }
-                        </div>
-                    }
-                    else
-                    {
-                        @*grid mode*@
-                        <div class="product-grid">
-                            @foreach (var product in Model.Products)
-                            {
-                                <div class="item-box">
-                                    @Html.Partial("_ProductBox", product)
-                                </div>
-                            }
-                        </div>
-                    }
+                    @*list mode*@
+                    <div class="product-list">
+                        @foreach (var product in Model.Products)
+                        {
+                            <div class="item-box">
+                                @Html.Partial("_ProductBox", product)
+                            </div>
+                        }
+                    </div>
                 }
                 else
                 {
-                    <div class="no-result">
-                        @T("Category.NoRows")
+                    @*grid mode*@
+                    <div class="product-grid">
+                        @foreach (var product in Model.Products)
+                        {
+                            <div class="item-box">
+                                @Html.Partial("_ProductBox", product)
+                            </div>
+                        }
                     </div>
                 }
+            }
+            else
+            {
+                <div class="no-result">
+                    @T("Category.NoRows")
+                </div>
+            }
+
+        </div>
+
+               
 
 
 
