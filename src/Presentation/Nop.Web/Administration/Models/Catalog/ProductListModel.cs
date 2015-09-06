@@ -22,6 +22,8 @@ namespace Nop.Admin.Models.Catalog
         public string SearchProductName { get; set; }
         [NopResourceDisplayName("Admin.Catalog.Products.List.SearchCategory")]
         public int SearchCategoryId { get; set; }
+        [NopResourceDisplayName("Admin.Catalog.Products.List.ShowUnpublised")]
+        public bool ShowUnpublised { get; set; }
         [NopResourceDisplayName("Admin.Catalog.Products.List.SearchIncludeSubCategories")]
         public bool SearchIncludeSubCategories { get; set; }
         [NopResourceDisplayName("Admin.Catalog.Products.List.SearchManufacturer")]
@@ -49,5 +51,7 @@ namespace Nop.Admin.Models.Catalog
         public IList<SelectListItem> AvailableWarehouses { get; set; }
         public IList<SelectListItem> AvailableVendors { get; set; }
         public IList<SelectListItem> AvailableProductTypes { get; set; }
+        
+       
     }
 }

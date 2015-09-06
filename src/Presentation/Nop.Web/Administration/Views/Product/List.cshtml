@@ -56,6 +56,14 @@
         </tr>
         <tr>
             <td class="adminTitle">
+                @Html.NopLabelFor(model => model.ShowUnpublised):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.ShowUnpublised)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchManufacturerId):
             </td>
             <td class="adminData">
@@ -219,94 +227,95 @@
     
     <script type="text/javascript">
 
-        var selectedIds = [];
+    var selectedIds = [];
 
-        $(document).ready(function () {
+    $(document).ready(function () {
 
-            //search button
-            $('#search-products').click(function () {
-                //search
-                var grid = $('#products-grid').data('kendoGrid');
-                grid.dataSource.page(1); //new search. Set page size to 1
-                //grid.dataSource.read(); we already loaded the grid above using "page" function
-                //clear selected checkboxes
-                $('.checkboxGroups').attr('checked', false).change();
-                selectedIds = [];
-                return false;
-            });
-
-            $("#@Html.FieldIdFor(model => model.SearchProductName)").keydown(function (event) {
-                if (event.keyCode == 13) {
-                    $("#search-products").click();
-                    return false;
-                }
-            });
-            $("#@Html.FieldIdFor(model => model.GoDirectlyToSku)").keydown(function (event) {
-                if (event.keyCode == 13) {
-                    $("#go-to-product-by-sku").click();
-                    return false;
-                }
-            });
-
-            //delete selected
-            $('#delete-selected').click(function(e) {
-
-                e.preventDefault();
-
-                var postData = {
-                    selectedIds: selectedIds
-                };
-
-                $.ajax({
-                    cache: false,
-                    type: "POST",
-                    url: "@(Url.Action("DeleteSelected", "Product"))",
-                    data: postData,
-                    complete: function(data) {
-                        //reload grid
-                        var grid = $('#products-grid').data('kendoGrid');
-                        grid.dataSource.read();
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        alert(thrownError);
-                    },
-                    traditional: true
-                });
-                return false;
-            });
-            
-            $('#mastercheckbox').click(function () {
-                $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
-            });
-
-            //wire up checkboxes. 
-            $('#products-grid').on('change', 'input[type=checkbox][id!=mastercheckbox]', function (e) {
-                var $check = $(this);
-                if ($check.is(":checked") == true) {
-                    var checked = jQuery.inArray($check.val(), selectedIds);
-                    if (checked == -1) {
-                        //add id to selectedIds.  
-                        selectedIds.push($check.val());
-                    }
-                }
-                else {
-                    var checked = jQuery.inArray($check.val(), selectedIds);
-                    if (checked > -1) {
-                        //remove id from selectedIds.  
-                        selectedIds = $.grep(selectedIds, function (item, index) {
-                            return item != $check.val();
-                        });
-                    }
-                }
-                updateMasterCheckbox();
-            });
+        //search button
+        $('#search-products').click(function () {
+            //search
+            var grid = $('#products-grid').data('kendoGrid');
+            grid.dataSource.page(1); //new search. Set page size to 1
+            //grid.dataSource.read(); we already loaded the grid above using "page" function
+            //clear selected checkboxes
+            $('.checkboxGroups').attr('checked', false).change();
+            selectedIds = [];
+            return false;
         });
 
-        function additionalData() {
-            return {
+        $("#@Html.FieldIdFor(model => model.SearchProductName)").keydown(function (event) {
+            if (event.keyCode == 13) {
+                $("#search-products").click();
+                return false;
+            }
+        });
+        $("#@Html.FieldIdFor(model => model.GoDirectlyToSku)").keydown(function (event) {
+            if (event.keyCode == 13) {
+                $("#go-to-product-by-sku").click();
+                return false;
+            }
+        });
+
+        //delete selected
+        $('#delete-selected').click(function(e) {
+
+            e.preventDefault();
+
+            var postData = {
+                selectedIds: selectedIds
+            };
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "@(Url.Action("DeleteSelected", "Product"))",
+                data: postData,
+                complete: function(data) {
+                    //reload grid
+                    var grid = $('#products-grid').data('kendoGrid');
+                    grid.dataSource.read();
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                },
+                traditional: true
+            });
+            return false;
+        });
+
+        $('#mastercheckbox').click(function () {
+            $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+        });
+
+        //wire up checkboxes.
+        $('#products-grid').on('change', 'input[type=checkbox][id!=mastercheckbox]', function (e) {
+            var $check = $(this);
+            if ($check.is(":checked") == true) {
+                var checked = jQuery.inArray($check.val(), selectedIds);
+                if (checked == -1) {
+                    //add id to selectedIds.
+                    selectedIds.push($check.val());
+                }
+            }
+            else {
+                var checked = jQuery.inArray($check.val(), selectedIds);
+                if (checked > -1) {
+                    //remove id from selectedIds.
+                    selectedIds = $.grep(selectedIds, function (item, index) {
+                        return item != $check.val();
+                    });
+                }
+            }
+            updateMasterCheckbox();
+        });
+    });
+
+    function additionalData() {
+        return {
                 SearchProductName: $('#@Html.FieldIdFor(model => model.SearchProductName)').val(),
                 SearchCategoryId: $('#SearchCategoryId').val(),
                 SearchIncludeSubCategories: $('#@Html.FieldIdFor(model => model.SearchIncludeSubCategories)').is(':checked'),
+                ShowUnpublised: $('#@Html.FieldIdFor(model => model.ShowUnpublised)').is(':checked'),
                 SearchManufacturerId: $('#SearchManufacturerId').val(),
                 SearchStoreId: $('#SearchStoreId').val(),
                 SearchWarehouseId: $('#SearchWarehouseId').val(),
@@ -319,7 +328,7 @@
             $('#products-grid input[type=checkbox][id!=mastercheckbox]').each(function () {
                 var currentId = $(this).val();
                 var checked = jQuery.inArray(currentId, selectedIds);
-                //set checked based on if current checkbox's value is in selectedIds.  
+                //set checked based on if current checkbox's value is in selectedIds.
                 $(this).attr('checked', checked > -1);
             });
 

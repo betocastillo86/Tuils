@@ -833,8 +833,15 @@ namespace Nop.Admin.Controllers
                 keywords: model.SearchProductName,
                 pageIndex: command.Page - 1,
                 pageSize: command.PageSize,
-                showHidden: true
+                orderBy:ProductSortingEnum.CreatedOn,
+                //Cuando debe mostrar los que no están publicados intenta que ejecute el filtro en 
+                //el que trae solo los que tienen published = false
+                //esto se ve en el storeprocedure en el ELSE la condicion @Published = 0 AND @ShowHidden = 1
+                showHidden: !model.ShowUnpublised,
+                //ENvia el filtro de los que no están publicados
+                published: model.ShowUnpublised ? (bool?)false : null
             );
+
             var gridModel = new DataSourceResult();
             gridModel.Data = products.Select(x =>
             {

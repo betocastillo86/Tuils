@@ -975,6 +975,9 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Category.DefaultMetadescription", "Compra y vende {0} facilmente en tuils. Tenemos para ti los mejores productos relacionados con el mundo de las motos.");
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.ExpirationBikeReferencesKey", "Llave que valida en el cliente si se deben recargar las marcas de motos");
                 newLocaleStringResources.Add("Admin.Catalog.Categories.Fields.ShowWithManufacturers", "Mostrar con las marcas en el home");
+                newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowUnpublised", "Mostros solo los que no están publicados");
+
+                
                 
                 
                 
