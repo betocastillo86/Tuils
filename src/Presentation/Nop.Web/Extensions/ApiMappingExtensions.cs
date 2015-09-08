@@ -116,6 +116,12 @@ namespace Nop.Web.Extensions.Api
 
             if(model.IsNew.HasValue)
                 entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.Option, AllowFiltering = true, CustomValue = model.Year.ToString(), SpecificationAttributeOptionId = model.IsNew.Value ? _tuilsSettings.specificationattributeOptionIsNewYes : _tuilsSettings.specificationattributeOptionIsNewNo, ShowOnProductPage = true });
+
+
+            //En los casos 
+            var categoryProduct = categoryService.GetCategoryById(model.CategoryId);
+            if (categoryProduct != null && categoryProduct.SpecificationAttributeOptionId.HasValue)
+                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.Option, AllowFiltering = true, CustomValue = categoryProduct.SpecificationAttributeOptionId.Value.ToString(), SpecificationAttributeOptionId = categoryProduct.SpecificationAttributeOptionId.Value, ShowOnProductPage = true });
             #endregion
 
 

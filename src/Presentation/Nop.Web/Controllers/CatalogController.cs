@@ -1763,7 +1763,7 @@ namespace Nop.Web.Controllers
             if (!string.IsNullOrEmpty(model.Q))
             {
                 //Solo si tiene un filto por speficicación puede buscar
-                if (model.Q.Length < _catalogSettings.ProductSearchTermMinimumLength && Request["specs"] == null)
+                if (model.Q.Length <= _catalogSettings.ProductSearchTermMinimumLength && Request["specs"] == null)
                 {
                     model.Warning = string.Format(_localizationService.GetResource("Search.SearchTermMinimumLengthIsNCharacters"), _catalogSettings.ProductSearchTermMinimumLength);
                 }

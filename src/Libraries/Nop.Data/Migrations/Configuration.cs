@@ -2292,6 +2292,8 @@ namespace Nop.Data.Migrations
                 settings.Add("tuilssettings.Url_OG_ImageSellBike", "http://tuils.com/Content/images/ogBike.jpg");
                 settings.Add("tuilssettings.Url_OG_ImageSellProduct", "http://tuils.com/Content/images/ogProduct.jpg");
                 settings.Add("tuilssettings.Url_OG_ImageSellService", "http://tuils.com/Content/images/ogService.jpg");
+                settings.Add("catalogSettings.NumberOfFeaturedProductsOnHomepage", "16");
+                
                 
                 
                 

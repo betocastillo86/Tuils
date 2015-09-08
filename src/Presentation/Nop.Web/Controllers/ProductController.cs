@@ -1229,16 +1229,28 @@ namespace Nop.Web.Controllers
         [ChildActionOnly]
         public ActionResult HomepageProducts(int? productThumbPictureSize)
         {
-            var products = _productService.GetAllProductsDisplayedOnHomePage();
-            //ACL and store mapping
-            products = products.Where(p => _aclService.Authorize(p) && _storeMappingService.Authorize(p)).ToList();
-            //availability dates
-            products = products.Where(p => p.IsAvailable()).ToList();
 
-            if (products.Count == 0)
+            var cacheKey = ModelCacheEventConsumer.HOMEPAGE_FEATURED_PRODUCTS_KEY;
+
+            var models = _cacheManager.Get(cacheKey, () => {
+                var products =_productService.GetAllProductsDisplayedOnHomePage();
+                //ACL and store mapping
+                products = products.Where(p => _aclService.Authorize(p) && _storeMappingService.Authorize(p)).ToList();
+                //availability dates
+                products = products.Where(p => p.IsAvailable()).ToList();
+
+                return PrepareProductOverviewModels(products, true, true, productThumbPictureSize).ToList();
+
+            }) ;
+            
+
+            if (models.Count == 0)
                 return Content("");
 
-            var model = PrepareProductOverviewModels(products, true, true, productThumbPictureSize).ToList();
+            var model = models.OrderBy(m => Guid.NewGuid())
+                .Take(_catalogSettings.NumberOfFeaturedProductsOnHomepage)
+                .ToList();
+
             return PartialView(model);
         }
 

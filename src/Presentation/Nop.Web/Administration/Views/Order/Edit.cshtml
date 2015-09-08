@@ -38,12 +38,12 @@
             <li @Html.RenderSelectedTabIndex(0, GetSelectedTabIndex())>
                 @T("Admin.Orders.Info")
             </li>
-            <li @Html.RenderSelectedTabIndex(1, GetSelectedTabIndex())>
+            @*<li @Html.RenderSelectedTabIndex(1, GetSelectedTabIndex())>
                 @T("Admin.Orders.BillingInfo")
             </li>
             <li @Html.RenderSelectedTabIndex(2, GetSelectedTabIndex())>
                 @T("Admin.Orders.ShippingInfo")
-            </li>
+            </li>*@
             <li @Html.RenderSelectedTabIndex(3, GetSelectedTabIndex())>
                 @T("Admin.Orders.Products")
             </li>
@@ -57,12 +57,12 @@
         <div>
             @TabInfo()
         </div>
-        <div>
+        @*<div>
             @TabBillingInfo()
         </div>
         <div>
             @TabShippingInfo()
-        </div>
+        </div>*@
         <div>
             @TabProducts()
         </div>
@@ -106,14 +106,14 @@
 {
     @Html.Partial("_OrderDetails.Info", Model)
 }
-@helper TabBillingInfo()
+@*@helper TabBillingInfo()
 {
     @Html.Partial("_OrderDetails.Billing", Model)
-}
-@helper TabShippingInfo()
+}*@
+@*@helper TabShippingInfo()
 {
     @Html.Partial("_OrderDetails.Shipping", Model)
-}
+}*@
 @helper TabProducts()
 {
     @Html.Partial("_OrderDetails.Products", Model)

@@ -440,10 +440,11 @@ namespace Nop.Web.Infrastructure.Cache
         public const string HOMEPAGE_BESTSELLERS_IDS_KEY = "Nop.pres.bestsellers.homepage-{0}";
         public const string HOMEPAGE_BESTSELLERS_IDS_PATTERN_KEY = "Nop.pres.bestsellers.homepage";
 
-
-        
-
-
+        /// <summary>
+        /// Llave de productos destacados en el home
+        /// </summary>
+        public const string HOMEPAGE_FEATURED_PRODUCTS_KEY = "Nop.pres.featuredProducts.homepage";
+  
         /// <summary>
         /// Trae los productos destacados de la izquierda
         /// </summary>
@@ -889,6 +890,7 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(PRODUCTS_ALSO_PURCHASED_IDS_PATTERN_KEY);
             _cacheManager.RemoveByPattern(PRODUCTS_RELATED_IDS_PATTERN_KEY);
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(HOMEPAGE_FEATURED_PRODUCTS_KEY);
 
             //Limpia el cache de los destacados a la izquierda solo si se actualizan
             if (eventMessage.Entity.LeftFeatured.HasValue && eventMessage.Entity.LeftFeatured.Value)
@@ -906,6 +908,7 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(PRODUCTS_ALSO_PURCHASED_IDS_PATTERN_KEY);
             _cacheManager.RemoveByPattern(PRODUCTS_RELATED_IDS_PATTERN_KEY);
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(HOMEPAGE_FEATURED_PRODUCTS_KEY);
 
             //Limpia el cache de los destacados a la izquierda solo si se actualizan
             if (eventMessage.Entity.LeftFeatured.HasValue && eventMessage.Entity.LeftFeatured.Value)

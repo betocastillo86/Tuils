@@ -35,6 +35,7 @@ using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Mvc;
+using Nop.Services.Customers;
 
 namespace Nop.Admin.Controllers
 {
@@ -440,70 +441,70 @@ namespace Nop.Admin.Controllers
 
             #region Billing & shipping info
 
-            model.BillingAddress = order.BillingAddress.ToModel();
-            model.BillingAddress.FormattedCustomAddressAttributes = _addressAttributeFormatter.FormatAttributes(order.BillingAddress.CustomAttributes);
-            model.BillingAddress.FirstNameEnabled = true;
-            model.BillingAddress.FirstNameRequired = true;
-            model.BillingAddress.LastNameEnabled = true;
-            model.BillingAddress.LastNameRequired = true;
-            model.BillingAddress.EmailEnabled = true;
-            model.BillingAddress.EmailRequired = true;
-            model.BillingAddress.CompanyEnabled = _addressSettings.CompanyEnabled;
-            model.BillingAddress.CompanyRequired = _addressSettings.CompanyRequired;
-            model.BillingAddress.CountryEnabled = _addressSettings.CountryEnabled;
-            model.BillingAddress.StateProvinceEnabled = _addressSettings.StateProvinceEnabled;
-            model.BillingAddress.CityEnabled = _addressSettings.CityEnabled;
-            model.BillingAddress.CityRequired = _addressSettings.CityRequired;
-            model.BillingAddress.StreetAddressEnabled = _addressSettings.StreetAddressEnabled;
-            model.BillingAddress.StreetAddressRequired = _addressSettings.StreetAddressRequired;
-            model.BillingAddress.StreetAddress2Enabled = _addressSettings.StreetAddress2Enabled;
-            model.BillingAddress.StreetAddress2Required = _addressSettings.StreetAddress2Required;
-            model.BillingAddress.ZipPostalCodeEnabled = _addressSettings.ZipPostalCodeEnabled;
-            model.BillingAddress.ZipPostalCodeRequired = _addressSettings.ZipPostalCodeRequired;
-            model.BillingAddress.PhoneEnabled = _addressSettings.PhoneEnabled;
-            model.BillingAddress.PhoneRequired = _addressSettings.PhoneRequired;
-            model.BillingAddress.FaxEnabled = _addressSettings.FaxEnabled;
-            model.BillingAddress.FaxRequired = _addressSettings.FaxRequired;
+            //model.BillingAddress = order.BillingAddress.ToModel();
+            //model.BillingAddress.FormattedCustomAddressAttributes = _addressAttributeFormatter.FormatAttributes(order.BillingAddress.CustomAttributes);
+            //model.BillingAddress.FirstNameEnabled = true;
+            //model.BillingAddress.FirstNameRequired = true;
+            //model.BillingAddress.LastNameEnabled = true;
+            //model.BillingAddress.LastNameRequired = true;
+            //model.BillingAddress.EmailEnabled = true;
+            //model.BillingAddress.EmailRequired = true;
+            //model.BillingAddress.CompanyEnabled = _addressSettings.CompanyEnabled;
+            //model.BillingAddress.CompanyRequired = _addressSettings.CompanyRequired;
+            //model.BillingAddress.CountryEnabled = _addressSettings.CountryEnabled;
+            //model.BillingAddress.StateProvinceEnabled = _addressSettings.StateProvinceEnabled;
+            //model.BillingAddress.CityEnabled = _addressSettings.CityEnabled;
+            //model.BillingAddress.CityRequired = _addressSettings.CityRequired;
+            //model.BillingAddress.StreetAddressEnabled = _addressSettings.StreetAddressEnabled;
+            //model.BillingAddress.StreetAddressRequired = _addressSettings.StreetAddressRequired;
+            //model.BillingAddress.StreetAddress2Enabled = _addressSettings.StreetAddress2Enabled;
+            //model.BillingAddress.StreetAddress2Required = _addressSettings.StreetAddress2Required;
+            //model.BillingAddress.ZipPostalCodeEnabled = _addressSettings.ZipPostalCodeEnabled;
+            //model.BillingAddress.ZipPostalCodeRequired = _addressSettings.ZipPostalCodeRequired;
+            //model.BillingAddress.PhoneEnabled = _addressSettings.PhoneEnabled;
+            //model.BillingAddress.PhoneRequired = _addressSettings.PhoneRequired;
+            //model.BillingAddress.FaxEnabled = _addressSettings.FaxEnabled;
+            //model.BillingAddress.FaxRequired = _addressSettings.FaxRequired;
 
-            model.ShippingStatus = order.ShippingStatus.GetLocalizedEnum(_localizationService, _workContext); ;
-            if (order.ShippingStatus != ShippingStatus.ShippingNotRequired)
-            {
-                model.IsShippable = true;
+            //model.ShippingStatus = order.ShippingStatus.GetLocalizedEnum(_localizationService, _workContext); ;
+            //if (order.ShippingStatus != ShippingStatus.ShippingNotRequired)
+            //{
+            //    model.IsShippable = true;
 
-                model.PickUpInStore = order.PickUpInStore;
-                if (!order.PickUpInStore)
-                {
-                    model.ShippingAddress = order.ShippingAddress.ToModel();
-                    model.ShippingAddress.FormattedCustomAddressAttributes = _addressAttributeFormatter.FormatAttributes(order.ShippingAddress.CustomAttributes);
-                    model.ShippingAddress.FirstNameEnabled = true;
-                    model.ShippingAddress.FirstNameRequired = true;
-                    model.ShippingAddress.LastNameEnabled = true;
-                    model.ShippingAddress.LastNameRequired = true;
-                    model.ShippingAddress.EmailEnabled = true;
-                    model.ShippingAddress.EmailRequired = true;
-                    model.ShippingAddress.CompanyEnabled = _addressSettings.CompanyEnabled;
-                    model.ShippingAddress.CompanyRequired = _addressSettings.CompanyRequired;
-                    model.ShippingAddress.CountryEnabled = _addressSettings.CountryEnabled;
-                    model.ShippingAddress.StateProvinceEnabled = _addressSettings.StateProvinceEnabled;
-                    model.ShippingAddress.CityEnabled = _addressSettings.CityEnabled;
-                    model.ShippingAddress.CityRequired = _addressSettings.CityRequired;
-                    model.ShippingAddress.StreetAddressEnabled = _addressSettings.StreetAddressEnabled;
-                    model.ShippingAddress.StreetAddressRequired = _addressSettings.StreetAddressRequired;
-                    model.ShippingAddress.StreetAddress2Enabled = _addressSettings.StreetAddress2Enabled;
-                    model.ShippingAddress.StreetAddress2Required = _addressSettings.StreetAddress2Required;
-                    model.ShippingAddress.ZipPostalCodeEnabled = _addressSettings.ZipPostalCodeEnabled;
-                    model.ShippingAddress.ZipPostalCodeRequired = _addressSettings.ZipPostalCodeRequired;
-                    model.ShippingAddress.PhoneEnabled = _addressSettings.PhoneEnabled;
-                    model.ShippingAddress.PhoneRequired = _addressSettings.PhoneRequired;
-                    model.ShippingAddress.FaxEnabled = _addressSettings.FaxEnabled;
-                    model.ShippingAddress.FaxRequired = _addressSettings.FaxRequired;
+            //    model.PickUpInStore = order.PickUpInStore;
+            //    if (!order.PickUpInStore)
+            //    {
+            //        model.ShippingAddress = order.ShippingAddress.ToModel();
+            //        model.ShippingAddress.FormattedCustomAddressAttributes = _addressAttributeFormatter.FormatAttributes(order.ShippingAddress.CustomAttributes);
+            //        model.ShippingAddress.FirstNameEnabled = true;
+            //        model.ShippingAddress.FirstNameRequired = true;
+            //        model.ShippingAddress.LastNameEnabled = true;
+            //        model.ShippingAddress.LastNameRequired = true;
+            //        model.ShippingAddress.EmailEnabled = true;
+            //        model.ShippingAddress.EmailRequired = true;
+            //        model.ShippingAddress.CompanyEnabled = _addressSettings.CompanyEnabled;
+            //        model.ShippingAddress.CompanyRequired = _addressSettings.CompanyRequired;
+            //        model.ShippingAddress.CountryEnabled = _addressSettings.CountryEnabled;
+            //        model.ShippingAddress.StateProvinceEnabled = _addressSettings.StateProvinceEnabled;
+            //        model.ShippingAddress.CityEnabled = _addressSettings.CityEnabled;
+            //        model.ShippingAddress.CityRequired = _addressSettings.CityRequired;
+            //        model.ShippingAddress.StreetAddressEnabled = _addressSettings.StreetAddressEnabled;
+            //        model.ShippingAddress.StreetAddressRequired = _addressSettings.StreetAddressRequired;
+            //        model.ShippingAddress.StreetAddress2Enabled = _addressSettings.StreetAddress2Enabled;
+            //        model.ShippingAddress.StreetAddress2Required = _addressSettings.StreetAddress2Required;
+            //        model.ShippingAddress.ZipPostalCodeEnabled = _addressSettings.ZipPostalCodeEnabled;
+            //        model.ShippingAddress.ZipPostalCodeRequired = _addressSettings.ZipPostalCodeRequired;
+            //        model.ShippingAddress.PhoneEnabled = _addressSettings.PhoneEnabled;
+            //        model.ShippingAddress.PhoneRequired = _addressSettings.PhoneRequired;
+            //        model.ShippingAddress.FaxEnabled = _addressSettings.FaxEnabled;
+            //        model.ShippingAddress.FaxRequired = _addressSettings.FaxRequired;
                     
-                    model.ShippingAddressGoogleMapsUrl = string.Format("http://maps.google.com/maps?f=q&hl=en&ie=UTF8&oe=UTF8&geocode=&q={0}", Server.UrlEncode(order.ShippingAddress.Address1 + " " + order.ShippingAddress.ZipPostalCode + " " + order.ShippingAddress.City + " " + (order.ShippingAddress.Country != null ? order.ShippingAddress.Country.Name : "")));
-                }
-                model.ShippingMethod = order.ShippingMethod;
+            //        model.ShippingAddressGoogleMapsUrl = string.Format("http://maps.google.com/maps?f=q&hl=en&ie=UTF8&oe=UTF8&geocode=&q={0}", Server.UrlEncode(order.ShippingAddress.Address1 + " " + order.ShippingAddress.ZipPostalCode + " " + order.ShippingAddress.City + " " + (order.ShippingAddress.Country != null ? order.ShippingAddress.Country.Name : "")));
+            //    }
+            //    model.ShippingMethod = order.ShippingMethod;
 
-                model.CanAddNewShipments = order.HasItemsToAddToShipment();
-            }
+            //    model.CanAddNewShipments = order.HasItemsToAddToShipment();
+            //}
 
             #endregion
 
@@ -883,9 +884,13 @@ namespace Nop.Admin.Controllers
                         OrderStatus = x.OrderStatus.GetLocalizedEnum(_localizationService, _workContext),
                         PaymentStatus = x.PaymentStatus.GetLocalizedEnum(_localizationService, _workContext),
                         ShippingStatus = x.ShippingStatus.GetLocalizedEnum(_localizationService, _workContext),
-                        CustomerEmail = x.BillingAddress.Email,
-                        CustomerFullName = string.Format("{0} {1}", x.BillingAddress.FirstName, x.BillingAddress.LastName),
-                        CreatedOn = _dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc)
+                        //CustomerEmail = x.BillingAddress.Email,
+                        //CustomerFullName = string.Format("{0} {1}", x.BillingAddress.FirstName, x.BillingAddress.LastName),
+                        CustomerEmail = x.Customer.Email,
+                        CustomerFullName = x.Customer.GetFullName(),
+                        CreatedOn = _dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc),
+                        FirstProductName = x.OrderItems.FirstOrDefault().Product.Name,
+                        FirstProductId = x.OrderItems.FirstOrDefault().Product.Id
                     };
                 }),
                 Total = orders.TotalCount

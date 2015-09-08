@@ -172,6 +172,9 @@ namespace Nop.Admin.Models.Orders
         public string ShippingAddressGoogleMapsUrl { get; set; }
         public bool CanAddNewShipments { get; set; }
 
+        public string FirstProductName { get; set; }
+        public int FirstProductId { get; set; }
+
         //billing info
         [NopResourceDisplayName("Admin.Orders.Fields.BillingAddress")]
         public AddressModel BillingAddress { get; set; }
