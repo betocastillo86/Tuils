@@ -7,6 +7,7 @@ using Nop.Core.Domain.Customers;
 using Nop.Core.Infrastructure;
 using Nop.Services.Common;
 using Nop.Services.Localization;
+using Nop.Services.Catalog;
 
 namespace Nop.Services.Customers
 {
@@ -91,6 +92,25 @@ namespace Nop.Services.Customers
         public static int? GetBikeReference(this Customer customer)
         {
             return customer.GetAttribute<int?>(SystemCustomerAttributeNames.BikeReferenceId);
+        }
+
+        /// <summary>
+        /// Retorna el nombre de la referencia de moto
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <param name="categoryService"></param>
+        /// <returns></returns>
+        public static string GetBikeReferenceName(this Customer customer, ICategoryService categoryService)
+        {
+            int? bikeReferenceId = customer.GetBikeReference();
+            if (bikeReferenceId.HasValue)
+            {
+                var category = categoryService.GetCategoryById(bikeReferenceId.Value);
+                if (category != null)
+                    return category.Name;
+            }
+
+            return null;
         }
 
 

@@ -83,6 +83,7 @@ namespace Nop.Admin.Controllers
         private readonly IAddressAttributeParser _addressAttributeParser;
         private readonly IAddressAttributeService _addressAttributeService;
         private readonly IAddressAttributeFormatter _addressAttributeFormatter;
+        private readonly ICategoryService _categoryService;
 
         #endregion
 
@@ -124,7 +125,8 @@ namespace Nop.Admin.Controllers
             ICustomerAttributeService customerAttributeService,
             IAddressAttributeParser addressAttributeParser,
             IAddressAttributeService addressAttributeService,
-            IAddressAttributeFormatter addressAttributeFormatter)
+            IAddressAttributeFormatter addressAttributeFormatter,
+            ICategoryService categoryService)
         {
             this._customerService = customerService;
             this._newsLetterSubscriptionService = newsLetterSubscriptionService;
@@ -163,6 +165,7 @@ namespace Nop.Admin.Controllers
             this._addressAttributeParser = addressAttributeParser;
             this._addressAttributeService = addressAttributeService;
             this._addressAttributeFormatter = addressAttributeFormatter;
+            this._categoryService = categoryService;
         }
 
         #endregion
@@ -507,6 +510,7 @@ namespace Nop.Admin.Controllers
                     model.StateProvinceId = customer.GetAttribute<int>(SystemCustomerAttributeNames.StateProvinceId);
                     model.Phone = customer.GetAttribute<string>(SystemCustomerAttributeNames.Phone);
                     model.Fax = customer.GetAttribute<string>(SystemCustomerAttributeNames.Fax);
+                    model.BikeReferenceName = customer.GetBikeReferenceName(_categoryService);
                 }
             }
 

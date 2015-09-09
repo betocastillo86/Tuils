@@ -422,6 +422,18 @@
                 </td>
             </tr>
         }
+        @if (Model.BikeReferenceName != null)
+        {
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.BikeReferenceName):
+                </td>
+                <td class="adminData">
+                    @Html.DisplayFor(model => model.BikeReferenceName)
+                    @Html.ValidationMessageFor(model => model.BikeReferenceName)
+                </td>
+            </tr>
+        }
         @if (Model.CustomerAttributes.Count > 0)
         {
             @Html.Partial("_CustomerAttributes", Model.CustomerAttributes)

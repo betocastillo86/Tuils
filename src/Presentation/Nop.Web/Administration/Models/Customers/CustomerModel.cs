@@ -111,7 +111,8 @@ namespace Nop.Admin.Models.Customers
 
         public List<CustomerAttributeModel> CustomerAttributes { get; set; }
 
-
+        [NopResourceDisplayName("Admin.Customers.Customers.Fields.BikeReferenceName")]
+        public string BikeReferenceName { get; set; }
 
 
 

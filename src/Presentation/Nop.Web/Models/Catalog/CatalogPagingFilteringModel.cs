@@ -597,7 +597,7 @@ namespace Nop.Web.Models.Catalog
                         item.FilterUrl = this.CreateFilterUrl(webHelper, x.SpecificationAttributeOptionId, null);
 
                         return item;
-                    }).ToList();
+                    }).OrderByDescending(o => o.NumOfProducts).ToList();
 
                     this.RemoveFilterUrl = this.RemoveFilterFromUrl(webHelper, alreadyFilteredOptions.Select(f => SeoExtensions.GetSeName(f.SpecificationAttributeOptionName)).ToArray());
                     //remove filter URL
@@ -773,8 +773,8 @@ namespace Nop.Web.Models.Catalog
                     statesOptions = stateProvinceService
                      .GetStatesProvincesByIds(filterableStateProvinceIds != null ?
                      filterableStateProvinceIds.Keys.ToArray() : new int[] { })
-                     .OrderBy(c => c.DisplayOrder)
-                     .ThenBy(saof => saof.Name)
+                     //.OrderBy(c => c.DisplayOrder)
+                     //.ThenBy(saof => saof.Name)
                      .ToList();
                 }
 
@@ -883,8 +883,8 @@ namespace Nop.Web.Models.Catalog
                     options = manufacturerService
                      .GetManufacturersByIds(filterableManufacturerIds != null ?
                      filterableManufacturerIds.Keys.ToArray() : new int[] { })
-                     .OrderBy(c => c.DisplayOrder)
-                     .ThenBy(saof => saof.Name)
+                     //.OrderBy(c => c.DisplayOrder)
+                     //.ThenBy(saof => saof.Name)
                      .ToList();
                 }
 
@@ -918,7 +918,7 @@ namespace Nop.Web.Models.Catalog
                             item.FilterUrl = this.CreateFilterUrl(webHelper, x.Id, x.Name);
 
                             return item;
-                        }).ToList();
+                        }).OrderByDescending(o => o.NumOfProducts).ToList();
                     }
 
 
@@ -992,8 +992,8 @@ namespace Nop.Web.Models.Catalog
                     options = categoryService
                      .GetCategoriesByIds(filterableSpecialCategoryIds != null ?
                      filterableSpecialCategoryIds.Keys.ToArray() : new int[] { })
-                     .OrderBy(c => c.DisplayOrder)
-                     .ThenBy(saof => saof.Name)
+                     //.OrderBy(c => c.DisplayOrder)
+                     //.ThenBy(saof => saof.Name)
                      .ToList();
                 }
 

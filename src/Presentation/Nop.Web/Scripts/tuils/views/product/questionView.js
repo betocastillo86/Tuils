@@ -43,6 +43,7 @@
                 this.$("#question-form").fadeOut({
                     complete: function () {
                         that.$("#divQuestionPublished").show();
+                        that.$(".no-result").hide();
                     }
                 });
             },
