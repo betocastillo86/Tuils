@@ -773,6 +773,7 @@ td.fieldname{font-size:12px;}
 .product-filters li a{color:#7f7d84;}
 .product-filters li:hover a{color:#FA4C2A; text-decoration: underline;}
 	.fil_cant{background:#fa4c2a; color:#FFF; font-size: 12px; font-weight: 400; border-radius: 3px; text-align: center; padding:1px 5px; float: right; display: block;}
+	.namefil{white-space:nowrap; width: calc(100% - 45px); display: inline-block; text-overflow:ellipsis; overflow: hidden;}
 	.qcat-more-filters{color:#3b5a83; font-size: 11px; margin:0 0 0 5px;}
 	.qcat-more-filters b{font-weight: normal; text-decoration: underline;}
 	.qcat-more-filters span{color:#fb7055;}

@@ -10,7 +10,7 @@
 
             @foreach (var item in Model.NotFilteredItems)
             {
-                <li><a href="@item.FilterUrl" rel="nofollow">@item.Name <span class="fil_cant">@item.NumOfProducts</span></a></li>
+                <li><a href="@item.FilterUrl" rel="nofollow"><span class="namefil">@item.Name</span> <span class="fil_cant">@item.NumOfProducts</span></a></li>
             }
         </ul>
     }
