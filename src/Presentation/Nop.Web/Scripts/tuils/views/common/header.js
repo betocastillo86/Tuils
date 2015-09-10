@@ -67,12 +67,12 @@
             this.templateUserAuthenticated = Handlebars.compile(this.$("#templateLoggedUser").html());
             this.$(".preLogin").hide();
             this.$("ul").append(this.templateUserAuthenticated(model.toJSON()));
-            if (this.isMinSize())
-            {
-                var templateLoggedInResponsive = Handlebars.compile(this.$("#templateLoggedInResponsive").html());
-                $("#nav ul").parent().prepend(templateLoggedInResponsive(model.toJSON()));
-                $("#nav ul").hide();
-            }
+            //if (this.isMinSize())
+            //{
+            //    var templateLoggedInResponsive = Handlebars.compile(this.$("#templateLoggedInResponsive").html());
+            //    $("#nav ul").parent().prepend(templateLoggedInResponsive(model.toJSON()));
+            //    $("#nav ul").hide();
+            //}
         },
         //loadTopMenu: function () {
         //    this.viewTopMenu = new TopMenuView({ el: '.header-menu' });

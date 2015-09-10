@@ -7,6 +7,7 @@
     var supportRtl = EngineContext.Current.Resolve<Nop.Core.IWorkContext>().WorkingLanguage.Rtl;
     var currentThemeName = EngineContext.Current.Resolve<Nop.Web.Framework.Themes.IThemeContext>().WorkingThemeName;
     var seoSettings = EngineContext.Current.Resolve<Nop.Core.Domain.Seo.SeoSettings>();
+    var tuilsSettings = EngineContext.Current.Resolve<TuilsSettings>();
 
 
 
@@ -56,7 +57,7 @@
     else
     {
         @:
-    <script data-main="/scripts/tuils/built" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js" async ></script>
+    <script data-main="/scripts/tuils/built.js?cache=@(tuilsSettings.KeyCacheBuiltJavascript)" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js" async ></script>
     }
 
     @Html.NopScripts(this.Url, ResourceLocation.Head)

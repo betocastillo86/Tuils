@@ -10,9 +10,9 @@ define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars
             errors: {
                 'PhoneNumber' : 'El número de contacto es obligatorio'
             },
-            bindings: {
-                "PhoneNumber" : "#PhoneNumber"
-            },
+            //bindings: {
+            //    "PhoneNumber" : "#PhoneNumber"
+            //},
             productType: undefined,
             btnFinish:undefined,
             //Propiedades que se van a mostrar en el resumen, esto depende del tipo de producto

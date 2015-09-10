@@ -31,6 +31,7 @@ using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Security;
 using Nop.Core.Domain.Common;
+using Nop.Services.Configuration;
 
 namespace Nop.Admin.Controllers
 {
@@ -56,6 +57,7 @@ namespace Nop.Admin.Controllers
         private readonly ILocalizationService _localizationService;
         private readonly ISearchTermService _searchTermService;
         private readonly IStoreService _storeService;
+        private readonly ISettingService _settingService;
         private readonly CatalogSettings _catalogSettings;
         private readonly HttpContextBase _httpContext;
         private readonly TuilsSettings _tuilsSettings;
@@ -84,7 +86,8 @@ namespace Nop.Admin.Controllers
             IStoreService storeService,
             CatalogSettings catalogSettings,
             HttpContextBase httpContext, 
-            TuilsSettings tuilsSettings)
+            TuilsSettings tuilsSettings,
+            ISettingService settingService)
         {
             this._paymentService = paymentService;
             this._shippingService = shippingService;
@@ -107,6 +110,7 @@ namespace Nop.Admin.Controllers
             this._catalogSettings = catalogSettings;
             this._httpContext = httpContext;
             this._tuilsSettings = tuilsSettings;
+            this._settingService = settingService;
         }
 
         #endregion
@@ -540,6 +544,13 @@ namespace Nop.Admin.Controllers
 
             Nop.Web.Framework.Mvc.JavascriptConfiguration.CreateJavascriptConfigurationFile(_tuilsSettings);
             Nop.Web.Framework.Mvc.JavascriptConfiguration.CreateJavascriptResourcesFile();
+            
+            //Genera una nueva llave que regenera el javascript
+            //y actualiza los settings
+            _tuilsSettings.KeyCacheBuiltJavascript = Guid.NewGuid().ToString();
+            _settingService.SaveSetting<TuilsSettings>(_tuilsSettings);
+
+
             return RedirectToAction("Index", "Home", new { updated = 1 });
         }
 
