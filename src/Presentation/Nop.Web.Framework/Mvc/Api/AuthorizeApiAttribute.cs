@@ -15,7 +15,7 @@ namespace Nop.Web.Framework.Mvc.Api
     /// </summary>
     public class AuthorizeApiAttribute : System.Web.Http.AuthorizeAttribute
     {
-        private readonly IWorkContext _workContext;
+        protected readonly IWorkContext _workContext;
 
         public AuthorizeApiAttribute() : base()
         {

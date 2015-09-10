@@ -75,7 +75,7 @@
     <br />
     <div class="title" >@T("PublishProduct.Product.Html")</div>
     <div class="descript_crea" >
-        @Html.TextAreaRequired("FullDescription", labelText:string.Empty)
+        @Html.TextAreaRequired("FullDescription", labelText: string.Empty, controlHtmlAttributes: new { maxLength = 500 }, showAsterisk: false)
     </div>
 
 </form>

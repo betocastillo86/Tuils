@@ -165,7 +165,7 @@ namespace Nop.Web.Controllers.Api
         #region Save Pictures
 
         [AuthorizeApi]
-        [Route("api/addresses/{id}/picture/{pictureId?}")]
+        [Route("api/addresses/{id}/pictures/{pictureId?}")]
         [HttpPost]
         public async Task<IHttpActionResult> SavePicture(int id, int? pictureId = null)
         {
@@ -244,6 +244,34 @@ namespace Nop.Web.Controllers.Api
                 return NotFound();
             }
 
+        }
+
+        //[AuthorizeApiVendorAttribute]
+        [AuthorizeApiAttribute]
+        [Route("api/addresses/{id}/pictures/{pictureId}")]
+        [HttpDelete]
+        public IHttpActionResult DeletePicture(int id, int pictureId)
+        {
+            var address = _addressService.GetAddressById(id);
+
+            //Si la dirección no existe o no tiene imagenes
+            if (address == null || address.AddressPictures.Count == 0)
+                return NotFound();
+
+            //la sede debe pertenecer al usuario en sesión
+            if (address.VendorId == _workContext.CurrentVendor.Id)
+            {
+                var picture = address.AddressPictures.FirstOrDefault(p => p.PictureId == pictureId);
+                if(picture != null)
+                {
+                    _pictureService.DeletePicture(picture.Picture);
+                    return Ok(id);
+                }
+                else
+                    return NotFound();
+            }
+            else
+                return Unauthorized();
         }
         #endregion
 

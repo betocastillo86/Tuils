@@ -30,7 +30,7 @@
                             duration: 200
                         },
                         buttons: {
-                            'Cerrar': function () {
+                            'Aceptar': function () {
                                 $(this).dialog('close');
                             }
                         },

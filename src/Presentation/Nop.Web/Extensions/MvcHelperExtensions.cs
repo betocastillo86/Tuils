@@ -55,7 +55,7 @@ namespace System.Web.Mvc.Html
         }
 
 
-        private static MvcHtmlString ControlRequiredFor<TModel, TProperty>(this HtmlHelper<TModel> helper, ControlType controlType, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null, string labelText = null, bool required= true, bool showLabel = true)
+        private static MvcHtmlString ControlRequiredFor<TModel, TProperty>(this HtmlHelper<TModel> helper, ControlType controlType, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null, string labelText = null, bool required= true, bool showLabel = true, bool showAsterisk = true)
         {
             var htmlControl = new StringBuilder();
 
@@ -89,7 +89,7 @@ namespace System.Web.Mvc.Html
             }
 
             //Agrega la sección de codigo que contiene lo que se marca como obligatorio
-            htmlControl.Append(GetRequiredHtmlPart(ExpressionHelper.GetExpressionText(expression), required));
+            htmlControl.Append(GetRequiredHtmlPart(ExpressionHelper.GetExpressionText(expression), required, showAsterisk));
 
             return new MvcHtmlString(htmlControl.ToString());
         }
@@ -107,8 +107,9 @@ namespace System.Web.Mvc.Html
         /// <param name="labelResource">texto tomado de los recursos que se carga en el Label (Este valor prima sobre labelText)</param>
         /// <param name="controlHtmlAttributes">objeto con las propiedades agregadas al control</param>
         /// <param name="selectList">Listado de opcines en los casos de dropdownlist</param>
+        /// <param name="showAsterisk">Cuando es obligatorio, muestra o no el asterisco</param>
         /// <returns></returns>
-        private static MvcHtmlString ControlRequired(this HtmlHelper helper, ControlType controlType, string field, string value = null, string labelText = null, string labelResource = null, object controlHtmlAttributes = null, IEnumerable<SelectListItem> selectList = null, bool required = true)
+        private static MvcHtmlString ControlRequired(this HtmlHelper helper, ControlType controlType, string field, string value = null, string labelText = null, string labelResource = null, object controlHtmlAttributes = null, IEnumerable<SelectListItem> selectList = null, bool required = true, bool showAsterisk = true)
         {
             var htmlControl = new StringBuilder();
 
@@ -139,7 +140,7 @@ namespace System.Web.Mvc.Html
 
 
             //Agrega la sección de codigo que contiene lo que se marca como obligatorio
-            htmlControl.Append(GetRequiredHtmlPart(field, required));
+            htmlControl.Append(GetRequiredHtmlPart(field, required, showAsterisk));
 
             return new MvcHtmlString(htmlControl.ToString());
         }
@@ -174,10 +175,11 @@ namespace System.Web.Mvc.Html
         /// <param name="labelText">texto que se encuentra en el Label</param>
         /// <param name="labelResource">texto tomado de los recursos que se carga en el Label (Este valor prima sobre labelText)</param>
         /// <param name="controlHtmlAttributes">objeto con las propiedades agregadas al control</param>
+        /// <param name="showAsterisk">En el caso de ser obligatorio, si debe o no mostrar el asterisco</param>
         /// <returns>contenido Html del control</returns>
-        public static MvcHtmlString TextAreaRequired(this HtmlHelper helper, string field, string value = null, string labelText = null, string labelResource = null, object controlHtmlAttributes = null, bool required = true)
+        public static MvcHtmlString TextAreaRequired(this HtmlHelper helper, string field, string value = null, string labelText = null, string labelResource = null, object controlHtmlAttributes = null, bool required = true, bool showAsterisk = true)
         {
-            return ControlRequired(helper, ControlType.TextArea, field, value, labelText, labelResource, controlHtmlAttributes, required: required);
+            return ControlRequired(helper, ControlType.TextArea, field, value, labelText, labelResource, controlHtmlAttributes, required: required, showAsterisk: showAsterisk);
         }
 
         /// <summary>
@@ -219,10 +221,10 @@ namespace System.Web.Mvc.Html
         /// Retorna la parte final de los controles que deben ser obligatorios
         /// </summary>
         /// <returns></returns>
-        private static string GetRequiredHtmlPart(string field, bool required = true)
+        private static string GetRequiredHtmlPart(string field, bool required = true, bool showAsterisk = true)
         {
             var str = new StringBuilder();
-            if(required)
+            if(required && showAsterisk)
                 str.Append("<span class=\"required\">*</span>");
             str.Append("<div class=\"text-character\"></div>");
             //En los casso que contenga . solo toma la parte final de la cadena

@@ -9,6 +9,7 @@
                 'click #btnSaveBack': 'back',
                 'click .picture-uploader li': 'changeImage',
                 "change input[type='file']": "saveImage",
+                "click .icon-delete": "removeImage"
             },
             
             vendorId: 0,
@@ -49,6 +50,7 @@
 
                 this.pictureCollection = new AddressCollection();
                 this.pictureCollection.on('sync', this.showPictures, this);
+                this.pictureCollection.on('remove', this.showPictures, this);
 
                 this.render();
                 this.loadControls();
@@ -133,6 +135,7 @@
                 this.alert('Guardado correctamente');
             },
             changeImage: function (obj) {
+                obj.preventDefault();
                 this.fileUpload.click();
                 this.selectedPictureId = $(obj.currentTarget).attr('data-id');
             },
@@ -152,6 +155,11 @@
                         alert("El tamaño excede el limite");
                     }
                 }
+            },
+            removeImage: function (obj) {
+                var pictureId = parseInt($(obj.target).attr("data-id"));
+                var model = this.pictureCollection.findWhere({ Id: pictureId });
+                model.removeImage(this.id);
             },
             errorSaving: function (error)
             {

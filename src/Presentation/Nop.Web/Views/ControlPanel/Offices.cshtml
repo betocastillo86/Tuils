@@ -115,11 +115,13 @@
     <ul class="picture-uploader">
         {{#each pictures}}
         <li data-id="{{Id}}">
+            <i class="icon-delete" data-id="{{Id}}" ></i>
             <img src="{{ImageUrl}}?r={{random}}" title="{{Title}}" alt="{{AlternateText}}" />
         </li>
         {{/each}}
         {{#if allowMoreImages }}
         <li>
+            <i class="icon-delete" style="display:none"></i>
             <span class="icon-foto" data-id="0" title="@T("offices.newimagehelp")"></span>
         </li>
         {{/if}}

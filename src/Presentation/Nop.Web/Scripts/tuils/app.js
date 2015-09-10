@@ -26,9 +26,9 @@
         equalTo: '{0} debe ser igual a {1}',
         digits: '{0} solo puede tener números',
         number: '{0} debe ser un número',
-        email: '{0} debe ser un correo valido',
+        email: '{0} debe ser un correo válido',
         url: '{0} debe ser una url',
-        inlinePattern: '{0} no es valido'
+        inlinePattern: '{0} no es válido'
     });
     
     return TuilsApp;

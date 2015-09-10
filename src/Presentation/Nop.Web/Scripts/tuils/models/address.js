@@ -75,10 +75,14 @@
                 resizer.photo(file, sizeBig, 'file', function (resizedFile) {
                     resizer.photo(resizedFile, sizeMini, 'dataURL', function (thumbnail) {
                         that.fileModel.set({ src: thumbnail, file: resizedFile });
-                        that.fileModel.upload({ saveUrl: '/api/addresses/' + that.get('Id') + '/picture' + (pictureId > 0 ? '/' + pictureId : '') });
+                        that.fileModel.upload({ saveUrl: '/api/addresses/' + that.get('Id') + '/pictures' + (pictureId > 0 ? '/' + pictureId : '') });
                     });
                 });
           //  });
+        },
+        removeImage: function (addressId) {
+            this.url = this.baseUrl + '/' + addressId + '/pictures/' + this.get('Id');
+            this.destroy();
         },
         fileUploaded: function (file) {
             this.trigger("file-saved", file);

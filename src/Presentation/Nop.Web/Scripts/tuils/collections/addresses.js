@@ -1,9 +1,11 @@
-﻿define(['underscore', 'backbone'], function (_, Backbone) {
+﻿define(['underscore', 'backbone', 'tuils/models/address'], function (_, Backbone, AddressModel) {
     var AddressCollection = Backbone.Collection.extend({
 
         baseUrl: "/api/addresses",
 
         url: "/api/addresses",
+
+        model : AddressModel,
 
         getOfficesByVendor: function (id)
         {
