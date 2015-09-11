@@ -6,10 +6,14 @@
     {
         <div class="product-vendor" itemprop="seller" itemscope itemtype="http://schema.org/Organization" style="display:@(!Model.ProductAlreadyBought ? "none" : string.Empty)">
             <h3>Informaci&oacute;n del vendedor</h3>
-            <p><span class="label">@T("Products.Vendor"): </span><span class="value"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })" itemprop="name">@Model.VendorModel.Name</a></span></p>
+            
             @if (Model.VendorModel.VendorType == Nop.Core.Domain.Vendors.VendorType.User)
             {
                 <p><span class="label"><span class="icon-tel"></span> @T("Products.Vendor.PhoneNumber"): </span><span class="value tel-vendor">@Model.VendorModel.PhoneNumber</span></p>
+            }
+            else
+            {
+                <p><span class="label">@T("Products.Vendor.Shop"): </span><span class="value"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })" itemprop="name">@Model.VendorModel.Name</a></span></p>
             }
         </div>
     }

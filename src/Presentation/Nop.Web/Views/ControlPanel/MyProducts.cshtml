@@ -38,9 +38,11 @@
             <div class="product-dtl-txt">
                 <h3><a href="@(product.Published ? Url.Action("ProductDetails", "Product", new { seName = product.SeName }) : "#")">@product.Name</a></h3>
                 <ul>
-                    <li>@T("myproducts.visits"): @product.Visits</li>
-                    <li>@T("myproducts.totalsales"): @product.TotalSales</li>
+                    @*<li>@T("myproducts.visits"): @product.Visits</li>*@
+                    @*<li>@T("myproducts.totalsales"): @product.TotalSales</li>*@
                     <li>@T("myproducts.ApprovedTotalReviews"): @product.ApprovedTotalReviews</li>
+                    <li>@T("myproducts.NumClicksForMoreInfo"): @product.NumClicksForMoreInfo</li>
+                    
                     @if (product.Published)
                     { 
                         if (product.UnansweredQuestions > 0)

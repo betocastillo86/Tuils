@@ -25,6 +25,7 @@ namespace Nop.Web.Extensions.Api
             var entity = new Product();
             entity.Name = model.Name;
             entity.FullDescription = model.FullDescription;
+            entity.ShortDescription = model.FullDescription;
             entity.IsShipEnabled = model.IsShipEnabled;
             //entity.AdditionalShippingCharge = model.AdditionalShippingCharge;
             entity.Price = model.Price;

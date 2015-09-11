@@ -52,6 +52,8 @@ namespace Nop.Web.Models.Catalog
 
         public bool FeaturedBySpecialCategory { get; set; }
 
+        public int NumClicksForMoreInfo { get; set; }
+
 
 		#region Nested Classes
 

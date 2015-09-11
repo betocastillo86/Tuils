@@ -87,7 +87,7 @@
                     //Traquea que un usuario a intentado comprar un producto
                     this.trackGAEvent('Compra', 'Intento');
                 }
-                
+
                 this.validateAuthorization();
                 this.showLoadingAll();
                 this.model.newOrder();
@@ -110,6 +110,7 @@
                 else {
                     this.$('#btnShowVendor').hide();
                     this.$('.product-vendor').show();
+                    this.scrollFocusObject('.product-vendor', -50);
                 }  
             }
         });

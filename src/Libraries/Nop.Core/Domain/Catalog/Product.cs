@@ -477,6 +477,12 @@ namespace Nop.Core.Domain.Catalog
         public Nullable<bool> LeftFeatured { get; set; }
 
         /// <summary>
+        /// Número de clicks que han dado los usuarios que desean saber más información acerca de un producto
+        /// Estos no se cuentan cuando el usuario está autenticado
+        /// </summary>
+        public int NumClicksForMoreInfo { get; set; }
+
+        /// <summary>
         /// Gets or sets the product type
         /// </summary>
         public ProductType ProductType

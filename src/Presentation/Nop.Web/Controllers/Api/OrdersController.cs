@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Nop.Services.Customers;
 
 namespace Nop.Web.Controllers.Api
 {
@@ -54,7 +55,8 @@ namespace Nop.Web.Controllers.Api
         /// Crea una nueva orden después de una solicitud de un usuario de consultar el producto
         /// </summary>
         /// <returns></returns>
-        [AuthorizeApi]
+        //Se elimina por ahora la autorización ya que se va permitir ver el teléfono a los usuarios que no están registrados
+        //[AuthorizeApi]
         [HttpPost]
         [Route("api/orders")]
         public IHttpActionResult Insert(OrderModel model)
@@ -68,50 +70,60 @@ namespace Nop.Web.Controllers.Api
             if(product == null)
                 return NotFound();
 
-            //Si el usuario ya compró el producto omite las validaciones y devuelve un true
-            if (_orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, model.ProductId))
-                return Ok(new { id = model.ProductId });
-
-            
-            var processPaymentRequest = new Nop.Services.Payments.ProcessPaymentRequest();
-
-            //prevent 2 orders being placed within an X seconds time frame
-            //Se elimina validacion ya que el anterior cumple con la condicion if (_orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, model.ProductId))
-            //if (!_orderService.IsMinimumOrderPlacementIntervalValid(_workContext.CurrentCustomer))
-            //    throw new Exception(_localizationService.GetResource("Checkout.MinOrderPlacementInterval"));
-
-            //place order
-            processPaymentRequest.StoreId = _storeContext.CurrentStore.Id;
-            processPaymentRequest.CustomerId = _workContext.CurrentCustomer.Id;
-            processPaymentRequest.PaymentMethodSystemName = _workContext.CurrentCustomer.GetAttribute<string>(
-                SystemCustomerAttributeNames.SelectedPaymentMethod,
-                _genericAttributeService, _storeContext.CurrentStore.Id);
-
-            //intenta agregar los datos al carro de compras
-            var addCartResult = _shoppingCartService.AddToCart(customer: _workContext.CurrentCustomer,
-                product: product,
-                shoppingCartType: ShoppingCartType.ShoppingCart,
-                storeId: _storeContext.CurrentStore.Id,
-                quantity: 1,
-                validateCartDisabled: false);
-
-            if (addCartResult.Count == 0)
+            //Si no hay sesión, se suma a los clicks del producto pero no se crea ninguna orden
+            if (_workContext.CurrentCustomer.IsGuest())
             {
-                //Intenta registrar la orden como paga
-                var placeOrderResult = _orderProcessingService.PlaceOrder(processPaymentRequest);
-                if (placeOrderResult.Errors.Count == 0)
+                product.NumClicksForMoreInfo++;
+                _productService.UpdateProduct(product);
+                return Ok(model);
+            }
+            else
+            {
+                //Si el usuario ya compró el producto omite las validaciones y devuelve un true
+                if (_orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, model.ProductId))
+                    return Ok(new { id = model.ProductId });
+
+
+                var processPaymentRequest = new Nop.Services.Payments.ProcessPaymentRequest();
+
+                //prevent 2 orders being placed within an X seconds time frame
+                //Se elimina validacion ya que el anterior cumple con la condicion if (_orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, model.ProductId))
+                //if (!_orderService.IsMinimumOrderPlacementIntervalValid(_workContext.CurrentCustomer))
+                //    throw new Exception(_localizationService.GetResource("Checkout.MinOrderPlacementInterval"));
+
+                //place order
+                processPaymentRequest.StoreId = _storeContext.CurrentStore.Id;
+                processPaymentRequest.CustomerId = _workContext.CurrentCustomer.Id;
+                processPaymentRequest.PaymentMethodSystemName = _workContext.CurrentCustomer.GetAttribute<string>(
+                    SystemCustomerAttributeNames.SelectedPaymentMethod,
+                    _genericAttributeService, _storeContext.CurrentStore.Id);
+
+                //intenta agregar los datos al carro de compras
+                var addCartResult = _shoppingCartService.AddToCart(customer: _workContext.CurrentCustomer,
+                    product: product,
+                    shoppingCartType: ShoppingCartType.ShoppingCart,
+                    storeId: _storeContext.CurrentStore.Id,
+                    quantity: 1,
+                    validateCartDisabled: false);
+
+                if (addCartResult.Count == 0)
                 {
-                    var order = placeOrderResult.PlacedOrder;
-                    return Ok(new { id = order.Id });
+                    //Intenta registrar la orden como paga
+                    var placeOrderResult = _orderProcessingService.PlaceOrder(processPaymentRequest);
+                    if (placeOrderResult.Errors.Count == 0)
+                    {
+                        var order = placeOrderResult.PlacedOrder;
+                        return Ok(new { id = order.Id });
+                    }
+                    else
+                    {
+                        return InternalServerError(new NopException(addCartResult.FirstOrDefault()));
+                    }
                 }
                 else
                 {
                     return InternalServerError(new NopException(addCartResult.FirstOrDefault()));
                 }
-            }
-            else
-            {
-                return InternalServerError(new NopException(addCartResult.FirstOrDefault()));
             }
 
         }

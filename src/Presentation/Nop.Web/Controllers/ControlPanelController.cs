@@ -546,7 +546,8 @@ namespace Nop.Web.Controllers
                     AvailableStartDate = p.AvailableStartDateTimeUtc ?? DateTime.UtcNow,
                     AvailableEndDate = p.AvailableEndDateTimeUtc ?? DateTime.UtcNow,
                     Published = p.Published && p.AvailableEndDateTimeUtc > DateTime.UtcNow,
-                    DefaultPictureModel = p.GetPicture(_localizationService, _mediaSettings, _pictureService)
+                    DefaultPictureModel = p.GetPicture(_localizationService, _mediaSettings, _pictureService),
+                    NumClicksForMoreInfo = p.NumClicksForMoreInfo
                 }).ToList();
 
                 model.PagingFilteringContext.q = command.q;

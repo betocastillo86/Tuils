@@ -977,8 +977,9 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Catalog.Categories.Fields.ShowWithManufacturers", "Mostrar con las marcas en el home");
                 newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowUnpublised", "Mostrar solo los que no están publicados");
                 newLocaleStringResources.Add("Admin.Customers.Customers.Fields.BikeReferenceName", "Referencia de moto seleccionada");
+                newLocaleStringResources.Add("myproducts.numclicksformoreinfo", "Interesados en tu producto");
                 
-
+                
                 
                 
                 
