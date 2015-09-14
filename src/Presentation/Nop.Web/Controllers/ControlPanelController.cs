@@ -211,6 +211,13 @@ namespace Nop.Web.Controllers
                     _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.NewsletterBrand, Core.Domain.Messages.NewsLetterSuscriptionType.MyBrand, customer.GetFullName());
                     _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.NewsletterReference, Core.Domain.Messages.NewsLetterSuscriptionType.MyReference, customer.GetFullName());
 
+                    ///Actualiza los teléfonos del vendedor
+                    if (_workContext.CurrentVendor != null)
+                    {
+                        _workContext.CurrentVendor.PhoneNumber = model.Phone;
+                        _vendorService.UpdateVendor(_workContext.CurrentVendor); 
+                    }
+
                     model.ConfirmMessage = _localizationService.GetResource("MyAccount.Confirm");
 
                 }
