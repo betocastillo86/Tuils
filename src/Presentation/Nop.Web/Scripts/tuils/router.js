@@ -3,12 +3,12 @@
 ,'tuils/views/product/productDetailView','tuils/views/common/newsletterView','tuils/views/common/searcherView','tuils/views/common/leftFeaturedProductsView'	
 , 'tuils/views/common/header', 'tuils/views/panel/offices', 'tuils/views/panel/menu', 'tuils/views/panel/myProductsView', 'tuils/views/home/homeView',
 'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView', 'tuils/views/publishProduct/publishView',
-'tuils/views/common/footerView',
+'tuils/views/common/footerView', 'tuils/views/panel/editProductView',
 'ajaxCart', 'nopCommon'],
     function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView,
         MyAccountView,VendorServicesView ,QuestionsView ,VendorDetailView,
         ProductDetailView, NewsletterView, SearcherView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
-        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView) {
+        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView, EditProductView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -37,6 +37,7 @@
                 "mi-cuenta/mis-ventas(/:query)": "myOrders",
                 "mi-cuenta/mis-productos(/:query)": "myProducts",
                 "mi-cuenta/preguntas-pendientes(/:query)": "questions",
+                "ControlPanel/EditProduct(/:id)": "editProduct",
                 "mis-deseos(/:customerGuid)": 'wishlist',
                 "comparar": 'compare',
                 "customer/changepassword" : "changePassword",
@@ -118,9 +119,12 @@
                 that.currentView = new QuestionsView({ el: that.defaultEl });
                 this.loadSubViewsPanel();
             },
+            editProduct: function (id) {
+                this.currentView = new EditProductView({ el: this.defaultEl, productId: parseInt(id) });
+                this.loadSubViewsPanel();
+            },
             vendorServices: function () {
-                var that = this;
-                that.currentView = new VendorServicesView({ el: that.defaultEl });
+                this.currentView = new VendorServicesView({ el: this.defaultEl });
                 this.loadSubViewsPanel();
             },
             vendor : function(query)

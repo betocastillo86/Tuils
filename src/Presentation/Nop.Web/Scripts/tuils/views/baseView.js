@@ -218,6 +218,25 @@
 
             return this._isMobile;
         },
+        //Valida que sea un tamaño valido y la extensión
+        isValidFileUpload: function (file, target, type) {
+
+            if (file) {
+                if (TuilsUtil.isValidSize(target)) {
+                    if (TuilsUtil.isValidExtension(target, type)) {
+                        return true;
+                    }
+                    else {
+                        this.alert("La extensión del archivo no es valida");
+                        return false;
+                    }
+                }
+                else {
+                    this.alert("El tamaño excede el limite");
+                    return false;
+                }
+            }
+        },
         isMinSize: function () {
             var currentWidth = window.innerWidth || document.documentElement.clientWidth;
             return currentWidth <= this.minSizeDesktopWith;

@@ -66,6 +66,7 @@
                     <div class="conte_btn">
                         @*<a class="btn-azul" href="javascript:;"><span class="icon-mail"></span>Editar</a>*@
                         <a class="btn-naranja" href="@Url.Action("ProductDetails", "Product", new { seName = product.SeName })">@T("myproducts.viewOnline")</a>
+                        <a class="btn-azul"  href="@Url.Action("EditProduct", "ControlPanel", new { id = product.Id })">@T("myproducts.editProduct")</a>
                     </div>
                 }
             </div>

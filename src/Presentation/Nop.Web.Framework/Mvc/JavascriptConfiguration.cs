@@ -68,7 +68,8 @@ namespace Nop.Web.Framework.Mvc
                     productImageMaxSizeResize = mediaSettings.ProductImageMaxSizeResize,
                     coverImageMaxSizeResize = mediaSettings.CoverImageMaxSizeResize,
                     logoImageMaxSizeResize = mediaSettings.LogoImageMaxSizeResize,
-                    vendorBackgroundThumbPictureSize = mediaSettings.VendorBackgroundThumbPictureSize
+                    vendorBackgroundThumbPictureSize = mediaSettings.VendorBackgroundThumbPictureSize,
+                    productthumbpicturesizeonproductdetailspage = mediaSettings.ProductThumbPictureSizeOnProductDetailsPage
                 },
                 vendor = new
                 {
@@ -77,7 +78,8 @@ namespace Nop.Web.Framework.Mvc
                 catalog = new
                 {
                     limitOfSpecialCategories = catalogSettings.LimitOfSpecialCategories,
-                    limitDaysOfProductPublished = catalogSettings.LimitDaysOfProductPublished
+                    limitDaysOfProductPublished = catalogSettings.LimitDaysOfProductPublished,
+                    limitNumPictures = catalogSettings.LimitNumPictures
                 },
                 errorCodes = new
                 {

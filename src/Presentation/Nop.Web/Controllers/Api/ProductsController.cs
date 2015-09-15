@@ -15,6 +15,14 @@ using Nop.Core.Domain.Common;
 using Nop.Services.Common;
 using Nop.Core.Domain.Customers;
 using Nop.Services.Localization;
+using Nop.Core.Domain.Media;
+using Nop.Services.Media;
+using Nop.Web.Models.Media;
+using System.Threading.Tasks;
+using Nop.Web.Infrastructure;
+using Nop.Services.Seo;
+using Nop.Utilities;
+using Nop.Web.Models.Catalog;
 
 
 namespace Nop.Web.Controllers.Api
@@ -31,6 +39,8 @@ namespace Nop.Web.Controllers.Api
         private readonly TuilsSettings _tuilsSettings;
         private readonly IGenericAttributeService _genericAttributeService;
         private readonly ILocalizationService _localizationService;
+        private readonly MediaSettings _mediaSettings;
+        private readonly IPictureService _pictureService;
         #endregion
 
         #region Ctor
@@ -41,7 +51,9 @@ namespace Nop.Web.Controllers.Api
             CatalogSettings catalogSettings,
             TuilsSettings tuilsSettings,
             IGenericAttributeService genericAttributeService,
-            ILocalizationService localizationService)
+            ILocalizationService localizationService,
+            MediaSettings mediaSettings,
+            IPictureService pictureService)
         {
             this._productService = productService;
             this._workContext = workContext;
@@ -51,6 +63,8 @@ namespace Nop.Web.Controllers.Api
             this._tuilsSettings = tuilsSettings;
             this._genericAttributeService = genericAttributeService;
             this._localizationService = localizationService;
+            this._mediaSettings = mediaSettings;
+            this._pictureService = pictureService;
         }
         #endregion
         [Route("api/products")]
@@ -109,5 +123,136 @@ namespace Nop.Web.Controllers.Api
                 return Conflict();
             }
         }
+
+
+        [Route("api/products")]
+        [HttpPut]
+        [AuthorizeApi]
+        public IHttpActionResult Update(EditProductModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var product = _productService.GetProductById(model.Id);
+
+                if (product == null || product.VendorId != _workContext.CurrentVendor.Id)
+                    return Unauthorized();
+
+
+                //Actualiza el modelo
+                product.Name = model.Name;
+                product.ShortDescription = model.ShortDescription;
+                product.FullDescription = model.ShortDescription;
+                product.Price = model.Price;
+
+                _productService.UpdateProduct(product);
+
+                return Ok(model);
+            }
+            else {
+                return BadRequest();
+            }
+
+        }
+
+        #region Pictures
+        [Route("api/products/{id}/pictures")]
+        [HttpGet]
+        [AuthorizeApi]
+        public IHttpActionResult GetPictures(int id)
+        {
+            var pictures = _pictureService.GetPicturesByProductId(id);
+            var pictureModels = new List<PictureOrderedModel>();
+            int displayOrder = 0;
+            foreach (var picture in pictures)
+            {
+                pictureModels.Add(new PictureOrderedModel
+                {
+                    Id = picture.Id,
+                    ImageUrl = _pictureService.GetPictureUrl(picture, _mediaSettings.ProductThumbPictureSizeOnProductDetailsPage, crop: true),
+                    FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
+                    DisplayOrder = displayOrder++
+                });
+            }
+
+            return Ok(pictureModels);
+        }
+
+        [Route("api/products/{productId}/pictures/{pictureId}")]
+        [HttpDelete]
+        [AuthorizeApi]
+        public IHttpActionResult GetPictures(int productId, int pictureId)
+        {
+
+            var product = _productService.GetProductById(productId);
+            
+            //El producto debe pertenecer al mismo vendedor de la sesión
+            if(product == null || product.VendorId != _workContext.CurrentVendor.Id)
+                return NotFound();
+            
+            //Minimo puede quedar con una imagen en el producto
+            if (product.ProductPictures.Count <= 1)
+                return Unauthorized();
+            
+            var picture = product.ProductPictures.FirstOrDefault(p => p.PictureId == pictureId);
+            if (picture == null)
+                return NotFound();
+
+            //elimina el modelo
+            _pictureService.DeletePicture(picture.Picture);
+
+            return Ok(new { deleted = true });
+        }
+
+        [Route("api/products/{productId}/pictures/{pictureId?}")]
+        [HttpPost]
+        [AuthorizeApi]
+        [AsyncFileUploadApiFilter]
+        public IHttpActionResult SavePicture(int productId, int? pictureId = null)
+        {
+            if (productId > 0 &&
+               Request.Properties["fileUploaded"] != null &&
+               _workContext.CurrentVendor != null)
+            {
+
+                var fileToUpload = Request.Properties["fileUploaded"] as FileData;
+
+                var product = _productService.GetProductById(productId);
+
+                if (product == null || product.VendorId != _workContext.CurrentVendor.Id)
+                    return NotFound();
+
+
+                Picture picture = null;
+                //Si viene id de la foto actualiza los datos, sino inserta una nueva
+                if (pictureId.HasValue)
+                {
+                    //Valida que la foto exista
+                    var prodPicture = product.ProductPictures.FirstOrDefault(p => p.PictureId == pictureId);
+                    if (prodPicture == null)
+                        return NotFound();
+
+                    picture = prodPicture.Picture;
+                    _pictureService.UpdatePicture(pictureId.Value, fileToUpload.Data, fileToUpload.ContentType, product.GetSeName(), true);
+                }
+                else
+                {
+                    //Inserta la imagen y la asocia
+                    picture = _productService.InsertProductPicture(productId, fileToUpload.Data, fileToUpload.ContentType, product.GetSeName(), true, displayOrder: product.ProductPictures.Count).Picture;
+                }
+
+                //Retorna el modelo de la imagen
+                return Ok(new PictureOrderedModel()
+                {
+                    Id = picture.Id,
+                    ImageUrl = _pictureService.GetPictureUrl(picture, _mediaSettings.ProductThumbPictureSizeOnProductDetailsPage, crop: true),
+                    FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
+                });
+            }
+            else
+                return BadRequest();
+        }
+        #endregion
+
+       
     }
 }

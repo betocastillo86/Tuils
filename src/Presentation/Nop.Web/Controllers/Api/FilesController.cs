@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Nop.Web.Framework.Mvc.Api;
 
 namespace Nop.Web.Controllers.Api
 {

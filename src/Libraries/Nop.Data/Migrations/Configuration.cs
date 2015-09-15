@@ -978,15 +978,15 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowUnpublised", "Mostrar solo los que no están publicados");
                 newLocaleStringResources.Add("Admin.Customers.Customers.Fields.BikeReferenceName", "Referencia de moto seleccionada");
                 newLocaleStringResources.Add("myproducts.numclicksformoreinfo", "Interesados en tu producto");
+                newLocaleStringResources.Add("PageTitle.EditProduct", "Editar producto");
+                newLocaleStringResources.Add("EditProduct.Title", "Editar producto");
+                newLocaleStringResources.Add("myproducts.editProduct", "Actualizar");
+                newLocaleStringResources.Add("myproducts.editProduct.back", "Volver");
                 
                 
                 
                 
                 
-                
-
-                
-
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)
                 {
@@ -2296,12 +2296,7 @@ namespace Nop.Data.Migrations
                 settings.Add("tuilssettings.Url_OG_ImageSellProduct", "http://tuils.com/Content/images/ogProduct.jpg");
                 settings.Add("tuilssettings.Url_OG_ImageSellService", "http://tuils.com/Content/images/ogService.jpg");
                 settings.Add("catalogSettings.NumberOfFeaturedProductsOnHomepage", "16");
-                
-                
-                
-                
-                
-                
+                settings.Add("catalogSettings.LimitNumPictures", "7");
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var setting in settings)

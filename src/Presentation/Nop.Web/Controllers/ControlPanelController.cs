@@ -34,6 +34,7 @@ using Nop.Services.Localization;
 using Nop.Web.Models.Catalog;
 using Nop.Core.Domain.Orders;
 using Nop.Web.Extensions.Api;
+using Nop.Services.Security;
 
 namespace Nop.Web.Controllers
 {
@@ -62,6 +63,7 @@ namespace Nop.Web.Controllers
         private readonly IPictureService _pictureService;
         private readonly ILocalizationService _localizationService;
         private readonly IProductService _productService;
+        private readonly IPermissionService _permissionService;
         private readonly MediaSettings _mediaSettings;
         private readonly ControlPanelSettings _controlPanelSettings;
 
@@ -598,6 +600,46 @@ namespace Nop.Web.Controllers
             {
                 return _categoryService.GetChildCategoryIds(parentCategoryId);
             });
+        }
+
+
+
+
+        #endregion
+
+        #region EditProductControlPanel
+        public ActionResult EditProduct(int id)
+        {
+
+            //Consulta el producto que se desea editar
+            var product = _productService.GetProductById(id);
+
+            if (product == null || product.Deleted)
+                return InvokeHttp404();
+
+            //Is published?
+            //Check whether the current user has a "Manage catalog" permission
+            //It allows him to preview a product before publishing
+            if (!product.Published && !_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return InvokeHttp404();
+
+            //Si el vendedor del producto que se desea editar no es el mismo, lo saca
+            if (product.VendorId != _workContext.CurrentVendor.Id)
+                return InvokeHttp404();
+
+            var model = PrepareEditProductModel(product);
+
+            return View(model);
+        }
+
+        [NonAction]
+        private EditProductModel PrepareEditProductModel(Product product)
+        {
+            var model = new EditProductModel();
+            model.Name = product.Name;
+            model.ShortDescription = product.ShortDescription;
+            model.Price = product.Price;
+            return model;
         }
         #endregion
 

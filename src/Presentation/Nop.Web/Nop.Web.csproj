@@ -205,6 +205,7 @@
     <Compile Include="Controllers\Api\FilesController.cs" />
     <Compile Include="Controllers\Api\ManufacturersController.cs" />
     <Compile Include="Controllers\Api\OrdersController.cs" />
+    <Compile Include="Controllers\Api\PicturesController.cs" />
     <Compile Include="Controllers\Api\ProductsController.cs" />
     <Compile Include="Controllers\Api\QuestionsController.cs" />
     <Compile Include="Controllers\Api\SpecificationAttributeController.cs" />
@@ -254,7 +255,6 @@
     <Compile Include="Infrastructure\BundleConfig.cs" />
     <Compile Include="Infrastructure\Cache\ModelCacheEventConsumer.cs" />
     <Compile Include="Infrastructure\GenericUrlRouteProvider.cs" />
-    <Compile Include="Infrastructure\InMemoryMultipartFormDataStreamProvider.cs" />
     <Compile Include="Infrastructure\Installation\IInstallationLocalizationService.cs" />
     <Compile Include="Infrastructure\Installation\InstallationLanguage.cs" />
     <Compile Include="Infrastructure\Installation\InstallationLocalizationService.cs" />
@@ -266,6 +266,7 @@
     <Compile Include="Models\Api\BaseApiModel.cs" />
     <Compile Include="Models\Api\MinifiedJson.cs" />
     <Compile Include="Models\Api\OrderModel.cs" />
+    <Compile Include="Models\Api\PictureOrderedModel.cs" />
     <Compile Include="Models\Api\ProductBaseModel.cs" />
     <Compile Include="Models\Api\ProductQuestionModel.cs" />
     <Compile Include="Models\Api\ProductReviewModel.cs" />
@@ -298,6 +299,7 @@
     <Compile Include="Models\Catalog\CategoriesHomePageModel.cs" />
     <Compile Include="Models\Catalog\CategorySimpleModel.cs" />
     <Compile Include="Models\Catalog\CompareProductsModel.cs" />
+    <Compile Include="Models\Catalog\EditProductModel.cs" />
     <Compile Include="Models\Catalog\IComparableModel.cs" />
     <Compile Include="Models\Catalog\IWishableModel.cs" />
     <Compile Include="Models\Catalog\ManufacturerHomePageModel.cs" />
@@ -1108,6 +1110,9 @@
     <Content Include="Scripts\tuils\collections\categories.js" />
     <Content Include="Scripts\tuils\collections\files.js" />
     <Content Include="Scripts\tuils\collections\manufacturers.js" />
+    <Content Include="Scripts\tuils\collections\pictures.js" />
+    <Content Include="Scripts\tuils\models\panel\updateProduct.js" />
+    <Content Include="Scripts\tuils\models\picture.js" />
     <Content Include="Scripts\tuils\collections\products.js" />
     <Content Include="Scripts\tuils\collections\reviews.js" />
     <Content Include="Scripts\tuils\collections\specificationAttribute.js" />
@@ -1145,6 +1150,8 @@
     <Content Include="Scripts\tuils\views\login\createUser.js" />
     <Content Include="Scripts\tuils\views\login\login.js" />
     <Content Include="Scripts\tuils\views\panel\addAddressView.js" />
+    <Content Include="Scripts\tuils\views\panel\editProductPicturesView.js" />
+    <Content Include="Scripts\tuils\views\panel\editProductView.js" />
     <Content Include="Scripts\tuils\views\panel\menu.js" />
     <Content Include="Scripts\tuils\views\panel\myAccount.js" />
     <Content Include="Scripts\tuils\views\panel\myProductsView.js" />
@@ -2567,10 +2574,12 @@
     <Content Include="Views\Product\ProductsSameVendor.cshtml" />
     <Content Include="Views\Catalog\CategoriesHomePage.cshtml" />
     <Content Include="Views\Shared\_OpenGraph.cshtml" />
+    <Content Include="Views\ControlPanel\EditProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
     <Folder Include="TempFiles\" />
+    <Folder Include="Views\Pictures\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Nop.Core\Nop.Core.csproj">

@@ -1,0 +1,54 @@
+﻿@model EditProductModel
+@using Nop.Web.Models.Catalog
+@{
+    Html.AddTitleParts(T("PageTitle.EditProduct").Text);
+    Layout = "~/Views/Shared/_PanelLayoutTwo.cshtml";
+}
+
+<div class="panel-control">
+    <h2 class="tit_sec">@T("EditProduct.Title")</h2>
+    @using (Html.BeginForm())
+    {
+        <div class="form-public">
+            <div class="inputs">
+                @Html.TextBoxRequiredFor(m => m.Name, labelText : T("PublishProduct.ProductTitle").Text)
+            </div>
+            <div class="inputs">
+                @Html.TextBoxRequired("Price", value: Model.Price.ToString("0"), labelText: T("PublishProduct.Price").Text, controlHtmlAttributes: new { tuils_val = "int", maxlength = "8" })
+            </div>
+
+            <br />
+            <div class="descript_crea">
+                @Html.TextAreaRequiredFor(m => m.ShortDescription, labelText: T("PublishProduct.Product.Html").Text, htmlAttributes: new { maxLength = 500 }, showAsterisk: false)
+            </div>
+            <div id="divPictures">
+
+            </div>
+
+            <script type="text/x-handlebars-template" id="templatePictures">
+                <ul class="picture-uploader">
+                    {{#each pictures}}
+                    <li class="addImageGalery" data-id="{{Id}}">
+                        <i class="icon-delete" data-id="{{Id}}"></i>
+                        <img src="{{ImageUrl}}?r={{random}}" title="{{Title}}" alt="{{AlternateText}}" width="120" height="120" />
+                    </li>
+                    {{/each}}
+                    {{#if allowMoreImages }}
+                    <li data-id="0" class="addImageGalery">
+                        <i class="icon-delete" style="display:none"></i>
+                        <span class="icon-foto" data-id="0" title="@T("offices.newimagehelp")"></span>
+                    </li>
+                    {{/if}}
+                    <br>
+                </ul>
+                <input type="file" style="display:none" />
+            </script>
+
+           
+            <input id="btnSave" type="button" class="button-1" value="@T("myproducts.editProduct")" />
+            @Html.ActionLink(T("myproducts.editProduct.back").Text, "MyProducts", new { p = true })
+        </div>
+    }
+    
+</div>
+
