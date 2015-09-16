@@ -46,7 +46,7 @@
 
            
             <input id="btnSave" type="button" class="button-1" value="@T("myproducts.editProduct")" />
-            @Html.ActionLink(T("myproducts.editProduct.back").Text, "MyProducts", new { p = true })
+            @Html.ActionLink(T("myproducts.editProduct.back").Text, "MyProducts", new { p = true }, new { @class = "btn_continue button-1 btnBack" })
         </div>
     }
     
