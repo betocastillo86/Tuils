@@ -7,6 +7,7 @@
 
 <div class="panel-control">
     <h2 class="tit_sec">@T("EditProduct.Title")</h2>
+    <p style="margin:0 0 20px;">Podrias editar los datos mas importantes de tu publicación y las fotos de tu producto.</p>
     @using (Html.BeginForm())
     {
         <div class="form-public">
@@ -45,8 +46,9 @@
             </script>
 
            
-            <input id="btnSave" type="button" class="button-1" value="@T("myproducts.editProduct")" />
-            @Html.ActionLink(T("myproducts.editProduct.back").Text, "MyProducts", new { p = true })
+            <input id="btnSave" type="button" class="button-1 btn_continue" value="@T("myproducts.editProduct")" />
+            @Html.ActionLink(T("myproducts.editProduct.back").Text, "MyProducts", new { p = true , @class= " btn_continue button-1 btnBack "})
+            <br/>
         </div>
     }
     
