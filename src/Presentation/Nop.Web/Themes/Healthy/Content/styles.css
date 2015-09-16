@@ -1612,7 +1612,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .descript_crea textarea{height: 150px;}
 
     .picture-uploader{margin: 0 auto; padding: 0; width:680px; list-style: none;}
-    .picture-uploader li{box-sizing: border-box; cursor: pointer; position: relative; width: 120px; height: 120px; background:#f6f9fd; border: 1px dashed #D8DEE6; text-align: center; color: #899CB5; font-size: 12px; float: left; margin:10px 0 10px 20px;}
+    .picture-uploader li{box-sizing: border-box; cursor: pointer; position: relative; width: 120px; height: 120px; background:#f6f9fd; border: 1px dashed #D8DEE6; text-align: center; color: #899CB5; font-size: 12px; float: left; margin:10px 0 10px 20px; overflow: hidden;}
         .picture-uploader li span{display: block; font-size: 60px; text-align: center; width: 60px; height: 60px; margin: 30px 30px 0; color: #C2DCEB;}
         .picture-uploader li.picture_principal{ width: 260px; height: 260px; margin:10px 0;}
         .picture-uploader li.picture_principal span{width: 120px; height: 120px; font-size: 120px; margin: 60px 60px 0;}
