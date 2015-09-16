@@ -982,6 +982,8 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("EditProduct.Title", "Editar producto");
                 newLocaleStringResources.Add("myproducts.editProduct", "Actualizar");
                 newLocaleStringResources.Add("myproducts.editProduct.back", "Volver");
+                newLocaleStringResources.Add("myproducts.disable", "Eliminar");
+                newLocaleStringResources.Add("myproducts.disable.alt", "Deshabilita el producto para que nadie lo pueda ver más");
                 
                 
                 

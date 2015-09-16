@@ -154,6 +154,22 @@ namespace Nop.Web.Controllers.Api
 
         }
 
+        [Route("api/products/{id}")]
+        [HttpDelete]
+        [AuthorizeApi]
+        public IHttpActionResult Delete(int id)
+        {
+            var product = _productService.GetProductById(id);
+            if (product == null || product.VendorId != _workContext.CurrentVendor.Id)
+                return Unauthorized();
+
+            //Se desactia el producto
+            product.Published = false;
+            _productService.UpdateProduct(product);
+
+            return Ok(new { deleted = true, Id = id });
+        }
+
         #region Pictures
         [Route("api/products/{id}/pictures")]
         [HttpGet]
