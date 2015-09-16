@@ -1080,7 +1080,7 @@ html.oldie .container { width: 940px; }
 }
 @media screen and (max-width:640px) {
     /*header*/
-    .header-logo{width:100px; left: calc(50% - 50px);}
+    .header-logo{width:100px; height: 61px; left: calc(50% - 50px);}
 
     input[type="text"],input[type="password"], select{width:calc(100% - 10px);}
     .inputs{width: 100%; margin: 0 0 5px;}

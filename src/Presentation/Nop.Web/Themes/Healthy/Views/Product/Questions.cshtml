@@ -11,7 +11,7 @@
         @if (Model.IsAvailable)
         { 
             <div class="write-review" id="question-form" >
-            
+                <div class="title">Preguntas al vendedor</div>
                 <div class="message-error">@Html.ValidationSummary(true)</div>
                 <div class="form-fields">
                     @Html.Label(T("Questions.Write").Text)
@@ -33,8 +33,9 @@
          </div>
         }
         
-        <div id="divQuestionPublished" style="display:none">
-          <span>@T("Questions.QuestionPublished")</span>  
+        <div id="divQuestionPublished" class="quest-Publish" style="display:none">
+            <span class="icon-msj"></span>
+            <p>@T("Questions.QuestionPublished")</p> 
         </div>
 
         @if (Model.Questions.Count > 0)
