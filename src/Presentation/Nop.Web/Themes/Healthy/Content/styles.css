@@ -136,7 +136,7 @@ input[type="text"]:disabled{background:none repeat scroll 0 0 #FFF;}
 .header .ico-wishlist{padding-left:10px;padding-bottom:5px;}
 .header .ico-cart:hover *,.header .ico-wishlist:hover *{text-decoration:underline;cursor:pointer;}
 .header .ico-cart span,.header .ico-wishlist span{float:left;}
-.header-logo{margin:10px 0;float:left;text-align:left; width:135px; position: relative;}
+.header-logo{margin:10px 0;float:left;text-align:left; width:135px; height:81px; position: relative;}
 .header-logo a{display:table;margin:0 auto;}
 .header-logo a img{max-width:100%;}
 .header-logo a span{text-indent: -99999px; position: absolute;}
@@ -1306,7 +1306,7 @@ td.fieldname{font-size:12px;}
 .product-reviews-page .page-title a{text-decoration:none;}
 .product-reviews-page .result{}
 .product-reviews-page .write-review{margin: 0 0 30px;}
-.product-reviews-page .write-review .title{margin-bottom:10px;font-size:16px;line-height:20px;font-weight:bold;}
+.product-reviews-page .write-review .title, .product-questions-page .write-review .title{margin-bottom:10px;font-size:16px;line-height:20px;font-weight:700; color: #292732;}
 .product-reviews-page .write-review .inputs{height:74px;}
 	.write-review .inputs input[type="text"],.write-review .inputs select{background: #FFF;}
 	.product-reviews-page .write-review .inputs .text-character{margin:0;}
@@ -1320,6 +1320,9 @@ td.fieldname{font-size:12px;}
 .product-reviews-page .write-review .review-rating li{display:inline-block;list-style:none;}
 .product-reviews-page .write-review .review-rating input{vertical-align:bottom; margin: 0 3px;}
 .product-reviews-page .write-review .buttons, .product-questions-page .write-review .buttons{text-align:right;}
+.product-questions-page .no-result{font-size:18px; margin: 20px 0 0;}
+.quest-Publish span{background: #fb7055; color:#fff; font-size: 30px; width: 30px; text-align: center; padding: 10px; border-radius: 50px; display: block; margin: 0 auto;}
+.quest-Publish p{text-align: center; color:#627b9c; font-size: 18px; margin: 10px 0 0;}
 .product-review-list{}
 .question-text{border-bottom: solid 1px #e5e5e5; padding: 0 0 10px;}
 	.question-text .icon-msj, .question-text .icon-msj2{display:block; float: left; margin: 0 5px 0 0;}
