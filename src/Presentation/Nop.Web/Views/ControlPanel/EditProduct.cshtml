@@ -7,7 +7,8 @@
 
 <div class="panel-control">
     <h2 class="tit_sec">@T("EditProduct.Title")</h2>
-    <p style="margin:0 0 20px;">Podrias editar los datos mas importantes de tu publicación y las fotos de tu producto.</p>
+    <p style="margin:0 0 20px;">Podras editar los datos mas importantes de tu publicación y las fotos de tu producto.</p>
+    <div class="title">Datos del producto</div>
     @using (Html.BeginForm())
     {
         <div class="form-public">
@@ -22,6 +23,7 @@
             <div class="descript_crea">
                 @Html.TextAreaRequiredFor(m => m.ShortDescription, labelText: T("PublishProduct.Product.Html").Text, htmlAttributes: new { maxLength = 500 }, showAsterisk: false)
             </div>
+            <div class="title">Fotos</div>
             <div id="divPictures">
 
             </div>
