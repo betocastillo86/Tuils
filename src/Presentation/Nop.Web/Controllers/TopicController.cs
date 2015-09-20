@@ -65,7 +65,13 @@ namespace Nop.Web.Controllers
                 MetaDescription = topic.GetLocalized(x => x.MetaDescription),
                 MetaTitle = topic.GetLocalized(x => x.MetaTitle),
                 SeName = topic.GetSeName(),
+                TemplateName = string.IsNullOrEmpty(topic.TemplateName) ? "~/Views/Shared/_ColumnsThree.cshtml" : topic.TemplateName
             };
+
+            //Si debe mostrar el ancho completo agrega la propiedad
+            if (topic.FullWidth)
+                this.ViewData.Add("noWidth", "true");
+
             return model;
         }
 

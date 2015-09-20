@@ -86,6 +86,24 @@
                 @Html.ValidationMessageFor(model => model.IsPasswordProtected)
             </td>
         </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.TemplateName):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.TemplateName)
+                @Html.ValidationMessageFor(model => model.TemplateName)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.FullWidth):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.FullWidth)
+                @Html.ValidationMessageFor(model => model.FullWidth)
+            </td>
+        </tr>
         <tr id="pnlPasswordEnabled">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.Password):

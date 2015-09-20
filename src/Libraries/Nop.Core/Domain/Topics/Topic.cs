@@ -60,6 +60,16 @@ namespace Nop.Core.Domain.Topics
         public string MetaTitle { get; set; }
 
         /// <summary>
+        /// Asigna el valor de la plantilla que debe cargar cuando se muestra un template
+        /// </summary>
+        public string TemplateName { get; set; }
+
+        /// <summary>
+        /// Si es true: la plantilla agrega estilos a todo lo ancho
+        /// </summary>
+        public bool FullWidth { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the entity is limited/restricted to certain stores
         /// </summary>
         public bool LimitedToStores { get; set; }

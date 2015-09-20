@@ -978,6 +978,15 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowUnpublised", "Mostrar solo los que no están publicados");
                 newLocaleStringResources.Add("Admin.Customers.Customers.Fields.BikeReferenceName", "Referencia de moto seleccionada");
                 newLocaleStringResources.Add("myproducts.numclicksformoreinfo", "Interesados en tu producto");
+
+
+                newLocaleStringResources.Add("Admin.ContentManagement.Topics.Fields.TemplateName", "Nombre plantilla");
+                newLocaleStringResources.Add("Admin.ContentManagement.Topics.Fields.TemplateName.hint", "Nombre del template que se usara para mostrar la noticia");
+                newLocaleStringResources.Add("Admin.ContentManagement.Topics.Fields.FullWidth", "Activar ancho completo");
+                newLocaleStringResources.Add("Admin.ContentManagement.Topics.Fields.FullWidth.hint", "Permite que el diseño tome un ancho completo aplicandole estilos diferentes");
+
+
+                
                 
                 
                 

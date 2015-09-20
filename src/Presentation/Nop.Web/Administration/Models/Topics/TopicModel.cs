@@ -39,6 +39,12 @@ namespace Nop.Admin.Models.Topics
         [NopResourceDisplayName("Admin.ContentManagement.Topics.Fields.IsPasswordProtected")]
         public bool IsPasswordProtected { get; set; }
 
+        [NopResourceDisplayName("Admin.ContentManagement.Topics.Fields.TemplateName")]
+        public string TemplateName { get; set; }
+
+        [NopResourceDisplayName("Admin.ContentManagement.Topics.Fields.FullWidth")]
+        public bool FullWidth { get; set; }
+
         [NopResourceDisplayName("Admin.ContentManagement.Topics.Fields.Password")]
         public string Password { get; set; }
 
