@@ -1260,7 +1260,7 @@ namespace Nop.Web.Controllers
             int? bikeReference = _workContext.CurrentCustomer.GetBikeReference();
             
             //Para consultar debe tener configurada una motocicleta
-            if(_workContext.CurrentCustomer.IsGuest() || !bikeReference.HasValue)
+            if(_workContext.CurrentCustomer.IsGuest() || !bikeReference.HasValue || bikeReference.Value == 0)
                 return Content("");
             
             //Llave configurada de cache para la categoria

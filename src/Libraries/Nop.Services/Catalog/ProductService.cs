@@ -2195,11 +2195,11 @@ namespace Nop.Services.Catalog
             product.ProductTemplateId = 1; //TODO:Revisar si puede ir quemado
             product.ShowOnHomePage = false;
             product.AllowCustomerReviews = true;
-            product.CreatedOnUtc = product.UpdatedOnUtc = DateTime.Now;
+            product.CreatedOnUtc = product.UpdatedOnUtc = DateTime.UtcNow;
             product.OrderMaximumQuantity = 1;
             product.OrderMaximumQuantity = 1;
             product.StockQuantity = _tuilsSettings.defaultStockQuantity;
-            product.AvailableEndDateTimeUtc = DateTime.Now.AddDays(_catalogSettings.LimitDaysOfProductPublished);
+            product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(_catalogSettings.LimitDaysOfProductPublished);
 
             try
             {
@@ -2287,7 +2287,7 @@ namespace Nop.Services.Catalog
                 throw new ArgumentNullException("AnswerText");
 
             question.Status = QuestionStatus.Answered;
-            question.AnsweredOnUtc = DateTime.Now;
+            question.AnsweredOnUtc = DateTime.UtcNow;
             question.CustomerAnswerId = _workContext.CurrentCustomer.Id;
 
             if (UpdateProductQuestion(question))
@@ -2332,7 +2332,7 @@ namespace Nop.Services.Catalog
         /// <returns></returns>
         public void InsertQuestion(ProductQuestion question)
         {
-            question.CreatedOnUtc = DateTime.Now;
+            question.CreatedOnUtc = DateTime.UtcNow;
             question.Status = QuestionStatus.Created;
             _productQuestionRepository.Insert(question);
             //Envia la notificacion de que fue respondida la pregunta

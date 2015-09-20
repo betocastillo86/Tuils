@@ -492,8 +492,8 @@ namespace Nop.Services.Customers
             if (customer == null)
                 throw new ArgumentNullException("customer");
 
-            customer.CreatedOnUtc = DateTime.Now;
-            customer.LastActivityDateUtc = DateTime.Now;
+            customer.CreatedOnUtc = DateTime.UtcNow;
+            customer.LastActivityDateUtc = DateTime.UtcNow;
 
 
             _customerRepository.Insert(customer);

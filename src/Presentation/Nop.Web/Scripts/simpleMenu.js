@@ -142,6 +142,7 @@ define(['jquery'], function ($) {
 
         $(document).ready(function () {
             window.App.init();
+            $("#nav").show();
         });
 
     })(window, window.document);

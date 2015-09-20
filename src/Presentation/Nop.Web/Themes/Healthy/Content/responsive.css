@@ -412,7 +412,7 @@
         .master-wrapper-page.container.hd { padding: 0;}
     /*.master-wrapper-page .master-wrapper-content { display: table; }*/
     .container .master-wrapper-main .columns.twelve { width: auto; float: none; }
-    .master-wrapper-page .center-2.columns.ten { width: 530px; float: right; }
+    .master-wrapper-page .center-2.columns.ten { width: 100%; float: right; }
     .master-wrapper-main .side-2.columns.two { width: 200px; display: block; float: left; }
 
     /*Header*/
@@ -511,7 +511,7 @@
 }
 
 @media screen and (min-width:960px) {
-    .master-wrapper-page .center-2.columns.ten { width: 720px; }
+    .master-wrapper-page .center-2.columns.ten { width: 100%; }
     body .container.hd { padding: 0; }
 
     /*Footer*/

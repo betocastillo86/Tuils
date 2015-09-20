@@ -5,49 +5,50 @@
 <div id="nav-open-btn" class="headerButtonMenuResponsive">
     <a class="icon-menu"></a>
 </div>
-<div id="divPanelMenu" class="side-2 columns two">
-    <nav id="nav" class="@(!Model.IsMobileDevice ? "block block-category-navigation" : string.Empty )" role="navigation">
+<div id="divPanelMenu" class="side-2 columns two"  >
+    <nav id="nav" class="@(!Model.IsMobileDevice ? "block block-category-navigation" : string.Empty )" role="navigation" style="@(Model.IsMobileDevice ? "display:none" : string.Empty)">
         @if (!Model.IsMobileDevice)
-        { 
-            @:<div class="title">@Html.ActionLink(@T("controlpanel.menutitle").Text, "Index", "ControlPanel") </div>
-         @: <div class="listbox">
+        {
+            @:<div class="title">@Html.ActionLink(@T("controlpanel.menutitle").Text, "Index", "ControlPanel")</div>
+            @:<div class="listbox">
         }
-        
-        
-            
-                <ul class="menu-panel">
 
 
-                    @foreach (var option in Model.Modules)
+
+        <ul class="menu-panel">
+
+
+            @foreach (var option in Model.Modules)
+            {
+                bool hasSubMenu = option.SubModules.Count > 0;
+                bool selected = Model.SelectedParentModule == option.Name;
+
+                <li>
+                    <a class="nav-item-panel @(hasSubMenu ? "nav-with-sub" : string.Empty) @(selected ? "active" : string.Empty)" href="@Url.Action(option.Action, option.Controller, option.Parameters)"><span class="@option.IconBig"></span>@T(string.Format("controlpanel.{0}", option.Name)) </a>
+
+                    @if (hasSubMenu)
                     {
-                        bool hasSubMenu = option.SubModules.Count > 0;
-                        bool selected = Model.SelectedParentModule == option.Name;
-
-                        <li>
-                            <a class="nav-item-panel @(hasSubMenu ? "nav-with-sub" : string.Empty) @(selected ? "active" : string.Empty)" href="@Url.Action(option.Action, option.Controller, option.Parameters)"><span class="@option.IconBig"></span>@T(string.Format("controlpanel.{0}", option.Name)) </a>
-
-                            @if (hasSubMenu)
+                        <ul class="sub-menu-panel" style="display:@(Model.SelectedParentModule == option.Name ? "block" : "none")">
+                            @foreach (var subMenu in option.SubModules)
                             {
-                                <ul class="sub-menu-panel" style="display:@(Model.SelectedParentModule == option.Name ? "block" : "none")">
-                                    @foreach (var subMenu in option.SubModules)
-                                    {
-                                        selected = subMenu.Name.Equals(Model.SelectedModule);
-                                        <li>
-                                            <a href="@Url.Action(subMenu.Action, subMenu.Controller, subMenu.Parameters)" class="sub-item-panel @(selected ? "active" : string.Empty)">@T(string.Format("controlpanel.{0}", subMenu.Name)) </a>
-                                        </li>
-                                    }
-                                </ul>
+                                selected = subMenu.Name.Equals(Model.SelectedModule);
+                                <li>
+                                    <a href="@Url.Action(subMenu.Action, subMenu.Controller, subMenu.Parameters)" class="sub-item-panel @(selected ? "active" : string.Empty)">@T(string.Format("controlpanel.{0}", subMenu.Name)) </a>
+                                </li>
                             }
-
-                        </li>
+                        </ul>
                     }
 
-                    <li id="nav-close-btn">Cerrar</li>
-                </ul>
-            @if (!Model.IsMobileDevice)
-            {
-                 @:</div>
+                </li>
             }
-       
+
+            <li id="nav-close-btn">Cerrar</li>
+        </ul>
+        @if (!Model.IsMobileDevice)
+        {
+        @:</div>
+            }
+
     </nav>
+
 </div>

@@ -56,6 +56,7 @@
             this.viewAddAddress = new AddressView({ el: isNaN(id) ? "#divNewOffice" : "#divDetail" + id , VendorId: this.vendorId });
             this.viewAddAddress.on("saved", this.loadOffices, this);
             this.viewAddAddress.on("back", this.closeAccordion, this);
+            this.$('#btnNewAddress').show();
             this.hideNewOffice(!isNaN(id));
             
 
@@ -63,7 +64,9 @@
                 this.viewAddAddress.loadAddress(id);
             else
             {
-                this.accordion.accordion({ active: this.$('.headerAccordion').length - 1 });
+                var that = this;
+                this.accordion.accordion({ active: this.$('.headerAccordion').length - 1, activate: function () { that.scrollFocusObject('#divNewOffice'); } });
+                this.$('#btnNewAddress').hide();
                 this.viewAddAddress.newAddress();
             }
         },
