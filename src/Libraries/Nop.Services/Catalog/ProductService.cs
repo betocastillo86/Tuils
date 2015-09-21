@@ -23,6 +23,7 @@ using Nop.Services.Vendors;
 using Nop.Services.Orders;
 using Nop.Services.Logging;
 using Nop.Core.Domain.Vendors;
+using Nop.Core.Domain.Media;
 
 namespace Nop.Services.Catalog
 {
@@ -2064,7 +2065,30 @@ namespace Nop.Services.Catalog
         }
 
         /// <summary>
-        /// Updates a product picture
+        /// Inserta una nueva imagen al prodcuto apartir del objeto de Picture NO creado
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="picture"></param>
+        public virtual ProductPicture InsertProductPicture(int productId, byte[] pictureBinary, string mimeType, string seoFilename, bool isNew, bool validateBinary = true, int displayOrder = 0)
+        {
+           //Inserta la imagen
+            var picture = _pictureService.InsertPicture(pictureBinary, mimeType, seoFilename, isNew, validateBinary);
+
+
+            //Relaciona la imagen
+            var productPicture = new ProductPicture();
+            productPicture.ProductId = productId;
+            productPicture.PictureId = picture.Id;
+            productPicture.DisplayOrder = displayOrder;
+
+            //Guarda
+            InsertProductPicture(productPicture);
+
+            return productPicture;
+        }
+
+        /// <summary>
+        /// Updates a product 
         /// </summary>
         /// <param name="productPicture">Product picture</param>
         public virtual void UpdateProductPicture(ProductPicture productPicture)

@@ -1090,6 +1090,8 @@ namespace Nop.Web.Controllers
 
         #endregion
 
+        
+
         #region Recently viewed products
 
         [NopHttpsRequirement(SslRequirement.No)]

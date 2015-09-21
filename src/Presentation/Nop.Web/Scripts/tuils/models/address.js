@@ -64,21 +64,18 @@
         },
         saveImage: function (file, pictureId, sizeMini, sizeBig) {
             var that = this;
-           // require(['fileModel', 'resize'], function (FileModel) {
+            that.fileModel = new FileModel();
+            that.fileModel.on("file-saved", that.fileUploaded, that);
+            that.fileModel.on("file-error", that.fileErrorUpload, that);
 
-                that.fileModel = new FileModel();
-                that.fileModel.on("file-saved", that.fileUploaded, that);
-                that.fileModel.on("file-error", that.fileErrorUpload, that);
-
-                var resizer = new window.resize();
-                resizer.init();
-                resizer.photo(file, sizeBig, 'file', function (resizedFile) {
-                    resizer.photo(resizedFile, sizeMini, 'dataURL', function (thumbnail) {
-                        that.fileModel.set({ src: thumbnail, file: resizedFile });
-                        that.fileModel.upload({ saveUrl: '/api/addresses/' + that.get('Id') + '/pictures' + (pictureId > 0 ? '/' + pictureId : '') });
-                    });
+            var resizer = new window.resize();
+            resizer.init();
+            resizer.photo(file, sizeBig, 'file', function (resizedFile) {
+                resizer.photo(resizedFile, sizeMini, 'dataURL', function (thumbnail) {
+                    that.fileModel.set({ src: thumbnail, file: resizedFile });
+                    that.fileModel.upload({ saveUrl: '/api/addresses/' + that.get('Id') + '/pictures' + (pictureId > 0 ? '/' + pictureId : '') });
                 });
-          //  });
+            });
         },
         removeImage: function (addressId) {
             this.url = this.baseUrl + '/' + addressId + '/pictures/' + this.get('Id');

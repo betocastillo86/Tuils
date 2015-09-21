@@ -44,14 +44,14 @@ namespace System.Web.Mvc.Html
         /// <param name="labelText">si el texto no viene del modelo se envía en esta propiedad</param>
         /// <param name="required">True: Muestra la zona de requerido. False: No lo muestra</param>
         /// <returns></returns>
-        public static MvcHtmlString TextBoxRequiredFor<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null, string labelText = null, bool required = true, bool showLabel = true)
+        public static MvcHtmlString TextBoxRequiredFor<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null, string labelText = null, bool required = true, bool showLabel = true, bool showAsterisk = true)
         {
-            return ControlRequiredFor(helper, ControlType.TextBox, expression, htmlAttributes, labelText, required, showLabel);
+            return ControlRequiredFor(helper, ControlType.TextBox, expression, htmlAttributes, labelText, required, showLabel, showAsterisk);
         }
 
-        public static MvcHtmlString TextAreaRequiredFor<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null, string labelText = null, bool required = true, bool showLabel = true)
+        public static MvcHtmlString TextAreaRequiredFor<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null, string labelText = null, bool required = true, bool showLabel = true, bool showAsterisk = true)
         {
-            return ControlRequiredFor(helper, ControlType.TextArea, expression, htmlAttributes, labelText, required, showLabel);
+            return ControlRequiredFor(helper, ControlType.TextArea, expression, htmlAttributes, labelText, required, showLabel, showAsterisk);
         }
 
 

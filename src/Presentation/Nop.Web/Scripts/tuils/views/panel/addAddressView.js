@@ -135,6 +135,7 @@
                 this.alert('Guardado correctamente');
             },
             changeImage: function (obj) {
+                if ($(obj.target).is(".icon-delete")) return false;
                 obj.preventDefault();
                 this.fileUpload.click();
                 this.selectedPictureId = $(obj.currentTarget).attr('data-id');

@@ -978,24 +978,22 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowUnpublised", "Mostrar solo los que no están publicados");
                 newLocaleStringResources.Add("Admin.Customers.Customers.Fields.BikeReferenceName", "Referencia de moto seleccionada");
                 newLocaleStringResources.Add("myproducts.numclicksformoreinfo", "Interesados en tu producto");
-
-
                 newLocaleStringResources.Add("Admin.ContentManagement.Topics.Fields.TemplateName", "Nombre plantilla");
                 newLocaleStringResources.Add("Admin.ContentManagement.Topics.Fields.TemplateName.hint", "Nombre del template que se usara para mostrar la noticia");
                 newLocaleStringResources.Add("Admin.ContentManagement.Topics.Fields.FullWidth", "Activar ancho completo");
                 newLocaleStringResources.Add("Admin.ContentManagement.Topics.Fields.FullWidth.hint", "Permite que el diseño tome un ancho completo aplicandole estilos diferentes");
-
-
-                
-                
-                
-                
-                
-                
-                
+                newLocaleStringResources.Add("PageTitle.EditProduct", "Editar producto");
+                newLocaleStringResources.Add("EditProduct.Title", "Editar producto");
+                newLocaleStringResources.Add("myproducts.editProduct", "Actualizar");
+                newLocaleStringResources.Add("myproducts.editProduct.back", "Atrás");
+                newLocaleStringResources.Add("myproducts.disable", "Eliminar");
+                newLocaleStringResources.Add("myproducts.disable.alt", "Deshabilita el producto para que nadie lo pueda ver más");
 
                 
-
+                
+                
+                
+                
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)
                 {
@@ -2305,12 +2303,7 @@ namespace Nop.Data.Migrations
                 settings.Add("tuilssettings.Url_OG_ImageSellProduct", "http://tuils.com/Content/images/ogProduct.jpg");
                 settings.Add("tuilssettings.Url_OG_ImageSellService", "http://tuils.com/Content/images/ogService.jpg");
                 settings.Add("catalogSettings.NumberOfFeaturedProductsOnHomepage", "16");
-                
-                
-                
-                
-                
-                
+                settings.Add("catalogSettings.LimitNumPictures", "7");
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var setting in settings)

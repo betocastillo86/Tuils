@@ -29,7 +29,7 @@
 
         @foreach (var product in Model.Products)
         {
-            <li class="product-detail">
+            <li class="product-detail" data-id="@product.Id">
             <div class="product-dtl-img">
                 <a href="@(product.Published ? Url.Action("ProductDetails", "Product", new { seName = product.SeName }) : "#")">
                 <img title="@product.Name" src="@product.DefaultPictureModel.ImageUrl" alt="@product.Name">
@@ -65,7 +65,9 @@
                 { 
                     <div class="conte_btn">
                         @*<a class="btn-azul" href="javascript:;"><span class="icon-mail"></span>Editar</a>*@
-                        <a class="btn-naranja" href="@Url.Action("ProductDetails", "Product", new { seName = product.SeName })">@T("myproducts.viewOnline")</a>
+                        @*<a class="btn-naranja" href="@Url.Action("ProductDetails", "Product", new { seName = product.SeName })">@T("myproducts.viewOnline")</a>*@
+                        <a class="btnUnpublish btn-naranja" data-id="@product.Id" title="@T("myproducts.disable.alt")">@T("myproducts.disable")</a>
+                        <a class="btn-azul"  href="@Url.Action("EditProduct", "ControlPanel", new { id = product.Id })">@T("myproducts.editProduct")</a>
                     </div>
                 }
             </div>

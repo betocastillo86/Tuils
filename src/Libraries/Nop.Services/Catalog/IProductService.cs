@@ -482,6 +482,13 @@ namespace Nop.Services.Catalog
         void InsertProductPicture(ProductPicture productPicture);
 
         /// <summary>
+        /// Inserta una nueva imagen al prodcuto apartir del objeto de Picture NO creado
+        /// </summary>
+        /// <param name="productId"></param>
+        ///<param name="pictureBinary">Datos del archivo</param>
+        ProductPicture InsertProductPicture(int productId, byte[] pictureBinary, string mimeType, string seoFilename, bool isNew, bool validateBinary = true, int displayOrder = 0);
+
+        /// <summary>
         /// Updates a product picture
         /// </summary>
         /// <param name="productPicture">Product picture</param>

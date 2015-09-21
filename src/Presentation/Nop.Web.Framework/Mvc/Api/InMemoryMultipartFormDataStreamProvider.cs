@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nop.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Nop.Web.Infrastructure
+namespace Nop.Web.Framework.Mvc.Api
 {
     public class InMemoryMultipartFormDataStreamProvider : MultipartStreamProvider
     {
@@ -115,6 +116,8 @@ namespace Nop.Web.Infrastructure
         public string FileName { get; set; }
         public string ContentType { get; set; }
         public byte[] Data { get; set; }
+
+        public string Extension { get { return Files.GetExtensionByContentType(this.ContentType); } }
 
         public long Size { get { return (Data != null ? Data.LongLength : 0L); } }
 

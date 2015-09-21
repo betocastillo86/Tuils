@@ -536,6 +536,12 @@ namespace Nop.Services.Media
                             //Si debe cortar la imagen carga el ancho y alto fijo
                             ResizeSettings settings;
                             if (crop)
+                            {
+                                if (newSize.Width > newSize.Height)
+                                    newSize.Height = newSize.Width;
+                                else
+                                    newSize.Width = newSize.Height;
+                                
                                 settings = new ResizeSettings
                                 {
                                     Width = newSize.Width,
@@ -543,6 +549,7 @@ namespace Nop.Services.Media
                                     Mode = FitMode.Crop,
                                     Quality = _mediaSettings.DefaultImageQuality
                                 };
+                            }
                             else
                                 settings = new ResizeSettings
                                 {

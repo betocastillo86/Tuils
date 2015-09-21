@@ -95,6 +95,7 @@
                 return true;
             }
         },
+        
         //Convierte los ticks de .NET a ticks en JS
         //ticks are recorded from 1/1/1; get microtime difference from 1/1/1/ to 1/1/1970
         ticksToJs: function (ticks) {

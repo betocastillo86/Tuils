@@ -7,6 +7,8 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
         var ProductModel = AuthenticationModel.extend({
             baseUrl: "/api/products",
             url: "/api/products",
+        
+            idAttribute :'Id',
 
             initialize : function(){
                 this.on('change:IsShipEnabled', function (value) {
@@ -147,6 +149,10 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                 this.set('message_login', TuilsResources.loginMessages.publishProduct);
                 this.set('ga_action', 'Publicacion');
                 this.save();
+            },
+            remove: function () {
+                this.url = this.baseUrl + '/' + this.get('Id');
+                this.destroy();
             }
         });
         

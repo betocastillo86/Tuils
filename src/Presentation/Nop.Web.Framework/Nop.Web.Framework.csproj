@@ -151,8 +151,10 @@
     <Compile Include="Kendoui\QueryableExtensions.cs" />
     <Compile Include="Menu\SiteMapNode.cs" />
     <Compile Include="Menu\XmlSiteMap.cs" />
+    <Compile Include="Mvc\Api\AsyncFileUploadApiFilter.cs" />
     <Compile Include="Mvc\Api\AuthorizeApiAttribute.cs" />
     <Compile Include="Mvc\Api\AuthorizeApiVendorAttribute.cs" />
+    <Compile Include="Mvc\Api\InMemoryMultipartFormDataStreamProvider.cs" />
     <Compile Include="Mvc\ConditionalValidationAttribute.cs" />
     <Compile Include="Mvc\DependencyRegistrarExtensions.cs" />
     <Compile Include="Mvc\JavascriptConfiguration.cs" />
@@ -247,6 +249,10 @@
     <ProjectReference Include="..\..\Libraries\Nop.Services\Nop.Services.csproj">
       <Project>{210541ad-f659-47da-8763-16f36c5cd2f4}</Project>
       <Name>Nop.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Nop.Utilities\Nop.Utilities.csproj">
+      <Project>{a210b081-8f58-4af1-aef3-be60a199505d}</Project>
+      <Name>Nop.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
