@@ -852,6 +852,13 @@ html.oldie .container { width: 940px; }
     /*fin panel de control*/
     /*PUBLICAR PRDUCTO*/
     .tipo-marca ul.tagit{width: calc(100% - 190px);}
+    /*QUIENES SOMOS*/
+    .tit_quienes{padding: 80px 0;}
+    .desta_quienes{margin: 40px 0 0 25px; padding: 50px 20px 20px; height: 495px;}
+    .desta_quienes:first-child{margin: 40px 0 0;}
+    .desta_quienes h3{font-size: 23px;}
+    .desta_quienes [class^="icon-"]{font-size: 40px; left: calc(50% - 40px); top: -40px;}
+    /*FIN QUIENES SOMOS*/
 }
 @media screen and (max-width:1024px){
     /*Header*/
@@ -988,6 +995,16 @@ html.oldie .container { width: 940px; }
     /*MARCAS*/
     .conte_marcas li img{width: 95%;}
 
+    /*QUIENES SOMOS*/
+    .tit_quienes{padding: 50px 0;}
+    .txt_quienes{font-size: 18px;}
+    .desta_quienes{margin: 33px 0 0 25px; padding: 33px 20px 20px; height: 465px;}
+    .desta_quienes:first-child{margin: 33px 0 0;}
+    .desta_quienes h3{font-size: 17px; margin: 5px 0 0;}
+    .desta_quienes h4{font-size: 14px; height: 40px;}
+    .desta_quienes [class^="icon-"]{font-size: 35px; left: calc(50% - 33px); top: -33px; padding: 15px;}
+    .desta_quienes ul li{font-size: 12px;}
+    /*FIN QUIENES SOMOS*/
 }
 @media screen and (max-width:768px) {
     /*Header*/
@@ -1074,6 +1091,14 @@ html.oldie .container { width: 940px; }
     /*FOOTER*/
     .footer-menu h3 .icon-mas, .footer-menu h3 .icon-menos{ display: inline-block; position: absolute; right: 10px; font-size: 16px; padding: 3px 0 0;}
     /*FIN FOOTER*/
+    /*QUIENES SOMOS*/
+    .tit_quienes{font-size: 35px;}
+    .txt_quienes{font-size: 16px;}
+    .desta_quienes:first-child{margin: 33px 0 20px;}
+    .desta_quienes{height: auto; width: 100%; margin: 33px 0 20px;}
+    .desta_quienes h3{font-size: 23px;}
+    .desta_quienes h4{font-size: 16px; height: auto;}
+    /*FIN QUIENES SOMOS*/
 }
 @media screen and (max-width:667px) {
 
@@ -1297,6 +1322,11 @@ html.oldie .container { width: 940px; }
     /* PRODUCTS IN GRID - TEMPLATE */
     .product-grid .product-item .picture, .item .picture{margin:0 7px; padding: 5px 0;}
     .product-grid .product-item .details{margin: 0 7px;}
+    /*QUIENES SOMOS*/
+    .tit_quienes{font-size: 25px; text-align: left; padding: 20px 10px 10px; background: transparent;}
+    .txt_quienes{text-align: justify; font-size: 14px; margin: 0 0 15px;}
+    .txt_quienes:after{display: none;}
+    /*FIN QUIENES SOMOS*/
 }
 @media screen and (max-width:360px) {
     /* PRODUCTS IN GRID - TEMPLATE */
@@ -1331,4 +1361,6 @@ html.oldie .container { width: 940px; }
     .tipe-register{width: auto;}
        .tipe-register a span{font-size: 40px; width: 40px; height: 40px;}
 
+    .desta_quienes h3{font-size: 21px;}
+    .desta_quienes h4{margin: 0 0 10px;}
 }
