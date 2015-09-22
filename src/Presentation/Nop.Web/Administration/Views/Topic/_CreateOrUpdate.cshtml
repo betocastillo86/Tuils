@@ -104,6 +104,15 @@
                 @Html.ValidationMessageFor(model => model.FullWidth)
             </td>
         </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.HideTitle):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.HideTitle)
+                @Html.ValidationMessageFor(model => model.HideTitle)
+            </td>
+        </tr>
         <tr id="pnlPasswordEnabled">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.Password):

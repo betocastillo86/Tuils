@@ -68,9 +68,9 @@ namespace Nop.Web.Controllers
                 TemplateName = string.IsNullOrEmpty(topic.TemplateName) ? "~/Views/Shared/_ColumnsThree.cshtml" : topic.TemplateName
             };
 
-            //Si debe mostrar el ancho completo agrega la propiedad
-            if (topic.FullWidth)
-                this.ViewData.Add("noWidth", "true");
+
+            model.FullWidth = topic.FullWidth;
+            model.HideTitle = topic.HideTitle;
 
             return model;
         }
@@ -94,6 +94,11 @@ namespace Nop.Web.Controllers
                 return PrepareTopicModel(topic);
             }
             );
+
+
+            //Si debe mostrar el ancho completo agrega la propiedad
+            if (cacheModel.FullWidth)
+                this.ViewData.Add("noWidth", "true");
 
             if (cacheModel == null)
                 return RedirectToRoute("HomePage");

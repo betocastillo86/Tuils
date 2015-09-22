@@ -45,6 +45,9 @@ namespace Nop.Admin.Models.Topics
         [NopResourceDisplayName("Admin.ContentManagement.Topics.Fields.FullWidth")]
         public bool FullWidth { get; set; }
 
+        [NopResourceDisplayName("Admin.ContentManagement.Topics.Fields.HideTitle")]
+        public bool HideTitle { get; set; }
+
         [NopResourceDisplayName("Admin.ContentManagement.Topics.Fields.Password")]
         public string Password { get; set; }
 

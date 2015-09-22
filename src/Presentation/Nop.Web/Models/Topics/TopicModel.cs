@@ -24,5 +24,9 @@ namespace Nop.Web.Models.Topics
 
         public string TemplateName { get; set; }
 
+        public bool FullWidth { get; set; }
+
+        public bool HideTitle { get; set; }
+
     }
 }

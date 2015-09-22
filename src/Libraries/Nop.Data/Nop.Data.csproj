@@ -199,6 +199,10 @@
     <Compile Include="Migrations\201509202049009_AddColumn_Template_Table_Topic.Designer.cs">
       <DependentUpon>201509202049009_AddColumn_Template_Table_Topic.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509220212040_AddColumn_HideTitle_Table_Topic.cs" />
+    <Compile Include="Migrations\201509220212040_AddColumn_HideTitle_Table_Topic.Designer.cs">
+      <DependentUpon>201509220212040_AddColumn_HideTitle_Table_Topic.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -419,6 +423,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509202049009_AddColumn_Template_Table_Topic.resx">
       <DependentUpon>201509202049009_AddColumn_Template_Table_Topic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509220212040_AddColumn_HideTitle_Table_Topic.resx">
+      <DependentUpon>201509220212040_AddColumn_HideTitle_Table_Topic.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

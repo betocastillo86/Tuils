@@ -988,12 +988,10 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("myproducts.editProduct.back", "Atrás");
                 newLocaleStringResources.Add("myproducts.disable", "Eliminar");
                 newLocaleStringResources.Add("myproducts.disable.alt", "Deshabilita el producto para que nadie lo pueda ver más");
+                newLocaleStringResources.Add("Admin.ContentManagement.Topics.Fields.HideTitle", "Ocultar titulo");
+                newLocaleStringResources.Add("Admin.ContentManagement.Topics.Fields.HideTitle.Hint", "Oculta el titulo por defecto");
+                
 
-                
-                
-                
-                
-                
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)
                 {

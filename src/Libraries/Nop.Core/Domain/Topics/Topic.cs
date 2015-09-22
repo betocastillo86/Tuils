@@ -70,6 +70,11 @@ namespace Nop.Core.Domain.Topics
         public bool FullWidth { get; set; }
 
         /// <summary>
+        /// Oculta el titulo por defecto
+        /// </summary>
+        public bool HideTitle { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the entity is limited/restricted to certain stores
         /// </summary>
         public bool LimitedToStores { get; set; }
