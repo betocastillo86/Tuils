@@ -91,51 +91,65 @@
                             <input type="text" class="searchinput" value="@Model.PagingFilteringContext.q" />
                             <a class="btn_search"><span class="icon-lupa"></span></a>
                         </div>
-                        @if (Model.FilteredByProduct)
-                        { 
-                            <div>Si quieres ver todos los productos de <b>@Model.Name</b> da clic @Html.ActionLink("aquí", "Vendor") </div>
-                        }
 
 
                         @if (Model.Products.Count > 0)
                         {
                             @*grid mode*@
                             <div class="product-grid">
-                                @foreach (var product in Model.Products)
+                                
+                                @if (!Model.FilteredByProduct)
                                 {
-                                    <div class="item-box">
-                                        @Html.Partial("_ProductBox", product)
-                                    </div>
+                                    foreach (var product in Model.Products)
+                                    {
+                                        <div class="item-box">
+                                            @Html.Partial("_ProductBox", product)
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    var product = Model.Products.FirstOrDefault();
+                                    <div class="product-sale">
+                                            <h1>@product.Name</h1>
+                                            <div class="picture"><a href="@Url.RouteUrl("Product", new { seName = product.Id })"><img src="@product.DefaultPictureModel.ImageUrl" /></a></div>
+                                            <div class="descript_pro">
+                                                <div class="product-price">@product.ProductPrice.Price</div>
+                                                <p>@Html.Raw(product.FullDescription)</p>
+                                                <div class="product-infopluss">
+                                                    <h3>@T("product.additionalInfo")</h3>
 
-
-                                    @*<div class="product-sale">
-                                        <h1>casco cabecilla nuevecito y listo para usar</h1>
-                                        <div class="picture"></div>
-                                        <div class="descript_pro">
-                                            <div class="product-price">200.000.000</div>
-                                            <p>este casco es una chimba parace que tuvieras una cabeza gigante y muy comodo espero les gusta mucho parceros</p>
-                                            <div class="product-infopluss">
-                                                <h3>Información adicional</h3>
-                                                Producto especial para
-                                                <ul>
-                                                    <li>Yamaha Bws</li>
-                                                    <li>Yamaha FZ8 s</li>
-                                                    <li>Yamaha Raider</li>
-                                                </ul>                       
-                                                <div class="manufacturers">
-                                                    <span class="label">Marca:</span>
-                                                    <span class="value">
-                                                        <a itemprop="brand" href="/m/torc/">TORC</a>
-                                                    </span>
+                                                    @if (product.SpecificationAttributeModels.Count > 0)
+                                                    {
+                                                        @T("Products.Specs")
+                                                        <ul>
+                                                            @foreach (var spec in product.SpecificationAttributeModels)
+                                                            {
+                                                                <li>@spec.SpecificationAttributeName : @spec.ValueRaw</li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                    @if (product.Manufacturers.Count > 0)
+                                                    {
+                                                        var manufacturer = product.Manufacturers.FirstOrDefault();
+                                                        <div class="manufacturers">
+                                                            <span class="label">@T("Products.Manufacturer"):</span>
+                                                            <span class="value">
+                                                                <a href="@Url.RouteUrl("Manufacturer", new { SeName = manufacturer.SeName })">@manufacturer.Name</a>
+                                                            </span>
+                                                        </div>
+                                                    }
+                                                    
                                                 </div>
                                             </div>
+                                            <br/>
                                         </div>
-                                        <br/>
-                                    </div>*@
 
-
-
+                                    <div style="margin:20px 0 10px;">Si quieres ver todos los productos de <b>@Model.Name</b> </div>
+                                    <a class="button-1" href="@Url.RouteUrl("Vendor", new { seName = Model.SeName })">Ver aquí</a>
                                 }
+                                
+                               
                             </div>
                         }
                         else

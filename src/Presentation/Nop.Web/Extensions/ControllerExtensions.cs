@@ -88,7 +88,8 @@ namespace Nop.Web.Extensions
             IEnumerable<Product> products,
             bool preparePriceModel = true, bool preparePictureModel = true,
             int? productThumbPictureSize = null, bool prepareSpecificationAttributes = false,
-            bool forceRedirectionAfterAddingToCart = false)
+            bool forceRedirectionAfterAddingToCart = false,
+            bool prepareManufacturer = false)
         {
             if (products == null)
                 throw new ArgumentNullException("products");
@@ -353,15 +354,20 @@ namespace Nop.Web.Extensions
                 }
                     #endregion
 
-                #region CODIGO ELIMINADO
-                ////specs
-                //if (prepareSpecificationAttributes)
-                //{
-                //    model.SpecificationAttributeModels = PrepareProductSpecificationModel(controller, workContext,
-                //         specificationAttributeService, cacheManager, product);
-                //}
-                #endregion
-                
+                //specs
+                if (prepareSpecificationAttributes)
+                {
+                    model.SpecificationAttributeModels = PrepareProductSpecificationModel(controller, workContext,
+                         specificationAttributeService, cacheManager, product);
+                }
+
+                //Agrega la información de la marca
+                if (prepareManufacturer && product.ProductManufacturers.Count > 0)
+                {
+                    var manufacturer = product.ProductManufacturers.FirstOrDefault().Manufacturer;
+                    model.Manufacturers.Add(new ManufacturerBriefInfoModel() { Name = manufacturer.Name, SeName = manufacturer.GetSeName()  });
+                }
+
 
                 //reviews
                 model.ReviewOverviewModel = new ProductReviewOverviewModel

@@ -149,7 +149,7 @@ namespace Nop.Web.Controllers.Api
                 return Ok(model);
             }
             else {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
         }

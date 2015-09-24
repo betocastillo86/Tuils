@@ -13,7 +13,7 @@ namespace Nop.Web.Models.Catalog
     public class EditProductModel : BaseNopEntityModel
     {
         [Required]
-        [MaxLength(40)]
+        [MaxLength(50)]
         public string Name { get; set; }
 
         [Required]

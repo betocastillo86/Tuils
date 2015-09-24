@@ -409,7 +409,7 @@ namespace Nop.Web.Controllers
         protected virtual IEnumerable<ProductOverviewModel> PrepareProductOverviewModels(IEnumerable<Product> products,
             bool preparePriceModel = true, bool preparePictureModel = true,
             int? productThumbPictureSize = null, bool prepareSpecificationAttributes = false,
-            bool forceRedirectionAfterAddingToCart = false)
+            bool forceRedirectionAfterAddingToCart = false, bool prepareManufacturer = false)
         {
             return this.PrepareProductOverviewModels(_workContext,
                 _storeContext, _categoryService, _productService, _specificationAttributeService,
@@ -419,7 +419,7 @@ namespace Nop.Web.Controllers
                 _catalogSettings, _mediaSettings, products,
                 preparePriceModel, preparePictureModel,
                 productThumbPictureSize, prepareSpecificationAttributes,
-                forceRedirectionAfterAddingToCart);
+                forceRedirectionAfterAddingToCart, prepareManufacturer);
         }
 
         #endregion
@@ -1391,6 +1391,11 @@ namespace Nop.Web.Controllers
             Dictionary<int, int> filterableSpecificationAttributeOptionIds;
             IPagedList<Product> products = null;
 
+
+            
+            //Por defecto no se muestran las especificaciones adidcionales, pero si está filtrado por Id
+            bool prepareSpecificationAttributes = false;
+            bool prepareManufacturers = false;
             //Si viene filtro por id de producto intenta realizar el filtro
             //Si  no encuentra ningún resultado trae todos los productos del vendedor
             if (command.pid > 0)
@@ -1402,6 +1407,8 @@ namespace Nop.Web.Controllers
                 {
                     model.FilteredByProduct = true;
                     products = new PagedList<Product>(new List<Product>() { product }, 0, 1, 1);
+                    prepareSpecificationAttributes = true;
+                    prepareManufacturers = true;
                 }
             }
 
@@ -1420,7 +1427,7 @@ namespace Nop.Web.Controllers
             }
 
             
-            model.Products = PrepareProductOverviewModels(products).ToList();
+            model.Products = PrepareProductOverviewModels(products, prepareSpecificationAttributes:prepareSpecificationAttributes, prepareManufacturer: prepareManufacturers).ToList();
 
             model.TotalActiveProducts = _productService.CountActiveProductsByVendorId(vendor.Id);
 

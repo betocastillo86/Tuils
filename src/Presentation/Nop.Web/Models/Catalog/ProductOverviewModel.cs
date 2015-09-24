@@ -16,6 +16,7 @@ namespace Nop.Web.Models.Catalog
             DefaultPictureModel = new PictureModel();
             SpecificationAttributeModels = new List<ProductSpecificationModel>();
             ReviewOverviewModel = new ProductReviewOverviewModel();
+            Manufacturers = new List<ManufacturerBriefInfoModel>();
         }
 
         public string Name { get; set; }
@@ -29,6 +30,8 @@ namespace Nop.Web.Models.Catalog
         public PictureModel DefaultPictureModel { get; set; }
         //specification attributes
         public IList<ProductSpecificationModel> SpecificationAttributeModels { get; set; }
+
+        public IList<ManufacturerBriefInfoModel> Manufacturers { get; set; }
         //price
         public ProductReviewOverviewModel ReviewOverviewModel { get; set; }
 
