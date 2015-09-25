@@ -1925,3 +1925,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 .descript_crea .field-validation-error {
     margin:0px;
 }
+/**Permite mostrar solo 4 en los filtros*/
+.product-filters li:nth-of-type(n+5) {
+        display: none;
+    }

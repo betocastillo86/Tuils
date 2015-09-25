@@ -13,6 +13,7 @@ using Nop.Services.Directory;
 using Nop.Core.Domain.Directory;
 using System.Text;
 using Nop.Services.Seo;
+using Nop.Core.Domain.Common;
 
 namespace Nop.Web.Models.Catalog
 {
@@ -109,10 +110,13 @@ namespace Nop.Web.Models.Catalog
 
             public bool ShowFilterNameInUrl { get; set; }
 
+            public int MaxNumberOptionsToShow { get; private set; }
+
 
             public FilterBaseModel(string queryString)
             {
                 this.QUERYSTRINGPARAM = queryString;
+                this.MaxNumberOptionsToShow = Nop.Core.Infrastructure.EngineContext.Current.Resolve<TuilsSettings>().MaxNumberOptionsToShowOnFilters;
             }
 
             protected virtual string ExcludeQueryStringParams(string url, IWebHelper webHelper)
@@ -810,7 +814,9 @@ namespace Nop.Web.Models.Catalog
                             item.FilterUrl = this.CreateFilterUrl(webHelper, x.Id, x.Name);
 
                             return item;
-                        }).ToList();
+                        })
+                        .OrderByDescending(m => m.NumOfProducts)
+                        .ToList();
                     }
 
                     //remove filter URL

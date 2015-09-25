@@ -776,6 +776,13 @@ namespace Nop.Web.Controllers
 
             #region Product review overview
 
+            int bestRating = 0;
+            int worstRating = 0;
+            if (product.ApprovedTotalReviews > 0)
+                _productService.GetBestWorstRating(product.Id, out bestRating, out worstRating);
+
+
+
             model.ProductReviewOverview = new ProductReviewOverviewModel
             {
                 ProductId = product.Id,
@@ -783,7 +790,10 @@ namespace Nop.Web.Controllers
                 TotalReviews = product.ApprovedTotalReviews,
                 AllowCustomerReviews = product.AllowCustomerReviews,
                 IsProductDetail = true,
-                ShowSnippets = showRichSnippets
+                ShowSnippets = showRichSnippets,
+                BestRating = bestRating,
+                WorstRating = worstRating
+
             };
 
             #endregion

@@ -609,5 +609,12 @@ namespace Nop.Services.Catalog
 
 
 
+        /// <summary>
+        /// Trae la mejor y la peor calificación de un producto
+        /// </summary>
+        /// <param name="productId">Id del producto</param>
+        /// <param name="bestRating">Variable de salida con la mejor calificacion</param>
+        /// <param name="worstRating">Varibale de salida con la peor calificación</param>
+        void GetBestWorstRating(int productId, out int bestRating, out int worstRating);
     }
 }

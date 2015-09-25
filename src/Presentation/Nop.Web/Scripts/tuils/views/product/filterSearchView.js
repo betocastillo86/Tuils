@@ -5,7 +5,8 @@ function ($, _, BaseView) {
         events: {
             'click #btnShowFilter': 'showFilter',
             'click .tit_fil .icon-close': 'closeFilter',
-            'focusout .priceFilter input[type="text"]': 'loadLinkPriceFilter'
+            'focusout .priceFilter input[type="text"]': 'loadLinkPriceFilter',
+            'click .qcat-more-filters' : 'showMoreOptions'
         },
         divFilter: $(".filters-main"),
 
@@ -18,6 +19,13 @@ function ($, _, BaseView) {
             this.on("window-resized-min", this.resize, this);
             this.on("window-resized-max", this.resize, this);
             this.resize();
+        },
+        showMoreOptions: function (obj) {
+            var button = $(obj.currentTarget);
+            //Muestra todas las opciones
+            button.parent().find('li').show();
+            //Oculta el botón
+            button.hide();
         },
         resize: function () {
             if (this.isMinSize()) {

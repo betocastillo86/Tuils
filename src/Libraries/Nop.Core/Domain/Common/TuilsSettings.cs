@@ -126,5 +126,10 @@ namespace Nop.Core.Domain.Common
         /// Llave generada automáticamente que permite evitar el cache del archivo built.js cuando es necesario actualizarlo
         /// </summary>
         public string KeyCacheBuiltJavascript { get; set; }
+
+        /// <summary>
+        /// Numero maximo de opciones que se muestran en los filtros de la izquierda
+        /// </summary>
+        public int MaxNumberOptionsToShowOnFilters { get; set; }
     }
 }

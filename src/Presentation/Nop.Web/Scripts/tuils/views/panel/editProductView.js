@@ -42,7 +42,12 @@
                 }
             },
             saved: function () {
-                this.alert('Tu producto ha sido actualizado');
+                this.alert({
+                    message: 'Tu producto ha sido actualizado',
+                    afterClose: function () {
+                        document.location.href = '/mi-cuenta/mis-productos?p=true';
+                    }
+                });
             },
             loadPictures: function () {
                 this.viewPictures = new EditProductPicturesView({ el: "#divPictures", productId : this.productId });

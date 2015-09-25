@@ -13,6 +13,10 @@ namespace Nop.Web.Models.Catalog
 
         public int RatingSum { get; set; }
 
+        public int BestRating { get; set; }
+
+        public int WorstRating { get; set; }
+
         public int TotalReviews { get; set; }
 
         public bool ShowSnippets { get; set; }

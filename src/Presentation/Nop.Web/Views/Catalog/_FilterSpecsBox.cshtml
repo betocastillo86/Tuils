@@ -20,6 +20,11 @@
                     {
                         <li><a href="@spec.FilterUrl" rel="nofollow"><span class="namefil">@spec.SpecificationAttributeOptionName</span> <span class="fil_cant">@spec.NumOfProducts</span></a></li>
                     }
+                    @if (groupList.Count > Model.MaxNumberOptionsToShow)
+                    {
+                        <a href="javascript:;" class="qcat-more-filters"><b>@T("Filtering.MoreOptions")</b> <span class="icon-down"></span></a>
+                    }
+
                 </ul>
 
             }

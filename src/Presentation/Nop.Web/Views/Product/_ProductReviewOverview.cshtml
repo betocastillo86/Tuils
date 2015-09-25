@@ -37,9 +37,11 @@
             { 
                 <span style="display: none;">@ratingValue.ToString("0.0", new CultureInfo("en-US"))</span>
                 <span style="display: none;">@Model.TotalReviews</span>
+                <meta itemprop="bestRating" content="10" />
+                <meta itemprop="worstRating" content="1" />
             }
-            
-            
+
+
         }
         else
         {

@@ -991,6 +991,9 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.ContentManagement.Topics.Fields.HideTitle", "Ocultar titulo");
                 newLocaleStringResources.Add("Admin.ContentManagement.Topics.Fields.HideTitle.Hint", "Oculta el titulo por defecto");
                 newLocaleStringResources.Add("product.additionalInfo", "Información adicional");
+                newLocaleStringResources.Add("Filtering.MoreOptions", "Más opciones");
+
+            
                 
 
                 //Recorre todas las llaves que desea adicional
@@ -2303,6 +2306,7 @@ namespace Nop.Data.Migrations
                 settings.Add("tuilssettings.Url_OG_ImageSellService", "http://tuils.com/Content/images/ogService.jpg");
                 settings.Add("catalogSettings.NumberOfFeaturedProductsOnHomepage", "16");
                 settings.Add("catalogSettings.LimitNumPictures", "7");
+                settings.Add("tuilsSettings.MaxNumberOptionsToShowOnFilters", "4");
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var setting in settings)

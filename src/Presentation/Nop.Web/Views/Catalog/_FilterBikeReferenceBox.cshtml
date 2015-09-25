@@ -12,6 +12,10 @@
             {
                 <li><a href="@item.FilterUrl" rel="nofollow"><span class="namefil">@item.Name</span> <span class="fil_cant">@item.NumOfProducts</span></a></li>
             }
+            @if (Model.NotFilteredItems.Count > Model.MaxNumberOptionsToShow)
+            {
+                <a href="javascript:;" class="qcat-more-filters"><b>@T("Filtering.MoreOptions")</b> <span class="icon-down"></span></a>
+            }
         </ul>
     }
 }

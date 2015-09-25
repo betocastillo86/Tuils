@@ -8,6 +8,8 @@
 
             autoclose: true,
 
+            afterClose: function () { },
+
             duration:3000,
 
             initialize: function (args) {
@@ -32,6 +34,7 @@
                         buttons: {
                             'Aceptar': function () {
                                 $(this).dialog('close');
+                                that.afterClose();
                             }
                         },
                         open: function (event, ui) {
@@ -39,6 +42,7 @@
                             {
                                 setTimeout(function () {
                                     that.$el.dialog('close');
+                                    that.afterClose();
                                 }, that.duration);
                             }
                         }
@@ -55,6 +59,9 @@
                     message = args;
                 if (args.message)
                     message = args.message;
+
+                if (args && args.afterClose)
+                    this.afterClose = args.afterClose;
 
                 this.$el.html(message)
                 this.$el.dialog('open');

@@ -7,11 +7,23 @@
     {
         <ul class="product-filters">
             <div class="filter-title">@T("Filtering.CategoryFilter")</div>
-
+            @*@{
+                int i = 0;     
+            }*@
             @foreach (var category in Model.NotFilteredItems)
             {
-                <li><a href="@category.FilterUrl"><span class="namefil">@category.Name</span> <span class="fil_cant">@category.NumOfProducts</span></a></li>
+                //string styleShow = i >= Model.MaxNumberOptionsToShow ? "style=display:none" : string.Empty;
+                //i++;
+                <li  ><a href="@category.FilterUrl"><span class="namefil">@category.Name</span> <span class="fil_cant">@category.NumOfProducts</span></a></li>
+            }
+
+            @if(Model.NotFilteredItems.Count > Model.MaxNumberOptionsToShow)
+            {
+                <a href="javascript:;" class="qcat-more-filters"><b>@T("Filtering.MoreOptions")</b> <span class="icon-down"></span></a>
             }
         </ul>
     }
 }
+<style>
+    
+</style>

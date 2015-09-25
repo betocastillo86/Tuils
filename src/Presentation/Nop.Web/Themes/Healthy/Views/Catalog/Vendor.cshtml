@@ -111,8 +111,8 @@
                                 {
                                     var product = Model.Products.FirstOrDefault();
                                     <div class="product-sale">
-                                            <h1>@product.Name</h1>
-                                            <div class="picture"><a href="@Url.RouteUrl("Product", new { seName = product.Id })"><img src="@product.DefaultPictureModel.ImageUrl" /></a></div>
+                                            <h1><a href="@Url.RouteUrl("Product", new { seName = product.SeName })">@product.Name</a></h1>
+                                            <div class="picture"><a href="@Url.RouteUrl("Product", new { seName = product.SeName })"><img src="@product.DefaultPictureModel.ImageUrl" /></a></div>
                                             <div class="descript_pro">
                                                 <div class="product-price">@product.ProductPrice.Price</div>
                                                 <p>@Html.Raw(product.FullDescription)</p>

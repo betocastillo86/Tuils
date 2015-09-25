@@ -1370,6 +1370,24 @@ namespace Nop.Services.Catalog
             }
         }
 
+
+
+        /// <summary>
+        /// Trae la mejor y la peor calificación de un producto
+        /// </summary>
+        /// <param name="productId">Id del producto</param>
+        /// <param name="bestRating">Variable de salida con la mejor calificacion</param>
+        /// <param name="worstRating">Varibale de salida con la peor calificación</param>
+        public void GetBestWorstRating(int productId, out int bestRating, out int worstRating)
+        {
+            var maxMin = _productReviewRepository.Table.Where(r => r.ProductId == productId)
+                .GroupBy(r => r.ProductId)
+                .Select(r => new { Best = r.Max(g => g.Rating), Worst = r.Min(g => g.Rating) });
+
+            bestRating = maxMin.FirstOrDefault().Best;
+            worstRating = maxMin.FirstOrDefault().Worst;
+        }
+
         /// <summary>
         /// Get low stock products
         /// </summary>
