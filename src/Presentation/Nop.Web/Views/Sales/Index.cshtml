@@ -10,12 +10,7 @@
 
 <div class="master-wrapper-page container hd">
     <div class="master-wrapper-content">
-        <div class="master-wrapper-main">
-            @if (Model.HasReachedLimitOfProducts)
-            { 
-                <div style="color:red">@T("PublishProduct.HasReachedLimitOfProducts")</div>
-            }
-            
+        <div class="master-wrapper-main">            
             <div class="product-public">
                 <ol class="wizard-breadcrumb">
                     <li id="btnPublishProductStep1" class="wizard-current"><b>PASO 1</b><div>@T("PublishProduct.StepMenu1")</div></li>
@@ -24,6 +19,10 @@
                     <li id="btnPublishProductStep4" class="wizard-step"><b>PASO 4</b><div>@T("PublishProduct.StepMenu4")</div></li>
                     <br />
                 </ol>
+                @if (Model.HasReachedLimitOfProducts)
+                { 
+                    <div class="alert-public"><span class="icon-alert"></span> <p>@T("PublishProduct.HasReachedLimitOfProducts")</p><br/></div>
+                }
                 <p class="wizard-help">Elige qué quieres vender</p>
                 <nav class="nav-category">
                     <a href="@Url.Action("PublishProduct")" title="@T("Publish.Bike.Img.Alt")"><li class="hub-std"><span class="icon-casco"></span><p>productos</p></li></a>

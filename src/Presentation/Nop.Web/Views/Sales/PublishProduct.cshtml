@@ -30,10 +30,6 @@
     <div class="master-wrapper-page container hd">
         <div class="master-wrapper-content">
             <div class="master-wrapper-main">
-                @if (Model.HasReachedLimitOfProducts)
-                {
-                    <div style="color:red">@T("PublishProduct.HasReachedLimitOfProducts")</div>
-                }
                 <div class="product-public">
                     <ol class="wizard-breadcrumb">
 
@@ -44,6 +40,10 @@
 
                         <br />
                     </ol>
+                    @if (Model.HasReachedLimitOfProducts)
+                    {
+                        <div class="alert-public"><span class="icon-alert"></span> <p>@T("PublishProduct.HasReachedLimitOfProducts")</p><br/></div>
+                    }
 
                     <div id="divStep_1">
                         @Html.Partial("_SelectCategory")

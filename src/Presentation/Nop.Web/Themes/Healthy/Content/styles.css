@@ -1565,7 +1565,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 }
 
 /*PUBLICAR PRDUCTO*/
-.product-public{margin: 25px 0 30px;}
+.product-public{margin:0 0 30px;}
     .wizard-breadcrumb{list-style: none; background:#F6F9FD; margin: 0 0 20px;}
     .wizard-breadcrumb li{float: left; position: relative; text-align: center; width: 25%; padding: 4px 0; cursor: pointer;}
     .wizard-step{color: #A9A9AD; font-style: italic; font-size: 12px; font-weight: 500;}
@@ -1573,12 +1573,16 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
         .wizard-step b, .wizard-current b{display: none;}
         .wizard-step:before{border-bottom: 25px solid #F6F9FD; border-left: 10px solid transparent; content: ""; position: absolute; left: -10px; top: 0; }
         .wizard-step:after{position: absolute; top: -4px; right: -3px; content:"/"; z-index: 2; font-style:normal; font-weight: 300; font-size: 26px;}
+    	.wizard-step:nth-child(4n):after{display: none;}
     .wizard-current{color:#395983; font-size: 14px; font-weight: 700; background:#E6ECF4;}
-        .wizard-current:before{position: absolute; top: -6px; left: -7px; content:"/"; z-index: 4; font-weight: 300; font-size: 28px;}
         .wizard-current:after{position: absolute; top: -6px; right: 0px; content:"/"; z-index: 4; font-weight: 300; font-size: 28px;}
     .btn_volver{background:url(images/btn_volver.png) no-repeat; display: block; width: 130px; height: 22px; color: #FFF !important; margin: 0 0 10px; padding: 2px 0 0 15px; box-sizing:border-box;}
     .wizard-help{display: none;}
     .btnBack{margin: 0 20px 0 0;}
+    .alert-public{background:#f3f5f7; border-bottom: 2px solid #fb7055; box-sizing:border-box; padding: 10px; margin: 0 0 10px; border-radius: 3px;}
+    .alert-public span{color: #fb7055; font-size: 30px; display: block; float: left;}
+    .alert-public p{float: left; font-size:16px; padding: 5px 0 5px 5px; width: calc(100% - 35px);}
+
 
 .master-wrapper-page .center-2.columns.ten .field-validation-error{margin: 0 20px 0 0;}
 
