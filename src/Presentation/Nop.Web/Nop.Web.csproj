@@ -2575,6 +2575,8 @@
     <Content Include="Views\Catalog\CategoriesHomePage.cshtml" />
     <Content Include="Views\Shared\_OpenGraph.cshtml" />
     <Content Include="Views\ControlPanel\EditProduct.cshtml" />
+    <Content Include="Themes\Healthy\Views\Catalog\ExternalSearch.cshtml" />
+    <Content Include="Themes\Healthy\Views\Shared\_ExternalLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

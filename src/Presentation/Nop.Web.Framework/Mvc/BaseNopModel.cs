@@ -43,4 +43,15 @@ namespace Nop.Web.Framework.Mvc
     {
         public virtual int Id { get; set; }
     }
+
+    public partial class BaseNopCampaignEntityModel : BaseNopEntityModel
+    {
+        public bool HasCampaign { get { return !string.IsNullOrEmpty(AnalyticsSource) && !string.IsNullOrEmpty(AnalyticsMedium) && !string.IsNullOrEmpty(AnalyticsCampaign); } }
+
+        public string AnalyticsSource { get; set; }
+
+        public string AnalyticsMedium { get; set; }
+
+        public string AnalyticsCampaign { get; set; }
+    }
 }

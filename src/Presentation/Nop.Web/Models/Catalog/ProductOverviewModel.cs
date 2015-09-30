@@ -7,7 +7,7 @@ using Nop.Core;
 
 namespace Nop.Web.Models.Catalog
 {
-    public partial class ProductOverviewModel : BaseNopEntityModel, IComparableModel, IWishableModel
+    public partial class ProductOverviewModel : BaseNopCampaignEntityModel, IComparableModel, IWishableModel
     {
 
         public ProductOverviewModel()

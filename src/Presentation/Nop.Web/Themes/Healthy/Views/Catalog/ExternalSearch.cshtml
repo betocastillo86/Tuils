@@ -1,0 +1,21 @@
+﻿@model SearchModel
+@{
+    Layout = "~/Views/Shared/_ExternalLayout.cshtml";
+}
+@using Nop.Core.Domain.Seo;
+@using Nop.Core.Infrastructure;
+@using Nop.Web.Models.Catalog;
+@using Nop.Web.Extensions;
+
+
+@if (Model.Products.Count > 0)
+{
+    <div class="related-products-grid">
+        @foreach (var product in Model.Products)
+        {
+            <div class="item-box">
+                @Html.Partial("_ProductBox", product)
+            </div>
+        }
+    </div>
+}

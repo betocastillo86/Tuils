@@ -89,7 +89,10 @@ namespace Nop.Web.Extensions
             bool preparePriceModel = true, bool preparePictureModel = true,
             int? productThumbPictureSize = null, bool prepareSpecificationAttributes = false,
             bool forceRedirectionAfterAddingToCart = false,
-            bool prepareManufacturer = false)
+            bool prepareManufacturer = false,
+            string utm_source = null, 
+            string utm_medium = null,
+            string utm_campaign = null)
         {
             if (products == null)
                 throw new ArgumentNullException("products");
@@ -107,7 +110,10 @@ namespace Nop.Web.Extensions
                     CompareProductsEnabled = catalogSettings.CompareProductsEnabled,
                     DisableWishlistButton = workContext.CurrentCustomer == null || workContext.CurrentCustomer.IsGuest(),
                     FeaturedBySpecialCategory = product.FeaturedBySpecialCategory,
-                    StateProvinceName = stateProvinceService.GetStateProvinceById(product.StateProvinceId).Name
+                    StateProvinceName = stateProvinceService.GetStateProvinceById(product.StateProvinceId).Name,
+                    AnalyticsSource = utm_source,
+                    AnalyticsMedium = utm_medium,
+                    AnalyticsCampaign = utm_campaign
                 };
                 //price
                 if (preparePriceModel)

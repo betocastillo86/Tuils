@@ -409,7 +409,7 @@ namespace Nop.Web.Controllers
         protected virtual IEnumerable<ProductOverviewModel> PrepareProductOverviewModels(IEnumerable<Product> products,
             bool preparePriceModel = true, bool preparePictureModel = true,
             int? productThumbPictureSize = null, bool prepareSpecificationAttributes = false,
-            bool forceRedirectionAfterAddingToCart = false, bool prepareManufacturer = false)
+            bool forceRedirectionAfterAddingToCart = false, bool prepareManufacturer = false, string utm_source = null, string utm_medium = null, string utm_campaign = null)
         {
             return this.PrepareProductOverviewModels(_workContext,
                 _storeContext, _categoryService, _productService, _specificationAttributeService,
@@ -419,7 +419,7 @@ namespace Nop.Web.Controllers
                 _catalogSettings, _mediaSettings, products,
                 preparePriceModel, preparePictureModel,
                 productThumbPictureSize, prepareSpecificationAttributes,
-                forceRedirectionAfterAddingToCart, prepareManufacturer);
+                forceRedirectionAfterAddingToCart, prepareManufacturer, utm_source, utm_medium, utm_campaign);
         }
 
         #endregion
@@ -2044,6 +2044,103 @@ namespace Nop.Web.Controllers
 
 
         }
+
+        #endregion
+
+        #region ExternalSearch
+
+        public ActionResult ExternalSearch(SearchModel model, CatalogPagingFilteringModel command)
+        {
+            //Debe venir con la llave de cache
+            if (!string.IsNullOrEmpty(Request["ck"]))
+            {
+
+                string cacheKey = string.Format(ModelCacheEventConsumer.SEARCH_EXTERNAL_BY_NEW_SEARCH, Request["ck"]);
+
+                model = model ?? new SearchModel();
+                model.IsMobileDevice = Request.Browser.IsMobileDevice;
+                model.Q = string.IsNullOrEmpty(model.Q) ? string.Empty : model.Q.Trim();
+
+                var pagedProducts = _cacheManager.Get(cacheKey, () => {
+
+                    IPagedList<Product> products = new PagedList<Product>(new List<Product>(), 0, 1);
+                    
+                    if (!string.IsNullOrEmpty(model.Q))
+                    {
+                        //Solo si tiene un filto por speficicación puede buscar
+                        if (model.Q.Length <= _catalogSettings.ProductSearchTermMinimumLength && Request["specs"] == null)
+                        {
+                            model.Warning = string.Format(_localizationService.GetResource("Search.SearchTermMinimumLengthIsNCharacters"), _catalogSettings.ProductSearchTermMinimumLength);
+                        }
+                        else
+                        {
+
+                            var categoryIds = new List<int>();
+
+                            //advanced search
+                            var categoryId = model.Cid;
+                            if (categoryId > 0)
+                            {
+                                categoryIds.Add(categoryId);
+                                if (model.Isc)
+                                {
+                                    //include subcategories
+                                    categoryIds.AddRange(GetChildCategoryIds(categoryId));
+                                }
+                            }
+
+
+                            decimal? minPriceConverted = null;
+                            decimal? maxPriceConverted = null;
+                            //Valida el rango de precios
+                            var priceFilter = command.PriceRangeFilter.GetSelectedPriceRange(_webHelper, null);
+                            if (priceFilter != null)
+                            {
+                                minPriceConverted = priceFilter.From;
+                                maxPriceConverted = priceFilter.To;
+                            }
+
+                            //Ciudad seleccionada
+                            int? stateProvinceId = model.PagingFilteringContext.StateProvinceFilter.GetAlreadyFilteredId(_webHelper);
+                            //Marca seleccionada
+                            int? manufacturerId = model.PagingFilteringContext.ManufacturerFilter.GetAlreadyFilteredId(_webHelper);
+                            //Categoria especial seleccionada (Marca de la moto)
+                            int? specialCategoryId = model.PagingFilteringContext.BikeReferenceFilter.GetAlreadyFilteredId(_webHelper);
+
+                            //products
+                            products = _productService.SearchProducts(
+                                categoryIds: categoryIds,
+                                manufacturerId: manufacturerId ?? 0,
+                                storeId: _storeContext.CurrentStore.Id,
+                                visibleIndividuallyOnly: true,
+                                priceMin: minPriceConverted,
+                                priceMax: maxPriceConverted,
+                                keywords: model.Q,
+                                languageId: _workContext.WorkingLanguage.Id,
+                                orderBy: (ProductSortingEnum)command.OrderBy,
+                                pageIndex: 0,
+                                pageSize: command.PageSize > 20 ? 20 : command.PageSize,
+                                stateProvinceId: stateProvinceId,
+                                specialCategoryId: specialCategoryId);
+
+                            
+                        }
+                    }
+
+                    return products;
+
+
+                });
+
+                model.Products = PrepareProductOverviewModels(pagedProducts, utm_source:command.ana_source, utm_medium:command.ana_medium, utm_campaign:command.ana_campaign).ToList();
+                model.PagingFilteringContext.LoadPagedList(pagedProducts);
+
+                return View(model);
+            }
+            else
+                return Content(string.Empty);
+        }
+
 
         #endregion
     }

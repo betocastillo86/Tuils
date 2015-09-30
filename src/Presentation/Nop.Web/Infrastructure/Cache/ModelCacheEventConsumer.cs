@@ -147,6 +147,14 @@ namespace Nop.Web.Infrastructure.Cache
 
 
         /// <summary>
+        /// Cache para busquedas externas
+        /// {0}  Valor de la llave nueva de cache que se está enviando
+        /// </summary>
+        public const string SEARCH_EXTERNAL_BY_GENERAL = "Nop.pres.search.extenal";
+        public const string SEARCH_EXTERNAL_BY_NEW_SEARCH = "Nop.pres.search.extenal-{0}";
+
+
+        /// <summary>
         /// Key for ManufacturerNavigationModel caching
         /// </summary>
         /// <remarks>

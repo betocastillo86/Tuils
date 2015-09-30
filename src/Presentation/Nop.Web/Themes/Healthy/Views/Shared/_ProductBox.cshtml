@@ -17,10 +17,12 @@
     {
         addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, });
     }    */
+    var complementUrl = !Model.HasCampaign ? (object)new { SeName = Model.SeName } : (object)new { SeName = Model.SeName, utm_source = Model.AnalyticsSource, utm_medium = Model.AnalyticsMedium, utm_campaign = Model.AnalyticsCampaign };
+
 }
 <div class="product-item" data-productid="@Model.Id">
     <div class="picture">
-        <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
+        <a href="@Url.RouteUrl("Product", complementUrl)" title="@Model.DefaultPictureModel.Title">
             <img alt="@Model.DefaultPictureModel.AlternateText" alt="@Model.DefaultPictureModel.Title" src="@Model.DefaultPictureModel.ImageUrl " />
         </a>
     </div>
@@ -30,7 +32,7 @@
             <span class="serv_espec">PARA TU MOTO</span>
         }
         <h3 class="product-title">
-            <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })">@Model.Name</a>
+            <a href="@Url.RouteUrl("Product", complementUrl)">@Model.Name</a>
         </h3>
         <div class="description">
             @Html.Raw(Model.ShortDescription)
@@ -48,7 +50,7 @@
             <div class="clear"></div>
             @*@added*@
             <div class="buttons">
-                <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" class="button-2 product-box-add-to-cart-button">@T("Products.Details")</a>
+                <a href="@Url.RouteUrl("Product", complementUrl)" class="button-2 product-box-add-to-cart-button">@T("Products.Details")</a>
                    @*@if (!Model.ProductPrice.DisableBuyButton)
             {
                 <input type="button" value="@(Model.ProductPrice.AvailableForPreOrder ? T("ShoppingCart.PreOrder") : T("ShoppingCart.AddToCart"))" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink    ');return false;" />

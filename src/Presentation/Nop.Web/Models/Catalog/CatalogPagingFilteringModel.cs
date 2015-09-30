@@ -94,6 +94,11 @@ namespace Nop.Web.Models.Catalog
         /// </summary>
         public int pid { get; set; }
 
+        public string ana_source { get; set; }
+
+        public string ana_medium { get; set; }
+
+        public string ana_campaign { get; set; }
 
         #endregion
 
