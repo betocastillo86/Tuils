@@ -874,6 +874,10 @@ html.oldie .container { width: 940px; }
     .main-search-box{display: block; z-index: 2; border-radius: 0 0 0 30px;}
 
         .top-menu, .header-links-wrapper{height:inherit; background:none; position: inherit; width: inherit;}
+        .header-links-wrapper #social{float: none; padding:20px; margin: 0;}
+        .header-links-wrapper #social a{height: 28px; width: 33px;}
+        .header-links-wrapper #social p{display: block; float: left; color: #FFF; padding: 5px 5px 5px 0;}
+        .header-links-wrapper a.facebook, .header-links-wrapper a.twitter, .header-links-wrapper a.youtube{margin:0 10px 0 0; font-size: 25px;}
     .header-logo{position:absolute; top: 10px; left:calc(50% - 50px); z-index:3; margin: 0; height: 61px; width: 100px;}
     .btn_anuncia{position: absolute; z-index: 2; top:10px; right:80px; padding: 10px 15px; margin:0;}
         .btn_anuncia i{display: none;}

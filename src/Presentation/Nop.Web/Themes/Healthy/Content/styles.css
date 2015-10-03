@@ -149,8 +149,10 @@ ul.language-list li{list-style:none;display:inline;padding:0 5px;float:left;}
 ul.language-list li .selected{border:solid 1px #ccc!important;}
 ul.language-list li:hover{cursor:pointer;}
 .header-links-wrapper{position:relative;text-align:right;width:100%; height: 40px; background:url(images/bkg_header.jpg) repeat-x top left #292732;}
-.header-links-wrapper #social{float: right; margin: 0 0 0 5px;}
-.header-links-wrapper a.facebook, .header-links-wrapper a.twitter, .header-links-wrapper a.youtube{margin:3px 6px 3px 0;}
+.header-links-wrapper #social{margin: 0; padding: 0;}
+.header-links-wrapper #social a{width: 28px; height: 23px;} 
+.header-links-wrapper #social p{display: none;}
+.header-links-wrapper a.facebook, .header-links-wrapper a.twitter, .header-links-wrapper a.youtube{margin:6px 6px 5px 0; font-size: 20px;}
 .header-links { display: inline-block; float: none; margin: 0; text-align: center; font-size: 14px; font-weight: 300; padding:0;}
 .header-links ul{padding:0;margin:0;float:left;}
 .header-links ul li{list-style:none outside none; display: inline-block; padding:12px 5px 11px; vertical-align: top;}
