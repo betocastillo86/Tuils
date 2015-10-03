@@ -60,7 +60,7 @@
         <div class="picture">
             @if (Model.Sold)
             {
-                <div style="background-color:red">@T("Products.Sold")</div>
+                <div class="sold_label">@T("Products.Sold")</div>
             }
             <a href="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.Name" id="main-product-img-lightbox-anchor-@Model.Id">
                 
