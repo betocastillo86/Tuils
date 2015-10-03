@@ -63,6 +63,9 @@
             <li @Html.RenderSelectedTabIndex(14, GetSelectedTabIndex())>
                 @T("Admin.Catalog.Products.PurchasedWithOrders")
             </li>
+            <li @Html.RenderSelectedTabIndex(5, GetSelectedTabIndex())>
+                @T("Admin.Catalog.Products.SpecialCategories")
+            </li>
         }
     </ul>
     <div>
@@ -112,6 +115,9 @@
         <div>
             @TabPurchasedWithOrders()
         </div>
+    <div>
+        @TabSpecialCategories()
+    </div>
     }
 </div>
 
@@ -143,6 +149,10 @@
 @helper TabManufacturers()
 {
     @Html.Partial("_CreateOrUpdate.Manufacturers", Model)
+}
+@helper TabSpecialCategories()
+{
+    @Html.Partial("_CreateOrUpdate.SpecialCategories", Model)
 }
 @helper TabPictures()
 {

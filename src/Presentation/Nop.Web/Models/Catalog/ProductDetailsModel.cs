@@ -65,6 +65,15 @@ namespace Nop.Web.Models.Catalog
         public bool IsFreeShipping { get; set; }
         public bool FreeShippingNotificationEnabled { get; set; }
         public string DeliveryDate { get; set; }
+        /// <summary>
+        /// Solo muestra el boton de comprar si
+        /// - No ha sido comprado por el mismo por el mismo usuario previamente
+        /// - Esta disponible
+        /// - No está vendido
+        /// </summary>
+        public bool ShowButtonMoreInfo { get { return !this.ProductAlreadyBought && this.IsAvailable && !this.Sold; } }
+
+        public bool Sold { get; set; }
 
         public bool IsAvailable { get; set; }
         public bool IsRental { get; set; }

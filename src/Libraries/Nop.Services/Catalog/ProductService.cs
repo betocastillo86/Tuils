@@ -2462,6 +2462,29 @@ namespace Nop.Services.Catalog
                 .ToList();
         }
 
+        public void InsertSpecialCategoryProduct(SpecialCategoryProduct specialCategory)
+        {
+            _specialCategoryProductRepository.Insert(specialCategory);
+        }
+
+        public SpecialCategoryProduct GetSpecialCategoryProductById(int specialCategoryProductId)
+        {
+            if (specialCategoryProductId == 0)
+                throw new ArgumentNullException("specialCategoryProductId");
+
+            return _specialCategoryProductRepository.GetById(specialCategoryProductId);
+        }
+
+        public void UpdateSpecialCategoryProduct(SpecialCategoryProduct specialCategory)
+        {
+            _specialCategoryProductRepository.Update(specialCategory);
+        }
+
+        public void DeleteSpecialCategoryProduct(SpecialCategoryProduct specialCategory)
+        {
+            _specialCategoryProductRepository.Delete(specialCategory);
+        }
+
 
         #endregion
 

@@ -342,6 +342,9 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.Published")]
         public bool Published { get; set; }
 
+        [NopResourceDisplayName("Admin.Catalog.Products.Fields.Sold")]
+        public bool Sold { get; set; }
+
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.CreatedOn")]
         public DateTime? CreatedOn { get; set; }
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.UpdatedOn")]
@@ -524,6 +527,20 @@ namespace Nop.Admin.Models.Catalog
 
             [NopResourceDisplayName("Admin.Catalog.Products.Manufacturers.Fields.DisplayOrder")]
             public int DisplayOrder { get; set; }
+        }
+
+
+
+        public partial class ProductSpecialCategoryModel : BaseNopEntityModel
+        {
+            [NopResourceDisplayName("Admin.Catalog.Products.SpecialCategories.Fields.Category")]
+            public string Category { get; set; }
+
+            public int ProductId { get; set; }
+
+            public int CategoryId { get; set; }
+
+            public bool SpecialTypeId { get; set; }
         }
 
         public partial class RelatedProductModel : BaseNopEntityModel

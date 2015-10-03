@@ -115,7 +115,7 @@
                         </div>
                         <!--vendor info-->
                         <!---Muesta el botón de comprar-->
-                        @if (!Model.ProductAlreadyBought && Model.IsAvailable)
+                        @if (Model.ShowButtonMoreInfo)
                         {
                             <input type="button" value="@T("Products.SeeVendor")" id="btnShowVendor" data-productid="@Model.Id" data-vendorurl="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName, pid = Model.Id })" class="button-2">
                         }

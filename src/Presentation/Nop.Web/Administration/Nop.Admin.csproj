@@ -434,6 +434,7 @@
     <Content Include="Views\Manufacturer\_CreateOrUpdate.Categories.cshtml" />
     <Content Include="Views\Category\HomeMenu.cshtml" />
     <Content Include="Views\Vendor\DefaultCovers.cshtml" />
+    <Content Include="Views\Product\_CreateOrUpdate.SpecialCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Category\Create.cshtml" />

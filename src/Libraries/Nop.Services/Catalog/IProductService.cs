@@ -590,6 +590,18 @@ namespace Nop.Services.Catalog
 
         IList<SpecialCategoryProduct> GetSpecialCategoriesByProductId(int productId);
 
+        /// <summary>
+        /// Inserta una relacion de producto con cartegorias especiales
+        /// </summary>
+        /// <param name="specialCategory"></param>
+        void InsertSpecialCategoryProduct(SpecialCategoryProduct specialCategory);
+
+        SpecialCategoryProduct GetSpecialCategoryProductById(int specialCategoryProductId);
+
+        void UpdateSpecialCategoryProduct(SpecialCategoryProduct specialCategory);
+
+        void DeleteSpecialCategoryProduct(SpecialCategoryProduct specialCategory);
+
         bool HasReachedLimitOfProducts(int vendorId);
 
         /// <summary>

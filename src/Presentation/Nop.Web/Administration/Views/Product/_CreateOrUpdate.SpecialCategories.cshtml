@@ -1,0 +1,146 @@
+﻿
+@using Nop.Services.Catalog
+@model ProductModel
+@if (Model.Id > 0)
+{
+    if (Model.AvailableCategories.Count > 0)
+    {
+        <div id="productspecialcategories-grid"></div>
+
+        <script>
+                $(document).ready(function () {
+                    $("#productspecialcategories-grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: {
+                                    url: "@Html.Raw(Url.Action("ProductSpecialCategoryList", "Product", new { productId = Model.Id }))",
+                                    type: "POST",
+                                    dataType: "json"
+                                },
+                                create: {
+                                    url: "@Html.Raw(Url.Action("ProductSpecialCategoryInsert", "Product", new { productId = Model.Id }))",
+                                    type: "POST",
+                                    dataType: "json"
+                                },
+                                update: {
+                                    url:"@Html.Raw(Url.Action("ProductSpecialCategoryUpdate", "Product"))",
+                                    type: "POST",
+                                    dataType: "json"
+                                },
+                                destroy: {
+                                    url: "@Html.Raw(Url.Action("ProductSpecialCategoryDelete", "Product"))",
+                                    type: "POST",
+                                    dataType: "json"
+                                }
+                            },
+                            schema: {
+                                data: "Data",
+                                total: "Total",
+                                errors: "Errors",
+                                model: {
+                                    id: "Id",
+                                    fields: {
+                                        Category: { editable: true, type: "string" },
+                                        //ProductId: { editable: false, type: "number" },
+                                        CategoryId: { editable: true, type: "number" },
+                                        SpecialTypeId: { editable: false, type: "number" },
+                                        Id: { editable: false, type: "number" }
+                                    }
+                                }
+                            },
+                            requestEnd: function (e) {
+                                if (e.type == "create" || e.type == "update") {
+                                    this.read();
+                                }
+                            },
+                            error: function (e) {
+                                display_kendoui_grid_error(e);
+                                // Cancel the changes
+                                this.cancelChanges();
+                            },
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true
+                        },
+                        pageable: {
+                            refresh: true,
+                            numeric: false,
+                            previousNext: false,
+                            info: false
+                        },
+                        toolbar: ["create"],
+                        edit: function(e) {
+                            if (e.model.isNew()) {
+                                //little hack here
+                                //pre-select the first value of kendoui dropdownlist datasource
+                                //for some reasons (maybe, bug) it always sends 0
+                                //if no value has been selected (changed) in the dropdownlist
+                                if (allSpecialCategories.length > 0) {
+                                    e.model.CategoryId = allSpecialCategories[0].Id;
+                                }
+                            }
+                        },
+                        editable: {
+                            confirmation: false,
+                            mode: "inline"
+                        },
+                        scrollable: false,
+                        columns: [{
+                            field: "CategoryId",
+                                title: "@T("Admin.Catalog.Products.Manufacturers.Fields.Manufacturer")",
+                                width: 200,
+                                editor: specialCategoryDropDownEditor,
+                                template: "#:Category#"
+                            },
+
+                            {
+                            command: [{
+                                name: "edit",
+                                text: "@T("Admin.Common.Edit")"
+                            }, {
+                                name: "destroy",
+                                text: "@T("Admin.Common.Delete")"
+                            }],
+                            width: 200
+                        }]
+                    });
+                });
+
+                //local datasource
+                var allSpecialCategories = [
+                    @for (int i = 0; i < Model.AvailableCategories.Count; i++)
+                    {
+                        var categoryItem = Model.AvailableCategories[i];
+                        <text>
+                        {
+                            Id: @(categoryItem.Value),
+                            Name: "@(Html.Raw(HttpUtility.JavaScriptStringEncode(categoryItem.Text)))"
+                        }
+                        </text>
+                        if (i != Model.AvailableCategories.Count - 1)
+                        {
+                            <text>,</text>
+                        }
+                    }
+                ];
+
+            function specialCategoryDropDownEditor(container, options) {
+                    $('<input required data-text-field="Name" data-value-field="Id" data-bind="value:CategoryId"/>')
+                        .appendTo(container)
+                        .kendoDropDownList({
+                            autoBind: false,
+                            dataSource: allSpecialCategories
+                        });
+                }
+        </script>
+    }
+    else
+    {
+        @T("Admin.Catalog.Products.SpecialCategories.NoCategoriesAvailable")
+    }
+}
+else
+{
+    @T("Admin.Catalog.Products.SpecialCategories.SaveBeforeEdit")
+}

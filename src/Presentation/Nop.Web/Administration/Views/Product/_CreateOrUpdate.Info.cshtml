@@ -1309,6 +1309,15 @@
     </tr>
     <tr>
         <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Sold):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Sold)
+            @Html.ValidationMessageFor(model => model.Sold)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
             @Html.NopLabelFor(model => model.Published):
         </td>
         <td class="adminData">

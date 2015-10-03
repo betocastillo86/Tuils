@@ -380,6 +380,11 @@ namespace Nop.Core.Domain.Catalog
         public decimal MaximumCustomerEnteredPrice { get; set; }
 
         /// <summary>
+        /// Marca si un producto ya fue vendido o no
+        /// </summary>
+        public bool Sold { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this product has tier prices configured
         /// <remarks>The same as if we run this.TierPrices.Count > 0
         /// We use this property for performance optimization:

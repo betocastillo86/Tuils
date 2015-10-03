@@ -1568,6 +1568,136 @@ namespace Nop.Admin.Controllers
         
         #endregion
 
+        #region Product specialCategories
+
+        [HttpPost]
+        public ActionResult ProductSpecialCategoryList(DataSourceRequest command, int productId)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            //a vendor should have access only to his products
+            if (_workContext.CurrentVendor != null)
+            {
+                var product = _productService.GetProductById(productId);
+                if (product != null && product.VendorId != _workContext.CurrentVendor.Id)
+                {
+                    return Content("This is not your product");
+                }
+            }
+
+            var productSpecialCategories = _productService.GetSpecialCategoriesByProductId(productId);
+            var productSpecialCategoriesModel = productSpecialCategories
+                .Select(x => new ProductModel.ProductSpecialCategoryModel
+                {
+                    Id = x.Id,
+                    Category = _categoryService.GetCategoryById(x.CategoryId).Name,
+                    ProductId = x.ProductId
+                })
+                .ToList();
+
+            var gridModel = new DataSourceResult
+            {
+                Data = productSpecialCategoriesModel,
+                Total = productSpecialCategoriesModel.Count
+            };
+
+            return Json(gridModel);
+        }
+
+        [HttpPost]
+        public ActionResult ProductSpecialCategoryInsert(ProductModel.ProductSpecialCategoryModel model)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            var productId = model.ProductId;
+            var categoryId = model.CategoryId;
+
+            //a vendor should have access only to his products
+            if (_workContext.CurrentVendor != null)
+            {
+                var product = _productService.GetProductById(productId);
+                if (product != null && product.VendorId != _workContext.CurrentVendor.Id)
+                {
+                    return Content("This is not your product");
+                }
+            }
+
+            var existingProductSpecialCategories = _productService.GetSpecialCategoriesByProductId(productId).FirstOrDefault(x => x.CategoryId == categoryId);
+            if (existingProductSpecialCategories == null)
+            {
+                
+                var productCategory = new SpecialCategoryProduct
+                {
+                    ProductId = productId,
+                    CategoryId = categoryId,
+                    SpecialType = SpecialCategoryProductType.BikeBrand
+                };
+
+                _productService.InsertSpecialCategoryProduct(productCategory);
+            }
+
+            return new NullJsonResult();
+        }
+
+        [HttpPost]
+        public ActionResult ProductSpecialCategoryUpdate(ProductModel.ProductSpecialCategoryModel model)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            var specialCategoryProduct = _productService.GetSpecialCategoryProductById(model.Id);
+            if (specialCategoryProduct == null)
+                throw new ArgumentException("No product category mapping found with the specified id");
+
+            //a vendor should have access only to his products
+            if (_workContext.CurrentVendor != null)
+            {
+                var product = _productService.GetProductById(specialCategoryProduct.ProductId);
+                if (product != null && product.VendorId != _workContext.CurrentVendor.Id)
+                {
+                    return Content("This is not your product");
+                }
+            }
+
+            specialCategoryProduct.CategoryId = model.CategoryId;
+            
+
+            _productService.UpdateSpecialCategoryProduct(specialCategoryProduct);
+
+            return new NullJsonResult();
+        }
+
+        [HttpPost]
+        public ActionResult ProductSpecialCategoryDelete(int id)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            var specialCategoryProduct = _productService.GetSpecialCategoryProductById(id);
+            if (specialCategoryProduct == null)
+                throw new ArgumentException("No product manufacturer mapping found with the specified id");
+
+            var productId = specialCategoryProduct.ProductId;
+
+            //a vendor should have access only to his products
+            if (_workContext.CurrentVendor != null)
+            {
+                var product = _productService.GetProductById(productId);
+                if (product != null && product.VendorId != _workContext.CurrentVendor.Id)
+                {
+                    return Content("This is not your product");
+                }
+            }
+
+            _productService.DeleteSpecialCategoryProduct(specialCategoryProduct);
+
+            return new NullJsonResult();
+        }
+
+        #endregion
+
         #region Related products
 
         [HttpPost]

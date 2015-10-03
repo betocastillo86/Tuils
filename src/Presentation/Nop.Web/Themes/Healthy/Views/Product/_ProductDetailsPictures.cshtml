@@ -58,7 +58,12 @@
     else
     {
         <div class="picture">
+            @if (Model.Sold)
+            {
+                <div style="background-color:red">@T("Products.Sold")</div>
+            }
             <a href="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.Name" id="main-product-img-lightbox-anchor-@Model.Id">
+                
                 <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img-@Model.Id" />
             </a>
             @*<script type="text/javascript">

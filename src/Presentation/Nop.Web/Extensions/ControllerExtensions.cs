@@ -113,7 +113,8 @@ namespace Nop.Web.Extensions
                     StateProvinceName = stateProvinceService.GetStateProvinceById(product.StateProvinceId).Name,
                     AnalyticsSource = utm_source,
                     AnalyticsMedium = utm_medium,
-                    AnalyticsCampaign = utm_campaign
+                    AnalyticsCampaign = utm_campaign,
+                    Sold = product.Sold
                 };
                 //price
                 if (preparePriceModel)

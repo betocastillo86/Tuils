@@ -992,7 +992,18 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.ContentManagement.Topics.Fields.HideTitle.Hint", "Oculta el titulo por defecto");
                 newLocaleStringResources.Add("product.additionalInfo", "Información adicional");
                 newLocaleStringResources.Add("Filtering.MoreOptions", "Más opciones");
-
+                newLocaleStringResources.Add("Admin.Catalog.Products.Fields.Sold", "Marcar como vendido");
+                newLocaleStringResources.Add("Admin.Catalog.Products.Fields.Sold.Hint", "Marca como vendido un producto en el Home y no permite obtener el numero");
+                newLocaleStringResources.Add("Products.Sold", "Vendido");
+                newLocaleStringResources.Add("Products.ForYourBike", "PARA TU MOTO");
+                newLocaleStringResources.Add("Admin.Catalog.Products.SpecialCategories", "Categorías especiales");
+                newLocaleStringResources.Add("Admin.Catalog.Products.SpecialCategories.SaveBeforeEdit", "Primero guarde el producto");
+                newLocaleStringResources.Add("Admin.Catalog.Products.SpecialCategories.NoCategoriesAvailable", "No hay categorías disponibles");
+                newLocaleStringResources.Add("Admin.Catalog.Products.SpecialCategories.Fields.Category", "Categoría");
+                newLocaleStringResources.Add("Admin.Catalog.Products.SpecialCategories.Fields.Category.Hint", "Categoría");
+                
+                
+                
             
                 
 

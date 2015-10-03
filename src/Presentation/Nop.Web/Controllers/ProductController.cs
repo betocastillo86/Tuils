@@ -228,7 +228,8 @@ namespace Nop.Web.Controllers
                 DetailShipping = product.DetailShipping,
                 IncludeSupplies = product.IncludeSupplies,
                 IsMobileDevice = Request.Browser.IsMobileDevice,
-                IsAvailable = product.IsAvailable()
+                IsAvailable = product.IsAvailable(),
+                Sold = product.Sold
             };
             
             //automatically generate product description?
@@ -265,8 +266,8 @@ namespace Nop.Web.Controllers
             {
                 //_orderService.getorder
 
-                if (!_workContext.CurrentCustomer.IsGuest())
-                    model.ProductAlreadyBought = _orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, product.Id);
+                //if (!_workContext.CurrentCustomer.IsGuest())
+                //    model.ProductAlreadyBought = _orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, product.Id);
 
                 //Si el producto ya fue comprado consulta el vendor
                 
@@ -780,8 +781,6 @@ namespace Nop.Web.Controllers
             int worstRating = 0;
             if (product.ApprovedTotalReviews > 0)
                 _productService.GetBestWorstRating(product.Id, out bestRating, out worstRating);
-
-
 
             model.ProductReviewOverview = new ProductReviewOverviewModel
             {
