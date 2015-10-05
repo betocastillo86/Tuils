@@ -114,7 +114,8 @@ namespace Nop.Services.Catalog
             int? specialCategoryId = null,
             int? orderBySpecialCategoryId = null,
            int? stateProvinceId = null,
-            bool? leftFeatured = null);
+            bool? leftFeatured = null,
+            bool? sold = null);
 
 
 
@@ -148,7 +149,8 @@ namespace Nop.Services.Catalog
             int? specialCategoryId = null,
             int? orderBySpecialCategoryId = null,
            int? stateProvinceId = null,
-            bool? leftFeatured = null);
+            bool? leftFeatured = null,
+             bool? sold = null);
 
 
         /// <summary>
@@ -241,7 +243,8 @@ namespace Nop.Services.Catalog
             int? specialCategoryId = null,
             int? orderBySpecialCategoryId = null,
             bool? loadPriceRange = false,
-            bool? leftFeatured = null);
+            bool? leftFeatured = null,
+            bool? sold = null);
 
 
         /// <summary>

@@ -73,7 +73,9 @@ namespace Nop.Web.Framework.Mvc
                 },
                 vendor = new
                 {
-                    reviewsPageSize = vendorSettings.DefaultReviewsPageSize
+                    reviewsPageSize = vendorSettings.DefaultReviewsPageSize,
+                    minWidthCover = vendorSettings.MinWidthCover,
+                    minHeightCover = vendorSettings.MinHeightCover
                 },
                 catalog = new
                 {

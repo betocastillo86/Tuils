@@ -63,15 +63,15 @@
                     @T("vendor.noEditedDescription")
                 }
                 else
-                { 
-                    @Model.Description
+                {
+                    @(string.IsNullOrEmpty(Model.Description) ? string.Concat("Contacto : ", Model.PhoneNumber) : Model.Description)
                 }
                     
                      
                 </p>
                 @if (Model.AllowEdit)
                 {
-                    @Html.TextAreaFor(m => m.Description, new { style = "display:none", tuils_for = "edit", maxLength = "400" })
+                    @Html.TextAreaFor(m => m.Description, new { style = "display:none", tuils_for = "edit", maxLength = "300" })
                 }
                 <div class="ctl-tarjetas" tuils-for="show">
                     <li id="liShipping" @(Model.EnableShipping ? string.Empty : "style=display:none") title="@T("vendor.enableShipping.description")">@T("vendor.enableShipping") <span class="icon-envio"></span></li>

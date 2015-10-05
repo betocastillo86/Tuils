@@ -389,7 +389,9 @@ namespace Nop.Web.Controllers
                 AllowPrivateMessages = customer.IsRegistered() && _forumSettings.AllowPrivateMessages,
                 UnreadPrivateMessages = unreadMessage,
                 AlertMessage = alertMessage,
-                UnansweredQuestions = _workContext.CurrentVendor != null ? _workContext.CurrentVendor.UnansweredQuestions : 0
+                UnansweredQuestions = _workContext.CurrentVendor != null ? _workContext.CurrentVendor.UnansweredQuestions : 0,
+                YoutubeLink = _storeInformationSettings.YoutubeLink,
+                FacebookLink = _storeInformationSettings.FacebookLink
             };
 
 

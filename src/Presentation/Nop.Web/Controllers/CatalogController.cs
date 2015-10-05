@@ -1459,7 +1459,8 @@ namespace Nop.Web.Controllers
                 EnableCreditCardPayment = vendor.EnableCreditCardPayment ?? false,
                 EnableShipping = vendor.EnableShipping ?? false,
                 AllowEdit = _workContext.CurrentVendor != null && _workContext.CurrentVendor.Id == vendor.Id,
-                BackgroundPosition = vendor.BackgroundPosition
+                BackgroundPosition = vendor.BackgroundPosition,
+                PhoneNumber = vendor.PhoneNumber
             };
             //Cargan las imagenes
 

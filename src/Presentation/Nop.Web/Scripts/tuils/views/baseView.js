@@ -151,6 +151,24 @@
 
             return errors;
         },
+
+        validateImageSize: function (fileContent, minWidth, minHeight, callbackSuccess, callbackError, ctx) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                var img = new Image();
+                img.onload = function () {
+                    var errorMessage = 'Tu imagen es muy pequeña y no se verá bien. El tamaño mínimo recomendado para cargar esta imagen es de ' + minWidth + 'x' + minHeight;
+                    if (minWidth && minWidth > img.width)
+                        callbackError.call(ctx, { codeError: 'minWidth', message: errorMessage });
+                    else if (minHeight && minHeight > img.height)
+                        callbackError.call(ctx, { codeError: 'minWidth', message: errorMessage });
+                    else
+                        callbackSuccess.call(ctx);
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(fileContent);
+        },
         markErrorsOnForm: function (errors, fieldsToMark) {
             var that = this;
             _.each(errors, function (errorField, index) {

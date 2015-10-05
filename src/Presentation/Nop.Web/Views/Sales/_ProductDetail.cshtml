@@ -17,6 +17,11 @@
             <div class="text-character"></div>
             <span class="field-validation-error" tuils-val-for="ManufacturerId"></span>
         </div>
+        <div class="inputs" title="@T("PublishProduct.StateProvince.Alt")">
+            @Html.LabelT("PublishProduct.StateProvince")
+            @Html.DropDownList("ddlStateProvince", Model.StateProvinces, "-")
+            @ShowRequired("StateProvince")
+        </div>
         <div class="inputs" title="@T("PublishProduct.HasShipping.Alt")">
             @Html.Label(@T("PublishProduct.HasShipping").Text)
             <input id="chkIsShipEnabled" type="checkbox" />
@@ -32,11 +37,7 @@
         <div class="input_check" title="@T("PublishProduct.HasSpecialBikes.Alt")">
             <input id="chkHasSpecialBikes" type="checkbox" /> @Html.Label(@T("PublishProduct.HasSpecialBikes").Text)
         </div>
-        <div class="inputs" title="@T("PublishProduct.StateProvince.Alt")">
-            @Html.LabelT("PublishProduct.StateProvince")
-            @Html.DropDownList("ddlStateProvince", Model.StateProvinces, "-")
-            @ShowRequired("StateProvince")
-        </div>
+        
         <br />
         <div id="divBikeReferences" style="display:none" >
             <div class="title">@T("PublishProduct.Product.TitleForBrandBike")</div>

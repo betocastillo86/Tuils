@@ -32,6 +32,16 @@ namespace Nop.Core.Domain.Vendors
         /// </summary>
         public int DefaultReviewsPageSize { get; set; }
 
+        /// <summary>
+        /// Ancho minimo para cargar una imagen de cover
+        /// </summary>
+        public int MinWidthCover { get; set; }
+
+        /// <summary>
+        /// Alto  minimo para cargar una imagen de cover
+        /// </summary>
+        public int MinHeightCover { get; set; }
+
         public int DefaultPicture1 { get; set; }
         public int DefaultPicture2 { get; set; }
         public int DefaultPicture3 { get; set; }

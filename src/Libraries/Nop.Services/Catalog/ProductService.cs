@@ -410,7 +410,8 @@ namespace Nop.Services.Catalog
             int? specialCategoryId = null,
             int? orderBySpecialCategoryId = null,
            int? stateProvinceId = null,
-            bool? leftFeatured = null)
+            bool? leftFeatured = null,
+             bool? sold = null)
         {
             Dictionary<int, int> filterableSpecificationAttributeOptionCount;
             return SearchProducts(
@@ -420,7 +421,7 @@ namespace Nop.Services.Catalog
                 parentGroupedProductId, productType, visibleIndividuallyOnly, featuredProducts,
                 priceMin, priceMax, productTagId, keywords, searchDescriptions, searchSku,
                 searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published, 
-                specialCategoryId, orderBySpecialCategoryId, stateProvinceId, leftFeatured);
+                specialCategoryId, orderBySpecialCategoryId, stateProvinceId, leftFeatured, sold);
         }
 
 
@@ -453,7 +454,8 @@ namespace Nop.Services.Catalog
             int? specialCategoryId = null,
             int? orderBySpecialCategoryId = null,
            int? stateProvinceId = null,
-            bool? leftFeatured = null)
+            bool? leftFeatured = null,
+             bool? sold = null)
         {
             Dictionary<int, int> filterableCategoryCount;
             Dictionary<int, int> filterableStateProvinceCount;
@@ -474,7 +476,7 @@ namespace Nop.Services.Catalog
                 parentGroupedProductId, productType, visibleIndividuallyOnly, featuredProducts,
                 priceMin, priceMax, productTagId, keywords, searchDescriptions, searchSku,
                 searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published, 
-                stateProvinceId, specialCategoryId, orderBySpecialCategoryId, false,leftFeatured);
+                stateProvinceId, specialCategoryId, orderBySpecialCategoryId, false,leftFeatured, sold);
         }
 
 
@@ -557,7 +559,8 @@ namespace Nop.Services.Catalog
             int? specialCategoryId = null,
             int? orderBySpecialCategoryId = null,
             bool? loadPriceRange = false,
-            bool? leftFeatured = null)
+            bool? leftFeatured = null,
+             bool? sold = null)
         {
             filterableSpecificationAttributeOptionCount = new Dictionary<int, int>();
             filterableCategoryCount = new Dictionary<int, int>();
@@ -775,6 +778,12 @@ namespace Nop.Services.Catalog
             pPublished.DbType = DbType.Boolean;
 
 
+            var pSold= _dataProvider.GetParameter();
+            pSold.ParameterName = "Sold";
+            pSold.Value = sold != null ? (object)sold : DBNull.Value;
+            pSold.DbType = DbType.Boolean;
+
+
             var pStateProvinceId = _dataProvider.GetParameter();
             pStateProvinceId.ParameterName = "StateProvinceId";
             pStateProvinceId.Value = stateProvinceId != null ? (object)stateProvinceId : DBNull.Value;
@@ -907,6 +916,7 @@ namespace Nop.Services.Catalog
                 pPageSize,
                 pShowHidden,
                 pPublished,
+                pSold,
                 pStateProvinceId,
                 pSpecialCategoryId,
                 pLeftFeatured,
@@ -2418,7 +2428,10 @@ namespace Nop.Services.Catalog
                 return 0;
 
             var query = _productRepository.Table
-                .Where(p => p.VendorId == vendorId)
+                .Where(p => p.VendorId == vendorId &&
+                    p.Published &&
+                    p.AvailableEndDateTimeUtc > DateTime.UtcNow &&
+                    !p.Sold)
                 .GroupBy(p => p.VendorId)
                 .Select(group => group.Count());
 
@@ -2520,7 +2533,8 @@ namespace Nop.Services.Catalog
                 //Productos publicados que su fecha de vencimiento sea mayor a hoy 
                 //y menor  a los siguientes 5 dias
                 && p.AvailableEndDateTimeUtc > DateTime.UtcNow 
-                && p.AvailableEndDateTimeUtc < lastDate);
+                && p.AvailableEndDateTimeUtc < lastDate
+                && !p.Sold);
 
             if (withMessageSent.HasValue)
                 query = query.Where(p => p.ExpirationMessageSent == withMessageSent.Value);
@@ -2536,7 +2550,8 @@ namespace Nop.Services.Catalog
         {
             var query = _productRepository.Table.Where(p => p.Published &&
                 p.AvailableEndDateTimeUtc < DateTime.UtcNow &&
-                !p.PublishingFinishedMessageSent);
+                !p.PublishingFinishedMessageSent &&
+                !p.Sold);
             return query.ToList();
         }
         #endregion

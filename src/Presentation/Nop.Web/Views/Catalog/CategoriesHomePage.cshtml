@@ -36,7 +36,10 @@ else
         <h3 class="title">@T("Homepage.Categories")</h3>
         @foreach (var category in Model.Categories)
         {
-            <h2 class="tit_category_m"><span><img class="img-cat" src="@category.PictureModel.ImageUrl" /></span><a href="@Url.Action("Category", "Catalog", new { seName = category.SeName })">@category.Name</a><i class="icon-mas"></i><br /></h2>
+            <div class="content-category-menu">
+                <h2 class="tit_category_m"><span><img class="img-cat" src="@category.PictureModel.ImageUrl" /></span><a href="@Url.Action("Category", "Catalog", new { seName = category.SeName })">@category.Name</a><i class="icon-mas"></i><br /></h2>
+            </div>
+            
             <ul class="box_category_m">
                 @foreach (var children in category.ChildrenCategories)
                 {

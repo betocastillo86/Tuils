@@ -130,7 +130,13 @@
                         if (TuilsUtilities.isValidExtension(obj.target, 'image')) {
                             if (this.imageType == 'back')
                             {
-                                this.model.saveBackground(file);
+                                this.validateImageSize(file, TuilsConfiguration.vendor.minWidthCover, TuilsConfiguration.vendor.minHeightCover, function () {
+                                    this.model.saveBackground(file);
+                                },
+                                function (model) {
+                                    this.alert(model.message);
+                                }, this);
+                               // this.model.saveBackground(file);
                             }
                             else if (this.imageType == 'main')
                                 this.model.saveLogo(file);

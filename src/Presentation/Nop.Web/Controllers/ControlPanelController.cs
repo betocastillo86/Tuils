@@ -541,7 +541,7 @@ namespace Nop.Web.Controllers
 
                 var products = _productService.SearchProducts(showHidden: !command.p, categoryIds: categoriesIds, vendorId: _workContext.CurrentVendor.Id,
                     pageSize: command.PageSize, pageIndex: command.PageIndex, keywords: keywordsSearch,
-                    orderBy: ProductSortingEnum.UpdatedOn, published:command.p);
+                    orderBy: ProductSortingEnum.UpdatedOn, published: command.p);
 
                 model.Products = products.Select(p => new ProductOverviewModel()
                 {

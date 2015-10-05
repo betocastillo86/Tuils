@@ -23,5 +23,9 @@ namespace Nop.Web.Models.Common
 
         public List<CategorySimpleModel> Categories { get; set; }
 
+        public string YoutubeLink { get; set; }
+
+        public string FacebookLink { get; set; }
+
     }
 }

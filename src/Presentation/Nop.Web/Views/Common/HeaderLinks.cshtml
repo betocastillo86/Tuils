@@ -10,7 +10,7 @@
 <nav id="nav" class="header-links">
     <ul>
         @*@Html.Widget("header_links_before")*@
-        <li class="btn_home"><h2><a href="@Url.RouteUrl("HomePage")">Inicio</a></h2></li>
+        <li class="btn_home"><h2><a href="@Url.RouteUrl("HomePage")">@T("HeaderLinks.Home")</a></h2></li>
         @if (Model.UnansweredQuestions > 0)
         {
             <li class="btn_noti"><a href="@Url.Action("Questions", "ControlPanel")" class="icon-camp" title="@T("Account.UnansweredQuestions.Alt", Model.UnansweredQuestions)"></a><span>@Model.UnansweredQuestions</span></li>
@@ -66,9 +66,9 @@
         @*@Html.Widget("header_links_after")*@
         <li id="nav-close-btn" style="display:none">x</li>
         <li id="social">
-            <p>Nuestras redes:</p>
-            <a class="facebook first" href="https://www.facebook.com/mototuils" target="_blank" title="facebook"><span class="icon-fb"></span></a>
-            <a class="youtube" href="https://www.youtube.com/c/MotoTuilsCol" target="_blank"><span class="icon-ytb"></span></a>
+            <p>@T("Account.SocialNetworks")</p>
+            <a class="facebook first" href="@Model.FacebookLink" target="_blank" title="facebook"><span class="icon-fb"></span></a>
+            <a class="youtube" href="@Model.YoutubeLink" target="_blank"><span class="icon-ytb"></span></a>
         </li>
     </ul>
 

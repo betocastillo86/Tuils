@@ -1001,6 +1001,9 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Catalog.Products.SpecialCategories.NoCategoriesAvailable", "No hay categorías disponibles");
                 newLocaleStringResources.Add("Admin.Catalog.Products.SpecialCategories.Fields.Category", "Categoría");
                 newLocaleStringResources.Add("Admin.Catalog.Products.SpecialCategories.Fields.Category.Hint", "Categoría");
+                newLocaleStringResources.Add("HeaderLinks.Home", "Home");
+                newLocaleStringResources.Add("Account.SocialNetworks", "Nuestras redes:");
+                
                 
                 
                 
@@ -2318,6 +2321,8 @@ namespace Nop.Data.Migrations
                 settings.Add("catalogSettings.NumberOfFeaturedProductsOnHomepage", "16");
                 settings.Add("catalogSettings.LimitNumPictures", "7");
                 settings.Add("tuilsSettings.MaxNumberOptionsToShowOnFilters", "4");
+                settings.Add("vendorSettings.MinWidthCover", "1200");
+                settings.Add("vendorSettings.MinHeightCover", "500");
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var setting in settings)

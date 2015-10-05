@@ -164,7 +164,7 @@ namespace Nop.Web.Controllers.Api
                 return Unauthorized();
 
             //Se desactia el producto
-            product.Published = false;
+            product.Sold = true;
             _productService.UpdateProduct(product);
 
             return Ok(new { deleted = true, Id = id });

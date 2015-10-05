@@ -143,56 +143,56 @@ namespace Nop.Services.ControlPanel
                 });
             }
 
-            if (vendor != null)
-            {
-                //Ventas
-                modules.Add(new ControlPanelModule()
-                {
-                    Name = "MySales",
-                    Controller = "ControlPanel",
-                    Action = "MySales",
-                    IconMini = "icon-venta",
-                    IconBig = "icon-venta",
-                    SubModules = new List<ControlPanelModule>() { 
-                    new ControlPanelModule()
-                    {
-                        Name = "AllOrders",
-                        Controller = "ControlPanel",
-                        Action = "MySales",
-                        IconMini = "icon-venta",
-                        IconBig = "icon-venta"
-                    },
-                    new ControlPanelModule()
-                    {
-                        Name = "MySalesNoRating",
-                        Controller = "ControlPanel",
-                        Action = "MySales",
-                        IconMini = "icon-venta",
-                        IconBig = "icon-venta",
-                        Parameters = new { filter = "norating" }
-                    },
-                    new ControlPanelModule()
-                    {
-                        Name = "MySalesRating",
-                        Controller = "ControlPanel",
-                        Action = "MySales",
-                        IconMini = "icon-venta",
-                        IconBig = "icon-venta",
-                        Parameters = new { filter = "rating" }
-                    },
-                    new ControlPanelModule()
-                    {
-                        Name = "MySalesActiveProducts",
-                        Controller = "ControlPanel",
-                        Action = "MySales",
-                        IconMini = "icon-venta",
-                        IconBig = "icon-venta",
-                        Parameters = new { filter = "active" }
-                    }
-                }
-                });
+            //if (vendor != null)
+            //{
+            //    //Ventas
+            //    modules.Add(new ControlPanelModule()
+            //    {
+            //        Name = "MySales",
+            //        Controller = "ControlPanel",
+            //        Action = "MySales",
+            //        IconMini = "icon-venta",
+            //        IconBig = "icon-venta",
+            //        SubModules = new List<ControlPanelModule>() { 
+            //        new ControlPanelModule()
+            //        {
+            //            Name = "AllOrders",
+            //            Controller = "ControlPanel",
+            //            Action = "MySales",
+            //            IconMini = "icon-venta",
+            //            IconBig = "icon-venta"
+            //        },
+            //        new ControlPanelModule()
+            //        {
+            //            Name = "MySalesNoRating",
+            //            Controller = "ControlPanel",
+            //            Action = "MySales",
+            //            IconMini = "icon-venta",
+            //            IconBig = "icon-venta",
+            //            Parameters = new { filter = "norating" }
+            //        },
+            //        new ControlPanelModule()
+            //        {
+            //            Name = "MySalesRating",
+            //            Controller = "ControlPanel",
+            //            Action = "MySales",
+            //            IconMini = "icon-venta",
+            //            IconBig = "icon-venta",
+            //            Parameters = new { filter = "rating" }
+            //        },
+            //        new ControlPanelModule()
+            //        {
+            //            Name = "MySalesActiveProducts",
+            //            Controller = "ControlPanel",
+            //            Action = "MySales",
+            //            IconMini = "icon-venta",
+            //            IconBig = "icon-venta",
+            //            Parameters = new { filter = "active" }
+            //        }
+            //    }
+            //    });
 
-            }
+            //}
 
             if (vendor != null)
             {
@@ -232,42 +232,42 @@ namespace Nop.Services.ControlPanel
 
 
             //Compras
-            modules.Add(new ControlPanelModule()
-            {
-                Name = "MyOrders",
-                Controller = "ControlPanel",
-                Action = "MyOrders",
-                IconMini = "icon-compra",
-                IconBig = "icon-compra",
-                SubModules = new List<ControlPanelModule>() { 
-                    new ControlPanelModule()
-                    {
-                        Name = "AllOrders",
-                        Controller = "ControlPanel",
-                        Action = "MyOrders",
-                        IconMini = "icon-compra",
-                        IconBig = "icon-compra"
-                    },
-                   new ControlPanelModule()
-                    {
-                        Name = "MySalesNoRating",
-                        Controller = "ControlPanel",
-                        Action = "MyOrders",
-                        IconMini = "icon-compra",
-                        IconBig = "icon-compra",
-                        Parameters = new { filter = "norating" }
-                    },
-                    new ControlPanelModule()
-                    {
-                        Name = "MySalesRating",
-                        Controller = "ControlPanel",
-                        Action = "MyOrders",
-                        IconMini = "icon-compra",
-                        IconBig = "icon-compra",
-                        Parameters = new { filter = "rating" }
-                    }
-                }
-            });
+            //modules.Add(new ControlPanelModule()
+            //{
+            //    Name = "MyOrders",
+            //    Controller = "ControlPanel",
+            //    Action = "MyOrders",
+            //    IconMini = "icon-compra",
+            //    IconBig = "icon-compra",
+            //    SubModules = new List<ControlPanelModule>() { 
+            //        new ControlPanelModule()
+            //        {
+            //            Name = "AllOrders",
+            //            Controller = "ControlPanel",
+            //            Action = "MyOrders",
+            //            IconMini = "icon-compra",
+            //            IconBig = "icon-compra"
+            //        },
+            //       new ControlPanelModule()
+            //        {
+            //            Name = "MySalesNoRating",
+            //            Controller = "ControlPanel",
+            //            Action = "MyOrders",
+            //            IconMini = "icon-compra",
+            //            IconBig = "icon-compra",
+            //            Parameters = new { filter = "norating" }
+            //        },
+            //        new ControlPanelModule()
+            //        {
+            //            Name = "MySalesRating",
+            //            Controller = "ControlPanel",
+            //            Action = "MyOrders",
+            //            IconMini = "icon-compra",
+            //            IconBig = "icon-compra",
+            //            Parameters = new { filter = "rating" }
+            //        }
+            //    }
+            //});
 
             //Mensajes
             //modules.Add(new ControlPanelModule()

@@ -24,6 +24,8 @@ namespace Nop.Web.Models.Catalog
 
         public double AvgRating { get; set; }
 
+        public string PhoneNumber { get; set; }
+
         public int TotalActiveProducts { get; set; }
 
         public int TotalSoldProducts { get; set; }
