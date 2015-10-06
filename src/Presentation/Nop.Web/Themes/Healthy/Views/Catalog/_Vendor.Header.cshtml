@@ -58,16 +58,23 @@
             </div>
             <div class="pr-perfil">
                 <p tuils-for="show">
-                @if (Model.AllowEdit && string.IsNullOrEmpty(Model.Description))
-                {
-                    @T("vendor.noEditedDescription")
-                }
-                else
-                {
-                    @(string.IsNullOrEmpty(Model.Description) ? string.Concat("Contacto : ", Model.PhoneNumber) : Model.Description)
-                }
-                    
-                     
+                    @if (Model.AllowEdit && string.IsNullOrEmpty(Model.Description))
+                    {
+                        @T("vendor.noEditedDescription")
+                    }
+                    else
+                    {
+                        if(string.IsNullOrEmpty(Model.Description))
+                        {
+
+                            <span clas="phone_initial"><i class="icon-tel"></i> <span>@Model.PhoneNumber</span><br/></span>
+                        }
+                        else
+                        {
+                          @Model.Description
+                        }
+
+                   }    
                 </p>
                 @if (Model.AllowEdit)
                 {
