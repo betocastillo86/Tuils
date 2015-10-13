@@ -70,61 +70,66 @@ namespace Nop.Web.Controllers.Api
             if(product == null)
                 return NotFound();
 
-            //Si no hay sesión, se suma a los clicks del producto pero no se crea ninguna orden
-            if (_workContext.CurrentCustomer.IsGuest())
-            {
-                product.NumClicksForMoreInfo++;
-                _productService.UpdateProduct(product);
-                return Ok(model);
-            }
-            else
-            {
-                //Si el usuario ya compró el producto omite las validaciones y devuelve un true
-                if (_orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, model.ProductId))
-                    return Ok(new { id = model.ProductId });
+
+            product.NumClicksForMoreInfo++;
+            _productService.UpdateProduct(product);
+            return Ok(model);
+
+            //////Si no hay sesión, se suma a los clicks del producto pero no se crea ninguna orden
+            ////if (_workContext.CurrentCustomer.IsGuest())
+            ////{
+            ////    product.NumClicksForMoreInfo++;
+            ////    _productService.UpdateProduct(product);
+            ////    return Ok(model);
+            ////}
+            ////else
+            ////{
+            ////    //Si el usuario ya compró el producto omite las validaciones y devuelve un true
+            ////    if (_orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, model.ProductId))
+            ////        return Ok(new { id = model.ProductId });
 
 
-                var processPaymentRequest = new Nop.Services.Payments.ProcessPaymentRequest();
+            ////    var processPaymentRequest = new Nop.Services.Payments.ProcessPaymentRequest();
 
-                //prevent 2 orders being placed within an X seconds time frame
-                //Se elimina validacion ya que el anterior cumple con la condicion if (_orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, model.ProductId))
-                //if (!_orderService.IsMinimumOrderPlacementIntervalValid(_workContext.CurrentCustomer))
-                //    throw new Exception(_localizationService.GetResource("Checkout.MinOrderPlacementInterval"));
+            ////    //prevent 2 orders being placed within an X seconds time frame
+            ////    //Se elimina validacion ya que el anterior cumple con la condicion if (_orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, model.ProductId))
+            ////    //if (!_orderService.IsMinimumOrderPlacementIntervalValid(_workContext.CurrentCustomer))
+            ////    //    throw new Exception(_localizationService.GetResource("Checkout.MinOrderPlacementInterval"));
 
-                //place order
-                processPaymentRequest.StoreId = _storeContext.CurrentStore.Id;
-                processPaymentRequest.CustomerId = _workContext.CurrentCustomer.Id;
-                processPaymentRequest.PaymentMethodSystemName = _workContext.CurrentCustomer.GetAttribute<string>(
-                    SystemCustomerAttributeNames.SelectedPaymentMethod,
-                    _genericAttributeService, _storeContext.CurrentStore.Id);
+            ////    //place order
+            ////    processPaymentRequest.StoreId = _storeContext.CurrentStore.Id;
+            ////    processPaymentRequest.CustomerId = _workContext.CurrentCustomer.Id;
+            ////    processPaymentRequest.PaymentMethodSystemName = _workContext.CurrentCustomer.GetAttribute<string>(
+            ////        SystemCustomerAttributeNames.SelectedPaymentMethod,
+            ////        _genericAttributeService, _storeContext.CurrentStore.Id);
 
-                //intenta agregar los datos al carro de compras
-                var addCartResult = _shoppingCartService.AddToCart(customer: _workContext.CurrentCustomer,
-                    product: product,
-                    shoppingCartType: ShoppingCartType.ShoppingCart,
-                    storeId: _storeContext.CurrentStore.Id,
-                    quantity: 1,
-                    validateCartDisabled: false);
+            ////    //intenta agregar los datos al carro de compras
+            ////    var addCartResult = _shoppingCartService.AddToCart(customer: _workContext.CurrentCustomer,
+            ////        product: product,
+            ////        shoppingCartType: ShoppingCartType.ShoppingCart,
+            ////        storeId: _storeContext.CurrentStore.Id,
+            ////        quantity: 1,
+            ////        validateCartDisabled: false);
 
-                if (addCartResult.Count == 0)
-                {
-                    //Intenta registrar la orden como paga
-                    var placeOrderResult = _orderProcessingService.PlaceOrder(processPaymentRequest);
-                    if (placeOrderResult.Errors.Count == 0)
-                    {
-                        var order = placeOrderResult.PlacedOrder;
-                        return Ok(new { id = order.Id });
-                    }
-                    else
-                    {
-                        return InternalServerError(new NopException(addCartResult.FirstOrDefault()));
-                    }
-                }
-                else
-                {
-                    return InternalServerError(new NopException(addCartResult.FirstOrDefault()));
-                }
-            }
+            ////    if (addCartResult.Count == 0)
+            ////    {
+            ////        //Intenta registrar la orden como paga
+            ////        var placeOrderResult = _orderProcessingService.PlaceOrder(processPaymentRequest);
+            ////        if (placeOrderResult.Errors.Count == 0)
+            ////        {
+            ////            var order = placeOrderResult.PlacedOrder;
+            ////            return Ok(new { id = order.Id });
+            ////        }
+            ////        else
+            ////        {
+            ////            return InternalServerError(new NopException(addCartResult.FirstOrDefault()));
+            ////        }
+            ////    }
+            ////    else
+            ////    {
+            ////        return InternalServerError(new NopException(addCartResult.FirstOrDefault()));
+            ////    }
+            ////}
 
         }
 

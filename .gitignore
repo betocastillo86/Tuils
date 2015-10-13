@@ -199,7 +199,10 @@ FakesAssemblies/
 
 #Imagenes de Tuils
 src/Presentation/Nop.Web/Content/Images/Thumbs/*
+src/Presentation/Nop.Web/Content/Images/*
 
+#PluginsRecompilados
+src/Presentation/Nop.Web/Plugins/Misc.MailChimp/Nop.Plugin.Misc.MailChimp.dll
 
 #NuGet
 **/.nuget

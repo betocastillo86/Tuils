@@ -260,24 +260,15 @@ namespace Nop.Services.Vendors
 
                 //Si la foto ya está asignada la actualiza, sino la crea
                 Picture picture = null;
-                bool pictureExisted = pictureId.HasValue;
+                //No debe actualizar debido al nuevo funcionamiento
+                bool pictureExisted = false;
 
-                if (pictureId.HasValue)
-                {
-                    picture = _pictureService.UpdatePicture(pictureId.Value, dataFile, mimeType, seoName, true);
-                    if(picture.Id == 0)
-                        return false;
-                }
+                picture = _pictureService.InsertPicture(dataFile, mimeType, seoName, true);
+
+                if (isMainPicture)
+                    vendor.PictureId = picture.Id;
                 else
-                {
-                    picture = _pictureService.InsertPicture(dataFile, mimeType, seoName, true);
-
-                    if (isMainPicture)
-                        vendor.PictureId = picture.Id;
-                    else
-                        vendor.BackgroundPictureId = picture.Id;
-                    
-                }
+                    vendor.BackgroundPictureId = picture.Id;
 
                 
                 //Si la imagen no existia actualiza
