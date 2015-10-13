@@ -267,6 +267,32 @@ namespace Nop.Web.Controllers.Api
             else
                 return BadRequest();
         }
+
+
+        /// <summary>
+        /// Permite ver más información del producto, suma la vista
+        /// </summary>
+        /// <param name="id">id del producto que se desea ver más info</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("api/products/{productId}/moreinfo")]
+        public IHttpActionResult SeeMoreInfo(int productId)
+        {
+            if (productId <= 0)
+                return NotFound();
+
+            //Consulta y valida que el producto exista
+            var product = _productService.GetProductById(productId);
+            if (product == null)
+                return NotFound();
+
+            //Suma la visita
+            product.NumClicksForMoreInfo++;
+            _productService.UpdateProduct(product);
+
+            return Ok( new { Id = product.Id });
+        }
+
         #endregion
 
        

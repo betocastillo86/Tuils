@@ -153,6 +153,10 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
             remove: function () {
                 this.url = this.baseUrl + '/' + this.get('Id');
                 this.destroy();
+            },
+            moreInfo: function () {
+                this.url = this.baseUrl + '/' + this.get('Id') + '/moreinfo';
+                this.save();
             }
         });
         
