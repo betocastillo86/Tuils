@@ -11,20 +11,25 @@ using Nop.Services.Directory;
 using Nop.Core;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Customers;
+using Nop.Web.Framework;
+using Nop.Core.Caching;
+using Nop.Web.Infrastructure.Cache;
 
 namespace Nop.Web.Controllers
 {
-    public class SalesController : Controller
+    public class SalesController : BasePublicController
     {
 
         #region Fields
-        private ICategoryService _categoryService;
-        private ISpecificationAttributeService _specificationAttributeService;
-        private IStateProvinceService _stateProvinceService;
-        private TuilsSettings _tuilsSettings;
-        private CatalogSettings _catalogSettings;
-        private IWorkContext _workContext;
-        private IProductService _productService;
+        private readonly ICategoryService _categoryService;
+        private readonly ISpecificationAttributeService _specificationAttributeService;
+        private readonly IStateProvinceService _stateProvinceService;
+        private readonly TuilsSettings _tuilsSettings;
+        private readonly CatalogSettings _catalogSettings;
+        private readonly IWorkContext _workContext;
+        private readonly IProductService _productService;
+        private readonly PlanSettings _planSettings;
+        private readonly ICacheManager _cacheManager;
         #endregion
 
         #region Ctor
@@ -35,7 +40,9 @@ namespace Nop.Web.Controllers
             TuilsSettings tuilsSettings,
             IWorkContext workContext,
             CatalogSettings catalogSettings,
-            IProductService productService)
+            IProductService productService,
+            PlanSettings planSettings,
+            ICacheManager cacheManager)
         {
             this._categoryService = categoryService;
             this._tuilsSettings = tuilsSettings;
@@ -44,6 +51,8 @@ namespace Nop.Web.Controllers
             this._workContext = workContext;
             this._catalogSettings = catalogSettings;
             this._productService = productService;
+            this._planSettings = planSettings;
+            this._cacheManager = cacheManager;
         }
         #endregion
 
@@ -140,6 +149,52 @@ namespace Nop.Web.Controllers
             model.SubSectionTitle = "Servicios";
 
             return View("PublishProduct", model);
+        }
+
+        /// <summary>
+        /// Funcionalidad que permite seleccionar un plan  
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [SameVendorProduct]
+        public ActionResult SelectPlan(int id, Product product)
+        {
+            //Consulta de acuerdo al tipo de vendedor la categoria desde la cual va sacar los planes
+            int categoryPlanId = _workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.User ? _planSettings.CategoryProductPlansId : _planSettings.CategoryStorePlansId;
+            
+
+            var model = new SelectPlanModel();
+            
+            string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_ACTIVE_PLANS_MODEL_KEY, categoryPlanId);
+            model.Plans = _cacheManager.Get(cacheKey, () => { 
+            
+                //Consulta tdos los productos pertenecientes a la categoria de los planes
+                var plans = _productService.SearchProducts(categoryIds: new List<int>() { categoryPlanId });
+
+                var listPlans = new List<SelectPlanModel.PlanModel>();
+
+                foreach (var plan in plans)
+                {
+                    var planModel = new SelectPlanModel.PlanModel();
+                    planModel.Id = plan.Id;
+                    //Agrega las caracteristicas del plan
+                    foreach (var spec in plan.ProductSpecificationAttributes)
+	                {
+		                planModel.Specifications.Add(new SelectPlanModel.SpecificationPlan(){
+                             Name = spec.SpecificationAttributeOption.SpecificationAttribute.Name,
+                             SpecificationAttributeId = spec.SpecificationAttributeOption.SpecificationAttributeId,
+                             Value = string.IsNullOrEmpty(spec.CustomValue) ? spec.SpecificationAttributeOption.Name : spec.CustomValue
+                        });
+	                }
+
+                    listPlans.Add(planModel);
+                }
+
+                return listPlans;
+            });
+
+
+            return View(model);
         }
 
         #region Metodos Privados

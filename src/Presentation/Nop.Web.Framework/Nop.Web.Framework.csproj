@@ -160,6 +160,7 @@
     <Compile Include="Mvc\JavascriptConfiguration.cs" />
     <Compile Include="Mvc\NullJsonResult.cs" />
     <Compile Include="Mvc\RequiredIfAttribute.cs" />
+    <Compile Include="SameVendorProductAttribute.cs" />
     <Compile Include="Security\BasicAuthenticationAttribute.cs" />
     <Compile Include="Seo\CustomUrlRecordEntityNameRequested.cs" />
     <Compile Include="Seo\WwwRequirementAttribute.cs" />

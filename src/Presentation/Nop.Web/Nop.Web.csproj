@@ -407,6 +407,7 @@
     <Compile Include="Models\Profile\PostsModel.cs" />
     <Compile Include="Models\Profile\ProfilePostsModel.cs" />
     <Compile Include="Models\Sales\PublishProductModel.cs" />
+    <Compile Include="Models\Sales\SelectPlanModel.cs" />
     <Compile Include="Models\Sales\SelectPublishCategoryModel.cs" />
     <Compile Include="Models\ShoppingCart\MiniShoppingCartModel.cs" />
     <Compile Include="Models\ShoppingCart\WishlistEmailAFriendModel.cs" />
@@ -2577,6 +2578,7 @@
     <Content Include="Views\ControlPanel\EditProduct.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\ExternalSearch.cshtml" />
     <Content Include="Themes\Healthy\Views\Shared\_ExternalLayout.cshtml" />
+    <Content Include="Views\Sales\SelectPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

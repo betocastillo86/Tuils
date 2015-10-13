@@ -1003,11 +1003,17 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Catalog.Products.SpecialCategories.Fields.Category.Hint", "Categoría");
                 newLocaleStringResources.Add("HeaderLinks.Home", "Home");
                 newLocaleStringResources.Add("Account.SocialNetworks", "Nuestras redes:");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans", "Planes Settings");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.CategoryProductPlans", "Categoría Planes Productos");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.CategoryStorePlans", "Categoría Planes Tiendas");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdLimitDays", "Especificación limite de días");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdPictures", "Especificación Limite de fotos");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdDisplayOrder", "Especificación Orden de Exposición");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdSliders", "Especificación Bandas rotativas");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdHomePage", "Especificación HomePage");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdSocialNetworks", "Especificación redes sociales");
                 
-                
-                
-                
-            
+
                 
 
                 //Recorre todas las llaves que desea adicional
@@ -2323,6 +2329,7 @@ namespace Nop.Data.Migrations
                 settings.Add("tuilsSettings.MaxNumberOptionsToShowOnFilters", "4");
                 settings.Add("vendorSettings.MinWidthCover", "1200");
                 settings.Add("vendorSettings.MinHeightCover", "500");
+
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var setting in settings)

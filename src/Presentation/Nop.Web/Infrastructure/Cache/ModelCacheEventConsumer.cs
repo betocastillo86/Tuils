@@ -271,6 +271,17 @@ namespace Nop.Web.Infrastructure.Cache
         public const string CATEGORY_CHILD_IDENTIFIERS_PATTERN_KEY = "Nop.pres.category.childidentifiers";
 
 
+
+        /// <summary>
+        /// Llaves de cache que Contienen los planes activos en el sitio
+        /// </summary>
+        /// <remarks>
+        /// {0} : Tipo de planes. Empresas o personas
+        /// </remarks>
+        public const string CATEGORY_ACTIVE_PLANS_MODEL_KEY = "Nop.pres.plans.activePlans-{0}";
+        public const string CATEGORY_ACTIVE_PLANS_PATTERN_KEY = "Nop.pres.plans.activePlans";
+
+
         
 
         public const string CATEGORIES_API_ALL_SERVICES = "Nop.category.api.services";

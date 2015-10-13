@@ -677,13 +677,17 @@ namespace Nop.Web.Infrastructure
 
 
             /************NUEVAS RUTAS TUILS ******/
+
+
             //Javascript de recursos
             routes.MapLocalizedRoute("JsResources",
                "Scripts/tuils/resources",
                new { controller = "Common", action = "JsResources" },
                new[] { "Nop.Web.Controllers" }
                );
-
+            
+            
+            #region Sales
             //publicar producto
             routes.MapLocalizedRoute("PublishNewItem",
                 "quiero-vender",
@@ -710,6 +714,14 @@ namespace Nop.Web.Infrastructure
                new { controller = "Sales", action = "PublishProductService", id = UrlParameter.Optional },
                new[] { "Nop.Web.Controllers" }
                );
+
+            routes.MapLocalizedRoute("SelectPlan",
+               "mis-productos/seleccionar-plan/{id}",
+               new { controller = "Sales", action = "SelectPlan", id = UrlParameter.Optional },
+               new[] { "Nop.Web.Controllers" }
+               );
+            #endregion
+            
 
             
 

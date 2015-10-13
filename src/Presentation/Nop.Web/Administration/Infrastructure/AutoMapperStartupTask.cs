@@ -851,6 +851,9 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<CustomerUserSettingsModel.AddressSettingsModel, AddressSettings>();
 
+            //Plan settings
+            Mapper.CreateMap<PlansSettingsModel, PlanSettings>();
+            Mapper.CreateMap<PlanSettings, PlansSettingsModel>();
 
             //category template
             Mapper.CreateMap<CategoryTemplate, CategoryTemplateModel>()

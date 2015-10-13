@@ -883,6 +883,14 @@ namespace Nop.Admin.Extensions
             return model.MapTo(destination);
         }
 
+        public static PlansSettingsModel ToModel(this PlanSettings entity)
+        {
+            return entity.MapTo<PlanSettings, PlansSettingsModel>();
+        }
+        public static PlanSettings ToEntity(this PlansSettingsModel model, PlanSettings destination)
+        {
+            return model.MapTo(destination);
+        }
 
         public static ShippingSettingsModel ToModel(this ShippingSettings entity)
         {

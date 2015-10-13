@@ -199,6 +199,7 @@ FakesAssemblies/
 
 #Imagenes de Tuils
 src/Presentation/Nop.Web/Content/Images/Thumbs/*
+src/Presentation/Nop.Web/Content/Images/*
 
 
 #NuGet

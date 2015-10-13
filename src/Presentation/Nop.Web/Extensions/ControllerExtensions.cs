@@ -110,7 +110,7 @@ namespace Nop.Web.Extensions
                     CompareProductsEnabled = catalogSettings.CompareProductsEnabled,
                     DisableWishlistButton = workContext.CurrentCustomer == null || workContext.CurrentCustomer.IsGuest(),
                     FeaturedBySpecialCategory = product.FeaturedBySpecialCategory,
-                    StateProvinceName = stateProvinceService.GetStateProvinceById(product.StateProvinceId).Name,
+                    StateProvinceName = product.StateProvinceId.HasValue ? stateProvinceService.GetStateProvinceById(product.StateProvinceId.Value).Name : string.Empty,
                     AnalyticsSource = utm_source,
                     AnalyticsMedium = utm_medium,
                     AnalyticsCampaign = utm_campaign,
