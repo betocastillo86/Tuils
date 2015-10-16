@@ -7,55 +7,99 @@
 @{
     bool first = true;   
 }
+<div id="divMainSection">
 
-@using (Html.BeginForm())
-{ 
-    foreach (var plan in Model.Plans)
+
+    @using (Html.BeginForm())
     {
-        if (first)
+        foreach (var plan in Model.Plans)
         {
+            if (first)
+            {
+                <div>
+                    <ul>
+                        @foreach (var spec in Model.Plans.Last().Specifications)
+                        {
+                            <li>@spec.Name</li>
+                        }
+                    </ul>
+                </div>
+                        first = false;
+            }
+
             <div>
                 <ul>
-                    @foreach (var spec in Model.Plans.Last().Specifications)
+                    <li><h2>@plan.Name</h2></li>
+                    @foreach (var spec in plan.Specifications)
                     {
-                        <li>@spec.Name</li>
+                        <li>@spec.Value</li>
                     }
                 </ul>
             </div>
-            first = false;
-        }
 
-        <div>
-            <ul>
-                @foreach (var spec in plan.Specifications)
-                {
-                    <li>@spec.Value</li>
-                }
-            </ul>
+    <input name="SelectedPlan" type="radio" value="@plan.Id" data-name="@plan.Name" />
+
+        }
+        <div id="divAdditionalInfo" style="display:none">
+            <table>
+                <tr>
+                    <td>
+                        <div class="inputs" >
+                            departamento  @Html.DropDownList("ddlStateProvince", Model.StateProvinces, "-")
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="inputs">
+                            ciudad  @Html.TextBoxFor(m => m.CustomerAddressInformation.City)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="inputs">
+                            phone number  @Html.TextBoxFor(m => m.CustomerAddressInformation.PhoneNumber)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        direccion   @Html.TextBoxFor(m => m.CustomerAddressInformation.Address)
+
+                        @Html.HiddenFor(m => m.CustomerAddressInformation.AddressId)
+                    </td>
+                </tr>
+            </table>
         </div>
 
 
-        <input name="SelectedPlan" type="radio" value="@plan.Id" />
+    <input id="merchantId" name="merchantId" type="hidden" value="">
+    <input id="referenceCode" name="referenceCode" type="hidden" value="">
+    <input id="amount" name="amount" type="hidden" value="">
+    <input id="accountId" name="accountId" type="hidden" value="">
+    <input id="signature" name="signature" type="hidden" value="">
+    <input id="currency" name="currency" type="hidden" value="">
+    <input id="responseUrl" name="responseUrl" type="hidden" value="">
+    <input id="confirmationUrl" name="confirmationUrl" type="hidden" value="">
 
 
-        <input name="merchantId" type="hidden" value="545191">
-        <input name="referenceCode" type="hidden" value="123NumeroOrden">
-        <input name="description" type="hidden" value="Nombre del plan que se desea comprar">
-        <input name="amount" type="hidden" value="300000">
         <input name="tax" type="hidden" value="0">
         <input name="taxReturnBase" type="hidden" value="0">
-        <input name="signature" type="hidden" value="MD5(ApiKey~merchantId~referenceCode~amount~currency)">
-        <input name="accountId" type="hidden" value="547379">
-    
-        <input name="currency" type="hidden" value="COP">
-        <input name="buyerEmail" type="hidden" value="test@test.com">
+        
+
+        <input id="description" name="description" type="hidden" value="Nombre del plan que se desea comprar">
+        <input name="buyerEmail" type="hidden" value="@Model.CustomerInformation.Email">
+        <input name="payerFullName" type="hidden" value="@Model.CustomerInformation.FullName">
+        <input name="mobilePhone" type="hidden" value="@Model.CustomerInformation.PhoneNumber">
 
         <input name="test" type="hidden" value="1">
 
-        <input name="responseUrl" type="hidden" value="http://local.tuils.com/Sales/Response">
-        <input name="confirmationUrl" type="hidden" value="http://local.tuils.com/Sales/Confirm">
 
-        <input name="Submit" type="submit" value="Enviar">
+        <a href="/" id="btnContinue" style="display:none">Continuar</a>
+        <input id="btnPay" name="Submit" type="button" value="Pagar" style="display:none">
+
+
     }
-} 
 
+</div>

@@ -36,6 +36,34 @@
                 @Html.ValidationMessageFor(m => m.CategoryStorePlansId)
             </td>
         </tr>
+
+        @if (Model.AvailableProductsPlans.Count > 0)
+        {
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(m => m.PlanProductsFree):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(m => m.PlanProductsFree, Model.AvailableProductsPlans)
+                    @Html.ValidationMessageFor(m => m.PlanProductsFree)
+                </td>
+            </tr>
+        }
+        
+        @if (Model.AvailableStoresPlans.Count > 0)
+        {
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(m => m.PlanStoresFree):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(m => m.PlanStoresFree, Model.AvailableStoresPlans)
+                    @Html.ValidationMessageFor(m => m.PlanStoresFree)
+                </td>
+            </tr>
+        }
+        
+        
         <tr>
             <td class="adminTitle">
                 @Html.LabelFor(m => m.SpecificationAttributeIdLimitDays):

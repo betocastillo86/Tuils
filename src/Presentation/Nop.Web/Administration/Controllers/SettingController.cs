@@ -72,6 +72,7 @@ namespace Nop.Admin.Controllers
         private readonly IGenericAttributeService _genericAttributeService;
         private readonly ICategoryService _categoryService;
         private readonly ISpecificationAttributeService _specificationAttributeService;
+        private readonly IProductService _productService;
         private readonly TuilsSettings _tuilsSettings;
 
 		#endregion
@@ -100,7 +101,8 @@ namespace Nop.Admin.Controllers
             IGenericAttributeService genericAttributeService,
             TuilsSettings tuilsSettings,
             ICategoryService categoryService,
-            ISpecificationAttributeService specificationAttributeService)
+            ISpecificationAttributeService specificationAttributeService,
+            IProductService productService)
         {
             this._settingService = settingService;
             this._countryService = countryService;
@@ -125,6 +127,7 @@ namespace Nop.Admin.Controllers
             this._tuilsSettings = tuilsSettings;
             this._categoryService = categoryService;
             this._specificationAttributeService = specificationAttributeService;
+            this._productService = productService;
         }
 
 		#endregion 
@@ -999,6 +1002,37 @@ namespace Nop.Admin.Controllers
                     Value = category.Id.ToString()
                 });
             }
+
+            //Si se ha seleccionado la categoría de planes de productos
+            //carga los planes que aplican para esa categoria
+            //Sino no
+            if (model.CategoryProductPlansId > 0)
+            {
+                foreach (var product in _productService.SearchProducts(categoryIds: new List<int>() { model.CategoryProductPlansId }))
+                {
+                    model.AvailableProductsPlans.Add(new SelectListItem() { 
+                        Text = product.Name,
+                        Value = product.Id.ToString()
+                    });
+                }
+                
+            }
+
+            //Si se ha seleccionado la categoría de planes de tiendas
+            //carga los planes que aplican para esa categoria
+            //Sino no
+            if (model.CategoryStorePlansId > 0)
+            {
+                foreach (var product in _productService.SearchProducts(categoryIds: new List<int>() { model.CategoryStorePlansId }))
+                {
+                    model.AvailableStoresPlans.Add(new SelectListItem()
+                    {
+                        Text = product.Name,
+                        Value = product.Id.ToString()
+                    });
+                }
+            }
+
         }
 
 

@@ -12,6 +12,8 @@ namespace Nop.Admin.Models.Settings
             AvailableCategories = new List<SelectListItem>();
             AvailableSpecificationAttributeOptions = new List<SelectListItem>();
             AvailableSpecificationAttributes = new List<SelectListItem>();
+            AvailableStoresPlans = new List<SelectListItem>();
+            AvailableProductsPlans = new List<SelectListItem>();
         }
         
         [NopResourceDisplayName("Admin.Configuration.Settings.Plans.CategoryProductPlans")]
@@ -19,6 +21,19 @@ namespace Nop.Admin.Models.Settings
 
         [NopResourceDisplayName("Admin.Configuration.Settings.Plans.CategoryStorePlans")]
         public int CategoryStorePlansId { get; set; }
+
+
+        /// <summary>
+        /// Marca cual es el plan gratis de productos
+        /// </summary>
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.PlanProductsFree")]
+        public int PlanProductsFree { get; set; }
+
+        /// <summary>
+        /// Marca cual es el plan gratis para tiendas
+        /// </summary>
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.PlanStoresFree")]
+        public int PlanStoresFree { get; set; }
 
 
         [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributeIdLimitDays")]
@@ -40,6 +55,11 @@ namespace Nop.Admin.Models.Settings
         public int SpecificationAttributeIdSocialNetworks { get; set; }
 
         public IList<SelectListItem> AvailableCategories { get; set; }
+
+
+        public IList<SelectListItem> AvailableProductsPlans { get; set; }
+
+        public IList<SelectListItem> AvailableStoresPlans { get; set; }
 
         public IList<SelectListItem> AvailableSpecificationAttributes { get; set; }
 

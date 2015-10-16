@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Nop.Web.Models.Sales
 {
@@ -11,7 +12,9 @@ namespace Nop.Web.Models.Sales
         public SelectPlanModel()
         {
             Plans = new List<PlanModel>();
-            CustomerInformation = new CustomerInformationModel();
+            CustomerAddressInformation = new CustomerAddress();
+            CustomerInformation = new CustomerInfo();
+            
         }
         /// <summary>
         /// Listado de planes
@@ -19,12 +22,21 @@ namespace Nop.Web.Models.Sales
         public List<PlanModel>  Plans { get; set; }
 
 
+        public SelectList StateProvinces { get; set; }
+
+        /// <summary>
+        /// Url a la que se envia el formulario
+        /// </summary>
+        public string RedirectUrl { get; set; }
+
         public int SelectedPlan { get; set; }
 
         /// <summary>
         /// Informacion del usuario
         /// </summary>
-        public CustomerInformationModel CustomerInformation { get; set; }
+        public CustomerAddress CustomerAddressInformation { get; set; }
+
+        public CustomerInfo CustomerInformation { get; set; }
 
 
         public class PlanModel : BaseNopEntityModel
@@ -34,6 +46,8 @@ namespace Nop.Web.Models.Sales
                 Specifications = new List<SpecificationPlan>();
             }
             public IList<SpecificationPlan> Specifications { get; set; }
+
+            public string Name { get; set; }
         }
 
         public class SpecificationPlan
@@ -45,12 +59,26 @@ namespace Nop.Web.Models.Sales
             public string Value { get; set; }
         }
         
-        public class CustomerInformationModel
+        public class CustomerAddress
         {
+            public int AddressId { get; set; }
 
             public int StateProvinceId { get; set; }
 
             public string Address { get; set; }
+
+            public string PhoneNumber { get; set; }
+
+            public string City { get; set; }
+        }
+
+        public class CustomerInfo
+        {
+            public string FullName { get; set; }
+
+            public string Email { get; set; }
+
+            public string PhoneNumber { get; set; }
         }
     }
 }

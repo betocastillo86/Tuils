@@ -3,9 +3,11 @@ namespace Nop.Data.Migrations
     using Nop.Core.Data;
     using Nop.Core.Domain.Catalog;
     using Nop.Core.Domain.Configuration;
+    using Nop.Core.Domain.Customers;
     using Nop.Core.Domain.Directory;
     using Nop.Core.Domain.Localization;
     using Nop.Core.Domain.Messages;
+    using Nop.Core.Domain.Security;
     using Nop.Core.Domain.Seo;
     using Nop.Core.Domain.Tasks;
     using Nop.Core.Infrastructure;
@@ -38,6 +40,12 @@ namespace Nop.Data.Migrations
             bool runTemplatesEmails = false;
             bool runUrls = false;
             bool runTasks = false;
+            bool runPermissions = true;
+
+            /***DEBUG***/
+            if (System.Diagnostics.Debugger.IsAttached == false)
+                System.Diagnostics.Debugger.Launch();
+
 
             #region Specification Attribute
 
@@ -1012,8 +1020,8 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdSliders", "Especificación Bandas rotativas");
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdHomePage", "Especificación HomePage");
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdSocialNetworks", "Especificación redes sociales");
-                
-
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.PlanProductsFree", "Plan gratis para productos");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.PlanStoresFree", "Plan gratis para tiendas");
                 
 
                 //Recorre todas las llaves que desea adicional
@@ -2531,6 +2539,26 @@ namespace Nop.Data.Migrations
                         context.Set<MessageTemplate>().Add(template);
                     }
                 }
+            }
+
+            #endregion
+
+            #region PermissionRecords
+
+            if (runPermissions)
+            {
+                //var permissionTable = context.Set<PermissionRecord>();
+
+                ////Consulta los permisos y empieza a agregarle todos los roles si es necesario
+                //var pmEnableShoppingCart = permissionTable.FirstOrDefault(p => p.SystemName.Equals("EnableShoppingCart"));
+
+                //var roles = context.Set<CustomerRole>();
+                //foreach (var role in roles)
+                //{
+                //   if(pmEnableShoppingCart.CustomerRoles.FirstOrDefault(r => r.Id == role.Id) == null)
+                //        pmEnableShoppingCart.CustomerRoles.Add(role);
+                //}
+
             }
 
             #endregion

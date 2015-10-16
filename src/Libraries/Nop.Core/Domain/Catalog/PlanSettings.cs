@@ -13,6 +13,16 @@ namespace Nop.Core.Domain.Catalog
 
         public int CategoryStorePlansId { get; set; }
 
+        /// <summary>
+        /// Marca cual es el plan gratis de productos
+        /// </summary>
+        public int PlanProductsFree { get; set; }
+
+        /// <summary>
+        /// Marca cual es el plan gratis para tiendas
+        /// </summary>
+        public int PlanStoresFree { get; set; }
+
         public int SpecificationAttributeIdLimitDays { get; set; }
 
         public int SpecificationAttributeIdPictures { get; set; }

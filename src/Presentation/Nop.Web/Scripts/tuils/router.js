@@ -3,12 +3,12 @@
 ,'tuils/views/product/productDetailView','tuils/views/common/newsletterView','tuils/views/common/searcherView','tuils/views/common/leftFeaturedProductsView'	
 , 'tuils/views/common/header', 'tuils/views/panel/offices', 'tuils/views/panel/menu', 'tuils/views/panel/myProductsView', 'tuils/views/home/homeView',
 'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView', 'tuils/views/publishProduct/publishView',
-'tuils/views/common/footerView', 'tuils/views/panel/editProductView',
+'tuils/views/common/footerView', 'tuils/views/panel/editProductView', 'tuils/views/publishProduct/selectPlanView',
 'ajaxCart', 'nopCommon'],
     function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView,
         MyAccountView,VendorServicesView ,QuestionsView ,VendorDetailView,
         ProductDetailView, NewsletterView, SearcherView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
-        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView, EditProductView) {
+        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView, EditProductView, SelectPlanView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -36,6 +36,7 @@
                 "mi-cuenta/mis-compras(/:query)": "myOrders",
                 "mi-cuenta/mis-ventas(/:query)": "myOrders",
                 "mi-cuenta/mis-productos(/:query)": "myProducts",
+                "mis-productos/seleccionar-plan(/:id)": "selectPlan",
                 "mi-cuenta/preguntas-pendientes(/:query)": "questions",
                 "ControlPanel/EditProduct(/:id)": "editProduct",
                 "mis-deseos(/:customerGuid)": 'wishlist',
@@ -73,6 +74,10 @@
             },
             sellService: function (step) {
                 this.sellSwitch(TuilsConfiguration.productBaseTypes.service);
+            },
+            selectPlan: function (id) {
+                this.currentView = new SelectPlanView({ el: this.defaultEl, id: parseInt(id) });
+                this.loadSubViews();
             },
             sellSwitch: function (type) {
                 if (!this.currentView) {

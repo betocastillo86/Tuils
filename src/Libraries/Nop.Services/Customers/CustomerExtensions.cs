@@ -39,6 +39,22 @@ namespace Nop.Services.Customers
             return fullName;
         }
 
+
+        public static string GetFirstName(this Customer customer)
+        {
+            if (customer == null)
+                throw new ArgumentNullException("customer");
+            return customer.GetAttribute<string>(SystemCustomerAttributeNames.FirstName);
+        }
+
+        public static string GetLastName(this Customer customer)
+        {
+            if (customer == null)
+                throw new ArgumentNullException("customer");
+            return customer.GetAttribute<string>(SystemCustomerAttributeNames.LastName);
+        }
+
+
         /// <summary>
         /// Formats the customer name
         /// </summary>

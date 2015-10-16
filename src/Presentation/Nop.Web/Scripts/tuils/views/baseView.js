@@ -56,7 +56,41 @@
                 this.validateSendRequestAfterSession = false;
             }
         },
-        stickThem: function () {
+        //prebind: actualiza los valores del modelo de acuerdo a los controles
+        stickThem: function (preBind) {
+
+            if (preBind && this.bindings != undefined)
+            {
+                var that = this;
+                _.each(this.bindings, function (element, index) {
+                    //Si es un objeto busca la propiedad en el campo observe
+
+                    var selector;
+                    var field;
+
+                    if (_.isObject(element)) {
+                        var bind = true;
+                        //Si se ha puesto la propiedad de preBind valida que este en true para cargarlo, sino no lo hace
+                        if (element['preBind'] != undefined)
+                            bind = element['preBind'];
+
+                        if (!bind)
+                            return;
+
+                        field = element['observe'];
+                        selector = element['controlToMark'] ? element['controlToMark'] : index;
+                    }
+                    else {
+                        field = element;
+                        selector = index;
+                    }
+
+                    //Actualiza el valor del modelo dependiendo de los valores existentes en el formulario
+                    that.model.set(field, that.$(selector).val());
+                });
+            }
+
+
             this.stickit();
             this.basicValidations();
         },

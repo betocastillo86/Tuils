@@ -204,6 +204,7 @@
     <Compile Include="Controllers\Api\CategoriesController.cs" />
     <Compile Include="Controllers\Api\FilesController.cs" />
     <Compile Include="Controllers\Api\ManufacturersController.cs" />
+    <Compile Include="Controllers\Api\OrderPlansController.cs" />
     <Compile Include="Controllers\Api\OrdersController.cs" />
     <Compile Include="Controllers\Api\PicturesController.cs" />
     <Compile Include="Controllers\Api\ProductsController.cs" />
@@ -264,8 +265,10 @@
     <Compile Include="Models\Api\AddressModel.cs" />
     <Compile Include="Models\Api\AddressPictureModel.cs" />
     <Compile Include="Models\Api\BaseApiModel.cs" />
+    <Compile Include="Models\Api\CreateOrderResult.cs" />
     <Compile Include="Models\Api\MinifiedJson.cs" />
     <Compile Include="Models\Api\OrderModel.cs" />
+    <Compile Include="Models\Api\OrderPlanModel.cs" />
     <Compile Include="Models\Api\PictureOrderedModel.cs" />
     <Compile Include="Models\Api\ProductBaseModel.cs" />
     <Compile Include="Models\Api\ProductQuestionModel.cs" />
@@ -1112,6 +1115,7 @@
     <Content Include="Scripts\tuils\collections\files.js" />
     <Content Include="Scripts\tuils\collections\manufacturers.js" />
     <Content Include="Scripts\tuils\collections\pictures.js" />
+    <Content Include="Scripts\tuils\models\orderPlan.js" />
     <Content Include="Scripts\tuils\models\panel\updateProduct.js" />
     <Content Include="Scripts\tuils\models\picture.js" />
     <Content Include="Scripts\tuils\collections\products.js" />
@@ -1170,6 +1174,7 @@
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\previousProductCreatedView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\publishView.js" />
+    <Content Include="Scripts\tuils\views\publishProduct\selectPlanView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
     <Content Include="Scripts\tuils\views\utilities\imagesSelectorView.js" />
     <Content Include="Scripts\tuils\views\utilities\htmlEditorView.js" />

@@ -625,34 +625,32 @@ namespace Nop.Services.Orders
                 if (customer.IsGuest() && !_orderSettings.AnonymousCheckoutAllowed)
                     throw new NopException("Anonymous checkout is not allowed");
 
-                #region Codigo Eliminado BillingAddress
-                ////billing address
-                //Address billingAddress;
-                //if (!processPaymentRequest.IsRecurringPayment)
-                //{
-                //    if (customer.BillingAddress == null)
-                //        throw new NopException("Billing address is not provided");
+                //billing address
+                Address billingAddress;
+                if (!processPaymentRequest.IsRecurringPayment)
+                {
+                    if (customer.BillingAddress == null)
+                        throw new NopException("Billing address is not provided");
 
-                //    if (!CommonHelper.IsValidEmail(customer.BillingAddress.Email))
-                //        throw new NopException("Email is not valid");
+                    if (!CommonHelper.IsValidEmail(customer.BillingAddress.Email))
+                        throw new NopException("Email is not valid");
 
-                //    //clone billing address
-                //    billingAddress = (Address)customer.BillingAddress.Clone();
-                //    if (billingAddress.Country != null && !billingAddress.Country.AllowsBilling)
-                //        throw new NopException(string.Format("Country '{0}' is not allowed for billing", billingAddress.Country.Name));
-                //}
-                //else
-                //{
-                //    if (initialOrder.BillingAddress == null)
-                //        throw new NopException("Billing address is not available");
+                    //clone billing address
+                    billingAddress = (Address)customer.BillingAddress.Clone();
+                    if (billingAddress.Country != null && !billingAddress.Country.AllowsBilling)
+                        throw new NopException(string.Format("Country '{0}' is not allowed for billing", billingAddress.Country.Name));
+                }
+                else
+                {
+                    if (initialOrder.BillingAddress == null)
+                        throw new NopException("Billing address is not available");
 
-                //    //clone billing address
-                //    billingAddress = (Address)initialOrder.BillingAddress.Clone();
-                //    if (billingAddress.Country != null && !billingAddress.Country.AllowsBilling)
-                //        throw new NopException(string.Format("Country '{0}' is not allowed for billing", billingAddress.Country.Name));
-                //}
-                #endregion
-                
+                    //clone billing address
+                    billingAddress = (Address)initialOrder.BillingAddress.Clone();
+                    if (billingAddress.Country != null && !billingAddress.Country.AllowsBilling)
+                        throw new NopException(string.Format("Country '{0}' is not allowed for billing", billingAddress.Country.Name));
+                }
+
                 //checkout attributes
                 string checkoutAttributeDescription, checkoutAttributesXml;
                 if (!processPaymentRequest.IsRecurringPayment)
@@ -666,8 +664,6 @@ namespace Nop.Services.Orders
                     checkoutAttributeDescription = initialOrder.CheckoutAttributeDescription;
                 }
 
-
-                #region Codigo Eliminado Carrito
                 //load and validate customer shopping cart
                 IList<ShoppingCartItem> cart = null;
                 if (!processPaymentRequest.IsRecurringPayment)
@@ -715,43 +711,37 @@ namespace Nop.Services.Orders
                         }
                     }
                 }
-                #endregion
 
-                #region Codigo Eliminado Stock (Como no hay stock no hay necesidad de contar)
                 //min totals validation
-                //if (!processPaymentRequest.IsRecurringPayment)
-                //{
-                //    bool minOrderSubtotalAmountOk = ValidateMinOrderSubtotalAmount(cart);
-                //    if (!minOrderSubtotalAmountOk)
-                //    {
-                //        decimal minOrderSubtotalAmount = _currencyService.ConvertFromPrimaryStoreCurrency(_orderSettings.MinOrderSubtotalAmount, _workContext.WorkingCurrency);
-                //        throw new NopException(string.Format(_localizationService.GetResource("Checkout.MinOrderSubtotalAmount"), _priceFormatter.FormatPrice(minOrderSubtotalAmount, true, false)));
-                //    }
-                //    bool minOrderTotalAmountOk = ValidateMinOrderTotalAmount(cart);
-                //    if (!minOrderTotalAmountOk)
-                //    {
-                //        decimal minOrderTotalAmount = _currencyService.ConvertFromPrimaryStoreCurrency(_orderSettings.MinOrderTotalAmount, _workContext.WorkingCurrency);
-                //        throw new NopException(string.Format(_localizationService.GetResource("Checkout.MinOrderTotalAmount"), _priceFormatter.FormatPrice(minOrderTotalAmount, true, false)));
-                //    }
-                //}
-                #endregion
+                if (!processPaymentRequest.IsRecurringPayment)
+                {
+                    bool minOrderSubtotalAmountOk = ValidateMinOrderSubtotalAmount(cart);
+                    if (!minOrderSubtotalAmountOk)
+                    {
+                        decimal minOrderSubtotalAmount = _currencyService.ConvertFromPrimaryStoreCurrency(_orderSettings.MinOrderSubtotalAmount, _workContext.WorkingCurrency);
+                        throw new NopException(string.Format(_localizationService.GetResource("Checkout.MinOrderSubtotalAmount"), _priceFormatter.FormatPrice(minOrderSubtotalAmount, true, false)));
+                    }
+                    bool minOrderTotalAmountOk = ValidateMinOrderTotalAmount(cart);
+                    if (!minOrderTotalAmountOk)
+                    {
+                        decimal minOrderTotalAmount = _currencyService.ConvertFromPrimaryStoreCurrency(_orderSettings.MinOrderTotalAmount, _workContext.WorkingCurrency);
+                        throw new NopException(string.Format(_localizationService.GetResource("Checkout.MinOrderTotalAmount"), _priceFormatter.FormatPrice(minOrderTotalAmount, true, false)));
+                    }
+                }
 
-                #region Codigo Eliminado Taxes no aplican
                 //tax display type
                 var customerTaxDisplayType = TaxDisplayType.IncludingTax;
-                //if (!processPaymentRequest.IsRecurringPayment)
-                //{
-                //    if (_taxSettings.AllowCustomersToSelectTaxDisplayType)
-                //        customerTaxDisplayType = (TaxDisplayType)customer.GetAttribute<int>(SystemCustomerAttributeNames.TaxDisplayTypeId, processPaymentRequest.StoreId);
-                //    else
-                //        customerTaxDisplayType = _taxSettings.TaxDisplayType;
-                //}
-                //else
-                //{
-                //    customerTaxDisplayType = initialOrder.CustomerTaxDisplayType;
-                //}
-                #endregion
-                
+                if (!processPaymentRequest.IsRecurringPayment)
+                {
+                    if (_taxSettings.AllowCustomersToSelectTaxDisplayType)
+                        customerTaxDisplayType = (TaxDisplayType)customer.GetAttribute<int>(SystemCustomerAttributeNames.TaxDisplayTypeId, processPaymentRequest.StoreId);
+                    else
+                        customerTaxDisplayType = _taxSettings.TaxDisplayType;
+                }
+                else
+                {
+                    customerTaxDisplayType = initialOrder.CustomerTaxDisplayType;
+                }
 
                 //applied discount (used to store discount usage history)
                 var appliedDiscounts = new List<Discount>();
@@ -794,105 +784,92 @@ namespace Nop.Services.Orders
                 }
 
 
-
+                //shipping info
                 bool shoppingCartRequiresShipping = false;
-
-                #region Codigo Eliminado ShippingAddress
-                //////shipping info
-                
-                ////if (!processPaymentRequest.IsRecurringPayment)
-                ////{
-                ////    shoppingCartRequiresShipping = cart.RequiresShipping();
-                ////}
-                ////else
-                ////{
-                ////    shoppingCartRequiresShipping = initialOrder.ShippingStatus != ShippingStatus.ShippingNotRequired;
-                ////}
+                if (!processPaymentRequest.IsRecurringPayment)
+                {
+                    shoppingCartRequiresShipping = cart.RequiresShipping();
+                }
+                else
+                {
+                    shoppingCartRequiresShipping = initialOrder.ShippingStatus != ShippingStatus.ShippingNotRequired;
+                }
                 Address shippingAddress = null;
                 string shippingMethodName = "", shippingRateComputationMethodSystemName = "";
                 bool pickUpInStore = false;
-                ////if (shoppingCartRequiresShipping)
-                ////{
-                ////    if (!processPaymentRequest.IsRecurringPayment)
-                ////    {
-                ////        pickUpInStore = _shippingSettings.AllowPickUpInStore &&
-                ////            customer.GetAttribute<bool>(SystemCustomerAttributeNames.SelectedPickUpInStore, processPaymentRequest.StoreId);
+                if (shoppingCartRequiresShipping)
+                {
+                    if (!processPaymentRequest.IsRecurringPayment)
+                    {
+                        pickUpInStore = _shippingSettings.AllowPickUpInStore &&
+                            customer.GetAttribute<bool>(SystemCustomerAttributeNames.SelectedPickUpInStore, processPaymentRequest.StoreId);
 
-                ////        if (!pickUpInStore)
-                ////        {
-                ////            if (customer.ShippingAddress == null)
-                ////                throw new NopException("Shipping address is not provided");
+                        if (!pickUpInStore)
+                        {
+                            if (customer.ShippingAddress == null)
+                                throw new NopException("Shipping address is not provided");
 
-                ////            if (!CommonHelper.IsValidEmail(customer.ShippingAddress.Email))
-                ////                throw new NopException("Email is not valid");
+                            if (!CommonHelper.IsValidEmail(customer.ShippingAddress.Email))
+                                throw new NopException("Email is not valid");
 
-                ////            //clone shipping address
-                ////            shippingAddress = (Address)customer.ShippingAddress.Clone();
-                ////            if (shippingAddress.Country != null && !shippingAddress.Country.AllowsShipping)
-                ////            {
-                ////                throw new NopException(string.Format("Country '{0}' is not allowed for shipping", shippingAddress.Country.Name));
-                ////            }
-                ////        }
+                            //clone shipping address
+                            shippingAddress = (Address)customer.ShippingAddress.Clone();
+                            if (shippingAddress.Country != null && !shippingAddress.Country.AllowsShipping)
+                            {
+                                throw new NopException(string.Format("Country '{0}' is not allowed for shipping", shippingAddress.Country.Name));
+                            }
+                        }
 
-                ////        var shippingOption = customer.GetAttribute<ShippingOption>(SystemCustomerAttributeNames.SelectedShippingOption, processPaymentRequest.StoreId);
-                ////        if (shippingOption != null)
-                ////        {
-                ////            shippingMethodName = shippingOption.Name;
-                ////            shippingRateComputationMethodSystemName = shippingOption.ShippingRateComputationMethodSystemName;
-                ////        }
-                ////    }
-                ////    else
-                ////    {
-                ////        pickUpInStore = initialOrder.PickUpInStore;
+                        var shippingOption = customer.GetAttribute<ShippingOption>(SystemCustomerAttributeNames.SelectedShippingOption, processPaymentRequest.StoreId);
+                        if (shippingOption != null)
+                        {
+                            shippingMethodName = shippingOption.Name;
+                            shippingRateComputationMethodSystemName = shippingOption.ShippingRateComputationMethodSystemName;
+                        }
+                    }
+                    else
+                    {
+                        pickUpInStore = initialOrder.PickUpInStore;
 
-                ////        if (!pickUpInStore)
-                ////        {
-                ////            if (initialOrder.ShippingAddress == null)
-                ////                throw new NopException("Shipping address is not available");
+                        if (!pickUpInStore)
+                        {
+                            if (initialOrder.ShippingAddress == null)
+                                throw new NopException("Shipping address is not available");
 
-                ////            //clone shipping address
-                ////            shippingAddress = (Address)initialOrder.ShippingAddress.Clone();
-                ////            if (shippingAddress.Country != null && !shippingAddress.Country.AllowsShipping)
-                ////            {
-                ////                throw new NopException(string.Format("Country '{0}' is not allowed for shipping", shippingAddress.Country.Name));
-                ////            }
-                ////        }
+                            //clone shipping address
+                            shippingAddress = (Address)initialOrder.ShippingAddress.Clone();
+                            if (shippingAddress.Country != null && !shippingAddress.Country.AllowsShipping)
+                            {
+                                throw new NopException(string.Format("Country '{0}' is not allowed for shipping", shippingAddress.Country.Name));
+                            }
+                        }
 
-                ////        shippingMethodName = initialOrder.ShippingMethod;
-                ////        shippingRateComputationMethodSystemName = initialOrder.ShippingRateComputationMethodSystemName;
-                ////    }
-                ////}
-                #endregion
+                        shippingMethodName = initialOrder.ShippingMethod;
+                        shippingRateComputationMethodSystemName = initialOrder.ShippingRateComputationMethodSystemName;
+                    }
+                }
 
 
+                //shipping total
                 decimal? orderShippingTotalInclTax, orderShippingTotalExclTax = null;
-                orderShippingTotalInclTax = 0;
-                orderShippingTotalExclTax = 0;
+                if (!processPaymentRequest.IsRecurringPayment)
+                {
+                    decimal taxRate;
+                    Discount shippingTotalDiscount;
+                    orderShippingTotalInclTax = _orderTotalCalculationService.GetShoppingCartShippingTotal(cart, true, out taxRate, out shippingTotalDiscount);
+                    orderShippingTotalExclTax = _orderTotalCalculationService.GetShoppingCartShippingTotal(cart, false);
+                    if (!orderShippingTotalInclTax.HasValue || !orderShippingTotalExclTax.HasValue)
+                        throw new NopException("Shipping total couldn't be calculated");
 
-                #region Codigo Eliminado ShipppingTotal
-                //////shipping total
-                ////if (!processPaymentRequest.IsRecurringPayment)
-                ////{
-                ////    decimal taxRate;
-                ////    Discount shippingTotalDiscount;
-                ////    orderShippingTotalInclTax = _orderTotalCalculationService.GetShoppingCartShippingTotal(cart, true, out taxRate, out shippingTotalDiscount);
-                ////    orderShippingTotalExclTax = _orderTotalCalculationService.GetShoppingCartShippingTotal(cart, false);
-                ////    if (!orderShippingTotalInclTax.HasValue || !orderShippingTotalExclTax.HasValue)
-                ////        throw new NopException("Shipping total couldn't be calculated");
+                    if (shippingTotalDiscount != null && !appliedDiscounts.ContainsDiscount(shippingTotalDiscount))
+                        appliedDiscounts.Add(shippingTotalDiscount);
+                }
+                else
+                {
+                    orderShippingTotalInclTax = initialOrder.OrderShippingInclTax;
+                    orderShippingTotalExclTax = initialOrder.OrderShippingExclTax;
+                }
 
-                ////    if (shippingTotalDiscount != null && !appliedDiscounts.ContainsDiscount(shippingTotalDiscount))
-                ////        appliedDiscounts.Add(shippingTotalDiscount);
-                ////}
-                ////else
-                ////{
-                ////    orderShippingTotalInclTax = initialOrder.OrderShippingInclTax;
-                ////    orderShippingTotalExclTax = initialOrder.OrderShippingExclTax;
-                ////}
-
-                #endregion
-
-
-               
 
                 //payment total
                 decimal paymentAdditionalFeeInclTax, paymentAdditionalFeeExclTax;
@@ -908,40 +885,37 @@ namespace Nop.Services.Orders
                     paymentAdditionalFeeExclTax = initialOrder.PaymentMethodAdditionalFeeExclTax;
                 }
 
+
+                //tax total
                 decimal orderTaxTotal = decimal.Zero;
                 string vatNumber = "", taxRates = "";
+                if (!processPaymentRequest.IsRecurringPayment)
+                {
+                    //tax amount
+                    SortedDictionary<decimal, decimal> taxRatesDictionary;
+                    orderTaxTotal = _orderTotalCalculationService.GetTaxTotal(cart, out taxRatesDictionary);
 
-                #region Codigo Eliminado TaxTotal
-                ////tax total
-                //decimal orderTaxTotal = decimal.Zero;
-                //string vatNumber = "", taxRates = "";
-                //if (!processPaymentRequest.IsRecurringPayment)
-                //{
-                //    //tax amount
-                //    SortedDictionary<decimal, decimal> taxRatesDictionary;
-                //    orderTaxTotal = _orderTotalCalculationService.GetTaxTotal(cart, out taxRatesDictionary);
+                    //VAT number
+                    var customerVatStatus = (VatNumberStatus)customer.GetAttribute<int>(SystemCustomerAttributeNames.VatNumberStatusId);
+                    if (_taxSettings.EuVatEnabled && customerVatStatus == VatNumberStatus.Valid)
+                        vatNumber = customer.GetAttribute<string>(SystemCustomerAttributeNames.VatNumber);
 
-                //    //VAT number
-                //    var customerVatStatus = (VatNumberStatus)customer.GetAttribute<int>(SystemCustomerAttributeNames.VatNumberStatusId);
-                //    if (_taxSettings.EuVatEnabled && customerVatStatus == VatNumberStatus.Valid)
-                //        vatNumber = customer.GetAttribute<string>(SystemCustomerAttributeNames.VatNumber);
+                    //tax rates
+                    foreach (var kvp in taxRatesDictionary)
+                    {
+                        var taxRate = kvp.Key;
+                        var taxValue = kvp.Value;
+                        taxRates += string.Format("{0}:{1};   ", taxRate.ToString(CultureInfo.InvariantCulture), taxValue.ToString(CultureInfo.InvariantCulture));
+                    }
+                }
+                else
+                {
+                    orderTaxTotal = initialOrder.OrderTax;
+                    //VAT number
+                    vatNumber = initialOrder.VatNumber;
+                }
 
-                //    //tax rates
-                //    foreach (var kvp in taxRatesDictionary)
-                //    {
-                //        var taxRate = kvp.Key;
-                //        var taxValue = kvp.Value;
-                //        taxRates += string.Format("{0}:{1};   ", taxRate.ToString(CultureInfo.InvariantCulture), taxValue.ToString(CultureInfo.InvariantCulture));
-                //    }
-                //}
-                //else
-                //{
-                //    orderTaxTotal = initialOrder.OrderTax;
-                //    //VAT number
-                //    vatNumber = initialOrder.VatNumber;
-                //}
-                #endregion
-                
+
                 //order total (and applied discounts, gift cards, reward points)
                 decimal? orderTotal = null;
                 decimal orderDiscountAmount = decimal.Zero;
@@ -973,9 +947,7 @@ namespace Nop.Services.Orders
                 #region Payment workflow
 
                 //skip payment workflow if order total equals zero
-                //bool skipPaymentWorkflow = orderTotal.Value == decimal.Zero;
-                //No realiza validaciones de pagos
-                bool skipPaymentWorkflow = true;
+                bool skipPaymentWorkflow = orderTotal.Value == decimal.Zero;
 
                 //payment workflow
                 if (!skipPaymentWorkflow)
@@ -1057,7 +1029,7 @@ namespace Nop.Services.Orders
                                 processPaymentRequest.CreditCardExpireMonth = initialOrder.AllowStoringCreditCardNumber ? Convert.ToInt32(_encryptionService.DecryptText(initialOrder.CardExpirationMonth)) : 0;
                                 processPaymentRequest.CreditCardExpireYear = initialOrder.AllowStoringCreditCardNumber ? Convert.ToInt32(_encryptionService.DecryptText(initialOrder.CardExpirationYear)) : 0;
                             }
-                            catch {}
+                            catch { }
 
                             var recurringPaymentType = _paymentService.GetRecurringPaymentType(processPaymentRequest.PaymentMethodSystemName);
                             switch (recurringPaymentType)
@@ -1151,8 +1123,7 @@ namespace Nop.Services.Orders
                             SubscriptionTransactionId = processPaymentResult.SubscriptionTransactionId,
                             PaymentStatus = processPaymentResult.NewPaymentStatus,
                             PaidDateUtc = null,
-                            //BillingAddress = billingAddress,
-                            BillingAddress = null,
+                            BillingAddress = billingAddress,
                             ShippingAddress = shippingAddress,
                             ShippingStatus = shippingStatus,
                             ShippingMethod = shippingMethodName,
@@ -1165,6 +1136,7 @@ namespace Nop.Services.Orders
                         _orderService.InsertOrder(order);
 
                         result.PlacedOrder = order;
+                        result.ResultPayment = processPaymentResult;
 
                         if (!processPaymentRequest.IsRecurringPayment)
                         {
@@ -1218,43 +1190,36 @@ namespace Nop.Services.Orders
                                 order.OrderItems.Add(orderItem);
                                 _orderService.UpdateOrder(order);
 
-                                
-
-
-
-                                #region Codigo eliminado
-                                //No hay tarjetas de regalo
                                 //gift cards
-                                //if (sc.Product.IsGiftCard)
-                                //{
-                                //    string giftCardRecipientName, giftCardRecipientEmail,
-                                //        giftCardSenderName, giftCardSenderEmail, giftCardMessage;
-                                //    _productAttributeParser.GetGiftCardAttribute(sc.AttributesXml,
-                                //        out giftCardRecipientName, out giftCardRecipientEmail,
-                                //        out giftCardSenderName, out giftCardSenderEmail, out giftCardMessage);
+                                if (sc.Product.IsGiftCard)
+                                {
+                                    string giftCardRecipientName, giftCardRecipientEmail,
+                                        giftCardSenderName, giftCardSenderEmail, giftCardMessage;
+                                    _productAttributeParser.GetGiftCardAttribute(sc.AttributesXml,
+                                        out giftCardRecipientName, out giftCardRecipientEmail,
+                                        out giftCardSenderName, out giftCardSenderEmail, out giftCardMessage);
 
-                                //    for (int i = 0; i < sc.Quantity; i++)
-                                //    {
-                                //        var gc = new GiftCard
-                                //        {
-                                //            GiftCardType = sc.Product.GiftCardType,
-                                //            PurchasedWithOrderItem = orderItem,
-                                //            Amount = scUnitPriceExclTax,
-                                //            IsGiftCardActivated = false,
-                                //            GiftCardCouponCode = _giftCardService.GenerateGiftCardCode(),
-                                //            RecipientName = giftCardRecipientName,
-                                //            RecipientEmail = giftCardRecipientEmail,
-                                //            SenderName = giftCardSenderName,
-                                //            SenderEmail = giftCardSenderEmail,
-                                //            Message = giftCardMessage,
-                                //            IsRecipientNotified = false,
-                                //            CreatedOnUtc = DateTime.UtcNow
-                                //        };
-                                //        _giftCardService.InsertGiftCard(gc);
-                                //    }
-                                //}
-                                #endregion
-                                
+                                    for (int i = 0; i < sc.Quantity; i++)
+                                    {
+                                        var gc = new GiftCard
+                                        {
+                                            GiftCardType = sc.Product.GiftCardType,
+                                            PurchasedWithOrderItem = orderItem,
+                                            Amount = scUnitPriceExclTax,
+                                            IsGiftCardActivated = false,
+                                            GiftCardCouponCode = _giftCardService.GenerateGiftCardCode(),
+                                            RecipientName = giftCardRecipientName,
+                                            RecipientEmail = giftCardRecipientEmail,
+                                            SenderName = giftCardSenderName,
+                                            SenderEmail = giftCardSenderEmail,
+                                            Message = giftCardMessage,
+                                            IsRecipientNotified = false,
+                                            CreatedOnUtc = DateTime.UtcNow
+                                        };
+                                        _giftCardService.InsertGiftCard(gc);
+                                    }
+                                }
+
                                 //inventory
                                 _productService.AdjustInventory(sc.Product, -sc.Quantity, sc.AttributesXml);
                             }
@@ -1262,77 +1227,72 @@ namespace Nop.Services.Orders
                             //clear shopping cart
                             cart.ToList().ForEach(sci => _shoppingCartService.DeleteShoppingCartItem(sci, false));
                         }
+                        else
+                        {
+                            //recurring payment
+                            var initialOrderItems = initialOrder.OrderItems;
+                            foreach (var orderItem in initialOrderItems)
+                            {
+                                //save item
+                                var newOrderItem = new OrderItem
+                                {
+                                    OrderItemGuid = Guid.NewGuid(),
+                                    Order = order,
+                                    ProductId = orderItem.ProductId,
+                                    UnitPriceInclTax = orderItem.UnitPriceInclTax,
+                                    UnitPriceExclTax = orderItem.UnitPriceExclTax,
+                                    PriceInclTax = orderItem.PriceInclTax,
+                                    PriceExclTax = orderItem.PriceExclTax,
+                                    OriginalProductCost = orderItem.OriginalProductCost,
+                                    AttributeDescription = orderItem.AttributeDescription,
+                                    AttributesXml = orderItem.AttributesXml,
+                                    Quantity = orderItem.Quantity,
+                                    DiscountAmountInclTax = orderItem.DiscountAmountInclTax,
+                                    DiscountAmountExclTax = orderItem.DiscountAmountExclTax,
+                                    DownloadCount = 0,
+                                    IsDownloadActivated = false,
+                                    LicenseDownloadId = 0,
+                                    ItemWeight = orderItem.ItemWeight,
+                                    RentalStartDateUtc = orderItem.RentalStartDateUtc,
+                                    RentalEndDateUtc = orderItem.RentalEndDateUtc
+                                };
+                                order.OrderItems.Add(newOrderItem);
+                                _orderService.UpdateOrder(order);
 
-                        #region Codigo eliminado
-                        //Ninguno es pago recurrente
-                        //else
-                        //{
-                        //    //recurring payment
-                        //    var initialOrderItems = initialOrder.OrderItems;
-                        //    foreach (var orderItem in initialOrderItems)
-                        //    {
-                        //        //save item
-                        //        var newOrderItem = new OrderItem
-                        //        {
-                        //            OrderItemGuid = Guid.NewGuid(),
-                        //            Order = order,
-                        //            ProductId = orderItem.ProductId,
-                        //            UnitPriceInclTax = orderItem.UnitPriceInclTax,
-                        //            UnitPriceExclTax = orderItem.UnitPriceExclTax,
-                        //            PriceInclTax = orderItem.PriceInclTax,
-                        //            PriceExclTax = orderItem.PriceExclTax,
-                        //            OriginalProductCost = orderItem.OriginalProductCost,
-                        //            AttributeDescription = orderItem.AttributeDescription,
-                        //            AttributesXml = orderItem.AttributesXml,
-                        //            Quantity = orderItem.Quantity,
-                        //            DiscountAmountInclTax = orderItem.DiscountAmountInclTax,
-                        //            DiscountAmountExclTax = orderItem.DiscountAmountExclTax,
-                        //            DownloadCount = 0,
-                        //            IsDownloadActivated = false,
-                        //            LicenseDownloadId = 0,
-                        //            ItemWeight = orderItem.ItemWeight,
-                        //            RentalStartDateUtc = orderItem.RentalStartDateUtc,
-                        //            RentalEndDateUtc = orderItem.RentalEndDateUtc
-                        //        };
-                        //        order.OrderItems.Add(newOrderItem);
-                        //        _orderService.UpdateOrder(order);
+                                //gift cards
+                                if (orderItem.Product.IsGiftCard)
+                                {
+                                    string giftCardRecipientName, giftCardRecipientEmail,
+                                        giftCardSenderName, giftCardSenderEmail, giftCardMessage;
+                                    _productAttributeParser.GetGiftCardAttribute(orderItem.AttributesXml,
+                                        out giftCardRecipientName, out giftCardRecipientEmail,
+                                        out giftCardSenderName, out giftCardSenderEmail, out giftCardMessage);
 
-                        //        //gift cards
-                        //        if (orderItem.Product.IsGiftCard)
-                        //        {
-                        //            string giftCardRecipientName, giftCardRecipientEmail,
-                        //                giftCardSenderName, giftCardSenderEmail, giftCardMessage;
-                        //            _productAttributeParser.GetGiftCardAttribute(orderItem.AttributesXml,
-                        //                out giftCardRecipientName, out giftCardRecipientEmail,
-                        //                out giftCardSenderName, out giftCardSenderEmail, out giftCardMessage);
+                                    for (int i = 0; i < orderItem.Quantity; i++)
+                                    {
+                                        var gc = new GiftCard
+                                        {
+                                            GiftCardType = orderItem.Product.GiftCardType,
+                                            PurchasedWithOrderItem = newOrderItem,
+                                            Amount = orderItem.UnitPriceExclTax,
+                                            IsGiftCardActivated = false,
+                                            GiftCardCouponCode = _giftCardService.GenerateGiftCardCode(),
+                                            RecipientName = giftCardRecipientName,
+                                            RecipientEmail = giftCardRecipientEmail,
+                                            SenderName = giftCardSenderName,
+                                            SenderEmail = giftCardSenderEmail,
+                                            Message = giftCardMessage,
+                                            IsRecipientNotified = false,
+                                            CreatedOnUtc = DateTime.UtcNow
+                                        };
+                                        _giftCardService.InsertGiftCard(gc);
+                                    }
+                                }
 
-                        //            for (int i = 0; i < orderItem.Quantity; i++)
-                        //            {
-                        //                var gc = new GiftCard
-                        //                {
-                        //                    GiftCardType = orderItem.Product.GiftCardType,
-                        //                    PurchasedWithOrderItem = newOrderItem,
-                        //                    Amount = orderItem.UnitPriceExclTax,
-                        //                    IsGiftCardActivated = false,
-                        //                    GiftCardCouponCode = _giftCardService.GenerateGiftCardCode(),
-                        //                    RecipientName = giftCardRecipientName,
-                        //                    RecipientEmail = giftCardRecipientEmail,
-                        //                    SenderName = giftCardSenderName,
-                        //                    SenderEmail = giftCardSenderEmail,
-                        //                    Message = giftCardMessage,
-                        //                    IsRecipientNotified = false,
-                        //                    CreatedOnUtc = DateTime.UtcNow
-                        //                };
-                        //                _giftCardService.InsertGiftCard(gc);
-                        //            }
-                        //        }
-
-                        //        //inventory
-                        //        _productService.AdjustInventory(orderItem.Product, -orderItem.Quantity, orderItem.AttributesXml);
-                        //    }
-                        //}
-                        #endregion
-                        
+                                //inventory
+                                _productService.AdjustInventory(orderItem.Product, -orderItem.Quantity, orderItem.AttributesXml);
+                            }
+                        }
 
                         //discount usage history
                         if (!processPaymentRequest.IsRecurringPayment)
@@ -1374,56 +1334,53 @@ namespace Nop.Services.Orders
                             _customerService.UpdateCustomer(customer);
                         }
 
-                        #region Codigo eliminado
-                        //No hay carrito recurrente
-                        ////recurring orders
-                        //if (!processPaymentRequest.IsRecurringPayment && isRecurringShoppingCart)
-                        //{
-                        //    //create recurring payment (the first payment)
-                        //    var rp = new RecurringPayment
-                        //    {
-                        //        CycleLength = processPaymentRequest.RecurringCycleLength,
-                        //        CyclePeriod = processPaymentRequest.RecurringCyclePeriod,
-                        //        TotalCycles = processPaymentRequest.RecurringTotalCycles,
-                        //        StartDateUtc = DateTime.UtcNow,
-                        //        IsActive = true,
-                        //        CreatedOnUtc = DateTime.UtcNow,
-                        //        InitialOrder = order,
-                        //    };
-                        //    _orderService.InsertRecurringPayment(rp);
+                        //recurring orders
+                        if (!processPaymentRequest.IsRecurringPayment && isRecurringShoppingCart)
+                        {
+                            //create recurring payment (the first payment)
+                            var rp = new RecurringPayment
+                            {
+                                CycleLength = processPaymentRequest.RecurringCycleLength,
+                                CyclePeriod = processPaymentRequest.RecurringCyclePeriod,
+                                TotalCycles = processPaymentRequest.RecurringTotalCycles,
+                                StartDateUtc = DateTime.UtcNow,
+                                IsActive = true,
+                                CreatedOnUtc = DateTime.UtcNow,
+                                InitialOrder = order,
+                            };
+                            _orderService.InsertRecurringPayment(rp);
 
 
-                        //    var recurringPaymentType = _paymentService.GetRecurringPaymentType(processPaymentRequest.PaymentMethodSystemName);
-                        //    switch (recurringPaymentType)
-                        //    {
-                        //        case RecurringPaymentType.NotSupported:
-                        //            {
-                        //                //not supported
-                        //            }
-                        //            break;
-                        //        case RecurringPaymentType.Manual:
-                        //            {
-                        //                //first payment
-                        //                var rph = new RecurringPaymentHistory
-                        //                {
-                        //                    RecurringPayment = rp,
-                        //                    CreatedOnUtc = DateTime.UtcNow,
-                        //                    OrderId = order.Id,
-                        //                };
-                        //                rp.RecurringPaymentHistory.Add(rph);
-                        //                _orderService.UpdateRecurringPayment(rp);
-                        //            }
-                        //            break;
-                        //        case RecurringPaymentType.Automatic:
-                        //            {
-                        //                //will be created later (process is automated)
-                        //            }
-                        //            break;
-                        //        default:
-                        //            break;
-                        //    }
-                        //}
-                        #endregion
+                            var recurringPaymentType = _paymentService.GetRecurringPaymentType(processPaymentRequest.PaymentMethodSystemName);
+                            switch (recurringPaymentType)
+                            {
+                                case RecurringPaymentType.NotSupported:
+                                    {
+                                        //not supported
+                                    }
+                                    break;
+                                case RecurringPaymentType.Manual:
+                                    {
+                                        //first payment
+                                        var rph = new RecurringPaymentHistory
+                                        {
+                                            RecurringPayment = rp,
+                                            CreatedOnUtc = DateTime.UtcNow,
+                                            OrderId = order.Id,
+                                        };
+                                        rp.RecurringPaymentHistory.Add(rph);
+                                        _orderService.UpdateRecurringPayment(rp);
+                                    }
+                                    break;
+                                case RecurringPaymentType.Automatic:
+                                    {
+                                        //will be created later (process is automated)
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
 
                         #endregion
 
@@ -1435,7 +1392,7 @@ namespace Nop.Services.Orders
                             //this order is placed by a store administrator impersonating a customer
                             order.OrderNotes.Add(new OrderNote
                             {
-                                Note = string.Format( "Order placed by a store owner ('{0}'. ID = {1}) impersonating the customer.",
+                                Note = string.Format("Order placed by a store owner ('{0}'. ID = {1}) impersonating the customer.",
                                     _workContext.OriginalCustomerIfImpersonated.Email, _workContext.OriginalCustomerIfImpersonated.Id),
                                 DisplayToCustomer = false,
                                 CreatedOnUtc = DateTime.UtcNow

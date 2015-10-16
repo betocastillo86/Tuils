@@ -32,6 +32,7 @@ namespace Nop.Web.Framework.Mvc
             var dateSettings = EngineContext.Current.Resolve<DateTimeSettings>();
             var mediaSettings = EngineContext.Current.Resolve<MediaSettings>();
             var vendorSettings = EngineContext.Current.Resolve<VendorSettings>();
+            var planSettings = EngineContext.Current.Resolve<PlanSettings>();
 
             var config = new
             {
@@ -70,6 +71,10 @@ namespace Nop.Web.Framework.Mvc
                     logoImageMaxSizeResize = mediaSettings.LogoImageMaxSizeResize,
                     vendorBackgroundThumbPictureSize = mediaSettings.VendorBackgroundThumbPictureSize,
                     productthumbpicturesizeonproductdetailspage = mediaSettings.ProductThumbPictureSizeOnProductDetailsPage
+                },
+                plan = new {
+                    planProductsFree = planSettings.PlanProductsFree,
+                    planStoresFree = planSettings.PlanStoresFree
                 },
                 vendor = new
                 {

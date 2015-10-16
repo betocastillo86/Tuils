@@ -14,6 +14,8 @@ using Nop.Core.Domain.Customers;
 using Nop.Web.Framework;
 using Nop.Core.Caching;
 using Nop.Web.Infrastructure.Cache;
+using Nop.Services.Customers;
+using Nop.Services.Common;
 
 namespace Nop.Web.Controllers
 {
@@ -79,7 +81,7 @@ namespace Nop.Web.Controllers
         {
             if (_workContext.CurrentVendor != null)
                 //Si el usuario tiene más productos publicados que el limite, muestra un mensaje de advertencia
-                return  _productService.HasReachedLimitOfProducts(_workContext.CurrentVendor.Id);
+                return _productService.HasReachedLimitOfProducts(_workContext.CurrentVendor.Id);
             return false;
         }
 
@@ -143,7 +145,7 @@ namespace Nop.Web.Controllers
         public ActionResult PublishProductService(int? id)
         {
             var model = GetPublishModel();
-            
+
             //Tipo de producto moto
             model.ProductType = ProductTypePublished.Service;
             model.SubSectionTitle = "Servicios";
@@ -177,6 +179,7 @@ namespace Nop.Web.Controllers
                 {
                     var planModel = new SelectPlanModel.PlanModel();
                     planModel.Id = plan.Id;
+                    planModel.Name = plan.Name;
                     //Agrega las caracteristicas del plan
                     foreach (var spec in plan.ProductSpecificationAttributes)
 	                {
@@ -193,8 +196,35 @@ namespace Nop.Web.Controllers
                 return listPlans;
             });
 
+            //Si el cliente tiene direcciones registradas la carga
+            if (_workContext.CurrentCustomer.Addresses.Count > 0)
+            {
+                var address = _workContext.CurrentCustomer.BillingAddress ?? _workContext.CurrentCustomer.Addresses.FirstOrDefault();
+                model.CustomerAddressInformation.AddressId = address.Id;
+                model.CustomerAddressInformation.Address = address.Address1;
+                model.CustomerAddressInformation.PhoneNumber = address.PhoneNumber;
+                model.CustomerAddressInformation.City = address.City;
+                model.CustomerAddressInformation.StateProvinceId = address.StateProvinceId.Value;
+            }
+            
+            string cacheStatesKey = string.Format(ModelCacheEventConsumer.STATEPROVINCES_BY_COUNTRY_MODEL_KEY, _tuilsSettings.defaultCountry,  "empty",  _workContext.WorkingLanguage.Id);
+            model.StateProvinces = new SelectList(
+                _cacheManager.Get(cacheStatesKey, () => { return _stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry); })
+                , "Id", "Name",
+                model.CustomerAddressInformation.StateProvinceId);
+
+            model.CustomerInformation.Email = _workContext.CurrentCustomer.Email;
+            model.CustomerInformation.PhoneNumber = _workContext.CurrentCustomer.GetAttribute<string>(SystemCustomerAttributeNames.Phone);
+            model.CustomerInformation.FullName = _workContext.CurrentCustomer.GetFullName();
+            
 
             return View(model);
+        }
+
+        public ActionResult Prueba()
+        {
+            
+            return Content(string.Empty);
         }
 
         #region Metodos Privados
@@ -202,7 +232,13 @@ namespace Nop.Web.Controllers
         {
             var model = new PublishProductModel();
             model.LimitDaysOfProductPublished = _catalogSettings.LimitDaysOfProductPublished;
-            model.StateProvinces = new SelectList(_stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry), "Id", "Name");
+
+            string cacheStatesKey = string.Format(ModelCacheEventConsumer.STATEPROVINCES_BY_COUNTRY_MODEL_KEY, _tuilsSettings.defaultCountry, "empty", _workContext.WorkingLanguage.Id);
+            model.StateProvinces = _cacheManager.Get(cacheStatesKey, () =>
+            {
+                return new SelectList(_stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry), "Id", "Name");
+            });
+
             model.IsMobileDevice = Request.Browser.IsMobileDevice;
             model.HasReachedLimitOfProducts = HasReachedLimitOfProducts();
             model.MaxSizeFileUpload = _tuilsSettings.maxFileUploadSize;
@@ -213,7 +249,8 @@ namespace Nop.Web.Controllers
         #endregion
     }
 
-    public enum ProductTypePublished { 
+    public enum ProductTypePublished
+    {
         Product,
         Service,
         Bike

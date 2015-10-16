@@ -14,6 +14,7 @@ namespace Nop.Services.Payments
         public ProcessPaymentResult() 
         {
             this.Errors = new List<string>();
+            this.AdditionalKeys = new Dictionary<string, string>();
         }
 
         public bool Success
@@ -66,6 +67,13 @@ namespace Nop.Services.Payments
         /// Gets or sets a value indicating whether storing of credit card number, CVV2 is allowed
         /// </summary>
         public bool AllowStoringCreditCardNumber { get; set; }
+
+
+        #region Properties PayU
+
+        public Dictionary<string, string> AdditionalKeys { get; set; }
+
+        #endregion
 
         /// <summary>
         /// Gets or sets a payment status after processing

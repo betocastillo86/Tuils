@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Nop.Core.Domain.Orders;
+using Nop.Services.Payments;
 
 namespace Nop.Services.Orders
 {
@@ -30,5 +31,7 @@ namespace Nop.Services.Orders
         /// Gets or sets the placed order
         /// </summary>
         public Order PlacedOrder { get; set; }
+
+        public ProcessPaymentResult ResultPayment { get; set; }
     }
 }
