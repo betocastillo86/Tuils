@@ -76,5 +76,8 @@ namespace Nop.Admin.Models.Settings
         [NopResourceDisplayName("Admin.Configuration.Settings.ShoppingCart.AllowCartItemEditing")]
         public bool AllowCartItemEditing { get; set; }
         public bool AllowCartItemEditing_OverrideForStore { get; set; }
+
+
+        
     }
 }

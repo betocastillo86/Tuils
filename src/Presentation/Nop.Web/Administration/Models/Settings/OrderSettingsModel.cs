@@ -39,6 +39,10 @@ namespace Nop.Admin.Models.Settings
         public bool TermsOfServiceOnShoppingCartPage { get; set; }
         public bool TermsOfServiceOnShoppingCartPage_OverrideForStore { get; set; }
 
+        [NopResourceDisplayName("Admin.Configuration.Settings.Order.MinutesBeforeCanAddPlanToCart")]
+        public int MinutesBeforeCanAddPlanToCart { get; set; }
+        public bool MinutesBeforeCanAddPlanToCart_OverrideForStore { get; set; }
+
         [NopResourceDisplayName("Admin.Configuration.Settings.Order.TermsOfServiceOnOrderConfirmPage")]
         public bool TermsOfServiceOnOrderConfirmPage { get; set; }
         public bool TermsOfServiceOnOrderConfirmPage_OverrideForStore { get; set; }

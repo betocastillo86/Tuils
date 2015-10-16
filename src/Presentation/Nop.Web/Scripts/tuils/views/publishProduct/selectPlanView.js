@@ -50,11 +50,13 @@
                 this.$("#confirmationUrl").val(resp.get('ConfirmationUrl'));
                 this.$("#description").val(this.$('input[name="SelectedPlan"]:checked').attr('data-name'));
                 this.$("form").attr("action", resp.get('UrlPayment'));
-                this.$("form").submit();
+                //this.$("form").submit();
             },
             errorCreatingOrder: function (resp, err) {
-                if (err.responseJSON.ExceptionMessage)
-                    this.alert(err.responseJSON.ExceptionMessage);
+                //if (err.responseJSON.ExceptionMessage)
+                //    this.alert(err.responseJSON.ExceptionMessage);
+                //else if (err.responseJSON.Message)
+                //    this.alert(err.responseJSON.Message);
             },
             isFreePlan : function(){
                 var selectedPlan = this.model.get('PlanId');

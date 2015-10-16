@@ -1,4 +1,5 @@
 ﻿using Nop.Core;
+using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Orders;
@@ -47,12 +48,13 @@ namespace Nop.Web.Controllers.Api
         public readonly PaymentSettings _paymentSettings;
         public readonly TuilsSettings _tuilsSettings;
         public readonly AddressSettings _addressSettings;
-        
+        public readonly OrderSettings _orderSettings;
 
-        
 
-        public OrderPlansController(IOrderService orderService, 
-            IWorkContext workContext, 
+
+
+        public OrderPlansController(IOrderService orderService,
+            IWorkContext workContext,
             ILocalizationService localizationService,
             IStoreContext storeContext,
             IGenericAttributeService genericAttributeService,
@@ -68,7 +70,8 @@ namespace Nop.Web.Controllers.Api
             AddressSettings addressSettings,
             IPaymentService paymentService,
             PaymentSettings paymentSettings,
-            IPluginFinder pluginFinder)
+            IPluginFinder pluginFinder,
+            OrderSettings orderSettings)
         {
             this._orderService = orderService;
             this._workContext = workContext;
@@ -88,6 +91,7 @@ namespace Nop.Web.Controllers.Api
             this._paymentService = paymentService;
             this._paymentSettings = paymentSettings;
             this._pluginFinder = pluginFinder;
+            this._orderSettings = orderSettings;
         }
 
         /// <summary>
@@ -100,298 +104,265 @@ namespace Nop.Web.Controllers.Api
         {
             if (ModelState.IsValid)
             {
-
-
-
-                //*********TODO********Validar que este entre los rangos para pedir nuevamente el producto********************
-                //Si el usuario ya compró el producto omite las validaciones y devuelve un true
-                //if (_orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, model.ProductId))
-                //    return Ok(new { id = model.ProductId });
-                //*********TODO********Validar que este entre los rangos para pedir nuevamente el producto********************
-
-                
                 var selectedPlan = _productService.GetProductById(model.PlanId);
 
                 if (selectedPlan == null)
                     return BadRequest("El plan seleccionado no existe");
 
-
-                #region 1. Agregar al carrito de compras
-                //por defecto solo se puede adquirir un solo plan al tiempo
-                int quantity = 1;
-
-                //Inicialmente no tiene atributos
-                string attributes = string.Empty;
-
-
-                //save item
-                var addToCartWarnings = new List<string>();
-                var cartType = ShoppingCartType.ShoppingCart;
-
-                //Limpia el carrito ya que no se pueden agregar cosas diferentes al actual plan que intenta comprar
-                _workContext.CurrentCustomer.ShoppingCartItems
-                    .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
-                    .LimitPerStore(_storeContext.CurrentStore.Id)
-                    .ToList()
-                    .ForEach(sci => _shoppingCartService.DeleteShoppingCartItem(sci, false));
-
-                //add to the cart
-                addToCartWarnings.AddRange(_shoppingCartService.AddToCart(_workContext.CurrentCustomer,
-                    selectedPlan, cartType, _storeContext.CurrentStore.Id,
-                    attributes, decimal.Zero,
-                    null, null, quantity, true));
-
-                #region Return result
-
-                //Valida que no tenga errores al agregar al carrito
-                if (addToCartWarnings.Count > 0)
-                {
-                    string cartWarnings = String.Join("\n", addToCartWarnings.ToArray());
-                    _logger.Warning(cartWarnings);
-                    return InternalServerError(new Exception(cartWarnings));
-                }
-
-
-                //activity log
-                _customerActivityService.InsertActivity("PublicStore.AddToShoppingCart", _localizationService.GetResource("ActivityLog.PublicStore.AddToShoppingCart"), selectedPlan.Name);
-                #endregion
-
-                #endregion
-
-
-                #region 2. Agregar Direccion de facturación
-
-                var cart = _workContext.CurrentCustomer.ShoppingCartItems
-                    .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
-                    .LimitPerStore(_storeContext.CurrentStore.Id)
-                    .ToList();
-
                 try
                 {
-                    
-
-                    if (cart.Count == 0)
-                        throw new Exception("Your cart is empty");
-
-                    //Intenta consultar la dirección del usuario para que sea la de facturación
-                    if (model.AddressId > 0)
-                    {
-                        //existing address
-                        var address = _workContext.CurrentCustomer.Addresses.FirstOrDefault(a => a.Id == model.AddressId);
-                        if (address == null)
-                            throw new Exception("Address can't be loaded");
-
-                        _workContext.CurrentCustomer.BillingAddress = address;
-                        _customerService.UpdateCustomer(_workContext.CurrentCustomer);
-                    }
-                    else
-                    {
-                        //Intenta buscar la dirección del usuario por los datos enviados
-                        var newAddress = _workContext.CurrentCustomer.Addresses.ToList().FindAddress(
-                                _workContext.CurrentCustomer.GetFirstName(), _workContext.CurrentCustomer.GetLastName(), model.PhoneNumber,
-                                _workContext.CurrentCustomer.Email, null, null,
-                                model.Address, null, model.City,
-                                model.StateProvinceId, null,
-                                _tuilsSettings.defaultCountry, null);
-
-                        //Si no existe previamente la crea
-                        if (newAddress == null)
-                        {
-                            newAddress = new Address();
-                            newAddress.FirstName = _workContext.CurrentCustomer.GetFirstName();
-                            newAddress.LastName = _workContext.CurrentCustomer.GetLastName();
-                            newAddress.PhoneNumber = model.PhoneNumber;
-                            newAddress.StateProvinceId = model.StateProvinceId;
-                            newAddress.CountryId = _tuilsSettings.defaultCountry;
-                            newAddress.City = model.City;
-                            newAddress.Active = true;
-                            newAddress.CreatedOnUtc = DateTime.UtcNow;
-                            newAddress.Email = _workContext.CurrentCustomer.Email;
-                            newAddress.Country = _countryService.GetCountryById(newAddress.CountryId.Value);
-                            newAddress.Address1 = model.Address;
-                            _workContext.CurrentCustomer.Addresses.Add(newAddress);
-                        }
-
-                        _workContext.CurrentCustomer.BillingAddress = newAddress;
-                        _customerService.UpdateCustomer(_workContext.CurrentCustomer);
-                    }
-
+                    //Realiza la adquisición del plan
+                    return Ok(BuyPlan(model, selectedPlan));
+                }
+                catch (NopException exc)
+                {
+                    _logger.Debug(exc.Message, exc, _workContext.CurrentCustomer);
+                    return BadRequest(exc.Message);
                 }
                 catch (Exception exc)
                 {
                     _logger.Error(exc.Message, exc, _workContext.CurrentCustomer);
                     return InternalServerError(exc);
                 }
-
-                #endregion
-
-
-                #region 3. Agregar información del pago
-
-
-                bool isPaymentWorkflowRequired = IsPaymentWorkflowRequired(cart, true);
-                if (isPaymentWorkflowRequired)
-                {
-                    //filter by country
-                    int filterByCountryId = 0;
-                    if (_addressSettings.CountryEnabled &&
-                        _workContext.CurrentCustomer.BillingAddress != null &&
-                        _workContext.CurrentCustomer.BillingAddress.Country != null)
-                    {
-                        filterByCountryId = _workContext.CurrentCustomer.BillingAddress.Country.Id;
-                    }
-
-                    //payment is required
-                    var paymentMethodModel = PreparePaymentMethodModel(cart, filterByCountryId);
-
-                    if (_paymentSettings.BypassPaymentMethodSelectionIfOnlyOne &&
-                        paymentMethodModel.PaymentMethods.Count == 1 && !paymentMethodModel.DisplayRewardPoints)
-                    {
-                        //if we have only one payment method and reward points are disabled or the current customer doesn't have any reward points
-                        //so customer doesn't have to choose a payment method
-
-                        var selectedPaymentMethodSystemName = paymentMethodModel.PaymentMethods[0].PaymentMethodSystemName;
-                        _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
-                            SystemCustomerAttributeNames.SelectedPaymentMethod,
-                            selectedPaymentMethodSystemName, _storeContext.CurrentStore.Id);
-
-                        var paymentMethodInst = _paymentService.LoadPaymentMethodBySystemName(selectedPaymentMethodSystemName);
-                        if (paymentMethodInst == null ||
-                            !paymentMethodInst.IsPaymentMethodActive(_paymentSettings) ||
-                            !_pluginFinder.AuthenticateStore(paymentMethodInst.PluginDescriptor, _storeContext.CurrentStore.Id))
-                            throw new Exception("Selected payment method can't be parsed");
-
-                    }
-                    else {
-                        var ex  = new Exception("Hay más metodos de pago activos. Porfavor comunicar este error a info@tuils.com");
-                        _logger.Fatal("No hay o Hay más metodos de pago activos.", ex);
-                        throw ex;
-                    }
-                }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                var processPaymentRequest = new Nop.Services.Payments.ProcessPaymentRequest();
-                processPaymentRequest.StoreId = _storeContext.CurrentStore.Id;
-                processPaymentRequest.CustomerId = _workContext.CurrentCustomer.Id;
-                processPaymentRequest.PaymentMethodSystemName = _workContext.CurrentCustomer.GetAttribute<string>(
-                    SystemCustomerAttributeNames.SelectedPaymentMethod,
-                    _genericAttributeService, _storeContext.CurrentStore.Id);
-
-
-                //Despues de cargar el tipo de pago crea la orden
-                var placeOrderResult = _orderProcessingService.PlaceOrder(processPaymentRequest);
-
-
-                if (placeOrderResult.Success)
-                {
-                    var postProcessPaymentRequest = new PostProcessPaymentRequest
-                    {
-                        Order = placeOrderResult.PlacedOrder
-                    };
-
-                    var paymentMethod = _paymentService.LoadPaymentMethodBySystemName(placeOrderResult.PlacedOrder.PaymentMethodSystemName);
-                    if (paymentMethod == null)
-                        //payment method could be null if order total is 0
-                        //success
-                        return Json(new { success = 1 });
-
-                    //if (paymentMethod.PaymentMethodType == PaymentMethodType.Redirection)
-                    //{
-                    //    //redirect
-                    //    return Json(new
-                    //    {
-                    //        redirect = string.Format("{0}checkout/OpcCompleteRedirectionPayment", _webHelper.GetStoreLocation())
-                    //    });
-                    //}
-
-                    //_paymentService.PostProcessPayment(postProcessPaymentRequest);
-
-                    
-                    
-                    //var postProcessPaymentRequest = new PostProcessPaymentRequest
-                    //{
-                    //    Order = placeOrderResult.PlacedOrder
-                    //};
-
-                    
-                    //Despues de crear la orden realiza la validación y creación del Signature
-                    _paymentService.PostProcessPayment(postProcessPaymentRequest);
-
-                    //Asigna los datos a la respuesta y retorna
-                    var result = new CreateOrderResult();
-                    result.Signature = postProcessPaymentRequest.Signature;
-                    result.MerchantId = placeOrderResult.ResultPayment.AdditionalKeys["MerchantId"];
-                    result.ReferenceCode = postProcessPaymentRequest.ReferenceCode;
-                    result.AccountId = placeOrderResult.ResultPayment.AdditionalKeys["AccountId"];
-                    result.Amount = placeOrderResult.PlacedOrder.OrderTotal.ToString("0");
-                    result.Currency = _workContext.WorkingCurrency.CurrencyCode;
-                    result.ResponseUrl = placeOrderResult.ResultPayment.AdditionalKeys["ResponseUrl"];
-                    result.ConfirmationUrl = placeOrderResult.ResultPayment.AdditionalKeys["ConfirmationUrl"];
-                    result.UrlPayment = placeOrderResult.ResultPayment.AdditionalKeys["UrlPayment"];
-
-                    return Ok(result);
-                }
-                else
-                {
-                    string placeOrderResultErrors = String.Join("\n", placeOrderResult.Errors.ToArray());
-                    _logger.Warning(placeOrderResultErrors);
-                    return InternalServerError(new Exception(placeOrderResultErrors));
-                }
-
-
-
-
-                #endregion
-
-
-
-
-
-
-
-
-                return Ok();
-
-
-
-
-
-
-
-
-
             }
             else
             {
                 return BadRequest(ModelState);
             }
         }
+
+        #region BuyPlan
+        private CreateOrderResult BuyPlan(OrderPlanModel model, Product selectedPlan)
+        {
+            //Agrega el plan al carrito
+            AddPlanToCart(selectedPlan);
+
+            //Agrega la dirección de facturación
+            var cart = AddBillingAddress(model);
+
+            //Crea la solicitud de pago
+            var paymentRequest = AddPayment(cart);
+
+            //Procesa la orden y obtiene el resultado
+            return PlaceOrder(paymentRequest);
+        }
+
+        /// <summary>
+        /// Agrega el plan seleccionado al carrito
+        /// </summary>
+        /// <param name="selectedPlan"></param>
+        private void AddPlanToCart(Product selectedPlan)
+        {
+            //por defecto solo se puede adquirir un solo plan al tiempo
+            int quantity = 1;
+
+            //Inicialmente no tiene atributos
+            string attributes = string.Empty;
+
+
+            //save item
+            var addToCartWarnings = new List<string>();
+            var cartType = ShoppingCartType.ShoppingCart;
+
+
+            //Valida que el usuario no tenga ordenes pendientes de pagar en cierto tiempo
+            if (!_orderService.CustomerCanAddPlanToCart(_workContext.CurrentCustomer.Id))
+            {
+                throw new NopException(CodeNopException.CategoryDoesntExist, string.Format("Ya has iniciado un proceso de compra previamente, debes esperar a que se cumplan {0} minutos antes de intentarlo nuevamente", _orderSettings.MinutesBeforeCanAddPlanToCart));
+            }
+
+            //add to the cart
+            addToCartWarnings.AddRange(_shoppingCartService.AddToCart(_workContext.CurrentCustomer,
+                selectedPlan, cartType, _storeContext.CurrentStore.Id,
+                attributes, decimal.Zero,
+                null, null, quantity, true));
+
+            //Valida que no tenga errores al agregar al carrito
+            if (addToCartWarnings.Count > 0)
+            {
+                string cartWarnings = String.Join("\n", addToCartWarnings.ToArray());
+                _logger.Warning(cartWarnings);
+                throw new NopException(cartWarnings);
+            }
+
+
+            //activity log
+            _customerActivityService.InsertActivity("PublicStore.AddToShoppingCart", _localizationService.GetResource("ActivityLog.PublicStore.AddToShoppingCart"), selectedPlan.Name);
+        }
+
+        /// <summary>
+        /// Agrega la dirección de facturación
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        private IList<ShoppingCartItem> AddBillingAddress(OrderPlanModel model)
+        {
+            var cart = _workContext.CurrentCustomer.ShoppingCartItems
+                .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
+                .LimitPerStore(_storeContext.CurrentStore.Id)
+                .ToList();
+
+
+
+
+            if (cart.Count == 0)
+                throw new NopException("Your cart is empty");
+
+            //Intenta consultar la dirección del usuario para que sea la de facturación
+            if (model.AddressId > 0)
+            {
+                //existing address
+                var address = _workContext.CurrentCustomer.Addresses.FirstOrDefault(a => a.Id == model.AddressId);
+                if (address == null)
+                    throw new NopException("Address can't be loaded");
+
+                _workContext.CurrentCustomer.BillingAddress = address;
+                _customerService.UpdateCustomer(_workContext.CurrentCustomer);
+            }
+            else
+            {
+                //Intenta buscar la dirección del usuario por los datos enviados
+                var newAddress = _workContext.CurrentCustomer.Addresses.ToList().FindAddress(
+                        _workContext.CurrentCustomer.GetFirstName(), _workContext.CurrentCustomer.GetLastName(), model.PhoneNumber,
+                        _workContext.CurrentCustomer.Email, null, null,
+                        model.Address, null, model.City,
+                        model.StateProvinceId, null,
+                        _tuilsSettings.defaultCountry, null);
+
+                //Si no existe previamente la crea
+                if (newAddress == null)
+                {
+                    newAddress = new Address();
+                    newAddress.FirstName = _workContext.CurrentCustomer.GetFirstName();
+                    newAddress.LastName = _workContext.CurrentCustomer.GetLastName();
+                    newAddress.PhoneNumber = model.PhoneNumber;
+                    newAddress.StateProvinceId = model.StateProvinceId;
+                    newAddress.CountryId = _tuilsSettings.defaultCountry;
+                    newAddress.City = model.City;
+                    newAddress.Active = true;
+                    newAddress.CreatedOnUtc = DateTime.UtcNow;
+                    newAddress.Email = _workContext.CurrentCustomer.Email;
+                    newAddress.Country = _countryService.GetCountryById(newAddress.CountryId.Value);
+                    newAddress.Address1 = model.Address;
+                    _workContext.CurrentCustomer.Addresses.Add(newAddress);
+                }
+
+                _workContext.CurrentCustomer.BillingAddress = newAddress;
+                _customerService.UpdateCustomer(_workContext.CurrentCustomer);
+            }
+
+            return cart;
+        }
+
+        /// <summary>
+        /// Realiza las validaciones del tipo de pago que va realizar y retorna el request del pago dependiendo del plugin
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <returns></returns>
+        private ProcessPaymentRequest AddPayment(IList<ShoppingCartItem> cart)
+        {
+            bool isPaymentWorkflowRequired = IsPaymentWorkflowRequired(cart, true);
+            if (isPaymentWorkflowRequired)
+            {
+                //filter by country
+                int filterByCountryId = 0;
+                if (_addressSettings.CountryEnabled &&
+                    _workContext.CurrentCustomer.BillingAddress != null &&
+                    _workContext.CurrentCustomer.BillingAddress.Country != null)
+                {
+                    filterByCountryId = _workContext.CurrentCustomer.BillingAddress.Country.Id;
+                }
+
+                //payment is required
+                var paymentMethodModel = PreparePaymentMethodModel(cart, filterByCountryId);
+
+                if (_paymentSettings.BypassPaymentMethodSelectionIfOnlyOne &&
+                    paymentMethodModel.PaymentMethods.Count == 1 && !paymentMethodModel.DisplayRewardPoints)
+                {
+                    //if we have only one payment method and reward points are disabled or the current customer doesn't have any reward points
+                    //so customer doesn't have to choose a payment method
+
+                    var selectedPaymentMethodSystemName = paymentMethodModel.PaymentMethods[0].PaymentMethodSystemName;
+                    _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
+                        SystemCustomerAttributeNames.SelectedPaymentMethod,
+                        selectedPaymentMethodSystemName, _storeContext.CurrentStore.Id);
+
+                    var paymentMethodInst = _paymentService.LoadPaymentMethodBySystemName(selectedPaymentMethodSystemName);
+                    if (paymentMethodInst == null ||
+                        !paymentMethodInst.IsPaymentMethodActive(_paymentSettings) ||
+                        !_pluginFinder.AuthenticateStore(paymentMethodInst.PluginDescriptor, _storeContext.CurrentStore.Id))
+                        throw new Exception("Selected payment method can't be parsed");
+
+                }
+                else
+                {
+                    var ex = new Exception("Hay más metodos de pago activos. Porfavor comunicar este error a info@tuils.com");
+                    _logger.Fatal("No hay o Hay más metodos de pago activos.", ex);
+                    throw ex;
+                }
+            }
+
+
+            //Crea el request para el pago
+            var processPaymentRequest = new Nop.Services.Payments.ProcessPaymentRequest();
+            processPaymentRequest.StoreId = _storeContext.CurrentStore.Id;
+            processPaymentRequest.CustomerId = _workContext.CurrentCustomer.Id;
+            processPaymentRequest.PaymentMethodSystemName = _workContext.CurrentCustomer.GetAttribute<string>(
+                SystemCustomerAttributeNames.SelectedPaymentMethod,
+                _genericAttributeService, _storeContext.CurrentStore.Id);
+
+            return processPaymentRequest;
+        }
+
+        /// <summary>
+        /// Crea la orden y genera la respuesta para el cliente
+        /// </summary>
+        /// <param name="processPaymentRequest"></param>
+        /// <returns></returns>
+        private CreateOrderResult PlaceOrder(ProcessPaymentRequest processPaymentRequest)
+        {
+            //Despues de cargar el tipo de pago crea la orden
+            var placeOrderResult = _orderProcessingService.PlaceOrder(processPaymentRequest);
+
+            if (placeOrderResult.Success)
+            {
+                var postProcessPaymentRequest = new PostProcessPaymentRequest
+                {
+                    Order = placeOrderResult.PlacedOrder
+                };
+
+                var paymentMethod = _paymentService.LoadPaymentMethodBySystemName(placeOrderResult.PlacedOrder.PaymentMethodSystemName);
+                if (paymentMethod == null)
+                {
+                    throw new NopException("No fue seleccionado metodo de pago ");
+                }
+
+                //Despues de crear la orden realiza la validación y creación del Signature
+                _paymentService.PostProcessPayment(postProcessPaymentRequest);
+
+                //Asigna los datos a la respuesta y retorna
+                var result = new CreateOrderResult();
+                result.Signature = postProcessPaymentRequest.Signature;
+                result.MerchantId = placeOrderResult.ResultPayment.AdditionalKeys["MerchantId"];
+                result.ReferenceCode = postProcessPaymentRequest.ReferenceCode;
+                result.AccountId = placeOrderResult.ResultPayment.AdditionalKeys["AccountId"];
+                result.Amount = placeOrderResult.PlacedOrder.OrderTotal.ToString("0");
+                result.Currency = _workContext.WorkingCurrency.CurrencyCode;
+                result.ResponseUrl = placeOrderResult.ResultPayment.AdditionalKeys["ResponseUrl"];
+                result.ConfirmationUrl = placeOrderResult.ResultPayment.AdditionalKeys["ConfirmationUrl"];
+                result.UrlPayment = placeOrderResult.ResultPayment.AdditionalKeys["UrlPayment"];
+
+                return result;
+            }
+            else
+            {
+                string placeOrderResultErrors = String.Join("\n", placeOrderResult.Errors.ToArray());
+                _logger.Warning(placeOrderResultErrors);
+                throw new NopException(placeOrderResultErrors);
+            }
+        }
+            #endregion
+
 
         /// <summary>
         /// Codigo copiado de CheckoutController

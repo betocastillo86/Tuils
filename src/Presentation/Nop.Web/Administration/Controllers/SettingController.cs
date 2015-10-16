@@ -1554,6 +1554,7 @@ namespace Nop.Admin.Controllers
                 model.AttachPdfInvoiceToOrderCompletedEmail_OverrideForStore = _settingService.SettingExists(orderSettings, x => x.AttachPdfInvoiceToOrderCompletedEmail, storeScope);
                 model.ReturnRequestsEnabled_OverrideForStore = _settingService.SettingExists(orderSettings, x => x.ReturnRequestsEnabled, storeScope);
                 model.NumberOfDaysReturnRequestAvailable_OverrideForStore = _settingService.SettingExists(orderSettings, x => x.NumberOfDaysReturnRequestAvailable, storeScope);
+                model.MinutesBeforeCanAddPlanToCart_OverrideForStore = _settingService.SettingExists(orderSettings, x => x.MinutesBeforeCanAddPlanToCart, storeScope);
             }
 
             var currencySettings = _settingService.LoadSetting<CurrencySettings>(storeScope);
@@ -1626,6 +1627,11 @@ namespace Nop.Admin.Controllers
                     _settingService.SaveSetting(orderSettings, x => x.TermsOfServiceOnShoppingCartPage, storeScope, false);
                 else if (storeScope > 0)
                     _settingService.DeleteSetting(orderSettings, x => x.TermsOfServiceOnShoppingCartPage, storeScope);
+
+                if (model.MinutesBeforeCanAddPlanToCart_OverrideForStore || storeScope == 0)
+                    _settingService.SaveSetting(orderSettings, x => x.MinutesBeforeCanAddPlanToCart, storeScope, false);
+                else if (storeScope > 0)
+                    _settingService.DeleteSetting(orderSettings, x => x.MinutesBeforeCanAddPlanToCart, storeScope);
 
                 if (model.TermsOfServiceOnOrderConfirmPage_OverrideForStore || storeScope == 0)
                     _settingService.SaveSetting(orderSettings, x => x.TermsOfServiceOnOrderConfirmPage, storeScope, false);

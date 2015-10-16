@@ -95,6 +95,16 @@
         </tr>
         <tr>
             <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.MinutesBeforeCanAddPlanToCart_OverrideForStore, model => model.MinutesBeforeCanAddPlanToCart, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.MinutesBeforeCanAddPlanToCart):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.MinutesBeforeCanAddPlanToCart)
+                @Html.ValidationMessageFor(model => model.MinutesBeforeCanAddPlanToCart)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
                 @Html.OverrideStoreCheckboxFor(model => model.MinOrderSubtotalAmount_OverrideForStore, model => model.MinOrderSubtotalAmount, Model.ActiveStoreScopeConfiguration)
                 @Html.NopLabelFor(model => model.MinOrderSubtotalAmount):
             </td>
@@ -293,5 +303,6 @@
                 @Html.ValidationMessageFor(model => model.ReturnRequestActionsParsed)
             </td>
         </tr>
+        
     </table>
 }

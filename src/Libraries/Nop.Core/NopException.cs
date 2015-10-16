@@ -92,10 +92,17 @@ namespace Nop.Core
         /// El vendedor a alcanzado el limite de productos permitidos para vender
         /// </summary>
         UserHasReachedLimitOfProducts = 102,
+
+
         #endregion
 
         #region User
-        HasSessionActive = 201
+        HasSessionActive = 201,
+        #endregion
+
+        #region GetPlans
+        CustomerHasOrderPending = 301,
+
         #endregion
 
 

@@ -8,6 +8,7 @@ using Nop.Core.Infrastructure;
 using Nop.Services.Common;
 using Nop.Services.Localization;
 using Nop.Services.Catalog;
+using System.Linq;
 
 namespace Nop.Services.Customers
 {
@@ -128,6 +129,7 @@ namespace Nop.Services.Customers
 
             return null;
         }
+
 
 
         #region Gift cards

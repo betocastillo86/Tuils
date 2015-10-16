@@ -1022,6 +1022,9 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdSocialNetworks", "Especificación redes sociales");
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.PlanProductsFree", "Plan gratis para productos");
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.PlanStoresFree", "Plan gratis para tiendas");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Order.MinutesBeforeCanAddPlanToCart", "Minutos para liberar carrito");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Order.MinutesBeforeCanAddPlanToCart.Hint", "Número de minutos después de los que se puede reiniciar el carrito de compras cuando se desea adquirir un plan");
+                
                 
 
                 //Recorre todas las llaves que desea adicional
