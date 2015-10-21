@@ -40,11 +40,11 @@ namespace Nop.Data.Migrations
             bool runTemplatesEmails = false;
             bool runUrls = false;
             bool runTasks = false;
-            bool runPermissions = true;
+            bool runPermissions = false;
 
             /***DEBUG***/
-            if (System.Diagnostics.Debugger.IsAttached == false)
-                System.Diagnostics.Debugger.Launch();
+            //if (System.Diagnostics.Debugger.IsAttached == false)
+            //    System.Diagnostics.Debugger.Launch();
 
 
             #region Specification Attribute
@@ -1024,6 +1024,31 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.PlanStoresFree", "Plan gratis para tiendas");
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Order.MinutesBeforeCanAddPlanToCart", "Minutos para liberar carrito");
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Order.MinutesBeforeCanAddPlanToCart.Hint", "Número de minutos después de los que se puede reiniciar el carrito de compras cuando se desea adquirir un plan");
+                newLocaleStringResources.Add("PageTitle.ResponsePayment", "Respuesta del pago realizado");
+                newLocaleStringResources.Add("PageTitle.SelectPlan", "Selecciona un plan para destacar tus productos");
+
+
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.SelectedPlanName", "Plan seleccionado");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.ReferenceCode", "Referencia 1");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.ReferencePayUCode", "Referencia 2");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.State", "Estado de la transacción");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.TransactionValue", "Valor del pago");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.Currency", "Moneda");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.TransactionDate", "Fecha");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.ProductName", "Producto destacado");
+                newLocaleStringResources.Add("Plugins.PayUExternal.TransactionState.Approved", "Aprobado");
+                newLocaleStringResources.Add("Plugins.PayUExternal.TransactionState.Declined", "Rechazado");
+                newLocaleStringResources.Add("Plugins.PayUExternal.TransactionState.Expired", "Expirado");
+                newLocaleStringResources.Add("Plugins.PayUExternal.TransactionState.Pending", "Pendiente");
+                newLocaleStringResources.Add("Plugins.PayUExternal.TransactionState.Error", "Error");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.CreditCard", "Tarjeta de credito");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.PSE", "PSE");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.ACH", "ACH");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.DebitCard", "Debito");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.Cash", "Efectivo");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.Referenced", "Pago Referenciado");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.BankReferenced", "Pago en bancos");
+                newLocaleStringResources.Add("Plugins.PayUExternal.ErrorResponse.External", "No fue posible procesar tu orden. Comunicate con servicio al cliente con la referencia {0} y codigo de error {1}");
                 
                 
 

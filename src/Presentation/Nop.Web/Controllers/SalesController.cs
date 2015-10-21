@@ -16,6 +16,8 @@ using Nop.Core.Caching;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Services.Customers;
 using Nop.Services.Common;
+using Nop.Services.Orders;
+using Nop.Services.Payments;
 
 namespace Nop.Web.Controllers
 {
@@ -32,6 +34,8 @@ namespace Nop.Web.Controllers
         private readonly IProductService _productService;
         private readonly PlanSettings _planSettings;
         private readonly ICacheManager _cacheManager;
+        private readonly IOrderService _orderService;
+        private readonly IPaymentService _paymentService;
         #endregion
 
         #region Ctor
@@ -44,7 +48,9 @@ namespace Nop.Web.Controllers
             CatalogSettings catalogSettings,
             IProductService productService,
             PlanSettings planSettings,
-            ICacheManager cacheManager)
+            ICacheManager cacheManager,
+            IOrderService orderService,
+            IPaymentService paymentService)
         {
             this._categoryService = categoryService;
             this._tuilsSettings = tuilsSettings;
@@ -55,6 +61,8 @@ namespace Nop.Web.Controllers
             this._productService = productService;
             this._planSettings = planSettings;
             this._cacheManager = cacheManager;
+            this._orderService = orderService;
+            this._paymentService = paymentService;
         }
         #endregion
 
@@ -153,6 +161,7 @@ namespace Nop.Web.Controllers
             return View("PublishProduct", model);
         }
 
+        #region Planes Pagos
         /// <summary>
         /// Funcionalidad que permite seleccionar un plan  
         /// </summary>
@@ -163,13 +172,14 @@ namespace Nop.Web.Controllers
         {
             //Consulta de acuerdo al tipo de vendedor la categoria desde la cual va sacar los planes
             int categoryPlanId = _workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.User ? _planSettings.CategoryProductPlansId : _planSettings.CategoryStorePlansId;
-            
 
-            var model = new SelectPlanModel();
-            
+
+            var model = new SelectPlanModel() { ProductId = id };
+
             string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_ACTIVE_PLANS_MODEL_KEY, categoryPlanId);
-            model.Plans = _cacheManager.Get(cacheKey, () => { 
-            
+            model.Plans = _cacheManager.Get(cacheKey, () =>
+            {
+
                 //Consulta tdos los productos pertenecientes a la categoria de los planes
                 var plans = _productService.SearchProducts(categoryIds: new List<int>() { categoryPlanId });
 
@@ -182,13 +192,14 @@ namespace Nop.Web.Controllers
                     planModel.Name = plan.Name;
                     //Agrega las caracteristicas del plan
                     foreach (var spec in plan.ProductSpecificationAttributes)
-	                {
-		                planModel.Specifications.Add(new SelectPlanModel.SpecificationPlan(){
-                             Name = spec.SpecificationAttributeOption.SpecificationAttribute.Name,
-                             SpecificationAttributeId = spec.SpecificationAttributeOption.SpecificationAttributeId,
-                             Value = string.IsNullOrEmpty(spec.CustomValue) ? spec.SpecificationAttributeOption.Name : spec.CustomValue
+                    {
+                        planModel.Specifications.Add(new SelectPlanModel.SpecificationPlan()
+                        {
+                            Name = spec.SpecificationAttributeOption.SpecificationAttribute.Name,
+                            SpecificationAttributeId = spec.SpecificationAttributeOption.SpecificationAttributeId,
+                            Value = string.IsNullOrEmpty(spec.CustomValue) ? spec.SpecificationAttributeOption.Name : spec.CustomValue
                         });
-	                }
+                    }
 
                     listPlans.Add(planModel);
                 }
@@ -206,8 +217,8 @@ namespace Nop.Web.Controllers
                 model.CustomerAddressInformation.City = address.City;
                 model.CustomerAddressInformation.StateProvinceId = address.StateProvinceId.Value;
             }
-            
-            string cacheStatesKey = string.Format(ModelCacheEventConsumer.STATEPROVINCES_BY_COUNTRY_MODEL_KEY, _tuilsSettings.defaultCountry,  "empty",  _workContext.WorkingLanguage.Id);
+
+            string cacheStatesKey = string.Format(ModelCacheEventConsumer.STATEPROVINCES_BY_COUNTRY_MODEL_KEY, _tuilsSettings.defaultCountry, "empty", _workContext.WorkingLanguage.Id);
             model.StateProvinces = new SelectList(
                 _cacheManager.Get(cacheStatesKey, () => { return _stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry); })
                 , "Id", "Name",
@@ -216,16 +227,47 @@ namespace Nop.Web.Controllers
             model.CustomerInformation.Email = _workContext.CurrentCustomer.Email;
             model.CustomerInformation.PhoneNumber = _workContext.CurrentCustomer.GetAttribute<string>(SystemCustomerAttributeNames.Phone);
             model.CustomerInformation.FullName = _workContext.CurrentCustomer.GetFullName();
-            
+
 
             return View(model);
         }
 
         public ActionResult Prueba()
         {
-            
+
             return Content(string.Empty);
         }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult PaymentResponse(int referenceCode)
+        {
+            if (referenceCode <= 0)
+                return HttpNotFound();
+
+
+            //Consulta la información de la orden para validar que exista
+            var order = _orderService.GetOrderById(referenceCode);
+
+            if (order == null)
+                return HttpNotFound();
+
+            //consulta el metodo de pago para cargar la respuesta
+            var selectedPaymentMethod = _paymentService.LoadPaymentMethodBySystemName(order.PaymentMethodSystemName);
+            string controllerResponse = null;
+            string actionResponse = null;
+            System.Web.Routing.RouteValueDictionary routeValues;
+            selectedPaymentMethod.GetPaymentInfoRoute(out actionResponse, out controllerResponse, out routeValues);
+
+            var model = new PaymentResponseModel();
+            model.PluginControllerResponse = controllerResponse;
+            model.PluginActionResponse = actionResponse;
+            model.PluginRouteValuesResponse = routeValues;
+
+            return View(model);
+        }
+        #endregion
+       
 
         #region Metodos Privados
         private PublishProductModel GetPublishModel()

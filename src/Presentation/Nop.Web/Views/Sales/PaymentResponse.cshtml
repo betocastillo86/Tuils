@@ -1,0 +1,10 @@
+﻿@model Nop.Web.Models.Sales.PaymentResponseModel
+
+@{
+    Html.AddTitleParts(T("PageTitle.ResponsePayment").Text);
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+}
+
+<h2>ResponsePayment</h2>
+
+@Html.Action(Model.PluginActionResponse, Model.PluginControllerResponse, Model.PluginRouteValuesResponse)

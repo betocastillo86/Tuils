@@ -1,6 +1,7 @@
 using System;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Logging;
+using System.Text;
 
 namespace Nop.Services.Logging
 {
@@ -10,10 +11,33 @@ namespace Nop.Services.Logging
         {
             FilteredLog(logger, LogLevel.Debug, message, exception, customer);
         }
+
+        public static void Debug(this ILogger logger, object reflectObject, Exception exception = null, Customer customer = null)
+        {
+            FilteredLog(logger, LogLevel.Debug, ToStringObject(reflectObject), exception, customer);
+        }
+
         public static void Information(this ILogger logger, string message, Exception exception = null, Customer customer = null)
         {
             FilteredLog(logger, LogLevel.Information, message, exception, customer);
         }
+
+        public static void Information(this ILogger logger, object reflectObject, Exception exception = null, Customer customer = null)
+        {
+            FilteredLog(logger, LogLevel.Information, ToStringObject(reflectObject), exception, customer);
+        }
+
+        private static string ToStringObject(object reflectObject)
+        {
+            var str = new StringBuilder();
+            foreach (var prop in reflectObject.GetType().GetProperties())
+            {
+                str.AppendFormat("{0} = {1}\n", prop.Name, prop.GetValue(reflectObject));
+            }
+            return str.ToString();
+        }
+
+
         public static void Warning(this ILogger logger, string message, Exception exception = null, Customer customer = null)
         {
             FilteredLog(logger, LogLevel.Warning, message, exception, customer);

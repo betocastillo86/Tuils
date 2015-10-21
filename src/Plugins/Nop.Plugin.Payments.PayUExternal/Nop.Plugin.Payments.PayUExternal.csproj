@@ -91,6 +91,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\PayUExternalController.cs" />
+    <Compile Include="Models\PaymentMethodType.cs" />
+    <Compile Include="Models\PaymentResponseErrorCodes.cs" />
+    <Compile Include="Models\PaymentResponseErrorModel.cs" />
+    <Compile Include="Models\PaymentResponseModel.cs" />
+    <Compile Include="Models\PaymentResponseRequest.cs" />
+    <Compile Include="Models\TransactionState.cs" />
     <Compile Include="PayUExternalPlugin.cs" />
     <Compile Include="PayUExternalSettings.cs" />
     <Compile Include="Models\ConfigurationModel.cs" />
@@ -125,6 +131,12 @@
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\PayUExternal\PaymentResponse.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\PayUExternal\ErrorResponse.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="web.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

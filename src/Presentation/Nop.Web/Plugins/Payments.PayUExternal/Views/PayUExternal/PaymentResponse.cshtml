@@ -1,0 +1,21 @@
+﻿@{
+    Html.AddTitleParts(T("PageTitle.ResponsePayment").Text);
+    Layout = null;
+}
+@model Nop.Plugin.Payments.PayUExternal.Models.PaymentResponseModel
+<div>
+   <div>@T("Plugins.PayUExternal.PaymentResponse.SelectedPlanName"): @Model.SelectedPlanName</div>
+    
+    <div>@T("Plugins.PayUExternal.PaymentResponse.ReferenceCode"): @Model.ReferenceCode</div>
+    <div>@T("Plugins.PayUExternal.PaymentResponse.ReferencePayUCode"): @Model.ReferencePayUCode</div>
+    <div>@T("Plugins.PayUExternal.PaymentResponse.State"): @Model.State</div>
+    <div>@T("Plugins.PayUExternal.PaymentResponse.TransactionValue"): @Model.TransactionValue</div>
+    <div>@T("Plugins.PayUExternal.PaymentResponse.Currency"): @Model.Currency</div>
+    <div>@T("Plugins.PayUExternal.PaymentResponse.TransactionDate"): @Model.TransactionDate</div>
+
+    @if (Model.IsFeaturedProduct)
+    {
+        <div>@T("Plugins.PayUExternal.PaymentResponse.ProductName"): @Model.ProductName</div>
+    }
+
+</div>

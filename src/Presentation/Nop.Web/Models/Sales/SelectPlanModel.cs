@@ -31,6 +31,8 @@ namespace Nop.Web.Models.Sales
 
         public int SelectedPlan { get; set; }
 
+        public int ProductId { get; set; }
+
         /// <summary>
         /// Informacion del usuario
         /// </summary>

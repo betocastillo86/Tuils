@@ -9,7 +9,7 @@ namespace Nop.Plugin.Payments.PayUExternal
         public void RegisterRoutes(RouteCollection routes)
         {
             //routes.MapRoute("Plugin.Payments.PayUExternal.Configure",
-            //     "Plugins/PayUExternal/Configure",
+            //     "Sales/PaymentResponse",
             //     new { controller = "PayUExternal", action = "Configure" },
             //     new[] { "Nop.Plugin.Payments.PayUExternal.Controllers" }
             //);

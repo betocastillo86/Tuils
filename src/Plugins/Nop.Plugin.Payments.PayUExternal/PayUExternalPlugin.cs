@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Nop.Services.Localization;
 
 namespace Nop.Plugin.Payments.ExternalPayU
 {
@@ -50,11 +51,51 @@ namespace Nop.Plugin.Payments.ExternalPayU
         public void PostProcessPayment(PostProcessPaymentRequest postProcessPaymentRequest)
         {
             //Asigna las llaves que serán usadas para crear el signature
-            string referenceCode = (postProcessPaymentRequest.Order.Id + 10000).ToString();
+            string referenceCode = (postProcessPaymentRequest.Order.Id).ToString();
             string amount = postProcessPaymentRequest.Order.OrderTotal.ToString("0");
             string currency = postProcessPaymentRequest.Order.CustomerCurrencyCode;
             postProcessPaymentRequest.Signature = GenerateSignature(referenceCode, amount, currency);
             postProcessPaymentRequest.ReferenceCode = referenceCode;
+        }
+
+        public override void Install()
+        {
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.PaymentResponse.SelectedPlanName", "Plan seleccionado");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.PaymentResponse.ReferenceCode", "Referencia 1");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.PaymentResponse.ReferencePayUCode", "Referencia 2");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.PaymentResponse.State", "Estado de la transacción");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.PaymentResponse.TransactionValue", "Valor del pago");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.PaymentResponse.Currency", "Moneda");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.PaymentResponse.TransactionDate", "Fecha");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.PaymentResponse.ProductName", "Producto destacado");
+
+
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.TransactionState.Approved", "Aprobado");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.TransactionState.Declined", "Rechazado");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.TransactionState.Expired", "Expirado");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.TransactionState.Pending", "Pendiente");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.TransactionState.Error", "Error");
+
+
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.PaymentMethodType.CreditCard", "Tarjeta de credito");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.PaymentMethodType.PSE", "PSE");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.PaymentMethodType.ACH", "ACH");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.PaymentMethodType.DebitCard", "Debito");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.PaymentMethodType.Cash", "Efectivo");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.PaymentMethodType.Referenced", "Pago Referenciado");
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.PaymentMethodType.BankReferenced", "Pago en bancos");
+
+            this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.ErrorResponse.External", "No fue posible procesar tu orden. Comunicate con servicio al cliente con la referencia {0} y codigo de error {1}");
+            //this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.ErrorResponse.Internal.InvalidSignature", "La firma no corresponde con los datos enviados");
+            //this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.ErrorResponse.Internal.NoPlanSelected", "El producto del que se procesa el pago no es de tipo plan");
+            //this.AddOrUpdatePluginLocaleResource("Plugins.PayUExternal.ErrorResponse.Internal.NoProductSelected", "El plan seleccionado es de destacar producto pero no viene seleccionado ningún producto");
+            
+            base.Install();
+        }
+
+        public override void Uninstall()
+        {
+            base.Uninstall();
         }
 
         public bool HidePaymentMethod(IList<Core.Domain.Orders.ShoppingCartItem> cart)
@@ -106,7 +147,9 @@ namespace Nop.Plugin.Payments.ExternalPayU
 
         public void GetPaymentInfoRoute(out string actionName, out string controllerName, out System.Web.Routing.RouteValueDictionary routeValues)
         {
-            throw new NotImplementedException();
+            actionName = "PaymentResponse";
+            controllerName = "PayUExternal";
+            routeValues = new System.Web.Routing.RouteValueDictionary { { "Namespaces", "Nop.Plugin.Payments.PayUExternal.Controllers" }, { "area", null } };
         }
 
         public Type GetControllerType()
