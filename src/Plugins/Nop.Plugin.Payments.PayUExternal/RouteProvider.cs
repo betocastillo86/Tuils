@@ -8,11 +8,11 @@ namespace Nop.Plugin.Payments.PayUExternal
     {
         public void RegisterRoutes(RouteCollection routes)
         {
-            //routes.MapRoute("Plugin.Payments.PayUExternal.Configure",
-            //     "Sales/PaymentResponse",
-            //     new { controller = "PayUExternal", action = "Configure" },
-            //     new[] { "Nop.Plugin.Payments.PayUExternal.Controllers" }
-            //);
+            routes.MapRoute("Plugin.Payments.PayUExternal.PaymentConfirmation",
+                 "Sales/PaymentConfirmation",
+                 new { controller = "PayUExternal", action = "PaymentConfirmation" },
+                 new[] { "Nop.Plugin.Payments.PayUExternal.Controllers" }
+            );
             //routes.MapRoute("Plugin.Widgets.MegaMenu.PublicInfo",
             //     "Plugins/WidgetsMegaMenu/PublicInfo",
             //     new { controller = "WidgetsMegaMenu", action = "PublicInfo" },

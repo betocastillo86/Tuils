@@ -27,6 +27,9 @@ using Nop.Services.Stores;
 using Nop.Plugin.Payments.PayUExternal.Models;
 using Nop.Plugin.Payments.ExternalPayU;
 using Nop.Services.Logging;
+using Nop.Core.Domain.Orders;
+using Nop.Services.Helpers;
+using System.Transactions;
 
 
 namespace Nop.Plugin.Payments.PayUExternal.Controllers
@@ -43,6 +46,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
         private readonly ILogger _logger;
         private readonly PlanSettings _planSettings;
         private readonly IDateTimeHelper _dateTimeHelper;
+        private readonly IOrderProcessingService _orderProcessingService;
         
         public PayUExternalController(PayUExternalSettings settings,
             ISettingService settingService,
@@ -53,7 +57,8 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
             IPriceFormatter priceFormater,
             PlanSettings planSettings,
             ILogger logger,
-            IDateTimeHelper datetimeHelper)
+            IDateTimeHelper datetimeHelper,
+            IOrderProcessingService orderProcessingService)
         {
             this._settings = settings;
             this._settingService = settingService;
@@ -65,6 +70,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
             this._planSettings = planSettings;
             this._logger = logger;
             this._dateTimeHelper = datetimeHelper;
+            this._orderProcessingService = orderProcessingService;
         }
 
         #region Configure
@@ -112,29 +118,38 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
         {
 
             //Almacena la información de la petición
-            _logger.Information(command);
+            _logger.Information(command, "PaymentResponseRequest");
             
             
-            if (!IsValidSignature(command))
-                return ErrorResponse(command, PaymentResponseErrorCodes.InvalidSignature.ToString());
+            if (!IsValidSignatureResponse(command))
+                return ErrorResponse(command, PaymentResponseErrorCode.InvalidSignature.ToString());
             
             var order = _orderService.GetOrderById(command.referenceCode);
             //Valida que la orden exista, que sea del usuario que se encuentra autenticado y que tenga items
             if (order == null || order.CustomerId != _workContext.CurrentCustomer.Id || order.OrderItems.Count == 0)
-                return ErrorResponse(command, PaymentResponseErrorCodes.InvalidOrderNumber.ToString());
+                return ErrorResponse(command, PaymentResponseErrorCode.InvalidOrderNumber.ToString());
 
             var selectedPlan = order.OrderItems.First().Product;
 
             //Si el producto que viene seleccionado no es un plan o un destacado para un producto muestra el error
             int categoryId = selectedPlan.ProductCategories.First().CategoryId;
             if(categoryId != _planSettings.CategoryProductPlansId && categoryId != _planSettings.CategoryStorePlansId)
-                return ErrorResponse(command, PaymentResponseErrorCodes.NoPlanSelected.ToString());
+                return ErrorResponse(command, PaymentResponseErrorCode.NoPlanSelected.ToString());
 
             //Si el plan es para destacar el producto y no viene extra1 que refiere el codigo del producto destacado es error
             int selectedProductId = 0;
             if((categoryId == _planSettings.CategoryProductPlansId  && string.IsNullOrEmpty(command.extra1))
                 & (!int.TryParse(command.extra1, out selectedProductId) || selectedProductId == 0))
-                return ErrorResponse(command, PaymentResponseErrorCodes.NoProductSelected.ToString());
+                return ErrorResponse(command, PaymentResponseErrorCode.NoProductSelected.ToString());
+
+
+            //Guarda la nota de que ya el usuario paso por la respuesta
+            order.OrderNotes.Add(new OrderNote() { 
+                CreatedOnUtc = DateTime.UtcNow,
+                Note = command.ToStringObject("Response->")
+            });
+
+            _orderService.UpdateOrder(order);
 
             var model = new PaymentResponseModel();
             model.SelectedPlanName = selectedPlan.Name;
@@ -161,13 +176,15 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
         {
 
             var model = new PaymentResponseErrorModel();
-            model.ErrorMessage = string.Format( _localizationService.GetResource("Plugins.PayUExternal.ErrorResponse.External"), command.referenceCode,  errorName);
+            model.ErrorMessage = string.Format(_localizationService.GetResource("Plugins.PayUExternal.ErrorResponse.External"), command.referenceCode, errorName);
 
             //Guarda la información de la transaccion
             _logger.Warning(string.Format("No fue posible procesar la petición, codigo de error {0}. Transaccion PayU {1}", errorName, command.reference_pol));
 
             return View("~/Plugins/Payments.PayUExternal/Views/PayUExternal/ErrorResponse.cshtml", model);
         }
+
+        
 
         /// <summary>
         /// Realiza la validacion de la firma que viene en el request
@@ -184,7 +201,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns>true: firma valida false: firma invalida</returns>
-        private bool IsValidSignature(PaymentResponseRequest command)
+        private bool IsValidSignatureResponse(PaymentResponseRequest command)
         {
             //Round half to even
             //bool even = ((int)(command.TX_VALUE * 10) % 2) == 0;
@@ -195,8 +212,158 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
             return signatureToValidate.Equals(command.signature);
         }
 
+
+
+
+       
+
         #endregion
 
+        #region PaymentConfirmation
+        /// <summary>
+        /// Procesa la confirmación de la orden y la marca como paga y queda lista para ser publicada
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult PaymentConfirmation(PaymentConfirmationRequest command)
+        {
+
+            //Almacena la información de la petición
+            _logger.Information(command, "PaymentConfirmationRequest");
+
+
+            if (!IsValidSignatureConfirmation(command))
+                return ErrorConfirmation(command, PaymentConfirmationErrorCode.InvalidSignature, null);
+
+            var order = _orderService.GetOrderById(command.reference_sale);
+            //Valida que la orden exista, que sea del usuario que se encuentra autenticado y que tenga items
+            if (order == null || order.CustomerId != _workContext.CurrentCustomer.Id || order.OrderItems.Count == 0)
+                return ErrorConfirmation(command, PaymentConfirmationErrorCode.InvalidOrderNumber, order);
+
+            var selectedPlan = order.OrderItems.First().Product;
+
+            //Si el producto que viene seleccionado no es un plan o un destacado para un producto muestra el error
+            int categoryId = selectedPlan.ProductCategories.First().CategoryId;
+            if (categoryId != _planSettings.CategoryProductPlansId && categoryId != _planSettings.CategoryStorePlansId)
+                return ErrorConfirmation(command, PaymentConfirmationErrorCode.NoPlanSelected, order);
+
+            //Si el plan es para destacar el producto y no viene extra1 que refiere el codigo del producto destacado es error
+            int selectedProductId = 0;
+            if ((categoryId == _planSettings.CategoryProductPlansId && string.IsNullOrEmpty(command.extra1))
+                & (!int.TryParse(command.extra1, out selectedProductId) || selectedProductId == 0))
+                return ErrorConfirmation(command, PaymentConfirmationErrorCode.NoProductSelected, order);
+            
+            //Inicia la transacción ReadUncommited ya que no es necesario que aisle las tablas por el tipo de operación que se está haciendo
+            using (var scope = new System.Transactions.TransactionScope(TransactionScopeOption.Required, new TransactionOptions(){ IsolationLevel = IsolationLevel.ReadUncommitted }))
+            {
+                
+                //Guarda la nota de que ya el usuario paso por la confirmacion
+                order.OrderNotes.Add(new OrderNote()
+                {
+                    CreatedOnUtc = DateTime.UtcNow,
+                    Note = command.ToStringObject("Confirmation->")
+                });
+
+                _orderService.UpdateOrder(order);
+
+
+                //Valida si puede marcar la orden y la marca como paga
+                if (_orderProcessingService.CanMarkOrderAsPaid(order))
+                {
+                    order.AuthorizationTransactionId = command.transaction_id;
+                    _orderService.UpdateOrder(order);
+
+                    _orderProcessingService.MarkOrderAsPaid(order);
+
+                    //Despues de realizar los cambios actualiza los datos del plan
+                    _productService.AddPlanToProduct(selectedProductId, order);
+
+                    scope.Complete();
+                }
+                else
+                {
+                    //Realiza dispose manual ya que no puede realizar el commit de los cambios
+                    //Transaction.Current.Rollback();
+                    scope.Dispose();
+                    return ErrorConfirmation(command, PaymentConfirmationErrorCode.OrderAlreadyPaid, order);
+                }
+            }
+            
+
+            Response.StatusCode = 200;
+            return Json(new { Resultado = "Operación existosa" }, JsonRequestBehavior.AllowGet);
+        }
+
+        [NonAction]
+        public ActionResult ErrorConfirmation(PaymentConfirmationRequest command, PaymentConfirmationErrorCode errorName, Order order)
+        {
+
+            int errorCode = 0;
+
+            switch (errorName)
+            {
+                case PaymentConfirmationErrorCode.InvalidSignature:
+                case PaymentConfirmationErrorCode.NoPlanSelected:
+                case PaymentConfirmationErrorCode.NoProductSelected:
+                case PaymentConfirmationErrorCode.InvalidOrderNumber:
+                    errorCode = 400;
+                    break;
+                default:
+                    errorCode = 400;
+                    break;
+            }
+
+            if (order != null)
+            {
+                //Guarda la nota de error en la orden
+                order.OrderNotes.Add(new OrderNote()
+                {
+                    CreatedOnUtc = DateTime.UtcNow,
+                    Note = command.ToStringObject("ConfirmationError->")
+                });
+
+                _orderService.UpdateOrder(order);
+            }
+
+
+            Response.StatusCode = errorCode;
+
+            var model = new PaymentResponseErrorModel();
+            model.ErrorMessage = string.Format(_localizationService.GetResource("Plugins.PayUExternal.ErrorResponse.External"), command.reference_pol, errorName);
+            //Guarda la información de la transaccion
+            _logger.Warning(string.Format("No fue posible procesar la petición ErrorConfirmation, codigo de error {0}. Transaccion PayU {1}", errorName, command.reference_pol));
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Realiza la validacion de la firma que viene en el request de la confirmación
+        /// La validación de la firma te permite comprobar la integridad de los datos, deberás generar la firma con los datos que encontrarás en la página de respuesta y compararla con la información del parámetro signature.
+        //  Si el segundo decimal del parámetro value es cero, ejemplo: 150.00
+        //  El nuevo valor new_value para generar la firma debe ir con sólo un decimal así: 150.0.
+        //  Si el segundo decimal del parámetro value es diferente a cero, ejemplo: 150.26
+        //  El nuevo valor new_value para generar la firma debe ir con los dos decimales así: 150.26.
+        //  Los parámetros para generar la firma merchant_id, reference_sale, value, currency y state_pol debes obtenerlos de la página de confirmación, no de tu base de datos.
+        //  Debes tener almacenada tu ApiKey de forma segura.
+        //  Esquema de la firma:
+        //          "ApiKey~merchant_id~reference_sale~new_value~currency~state_pol"             
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns>true: firma valida false: firma invalida</returns>
+        private bool IsValidSignatureConfirmation(PaymentConfirmationRequest command)
+        {
+            //Realiza el redondeo, validando si tiene más de dos decimales o no
+            bool twoDecimals = ((decimal)(command.ValueDecimal * 10) - (command.ValueDecimal * 10)) > 0;
+            decimal newValue = twoDecimals ? command.ValueDecimal : Math.Round(command.ValueDecimal, 1, MidpointRounding.ToEven);
+
+            //TX_VALUE siempre a un decimal con el método de redondeo "Round half to even"
+            var signatureToValidate = Nop.Utilities.Cryptography.MD5(string.Format("{0}~{1}~{2}~{3}~{4}~{5}", _settings.ApiKey, _settings.MerchantId, command.reference_sale, newValue.ToString(new System.Globalization.CultureInfo("en-US")), command.currency, Convert.ToInt32(command.state_pol)));
+            return signatureToValidate.Equals(command.sign);
+        }
+
+
+        #endregion
         public override IList<string> ValidatePaymentForm(FormCollection form)
         {
             throw new NotImplementedException();

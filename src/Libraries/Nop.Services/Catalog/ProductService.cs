@@ -83,6 +83,7 @@ namespace Nop.Services.Catalog
         private readonly ILogger _logger;
         private readonly ICategoryService _categoryService;
         private readonly ILocalizationService _localizationService;
+        private readonly PlanSettings _planSettings;
         
 
 
@@ -153,7 +154,8 @@ namespace Nop.Services.Catalog
             ILogger logger,
             ICategoryService categoryService,
             ILocalizationService localizacionService,
-            IRepository<Vendor> vendorRepository)
+            IRepository<Vendor> vendorRepository,
+            PlanSettings planSettings)
         {
             this._cacheManager = cacheManager;
             this._productRepository = productRepository;
@@ -190,6 +192,7 @@ namespace Nop.Services.Catalog
             this._categoryService = categoryService;
             this._localizationService = localizacionService;
             this._vendorRepository = vendorRepository;
+            this._planSettings = planSettings;
         }
 
         #endregion
@@ -2555,6 +2558,109 @@ namespace Nop.Services.Catalog
             return query.ToList();
         }
         #endregion
-       
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="order"></param>
+        /// <param name="planId"></param>
+        public void AddPlanToProduct(int productId, Order order)
+        {
+            if (order == null)
+                throw new ArgumentNullException("order");
+
+            var product = GetProductById(productId);
+            if (product == null)
+                throw new ArgumentNullException("productId");
+
+
+            //La orden y el producto deben ser del mismo usuario
+            if (order.Customer.VendorId != product.VendorId)
+                throw new NopException("El cliente de la orden no corresponde con el del vendedor del producto");
+
+            //Agrega las caracteristicas del plan al producto
+            var selectedPlan = order.OrderItems.FirstOrDefault().Product;
+            foreach (var attributeValues in selectedPlan.ProductSpecificationAttributes)
+            {
+                //Recorre todos los atributos asignados al PLAN para despues asignar las propiedades al producto
+                var attribute = attributeValues.SpecificationAttributeOption.SpecificationAttribute;
+
+                var valueAttributeSelected = attributeValues.SpecificationAttributeOption.Name;
+
+                //valida si el atributo es el número de días que va estar la publicación activa
+                if (attribute.Id == _planSettings.SpecificationAttributeIdLimitDays)
+                {
+                    //Actualiza la fecha de cierre del producto de acuerdo al valor en dias del plan
+                    product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(Convert.ToInt32(valueAttributeSelected));
+                }
+                //si el atributo es el número de fotografías inhabilita las sobrantes
+                else if (attribute.Id == _planSettings.SpecificationAttributeIdPictures)
+                {
+                    int maxNum = Convert.ToInt32(valueAttributeSelected);
+                    //Si las fotos son más que las que puede publicar las desactiva
+                    if (product.ProductPictures.Count > maxNum)
+                    {
+                        product.ProductPictures.Skip(maxNum)
+                            .ToList()
+                            .ForEach(p => {
+                                _productPictureRepository.Delete(p);
+                            });
+                    }
+                }
+                //si el atributo es la exposición que tiene el producto lo actualiza
+                else if (attribute.Id == _planSettings.SpecificationAttributeIdDisplayOrder)
+                {
+                    //Actualiza la propiedad del orden en el que se deben mostrar los productos
+                    product.DisplayOrder = Convert.ToInt32(valueAttributeSelected);
+                }
+                //Si es banda rotativa actualiza los valores correspondientes
+                else if (attribute.Id == _planSettings.SpecificationAttributeIdSliders)
+                {
+                    //So el valor asignado es el de categorias, destaca las categorías
+                    if (attributeValues.SpecificationAttributeOptionId == _planSettings.OptionAttributeFeaturedCategories)
+                    {
+                        //Busca las categorias del producto para destacarlas
+                        foreach (var category in product.ProductCategories)
+                        {
+                            category.IsFeaturedProduct = true;
+                        }
+                    }
+                    //So el valor asignado es el de marcas, destaca las marcas
+                    else if (attributeValues.SpecificationAttributeOptionId == _planSettings.OptionAttributeFeaturedManufacturers)
+                    {
+                        //Busca las marcas del producto para destacarlas
+                        foreach (var manufacturer in product.ProductManufacturers)
+                        {
+                            manufacturer.IsFeaturedProduct = true;
+                        }
+                    }
+                    else if (attributeValues.SpecificationAttributeOptionId == _planSettings.OptionAttributeFeaturedLeft)
+                    {
+                        product.LeftFeatured = true;
+                    }
+                    //IMPORTANTE. Para los destacados como relacionados se va dejar el mismo OptionAttributeFeaturedCategories
+                    //al filtrar los productos de la misma categoría del producto que se está mostrando
+                }
+                //Destaca los del home
+                else if (attribute.Id == _planSettings.SpecificationAttributeIdHomePage)
+                {
+                    product.ShowOnHomePage = true;
+                }
+                //Destaca los de las redes sociales
+                else if (attribute.Id == _planSettings.SpecificationAttributeIdSocialNetworks)
+                {
+                    product.SocialNetworkFeatured = true;
+                }
+            }
+
+            product.OrderPlanId = order.Id;
+
+            //Actualiza el producto con las acciones realizadas
+            UpdateProduct(product);
+
+
+        }
     }
 }

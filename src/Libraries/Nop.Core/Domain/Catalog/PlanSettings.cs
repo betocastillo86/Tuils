@@ -34,5 +34,30 @@ namespace Nop.Core.Domain.Catalog
         public int SpecificationAttributeIdHomePage { get; set; }
 
         public int SpecificationAttributeIdSocialNetworks { get; set; }
+
+
+
+        #region Opciones banda rotativa
+
+        /// <summary>
+        /// Destacado en las bandas de las categorias
+        /// </summary>
+        public int OptionAttributeFeaturedCategories { get; set; }
+
+        /// <summary>
+        /// Destacado en las bandas de las marcas
+        /// </summary>
+        public int OptionAttributeFeaturedManufacturers { get; set; }
+
+        /// <summary>
+        /// Destacado en las bandas de los relacionados
+        /// </summary>
+        public int OptionAttributeFeaturedRelated { get; set; }
+
+        /// <summary>
+        /// Destacado en la izquierda
+        /// </summary>
+        public int OptionAttributeFeaturedLeft { get; set; }
+        #endregion
     }
 }

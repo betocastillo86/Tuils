@@ -1049,6 +1049,14 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.Referenced", "Pago Referenciado");
                 newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.BankReferenced", "Pago en bancos");
                 newLocaleStringResources.Add("Plugins.PayUExternal.ErrorResponse.External", "No fue posible procesar tu orden. Comunicate con servicio al cliente con la referencia {0} y codigo de error {1}");
+
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.OptionAttributeFeaturedCategories", "Destacado en Categorias");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.OptionAttributeFeaturedManufacturers", "Destacado en marcas");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.OptionAttributeFeaturedRelated", "Destacado en productos relacionados");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.OptionAttributeFeaturedLeft", "Destacado a la izquierda");
+                newLocaleStringResources.Add("Admin.Catalog.Products.Fields.SocialNetworkFeatured", "Destacado en redes sociales");
+                newLocaleStringResources.Add("Admin.Catalog.Products.Fields.SocialNetworkFeatured.Hint", "Destacado en redes sociales");
+                
                 
                 
 

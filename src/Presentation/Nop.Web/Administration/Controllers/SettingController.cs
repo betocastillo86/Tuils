@@ -1033,6 +1033,20 @@ namespace Nop.Admin.Controllers
                 }
             }
 
+            ///Carga las opciones de tipos de sliders existentes basados en que ya hayan seleccionado
+            ///previamente model.SpecificationAttributeIdSliders
+            if (model.SpecificationAttributeIdSliders > 0)
+            {
+                foreach (var option in _specificationAttributeService.GetSpecificationAttributeOptionsBySpecificationAttribute(model.SpecificationAttributeIdSliders))
+                {
+                    model.AvailableSpecificationAttributeOptionsSliders.Add(new SelectListItem()
+                    {
+                        Text = option.Name,
+                        Value = option.Id.ToString()
+                    });
+                }
+            }
+
         }
 
 

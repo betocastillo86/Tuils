@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Nop.Plugin.Payments.PayUExternal.Models
 {
-    public enum PaymentResponseErrorCode
+    public enum PaymentConfirmationErrorCode
     {
         InvalidSignature,
         NoPlanSelected,
         NoProductSelected,
-        InvalidOrderNumber
+        InvalidOrderNumber,
+        OrderAlreadyPaid
     }
 }

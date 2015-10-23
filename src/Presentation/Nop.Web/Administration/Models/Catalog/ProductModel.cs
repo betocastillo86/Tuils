@@ -87,6 +87,9 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.LeftFeatured")]
         public bool LeftFeatured { get; set; }
 
+        [NopResourceDisplayName("Admin.Catalog.Products.Fields.SocialNetworkFeatured")]
+        public bool SocialNetworkFeatured { get; set; }
+
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.MetaKeywords")]
         [AllowHtml]
         public string MetaKeywords { get; set; }

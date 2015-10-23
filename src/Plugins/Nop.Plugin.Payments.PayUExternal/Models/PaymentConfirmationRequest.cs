@@ -20,7 +20,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Models
 
         public string response_code_pol { get; set; }
 
-        public string reference_sale { get; set; }
+        public int reference_sale { get; set; }
 
         public string reference_pol { get; set; }
 
@@ -36,7 +36,13 @@ namespace Nop.Plugin.Payments.PayUExternal.Models
 
         public int installments_number { get; set; }
 
-        public int value { get; set; }
+        public string value {get; set; }
+
+        public decimal ValueDecimal { 
+            get { 
+                return Convert.ToDecimal(this.value, new System.Globalization.CultureInfo("en-US")); 
+            } 
+        }
 
         public decimal tax { get; set; }
 

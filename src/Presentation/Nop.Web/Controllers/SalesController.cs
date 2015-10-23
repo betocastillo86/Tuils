@@ -266,6 +266,7 @@ namespace Nop.Web.Controllers
 
             return View(model);
         }
+
         #endregion
        
 
@@ -276,10 +277,12 @@ namespace Nop.Web.Controllers
             model.LimitDaysOfProductPublished = _catalogSettings.LimitDaysOfProductPublished;
 
             string cacheStatesKey = string.Format(ModelCacheEventConsumer.STATEPROVINCES_BY_COUNTRY_MODEL_KEY, _tuilsSettings.defaultCountry, "empty", _workContext.WorkingLanguage.Id);
-            model.StateProvinces = _cacheManager.Get(cacheStatesKey, () =>
-            {
-                return new SelectList(_stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry), "Id", "Name");
+
+            var stateProvinces = _cacheManager.Get(cacheStatesKey, () => {
+                return _stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry);
             });
+
+            model.StateProvinces = new SelectList(stateProvinces, "Id", "Name");
 
             model.IsMobileDevice = Request.Browser.IsMobileDevice;
             model.HasReachedLimitOfProducts = HasReachedLimitOfProducts();

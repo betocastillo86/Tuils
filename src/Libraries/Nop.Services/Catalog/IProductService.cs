@@ -631,5 +631,12 @@ namespace Nop.Services.Catalog
         /// <param name="bestRating">Variable de salida con la mejor calificacion</param>
         /// <param name="worstRating">Varibale de salida con la peor calificación</param>
         void GetBestWorstRating(int productId, out int bestRating, out int worstRating);
+
+        /// <summary>
+        /// Agrega las caracteristicas de un plan a un producto después de que este fue pago
+        /// </summary>
+        /// <param name="product">datos del producto a marcar</param>
+        /// <param name="order">datos de la orden relacionada</param>
+        void AddPlanToProduct(int productId, Order order);
     }
 }

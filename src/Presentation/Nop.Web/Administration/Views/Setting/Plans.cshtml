@@ -118,5 +118,57 @@
                 @Html.ValidationMessageFor(m => m.SpecificationAttributeIdSocialNetworks)
             </td>
         </tr>
+
     </table>
+    
+    if (Model.SpecificationAttributeIdSliders > 0)
+    {
+        <hr />
+        <table>
+            <tr>
+                <td colspan="2">TIPOS DE BANDAS ROTATIVAS</td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(m => m.OptionAttributeFeaturedCategories):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(m => m.OptionAttributeFeaturedCategories, Model.AvailableSpecificationAttributeOptionsSliders)
+                    @Html.ValidationMessageFor(m => m.OptionAttributeFeaturedCategories)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(m => m.OptionAttributeFeaturedManufacturers):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(m => m.OptionAttributeFeaturedManufacturers, Model.AvailableSpecificationAttributeOptionsSliders)
+                    @Html.ValidationMessageFor(m => m.OptionAttributeFeaturedManufacturers)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(m => m.OptionAttributeFeaturedRelated):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(m => m.OptionAttributeFeaturedRelated, Model.AvailableSpecificationAttributeOptionsSliders)
+                    @Html.ValidationMessageFor(m => m.OptionAttributeFeaturedRelated)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(m => m.OptionAttributeFeaturedLeft):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(m => m.OptionAttributeFeaturedLeft, Model.AvailableSpecificationAttributeOptionsSliders)
+                    @Html.ValidationMessageFor(m => m.OptionAttributeFeaturedLeft)
+                </td>
+            </tr>
+        </table>
+    }
+
+
 }

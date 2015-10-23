@@ -492,6 +492,11 @@ namespace Nop.Core.Domain.Catalog
         public Nullable<bool> LeftFeatured { get; set; }
 
         /// <summary>
+        /// Productos destacados en redes sociales
+        /// </summary>
+        public bool SocialNetworkFeatured { get; set; }
+
+        /// <summary>
         /// Número de clicks que han dado los usuarios que desean saber más información acerca de un producto
         /// Estos no se cuentan cuando el usuario está autenticado
         /// </summary>

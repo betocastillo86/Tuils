@@ -14,6 +14,7 @@ namespace Nop.Admin.Models.Settings
             AvailableSpecificationAttributes = new List<SelectListItem>();
             AvailableStoresPlans = new List<SelectListItem>();
             AvailableProductsPlans = new List<SelectListItem>();
+            AvailableSpecificationAttributeOptionsSliders = new List<SelectListItem>();
         }
         
         [NopResourceDisplayName("Admin.Configuration.Settings.Plans.CategoryProductPlans")]
@@ -54,6 +55,35 @@ namespace Nop.Admin.Models.Settings
         [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributeIdSocialNetworks")]
         public int SpecificationAttributeIdSocialNetworks { get; set; }
 
+
+        #region Opciones banda rotativa
+        
+        /// <summary>
+        /// Destacado en las bandas de las categorias
+        /// </summary>
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.OptionAttributeFeaturedCategories")]
+        public int OptionAttributeFeaturedCategories { get; set; }
+
+        /// <summary>
+        /// Destacado en las bandas de las marcas
+        /// </summary>
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.OptionAttributeFeaturedManufacturers")]
+        public int OptionAttributeFeaturedManufacturers { get; set; }
+
+        /// <summary>
+        /// Destacado en las bandas de los relacionados
+        /// </summary>
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.OptionAttributeFeaturedRelated")]
+        public int OptionAttributeFeaturedRelated { get; set; }
+
+        /// <summary>
+        /// Destacado en la izquierda
+        /// </summary>
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.OptionAttributeFeaturedLeft")]
+        public int OptionAttributeFeaturedLeft { get; set; }
+        #endregion
+
+
         public IList<SelectListItem> AvailableCategories { get; set; }
 
 
@@ -64,6 +94,10 @@ namespace Nop.Admin.Models.Settings
         public IList<SelectListItem> AvailableSpecificationAttributes { get; set; }
 
         public IList<SelectListItem> AvailableSpecificationAttributeOptions { get; set; }
+
+        
+        public IList<SelectListItem> AvailableSpecificationAttributeOptionsSliders { get; set; }
+
 
     }
 }

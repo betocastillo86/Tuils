@@ -52,6 +52,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -91,6 +92,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\PayUExternalController.cs" />
+    <Compile Include="Models\PaymentConfirmationErrorCode.cs" />
+    <Compile Include="Models\PaymentConfirmationRequest.cs" />
     <Compile Include="Models\PaymentMethodType.cs" />
     <Compile Include="Models\PaymentResponseErrorCodes.cs" />
     <Compile Include="Models\PaymentResponseErrorModel.cs" />
