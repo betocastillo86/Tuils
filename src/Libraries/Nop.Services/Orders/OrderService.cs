@@ -706,10 +706,12 @@ namespace Nop.Services.Orders
         {
             //Cuenta las ordenes que están pendientes de pago y que han sido creadas en los ultimos 20 minutos
             int paymentPending= Convert.ToInt32(PaymentStatus.Pending);
+            int orderStatusPending = Convert.ToInt32(PaymentStatus.Pending);
             DateTime limitDate = DateTime.UtcNow.AddMinutes(_orderSettings.MinutesBeforeCanAddPlanToCart * -1);
             var orders = _orderRepository.Table
                 .Where(o => o.CustomerId == customerId
-                    && o.PaymentStatusId == paymentPending
+                    //&& o.PaymentStatusId == paymentPending
+                    && o.OrderStatusId == orderStatusPending
                     && o.CreatedOnUtc > limitDate)
                 .ToList();
 

@@ -244,10 +244,11 @@
                 if (this.viewImageSelector) this.viewImageSelector.remove();
                 this.viewProductDetail.remove();
                 this.viewSummary.remove();
-                this.showFinish();
+                //this.showFinish();
                 this.trackGAEvent('Publicacion', 'Exitosa');
-                Backbone.history.navigate("quiero-vender/publicacion-exitosa");
+                //Backbone.history.navigate("quiero-vender/publicacion-exitosa");
                 TuilsStorage.setPublishProduct(undefined);
+                document.location.href = '/mis-productos/seleccionar-plan/' + this.model.get('Id');
             },
             save: function () {
                 this.validateAuthorization();

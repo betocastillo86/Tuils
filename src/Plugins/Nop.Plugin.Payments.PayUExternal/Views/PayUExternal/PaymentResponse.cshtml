@@ -17,5 +17,10 @@
     {
         <div>@T("Plugins.PayUExternal.PaymentResponse.ProductName"): @Model.ProductName</div>
     }
+    
+    @if (Model.TransactionRejected)
+    { 
+        @Html.ActionLink("Intenar con otro medio de pago", "SelectPlan", "Sales", new { id = Model.ProductId }, new { })
+    }
 
 </div>

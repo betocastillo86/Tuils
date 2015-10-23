@@ -158,13 +158,16 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
             model.State = _localizationService.GetResource(string.Format("Plugins.PayUExternal.TransactionState.{0}", command.transactionState));
             model.TransactionValue = _priceFormater.FormatPrice(order.OrderTotal);
             model.Currency = command.currency;
-            model.TransactionDate = Convert.ToDateTime(command.processingDate).ToShortDateString(); 
+            model.TransactionDate = Convert.ToDateTime(command.processingDate).ToShortDateString();
+
+            model.TransactionRejected = command.transactionState == TransactionState.Declined || command.transactionState == TransactionState.Error || command.transactionState == TransactionState.Expired;
 
             //Si el plan seleccionado es especial para destacar un producto, carga la información del mismo en el modelo
             if (categoryId == _planSettings.CategoryProductPlansId)
             { 
                 var product = _productService.GetProductById(selectedProductId);
                 model.ProductName = product.Name;
+                model.ProductId = product.Id;
                 model.IsFeaturedProduct = true;
             }
             
@@ -253,43 +256,69 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
             if ((categoryId == _planSettings.CategoryProductPlansId && string.IsNullOrEmpty(command.extra1))
                 & (!int.TryParse(command.extra1, out selectedProductId) || selectedProductId == 0))
                 return ErrorConfirmation(command, PaymentConfirmationErrorCode.NoProductSelected, order);
-            
+
+
+           
             //Inicia la transacción ReadUncommited ya que no es necesario que aisle las tablas por el tipo de operación que se está haciendo
-            using (var scope = new System.Transactions.TransactionScope(TransactionScopeOption.Required, new TransactionOptions(){ IsolationLevel = IsolationLevel.ReadUncommitted }))
+            using (var scope = new System.Transactions.TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                
+
                 //Guarda la nota de que ya el usuario paso por la confirmacion
                 order.OrderNotes.Add(new OrderNote()
                 {
                     CreatedOnUtc = DateTime.UtcNow,
-                    Note = command.ToStringObject("Confirmation->")
+                    Note = command.ToStringObject(string.Format("Confirmation{0}->", command.state_pol))
                 });
 
                 _orderService.UpdateOrder(order);
 
 
-                //Valida si puede marcar la orden y la marca como paga
-                if (_orderProcessingService.CanMarkOrderAsPaid(order))
+                switch (command.state_pol)
                 {
-                    order.AuthorizationTransactionId = command.transaction_id;
-                    _orderService.UpdateOrder(order);
+                    case TransactionState.Approved:
+                        //Valida si puede marcar la orden y la marca como paga
+                        if (_orderProcessingService.CanMarkOrderAsPaid(order))
+                        {
+                            order.AuthorizationTransactionId = command.transaction_id;
+                            //_orderService.UpdateOrder(order);
 
-                    _orderProcessingService.MarkOrderAsPaid(order);
+                            _orderProcessingService.MarkOrderAsPaid(order);
 
-                    //Despues de realizar los cambios actualiza los datos del plan
-                    _productService.AddPlanToProduct(selectedProductId, order);
+                            //Despues de realizar los cambios actualiza los datos del plan
+                            _productService.AddPlanToProduct(selectedProductId, order);
 
-                    scope.Complete();
+                            scope.Complete();
+                        }
+                        else
+                        {
+                            //Realiza dispose manual ya que no puede realizar el commit de los cambios
+                            //Transaction.Current.Rollback();
+                            scope.Dispose();
+                            return ErrorConfirmation(command, PaymentConfirmationErrorCode.OrderAlreadyPaid, order);
+                        }
+                        break;
+                    //Si hay errror realiza la cancelación de la orden y el usuario debe reiniciar la transacción
+                    case TransactionState.Declined:
+                    case TransactionState.Expired:
+                    case TransactionState.Error:
+                        if (_orderProcessingService.CanCancelOrder(order))
+                        {
+                            _orderProcessingService.CancelOrder(order, true);
+                            scope.Complete();
+                        }
+                        else
+                        {
+                            scope.Dispose();
+                            return ErrorConfirmation(command, PaymentConfirmationErrorCode.OrderAlreadyPaid, order);
+                        }
+                        break;
+                    case TransactionState.Pending:
+                    default:
+                        break;
                 }
-                else
-                {
-                    //Realiza dispose manual ya que no puede realizar el commit de los cambios
-                    //Transaction.Current.Rollback();
-                    scope.Dispose();
-                    return ErrorConfirmation(command, PaymentConfirmationErrorCode.OrderAlreadyPaid, order);
-                }
+
+
             }
-            
 
             Response.StatusCode = 200;
             return Json(new { Resultado = "Operación existosa" }, JsonRequestBehavior.AllowGet);

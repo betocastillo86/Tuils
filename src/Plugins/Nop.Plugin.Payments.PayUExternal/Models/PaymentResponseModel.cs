@@ -32,6 +32,16 @@ namespace Nop.Plugin.Payments.PayUExternal.Models
         public bool IsFeaturedProduct { get; set; }
 
         /// <summary>
+        /// Si la transaccion fue rechazada o no
+        /// </summary>
+        public bool TransactionRejected { get; set; }
+
+        /// <summary>
+        /// Nombre del producto que se desea destacar
+        /// </summary>
+        public int ProductId { get; set; }
+        
+        /// <summary>
         /// Nombre del producto que se desea destacar
         /// </summary>
         public string ProductName { get; set; }
