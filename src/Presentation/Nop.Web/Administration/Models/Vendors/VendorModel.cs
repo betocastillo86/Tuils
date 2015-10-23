@@ -74,6 +74,36 @@ namespace Nop.Admin.Models.Vendors
         [NopResourceDisplayName("Admin.Vendors.Fields.AssociatedCustomerEmails")]
         public IList<string> AssociatedCustomerEmails { get; set; }
 
+
+        public int VendorTypeId { get; set; }
+
+        public bool? EnableCreditCardPayment { get; set; }
+
+        public bool? EnableShipping { get; set; }
+
+        public int? PictureId { get; set; }
+
+        public int? BackgroundPictureId { get; set; }
+
+        public double? AvgRating { get; set; }
+
+        public int? BackgroundPosition { get; set; }
+
+        /// <summary>
+        /// Numero de veces que ha sido calificado un producto vendido por el usuario
+        /// </summary>
+        public int NumRatings { get; set; }
+
+        /// <summary>
+        /// Numero de contacto principal del vendedor
+        /// </summary>
+        public string PhoneNumber { get; set; }
+
+        /// <summary>
+        /// Numero de preguntas sin contestar de un vendedor
+        /// </summary>
+        public int UnansweredQuestions { get; set; }
+
     }
 
     public partial class VendorLocalizedModel : ILocalizedModelLocal

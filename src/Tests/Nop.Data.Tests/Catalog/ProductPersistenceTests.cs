@@ -221,7 +221,8 @@ namespace Nop.Data.Tests.Catalog
                               Published = true,
                               Deleted = false,
                               CreatedOnUtc = new DateTime(2010, 01, 01),
-                              UpdatedOnUtc = new DateTime(2010, 01, 02)
+                              UpdatedOnUtc = new DateTime(2010, 01, 02),
+                              VendorId = 2
                           };
             product.ProductCategories.Add
                 (
@@ -270,7 +271,8 @@ namespace Nop.Data.Tests.Catalog
                               Published = true,
                               Deleted = false,
                               CreatedOnUtc = new DateTime(2010, 01, 01),
-                              UpdatedOnUtc = new DateTime(2010, 01, 02)
+                              UpdatedOnUtc = new DateTime(2010, 01, 02),
+                              VendorId = 2
                           };
             product.ProductManufacturers.Add
                 (
@@ -319,7 +321,8 @@ namespace Nop.Data.Tests.Catalog
                               Published = true,
                               Deleted = false,
                               CreatedOnUtc = new DateTime(2010, 01, 01),
-                              UpdatedOnUtc = new DateTime(2010, 01, 02)
+                              UpdatedOnUtc = new DateTime(2010, 01, 02),
+                              VendorId = 2
                           };
             product.ProductPictures.Add
                 (
@@ -355,7 +358,8 @@ namespace Nop.Data.Tests.Catalog
                 Published = true,
                 Deleted = false,
                 CreatedOnUtc = new DateTime(2010, 01, 01),
-                UpdatedOnUtc = new DateTime(2010, 01, 02)
+                UpdatedOnUtc = new DateTime(2010, 01, 02),
+                VendorId = 2
             };
             product.ProductTags.Add
                 (
@@ -382,6 +386,7 @@ namespace Nop.Data.Tests.Catalog
                 Name = "Product name 1",
                 CreatedOnUtc = new DateTime(2010, 01, 03),
                 UpdatedOnUtc = new DateTime(2010, 01, 04),
+                VendorId = 2
             };
             product.TierPrices.Add
                 (
@@ -409,7 +414,8 @@ namespace Nop.Data.Tests.Catalog
                 Published = true,
                 Deleted = false,
                 CreatedOnUtc = new DateTime(2010, 01, 01),
-                UpdatedOnUtc = new DateTime(2010, 01, 02)
+                UpdatedOnUtc = new DateTime(2010, 01, 02),
+                VendorId = 2
             };
             product.ProductWarehouseInventory.Add
                 (
