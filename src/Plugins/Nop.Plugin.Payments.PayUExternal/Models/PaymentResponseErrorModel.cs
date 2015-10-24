@@ -9,5 +9,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Models
     public class PaymentResponseErrorModel
     {
         public string ErrorMessage { get; set; }
+
+        public PaymentConfirmationErrorCode ErrorCode { get; set; }
     }
 }

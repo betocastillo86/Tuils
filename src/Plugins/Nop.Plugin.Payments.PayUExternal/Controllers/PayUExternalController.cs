@@ -359,7 +359,8 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
             Response.StatusCode = errorCode;
 
             var model = new PaymentResponseErrorModel();
-            model.ErrorMessage = string.Format(_localizationService.GetResource("Plugins.PayUExternal.ErrorResponse.External"), command.reference_pol, errorName);
+            model.ErrorMessage = string.Format(_localizationService.GetResource("Plugins.PayUExternal.ErrorResponse.External") ?? string.Empty, command.reference_pol, errorName);
+            model.ErrorCode = errorName;
             //Guarda la información de la transaccion
             _logger.Warning(string.Format("No fue posible procesar la petición ErrorConfirmation, codigo de error {0}. Transaccion PayU {1}", errorName, command.reference_pol));
 

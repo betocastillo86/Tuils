@@ -8,6 +8,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Models
 {
     public enum PaymentConfirmationErrorCode
     {
+        None,
         InvalidSignature,
         NoPlanSelected,
         NoProductSelected,
