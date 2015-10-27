@@ -56,6 +56,33 @@ namespace Nop.Admin.Models.Settings
         public int SpecificationAttributeIdSocialNetworks { get; set; }
 
 
+        #region tiendas
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributePlanDays")]
+        public int SpecificationAttributePlanDays { get; set; }
+
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributeIdOwnStore")]
+        public int SpecificationAttributeIdOwnStore { get; set; }
+
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributeIdFeaturedManufacturers")]
+        public int SpecificationAttributeIdFeaturedManufacturers { get; set; }
+
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributeIdProductsFeaturedOnSliders")]
+        public int SpecificationAttributeIdProductsFeaturedOnSliders { get; set; }
+
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributeIdProductsOnHomePage")]
+        public int SpecificationAttributeIdProductsOnHomePage { get; set; }
+
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributeIdProductsOnSocialNetworks")]
+        public int SpecificationAttributeIdProductsOnSocialNetworks { get; set; }
+
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributeIdHelpWithStore")]
+        public int SpecificationAttributeIdHelpWithStore { get; set; }
+        #endregion
+
+
+        
+
+
         #region Opciones banda rotativa
         
         /// <summary>

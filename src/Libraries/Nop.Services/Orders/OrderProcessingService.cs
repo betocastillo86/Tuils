@@ -2777,6 +2777,30 @@ namespace Nop.Services.Orders
             return true;
         }
 
+        /// <summary>
+        /// Ya que los planes no se pueden adquirir automaicamente ya que dependen de la respuesta Confirmation
+        /// Se crearon dos llaves para validar la selección de caracteristicas destacadas del producto en el plan
+        /// Es una validación minima para evitar que por querystring realicen esta autenticacion
+        /// </summary>
+        /// <param name="orderId">numero de la orden</param>
+        /// <param name="productId">producto que se desea destcaar en el plan</param>
+        /// <returns></returns>
+        public string GetPaymentPlanValidationKeys(Order order, int productId)
+        {
+            if (order == null)
+                throw new ArgumentNullException("orderId");
+
+
+            //Solo cuando la orden no ha sido rechazada puede operar está acción, sino no va ser valida la URL entregada
+            if (order.PaymentStatus == PaymentStatus.Pending 
+                || order.PaymentStatus == PaymentStatus.Paid)
+            {
+                return Utilities.Cryptography.MD5(string.Format("~{0}~{1}~{2}", order.OrderGuid, productId, order.OrderItems.First().ProductId));
+            }
+
+            return "nokeyvalid";
+        }
+
         #endregion
     }
 }

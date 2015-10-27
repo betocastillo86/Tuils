@@ -2464,7 +2464,101 @@ namespace Nop.Services.Catalog
         }
 
 
+        /// <summary>
+        /// Cuenta la cantidad de lugares que le quedan disponibles a un vendedor dependiendo del plan seleccionado
+        /// para destacar sus productos
+        /// </summary>
+        /// <param name="product">
+        ///     Producto producto que se intenta agregar. Sirve para saber si el producto se debe contar o no en la lista.
+        ///     internamente contiene el Id del vendor
+        /// </param>
+        /// <param name="validatePlan">True: Debe validar que el plan este activo. Si no debe validar el parametro order no puede venir nulo</param>
+        /// <param name="order">Cuando no se valida el plan directamente contra la base de datos es el plan que seleccionó el usuario</param>
+        /// <returns>
+        /// Diccionario con la siguiente estructure:
+        ///     Llave: ID del SpecificationAttribute relacionado del plan (Ej: SpecificationAttributeId de Numero de productos publicados en el home)
+        ///     Valor: Array en posicion 0: Conteo de los productos que le quedan disponibles al vendor
+        ///            Array en posicion 1: Conteo de los productos que puede seleccionar en el plan
+        /// </returns>
+        public Dictionary<int, int[]> CountLeftFeaturedPlacesByVendor(Product product, bool validatePlan, Order order = null)
+        {
+            if (product == null)
+                throw new ArgumentNullException("product");
+
+            //Si seleccionó que no se valide el plan directamente debe venir la orden con la solicitud del plan del usuario
+            if(!validatePlan && order == null)
+                throw new ArgumentNullException("order");
+
+            var leftProducts = new Dictionary<int,int[]>();
+
+            //El plan del vendedor debe estar activo
+            if ((product.Vendor.CurrentOrderPlanId.HasValue && product.Vendor.PlanExpiredOnUtc > DateTime.UtcNow) || !validatePlan)
+            {
+
+                leftProducts = CountLeftFeaturedPlacesByVendor(!validatePlan && !product.Vendor.CurrentOrderPlanId.HasValue ? order : product.Vendor.CurrentOrderPlan, product.VendorId);
+                
+                //////Busca el plan seleccionado del vendedor
+                //////Si no tiene plan pago todavía lo busca en el enviado
+                ////var attributesPlan = (!validatePlan && !product.Vendor.CurrentOrderPlanId.HasValue ? order : product.Vendor.CurrentOrderPlan).OrderItems.FirstOrDefault().Product.ProductSpecificationAttributes;
+                
+                //////Consulta los productos activos del vendor
+                ////var products = SearchProducts(vendorId: product.VendorId);
+                
+                //////Cuenta los destacados en las bandas rotativas y cuantos hay por el plan y saca las diferencias
+                //////int productsFeaturedOnSlider = products.Where(p => p.FeaturedForSliders && p.Id != product.Id).Count();
+                ////int productsFeaturedOnSlider = products.Where(p => p.FeaturedForSliders).Count();
+                ////int productsFeaturedOnSliderByPlan = Convert.ToInt32(attributesPlan.FirstOrDefault(a => a.SpecificationAttributeOption.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsFeaturedOnSliders).SpecificationAttributeOption.Name);
+                ////leftProducts.Add(_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders, new int[] { productsFeaturedOnSliderByPlan - productsFeaturedOnSlider, productsFeaturedOnSliderByPlan });
+
+                //////Cuenta los destacados en el home y cuantos hay por el plan y saca las diferencias
+                ////int productsOnHome = products.Where(p => p.ShowOnHomePage).Count();
+                ////int productsOnHomeByPlan = Convert.ToInt32(attributesPlan.FirstOrDefault(a => a.SpecificationAttributeOption.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsOnHomePage).SpecificationAttributeOption.Name);
+                ////leftProducts.Add(_planSettings.SpecificationAttributeIdProductsOnHomePage, new int[] { productsOnHomeByPlan - productsOnHome, productsOnHomeByPlan });
+
+                //////Cuenta los destacados en el home y cuantos hay por el plan y saca las diferencias
+                ////int productsOnSocialNetworks = products.Where(p => p.SocialNetworkFeatured).Count();
+                ////int productsOnSocialNetworksByPlan = Convert.ToInt32(attributesPlan.FirstOrDefault(a => a.SpecificationAttributeOption.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsOnSocialNetworks).SpecificationAttributeOption.Name);
+                ////leftProducts.Add(_planSettings.SpecificationAttributeIdProductsOnSocialNetworks,  new int[] { productsOnSocialNetworksByPlan - productsOnSocialNetworks,productsOnSocialNetworksByPlan} );
+            }
+
+            return leftProducts;
+        }
+
+
+        public Dictionary<int, int[]> CountLeftFeaturedPlacesByVendor(Order order, int vendorId)
+        {
+            var leftProducts = new Dictionary<int, int[]>();
+            
+            //Busca el plan seleccionado del vendedor
+            //Si no tiene plan pago todavía lo busca en el enviado
+            var attributesPlan = order.OrderItems.FirstOrDefault().Product.ProductSpecificationAttributes;
+
+            //Consulta los productos activos del vendor
+            var products = SearchProducts(vendorId: vendorId);
+
+            //Cuenta los destacados en las bandas rotativas y cuantos hay por el plan y saca las diferencias
+            //int productsFeaturedOnSlider = products.Where(p => p.FeaturedForSliders && p.Id != product.Id).Count();
+            int productsFeaturedOnSlider = products.Where(p => p.FeaturedForSliders).Count();
+            int productsFeaturedOnSliderByPlan = Convert.ToInt32(attributesPlan.FirstOrDefault(a => a.SpecificationAttributeOption.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsFeaturedOnSliders).SpecificationAttributeOption.Name);
+            leftProducts.Add(_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders, new int[] { productsFeaturedOnSliderByPlan - productsFeaturedOnSlider, productsFeaturedOnSliderByPlan });
+
+            //Cuenta los destacados en el home y cuantos hay por el plan y saca las diferencias
+            int productsOnHome = products.Where(p => p.ShowOnHomePage).Count();
+            int productsOnHomeByPlan = Convert.ToInt32(attributesPlan.FirstOrDefault(a => a.SpecificationAttributeOption.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsOnHomePage).SpecificationAttributeOption.Name);
+            leftProducts.Add(_planSettings.SpecificationAttributeIdProductsOnHomePage, new int[] { productsOnHomeByPlan - productsOnHome, productsOnHomeByPlan });
+
+            //Cuenta los destacados en el home y cuantos hay por el plan y saca las diferencias
+            int productsOnSocialNetworks = products.Where(p => p.SocialNetworkFeatured).Count();
+            int productsOnSocialNetworksByPlan = Convert.ToInt32(attributesPlan.FirstOrDefault(a => a.SpecificationAttributeOption.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsOnSocialNetworks).SpecificationAttributeOption.Name);
+            leftProducts.Add(_planSettings.SpecificationAttributeIdProductsOnSocialNetworks, new int[] { productsOnSocialNetworksByPlan - productsOnSocialNetworks, productsOnSocialNetworksByPlan });
+
+            return leftProducts;
+        }
+
+
         #endregion
+
+        
 
         #region SpecialCategories
         public IList<SpecialCategoryProduct> GetSpecialCategoriesByProductId(int productId)
@@ -2625,6 +2719,7 @@ namespace Nop.Services.Catalog
                         foreach (var category in product.ProductCategories)
                         {
                             category.IsFeaturedProduct = true;
+                            _eventPublisher.EntityUpdated(category);
                         }
                     }
                     //So el valor asignado es el de marcas, destaca las marcas
@@ -2634,6 +2729,7 @@ namespace Nop.Services.Catalog
                         foreach (var manufacturer in product.ProductManufacturers)
                         {
                             manufacturer.IsFeaturedProduct = true;
+                            _eventPublisher.EntityUpdated(manufacturer);
                         }
                     }
                     else if (attributeValues.SpecificationAttributeOptionId == _planSettings.OptionAttributeFeaturedLeft)
@@ -2661,6 +2757,39 @@ namespace Nop.Services.Catalog
             UpdateProduct(product);
 
 
+        }
+
+        /// <summary>
+        /// Inactiva los productos de un vendor de acuerdo a un plan seleccionado
+        /// </summary>
+        /// <param name="vendor"></param>
+        public void ValidateProductLimitsByVendorPlan(Vendor vendor)
+        {
+
+            throw new Exception("No implementado");
+            //Cuenta los productos que un vendor tiene y cuantos le quedan de acuerdo al plan que posee
+            var leftProducts = CountLeftFeaturedPlacesByVendor(vendor.CurrentOrderPlan, vendor.Id);
+
+            //Si en alguna de las caracteristicas del plan el vendedor tiene más productos
+            if(leftProducts[_planSettings.SpecificationAttributeIdProductsOnHomePage][0] < 0 ||
+                leftProducts[_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders][0] < 0 ||
+                leftProducts[_planSettings.SpecificationAttributeIdProductsOnSocialNetworks][0] < 0
+                )
+            {
+                //Consulta nuevamnete los productos
+                var productsVendor = SearchProducts(vendorId: vendor.Id);
+
+                //Valida si debe remover productos del home page
+                if (leftProducts[_planSettings.SpecificationAttributeIdProductsOnHomePage][0] < 0)
+                {
+                    var toRemove = leftProducts[_planSettings.SpecificationAttributeIdProductsOnHomePage][0] * -1;
+                    productsVendor.Where(p => p.ShowOnHomePage)
+                        .Take(toRemove)
+                        .ToList()
+                        .ForEach(p => p.ShowOnHomePage = false);
+                }
+
+            }
         }
     }
 }

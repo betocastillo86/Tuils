@@ -30,6 +30,7 @@ using Nop.Services.Logging;
 using Nop.Core.Domain.Orders;
 using Nop.Services.Helpers;
 using System.Transactions;
+using Nop.Services.Vendors;
 
 
 namespace Nop.Plugin.Payments.PayUExternal.Controllers
@@ -47,6 +48,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
         private readonly PlanSettings _planSettings;
         private readonly IDateTimeHelper _dateTimeHelper;
         private readonly IOrderProcessingService _orderProcessingService;
+        private readonly IVendorService _vendorService;
         
         public PayUExternalController(PayUExternalSettings settings,
             ISettingService settingService,
@@ -58,7 +60,8 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
             PlanSettings planSettings,
             ILogger logger,
             IDateTimeHelper datetimeHelper,
-            IOrderProcessingService orderProcessingService)
+            IOrderProcessingService orderProcessingService,
+            IVendorService vendorService)
         {
             this._settings = settings;
             this._settingService = settingService;
@@ -71,6 +74,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
             this._logger = logger;
             this._dateTimeHelper = datetimeHelper;
             this._orderProcessingService = orderProcessingService;
+            this._vendorService = vendorService;
         }
 
         #region Configure
@@ -159,19 +163,42 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
             model.TransactionValue = _priceFormater.FormatPrice(order.OrderTotal);
             model.Currency = command.currency;
             model.TransactionDate = Convert.ToDateTime(command.processingDate).ToShortDateString();
-
+            model.OrderId = order.Id;
             model.TransactionRejected = command.transactionState == TransactionState.Declined || command.transactionState == TransactionState.Error || command.transactionState == TransactionState.Expired;
+
+            var product = _productService.GetProductById(selectedProductId);
+            model.ProductName = product.Name;
+            model.ProductId = product.Id;
+
 
             //Si el plan seleccionado es especial para destacar un producto, carga la información del mismo en el modelo
             if (categoryId == _planSettings.CategoryProductPlansId)
-            { 
-                var product = _productService.GetProductById(selectedProductId);
-                model.ProductName = product.Name;
-                model.ProductId = product.Id;
+            {
                 model.IsFeaturedProduct = true;
+            }
+            else
+            {
+                //Como la actualizacion del plan solo se activa en la confirmación, se envian dos llaves minimas de seguridad
+                //Además debe de venir de una publicación de un producto, sino solo muestra la confirmación de la venta
+                if (!model.TransactionRejected && selectedProductId > 0)
+                {
+                    model.RedirectToFeatureProduct = true;
+                    model.RedirectToFeaturedKey = _orderProcessingService.GetPaymentPlanValidationKeys(order, selectedProductId);
+
+                    
+                    //return RedirectToAction("SelectFeaturedAttributesByPlan", "Sales",
+                    //    new
+                    //    {
+                    //        orderId = order.Id,
+                    //        id = selectedProductId,
+                    //        sign = _orderProcessingService.GetPaymentPlanValidationKeys(order.Id, selectedProductId)
+                    //    });
+                }
+                
             }
             
             return View("~/Plugins/Payments.PayUExternal/Views/PayUExternal/PaymentResponse.cshtml", model);
+            
         }
 
         [ChildActionOnly]
@@ -248,6 +275,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
 
             //Si el producto que viene seleccionado no es un plan o un destacado para un producto muestra el error
             int categoryId = selectedPlan.ProductCategories.First().CategoryId;
+            
             if (categoryId != _planSettings.CategoryProductPlansId && categoryId != _planSettings.CategoryStorePlansId)
                 return ErrorConfirmation(command, PaymentConfirmationErrorCode.NoPlanSelected, order);
 
@@ -284,8 +312,22 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
 
                             _orderProcessingService.MarkOrderAsPaid(order);
 
-                            //Despues de realizar los cambios actualiza los datos del plan
-                            _productService.AddPlanToProduct(selectedProductId, order);
+
+                            var isStorePlan = categoryId == _planSettings.CategoryStorePlansId;
+                            
+                            //Si se ha seleccionado un plan especifico para un producto, se destaca
+                            if (!isStorePlan)
+                            {
+                                //Despues de realizar los cambios actualiza los datos del plan
+                                _productService.AddPlanToProduct(selectedProductId, order);
+                            }
+                            else 
+                            { 
+                                //Si el plan es a nivel de tienda actualiza las vigencias
+                                var vendor = _vendorService.AddPlanToVendor(order);
+                                //PARA DOWNGRADE LLAMAR EL METODO DE ABAJO
+                                //_productService.ValidateProductLimitsByVendorPlan(vendor);
+                            }
 
                             scope.Complete();
                         }

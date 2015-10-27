@@ -1,0 +1,59 @@
+﻿@using Nop.Web.Models.Catalog
+@model SelectFeaturedAttributesByPlanModel
+@{
+    ViewBag.Title = "SelectFeaturedAttributesByPlan";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+}
+
+
+@Html.Partial("_ProductBox", Model.ProductDetails)
+
+@using (Html.BeginForm())
+{
+    <div>
+        <ul>
+            <li>
+                @T("SelectFeaturedAttributesByPlan.SelectOnHome")
+
+                @if (Model.NumProductsOnHomeLeft > 0)
+                {
+                    @Html.CheckBoxFor(m => m.SelectOnHome)
+                }
+
+                <b>
+                    Puede coger @Model.NumProductsOnHomeByPlan
+                    Quedan (@Model.NumProductsOnHomeLeft)
+                </b>
+            </li>
+            <li>
+                @T("SelectFeaturedAttributesByPlan.SelectOnSliders")
+
+                @if (Model.NumProductsOnSlidersLeft > 0)
+                {
+                    @Html.CheckBoxFor(m => m.SelectOnSliders)
+                }
+
+                <b>
+                    Puede coger @Model.NumProductsOnSlidersByPlan
+                    Quedan (@Model.NumProductsOnSlidersLeft)
+                </b>
+            </li>
+            <li>
+                @T("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks")
+
+                @if (Model.NumProductsOnSocialNetworksLeft > 0)
+                {
+                    @Html.CheckBoxFor(m => m.SelectOnSocialNetworks)
+                }
+
+                <b>
+                    Puede coger @Model.NumProductsOnSocialNetworksByPlan
+                    Quedan (@Model.NumProductsOnSocialNetworksLeft)
+                </b>
+            </li>
+        </ul>
+    </div>
+    
+    <input type="submit" value="@T("SelectFeaturedAttributesByPlan.Save")" />
+    
+}

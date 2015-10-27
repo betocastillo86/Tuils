@@ -18,9 +18,17 @@
         <div>@T("Plugins.PayUExternal.PaymentResponse.ProductName"): @Model.ProductName</div>
     }
     
+
+    
+    
     @if (Model.TransactionRejected)
     { 
         @Html.ActionLink("Intenar con otro medio de pago", "SelectPlan", "Sales", new { id = Model.ProductId }, new { })
+    }
+    
+    @if (Model.RedirectToFeatureProduct)
+    { 
+        @Html.ActionLink("IR A DESTACAR PRODUCTO", "SelectFeaturedAttributesByPlan", "Catalog", new { id = Model.ProductId, orderId = Model.OrderId, sign = Model.RedirectToFeaturedKey, from = "publish" }, new { })
     }
 
 </div>

@@ -50,6 +50,8 @@ namespace Nop.Web.Models.Sales
             public IList<SpecificationPlan> Specifications { get; set; }
 
             public string Name { get; set; }
+
+            public string Price { get; set; }
         }
 
         public class SpecificationPlan

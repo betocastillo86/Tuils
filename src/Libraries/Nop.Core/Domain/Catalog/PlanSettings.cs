@@ -36,6 +36,16 @@ namespace Nop.Core.Domain.Catalog
         public int SpecificationAttributeIdSocialNetworks { get; set; }
 
 
+        #region Tiendas
+        public int SpecificationAttributePlanDays { get; set; }
+        public int SpecificationAttributeIdOwnStore { get; set; }
+        public int SpecificationAttributeIdFeaturedManufacturers { get; set; }
+        public int SpecificationAttributeIdProductsFeaturedOnSliders { get; set; }
+        public int SpecificationAttributeIdProductsOnHomePage { get; set; }
+        public int SpecificationAttributeIdProductsOnSocialNetworks { get; set; }
+        public int SpecificationAttributeIdHelpWithStore { get; set; }
+        #endregion
+        
 
         #region Opciones banda rotativa
 

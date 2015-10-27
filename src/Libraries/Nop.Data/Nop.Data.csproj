@@ -223,6 +223,10 @@
     <Compile Include="Migrations\201510221916520_AddColumn_SocialNetworkFeatured_Table_Product.Designer.cs">
       <DependentUpon>201510221916520_AddColumn_SocialNetworkFeatured_Table_Product.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510262013201_AddColumn_OrderPlan_DatePlan_FeatureSliders_Table_Product_Vendor.cs" />
+    <Compile Include="Migrations\201510262013201_AddColumn_OrderPlan_DatePlan_FeatureSliders_Table_Product_Vendor.Designer.cs">
+      <DependentUpon>201510262013201_AddColumn_OrderPlan_DatePlan_FeatureSliders_Table_Product_Vendor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -461,6 +465,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510221916520_AddColumn_SocialNetworkFeatured_Table_Product.resx">
       <DependentUpon>201510221916520_AddColumn_SocialNetworkFeatured_Table_Product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510262013201_AddColumn_OrderPlan_DatePlan_FeatureSliders_Table_Product_Vendor.resx">
+      <DependentUpon>201510262013201_AddColumn_OrderPlan_DatePlan_FeatureSliders_Table_Product_Vendor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

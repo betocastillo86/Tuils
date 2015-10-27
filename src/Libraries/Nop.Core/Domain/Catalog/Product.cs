@@ -474,6 +474,11 @@ namespace Nop.Core.Domain.Catalog
 
         public bool Hidden { get; set; }
 
+        /// <summary>
+        /// Propiedad que permite validar rapidamente si un producto está siendo destacado para las bandas rotativas
+        /// </summary>
+        public bool FeaturedForSliders { get; set; }
+
 
 
         /// <summary>

@@ -1056,8 +1056,19 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.OptionAttributeFeaturedLeft", "Destacado a la izquierda");
                 newLocaleStringResources.Add("Admin.Catalog.Products.Fields.SocialNetworkFeatured", "Destacado en redes sociales");
                 newLocaleStringResources.Add("Admin.Catalog.Products.Fields.SocialNetworkFeatured.Hint", "Destacado en redes sociales");
-                
-                
+
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributePlanDays", "Atributo Duración del plan");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdOwnStore", "Atributo propia tienda");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdFeaturedManufacturers", "Atributo marcas especializadas");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdHelpWithStore", "Atributo ayuda con tienda");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdProductsFeaturedOnSliders", "Atributo productos destacados");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdProductsOnHomePage", "Atributo productos en homepage");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdProductsOnSocialNetworks", "Atributo productos en redes sociales");
+
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnHome", "Destacados en el home");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnSliders", "Destacados en los sliders");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks", "Destacados en redes sociales");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.Save", "Destacar");
                 
 
                 //Recorre todas las llaves que desea adicional

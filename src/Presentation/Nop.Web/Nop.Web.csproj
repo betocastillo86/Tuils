@@ -409,8 +409,10 @@
     <Compile Include="Models\Profile\ProfileIndexModel.cs" />
     <Compile Include="Models\Profile\PostsModel.cs" />
     <Compile Include="Models\Profile\ProfilePostsModel.cs" />
+    <Compile Include="Models\Catalog\FeaturedAttributesByPlanRequest.cs" />
     <Compile Include="Models\Sales\PaymentResponseModel.cs" />
     <Compile Include="Models\Sales\PublishProductModel.cs" />
+    <Compile Include="Models\Catalog\SelectFeaturedAttributesByPlanModel.cs" />
     <Compile Include="Models\Sales\SelectPlanModel.cs" />
     <Compile Include="Models\Sales\SelectPublishCategoryModel.cs" />
     <Compile Include="Models\ShoppingCart\MiniShoppingCartModel.cs" />
@@ -2586,6 +2588,7 @@
     <Content Include="Themes\Healthy\Views\Shared\_ExternalLayout.cshtml" />
     <Content Include="Views\Sales\SelectPlan.cshtml" />
     <Content Include="Views\Sales\PaymentResponse.cshtml" />
+    <Content Include="Views\Catalog\SelectFeaturedAttributesByPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

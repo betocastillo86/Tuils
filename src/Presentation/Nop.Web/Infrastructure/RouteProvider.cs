@@ -720,6 +720,12 @@ namespace Nop.Web.Infrastructure
                new { controller = "Sales", action = "SelectPlan", id = UrlParameter.Optional },
                new[] { "Nop.Web.Controllers" }
                );
+
+            routes.MapLocalizedRoute("SelectFeaturedAttributesByPlan",
+               "mis-productos/destacar/{id}",
+               new { controller = "Sales", action = "SelectFeaturedAttributesByPlan", id = UrlParameter.Optional },
+               new[] { "Nop.Web.Controllers" }
+               );
             #endregion
             
 

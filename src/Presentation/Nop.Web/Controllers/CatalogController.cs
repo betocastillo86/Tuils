@@ -33,6 +33,7 @@ using Nop.Web.Models.Media;
 using Nop.Services.Orders;
 using Nop.Services.Customers;
 using Nop.Core.Domain.Orders;
+using Nop.Web.Framework;
 
 namespace Nop.Web.Controllers
 {
@@ -74,6 +75,8 @@ namespace Nop.Web.Controllers
         private readonly ICacheManager _cacheManager;
         private readonly IStateProvinceService _stateProvinceService;
         private readonly IOrderService _orderService;
+        private readonly IOrderProcessingService _orderProcessingService;
+        private readonly PlanSettings _planSettings;
 
 
         #endregion
@@ -113,7 +116,9 @@ namespace Nop.Web.Controllers
             ICacheManager cacheManager,
             IStateProvinceService stateProvinceService,
             IOrderService orderService,
-            TuilsSettings tuilsSettings)
+            TuilsSettings tuilsSettings,
+            IOrderProcessingService orderProcessingService,
+            PlanSettings planSettings)
         {
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
@@ -149,6 +154,8 @@ namespace Nop.Web.Controllers
             this._stateProvinceService = stateProvinceService;
             this._orderService = orderService;
             this._tuilsSettings = tuilsSettings;
+            this._orderProcessingService = orderProcessingService;
+            this._planSettings = planSettings;
         }
 
         #endregion
@@ -2142,6 +2149,177 @@ namespace Nop.Web.Controllers
                 return Content(string.Empty);
         }
 
+
+        #endregion
+
+        #region Plans
+        [HttpGet]
+        [Authorize]
+        [SameVendorProduct]
+        public ActionResult SelectFeaturedAttributesByPlan(int id, FeaturedAttributesByPlanRequest command, Product product)
+        {
+            //var product = _productService.GetProductById(id);
+            //if (product == null)
+            //    return HttpNotFound();
+
+            var model = new SelectFeaturedAttributesByPlanModel();
+            
+            try
+            {
+                PrepareSelectFeaturedAttributesByPlanModel(id, command, product, model);
+                model.SelectOnHome = product.ShowOnHomePage;
+                model.SelectOnSliders = product.FeaturedForSliders;
+                model.SelectOnSocialNetworks = product.SocialNetworkFeatured;
+            }
+            catch (NopException e)
+            {
+                if (e.Message.Equals("NotFound"))
+                    return HttpNotFound();
+                else
+                    return RedirectToAction("MyProducts", "ControlPanel");
+            }
+            
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [SameVendorProduct]
+        public ActionResult SelectFeaturedAttributesByPlan(int id, FeaturedAttributesByPlanRequest command, SelectFeaturedAttributesByPlanModel model, Product product)
+        {
+            
+            //var product = _productService.GetProductById(id);
+            //if (product == null)
+            //    return HttpNotFound();
+            
+            try
+            {
+                //Procesa las validaciones y carga nuevamente el modelo
+                PrepareSelectFeaturedAttributesByPlanModel(id, command, product, model);
+            }
+            catch (NopException e)
+            {
+                return RedirectToAction("MyProducts", "ControlPanel");
+            }
+
+            
+            //Si el producto lo quiere seleccionar destacado en el home
+            //lo actualiza asi como con las demás propiedades
+            //Si se está activando el producto en esta caracteristica
+            //Se debe validar que pueda hacerlo, sino no se actualiza
+            if (model.SelectOnHome && !product.ShowOnHomePage)
+            {
+                if (model.NumProductsOnHomeLeft > 0)
+                    product.ShowOnHomePage = true;
+            }
+            else
+                product.ShowOnHomePage = model.SelectOnHome;
+
+
+            if (model.SelectOnSocialNetworks && !product.SocialNetworkFeatured)
+            {
+                if (model.NumProductsOnSocialNetworksLeft > 0)
+                    product.SocialNetworkFeatured = true;
+            }
+            else
+                product.SocialNetworkFeatured = model.SelectOnSocialNetworks;
+
+
+            //Recorreo las categorias y las marcas y las deja como destacadas
+            bool activateSliders = false;
+            if (model.SelectOnSliders && !product.FeaturedForSliders)
+            {
+                activateSliders = model.NumProductsOnSlidersLeft > 0;
+            }
+            else
+                activateSliders = model.SelectOnSliders;
+
+
+            foreach (var category in product.ProductCategories)
+            {
+                category.IsFeaturedProduct = activateSliders;
+                _eventPublisher.EntityUpdated(category);
+            }
+
+            foreach (var manufacturer in product.ProductManufacturers)
+            {
+                manufacturer.IsFeaturedProduct = activateSliders;
+                _eventPublisher.EntityUpdated(manufacturer);
+            }
+
+            product.FeaturedForSliders = activateSliders;
+
+
+            //Actualiza los valores seleccionados por el usuario
+            _productService.UpdateProduct(product);
+
+            //Si viene de la publicación confirma la publicación
+            //if (string.Equals(command.from, "publish"))
+            //    return RedirectToAction("PublishConfirmation", "Sales", new { id = id });
+            //else
+            //    return RedirectToAction("MyProducts", "ControlPanel");
+            return RedirectToAction("MyProducts", "ControlPanel");
+        }
+
+
+        public void PrepareSelectFeaturedAttributesByPlanModel(int id, FeaturedAttributesByPlanRequest command, Product product, SelectFeaturedAttributesByPlanModel model)
+        {
+            Order order = null;
+            bool validatePlan = true;
+            
+            //Si la llave NO viene nula significa que debe validarla. 
+            if (!string.IsNullOrEmpty(command.sign))
+            {
+                order = _orderService.GetOrderById(command.orderId.Value);
+                validatePlan = false;
+
+                //Si llega ser invalida retorna al usuario al panel de control
+                if (!_orderProcessingService.GetPaymentPlanValidationKeys(order, id).Equals(command.sign))
+                    throw new NopException("MyProducts");
+            }
+            else
+            {
+                //en el caso contrario debe validar que el usuario tenga un plan comprado valido
+                order = _workContext.CurrentVendor.CurrentOrderPlan;
+
+                //La orden asociada al vendedor debe ser una orden paga  y finalizada
+                //No debe estar vencido el plan en el vendor
+                if (order == null
+                    || order.PaymentStatus != Core.Domain.Payments.PaymentStatus.Paid
+                    || order.OrderStatus != OrderStatus.Complete
+                    || _workContext.CurrentVendor.PlanExpiredOnUtc < DateTime.UtcNow
+                    )
+                {
+                    throw new NopException("MyProducts");
+                }
+            }
+
+            var selectedPlan = order.OrderItems.FirstOrDefault().Product;
+
+            //Valida cuantos productos les queda disponibles para destacar en cada uno de las caraceteristicas
+            var leftProductsOnPlan = _productService.CountLeftFeaturedPlacesByVendor(product, validatePlan, order);
+            model.ProductDetails = PrepareProductOverviewModels(new List<Product>() { product }).First();
+
+
+            //Valida que tenga productos en el home
+            if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsOnHomePage))
+            {
+                model.NumProductsOnHomeLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnHomePage][0];
+                model.NumProductsOnHomeByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnHomePage][1];
+            }
+            //valida productos en redes sociales
+            if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsOnSocialNetworks))
+            {
+                model.NumProductsOnSocialNetworksLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnSocialNetworks][0];
+                model.NumProductsOnSocialNetworksByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnSocialNetworks][1];
+            }
+            //Valida productos en sliders
+            if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders))
+            {
+                model.NumProductsOnSlidersLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders][0];
+                model.NumProductsOnSlidersByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders][1];
+            }
+        }
 
         #endregion
     }

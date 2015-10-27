@@ -18,6 +18,8 @@ using Nop.Services.Customers;
 using Nop.Services.Common;
 using Nop.Services.Orders;
 using Nop.Services.Payments;
+using Nop.Core.Domain.Orders;
+using Nop.Services.Vendors;
 
 namespace Nop.Web.Controllers
 {
@@ -36,6 +38,9 @@ namespace Nop.Web.Controllers
         private readonly ICacheManager _cacheManager;
         private readonly IOrderService _orderService;
         private readonly IPaymentService _paymentService;
+        private readonly IPriceFormatter _priceFormatter;
+        private readonly IOrderProcessingService _orderProcessingService;
+        private readonly IVendorService _vendorService;
         #endregion
 
         #region Ctor
@@ -50,7 +55,10 @@ namespace Nop.Web.Controllers
             PlanSettings planSettings,
             ICacheManager cacheManager,
             IOrderService orderService,
-            IPaymentService paymentService)
+            IPaymentService paymentService,
+            IPriceFormatter priceFormatter,
+            IOrderProcessingService orderProcessingService,
+            IVendorService vendorService)
         {
             this._categoryService = categoryService;
             this._tuilsSettings = tuilsSettings;
@@ -63,6 +71,9 @@ namespace Nop.Web.Controllers
             this._cacheManager = cacheManager;
             this._orderService = orderService;
             this._paymentService = paymentService;
+            this._priceFormatter = priceFormatter;
+            this._orderProcessingService = orderProcessingService;
+            this._vendorService = vendorService;
         }
         #endregion
 
@@ -173,6 +184,12 @@ namespace Nop.Web.Controllers
             //Consulta de acuerdo al tipo de vendedor la categoria desde la cual va sacar los planes
             int categoryPlanId = _workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.User ? _planSettings.CategoryProductPlansId : _planSettings.CategoryStorePlansId;
 
+            //Si el vendedor tiene un plan activo que no ha expirado lo envia directamente a destacar
+            if (_workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.Market &&
+                _workContext.CurrentVendor.CurrentOrderPlanId.HasValue && _workContext.CurrentVendor.PlanExpiredOnUtc > DateTime.UtcNow)
+            {
+                return RedirectToAction("SelectFeaturedAttributesByPlan", "Catalog", new { id = id });
+            }
 
             var model = new SelectPlanModel() { ProductId = id };
 
@@ -190,6 +207,7 @@ namespace Nop.Web.Controllers
                     var planModel = new SelectPlanModel.PlanModel();
                     planModel.Id = plan.Id;
                     planModel.Name = plan.Name;
+                    planModel.Price = _priceFormatter.FormatPrice(plan.Price); 
                     //Agrega las caracteristicas del plan
                     foreach (var spec in plan.ProductSpecificationAttributes)
                     {
@@ -266,6 +284,7 @@ namespace Nop.Web.Controllers
 
             return View(model);
         }
+
 
         #endregion
        

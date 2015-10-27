@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Customers;
 using Nop.Services.Catalog;
+using Nop.Core.Domain.Orders;
 
 namespace Nop.Services.Vendors
 {
@@ -420,14 +421,48 @@ namespace Nop.Services.Vendors
                 UpdateVendor(vendor);
             }
         }
+
+
+
+
         #endregion
 
+        public Vendor AddPlanToVendor(Order order)
+        {
+            if(order == null)
+                throw new ArgumentNullException("order");
+
+            //consulta el vendor de la orden
+            var vendor = GetVendorById(order.Customer.VendorId);
+
+            //Valida que no este intentando aplicar la orden dos veces
+            if(vendor.CurrentOrderPlanId.HasValue && vendor.CurrentOrderPlanId.Value == order.Id)
+                throw new NopException("No se puede aplicar la misma orden del plan dos veces");
+
+            //Consulta el plan que desea agregar
+            var selectedPlan = order.OrderItems.FirstOrDefault().Product;
+
+            var planSettings = Nop.Core.Infrastructure.EngineContext.Current.Resolve<PlanSettings>();
+            var planDays = Convert.ToInt32(selectedPlan.ProductSpecificationAttributes.FirstOrDefault(p => p.SpecificationAttributeOption.SpecificationAttributeId == planSettings.SpecificationAttributePlanDays).SpecificationAttributeOption.Name);
 
 
+            //Si el vendedor ya tenia un plan previamente calcula la fecha de cierre
+            //y el plan que tiene actualmente no ha expirado, le suma los dias
+            if (vendor.CurrentOrderPlanId.HasValue && vendor.PlanExpiredOnUtc > DateTime.UtcNow)
+            {
+                vendor.PlanExpiredOnUtc = vendor.PlanExpiredOnUtc.Value.AddDays(planDays);
+            }
+            else
+            {
+                vendor.PlanExpiredOnUtc = DateTime.UtcNow.AddDays(planDays);
+            }
+
+            vendor.CurrentOrderPlanId = order.Id;
+
+            UpdateVendor(vendor);
 
 
-
-
-       
+            return vendor;
+        }
     }
 }

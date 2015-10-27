@@ -4,6 +4,7 @@ using Nop.Core;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Shipping;
+using Nop.Core.Domain.Vendors;
 
 namespace Nop.Services.Catalog
 {
@@ -606,6 +607,24 @@ namespace Nop.Services.Catalog
         void DeleteSpecialCategoryProduct(SpecialCategoryProduct specialCategory);
 
         bool HasReachedLimitOfProducts(int vendorId);
+        
+        /// <summary>
+        /// Cuenta la cantidad de lugares que le quedan disponibles a un vendedor dependiendo del plan seleccionado
+        /// para destacar sus productos
+        /// </summary>
+        /// <param name="product">
+        ///     Producto producto que se intenta agregar. Sirve para saber si el producto se debe contar o no en la lista.
+        ///     internamente contiene el Id del vendor
+        /// </param>
+        /// <param name="validatePlan">True: Debe validar que el plan este activo. Si no debe validar el parametro order no puede venir nulo</param>
+        /// <param name="order">Cuando no se valida el plan directamente contra la base de datos es el plan que seleccionó el usuario</param>
+        /// <returns>
+        /// Diccionario con la siguiente estructure:
+        ///     Llave: ID del SpecificationAttribute relacionado del plan (Ej: SpecificationAttributeId de Numero de productos publicados en el home)
+        ///     Valor: Array en posicion 0: Conteo de los productos que le quedan disponibles al vendor
+        ///            Array en posicion 1: Conteo de los productos que puede seleccionar en el plan
+        /// </returns>
+        Dictionary<int, int[]> CountLeftFeaturedPlacesByVendor(Product product, bool validatePlan, Order order = null);
 
         /// <summary>
         /// Trae los productos que están a punto de finalizar dependiendo de un numero de dias previos
@@ -638,5 +657,11 @@ namespace Nop.Services.Catalog
         /// <param name="product">datos del producto a marcar</param>
         /// <param name="order">datos de la orden relacionada</param>
         void AddPlanToProduct(int productId, Order order);
+
+        /// <summary>
+        /// Inactiva caracteristicas destacadas en los productos de un vendor de acuerdo a un plan seleccionado
+        /// </summary>
+        /// <param name="vendor"></param>
+        void ValidateProductLimitsByVendorPlan(Vendor vendor);
     }
 }

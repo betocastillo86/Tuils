@@ -8,6 +8,8 @@ namespace Nop.Plugin.Payments.PayUExternal.Models
 {
     public class PaymentResponseModel
     {
+        public int OrderId { get; set; }
+        
         /// <summary>
         /// Nombre del plan seleccionado por el usuario
         /// </summary>
@@ -40,10 +42,22 @@ namespace Nop.Plugin.Payments.PayUExternal.Models
         /// Nombre del producto que se desea destacar
         /// </summary>
         public int ProductId { get; set; }
+
+        /// <summary>
+        /// True: Debe mostrar un link que lleve al usuario a destacar su producto entre las caracteristicas posibles existentes
+        /// </summary>
+        public bool RedirectToFeatureProduct { get; set; }
+
+
+        /// <summary>
+        /// Llave con la que deben redireccionar para destacar el producto
+        /// </summary>
+        public string RedirectToFeaturedKey { get; set; }
         
         /// <summary>
         /// Nombre del producto que se desea destacar
         /// </summary>
         public string ProductName { get; set; }
+
     }
 }
