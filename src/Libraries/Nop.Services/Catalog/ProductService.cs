@@ -44,6 +44,15 @@ namespace Nop.Services.Catalog
         /// Key pattern to clear cache
         /// </summary>
         private const string PRODUCTS_PATTERN_KEY = "Nop.product.";
+
+        /// <summary>
+        /// Key para guardar el detalle de un plan
+        /// </summary>
+        private const string PRODUCTS_PLAN_PATTERN = "Nop.product.";
+        /// <summary>
+        /// Key para guardar el detalle de un plan
+        /// </summary>
+        private const string PRODUCTS_PLAN_BY_ID_KEY = "Nop.product.{0}";
         #endregion
 
         #region Fields
@@ -2254,18 +2263,38 @@ namespace Nop.Services.Catalog
             product.OrderMaximumQuantity = 1;
             product.OrderMaximumQuantity = 1;
             product.StockQuantity = _tuilsSettings.defaultStockQuantity;
-            product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(_catalogSettings.LimitDaysOfProductPublished);
+
+            var vendor = _workContext.CurrentVendor;
+            //Si el producto es de una tienda, realiza validaciones de las fechas de expiración
+            if (vendor.VendorType == VendorType.Market)
+            {
+                //Si el vendor tiene un plan activo, deja la fecha de expiración del producto igual a la expiración del plan
+                if (vendor.CurrentOrderPlanId.HasValue && vendor.PlanExpiredOnUtc > DateTime.UtcNow)
+                {
+                    product.AvailableEndDateTimeUtc = vendor.PlanExpiredOnUtc;
+                }
+                else
+                {
+                    product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(_catalogSettings.LimitDaysOfStoreProductPublished);
+                }
+            }
+            else
+            {
+                product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(_catalogSettings.LimitDaysOfProductPublished);
+            }
+
+            //Guarda los datos del producto, intenta enviar el correo
+            InsertProduct(product);
 
             try
             {
-                InsertProduct(product);
                 //Despues de insertar envía la notificación
                 if (product.Id > 0)
                     _workflowMessageService.SendProductPublishedNotificationMessage(product, _workContext.WorkingLanguage.Id);
             }
             catch (Exception e)
             {
-                throw e;
+                _logger.Error(e.ToString(), e);
             }
 
         }
@@ -2531,7 +2560,8 @@ namespace Nop.Services.Catalog
             
             //Busca el plan seleccionado del vendedor
             //Si no tiene plan pago todavía lo busca en el enviado
-            var attributesPlan = order.OrderItems.FirstOrDefault().Product.ProductSpecificationAttributes;
+            var selectedPlan = GetPlanById(order.OrderItems.FirstOrDefault().Product.Id);
+            //var attributesPlan = order.OrderItems.FirstOrDefault().Product.ProductSpecificationAttributes;
 
             //Consulta los productos activos del vendor
             var products = SearchProducts(vendorId: vendorId);
@@ -2539,17 +2569,17 @@ namespace Nop.Services.Catalog
             //Cuenta los destacados en las bandas rotativas y cuantos hay por el plan y saca las diferencias
             //int productsFeaturedOnSlider = products.Where(p => p.FeaturedForSliders && p.Id != product.Id).Count();
             int productsFeaturedOnSlider = products.Where(p => p.FeaturedForSliders).Count();
-            int productsFeaturedOnSliderByPlan = Convert.ToInt32(attributesPlan.FirstOrDefault(a => a.SpecificationAttributeOption.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsFeaturedOnSliders).SpecificationAttributeOption.Name);
+            int productsFeaturedOnSliderByPlan = selectedPlan.NumProductsOnSliders;
             leftProducts.Add(_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders, new int[] { productsFeaturedOnSliderByPlan - productsFeaturedOnSlider, productsFeaturedOnSliderByPlan });
 
             //Cuenta los destacados en el home y cuantos hay por el plan y saca las diferencias
             int productsOnHome = products.Where(p => p.ShowOnHomePage).Count();
-            int productsOnHomeByPlan = Convert.ToInt32(attributesPlan.FirstOrDefault(a => a.SpecificationAttributeOption.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsOnHomePage).SpecificationAttributeOption.Name);
+            int productsOnHomeByPlan = selectedPlan.NumProductsOnHome;
             leftProducts.Add(_planSettings.SpecificationAttributeIdProductsOnHomePage, new int[] { productsOnHomeByPlan - productsOnHome, productsOnHomeByPlan });
 
             //Cuenta los destacados en el home y cuantos hay por el plan y saca las diferencias
             int productsOnSocialNetworks = products.Where(p => p.SocialNetworkFeatured).Count();
-            int productsOnSocialNetworksByPlan = Convert.ToInt32(attributesPlan.FirstOrDefault(a => a.SpecificationAttributeOption.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsOnSocialNetworks).SpecificationAttributeOption.Name);
+            int productsOnSocialNetworksByPlan = selectedPlan.NumProductsOnSocialNetworks;
             leftProducts.Add(_planSettings.SpecificationAttributeIdProductsOnSocialNetworks, new int[] { productsOnSocialNetworksByPlan - productsOnSocialNetworks, productsOnSocialNetworksByPlan });
 
             return leftProducts;
@@ -2606,14 +2636,27 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="vendorId"></param>
         /// <returns></returns>
-        public bool HasReachedLimitOfProducts(int vendorId)
+        public bool HasReachedLimitOfProducts(Vendor vendor, out int limit)
         {
-            //Si hay limite realiza la validación
-            if (_catalogSettings.ProductLimitPublished > 0)
+            var products = SearchProducts(vendorId: vendor.Id);
+            
+            if (vendor.VendorType == VendorType.Market)
             {
-                var products = SearchProducts(vendorId: vendorId, pageIndex: 0, pageSize: 0);
-                return products.TotalCount >= _catalogSettings.ProductLimitPublished;
+                //Consulta el plan seleccionado por la tienda o sino el gratis
+                var selectedPlan = GetPlanById(vendor.CurrentOrderPlanId.HasValue && vendor.PlanExpiredOnUtc > DateTime.UtcNow ? vendor.CurrentOrderPlan.OrderItems.FirstOrDefault().ProductId : _planSettings.PlanStoresFree);
+                limit = selectedPlan.NumProducts;
+                return products.TotalCount >= limit;
             }
+            else
+            {
+                limit = _catalogSettings.ProductLimitPublished;
+                //Si hay limite realiza la validación
+                if (_catalogSettings.ProductLimitPublished > 0)
+                {
+                    return products.TotalCount >= _catalogSettings.ProductLimitPublished;
+                }
+            }
+            
             return false;
         }
 
@@ -2760,36 +2803,127 @@ namespace Nop.Services.Catalog
         }
 
         /// <summary>
+        /// Trae el modelo de un plan dependiendo del id enviado
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public PlanModel GetPlanById(int id)
+        {
+            string cacheKey = string.Format(PRODUCTS_PLAN_BY_ID_KEY, id);
+            return _cacheManager.Get(cacheKey, () => {
+                var product = GetProductById(id);
+                var model = new PlanModel();
+                model.ProductId = product.Id;
+                model.Name = product.Name;
+
+                bool isPlanForStores = product.ProductCategories.FirstOrDefault().CategoryId == _planSettings.CategoryStorePlansId;
+
+
+                foreach (var spec in product.ProductSpecificationAttributes)
+                {
+                    var option = spec.SpecificationAttributeOption;
+
+                    if(option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdLimitProducts)
+                        model.NumProducts = Convert.ToInt32(option.Name);
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsOnHomePage)
+                        model.NumProductsOnHome = Convert.ToInt32(option.Name);
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsOnSocialNetworks)
+                        model.NumProductsOnSocialNetworks = Convert.ToInt32(option.Name);
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsFeaturedOnSliders)
+                        model.NumProductsOnSliders = Convert.ToInt32(option.Name);
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdHomePage)
+                        model.ShowOnHomePage = true;
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdSliders)
+                        model.ShowOnSliders = true;
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdSocialNetworks)
+                        model.ShowOnSocialNetworks = true;
+                }
+
+                return model;
+
+            });
+        }
+
+        /// <summary>
         /// Inactiva los productos de un vendor de acuerdo a un plan seleccionado
         /// </summary>
         /// <param name="vendor"></param>
         public void ValidateProductLimitsByVendorPlan(Vendor vendor)
         {
 
-            throw new Exception("No implementado");
-            //Cuenta los productos que un vendor tiene y cuantos le quedan de acuerdo al plan que posee
-            var leftProducts = CountLeftFeaturedPlacesByVendor(vendor.CurrentOrderPlan, vendor.Id);
-
-            //Si en alguna de las caracteristicas del plan el vendedor tiene más productos
-            if(leftProducts[_planSettings.SpecificationAttributeIdProductsOnHomePage][0] < 0 ||
-                leftProducts[_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders][0] < 0 ||
-                leftProducts[_planSettings.SpecificationAttributeIdProductsOnSocialNetworks][0] < 0
-                )
+            var selectedPlan = GetPlanById(vendor.CurrentOrderPlan.OrderItems.FirstOrDefault().ProductId);
+            
+            int iProduct = 0;
+            //Conteo de los productos con las caracteristicas seleccionadas
+            int iProductHome = 0;
+            int iProductSliders = 0;
+            int iProductSocialNetworks = 0;
+            //Trae todos los productos existentes y le aumenta el tiempo de muestra 
+            //solo al máximo de productos permitidos por el plan
+            foreach (var product in SearchProducts(vendorId: vendor.Id, showHidden: true, orderBy: ProductSortingEnum.UpdatedOn))
             {
-                //Consulta nuevamnete los productos
-                var productsVendor = SearchProducts(vendorId: vendor.Id);
-
-                //Valida si debe remover productos del home page
-                if (leftProducts[_planSettings.SpecificationAttributeIdProductsOnHomePage][0] < 0)
+                bool updateProduct = false;
+                
+                //Valida si el producto está dentro de las caracteristicas mostradas 
+                if (product.IsAvailable() && product.ShowOnHomePage)
+                    iProductHome++;
+                if (product.IsAvailable() && product.FeaturedForSliders)
+                    iProductSliders++;
+                if (product.IsAvailable() && product.SocialNetworkFeatured)
+                    iProductSocialNetworks++;
+                
+                //Actualiza la fecha de cierre a la fecha del plan
+                if (iProduct < selectedPlan.NumProducts && !product.Sold)
                 {
-                    var toRemove = leftProducts[_planSettings.SpecificationAttributeIdProductsOnHomePage][0] * -1;
-                    productsVendor.Where(p => p.ShowOnHomePage)
-                        .Take(toRemove)
-                        .ToList()
-                        .ForEach(p => p.ShowOnHomePage = false);
+                    product.AvailableEndDateTimeUtc = vendor.PlanExpiredOnUtc;
+                    updateProduct = true;
+                    iProduct++;
+                }
+                else
+                {
+                    if (product.AvailableEndDateTimeUtc > DateTime.UtcNow)
+                    {
+                        //Los demás productos los desactiva por fecha siempre y cuando no esten vencidos ya
+                        product.AvailableEndDateTimeUtc = DateTime.UtcNow;
+                        product.SocialNetworkFeatured = false;
+                        product.ShowOnHomePage = false;
+                        product.FeaturedForSliders = false;
+                        updateProduct = true;
+                    }
                 }
 
+                //Si se pasa del numero permitido en el plan lso empieza a desactivar
+                if (iProductSocialNetworks > selectedPlan.NumProductsOnSocialNetworks)
+                {
+                    product.SocialNetworkFeatured = false;
+                    updateProduct = true;
+                }
+                if (iProductHome > selectedPlan.NumProductsOnHome)
+                {
+                    product.ShowOnHomePage = false;
+                    updateProduct = true;
+                }
+                if (iProductSliders > selectedPlan.NumProductsOnSliders)
+                {
+                    product.FeaturedForSliders = false;
+                    product.LeftFeatured = false;
+                    updateProduct = true;
+                    foreach (var category in product.ProductCategories)
+                    {
+                        category.IsFeaturedProduct = false;
+                    }
+                    foreach (var manufacturer in product.ProductManufacturers)
+                    {
+                        manufacturer.IsFeaturedProduct = false;
+                    }
+                }
+
+                //Si se realizó algún cambio en el producto lo actualiza en Base de datos
+                if (updateProduct)
+                    UpdateProduct(product);
+                
             }
+
         }
     }
 }

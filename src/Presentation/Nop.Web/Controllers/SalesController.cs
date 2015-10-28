@@ -101,19 +101,23 @@ namespace Nop.Web.Controllers
             //Solo los talleres pueden publicar servicios
             if (_workContext.CurrentVendor != null)
             {
-                model.CanSelectService = _workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.RepairShop;
+                model.CanSelectService = _workContext.CurrentVendor.VendorType != VendorType.User;
+                int limit;
                 //Si el usuario tiene más productos publicados que el limite, muestra un mensaje de advertencia
-                model.HasReachedLimitOfProducts = HasReachedLimitOfProducts();
+                model.HasReachedLimitOfProducts = HasReachedLimitOfProducts(out limit);
+                model.NumLimitOfProducts = limit;
             }
 
             return View(model);
         }
 
-        private bool HasReachedLimitOfProducts()
+        private bool HasReachedLimitOfProducts(out int limit)
         {
+            limit = 0;
             if (_workContext.CurrentVendor != null)
                 //Si el usuario tiene más productos publicados que el limite, muestra un mensaje de advertencia
-                return _productService.HasReachedLimitOfProducts(_workContext.CurrentVendor.Id);
+                return _productService.HasReachedLimitOfProducts(_workContext.CurrentVendor, out limit);
+
             return false;
         }
 
@@ -192,14 +196,15 @@ namespace Nop.Web.Controllers
         /// <returns></returns>
         [Authorize]
         [SameVendorProduct]
-        public ActionResult SelectPlan(int id, Product product)
+        public ActionResult SelectPlan(int id, Product product, SelectPlanRequest command)
         {
             //Consulta de acuerdo al tipo de vendedor la categoria desde la cual va sacar los planes
             int categoryPlanId = _workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.User ? _planSettings.CategoryProductPlansId : _planSettings.CategoryStorePlansId;
 
             //Si el vendedor tiene un plan activo que no ha expirado lo envia directamente a destacar
             if (_workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.Market &&
-                _workContext.CurrentVendor.CurrentOrderPlanId.HasValue && _workContext.CurrentVendor.PlanExpiredOnUtc > DateTime.UtcNow)
+                _workContext.CurrentVendor.CurrentOrderPlanId.HasValue && _workContext.CurrentVendor.PlanExpiredOnUtc > DateTime.UtcNow
+                && !command.force)
             {
                 return RedirectToAction("SelectFeaturedAttributesByPlan", "Catalog", new { id = id });
             }
@@ -221,6 +226,7 @@ namespace Nop.Web.Controllers
                     planModel.Id = plan.Id;
                     planModel.Name = plan.Name;
                     planModel.Price = _priceFormatter.FormatPrice(plan.Price); 
+
                     //Agrega las caracteristicas del plan
                     foreach (var spec in plan.ProductSpecificationAttributes)
                     {
@@ -237,6 +243,22 @@ namespace Nop.Web.Controllers
 
                 return listPlans;
             });
+
+            //Si viene forzado deshabilita los planes que no se adecuen
+            if (command.force)
+            {
+                foreach (var plan in model.Plans)
+                {
+                    //busca la propiedad que contiene el limite de productos por plan
+                    var spec = plan.Specifications.FirstOrDefault(s => s.SpecificationAttributeId == _planSettings.SpecificationAttributeIdLimitProducts);
+                    //Si el numero de productos permitidos a publicar por el plan es menor que el limite del actual lo deshabilita
+                    if (spec != null && Convert.ToInt32(spec.Value) <= command.limit)
+                    {
+                        model.DisabledPlans.Add(plan.Id);
+                    }
+                }
+            }
+
 
             //Si el cliente tiene direcciones registradas la carga
             if (_workContext.CurrentCustomer.Addresses.Count > 0)
@@ -333,7 +355,9 @@ namespace Nop.Web.Controllers
             model.StateProvinces = new SelectList(stateProvinces, "Id", "Name");
 
             model.IsMobileDevice = Request.Browser.IsMobileDevice;
-            model.HasReachedLimitOfProducts = HasReachedLimitOfProducts();
+            int limit;
+            model.HasReachedLimitOfProducts = HasReachedLimitOfProducts(out limit);
+            model.NumLimitOfProducts = limit;
             model.MaxSizeFileUpload = _tuilsSettings.maxFileUploadSize;
             if (_workContext.CurrentVendor != null)
                 model.PhoneNumber = _workContext.CurrentVendor.PhoneNumber;

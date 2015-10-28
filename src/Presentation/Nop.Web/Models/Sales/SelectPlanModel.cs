@@ -14,12 +14,18 @@ namespace Nop.Web.Models.Sales
             Plans = new List<PlanModel>();
             CustomerAddressInformation = new CustomerAddress();
             CustomerInformation = new CustomerInfo();
+            DisabledPlans = new List<int>();
             
         }
         /// <summary>
         /// Listado de planes
         /// </summary>
         public List<PlanModel>  Plans { get; set; }
+
+        /// <summary>
+        /// Planes que son deshabilitados en los casos de UPGRADE
+        /// </summary>
+        public List<int> DisabledPlans { get; set; }
 
 
         public SelectList StateProvinces { get; set; }
@@ -52,6 +58,7 @@ namespace Nop.Web.Models.Sales
             public string Name { get; set; }
 
             public string Price { get; set; }
+
         }
 
         public class SpecificationPlan

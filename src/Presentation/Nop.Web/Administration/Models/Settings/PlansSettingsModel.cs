@@ -77,6 +77,9 @@ namespace Nop.Admin.Models.Settings
 
         [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributeIdHelpWithStore")]
         public int SpecificationAttributeIdHelpWithStore { get; set; }
+
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributeIdLimitProducts")]
+        public int SpecificationAttributeIdLimitProducts { get; set; }
         #endregion
 
 

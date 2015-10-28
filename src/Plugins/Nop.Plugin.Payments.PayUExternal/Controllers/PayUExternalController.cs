@@ -326,7 +326,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
                                 //Si el plan es a nivel de tienda actualiza las vigencias
                                 var vendor = _vendorService.AddPlanToVendor(order);
                                 //PARA DOWNGRADE LLAMAR EL METODO DE ABAJO
-                                //_productService.ValidateProductLimitsByVendorPlan(vendor);
+                                _productService.ValidateProductLimitsByVendorPlan(vendor);
                             }
 
                             scope.Complete();

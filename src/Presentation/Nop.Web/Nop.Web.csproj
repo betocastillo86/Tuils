@@ -415,6 +415,7 @@
     <Compile Include="Models\Sales\PublishProductModel.cs" />
     <Compile Include="Models\Catalog\SelectFeaturedAttributesByPlanModel.cs" />
     <Compile Include="Models\Sales\SelectPlanModel.cs" />
+    <Compile Include="Models\Sales\SelectPlanRequest.cs" />
     <Compile Include="Models\Sales\SelectPublishCategoryModel.cs" />
     <Compile Include="Models\ShoppingCart\MiniShoppingCartModel.cs" />
     <Compile Include="Models\ShoppingCart\WishlistEmailAFriendModel.cs" />

@@ -64,6 +64,8 @@ namespace Nop.Web.Models.Sales
 
         public bool HasReachedLimitOfProducts { get; set; }
 
+        public int NumLimitOfProducts { get; set; }
+
         public long MaxSizeFileUpload { get; set; }
     }
 

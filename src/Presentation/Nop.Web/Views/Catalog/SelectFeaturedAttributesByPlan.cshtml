@@ -5,11 +5,16 @@
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 }
 
-
+@if (Model.HasReachedLimitOfProducts)
+{
+    <div class="alert-public"><span class="icon-alert"></span> <p>@T("SelectFeaturedAttributesByPlan.HasReachedLimitOfProducts", Model.NumLimitOfProducts)</p> @Html.ActionLink(T("SelectFeaturedAttributesByPlan.SelectPlan").Text, "SelectPlan", "Sales", new { id = Model.ProductDetails.Id, force = "true", limit = Model.NumLimitOfProducts }, new { })<br /></div>
+}
 @Html.Partial("_ProductBox", Model.ProductDetails)
 
 @using (Html.BeginForm())
 {
+
+
     <div>
         <ul>
             <li>
@@ -53,12 +58,12 @@
             </li>
         </ul>
     </div>
-    
+
     <input type="submit" value="@T("SelectFeaturedAttributesByPlan.Save")" />
-    
+
     if (Model.ShowGoToMyProductsButton)
-    { 
+    {
         @Html.ActionLink(T("SelectFeaturedAttributesByPlan.gotoMyProducts").Text, "MyProducts", "ControlPanel")
     }
-    
+
 }

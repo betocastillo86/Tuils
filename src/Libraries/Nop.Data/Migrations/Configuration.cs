@@ -1072,6 +1072,9 @@ namespace Nop.Data.Migrations
 
                 newLocaleStringResources.Add("myproducts.featureByPlan", "Destacar");
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.gotoMyProducts", "Volver a mis productos");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdLimitProducts", "Limite de productos publicados");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.HasReachedLimitOfProducts", "No puedes destacar este producto ya que el plan que posees a alcanzado su limite máximo ({0} productos)");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectPlan", "Adquirir Plan");
                 
 
                 

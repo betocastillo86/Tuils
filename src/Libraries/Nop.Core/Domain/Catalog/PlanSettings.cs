@@ -44,6 +44,8 @@ namespace Nop.Core.Domain.Catalog
         public int SpecificationAttributeIdProductsOnHomePage { get; set; }
         public int SpecificationAttributeIdProductsOnSocialNetworks { get; set; }
         public int SpecificationAttributeIdHelpWithStore { get; set; }
+        
+        public int SpecificationAttributeIdLimitProducts { get; set; }
         #endregion
         
 

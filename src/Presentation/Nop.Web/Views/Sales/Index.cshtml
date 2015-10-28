@@ -21,7 +21,7 @@
                 </ol>
                 @if (Model.HasReachedLimitOfProducts)
                 { 
-                    <div class="alert-public"><span class="icon-alert"></span> <p>@T("PublishProduct.HasReachedLimitOfProducts")</p><br/></div>
+                    <div class="alert-public"><span class="icon-alert"></span> <p>@T("PublishProduct.HasReachedLimitOfProducts", Model.NumLimitOfProducts)</p><br/></div>
                 }
                 <p class="wizard-help">Elige qué quieres vender</p>
                 <nav class="nav-category">

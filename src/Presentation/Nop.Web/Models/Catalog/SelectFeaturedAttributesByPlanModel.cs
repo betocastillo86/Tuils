@@ -22,5 +22,9 @@ namespace Nop.Web.Models.Catalog
         public bool SelectOnSocialNetworks { get; set; }
 
         public bool ShowGoToMyProductsButton { get; set; }
+
+        public bool HasReachedLimitOfProducts { get; set; }
+
+        public int NumLimitOfProducts { get; set; }
     }
 }

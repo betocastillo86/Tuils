@@ -150,6 +150,7 @@
     <Compile Include="Catalog\CategoryTemplateService.cs" />
     <Compile Include="Catalog\IBackInStockSubscriptionService.cs" />
     <Compile Include="Catalog\IManufacturerTemplateService.cs" />
+    <Compile Include="Catalog\PlanModel.cs" />
     <Compile Include="Catalog\RoundingHelper.cs" />
     <Compile Include="Catalog\ManufacturerTemplateService.cs" />
     <Compile Include="Catalog\ICategoryTemplateService.cs" />

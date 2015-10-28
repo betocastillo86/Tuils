@@ -764,7 +764,7 @@ namespace Nop.Services.Messages
             tokens.Add(new Token("Product.ProductURLForCustomer", productUrl, true));
 
 
-            if (loadImages)
+            if (loadImages && product.ProductPictures.Count > 0)
             {
                 var url = _pictureService.GetPictureUrl(product.ProductPictures.FirstOrDefault().PictureId, _mediaSettings.ProductDetailsPictureSize, false);
                 tokens.Add(new Token("Product.ProductPictureURL", url));

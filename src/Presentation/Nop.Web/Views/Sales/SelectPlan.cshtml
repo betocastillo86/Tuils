@@ -37,8 +37,11 @@
                     }
                 </ul>
             </div>
+            if (!Model.DisabledPlans.Contains(plan.Id))
+            {
+                <input name="SelectedPlan" type="radio" value="@plan.Id" data-name="@plan.Name" />
+            }
 
-    <input name="SelectedPlan" type="radio" value="@plan.Id" data-name="@plan.Name" />
 
         }
         <div id="divAdditionalInfo" style="display:none">

@@ -95,8 +95,9 @@ namespace Nop.Web.Controllers.Api
                     else
                     {
                         product.VendorId = _workContext.CurrentVendor.Id;
-                        if(_productService.HasReachedLimitOfProducts(_workContext.CurrentVendor.Id))
-                            throw new NopException(CodeNopException.UserHasReachedLimitOfProducts, _localizationService.GetResource("PublishProduct.HasReachedLimitOfProducts"));
+                        //int limitProduts;
+                        //if(_productService.HasReachedLimitOfProducts(_workContext.CurrentVendor, out limitProduts))
+                        //    throw new NopException(CodeNopException.UserHasReachedLimitOfProducts, _localizationService.GetResource("PublishProduct.HasReachedLimitOfProducts", limitProduts));
                     }
 
                     //Guarda el número telefónico de contacto

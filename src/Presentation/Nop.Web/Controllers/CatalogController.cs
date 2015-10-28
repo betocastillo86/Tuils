@@ -2284,6 +2284,10 @@ namespace Nop.Web.Controllers
                 //en el caso contrario debe validar que el usuario tenga un plan comprado valido
                 order = _workContext.CurrentVendor.CurrentOrderPlan;
 
+                int limit;
+                model.HasReachedLimitOfProducts = _productService.HasReachedLimitOfProducts(_workContext.CurrentVendor, out limit);
+                model.NumLimitOfProducts = limit;
+
                 //La orden asociada al vendedor debe ser una orden paga  y finalizada
                 //No debe estar vencido el plan en el vendor
                 if (order == null

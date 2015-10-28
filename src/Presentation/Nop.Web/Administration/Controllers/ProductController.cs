@@ -983,9 +983,9 @@ namespace Nop.Admin.Controllers
                     locale.SeName = product.GetSeName(languageId, false, false);
                 });
 
-
+            int limit;
             if (model.VendorId > 0)
-                model.HasReachedLimitOfProducts = _productService.HasReachedLimitOfProducts(model.VendorId);
+                model.HasReachedLimitOfProducts = _productService.HasReachedLimitOfProducts(_vendorService.GetVendorById(model.VendorId), out limit);
 
             PrepareAclModel(model, product, false);
             PrepareStoresMappingModel(model, product, false);

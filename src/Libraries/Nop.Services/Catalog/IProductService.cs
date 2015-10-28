@@ -606,7 +606,7 @@ namespace Nop.Services.Catalog
 
         void DeleteSpecialCategoryProduct(SpecialCategoryProduct specialCategory);
 
-        bool HasReachedLimitOfProducts(int vendorId);
+        bool HasReachedLimitOfProducts(Vendor vendor, out int limit);
         
         /// <summary>
         /// Cuenta la cantidad de lugares que le quedan disponibles a un vendedor dependiendo del plan seleccionado
