@@ -717,7 +717,13 @@ namespace Nop.Web.Infrastructure
 
             routes.MapLocalizedRoute("SelectPlan",
                "mis-productos/seleccionar-plan/{id}",
-               new { controller = "Sales", action = "SelectPlan", id = UrlParameter.Optional },
+               new { controller = "Sales", action = "SelectPlan" },
+               new[] { "Nop.Web.Controllers" }
+               );
+
+            routes.MapLocalizedRoute("SelectPlanVendor",
+               "mis-productos/seleccionar-plan",
+               new { controller = "Sales", action = "SelectPlanVendor" },
                new[] { "Nop.Web.Controllers" }
                );
 

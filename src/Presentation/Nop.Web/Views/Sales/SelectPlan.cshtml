@@ -27,6 +27,8 @@
                         first = false;
             }
 
+            
+            
             <div>
                 <ul>
                     <li><h2>@plan.Name</h2></li>
@@ -37,7 +39,9 @@
                     }
                 </ul>
             </div>
-            if (!Model.DisabledPlans.Contains(plan.Id))
+            if (!Model.DisabledPlans.Contains(plan.Id) 
+                && !(Model.DisableFreePlan && plan.PriceDecimal == 0)
+                )
             {
                 <input name="SelectedPlan" type="radio" value="@plan.Id" data-name="@plan.Name" />
             }

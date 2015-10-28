@@ -17,6 +17,10 @@
     {
         <div>@T("Plugins.PayUExternal.PaymentResponse.ProductName"): @Model.ProductName</div>
     }
+    else
+    { 
+        @Html.ActionLink(T("Plugins.PayUExternal.PaymentResponse.PublishProduct").Text, "Index", "Sales")
+    }
     
 
     

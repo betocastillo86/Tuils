@@ -191,25 +191,51 @@ namespace Nop.Web.Controllers
 
         #region Planes Pagos
         /// <summary>
-        /// Funcionalidad que permite seleccionar un plan  
+        /// Funcionalidad que permite seleccionar un plan desde un producto seleccionado o publicado
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         [Authorize]
         [SameVendorProduct]
         public ActionResult SelectPlan(int id, Product product, SelectPlanRequest command)
         {
-            //Consulta de acuerdo al tipo de vendedor la categoria desde la cual va sacar los planes
-            int categoryPlanId = _workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.User ? _planSettings.CategoryProductPlansId : _planSettings.CategoryStorePlansId;
-
             //Si el vendedor tiene un plan activo que no ha expirado lo envia directamente a destacar
             if (_workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.Market &&
                 _workContext.CurrentVendor.CurrentOrderPlanId.HasValue && _workContext.CurrentVendor.PlanExpiredOnUtc > DateTime.UtcNow
-                && !command.force)
+                && (!command.force.HasValue || !command.force.Value) )
             {
                 return RedirectToAction("SelectFeaturedAttributesByPlan", "Catalog", new { id = id });
             }
 
             var model = new SelectPlanModel() { ProductId = id };
+            //Carga los planes para seleccionar
+            PrepareSelectPlanModel(model, command);
+
+            return View(model);
+        }
+
+        /// <summary>
+        /// Permite la selección de un plan. SOLO aplica para tiendas
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Authorize]
+        public ActionResult SelectPlanVendor(SelectPlanRequest command)
+        {
+            if (_workContext.CurrentVendor == null || _workContext.CurrentVendor.VendorType != VendorType.Market)
+                return RedirectToAction("Index", "ControlPanel");
+            
+            var model = new SelectPlanModel();
+            PrepareSelectPlanModel(model, command);
+            model.DisableFreePlan = true;
+            return View("SelectPlan", model);
+        }
+
+        private void PrepareSelectPlanModel(SelectPlanModel model, SelectPlanRequest command)
+        {
+            //Consulta de acuerdo al tipo de vendedor la categoria desde la cual va sacar los planes
+            int categoryPlanId = _workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.User ? _planSettings.CategoryProductPlansId : _planSettings.CategoryStorePlansId;
 
             string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_ACTIVE_PLANS_MODEL_KEY, categoryPlanId);
             model.Plans = _cacheManager.Get(cacheKey, () =>
@@ -225,7 +251,8 @@ namespace Nop.Web.Controllers
                     var planModel = new SelectPlanModel.PlanModel();
                     planModel.Id = plan.Id;
                     planModel.Name = plan.Name;
-                    planModel.Price = _priceFormatter.FormatPrice(plan.Price); 
+                    planModel.Price = _priceFormatter.FormatPrice(plan.Price);
+                    planModel.PriceDecimal = plan.Price;
 
                     //Agrega las caracteristicas del plan
                     foreach (var spec in plan.ProductSpecificationAttributes)
@@ -244,8 +271,10 @@ namespace Nop.Web.Controllers
                 return listPlans;
             });
 
+
+
             //Si viene forzado deshabilita los planes que no se adecuen
-            if (command.force)
+            if (command.force.HasValue && command.force.Value)
             {
                 foreach (var plan in model.Plans)
                 {
@@ -258,7 +287,6 @@ namespace Nop.Web.Controllers
                     }
                 }
             }
-
 
             //Si el cliente tiene direcciones registradas la carga
             if (_workContext.CurrentCustomer.Addresses.Count > 0)
@@ -280,15 +308,6 @@ namespace Nop.Web.Controllers
             model.CustomerInformation.Email = _workContext.CurrentCustomer.Email;
             model.CustomerInformation.PhoneNumber = _workContext.CurrentCustomer.GetAttribute<string>(SystemCustomerAttributeNames.Phone);
             model.CustomerInformation.FullName = _workContext.CurrentCustomer.GetFullName();
-
-
-            return View(model);
-        }
-
-        public ActionResult Prueba()
-        {
-
-            return Content(string.Empty);
         }
 
         [HttpGet]

@@ -166,10 +166,16 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
             model.OrderId = order.Id;
             model.TransactionRejected = command.transactionState == TransactionState.Declined || command.transactionState == TransactionState.Error || command.transactionState == TransactionState.Expired;
 
-            var product = _productService.GetProductById(selectedProductId);
-            model.ProductName = product.Name;
-            model.ProductId = product.Id;
 
+            //Carga los valores del producto
+            //Para los casos en que se adquiere un plan de tienda sin vender directamente un producto el id del producto puede ser 0
+            if (selectedProductId > 0)
+            {
+                var product = _productService.GetProductById(selectedProductId);
+                model.ProductName = product.Name;
+                model.ProductId = product.Id;    
+            }
+            
 
             //Si el plan seleccionado es especial para destacar un producto, carga la información del mismo en el modelo
             if (categoryId == _planSettings.CategoryProductPlansId)

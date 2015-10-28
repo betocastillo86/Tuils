@@ -40,6 +40,11 @@ namespace Nop.Web.Models.Sales
         public int ProductId { get; set; }
 
         /// <summary>
+        /// Deshabilita el plan gratis
+        /// </summary>
+        public bool DisableFreePlan { get; set; }
+
+        /// <summary>
         /// Informacion del usuario
         /// </summary>
         public CustomerAddress CustomerAddressInformation { get; set; }
@@ -58,6 +63,8 @@ namespace Nop.Web.Models.Sales
             public string Name { get; set; }
 
             public string Price { get; set; }
+
+            public decimal PriceDecimal { get; set; }
 
         }
 
