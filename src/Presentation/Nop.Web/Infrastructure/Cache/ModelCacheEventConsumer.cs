@@ -909,7 +909,7 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(PRODUCTS_ALSO_PURCHASED_IDS_PATTERN_KEY);
             _cacheManager.RemoveByPattern(PRODUCTS_RELATED_IDS_PATTERN_KEY);
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
-            _cacheManager.RemoveByPattern(HOMEPAGE_FEATURED_PRODUCTS_KEY);
+            _cacheManager.Remove(HOMEPAGE_FEATURED_PRODUCTS_KEY);
 
             //Limpia el cache de los destacados a la izquierda solo si se actualizan
             if (eventMessage.Entity.LeftFeatured.HasValue && eventMessage.Entity.LeftFeatured.Value)

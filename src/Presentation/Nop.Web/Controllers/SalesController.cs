@@ -20,6 +20,10 @@ using Nop.Services.Orders;
 using Nop.Services.Payments;
 using Nop.Core.Domain.Orders;
 using Nop.Services.Vendors;
+using Nop.Core.Domain.Vendors;
+using Nop.Services.Localization;
+using Nop.Core.Domain.Media;
+using Nop.Services.Media;
 
 namespace Nop.Web.Controllers
 {
@@ -41,6 +45,9 @@ namespace Nop.Web.Controllers
         private readonly IPriceFormatter _priceFormatter;
         private readonly IOrderProcessingService _orderProcessingService;
         private readonly IVendorService _vendorService;
+        private readonly ILocalizationService _localizationService;
+        private readonly MediaSettings _mediaSettings;
+        private readonly IPictureService _pictureService;
         #endregion
 
         #region Ctor
@@ -58,7 +65,10 @@ namespace Nop.Web.Controllers
             IPaymentService paymentService,
             IPriceFormatter priceFormatter,
             IOrderProcessingService orderProcessingService,
-            IVendorService vendorService)
+            IVendorService vendorService,
+            ILocalizationService localizationService,
+            MediaSettings mediaSettings,
+            IPictureService pictureService)
         {
             this._categoryService = categoryService;
             this._tuilsSettings = tuilsSettings;
@@ -74,6 +84,9 @@ namespace Nop.Web.Controllers
             this._priceFormatter = priceFormatter;
             this._orderProcessingService = orderProcessingService;
             this._vendorService = vendorService;
+            this._localizationService = localizationService;
+            this._mediaSettings = mediaSettings;
+            this._pictureService = pictureService;
         }
         #endregion
 
@@ -287,7 +300,23 @@ namespace Nop.Web.Controllers
 
 
         #endregion
-       
+
+        [HttpGet]
+        [Authorize]
+        [SameVendorProduct]
+        public ActionResult ConfirmationWithoutPlan(int id, Product product)
+        {
+            var model = new ConfirmationWithoutPlanModel();
+            model.ProductDetails.Name = product.Name;
+            model.ProductDetails.ProductPrice.Price = _priceFormatter.FormatPrice(product.Price);
+            model.ProductDetails.DefaultPictureModel = product.GetPicture(_localizationService, _mediaSettings, _pictureService);
+            
+            //De acuerdo a si es tienda o no carga el limite de dias de publicación
+            model.LimitDaysOfProductPublished = _workContext.CurrentVendor.VendorType == VendorType.Market ? _catalogSettings.LimitDaysOfStoreProductPublished : _catalogSettings.LimitDaysOfProductPublished;
+
+            return View(model);
+        }
+
 
         #region Metodos Privados
         private PublishProductModel GetPublishModel()

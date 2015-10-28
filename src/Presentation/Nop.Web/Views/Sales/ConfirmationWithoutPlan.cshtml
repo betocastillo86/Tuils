@@ -1,0 +1,20 @@
+﻿    
+@{
+    ViewBag.Title = "ConfirmationWithoutPlan";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+}
+
+@model Nop.Web.Models.Sales.ConfirmationWithoutPlanModel
+
+    <div class="imgPublicada">
+        <img src="@Model.ProductDetails.DefaultPictureModel.ImageUrl" />
+    </div>
+    <div class="resumen-final">
+        <h2>@T("PublishProduct.PublishFinished")</h2>
+        <p>@Model.ProductDetails.Name </p>
+        <h2>@Model.ProductDetails.ProductPrice.Price</h2>
+        <h3>@T("PublishProduct.TimeOutPost", Model.LimitDaysOfProductPublished)</h3>
+        @Html.ActionLink(T("SelectFeaturedAttributesByPlan.gotoMyProducts").Text, "MyProducts", "ControlPanel")
+    </div>
+
+

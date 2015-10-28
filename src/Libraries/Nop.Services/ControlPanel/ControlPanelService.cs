@@ -204,7 +204,7 @@ namespace Nop.Services.ControlPanel
                     Action = "MyProducts",
                     IconMini = "icon-scooter",
                     IconBig = "icon-scooter",
-                    Parameters = new { p = true },
+                    //Parameters = new { p = true },
                     SubModules = new List<ControlPanelModule>() { 
                     new ControlPanelModule()
                     {
@@ -212,8 +212,7 @@ namespace Nop.Services.ControlPanel
                         Controller = "ControlPanel",
                         Action = "MyProducts",
                         IconMini = "icon-scooter",
-                        IconBig = "icon-scooter",
-                        Parameters = new { p = true }
+                        IconBig = "icon-scooter"
                     },
                     new ControlPanelModule()
                     {
@@ -222,7 +221,7 @@ namespace Nop.Services.ControlPanel
                         Action = "MyProducts",
                         IconMini = "icon-scooter",
                         IconBig = "icon-scooter",
-                        OptionalParameters = new { p = false }
+                        Parameters = new { p = false }
                     }
                 }
 

@@ -20,5 +20,7 @@ namespace Nop.Web.Models.Catalog
         public int NumProductsOnSocialNetworksByPlan { get; set; }
         public int NumProductsOnSocialNetworksLeft { get; set; }
         public bool SelectOnSocialNetworks { get; set; }
+
+        public bool ShowGoToMyProductsButton { get; set; }
     }
 }

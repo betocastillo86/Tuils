@@ -1069,6 +1069,12 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnSliders", "Destacados en los sliders");
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks", "Destacados en redes sociales");
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.Save", "Destacar");
+
+                newLocaleStringResources.Add("myproducts.featureByPlan", "Destacar");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.gotoMyProducts", "Volver a mis productos");
+                
+
+                
                 
 
                 //Recorre todas las llaves que desea adicional

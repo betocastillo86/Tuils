@@ -15,7 +15,7 @@
             <li>
                 @T("SelectFeaturedAttributesByPlan.SelectOnHome")
 
-                @if (Model.NumProductsOnHomeLeft > 0)
+                @if (Model.SelectOnHome || Model.NumProductsOnHomeLeft > 0)
                 {
                     @Html.CheckBoxFor(m => m.SelectOnHome)
                 }
@@ -28,7 +28,7 @@
             <li>
                 @T("SelectFeaturedAttributesByPlan.SelectOnSliders")
 
-                @if (Model.NumProductsOnSlidersLeft > 0)
+                @if (Model.SelectOnSliders || Model.NumProductsOnSlidersLeft > 0)
                 {
                     @Html.CheckBoxFor(m => m.SelectOnSliders)
                 }
@@ -41,7 +41,7 @@
             <li>
                 @T("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks")
 
-                @if (Model.NumProductsOnSocialNetworksLeft > 0)
+                @if (Model.SelectOnSocialNetworks || Model.NumProductsOnSocialNetworksLeft > 0)
                 {
                     @Html.CheckBoxFor(m => m.SelectOnSocialNetworks)
                 }
@@ -55,5 +55,10 @@
     </div>
     
     <input type="submit" value="@T("SelectFeaturedAttributesByPlan.Save")" />
+    
+    if (Model.ShowGoToMyProductsButton)
+    { 
+        @Html.ActionLink(T("SelectFeaturedAttributesByPlan.gotoMyProducts").Text, "MyProducts", "ControlPanel")
+    }
     
 }

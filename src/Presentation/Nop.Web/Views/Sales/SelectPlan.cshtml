@@ -98,7 +98,9 @@
         <input name="test" type="hidden" value="1">
 
 
-        <a href="/" id="btnContinue" style="display:none">Continuar</a>
+        
+        @Html.ActionLink(T("SelectPlan.ContinueWithoutPlan").Text, "ConfirmationWithoutPlan", "Sales", new{ id = Model.ProductId },new { style = "display:none", id = "btnContinue" })
+        
         <input id="btnPay" name="Submit" type="button" value="Pagar" style="display:none">
 
 

@@ -2279,6 +2279,8 @@ namespace Nop.Web.Controllers
             }
             else
             {
+
+                model.ShowGoToMyProductsButton = true;
                 //en el caso contrario debe validar que el usuario tenga un plan comprado valido
                 order = _workContext.CurrentVendor.CurrentOrderPlan;
 

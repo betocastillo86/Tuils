@@ -24,6 +24,12 @@ namespace Nop.Web.Models.ControlPanel
 
         public string ResorceMessageNoRows { get; set; }
 
+        /// <summary>
+        /// True: Muestra el botón que permite destacar el producto por parte de un plan de un vendedor
+        /// </summary>
+        public bool ShowButtonFeatureByPlan { get; set; }
+
+
         public CatalogPagingFilteringModel PagingFilteringContext { get; set; }
 
         public class LinkFilter

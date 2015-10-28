@@ -533,15 +533,17 @@ namespace Nop.Web.Controllers
                 //Carga los tamaños de la paginación
                 PreparePageSizeOptions(model.PagingFilteringContext, command);
 
+                bool showPublished = command.p.HasValue ? command.p.Value : true;
+
                 string keywordsSearch = !string.IsNullOrWhiteSpace(command.q) ? command.q : null;
 
                 IList<int> categoriesIds = null;
                 if (command.pt.HasValue)
                     categoriesIds = GetChildCategoryIds(command.pt.Value);
 
-                var products = _productService.SearchProducts(showHidden: !command.p, categoryIds: categoriesIds, vendorId: _workContext.CurrentVendor.Id,
+                var products = _productService.SearchProducts(showHidden: !showPublished, categoryIds: categoriesIds, vendorId: _workContext.CurrentVendor.Id,
                     pageSize: command.PageSize, pageIndex: command.PageIndex, keywords: keywordsSearch,
-                    orderBy: ProductSortingEnum.UpdatedOn, published: command.p);
+                    orderBy: ProductSortingEnum.UpdatedOn, published: showPublished);
 
                 model.Products = products.Select(p => new ProductOverviewModel()
                 {
@@ -562,9 +564,10 @@ namespace Nop.Web.Controllers
                 model.PagingFilteringContext.q = command.q;
                 model.PagingFilteringContext.LoadPagedList(products);
 
-
                 //Carga la cadena de respuesta cuando no  hay resultados del filtro
-                model.ResorceMessageNoRows = string.Format("MyProducts.NoRows.{0}", command.p ? "Active" : "Inactive");
+                model.ResorceMessageNoRows = string.Format("MyProducts.NoRows.{0}", showPublished ? "Active" : "Inactive");
+                //Solo puede mostrar el botón de los planes si es un vendor
+                model.ShowButtonFeatureByPlan = _workContext.CurrentVendor.VendorType == VendorType.Market;
 
                 string url = _webHelper.GetThisPageUrl(true);
                 model.UrlFilterByServices = new MyProductsModel.LinkFilter()
