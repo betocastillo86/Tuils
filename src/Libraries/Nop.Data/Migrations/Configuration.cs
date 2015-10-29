@@ -37,9 +37,9 @@ namespace Nop.Data.Migrations
             bool runManufacturers = false;
             bool runManufacturersCategories = false;
             bool runSettings = true;
-            bool runTemplatesEmails = false;
+            bool runTemplatesEmails = true;
             bool runUrls = false;
-            bool runTasks = false;
+            bool runTasks = true;
             bool runPermissions = false;
 
             /***DEBUG***/
@@ -1075,7 +1075,7 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdLimitProducts", "Limite de productos publicados");
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.HasReachedLimitOfProducts", "No puedes destacar este producto ya que el plan que posees a alcanzado su limite máximo ({0} productos)");
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectPlan", "Adquirir Plan");
-                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.ProductName", "Publicar producto");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.PublishProduct", "Publicar producto");
                 
                 
 
@@ -2586,6 +2586,24 @@ namespace Nop.Data.Migrations
                         IsActive = true,
                         EmailAccountId = 1
                     },
+                    new MessageTemplate()
+                    {
+                        Id = 51,
+                        Name = "Vendor.ExpirationPlan",
+                        Subject = "%Store.Name%. El plan seleccionado para publicar está a punto de expirar",
+                        Body = "<p>Tu plan expirará en %Vendor.PlanExpiredOnUtc%. Te invitamos a renovarlo </p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 52,
+                        Name = "Vendor.PlanFinished",
+                        Subject = "%Store.Name%. El plan seleccionado ha expirado",
+                        Body = "<p> Los productos se desactivarán atumáticamente para vvolverlos a activar compre el plan de nuevo </p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
                     
                 };
 
@@ -2682,6 +2700,15 @@ namespace Nop.Data.Migrations
                         Enabled = true,
                         StopOnError = false,
                         Type = "Nop.Services.Common.PublishingAlmostFinishedTask, Nop.Services"
+                    },
+                    new ScheduleTask()
+                    {
+                        Id = 11,
+                        Name = "Vencimiento de planes",
+                        Seconds = 43200,
+                        Enabled = true,
+                        StopOnError = false,
+                        Type = "Nop.Services.Vendors.ValidateVendorExpiredPlansTask, Nop.Services"
                     }
 
                 };

@@ -31,6 +31,7 @@ using Nop.Services.Payments;
 using Nop.Services.Seo;
 using Nop.Services.Stores;
 using Nop.Core.Domain.Media;
+using Nop.Core.Domain.Vendors;
 
 namespace Nop.Services.Messages
 {
@@ -994,8 +995,23 @@ namespace Nop.Services.Messages
             };
             return allowedTokens.ToArray();
         }
+
+
+        public void AddVendorTokens(IList<Token> tokens, Vendor vendor)
+        {
+            tokens.Add(new Token("Vendor.Name", vendor.Name, true));
+            
+            if(vendor.PlanExpiredOnUtc.HasValue)
+                tokens.Add(new Token("Vendor.PlanExpiredOnUtc", vendor.PlanExpiredOnUtc.Value.ToString(), true));
+
+            //event notification
+            _eventPublisher.EntityTokensAdded(vendor, tokens);
+        }
         
         #endregion
+
+
+
 
 
         

@@ -663,5 +663,7 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="vendor"></param>
         void ValidateProductLimitsByVendorPlan(Vendor vendor);
+
+
     }
 }

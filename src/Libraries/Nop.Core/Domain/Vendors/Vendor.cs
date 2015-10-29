@@ -108,6 +108,17 @@ namespace Nop.Core.Domain.Vendors
         /// </summary>
         public System.DateTime? PlanExpiredOnUtc { get; set; }
 
+
+        /// <summary>
+        /// True: Se envío mensaje advirtiendo de expriación del plan
+        /// </summary>
+        public bool ExpirationPlanMessageSent { get; set; }
+
+        /// <summary>
+        /// True: Se envío mensaje advirtiendo que su plan finalizó
+        /// </summary>
+        public bool PlanFinishedMessageSent { get; set; }
+
         public VendorType VendorType
         {
             get { return (VendorType)VendorTypeId; }

@@ -372,5 +372,25 @@ namespace Nop.Services.Messages
         /// <returns></returns>
         int SendProductFinishedNotificationMessage(Product product, int languageId);
         #endregion
+
+        #region Vendor
+        /// <summary>
+        /// Envia notifcación que el plan está a punto de expirar
+        /// </summary>
+        /// <param name="vendor">datos del vendor</param>
+        /// <param name="expirationDays">Dias previos a expirar</param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        int SendVendorPlanExpirationNotificationMessage(Vendor vendor, int expirationDays, int languageId);
+
+
+        // <summary>
+        /// Envia notifcación que el plan del vendor ya finalizó por tiempo
+        /// </summary>
+        /// <param name="vendor">datos del vendor</param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        int SendVendorPlanFinishedNotificationMessage(Vendor vendor, int languageId);
+        #endregion
     }
 }

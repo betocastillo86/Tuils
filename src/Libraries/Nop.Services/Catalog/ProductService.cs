@@ -2925,5 +2925,6 @@ namespace Nop.Services.Catalog
             }
 
         }
+
     }
 }

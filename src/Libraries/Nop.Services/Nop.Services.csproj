@@ -216,6 +216,7 @@
     <Compile Include="Logging\ClearLogTask.cs" />
     <Compile Include="Media\ResizeType.cs" />
     <Compile Include="Shipping\EventPublisherExtensions.cs" />
+    <Compile Include="Vendors\ValidateVendorExpiredPlansTask.cs" />
     <Compile Include="Vendors\VendorService.cs" />
     <Compile Include="Vendors\IVendorService.cs" />
     <Compile Include="Customers\ICustomerRegistrationService.cs" />
