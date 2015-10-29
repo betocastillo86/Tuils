@@ -43,7 +43,10 @@ namespace Nop.Services.Common
             //Anvia todas las notificaciones pendientes
             foreach (var product in productsWithoutNotification)
             {
-                _workflowMessageService.SendProductFinishedNotificationMessage(product, 2);
+                //Solo realiza el envio cuando el vendor no tiene plan o la fecha de expiración del plan es menor a la del producto
+                if (!product.Vendor.PlanExpiredOnUtc.HasValue || product.Vendor.PlanExpiredOnUtc.Value.AddDays(1) < product.AvailableEndDateTimeUtc)
+                    _workflowMessageService.SendProductFinishedNotificationMessage(product, 2);
+
                 //Actualiza el producto y deja el mensjae como enviado
                 product.PublishingFinishedMessageSent = true;
                 _productService.UpdateProduct(product);
@@ -60,7 +63,9 @@ namespace Nop.Services.Common
             //Anvia todas las notificaciones pendientes
             foreach (var product in productsWithoutNotification)
             {
-                _workflowMessageService.SendProductExpirationNotificationMessage(product,_tuilsSettings.SendMessageExpirationProductDaysBefore,  2);
+                //Solo realiza el envio cuando el vendor no tiene plan o la fecha de expiración del plan es menor a la del producto
+                if (!product.Vendor.PlanExpiredOnUtc.HasValue || product.Vendor.PlanExpiredOnUtc.Value.AddDays(1) < product.AvailableEndDateTimeUtc)
+                    _workflowMessageService.SendProductExpirationNotificationMessage(product,_tuilsSettings.SendMessageExpirationProductDaysBefore,  2);
                 //Actualiza el producto y deja el mensjae como enviado
                 product.ExpirationMessageSent = true;
                 _productService.UpdateProduct(product);

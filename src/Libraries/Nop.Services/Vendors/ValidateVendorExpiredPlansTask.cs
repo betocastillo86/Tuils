@@ -15,6 +15,7 @@ namespace Nop.Services.Vendors
     public class ValidateVendorExpiredPlansTask : ITask
     {
         private readonly IVendorService _vendorService;
+        private readonly IProductService _productService;
         private readonly IWorkflowMessageService _workflowMessageService;
         private readonly IRepository<Vendor> _vendorRepository;
         private readonly TuilsSettings _tuilsSettings;
@@ -23,12 +24,14 @@ namespace Nop.Services.Vendors
         public ValidateVendorExpiredPlansTask(IVendorService vendorService,
             IRepository<Vendor> vendorRepository,
             IWorkflowMessageService workflowMessageService,
-            TuilsSettings tuilsSettings)
+            TuilsSettings tuilsSettings,
+            IProductService productService)
         {
             _vendorService = vendorService;
             _vendorRepository = vendorRepository;
             _workflowMessageService = workflowMessageService;
             _tuilsSettings = tuilsSettings;
+            _productService = productService;
         }
 
 
@@ -52,6 +55,10 @@ namespace Nop.Services.Vendors
                 //Actualiza el producto y deja el mensjae como enviado
                 vendor.PlanFinishedMessageSent = true;
                 _vendorService.UpdateVendor(vendor);
+
+                //Da de baja los productos que deben estarlo
+                _productService.ValidateProductLimitsByVendorPlan(vendor);
+
             }
         }
 

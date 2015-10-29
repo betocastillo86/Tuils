@@ -2837,6 +2837,8 @@ namespace Nop.Services.Catalog
                         model.ShowOnSliders = true;
                     else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdSocialNetworks)
                         model.ShowOnSocialNetworks = true;
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributePlanDays)
+                        model.DaysPlan = Convert.ToInt32(option.Name);
                 }
 
                 return model;
@@ -2851,7 +2853,12 @@ namespace Nop.Services.Catalog
         public void ValidateProductLimitsByVendorPlan(Vendor vendor)
         {
 
-            var selectedPlan = GetPlanById(vendor.CurrentOrderPlan.OrderItems.FirstOrDefault().ProductId);
+            //Si el plan ya expiró, carga los datos del plan gratis
+            int planId = vendor.PlanExpiredOnUtc > DateTime.UtcNow ? vendor.CurrentOrderPlan.OrderItems.FirstOrDefault().ProductId : _planSettings.PlanStoresFree;
+            var selectedPlan = GetPlanById(planId);
+            //Si el plan no se le ha vencido al vendor la fecha es la del vencimiento
+            //Si el plan ya se vencio, la fecha es la del plan gratis
+            var newExpirationDate = vendor.PlanExpiredOnUtc > DateTime.UtcNow ? vendor.PlanExpiredOnUtc : DateTime.UtcNow.AddDays(selectedPlan.DaysPlan);
             
             int iProduct = 0;
             //Conteo de los productos con las caracteristicas seleccionadas
@@ -2860,7 +2867,7 @@ namespace Nop.Services.Catalog
             int iProductSocialNetworks = 0;
             //Trae todos los productos existentes y le aumenta el tiempo de muestra 
             //solo al máximo de productos permitidos por el plan
-            foreach (var product in SearchProducts(vendorId: vendor.Id, showHidden: true, orderBy: ProductSortingEnum.UpdatedOn))
+            foreach (var product in SearchProducts(vendorId: vendor.Id, showHidden: true, orderBy: ProductSortingEnum.UpdatedOn, published:true))
             {
                 bool updateProduct = false;
                 
@@ -2875,7 +2882,7 @@ namespace Nop.Services.Catalog
                 //Actualiza la fecha de cierre a la fecha del plan
                 if (iProduct < selectedPlan.NumProducts && !product.Sold)
                 {
-                    product.AvailableEndDateTimeUtc = vendor.PlanExpiredOnUtc;
+                    product.AvailableEndDateTimeUtc = newExpirationDate;
                     updateProduct = true;
                     iProduct++;
                 }

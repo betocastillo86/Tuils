@@ -28,5 +28,7 @@ namespace Nop.Services.Catalog
         public bool ShowOnSliders { get; set; }
 
         public bool ShowOnSocialNetworks { get; set; }
+
+        public int DaysPlan { get; set; }
     }
 }
