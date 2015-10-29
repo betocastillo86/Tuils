@@ -108,5 +108,8 @@ namespace Nop.Core.Domain.Orders
         public bool RenderAssociatedAttributeValueQuantity { get; set; }
 
 
+        public bool AllowGuestsToAddCart { get; set; }
+
+
     }
 }

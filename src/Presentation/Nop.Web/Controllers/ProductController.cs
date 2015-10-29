@@ -1013,7 +1013,11 @@ namespace Nop.Web.Controllers
             //Se cambia para que el cache sea por la categoría
             var model = _cacheManager.Get(string.Format(ModelCacheEventConsumer.PRODUCTS_RELATED_IDS_KEY, mainCategory.CategoryId, _storeContext.CurrentStore.Id),
                 () => {
-                    var products = _productService.SearchProducts(categoryIds: new List<int>() { mainCategory.CategoryId }, pageIndex: 0, pageSize: 20, orderBy:ProductSortingEnum.Random);
+                    int pagesize = _catalogSettings.ShowRelatedProductsAsFeatured ? int.MaxValue : 20;
+                    var products = _productService.SearchProducts(categoryIds: new List<int>() { mainCategory.CategoryId }, 
+                        pageIndex: 0, 
+                        pageSize: pagesize, 
+                        featuredProducts:_catalogSettings.ShowRelatedProductsAsFeatured ? (bool?) true : null);
                     return PrepareProductOverviewModels(products, true, true, productThumbPictureSize).ToList();
                 }
                     //_productService.GetRelatedProductsByProductId1(productId).Select(x => x.ProductId2).ToArray()

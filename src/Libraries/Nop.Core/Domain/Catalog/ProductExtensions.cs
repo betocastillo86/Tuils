@@ -47,6 +47,16 @@ namespace Nop.Core.Domain.Catalog
         }
 
         /// <summary>
+        /// Tiene en cuenta las fechas, la publciacion y si está vendido o no 
+        /// </summary>
+        /// <param name="?"></param>
+        /// <returns></returns>
+        public static bool IsTotallyAvailable(this Product product)
+        {
+            return product.IsAvailable() && product.Published && !product.Sold;
+        }
+
+        /// <summary>
         /// Get a value indicating whether a product is available now (availability dates)
         /// </summary>
         /// <param name="product">Product</param>

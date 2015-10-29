@@ -59,6 +59,8 @@ namespace Nop.Web.Models.Catalog
 
         public int NumClicksForMoreInfo { get; set; }
 
+        public bool HasPlanSelected { get; set; }
+
 
 		#region Nested Classes
 

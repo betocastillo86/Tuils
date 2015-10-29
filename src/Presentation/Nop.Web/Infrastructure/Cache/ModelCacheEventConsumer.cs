@@ -487,7 +487,7 @@ namespace Nop.Web.Infrastructure.Cache
         /// Key for "related" product identifiers displayed on the product details page
         /// </summary>
         /// <remarks>
-        /// {0} : current product id
+        /// {0} : current CATEGORY
         /// {1} : current store ID
         /// </remarks>
         public const string PRODUCTS_RELATED_IDS_KEY = "Nop.pres.related-{0}-{1}";

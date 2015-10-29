@@ -404,5 +404,11 @@ namespace Nop.Core.Domain.Catalog
         /// Numero de imagenes que se pueden publicar para un producto
         /// </summary>
         public int LimitNumPictures { get; set; }
+
+        /// <summary>
+        /// True: Muestra los productos relacionados como los destacados de la misma categoría
+        /// False: Muestra los productos relacionados como los de la misma categoria sin necesidad que sean destacados
+        /// </summary>
+        public bool ShowRelatedProductsAsFeatured { get; set; }
     }
 }

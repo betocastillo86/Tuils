@@ -1360,7 +1360,13 @@ namespace Nop.Web.Controllers
         public ActionResult AddProductToCart_Catalog(int productId, int shoppingCartTypeId,
             int quantity, bool forceredirection = false)
         {
+            
+            
             var cartType = (ShoppingCartType)shoppingCartTypeId;
+
+            //Valida si no debe permitir agregar al carrito
+            if (cartType == ShoppingCartType.ShoppingCart && !_shoppingCartSettings.AllowGuestsToAddCart)
+                return HttpNotFound();
 
             var product = _productService.GetProductById(productId);
             if (product == null)
@@ -1543,6 +1549,10 @@ namespace Nop.Web.Controllers
         [ValidateInput(false)]
         public ActionResult AddProductToCart_Details(int productId, int shoppingCartTypeId, FormCollection form)
         {
+            //Valida si no debe permitir agregar al carrito
+            if (shoppingCartTypeId == Convert.ToInt32(ShoppingCartType.ShoppingCart) && !_shoppingCartSettings.AllowGuestsToAddCart)
+                return HttpNotFound();
+            
             var product = _productService.GetProductById(productId);
             if (product == null)
             {

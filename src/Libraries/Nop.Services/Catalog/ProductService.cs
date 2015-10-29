@@ -2638,7 +2638,7 @@ namespace Nop.Services.Catalog
         /// <returns></returns>
         public bool HasReachedLimitOfProducts(Vendor vendor, out int limit)
         {
-            var products = SearchProducts(vendorId: vendor.Id);
+            var products = SearchProducts(vendorId: vendor.Id, sold:false);
             
             if (vendor.VendorType == VendorType.Market)
             {
@@ -2649,11 +2649,12 @@ namespace Nop.Services.Catalog
             }
             else
             {
+                int totalPublishedWiouthPaying = products.Where(p => !p.OrderPlanId.HasValue).Count();
                 limit = _catalogSettings.ProductLimitPublished;
                 //Si hay limite realiza la validación
                 if (_catalogSettings.ProductLimitPublished > 0)
                 {
-                    return products.TotalCount >= _catalogSettings.ProductLimitPublished;
+                    return totalPublishedWiouthPaying >= _catalogSettings.ProductLimitPublished;
                 }
             }
             

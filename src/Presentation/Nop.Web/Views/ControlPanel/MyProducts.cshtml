@@ -71,6 +71,10 @@
                         { 
                             @Html.ActionLink(T("myproducts.featureByPlan").Text, "SelectFeaturedAttributesByPlan", "Catalog", new { id = product.Id }, new { @class = "btn-azul" })
                         }
+                        else if (!product.HasPlanSelected)
+                        { 
+                            @Html.ActionLink(T("myproducts.featureByProduct").Text, "SelectPlan", "Sales", new { id = product.Id }, new { @class = "btn-azul" })
+                        }
 
                         <a class="btnUnpublish btn-naranja" data-id="@product.Id" title="@T("myproducts.disable.alt")">@T("myproducts.disable")</a>
                         <a class="btn-azul"  href="@Url.Action("EditProduct", "ControlPanel", new { id = product.Id })">@T("myproducts.editProduct")</a>

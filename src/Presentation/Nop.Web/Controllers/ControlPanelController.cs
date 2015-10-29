@@ -542,7 +542,7 @@ namespace Nop.Web.Controllers
                     categoriesIds = GetChildCategoryIds(command.pt.Value);
 
                 var products = _productService.SearchProducts(showHidden: !showPublished, categoryIds: categoriesIds, vendorId: _workContext.CurrentVendor.Id,
-                    pageSize: command.PageSize, pageIndex: command.PageIndex, keywords: keywordsSearch,
+                    pageSize: command.PageSize, pageIndex: command.PageIndex, keywords: keywordsSearch, 
                     orderBy: ProductSortingEnum.UpdatedOn, published: showPublished);
 
                 model.Products = products.Select(p => new ProductOverviewModel()
@@ -556,9 +556,10 @@ namespace Nop.Web.Controllers
                     TotalSales = p.TotalSales,
                     AvailableStartDate = p.AvailableStartDateTimeUtc ?? DateTime.UtcNow,
                     AvailableEndDate = p.AvailableEndDateTimeUtc ?? DateTime.UtcNow,
-                    Published = p.Published && p.AvailableEndDateTimeUtc > DateTime.UtcNow,
+                    Published = p.IsTotallyAvailable(),
                     DefaultPictureModel = p.GetPicture(_localizationService, _mediaSettings, _pictureService),
-                    NumClicksForMoreInfo = p.NumClicksForMoreInfo
+                    NumClicksForMoreInfo = p.NumClicksForMoreInfo,
+                    HasPlanSelected = p.OrderPlanId.HasValue
                 }).ToList();
 
                 model.PagingFilteringContext.q = command.q;

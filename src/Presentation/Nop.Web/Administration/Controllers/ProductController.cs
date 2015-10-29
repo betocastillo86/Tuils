@@ -1057,6 +1057,11 @@ namespace Nop.Admin.Controllers
                             product.AppliedDiscounts.Remove(discount);
                     }
                 }
+
+                //Cuando el vendor tiene un plan pago, debe poner como fecha limite uno de los dos
+                if (product.Vendor.CurrentOrderPlanId.HasValue && product.Vendor.PlanExpiredOnUtc.Value > DateTime.UtcNow)
+                    product.AvailableEndDateTimeUtc = product.Vendor.PlanExpiredOnUtc;
+
                 _productService.UpdateProduct(product);
                 _productService.UpdateHasDiscountsApplied(product);
                 //back in stock notifications

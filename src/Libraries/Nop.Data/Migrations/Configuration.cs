@@ -1076,6 +1076,7 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.HasReachedLimitOfProducts", "No puedes destacar este producto ya que el plan que posees a alcanzado su limite máximo ({0} productos)");
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectPlan", "Adquirir Plan");
                 newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.PublishProduct", "Publicar producto");
+                newLocaleStringResources.Add("myproducts.featureByProduct", "Destacar");
                 
                 
 
@@ -2395,6 +2396,10 @@ namespace Nop.Data.Migrations
                 settings.Add("tuilsSettings.MaxNumberOptionsToShowOnFilters", "4");
                 settings.Add("vendorSettings.MinWidthCover", "1200");
                 settings.Add("vendorSettings.MinHeightCover", "500");
+                settings.Add("ShoppingCartSettings.allowgueststoaddcart", "False");
+                settings.Add("CatalogSettings.ShowRelatedProductsAsFeatured", "False");
+                
+                
 
 
                 //Recorre todas las llaves que desea adicional
