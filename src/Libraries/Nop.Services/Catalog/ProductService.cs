@@ -2865,9 +2865,16 @@ namespace Nop.Services.Catalog
             int iProductHome = 0;
             int iProductSliders = 0;
             int iProductSocialNetworks = 0;
+
+            //Consulta todos los productos 
+            var products = _productRepository.Table
+                .Where(p => p.VendorId == vendor.Id && p.Published)
+                .OrderByDescending(p => p.UpdatedOnUtc)
+                .ToList();
+
             //Trae todos los productos existentes y le aumenta el tiempo de muestra 
             //solo al máximo de productos permitidos por el plan
-            foreach (var product in SearchProducts(vendorId: vendor.Id, showHidden: true, orderBy: ProductSortingEnum.UpdatedOn, published:true))
+            foreach (var product in products)
             {
                 bool updateProduct = false;
                 
