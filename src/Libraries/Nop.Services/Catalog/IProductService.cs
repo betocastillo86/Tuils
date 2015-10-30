@@ -627,6 +627,22 @@ namespace Nop.Services.Catalog
         Dictionary<int, int[]> CountLeftFeaturedPlacesByVendor(Product product, bool validatePlan, Order order = null);
 
         /// <summary>
+        /// Cuenta la cantidad de lugares que le quedan disponibles a un vendedor dependiendo del plan seleccionado
+        /// para destacar sus productos
+        /// </summary>
+        /// <param name="order">
+        ///     Orden que sobre la que se quiere consultar el plan
+        /// </param>
+        /// <param name="vendorId">Id del vendor que consulta los datos</param>
+        /// <returns>
+        /// Diccionario con la siguiente estructure:
+        ///     Llave: ID del SpecificationAttribute relacionado del plan (Ej: SpecificationAttributeId de Numero de productos publicados en el home)
+        ///     Valor: Array en posicion 0: Conteo de los productos que le quedan disponibles al vendor
+        ///            Array en posicion 1: Conteo de los productos que puede seleccionar en el plan
+        /// </returns>
+        Dictionary<int, int[]> CountLeftFeaturedPlacesByVendor(Order order, int vendorId);
+
+        /// <summary>
         /// Trae los productos que están a punto de finalizar dependiendo de un numero de dias previos
         /// </summary>
         /// <param name="daysBefore"></param>

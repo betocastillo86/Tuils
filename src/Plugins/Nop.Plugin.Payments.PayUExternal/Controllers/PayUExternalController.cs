@@ -331,6 +331,11 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
                             { 
                                 //Si el plan es a nivel de tienda actualiza las vigencias
                                 var vendor = _vendorService.AddPlanToVendor(order);
+
+                                //Actualiza las fechas de la orden con los datos del plan
+                                order.PlanExpirationOnUtc = vendor.PlanExpiredOnUtc;
+                                order.PlanStartOnUtc = DateTime.UtcNow;
+                                
                                 //PARA DOWNGRADE LLAMAR EL METODO DE ABAJO
                                 _productService.ValidateProductLimitsByVendorPlan(vendor);
                             }
@@ -349,9 +354,9 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
                     case TransactionState.Declined:
                     case TransactionState.Expired:
                     case TransactionState.Error:
-                        if (_orderProcessingService.CanCancelOrder(order))
+                        if (_orderProcessingService.CanVoid(order))
                         {
-                            _orderProcessingService.CancelOrder(order, true);
+                            _orderProcessingService.Void(order);
                             scope.Complete();
                         }
                         else

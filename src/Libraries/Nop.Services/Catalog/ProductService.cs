@@ -2523,31 +2523,7 @@ namespace Nop.Services.Catalog
             //El plan del vendedor debe estar activo
             if ((product.Vendor.CurrentOrderPlanId.HasValue && product.Vendor.PlanExpiredOnUtc > DateTime.UtcNow) || !validatePlan)
             {
-
                 leftProducts = CountLeftFeaturedPlacesByVendor(!validatePlan && !product.Vendor.CurrentOrderPlanId.HasValue ? order : product.Vendor.CurrentOrderPlan, product.VendorId);
-                
-                //////Busca el plan seleccionado del vendedor
-                //////Si no tiene plan pago todavía lo busca en el enviado
-                ////var attributesPlan = (!validatePlan && !product.Vendor.CurrentOrderPlanId.HasValue ? order : product.Vendor.CurrentOrderPlan).OrderItems.FirstOrDefault().Product.ProductSpecificationAttributes;
-                
-                //////Consulta los productos activos del vendor
-                ////var products = SearchProducts(vendorId: product.VendorId);
-                
-                //////Cuenta los destacados en las bandas rotativas y cuantos hay por el plan y saca las diferencias
-                //////int productsFeaturedOnSlider = products.Where(p => p.FeaturedForSliders && p.Id != product.Id).Count();
-                ////int productsFeaturedOnSlider = products.Where(p => p.FeaturedForSliders).Count();
-                ////int productsFeaturedOnSliderByPlan = Convert.ToInt32(attributesPlan.FirstOrDefault(a => a.SpecificationAttributeOption.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsFeaturedOnSliders).SpecificationAttributeOption.Name);
-                ////leftProducts.Add(_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders, new int[] { productsFeaturedOnSliderByPlan - productsFeaturedOnSlider, productsFeaturedOnSliderByPlan });
-
-                //////Cuenta los destacados en el home y cuantos hay por el plan y saca las diferencias
-                ////int productsOnHome = products.Where(p => p.ShowOnHomePage).Count();
-                ////int productsOnHomeByPlan = Convert.ToInt32(attributesPlan.FirstOrDefault(a => a.SpecificationAttributeOption.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsOnHomePage).SpecificationAttributeOption.Name);
-                ////leftProducts.Add(_planSettings.SpecificationAttributeIdProductsOnHomePage, new int[] { productsOnHomeByPlan - productsOnHome, productsOnHomeByPlan });
-
-                //////Cuenta los destacados en el home y cuantos hay por el plan y saca las diferencias
-                ////int productsOnSocialNetworks = products.Where(p => p.SocialNetworkFeatured).Count();
-                ////int productsOnSocialNetworksByPlan = Convert.ToInt32(attributesPlan.FirstOrDefault(a => a.SpecificationAttributeOption.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsOnSocialNetworks).SpecificationAttributeOption.Name);
-                ////leftProducts.Add(_planSettings.SpecificationAttributeIdProductsOnSocialNetworks,  new int[] { productsOnSocialNetworksByPlan - productsOnSocialNetworks,productsOnSocialNetworksByPlan} );
             }
 
             return leftProducts;
@@ -2581,6 +2557,11 @@ namespace Nop.Services.Catalog
             int productsOnSocialNetworks = products.Where(p => p.SocialNetworkFeatured).Count();
             int productsOnSocialNetworksByPlan = selectedPlan.NumProductsOnSocialNetworks;
             leftProducts.Add(_planSettings.SpecificationAttributeIdProductsOnSocialNetworks, new int[] { productsOnSocialNetworksByPlan - productsOnSocialNetworks, productsOnSocialNetworksByPlan });
+
+            //Cuenta los productos que hacen parte del plan
+            int productsPublished = products.Count;
+            int productsPublishedByPlan = selectedPlan.NumProducts;
+            leftProducts.Add(_planSettings.SpecificationAttributeIdLimitProducts, new int[] { productsPublishedByPlan - productsPublished, productsPublishedByPlan });
 
             return leftProducts;
         }

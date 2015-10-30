@@ -66,6 +66,7 @@ namespace Nop.Web.Controllers
         private readonly IPermissionService _permissionService;
         private readonly MediaSettings _mediaSettings;
         private readonly ControlPanelSettings _controlPanelSettings;
+        private readonly PlanSettings _planSettings;
 
 
         #endregion
@@ -93,7 +94,8 @@ namespace Nop.Web.Controllers
             IPictureService pictureService,
             ILocalizationService localizationService,
             ControlPanelSettings controlPanelSettings,
-            IProductService productService)
+            IProductService productService,
+            PlanSettings planSettings)
         {
             this._customerService = customerService;
             this._workContext = workContext;
@@ -118,6 +120,7 @@ namespace Nop.Web.Controllers
             this._pictureService = pictureService;
             this._controlPanelSettings = controlPanelSettings;
             this._productService = productService;
+            this._planSettings = planSettings;
         }
         #endregion
 
@@ -388,38 +391,41 @@ namespace Nop.Web.Controllers
             //configura el paginador
             PreparePageSizeOptions(model.PagingFilteringContext, command);
 
-            bool? publishedProducts = null;
-            bool? withRating = null;
+            //bool? publishedProducts = null;
+            //bool? withRating = null;
 
-            switch (command.Filter)
-            {
-                case "rating":
-                    withRating = true;
-                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.Rating", isMyOrders ? "MyOrders": "MySales");
-                    break;
-                case "norating":
-                    withRating = false;
-                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.NoRating", isMyOrders ? "MyOrders": "MySales");
-                    break;
-                case "active":
-                    publishedProducts = true;
-                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.Active", isMyOrders ? "MyOrders" : "MySales");
-                    break;
-                default:
-                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.General", isMyOrders ? "MyOrders" : "MySales");
-                    break;
-            }
+            //switch (command.Filter)
+            //{
+            //    case "rating":
+            //        withRating = true;
+            //        model.ResorceMessageNoRows = string.Format("{0}.NoRows.Rating", isMyOrders ? "MyOrders": "MySales");
+            //        break;
+            //    case "norating":
+            //        withRating = false;
+            //        model.ResorceMessageNoRows = string.Format("{0}.NoRows.NoRating", isMyOrders ? "MyOrders": "MySales");
+            //        break;
+            //    case "active":
+            //        publishedProducts = true;
+            //        model.ResorceMessageNoRows = string.Format("{0}.NoRows.Active", isMyOrders ? "MyOrders" : "MySales");
+            //        break;
+            //    default:
+            //        model.ResorceMessageNoRows = string.Format("{0}.NoRows.General", isMyOrders ? "MyOrders" : "MySales");
+            //        break;
+            //}
 
 
-            IPagedList<Order> orders = null;
-            if (isMyOrders)
-                orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
-                    customerId: _workContext.CurrentCustomer.Id, pageIndex: command.PageIndex, pageSize: command.PageSize,
-                    publishedProducts: publishedProducts, withRating: withRating);
-            else
-                orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
-                    vendorId: _workContext.CurrentVendor.Id, pageIndex: command.PageIndex, pageSize: command.PageSize,
-                    publishedProducts: publishedProducts, withRating: withRating);
+            //IPagedList<Order> orders = null;
+            //if (isMyOrders)
+            //    orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
+            //        customerId: _workContext.CurrentCustomer.Id, pageIndex: command.PageIndex, pageSize: command.PageSize,
+            //        publishedProducts: publishedProducts, withRating: withRating);
+            //else
+            //    orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
+            //        vendorId: _workContext.CurrentVendor.Id, pageIndex: command.PageIndex, pageSize: command.PageSize,
+            //        publishedProducts: publishedProducts, withRating: withRating);
+
+            var orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
+                customerId: _workContext.CurrentCustomer.Id, pageIndex: command.PageIndex, pageSize: command.PageSize);
 
 
             foreach (var order in orders)
@@ -427,8 +433,17 @@ namespace Nop.Web.Controllers
                 var orderModel = new OrderItemModel
                 {
                     Id = order.Id,
-                    CreatedOn = _dateTimeHelper.ConvertToUserTime(order.CreatedOnUtc, DateTimeKind.Utc),
+                    CreatedOn = order.CreatedOnUtc.ToShortDateString(),
+                    PlanExpirationOnUtc = order.PlanExpirationOnUtc.HasValue ? order.PlanExpirationOnUtc.Value.ToShortDateString() : string.Empty,
+                    PlanStartOnUtc = order.PlanStartOnUtc.HasValue ? order.PlanStartOnUtc.Value.ToShortDateString() : string.Empty,
+                    PaymentStatus = order.PaymentStatus.GetLocalizedEnum(_localizationService, _workContext)
                 };
+
+                //Si la orden fue completada y la fecha de expiracion es menor que la actual: Cambia el nombre del estado
+                if (order.OrderStatus == OrderStatus.Complete && order.PlanExpirationOnUtc.HasValue && order.PlanExpirationOnUtc.Value < DateTime.UtcNow)
+                    orderModel.OrderStatus = _localizationService.GetResource("Myorders.Expired");
+                else
+                    orderModel.OrderStatus = order.OrderStatus.GetLocalizedEnum(_localizationService, _workContext);
 
                 var orderTotalInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderTotal, order.CurrencyRate);
                 orderModel.Price = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
@@ -438,15 +453,15 @@ namespace Nop.Web.Controllers
                     var item = order.OrderItems.FirstOrDefault();
 
                     //Consulta el review de una orden
-                    var review = _productService.GetAllProductReviews(orderItemId: item.Id, approved: isMyOrders ? (bool?)null : true).FirstOrDefault();
-                    if (review != null)
-                    {
-                        orderModel.Rating = review.Rating;
-                        orderModel.RatingApproved = review.IsApproved;
-                        //Solo muestra la calificacion si ya fue aprobada
-                        //Con excepción que si son "Mis Compras" si muesta que ya fue calificado
-                        orderModel.ShowRating = (review.IsApproved && !isMyOrders) || isMyOrders;
-                    }
+                    //var review = _productService.GetAllProductReviews(orderItemId: item.Id, approved: isMyOrders ? (bool?)null : true).FirstOrDefault();
+                    //if (review != null)
+                    //{
+                    //    orderModel.Rating = review.Rating;
+                    //    orderModel.RatingApproved = review.IsApproved;
+                    //    //Solo muestra la calificacion si ya fue aprobada
+                    //    //Con excepción que si son "Mis Compras" si muesta que ya fue calificado
+                    //    orderModel.ShowRating = (review.IsApproved && !isMyOrders) || isMyOrders;
+                    //}
 
                     orderModel.Product = new Models.Catalog.ProductOverviewModel()
                     {
@@ -473,23 +488,26 @@ namespace Nop.Web.Controllers
                     });
                     #endregion
 
-                    if (isMyOrders)
-                        orderModel.Vendor = new Models.Catalog.VendorModel()
-                        {
-                            Id = item.Product.VendorId,
-                            Name = item.Product.Vendor.Name,
-                            SeName = item.Product.Vendor.GetSeName()
-                        };
-                    else
-                    {
-                        orderModel.Customer = new CustomerInfoModel()
-                        {
-                            FirstName = order.Customer.GetAttribute<string>("FirstName"),
-                            LastName = order.Customer.GetAttribute<string>("LastName"),
-                            Phone = order.Customer.GetAttribute<string>("Phone"),
-                            Email = order.Customer.Email
-                        };
-                    }
+                    #region Anterior Logica
+                    //if (isMyOrders)
+                    //    orderModel.Vendor = new Models.Catalog.VendorModel()
+                    //    {
+                    //        Id = item.Product.VendorId,
+                    //        Name = item.Product.Vendor.Name,
+                    //        SeName = item.Product.Vendor.GetSeName()
+                    //    };
+                    //else
+                    //{
+                    //    orderModel.Customer = new CustomerInfoModel()
+                    //    {
+                    //        FirstName = order.Customer.GetAttribute<string>("FirstName"),
+                    //        LastName = order.Customer.GetAttribute<string>("LastName"),
+                    //        Phone = order.Customer.GetAttribute<string>("Phone"),
+                    //        Email = order.Customer.Email
+                    //    };
+                    //}
+                    #endregion
+                   
 
                 }
                 else
@@ -499,6 +517,70 @@ namespace Nop.Web.Controllers
 
                 model.Orders.Add(orderModel);
             }
+
+            #region CurrentPlan
+            //Carga los datos del plan actual del usuario si no lo tiene vencido
+            if (_workContext.CurrentVendor != null && _workContext.CurrentVendor.CurrentOrderPlan != null && _workContext.CurrentVendor.PlanExpiredOnUtc > DateTime.Now)
+            {
+                model.ShowCurrentPlan = true;
+                
+                var currentOrder = _workContext.CurrentVendor.CurrentOrderPlan;
+                var selectedPlan = currentOrder.OrderItems.FirstOrDefault().Product;
+
+                model.CurrentPlan.NumDaysToExpirePlan = Convert.ToInt32(_workContext.CurrentVendor.PlanExpiredOnUtc.Value.Subtract(DateTime.UtcNow).TotalDays);
+                model.CurrentPlan.ShowRenovateButton = _workContext.CurrentVendor.PlanExpiredOnUtc < DateTime.UtcNow.AddDays(10);
+                model.CurrentPlan.ShowUpgradeButton = true;
+                
+
+                //Carga los datos basicos de la orden
+                model.CurrentPlan.Order = new OrderItemModel
+                {
+                    Id = currentOrder.Id,
+                    CreatedOn = currentOrder.CreatedOnUtc.ToShortDateString(),
+                    PlanExpirationOnUtc = _workContext.CurrentVendor.PlanExpiredOnUtc.Value.ToShortDateString(),
+                    PlanStartOnUtc = currentOrder.PlanStartOnUtc.HasValue ? currentOrder.PlanStartOnUtc.Value.ToShortDateString() : string.Empty,
+                    PaymentStatus = currentOrder.PaymentStatus.GetLocalizedEnum(_localizationService, _workContext)
+                };
+
+                //Carga los dats del producto
+                model.CurrentPlan.Order.Product = new Models.Catalog.ProductOverviewModel()
+                {
+                    Id = selectedPlan.Id,
+                    Name = selectedPlan.Name
+                };
+
+                var orderTotalInCustomerCurrency = _currencyService.ConvertCurrency(currentOrder.OrderTotal, currentOrder.CurrencyRate);
+                model.CurrentPlan.Order.Price = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, currentOrder.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
+
+                var leftProductsOnPlan = _productService.CountLeftFeaturedPlacesByVendor(currentOrder, _workContext.CurrentVendor.Id);
+                //Carga los datos de los productos que han sido destacados en el plan
+                if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsOnHomePage))
+                {
+                    model.CurrentPlan.NumProductsOnHomeLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnHomePage][0];
+                    model.CurrentPlan.NumProductsOnHomeByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnHomePage][1];
+                }
+                //valida productos en redes sociales
+                if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsOnSocialNetworks))
+                {
+                    model.CurrentPlan.NumProductsOnSocialNetworksLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnSocialNetworks][0];
+                    model.CurrentPlan.NumProductsOnSocialNetworksByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnSocialNetworks][1];
+                }
+                //Valida productos en sliders
+                if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders))
+                {
+                    model.CurrentPlan.NumProductsOnSlidersLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders][0];
+                    model.CurrentPlan.NumProductsOnSlidersByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders][1];
+                }
+                //Valida productos
+                if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdLimitProducts))
+                {
+                    model.CurrentPlan.NumProductsLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdLimitProducts][0];
+                    model.CurrentPlan.NumProductsByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdLimitProducts][1];
+                }
+            }
+            #endregion
+            
+
 
             model.PagingFilteringContext.LoadPagedList(orders);
 

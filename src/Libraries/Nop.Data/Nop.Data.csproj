@@ -231,6 +231,10 @@
     <Compile Include="Migrations\201510282332179_AddColumn_MessageSent_Column_Vendor.Designer.cs">
       <DependentUpon>201510282332179_AddColumn_MessageSent_Column_Vendor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510301453160_AddColumn_PlanExpirationOnUtc_PlanStartOnUtc_Table_Order.cs" />
+    <Compile Include="Migrations\201510301453160_AddColumn_PlanExpirationOnUtc_PlanStartOnUtc_Table_Order.Designer.cs">
+      <DependentUpon>201510301453160_AddColumn_PlanExpirationOnUtc_PlanStartOnUtc_Table_Order.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -475,6 +479,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510282332179_AddColumn_MessageSent_Column_Vendor.resx">
       <DependentUpon>201510282332179_AddColumn_MessageSent_Column_Vendor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510301453160_AddColumn_PlanExpirationOnUtc_PlanStartOnUtc_Table_Order.resx">
+      <DependentUpon>201510301453160_AddColumn_PlanExpirationOnUtc_PlanStartOnUtc_Table_Order.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

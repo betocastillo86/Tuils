@@ -10,48 +10,107 @@
 <div class="help_table"><span></span><p>Visualizar tabla horizontalmente</p><br></div>
 <div class="conte_sale">
 
+
+
     
-    @if (Model.Orders.Count > 0)
+    @*@if (Model.Orders.Count > 0)
     { 
         <div class="table-header">
             <div class="td-img">img</div>
             <div class="td-pdt">@T("MyOrders.Product")</div>
-            <div class="td-vend">@T("MyOrders.Vendor")</div>
+            <div class="td-vend">@T("MyOrders.Status")</div>
             <div class="td-cal">@T("MyOrders.Rating") / @T("MyOrders.Date")</div>
             <div class="td-prec">@T("MyOrders.Price")</div>
             <br />
         </div>
+    }*@
+
+    @if (Model.ShowCurrentPlan)
+    {
+
+        if (Model.CurrentPlan.ShowRenovateButton)
+        {
+            <div class="alert-public"><span class="icon-alert"></span> <p>@T("MyOrders.SoonPlanWillExpire", Model.CurrentPlan.NumDaysToExpirePlan)</p>@Html.ActionLink(T("MyOrders.RenovatePlanNow").Text, "SelectPlanVendor", "Sales", new { }, new { @class = "btn-azul" })<br /></div>
+        }
+
+
+
+        <li>
+            <div class="td-pdt">
+                <p>@Model.CurrentPlan.Order.Product.Name</p>
+                <ul>
+                    <li>
+                        @T("SelectFeaturedAttributesByPlan.SelectOnHome")
+                        <b>
+                            Puede coger @Model.CurrentPlan.NumProductsOnHomeByPlan
+                            Quedan (@Model.CurrentPlan.NumProductsOnHomeLeft)
+                        </b>
+                    </li>
+                    <li>
+                        @T("SelectFeaturedAttributesByPlan.SelectOnSliders")
+                        <b>
+                            Puede coger @Model.CurrentPlan.NumProductsOnSlidersByPlan
+                            Quedan (@Model.CurrentPlan.NumProductsOnSlidersLeft)
+                        </b>
+                    </li>
+                    <li>
+                        @T("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks")
+                        <b>
+                            Puede coger @Model.CurrentPlan.NumProductsOnSocialNetworksByPlan
+                            Quedan (@Model.CurrentPlan.NumProductsOnSocialNetworksLeft)
+                        </b>
+                    </li>
+                </ul>
+            </div>
+            <div class="td-vend">
+                <p>@T("Myorders.Active")</p>
+            </div>
+            <div class="td-cal">
+                <p>
+                    @Model.CurrentPlan.Order.PlanStartOnUtc
+                    @Model.CurrentPlan.Order.PlanExpirationOnUtc
+                </p>
+            </div>
+            <div class="td-prec">
+
+
+
+                @Model.CurrentPlan.Order.Price
+                <div class="conte_btn">
+                    @if (Model.CurrentPlan.ShowRenovateButton)
+                    {
+                        @Html.ActionLink(T("MyOrders.RenovatePlan").Text, "SelectPlanVendor", "Sales", new { }, new { @class = "btn-azul" })
+                    }
+
+                    @Html.ActionLink(T("MyOrders.UpgradePlan").Text, "SelectPlanVendor", "Sales", new { force = true, limit = Model.CurrentPlan.NumProductsByPlan }, new { @class = "btn-azul" })
+                </div>
+                
+            </div>
+            <br />
+        </li>
+    }
+    else
+    {
+        <div class="alert-public"><span class="icon-alert"></span> <p>@T("MyOrders.BuyAPlan")</p>@Html.ActionLink(T("MyOrders.BuyAPlanButton").Text, "SelectPlanVendor", "Sales", new { }, new { @class = "btn btn-azul" })<br /></div>
     }
 
-    
+
     @foreach (var item in Model.Orders)
     {
         <li>
-            <div class="td-img">
-            <a href="@Url.Action("ProductDetails", "Product", new { seName = item.Product.SeName })">
-                <img title="@T("myorders.titleimgproduct", item.Product.Name)" src="@item.Product.DefaultPictureModel.ImageUrl" alt="@item.Product.Name">
-            </a>
-            </div>
             <div class="td-pdt">
-                <p><a href="@Url.Action("ProductDetails", "Product", new { seName = item.Product.SeName })">@item.Product.Name</a> </p>
+                <p>@item.Product.Name</p>
                 <span></span>
             </div>
             <div class="td-vend">
-                <p>@Html.ActionLink(item.Vendor.Name, "Vendor", "Catalog", new { seName = item.Vendor.SeName }, new { })</p>
-                <span>@item.Vendor.Email</span>
-                @*<span>@item.Vendor.num</span>*@
+                <p>@item.OrderStatus</p>
+                <span>Pago: @item.PaymentStatus</span>
+                
             </div>
             <div class="td-cal">
-                @if (item.ShowRating)
-                { 
-                    @Html.RatingControl(item.Rating.Value)
-                }
-                else
-                {
-                    <a href="@Url.Action("ProductDetails", "Product", new { seName = item.Product.SeName })#product-reviews-page">Calificar</a>
-                }
                 <p>
-                    @item.CreatedOn.ToShortDateString()
+                    @item.PlanStartOnUtc
+                    @item.PlanExpirationOnUtc
                 </p>
             </div>
             <div class="td-prec">@item.Price</div>

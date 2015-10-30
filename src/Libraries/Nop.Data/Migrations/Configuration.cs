@@ -1077,6 +1077,19 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectPlan", "Adquirir Plan");
                 newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.PublishProduct", "Publicar producto");
                 newLocaleStringResources.Add("myproducts.featureByProduct", "Destacar");
+                newLocaleStringResources.Add("MyOrders.Status", "Estado");
+                newLocaleStringResources.Add("Myorders.Expired", "Vencido");
+                newLocaleStringResources.Add("Myorders.Active", "Activo");
+                newLocaleStringResources.Add("MyOrders.RenovatePlan", "Renovar");
+                newLocaleStringResources.Add("MyOrders.UpgradePlan", "Subir el plan");
+                newLocaleStringResources.Add("MyOrders.RenovatePlanNow", "Renovar Ahora");
+                newLocaleStringResources.Add("MyOrders.SoonPlanWillExpire", "Quedan {0} días para que el plan que tiene actualmente expire. Lo puede renovar.");
+                newLocaleStringResources.Add("MyOrders.BuyAPlan", "No pierdas la oporunidad de vender más. Adquiere uno de nuestros planes a muy bajo costo.");
+                newLocaleStringResources.Add("MyOrders.BuyAPlanButton", "Comprar plan");
+                
+                
+                
+                
                 
                 
 
