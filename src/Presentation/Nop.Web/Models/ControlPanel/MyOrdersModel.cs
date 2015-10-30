@@ -15,8 +15,8 @@ namespace Nop.Web.Models.ControlPanel
             CurrentPlan = new CurrentPlanModel();
         }
 
-        
 
+        public int VendorId { get; set; }
         public bool ShowCurrentPlan { get; set; }
 
         public CurrentPlanModel CurrentPlan { get; set; }

@@ -12,21 +12,28 @@
 
 
 
-    
+
     @*@if (Model.Orders.Count > 0)
-    { 
-        <div class="table-header">
-            <div class="td-img">img</div>
-            <div class="td-pdt">@T("MyOrders.Product")</div>
-            <div class="td-vend">@T("MyOrders.Status")</div>
-            <div class="td-cal">@T("MyOrders.Rating") / @T("MyOrders.Date")</div>
-            <div class="td-prec">@T("MyOrders.Price")</div>
-            <br />
-        </div>
-    }*@
+        {
+            <div class="table-header">
+                <div class="td-img">img</div>
+                <div class="td-pdt">@T("MyOrders.Product")</div>
+                <div class="td-vend">@T("MyOrders.Status")</div>
+                <div class="td-cal">@T("MyOrders.Rating") / @T("MyOrders.Date")</div>
+                <div class="td-prec">@T("MyOrders.Price")</div>
+                <br />
+            </div>
+        }*@
+
+
+    @Html.HiddenFor(m => m.VendorId)
+    <div id="productsViewPopup"></div>
+    @Html.Partial("_VendorProductsPopup")
 
     @if (Model.ShowCurrentPlan)
     {
+
+
 
         if (Model.CurrentPlan.ShowRenovateButton)
         {
@@ -43,21 +50,21 @@
                         @T("SelectFeaturedAttributesByPlan.SelectOnHome")
                         <b>
                             Puede coger @Model.CurrentPlan.NumProductsOnHomeByPlan
-                            Quedan (@Model.CurrentPlan.NumProductsOnHomeLeft)
+                            <a href="javascript:;" class="filterFeatured" data-filter="home">Quedan (@Model.CurrentPlan.NumProductsOnHomeLeft)</a>
                         </b>
                     </li>
                     <li>
                         @T("SelectFeaturedAttributesByPlan.SelectOnSliders")
                         <b>
                             Puede coger @Model.CurrentPlan.NumProductsOnSlidersByPlan
-                            Quedan (@Model.CurrentPlan.NumProductsOnSlidersLeft)
+                            <a href="javascript:;" class="filterFeatured" data-filter="sliders">Quedan (@Model.CurrentPlan.NumProductsOnSlidersLeft)</a>
                         </b>
                     </li>
                     <li>
                         @T("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks")
                         <b>
                             Puede coger @Model.CurrentPlan.NumProductsOnSocialNetworksByPlan
-                            Quedan (@Model.CurrentPlan.NumProductsOnSocialNetworksLeft)
+                            <a href="javascript:;" class="filterFeatured" data-filter="SN"> Quedan (@Model.CurrentPlan.NumProductsOnSocialNetworksLeft)</a>
                         </b>
                     </li>
                 </ul>
@@ -84,7 +91,7 @@
 
                     @Html.ActionLink(T("MyOrders.UpgradePlan").Text, "SelectPlanVendor", "Sales", new { force = true, limit = Model.CurrentPlan.NumProductsByPlan }, new { @class = "btn-azul" })
                 </div>
-                
+
             </div>
             <br />
         </li>
@@ -105,7 +112,7 @@
             <div class="td-vend">
                 <p>@item.OrderStatus</p>
                 <span>Pago: @item.PaymentStatus</span>
-                
+
             </div>
             <div class="td-cal">
                 <p>
@@ -124,7 +131,7 @@
     <div class="pager">
         @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
     </div>
- 
+
 </div>
 
 

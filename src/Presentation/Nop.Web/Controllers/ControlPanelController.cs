@@ -386,7 +386,7 @@ namespace Nop.Web.Controllers
         [NonAction]
         protected virtual MyOrdersModel PrepareMyOrdersModel(MyOrdersPagingFilteringModel command, bool isMyOrders)
         {
-            var model = new MyOrdersModel();
+            var model = new MyOrdersModel() { VendorId = _workContext.CurrentVendor.Id };
 
             //configura el paginador
             PreparePageSizeOptions(model.PagingFilteringContext, command);

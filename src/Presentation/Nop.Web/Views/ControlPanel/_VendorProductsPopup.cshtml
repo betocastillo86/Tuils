@@ -1,0 +1,22 @@
+﻿<script  type="text/x-handlebars" id="templateVendorProductsPopup">
+    
+    {{#if this.length}}
+    
+    <table>
+        {{#each this}}
+        <tr>
+            <td>
+                {{Name}}
+                <b>{{PriceFormatted}}</b>
+                <img  src="{{ImageUrl}}" width="40" height="40"/>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+    {{else}}
+
+    NO HAY PRODUCTOS DESTACADOS DE ESTE TIPO
+
+    {{/if}}
+
+</script>

@@ -266,6 +266,7 @@
     <Compile Include="Models\Api\AddressPictureModel.cs" />
     <Compile Include="Models\Api\BaseApiModel.cs" />
     <Compile Include="Models\Api\CreateOrderResult.cs" />
+    <Compile Include="Models\Api\FilterProductsModel.cs" />
     <Compile Include="Models\Api\MinifiedJson.cs" />
     <Compile Include="Models\Api\OrderModel.cs" />
     <Compile Include="Models\Api\OrderPlanModel.cs" />
@@ -1164,10 +1165,12 @@
     <Content Include="Scripts\tuils\views\panel\editProductView.js" />
     <Content Include="Scripts\tuils\views\panel\menu.js" />
     <Content Include="Scripts\tuils\views\panel\myAccount.js" />
+    <Content Include="Scripts\tuils\views\panel\myOrdersView.js" />
     <Content Include="Scripts\tuils\views\panel\myProductsView.js" />
     <Content Include="Scripts\tuils\views\panel\offices.js" />
     <Content Include="Scripts\tuils\views\panel\questionsView.js" />
     <Content Include="Scripts\tuils\views\panel\responseQuestionView.js" />
+    <Content Include="Scripts\tuils\views\panel\vendorProductsPopupView.js" />
     <Content Include="Scripts\tuils\views\panel\vendorServices.js" />
     <Content Include="Scripts\tuils\views\product\manufacturerView.js" />
     <Content Include="Scripts\tuils\views\product\filterSearchView.js" />
@@ -2592,6 +2595,7 @@
     <Content Include="Views\Sales\PaymentResponse.cshtml" />
     <Content Include="Views\Catalog\SelectFeaturedAttributesByPlan.cshtml" />
     <Content Include="Views\Sales\ConfirmationWithoutPlan.cshtml" />
+    <Content Include="Views\ControlPanel\_VendorProductsPopup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

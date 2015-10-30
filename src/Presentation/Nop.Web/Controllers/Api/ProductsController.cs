@@ -41,6 +41,7 @@ namespace Nop.Web.Controllers.Api
         private readonly ILocalizationService _localizationService;
         private readonly MediaSettings _mediaSettings;
         private readonly IPictureService _pictureService;
+        private readonly IPriceFormatter _priceFormatter;
         #endregion
 
         #region Ctor
@@ -53,7 +54,8 @@ namespace Nop.Web.Controllers.Api
             IGenericAttributeService genericAttributeService,
             ILocalizationService localizationService,
             MediaSettings mediaSettings,
-            IPictureService pictureService)
+            IPictureService pictureService,
+            IPriceFormatter priceFormatter)
         {
             this._productService = productService;
             this._workContext = workContext;
@@ -65,6 +67,7 @@ namespace Nop.Web.Controllers.Api
             this._localizationService = localizationService;
             this._mediaSettings = mediaSettings;
             this._pictureService = pictureService;
+            this._priceFormatter = priceFormatter;
         }
         #endregion
         [Route("api/products")]
@@ -296,6 +299,33 @@ namespace Nop.Web.Controllers.Api
 
         #endregion
 
-       
+        #region ProductsByVendor
+        [HttpGet]
+        [Route("api/vendors/{id}/products", Order = 1)]
+        public IHttpActionResult GetProductsByVendor(int id, [FromUri]FilterProductsModel filter)
+        {
+            if (id <= 0)
+                return NotFound();
+
+            var products = _productService.SearchProducts(vendorId:id);
+
+
+            IQueryable<Product> query = products.AsQueryable();
+
+            if (filter.OnHome.HasValue && filter.OnHome.Value)
+                query = query.Where(p => p.ShowOnHomePage);
+
+            if(filter.OnSliders.HasValue && filter.OnSliders.Value)
+                query = query.Where(p => p.FeaturedForSliders);
+
+            if (filter.OnSN.HasValue && filter.OnSN.Value)
+                query = query.Where(p => p.SocialNetworkFeatured);
+
+            return Ok(query.ToList().ToModels(_priceFormatter, 
+                _localizationService, 
+                _mediaSettings, 
+                _pictureService));
+        }
+        #endregion
     }
 }

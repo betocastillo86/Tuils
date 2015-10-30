@@ -3,12 +3,12 @@
 ,'tuils/views/product/productDetailView','tuils/views/common/newsletterView','tuils/views/common/searcherView','tuils/views/common/leftFeaturedProductsView'	
 , 'tuils/views/common/header', 'tuils/views/panel/offices', 'tuils/views/panel/menu', 'tuils/views/panel/myProductsView', 'tuils/views/home/homeView',
 'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView', 'tuils/views/publishProduct/publishView',
-'tuils/views/common/footerView', 'tuils/views/panel/editProductView', 'tuils/views/publishProduct/selectPlanView',
+'tuils/views/common/footerView', 'tuils/views/panel/editProductView', 'tuils/views/publishProduct/selectPlanView', 'tuils/views/panel/myOrdersView',
 'ajaxCart', 'nopCommon'],
     function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView,
         MyAccountView,VendorServicesView ,QuestionsView ,VendorDetailView,
         ProductDetailView, NewsletterView, SearcherView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
-        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView, EditProductView, SelectPlanView) {
+        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView, EditProductView, SelectPlanView, MyOrdersView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -91,16 +91,15 @@
                 this.loadSubViews();
             },
             myAccount: function () {
-                var that = this;
-                that.currentView = new MyAccountView({ el: that.defaultEl });
+                this.currentView = new MyAccountView({ el: this.defaultEl });
                 this.loadSubViewsPanel();
             },
             myOffices: function () {
-                var that = this;
-                that.currentView = new OfficesView({ el: that.defaultEl });
+                this.currentView = new OfficesView({ el: this.defaultEl });
                 this.loadSubViewsPanel();
             },
             myOrders: function () {
+                this.currentView = new MyOrdersView({ el: this.defaultEl });
                 this.loadSubViewsPanel();
             },
             changePassword : function()
