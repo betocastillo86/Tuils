@@ -1086,13 +1086,10 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("MyOrders.SoonPlanWillExpire", "Quedan {0} días para que el plan que tiene actualmente expire. Lo puede renovar.");
                 newLocaleStringResources.Add("MyOrders.BuyAPlan", "No pierdas la oporunidad de vender más. Adquiere uno de nuestros planes a muy bajo costo.");
                 newLocaleStringResources.Add("MyOrders.BuyAPlanButton", "Comprar plan");
-                
-                
-                
-                
-                
-                
 
+                newLocaleStringResources.Add("myproducts.enable", "Reactivar");
+                newLocaleStringResources.Add("myproducts.enable.hint", "Permite que se puede visualizar nuevamente el producto");
+                
                 
                 
 

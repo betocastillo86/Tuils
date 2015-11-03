@@ -60,8 +60,8 @@
                 <h3>@(product.Published ? T("myproducts.publised") : T("myproducts.nopublised"))</h3>
                 <p>@T("myproducts.AvailableStartDate"): @product.AvailableStartDate.ToShortDateString()</p>
                 <p>@T("myproducts.AvailableEndDate"): @product.AvailableEndDate.ToShortDateString()</p>
-
-                @if (product.Published)
+                
+                @if (product.Available)
                 { 
                     <div class="conte_btn">
                         @*<a class="btn-azul" href="javascript:;"><span class="icon-mail"></span>Editar</a>*@
@@ -79,6 +79,13 @@
                         <a class="btnUnpublish btn-naranja" data-id="@product.Id" title="@T("myproducts.disable.alt")">@T("myproducts.disable")</a>
                         <a class="btn-azul"  href="@Url.Action("EditProduct", "ControlPanel", new { id = product.Id })">@T("myproducts.editProduct")</a>
                     </div>
+                }
+                else
+                {
+                    if (product.Published)
+                    {
+                        <a class="btnPublishMyProducts btn-naranja" data-id="@product.Id" title="@T("myproducts.enable.alt")">@T("myproducts.enable")</a>
+                    }
                 }
             </div>
             <br />

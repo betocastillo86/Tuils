@@ -207,6 +207,9 @@ namespace Nop.Web.Controllers
                 return RedirectToAction("SelectFeaturedAttributesByPlan", "Catalog", new { id = id });
             }
 
+            if (product.Sold)
+                return RedirectToAction("MyProducts", "ControlPanel");
+
             var model = new SelectPlanModel() { ProductId = id };
             //Carga los planes para seleccionar
             PrepareSelectPlanModel(model, command);

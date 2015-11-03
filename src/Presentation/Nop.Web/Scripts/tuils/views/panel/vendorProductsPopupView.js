@@ -6,8 +6,8 @@
 
             },
             vendorId :0,
-            template: Handlebars.compile($("#templateVendorProductsPopup").html()),
             initialize: function (args) {
+                this.template = Handlebars.compile($("#templateVendorProductsPopup").html());
                 this.vendorId = args.id;
                 this.collection = new ProductCollection();
                 this.collection.on('sync', this.showProducts, this);

@@ -638,7 +638,8 @@ namespace Nop.Web.Controllers
                     TotalSales = p.TotalSales,
                     AvailableStartDate = p.AvailableStartDateTimeUtc ?? DateTime.UtcNow,
                     AvailableEndDate = p.AvailableEndDateTimeUtc ?? DateTime.UtcNow,
-                    Published = p.IsTotallyAvailable(),
+                    Available = p.IsTotallyAvailable(),
+                    Published = p.Published,
                     DefaultPictureModel = p.GetPicture(_localizationService, _mediaSettings, _pictureService),
                     NumClicksForMoreInfo = p.NumClicksForMoreInfo,
                     HasPlanSelected = p.OrderPlanId.HasValue

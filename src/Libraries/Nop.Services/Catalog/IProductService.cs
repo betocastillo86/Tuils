@@ -681,5 +681,10 @@ namespace Nop.Services.Catalog
         void ValidateProductLimitsByVendorPlan(Vendor vendor);
 
 
+        /// <summary>
+        /// Realiza las validaciones para habilitar un producto y lo actualiza
+        /// </summary>
+        /// <param name="product">Producto a actualizar</param>
+        void EnableProduct(Product product);
     }
 }

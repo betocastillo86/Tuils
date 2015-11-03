@@ -158,6 +158,43 @@ namespace Nop.Web.Controllers.Api
 
         }
 
+
+        [Route("api/products/{id}/enable")]
+        [HttpPut]
+        [AuthorizeApi]
+        public IHttpActionResult Enable(int id)
+        {
+            if (_workContext.CurrentVendor == null)
+                return Unauthorized();
+
+            var product = _productService.GetProductById(id);
+
+            if (product != null)
+            {
+                if (product.VendorId == _workContext.CurrentVendor.Id)
+                {
+                    try
+                    {
+                        _productService.EnableProduct(product);
+                        return Ok(product.ToModel(_priceFormatter, _localizationService, _mediaSettings, _pictureService));
+                    }
+                    catch (NopException e)
+                    {
+                        //ModelState.AddModelError("ErrorEnabling", e.ToString());
+                        return BadRequest(e.Message);
+                    }
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [Route("api/products/{id}")]
         [HttpDelete]
         [AuthorizeApi]

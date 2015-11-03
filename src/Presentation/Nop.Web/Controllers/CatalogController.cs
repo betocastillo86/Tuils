@@ -2175,6 +2175,8 @@ namespace Nop.Web.Controllers
             {
                 if (e.Message.Equals("NotFound"))
                     return HttpNotFound();
+                if (e.Message.Equals("NoPlanSelected"))
+                    return RedirectToAction("SelectPlan", "Sales");
                 else
                     return RedirectToAction("MyProducts", "ControlPanel");
             }
@@ -2296,7 +2298,7 @@ namespace Nop.Web.Controllers
                     || _workContext.CurrentVendor.PlanExpiredOnUtc < DateTime.UtcNow
                     )
                 {
-                    throw new NopException("MyProducts");
+                    throw new NopException("NoPlanSelected");
                 }
             }
 

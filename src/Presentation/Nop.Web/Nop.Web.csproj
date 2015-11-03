@@ -1122,6 +1122,7 @@
     <Content Include="Scripts\tuils\collections\manufacturers.js" />
     <Content Include="Scripts\tuils\collections\pictures.js" />
     <Content Include="Scripts\tuils\models\orderPlan.js" />
+    <Content Include="Scripts\tuils\models\panel\myProduct.js" />
     <Content Include="Scripts\tuils\models\panel\updateProduct.js" />
     <Content Include="Scripts\tuils\models\picture.js" />
     <Content Include="Scripts\tuils\collections\products.js" />
@@ -1257,6 +1258,7 @@
     <Content Include="App_Readme\Handlebarsjs_README.md" />
     <Content Include="App_Readme\Handlebarsjs_LICENSE" />
     <Content Include="Scripts\handelbars.helpers.js" />
+    <None Include="Properties\PublishProfiles\PagosPruebas-Release.pubxml" />
     <None Include="Properties\PublishProfiles\Produccion-Release.pubxml" />
     <None Include="Properties\PublishProfiles\Pruebas-Release.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

@@ -30,5 +30,10 @@ namespace Nop.Services.Catalog
         public bool ShowOnSocialNetworks { get; set; }
 
         public int DaysPlan { get; set; }
+
+        /// <summary>
+        /// Orden en el que se muestran los productos publicados con el plan seleccionado
+        /// </summary>
+        public int DisplayOrder { get; set; }
     }
 }

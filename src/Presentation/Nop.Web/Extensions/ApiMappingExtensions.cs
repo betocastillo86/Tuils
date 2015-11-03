@@ -111,7 +111,7 @@ namespace Nop.Web.Extensions.Api
 
             //La placa es exclusiva de las motos
             if (!string.IsNullOrEmpty(model.CarriagePlate))
-                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.CarriagePlate, SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionCarriagePlate, ShowOnProductPage = true });
+                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.CarriagePlate, SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionCarriagePlate, ShowOnProductPage = false });
 
             //El año es esclusivo de las motos
             if (model.Year > 0)
@@ -149,8 +149,6 @@ namespace Nop.Web.Extensions.Api
 
 
             #endregion
-
-
             return entity;
         }
 
