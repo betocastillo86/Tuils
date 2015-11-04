@@ -118,7 +118,9 @@ namespace Nop.Admin.Controllers
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageVendors))
                 return AccessDeniedView();
 
-            var vendors = _vendorService.GetAllVendors(model.SearchName, command.Page - 1, command.PageSize, true);
+            var vendors = _vendorService.GetAllVendors(model.SearchName, command.Page - 1, command.PageSize, true, 
+                showOnHomePage: model.ShowOnHome ? (bool?) true : null,
+                withPlan: model.WithPlan ? (bool?) true : null);
             var gridModel = new DataSourceResult
             {
                 Data = vendors.Select(x =>

@@ -35,6 +35,8 @@ namespace Nop.Core.Domain.Catalog
 
         public int SpecificationAttributeIdSocialNetworks { get; set; }
 
+        public bool RunLikeTest { get; set; }
+
 
         #region Tiendas
         public int SpecificationAttributePlanDays { get; set; }
@@ -71,5 +73,7 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public int OptionAttributeFeaturedLeft { get; set; }
         #endregion
+
+       
     }
 }

@@ -245,7 +245,7 @@ namespace Nop.Web.Controllers
             {
 
                 //Consulta tdos los productos pertenecientes a la categoria de los planes
-                var plans = _productService.SearchProducts(categoryIds: new List<int>() { categoryPlanId });
+                var plans = _productService.SearchProducts(categoryIds: new List<int>() { categoryPlanId }, hidden:true);
 
                 var listPlans = new List<SelectPlanModel.PlanModel>();
 
@@ -311,6 +311,7 @@ namespace Nop.Web.Controllers
             model.CustomerInformation.Email = _workContext.CurrentCustomer.Email;
             model.CustomerInformation.PhoneNumber = _workContext.CurrentCustomer.GetAttribute<string>(SystemCustomerAttributeNames.Phone);
             model.CustomerInformation.FullName = _workContext.CurrentCustomer.GetFullName();
+            model.IsTest = _planSettings.RunLikeTest;
         }
 
         [HttpGet]

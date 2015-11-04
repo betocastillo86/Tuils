@@ -80,6 +80,9 @@ namespace Nop.Admin.Models.Settings
 
         [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributeIdLimitProducts")]
         public int SpecificationAttributeIdLimitProducts { get; set; }
+
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.RunLikeTest")]
+        public bool RunLikeTest { get; set; }
         #endregion
 
 

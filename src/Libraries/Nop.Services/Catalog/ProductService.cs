@@ -423,7 +423,11 @@ namespace Nop.Services.Catalog
             int? orderBySpecialCategoryId = null,
            int? stateProvinceId = null,
             bool? leftFeatured = null,
-             bool? sold = null)
+             bool? sold = null,
+            bool hidden = false,
+            bool? showOnHomePage = null,
+            bool? showOnSliders = null,
+            bool? showOnSocialNetworks = null)
         {
             Dictionary<int, int> filterableSpecificationAttributeOptionCount;
             return SearchProducts(
@@ -433,7 +437,8 @@ namespace Nop.Services.Catalog
                 parentGroupedProductId, productType, visibleIndividuallyOnly, featuredProducts,
                 priceMin, priceMax, productTagId, keywords, searchDescriptions, searchSku,
                 searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published, 
-                specialCategoryId, orderBySpecialCategoryId, stateProvinceId, leftFeatured, sold);
+                specialCategoryId, orderBySpecialCategoryId, stateProvinceId, leftFeatured, sold, hidden,
+                showOnHomePage, showOnSliders, showOnSocialNetworks);
         }
 
 
@@ -467,7 +472,11 @@ namespace Nop.Services.Catalog
             int? orderBySpecialCategoryId = null,
            int? stateProvinceId = null,
             bool? leftFeatured = null,
-             bool? sold = null)
+             bool? sold = null,
+            bool hidden = false,
+            bool? showOnHomePage = null,
+            bool? showOnSliders = null,
+            bool? showOnSocialNetworks = null)
         {
             Dictionary<int, int> filterableCategoryCount;
             Dictionary<int, int> filterableStateProvinceCount;
@@ -487,8 +496,9 @@ namespace Nop.Services.Catalog
                 storeId, vendorId, warehouseId,
                 parentGroupedProductId, productType, visibleIndividuallyOnly, featuredProducts,
                 priceMin, priceMax, productTagId, keywords, searchDescriptions, searchSku,
-                searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published, 
-                stateProvinceId, specialCategoryId, orderBySpecialCategoryId, false,leftFeatured, sold);
+                searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published,
+                stateProvinceId, specialCategoryId, orderBySpecialCategoryId, false, leftFeatured, sold, hidden,
+                showOnHomePage, showOnSliders, showOnSocialNetworks);
         }
 
 
@@ -531,6 +541,7 @@ namespace Nop.Services.Catalog
         /// <param name="orderBy">Order by</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <param name="published">Si viene null no filtra por el campo Published. Si no viene null si filtra por el campo dependiendo de su valor</param>
+        /// <param name="hidden">Campo Hidden de la tabla Product</param>
         /// <returns>Products</returns>
         public virtual IPagedList<Product> SearchProducts(
             out Dictionary<int, int> filterableSpecificationAttributeOptionCount,
@@ -572,7 +583,11 @@ namespace Nop.Services.Catalog
             int? orderBySpecialCategoryId = null,
             bool? loadPriceRange = false,
             bool? leftFeatured = null,
-             bool? sold = null)
+             bool? sold = null,
+            bool hidden = false,
+            bool? showOnHomePage = null,
+            bool? showOnSliders = null,
+            bool? showOnSocialNetworks = null)
         {
             filterableSpecificationAttributeOptionCount = new Dictionary<int, int>();
             filterableCategoryCount = new Dictionary<int, int>();
@@ -784,6 +799,29 @@ namespace Nop.Services.Catalog
             pShowHidden.Value = showHidden;
             pShowHidden.DbType = DbType.Boolean;
 
+
+            var pHidden = _dataProvider.GetParameter();
+            pHidden.ParameterName = "hidden";
+            pHidden.Value = hidden;
+            pHidden.DbType = DbType.Boolean;
+
+
+            var pShowOnHomePage = _dataProvider.GetParameter();
+            pShowOnHomePage.ParameterName = "showOnHomePage";
+            pShowOnHomePage.Value = showOnHomePage.HasValue ? (object)showOnHomePage : DBNull.Value;
+            pShowOnHomePage.DbType = DbType.Boolean;
+
+            var pShowOnSliders = _dataProvider.GetParameter();
+            pShowOnSliders.ParameterName = "showOnSliders";
+            pShowOnSliders.Value = showOnSliders.HasValue ? (object)showOnSliders : DBNull.Value;
+            pShowOnSliders.DbType = DbType.Boolean;
+
+            var pShowOnSocialNetworks = _dataProvider.GetParameter();
+            pShowOnSocialNetworks.ParameterName = "ShowOnSocialNetworks";
+            pShowOnSocialNetworks.Value = showOnSocialNetworks.HasValue ? (object)showOnSocialNetworks : DBNull.Value;
+            pShowOnSocialNetworks.DbType = DbType.Boolean;
+
+
             var pPublished = _dataProvider.GetParameter();
             pPublished.ParameterName = "Published";
             pPublished.Value = published != null ? (object)published : DBNull.Value;
@@ -927,6 +965,10 @@ namespace Nop.Services.Catalog
                 pPageIndex,
                 pPageSize,
                 pShowHidden,
+                pHidden,
+                pShowOnHomePage,
+                pShowOnSliders,
+                pShowOnSocialNetworks,
                 pPublished,
                 pSold,
                 pStateProvinceId,

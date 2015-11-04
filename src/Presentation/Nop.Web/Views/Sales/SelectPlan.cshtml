@@ -102,7 +102,7 @@
         <input name="payerFullName" type="hidden" value="@Model.CustomerInformation.FullName">
         <input name="mobilePhone" type="hidden" value="@Model.CustomerInformation.PhoneNumber">
 
-        <input name="test" type="hidden" value="1">
+        <input name="test" type="hidden" value="@(Model.IsTest ? "1" : "0")">
 
 
         

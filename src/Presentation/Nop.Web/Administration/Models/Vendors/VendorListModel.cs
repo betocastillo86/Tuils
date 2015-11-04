@@ -9,5 +9,11 @@ namespace Nop.Admin.Models.Vendors
         [NopResourceDisplayName("Admin.Vendors.List.SearchName")]
         [AllowHtml]
         public string SearchName { get; set; }
+
+        [NopResourceDisplayName("Admin.Vendors.List.ShowOnHome")]
+        public bool ShowOnHome { get; set; }
+
+        [NopResourceDisplayName("Admin.Vendors.List.WithPlan")]
+        public bool WithPlan { get; set; }
     }
 }

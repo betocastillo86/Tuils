@@ -191,6 +191,14 @@
                 @Html.ValidationMessageFor(m => m.SpecificationAttributeIdLimitProducts)
             </td>
         </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.RunLikeTest):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.RunLikeTest)
+            </td>
+        </tr>
     </table>
     
     if (Model.SpecificationAttributeIdSliders > 0)

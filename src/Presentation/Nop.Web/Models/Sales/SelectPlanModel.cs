@@ -45,6 +45,11 @@ namespace Nop.Web.Models.Sales
         public bool DisableFreePlan { get; set; }
 
         /// <summary>
+        /// True: llamado de pruebas a PayU
+        /// </summary>
+        public bool IsTest { get; set; }
+
+        /// <summary>
         /// Informacion del usuario
         /// </summary>
         public CustomerAddress CustomerAddressInformation { get; set; }
@@ -98,5 +103,7 @@ namespace Nop.Web.Models.Sales
 
             public string PhoneNumber { get; set; }
         }
+
+        
     }
 }

@@ -74,6 +74,8 @@ namespace Nop.Admin.Models.Vendors
         [NopResourceDisplayName("Admin.Vendors.Fields.AssociatedCustomerEmails")]
         public IList<string> AssociatedCustomerEmails { get; set; }
 
+        [NopResourceDisplayName("Admin.Vendors.Fields.PlanExpiredOnUtc")]
+        public System.DateTime? PlanExpiredOnUtc { get; set; }
 
         public int VendorTypeId { get; set; }
 

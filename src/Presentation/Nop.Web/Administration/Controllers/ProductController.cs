@@ -839,7 +839,12 @@ namespace Nop.Admin.Controllers
                 //esto se ve en el storeprocedure en el ELSE la condicion @Published = 0 AND @ShowHidden = 1
                 showHidden: !model.ShowUnpublised,
                 //ENvia el filtro de los que no están publicados
-                published: model.ShowUnpublised ? (bool?)false : null
+                published: model.ShowUnpublised ? (bool?)false : null,
+                //hidden = true son los que son planes
+                hidden: model.ShowHidden,
+                showOnHomePage: model.ShowOnHomePage ? (bool?)true : null,
+                showOnSliders: model.ShowOnSliders? (bool?)true : null,
+                showOnSocialNetworks: model.ShowOnSN ? (bool?)true : null
             );
 
             var gridModel = new DataSourceResult();

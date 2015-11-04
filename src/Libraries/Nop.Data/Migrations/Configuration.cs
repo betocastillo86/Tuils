@@ -1106,6 +1106,17 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.NumberOfVendorsOnHome", "Número de vendors en el home");
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.NumberOfVendorsOnHome.Hint", "Número de vendors en el home");
                 newLocaleStringResources.Add("Homepage.Vendors", "Vendedores destacados");
+                newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowHidden", "Mostrar productos ocultos");
+                newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowHidden.Hint", "Mostrar productos ocultos");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.RunLikeTest", "Sitio de Pruebas");
+
+
+                newLocaleStringResources.Add("Admin.Vendors.List.ShowOnHome", "Vendedores en el Home");
+                newLocaleStringResources.Add("Admin.Vendors.List.WithPlan", "Vendedores con plan");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.PlanExpiredOnUtc", "Plan expira en");
+                
+                
+                
                 
                 
                 

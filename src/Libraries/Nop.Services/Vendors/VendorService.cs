@@ -118,7 +118,7 @@ namespace Nop.Services.Vendors
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
         public virtual IPagedList<Vendor> GetAllVendors(string name = "",
-            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false, bool? showOnHomePage = null)
+            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false, bool? showOnHomePage = null, bool? withPlan = null)
         {
             var query = _vendorRepository.Table;
             if (!String.IsNullOrWhiteSpace(name))
@@ -129,6 +129,8 @@ namespace Nop.Services.Vendors
             if (showOnHomePage.HasValue)
                 query = query.Where(v => v.ShowOnHomePage == showOnHomePage.Value);
 
+            if (withPlan.HasValue && withPlan.Value)
+                query = query.Where(v => v.CurrentOrderPlanId != null);
 
             query = query.Where(v => !v.Deleted);
             query = query.OrderBy(v => v.DisplayOrder).ThenBy(v => v.Name);
