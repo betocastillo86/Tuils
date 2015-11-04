@@ -390,6 +390,16 @@
         </tr>
         <tr>
             <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.NumberOfVendorsOnHome_OverrideForStore, model => model.NumberOfVendorsOnHome, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.NumberOfVendorsOnHome):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.NumberOfVendorsOnHome)
+                @Html.ValidationMessageFor(model => model.NumberOfVendorsOnHome)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
                 @Html.OverrideStoreCheckboxFor(model => model.EmailAFriendEnabled_OverrideForStore, model => model.EmailAFriendEnabled, Model.ActiveStoreScopeConfiguration)
                 @Html.NopLabelFor(model => model.EmailAFriendEnabled):
             </td>

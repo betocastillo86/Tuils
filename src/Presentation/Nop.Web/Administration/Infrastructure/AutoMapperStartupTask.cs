@@ -851,6 +851,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.DisplayTaxShippingInfoProductBoxes_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.ProductLimitPublished_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.LimitDaysOfStoreProductPublished_OverrideForStore, mo => mo.Ignore())
+                .ForMember(dest => dest.NumberOfVendorsOnHome_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.LimitDaysOfProductPublished_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.ExpirationBikeReferencesKey, mo => mo.Ignore())
                 .ForMember(dest => dest.ExpirationBikeReferencesKey_OverrideForStore, mo => mo.Ignore())

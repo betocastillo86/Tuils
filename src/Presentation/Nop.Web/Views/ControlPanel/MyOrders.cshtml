@@ -104,6 +104,12 @@
 
     @foreach (var item in Model.Orders)
     {
+        if (Model.CurrentPlan.Order != null && item.Id == Model.CurrentPlan.Order.Id)
+        {
+            continue;
+        }
+            
+        
         <li>
             <div class="td-pdt">
                 <p>@item.Product.Name</p>

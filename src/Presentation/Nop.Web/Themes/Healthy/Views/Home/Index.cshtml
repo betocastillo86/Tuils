@@ -15,10 +15,12 @@
         @Html.Widget("home_page_top")
         @*@Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })*@
         @Html.Action("ManufacturerHomePage", "Catalog")
+        @Html.Action("HomepageProducts", "Product")
+        @Html.Action("VendorsHomePage", "Catalog")
         @Html.Action("CategoriesHomePage", "Catalog")
         @*fin para moviles categorias*@
         @*@Html.Action("HomepageCategories", "Catalog")*@
-        @Html.Action("HomepageProducts", "Product")
+        
         @Html.Action("ProductsForMyBike", "Product")    
         @*@Html.Action("HomepageBestSellers", "Product")*@
         @*@Html.Action("HomePageNews", "News")*@

@@ -118,13 +118,18 @@ namespace Nop.Services.Vendors
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
         public virtual IPagedList<Vendor> GetAllVendors(string name = "",
-            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false)
+            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false, bool? showOnHomePage = null)
         {
             var query = _vendorRepository.Table;
             if (!String.IsNullOrWhiteSpace(name))
                 query = query.Where(v => v.Name.Contains(name));
             if (!showHidden)
                 query = query.Where(v => v.Active);
+
+            if (showOnHomePage.HasValue)
+                query = query.Where(v => v.ShowOnHomePage == showOnHomePage.Value);
+
+
             query = query.Where(v => !v.Deleted);
             query = query.OrderBy(v => v.DisplayOrder).ThenBy(v => v.Name);
 
@@ -444,6 +449,8 @@ namespace Nop.Services.Vendors
 
             var planSettings = Nop.Core.Infrastructure.EngineContext.Current.Resolve<PlanSettings>();
             var planDays = Convert.ToInt32(selectedPlan.ProductSpecificationAttributes.FirstOrDefault(p => p.SpecificationAttributeOption.SpecificationAttributeId == planSettings.SpecificationAttributePlanDays).SpecificationAttributeOption.Name);
+            //Si tiene asignada la caracteristica que sale en el home la aplica para el vendor
+            bool showOnHome = selectedPlan.ProductSpecificationAttributes.FirstOrDefault(p => p.SpecificationAttributeOption.SpecificationAttributeId == planSettings.SpecificationAttributeIdHomePage) != null;
 
 
             //Si el vendedor ya tenia un plan previamente calcula la fecha de cierre
@@ -457,6 +464,9 @@ namespace Nop.Services.Vendors
                 vendor.PlanExpiredOnUtc = DateTime.UtcNow.AddDays(planDays);
             }
 
+            vendor.PlanFinishedMessageSent = false;
+            vendor.ExpirationPlanMessageSent = false;
+            vendor.ShowOnHomePage = showOnHome;
             vendor.CurrentOrderPlanId = order.Id;
 
             UpdateVendor(vendor);

@@ -41,7 +41,7 @@ namespace Nop.Data.Migrations
             bool runUrls = false;
             bool runTasks = true;
             bool runPermissions = false;
-
+            
             /***DEBUG***/
             //if (System.Diagnostics.Debugger.IsAttached == false)
             //    System.Diagnostics.Debugger.Launch();
@@ -121,7 +121,21 @@ namespace Nop.Data.Migrations
                     new SpecificationAttribute() { Id = 9, Name = "Recorrido", DisplayOrder = 0 },
                     new SpecificationAttribute() { Id = 10, Name = "Año/Modelo", DisplayOrder = 0 },
                     new SpecificationAttribute() { Id = 11, Name = "Placa", DisplayOrder = 0 },
-                    new SpecificationAttribute() { Id = 12, Name = "Insumos", DisplayOrder = 0 }
+                    new SpecificationAttribute() { Id = 12, Name = "Insumos", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 13, Name = "Duracion Fotos", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 14, Name = "Número Fotos", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 15, Name = "Exposición", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 16, Name = "Bandas rotativas", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 17, Name = "Pagina Inicio", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 18, Name = "Redes sociales", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 19, Name = "Duración del plan", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 20, Name = "Tienda virtual propia", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 21, Name = "Marcas especializadas", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 22, Name = "Productos publicados", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 23, Name = "Productos destacados", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 24, Name = "Productos en Home Page", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 25, Name = "Productos en redes sociales", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 26, Name = "Elaboración de la pagina", DisplayOrder = 0 }
                 };
                 specificationAttributeTable.AddOrUpdate(sa => sa.Id, specificationAttributes);
                 #endregion
@@ -1089,6 +1103,9 @@ namespace Nop.Data.Migrations
 
                 newLocaleStringResources.Add("myproducts.enable", "Reactivar");
                 newLocaleStringResources.Add("myproducts.enable.hint", "Permite que se puede visualizar nuevamente el producto");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.NumberOfVendorsOnHome", "Número de vendors en el home");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.NumberOfVendorsOnHome.Hint", "Número de vendors en el home");
+                newLocaleStringResources.Add("Homepage.Vendors", "Vendedores destacados");
                 
                 
                 
@@ -2408,6 +2425,7 @@ namespace Nop.Data.Migrations
                 settings.Add("vendorSettings.MinHeightCover", "500");
                 settings.Add("ShoppingCartSettings.allowgueststoaddcart", "False");
                 settings.Add("CatalogSettings.ShowRelatedProductsAsFeatured", "False");
+                settings.Add("CatalogSettings.NumberOfVendorsOnHome", "5");
                 
                 
 

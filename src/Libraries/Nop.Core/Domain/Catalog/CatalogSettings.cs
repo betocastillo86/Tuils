@@ -410,5 +410,10 @@ namespace Nop.Core.Domain.Catalog
         /// False: Muestra los productos relacionados como los de la misma categoria sin necesidad que sean destacados
         /// </summary>
         public bool ShowRelatedProductsAsFeatured { get; set; }
+
+        /// <summary>
+        /// Numero de vendors que se mostrarán en el home
+        /// </summary>
+        public int NumberOfVendorsOnHome { get; set; }
     }
 }

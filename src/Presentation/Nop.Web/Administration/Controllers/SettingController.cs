@@ -1121,6 +1121,7 @@ namespace Nop.Admin.Controllers
                 model.ProductLimitPublished_OverrideForStore = _settingService.SettingExists(catalogSettings, x => x.ProductLimitPublished, storeScope);
                 model.LimitDaysOfStoreProductPublished_OverrideForStore = _settingService.SettingExists(catalogSettings, x => x.LimitDaysOfStoreProductPublished, storeScope);
                 model.LimitDaysOfProductPublished_OverrideForStore = _settingService.SettingExists(catalogSettings, x => x.LimitDaysOfProductPublished, storeScope);
+                model.NumberOfVendorsOnHome_OverrideForStore = _settingService.SettingExists(catalogSettings, x => x.NumberOfVendorsOnHome, storeScope);
             }
 
             model.ExpirationBikeReferencesKey = _tuilsSettings.ExpirationBikeReferencesKey;
@@ -1423,6 +1424,13 @@ namespace Nop.Admin.Controllers
             else if (storeScope > 0)
                 _settingService.DeleteSetting(catalogSettings, x => x.LimitDaysOfStoreProductPublished, storeScope);
 
+            if (model.NumberOfVendorsOnHome_OverrideForStore || storeScope == 0)
+                _settingService.SaveSetting(catalogSettings, x => x.NumberOfVendorsOnHome, storeScope, false);
+            else if (storeScope > 0)
+                _settingService.DeleteSetting(catalogSettings, x => x.NumberOfVendorsOnHome, storeScope);
+
+
+            
 
             _tuilsSettings.ExpirationBikeReferencesKey = model.ExpirationBikeReferencesKey;
             _settingService.SaveSetting<TuilsSettings>(_tuilsSettings);

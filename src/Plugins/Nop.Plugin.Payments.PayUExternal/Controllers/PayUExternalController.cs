@@ -274,7 +274,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
 
             var order = _orderService.GetOrderById(command.reference_sale);
             //Valida que la orden exista, que sea del usuario que se encuentra autenticado y que tenga items
-            if (order == null || order.CustomerId != _workContext.CurrentCustomer.Id || order.OrderItems.Count == 0)
+            if (order == null || order.OrderItems.Count == 0)
                 return ErrorConfirmation(command, PaymentConfirmationErrorCode.InvalidOrderNumber, order);
 
             var selectedPlan = order.OrderItems.First().Product;
@@ -402,7 +402,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
                 order.OrderNotes.Add(new OrderNote()
                 {
                     CreatedOnUtc = DateTime.UtcNow,
-                    Note = command.ToStringObject("ConfirmationError->")
+                    Note = command.ToStringObject("ConfirmationError->" + errorName.ToString())
                 });
 
                 _orderService.UpdateOrder(order);

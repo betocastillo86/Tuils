@@ -119,6 +119,12 @@ namespace Nop.Core.Domain.Vendors
         /// </summary>
         public bool PlanFinishedMessageSent { get; set; }
 
+        /// <summary>
+        /// True: Muestra la tienda en el home
+        /// </summary>
+        public bool ShowOnHomePage { get; set; }
+
+
         public VendorType VendorType
         {
             get { return (VendorType)VendorTypeId; }

@@ -24,6 +24,7 @@ using Nop.Core;
 using Nop.Core.Domain.Media;
 using Nop.Services.Helpers;
 using Nop.Core.Domain.Vendors;
+using Nop.Services.Vendors;
 
 namespace Nop.Web.Extensions
 {
@@ -167,8 +168,77 @@ namespace Nop.Web.Extensions
             return models;
         }
         #endregion
-        
 
+        #region Vendor
+
+        public static VendorModel ToModel(this  Vendor vendor, 
+            IWorkContext workContext, 
+            IPictureService pictureService, 
+            ILocalizationService localizationService,
+            MediaSettings mediaSettings,
+            IVendorService vendorService)
+        {
+            var model = new VendorModel
+            {
+                Id = vendor.Id,
+                Name = vendor.GetLocalized(x => x.Name),
+                Description = vendor.GetLocalized(x => x.Description),
+                MetaKeywords = vendor.GetLocalized(x => x.MetaKeywords),
+                MetaDescription = vendor.GetLocalized(x => x.MetaDescription),
+                MetaTitle = vendor.GetLocalized(x => x.MetaTitle),
+                SeName = vendor.GetSeName(),
+                AvgRating = vendor.AvgRating ?? 0,
+                EnableCreditCardPayment = vendor.EnableCreditCardPayment ?? false,
+                EnableShipping = vendor.EnableShipping ?? false,
+                AllowEdit = workContext.CurrentVendor != null && workContext.CurrentVendor.Id == vendor.Id,
+                BackgroundPosition = vendor.BackgroundPosition,
+                PhoneNumber = vendor.PhoneNumber
+            };
+            //Cargan las imagenes
+
+            var pictureModel = new PictureModel
+            {
+                ImageUrl = pictureService.GetPictureUrl(vendor.Picture, mediaSettings.VendorMainThumbPictureSize, crop: true),
+                FullSizeImageUrl = pictureService.GetPictureUrl(vendor.Picture),
+                Title = string.Format(localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), model.Name),
+                AlternateText = string.Format(localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), model.Name)
+            };
+            model.Picture = pictureModel;
+
+            var backgroundPictureModel = new PictureModel
+            {
+                ImageUrl = pictureService.GetPictureUrl(vendor.BackgroundPicture, mediaSettings.VendorBackgroundThumbPictureSize),
+                FullSizeImageUrl = pictureService.GetPictureUrl(vendor.BackgroundPicture),
+                Title = string.Format(localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), model.Name),
+                AlternateText = string.Format(localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), model.Name)
+            };
+            model.BackgroundPicture = backgroundPictureModel;
+
+            //Carga las categorias especiales
+            model.SpecialCategories = vendorService.GetSpecialCategoriesByVendorId(vendor.Id).ToModels();
+
+            model.MetaDescription = model.MetaDescription ?? model.Description;
+
+            return model;
+        }
+
+
+        public static IList<VendorModel> ToModels(this  IList<Vendor> vendors,
+            IWorkContext workContext,
+            IPictureService pictureService,
+            ILocalizationService localizationService,
+            MediaSettings mediaSettings,
+            IVendorService vendorService)
+        {
+            var models = new List<VendorModel>();
+            foreach (var vendor in vendors)
+            {
+                models.Add(vendor.ToModel(workContext, pictureService, localizationService, mediaSettings, vendorService));
+            }
+            return models;
+        }
+
+        #endregion
 
         //public static List<CategoryBaseModel> ToBaseModels(this IList<Category> entities)
         //{

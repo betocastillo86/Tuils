@@ -1083,6 +1083,8 @@ namespace Nop.Web.Controllers
         
         #endregion
 
+
+
         #region Manufacturers
 
         [NopHttpsRequirement(SslRequirement.No)]
@@ -1453,48 +1455,7 @@ namespace Nop.Web.Controllers
 
         public VendorModel PrepareVendorModel(Vendor vendor)
         {
-            var model = new VendorModel
-            {
-                Id = vendor.Id,
-                Name = vendor.GetLocalized(x => x.Name),
-                Description = vendor.GetLocalized(x => x.Description),
-                MetaKeywords = vendor.GetLocalized(x => x.MetaKeywords),
-                MetaDescription = vendor.GetLocalized(x => x.MetaDescription),
-                MetaTitle = vendor.GetLocalized(x => x.MetaTitle),
-                SeName = vendor.GetSeName(),
-                AvgRating = vendor.AvgRating ?? 0,
-                EnableCreditCardPayment = vendor.EnableCreditCardPayment ?? false,
-                EnableShipping = vendor.EnableShipping ?? false,
-                AllowEdit = _workContext.CurrentVendor != null && _workContext.CurrentVendor.Id == vendor.Id,
-                BackgroundPosition = vendor.BackgroundPosition,
-                PhoneNumber = vendor.PhoneNumber
-            };
-            //Cargan las imagenes
-
-            var pictureModel = new PictureModel
-            {
-                ImageUrl = _pictureService.GetPictureUrl(vendor.Picture, _mediaSettings.VendorMainThumbPictureSize, crop: true),
-                FullSizeImageUrl = _pictureService.GetPictureUrl(vendor.Picture),
-                Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), model.Name),
-                AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), model.Name)
-            };
-            model.Picture = pictureModel;
-
-            var backgroundPictureModel = new PictureModel
-            {
-                ImageUrl = _pictureService.GetPictureUrl(vendor.BackgroundPicture, _mediaSettings.VendorBackgroundThumbPictureSize),
-                FullSizeImageUrl = _pictureService.GetPictureUrl(vendor.BackgroundPicture),
-                Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), model.Name),
-                AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), model.Name)
-            };
-            model.BackgroundPicture = backgroundPictureModel;
-
-            //Carga las categorias especiales
-            model.SpecialCategories = _vendorService.GetSpecialCategoriesByVendorId(vendor.Id).ToModels();
-
-            model.MetaDescription = model.MetaDescription ?? model.Description;
-
-            return model;
+            return vendor.ToModel(_workContext, _pictureService, _localizationService, _mediaSettings, _vendorService);
         }
 
 
@@ -1558,7 +1519,21 @@ namespace Nop.Web.Controllers
             return PartialView(cacheModel);
         }
 
+        [ChildActionOnly]
+        public ActionResult VendorsHomePage()
+        {
+            string cacheKey = ModelCacheEventConsumer.VENDOR_HOMEPAGE_KEY;
+            var vendors = _cacheManager.Get(cacheKey, () => {
+                return _vendorService.GetAllVendors(showOnHomePage: true)
+                    .ToModels(_workContext, _pictureService, _localizationService, _mediaSettings, _vendorService);
+            });
+            var model = new VendorsHomePageModel();
+            model.Vendors = vendors.OrderBy(v => Guid.NewGuid())
+                .Take(_catalogSettings.NumberOfVendorsOnHome)
+                .ToList();
 
+            return View(model);
+        }
 
         #endregion
 

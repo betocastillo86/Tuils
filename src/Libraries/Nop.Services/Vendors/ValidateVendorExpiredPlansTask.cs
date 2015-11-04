@@ -52,6 +52,9 @@ namespace Nop.Services.Vendors
             foreach (var vendor in vendorsWithoutNotification)
             {
                 _workflowMessageService.SendVendorPlanFinishedNotificationMessage(vendor, 2);
+                
+                //Ya no sale más en homepage
+                vendor.ShowOnHomePage = false;
                 //Actualiza el producto y deja el mensjae como enviado
                 vendor.PlanFinishedMessageSent = true;
                 _vendorService.UpdateVendor(vendor);

@@ -327,6 +327,7 @@
     <Compile Include="Models\Catalog\ManufacturerModel.cs" />
     <Compile Include="Models\Catalog\ManufacturerNavigationModel.cs" />
     <Compile Include="Models\Catalog\ProductDetailsModel.cs" />
+    <Compile Include="Models\Catalog\VendorsHomePageModel.cs" />
     <Compile Include="Models\Checkout\CheckoutShippingAddressModel.cs" />
     <Compile Include="Models\Checkout\CheckoutProgressModel.cs" />
     <Compile Include="Models\Checkout\CheckoutBillingAddressModel.cs" />
@@ -2598,6 +2599,7 @@
     <Content Include="Views\Catalog\SelectFeaturedAttributesByPlan.cshtml" />
     <Content Include="Views\Sales\ConfirmationWithoutPlan.cshtml" />
     <Content Include="Views\ControlPanel\_VendorProductsPopup.cshtml" />
+    <Content Include="Views\Catalog\VendorsHomePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
