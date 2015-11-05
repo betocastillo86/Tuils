@@ -862,6 +862,10 @@ html.oldie .container { width: 940px; }
     .desta_quienes [class^="icon-"]{font-size: 40px; left: calc(50% - 40px); top: -40px;}
     /*FIN QUIENES SOMOS*/
     .alert-public p{font-size:14px;}
+    /*PLANES*/
+    .menu_planes{font-size: 25px; width: 350px; margin: 0 auto 30px;}
+    .menu_planes li{padding: 0 20px;}
+    /*FIN PLANES*/
 }
 @media screen and (max-width:1024px){
     /*Header*/
@@ -1014,6 +1018,11 @@ html.oldie .container { width: 940px; }
     .desta_quienes [class^="icon-"]{font-size: 35px; left: calc(50% - 33px); top: -33px; padding: 15px;}
     .desta_quienes ul li{font-size: 12px;}
     /*FIN QUIENES SOMOS*/
+    /*PLANES*/
+    .plan-name{font-size: 16px; width: 90px; height: 90px; line-height: 90px;}
+    .plan-price{font-size: 20px;}
+    .planSelectionContainer p{margin: 0 0 20px;}
+    /*FIN PLANES*/
 }
 @media screen and (max-width:768px) {
     /*Header*/
@@ -1108,6 +1117,14 @@ html.oldie .container { width: 940px; }
     .desta_quienes h3{font-size: 23px;}
     .desta_quienes h4{font-size: 16px; height: auto;}
     /*FIN QUIENES SOMOS*/
+    /*PLANES*/
+    .menu_planes{font-size: 20px; width: 270px;}
+    .plan-name{font-size: 14px; width: 70px; height: 70px; line-height: 70px;}
+    .plan-price{font-size: 18px;}
+    .planSelectionContainer h2{font-size: 20px; text-align: center;}
+    .planSelectionContainer p{font-size: 14px; text-align: center;}
+    .contact-plan{margin: 20px 0 0; padding: 20px 0 0;}
+    /*FIN PLANES*/
 }
 @media screen and (max-width:667px) {
 
@@ -1245,6 +1262,18 @@ html.oldie .container { width: 940px; }
     /*fin panel de contrlo*/
     /*MARCAS*/
     .conte_marcas li{width:33.3%; margin: 0 0 20px; border: none;}
+    /*PLANES*/
+    .headerRow .columnHeader{display: none;}
+    .planOptions{border-collapse:separate; border-spacing:0 27px;}
+    .planTable .plan-row{border-bottom: 0;}
+    .cell-p:nth-child(3){border-left:1px solid #e8ebef; border-right: 1px solid #e8ebef;}
+    .cell-e:nth-child(2), .cell-e:nth-child(3), .cell-e:nth-child(4){border-right: 1px solid #e8ebef;}
+    .planTable .cell-p, .headerRow .cell-p{width:33.3%; padding: 8px; box-sizing:border-box;}
+    .planTable .cell-e, .headerRow .cell-e{width: 25%; padding: 8px; box-sizing:border-box;}
+    .planTable .columnHeader{display: none;}
+    .planTable .alt{display: block; font-size: 14px; position: absolute; text-align: center; width:calc(100% - 20px);}
+    .legal_plan{margin: 0 0 20px;}
+    /*FIN PLANES*/
 }
 @media screen and (max-width:568px) {
 
