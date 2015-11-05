@@ -1,6 +1,6 @@
 /* RESET STYLESHEET (html5doctor.com) v1.6.1 */
 html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;}
-body{line-height:1;}
+body{line-height:1; -moz-osx-font-smoothing:grayscale;}
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}
 nav ul{list-style:none;}
 blockquote,q{quotes:none;}
@@ -57,73 +57,75 @@ input[type="text"]:disabled{background:none repeat scroll 0 0 #FFF;}
 
 [class^="icon-"], [class*=" icon-"] { font-family: 'icomoon'; speak: none; font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; /* Better Font Rendering =========== */ -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
 
-.icon-accesorio:before {content: "\e639";}
-.icon-chaqueta:before {content: "\e63a";}
-.icon-equip:before {content: "\e63b";}
-.icon-gota:before {content: "\e63c";}
-.icon-llanta:before {content: "\e63d";}
-.icon-mas:before {content: "\e63e";}
-.icon-menos:before {content: "\e63f";}
-.icon-mujer:before {content: "\e640";}
-.icon-regalo:before {content: "\e641";}
-.icon-repuesto:before {content: "\e642";}
-.icon-pint:before {content: "\e636";}
-.icon-whatsapp:before {content: "\e637";}
-.icon-ytb:before {content: "\e638";}
-.icon-msj:before {content: "\e634";}
-.icon-msj2:before {content: "\e635";}
-.icon-casco:before {content: "\e633";}
-.icon-camp:before {content: "\e632";}
-.icon-m_c:before {content: "\e631";}
-.icon-filtros:before {content: "\e62d";}
-.icon-m_a:before {content: "\e62e";}
-.icon-m_b:before {content: "\e62f";}
-.icon-placa:before {content: "\e630";}
-.icon-loc:before {content: "\e62c";}
-.icon-card:before {content: "\e62a";}
-.icon-envio:before {content: "\e62b";}
-.icon-chopper:before {content: "\e604";}
-.icon-de_calle:before {content: "\e605";}
-.icon-deportiva:before {content: "\e606";}
-.icon-enduro:before {content: "\e607";}
-.icon-scooter:before {content: "\e608";}
-.icon-turismo:before {content: "\e609";}
-.icon-menu:before {content: "\e629";}
-.icon-user:before {content: "\e628";}
-.icon-tool:before {content: "\e619";}
-.icon-buzon:before {content: "\e61c";}
-.icon-calendar:before {content: "\e61d";}
-.icon-close:before {content: "\e61e";}
-.icon-compra:before {content: "\e61f";}
-.icon-cotiza:before {content: "\e620";}
-.icon-delete:before {content: "\e621";}
-.icon-edit:before {content: "\e622";}
-.icon-print:before {content: "\e623";}
-.icon-publica:before {content: "\e624";}
-.icon-tienda:before {content: "\e625";}
-.icon-venta:before {content: "\e626";}
-.icon-volver:before {content: "\e627";}
-.icon-alert:before {content: "\e60a";}
-.icon-car:before {content: "\e60b";}
-.icon-cc:before {content: "\e60c";}
-.icon-clip:before {content: "\e60d";}
-.icon-config:before {content: "\e60e";}
-.icon-corazon:before {content: "\e60f";}
-.icon-down:before {content: "\e610";}
-.icon-foto:before {content: "\e611";}
-.icon-home:before {content: "\e612";}
-.icon-llave:before {content: "\e613";}
-.icon-lupa:before {content: "\e614";}
-.icon-next:before {content: "\e615";}
-.icon-prev:before {content: "\e616";}
-.icon-share:before {content: "\e617";}
-.icon-star:before {content: "\e618";}
-.icon-ubica:before {content: "\e61a";}
-.icon-up:before {content: "\e61b";}
-.icon-mail:before {content: "\e600";}
-.icon-tel:before {content: "\e601";}
-.icon-fb:before {content: "\e602";}
-.icon-twt:before {content: "\e603";}
+.icon-check:before {content: "\e900";}
+.icon-fb:before {content: "\e901";}
+.icon-mail:before {content: "\e902";}
+.icon-manos:before {content: "\e903";}
+.icon-twt:before {content: "\e904";}
+.icon-alert:before {content: "\e905";}
+.icon-tel:before {content: "\e906";}
+.icon-accesorio:before {content: "\e907";}
+.icon-camp:before {content: "\e908";}
+.icon-casco:before {content: "\e909";}
+.icon-chaqueta:before {content: "\e90a";}
+.icon-equip:before {content: "\e90b";}
+.icon-gota:before {content: "\e90c";}
+.icon-llanta:before {content: "\e90d";}
+.icon-mas:before {content: "\e90e";}
+.icon-menos:before {content: "\e90f";}
+.icon-msj:before {content: "\e910";}
+.icon-msj2:before {content: "\e911";}
+.icon-mujer:before {content: "\e912";}
+.icon-pint:before {content: "\e913";}
+.icon-regalo:before {content: "\e914";}
+.icon-repuesto:before {content: "\e915";}
+.icon-whatsapp:before {content: "\e916";}
+.icon-ytb:before {content: "\e917";}
+.icon-filtros:before {content: "\e918";}
+.icon-m_a:before {content: "\e919";}
+.icon-m_b:before {content: "\e91a";}
+.icon-m_c:before {content: "\e91b";}
+.icon-placa:before {content: "\e91c";}
+.icon-card:before {content: "\e91d";}
+.icon-chopper:before {content: "\e91e";}
+.icon-de_calle:before {content: "\e91f";}
+.icon-deportiva:before {content: "\e920";}
+.icon-enduro:before {content: "\e921";}
+.icon-envio:before {content: "\e922";}
+.icon-loc:before {content: "\e923";}
+.icon-menu:before {content: "\e924";}
+.icon-scooter:before {content: "\e925";}
+.icon-turismo:before {content: "\e926";}
+.icon-buzon:before {content: "\e927";}
+.icon-calendar:before {content: "\e928";}
+.icon-close:before {content: "\e929";}
+.icon-compra:before {content: "\e92a";}
+.icon-cotiza:before {content: "\e92b";}
+.icon-delete:before {content: "\e92c";}
+.icon-edit:before {content: "\e92d";}
+.icon-print:before {content: "\e92e";}
+.icon-publica:before {content: "\e92f";}
+.icon-tienda:before {content: "\e930";}
+.icon-tool:before {content: "\e931";}
+.icon-user:before {content: "\e932";}
+.icon-venta:before {content: "\e933";}
+.icon-volver:before {content: "\e934";}
+.icon-car:before {content: "\e935";}
+.icon-cc:before {content: "\e936";}
+.icon-clip:before {content: "\e937";}
+.icon-config:before {content: "\e938";}
+.icon-corazon:before {content: "\e939";}
+.icon-down:before {content: "\e93a";}
+.icon-foto:before {content: "\e93b";}
+.icon-home:before {content: "\e93c";}
+.icon-llave:before {content: "\e93d";}
+.icon-lupa:before {content: "\e93e";}
+.icon-next:before {content: "\e93f";}
+.icon-prev:before {content: "\e940";}
+.icon-share:before {content: "\e941";}
+.icon-star:before {content: "\e942";}
+.icon-ubica:before {content: "\e943";}
+.icon-up:before {content: "\e944";}
 
 /* HEADER AND MENU */
 .header{padding:0 0 10px; height:auto; position: relative;}
@@ -1918,6 +1920,37 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 .somos-indi [class^="icon-"]{background: #fedbd4; color: #fa4c2a; box-shadow:0 2px 1px rgba(250, 75, 45, 0.5);}
 
 /*FIN QUIENES SOMOS*/
+/*PLANES*/
+.conte_planes{margin:0 0 30px;}
+.menu_planes{color: #fa4c2a; font-size: 30px; padding: 0; list-style: none; margin:0 auto 50px; width: 395px;}
+.menu_planes li{float: left; text-align: center; padding:0 30px;}
+.menu_planes li a{color: #fdb7aa; transition:ease all 0.3s;}
+.menu_planes li a.active{color:#fa4c2a;}
+.menu_planes li:first-child{border-right:2px solid #fa4c2a;}
+.planSelectionContainer{display: table; width: 100%;}
+.planSelectionContainer h2{color: #627b9c; font-size: 30px; text-align: left;}
+.planSelectionContainer p{font-size: 16px; text-align: left;}
+.planTable{border-collapse: collapse; display: table;  margin: 0; width: 100%;}
+.planOptions{background: #f8f8f9; border-radius: 3px; margin: 20px 0;}
+.planSelectionContainer .headerRow{display: table-row; font-size: 20px; padding-top: 5px;}
+.planSelectionContainer .selected{color: #3b5a83;}
+.planSelectionContainer .selected [class^="icon-"]{color: #fb7055;}
+.planTable .columnHeader{display: table-cell; padding: 12px 15px; text-align: left;}
+.plan-price{color: #899cb5; font-size: 30px;}
+.plan-price.selected{color: #fa4c2a; transition:ease all 0.3s;}
+.planTable .cell-p, .headerRow .cell-p{display: table-cell; text-align: center; width: 20%; text-align:center;}
+.planTable .cell-e, .headerRow .cell-e{display: table-cell; text-align: center; width: 15%; text-align:center;}
+.plan-name{background: #d8dee6; width: 110px; height: 110px; color: #899cb5; font-size: 20px; text-transform: uppercase; line-height: 110px; border-radius: 50%; display:inline-block;}
+.plan-name.selected{background: #3b5a83; color: #FFF; transition:ease all 0.3s;}
+.planTable .plan-row{border-bottom: 1px solid #e8ebef; display: table-row; font-size: 16px;}
+.planTable .plan-row:last-child{border-bottom: 0;}
+.plan-row [class^="icon-"]{font-size: 20px; color: #899cb5;}
+.legal_plan{text-align: left; float: left;}
+.legal_plan a{color:#fa4c2a;}
+.contact-plan{border-top: solid 1px #ebeef2; margin:50px 0 0; padding: 30px 0 0; text-align: center;}
+.contact-plan h3{color: #fa4c2a; font-size: 25px; font-weight: 500; margin:0 0 15px;}
+.contact-plan .button-1{padding: 8px 15px; margin: 15px 0 0;}
+/*FIN PLANES*/
 /*MODAL*/
 .modal{font-family: 'Ubuntu', sans-serif; padding:10px 20px 20px; position: relative; margin: 0 auto;}
 .modal-btn-close{background:#FB7055; color:#FFF !important; display: block; transition:ease all 0.4s; position: absolute; top: 10px; right: 10px; color:#FFF; padding:3px;}
