@@ -1590,6 +1590,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .alert-public{background:#f3f5f7; border-bottom: 2px solid #fb7055; box-sizing:border-box; padding: 10px; margin: 0 0 10px; border-radius: 3px;}
     .alert-public span{color: #fb7055; font-size: 30px; display: block; float: left;}
     .alert-public p{float: left; font-size:16px; padding: 5px 0 5px 5px; width: calc(100% - 35px);}
+    .alert-public .btn_extra{float: right; background: #fb7055; color: #FFF; font-size: 14px; text-align: center; padding: 6px 15px; border-radius: 3px;}
 
 
 .master-wrapper-page .center-2.columns.ten .field-validation-error{margin: 0 20px 0 0;}
@@ -1953,6 +1954,20 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 .contact-plan{border-top: solid 1px #ebeef2; margin:50px 0 0; padding: 30px 0 0; text-align: center;}
 .contact-plan h3{color: #fa4c2a; font-size: 25px; font-weight: 500; margin:0 0 15px;}
 .contact-plan .button-1{padding: 8px 15px; margin: 15px 0 0;}
+
+.auto_renova .onoffswitch{float: left;}
+.auto_renova p{float: left; font-weight: 500; color: #292732; padding: 8px 0; margin:0 5px 0 0;}
+.list_plan{margin: 0; padding: 0; list-style: none;}
+.list_plan li{border-bottom: 1px solid #e5e5e5; transition: all 0.4s ease 0s;}
+.plan-detail{float: left; text-align: left; margin:10px 15px; }
+.plan-detail h3{font-size: 16px; font-weight: 500; padding: 0 0 6px;}
+.rest-plan{font-weight: 500; color: #fa4c2a; cursor: pointer;}
+.plan-date{float: right; text-align: right; margin:10px 15px 10px 0;}
+    .plan-date h3{font-size: 16px; color:#3b5a83; font-weight: 500; padding: 0 0 6px;}
+    .plan-date .conte_btn{float: right; margin: 15px 0 0;}
+    .plan-date .conte_btn a{transition:ease all 0.4s; border-radius:2px; display:block; float: left; padding: 6px 10px; color: #FFF; margin: 0 0 0 10px;}
+.plan-actual .plan-detail h3{color: #3b5a83;}
+.plan-actual .plan-date h3{color: #F97053;}
 /*FIN PLANES*/
 /*MODAL*/
 .modal{font-family: 'Ubuntu', sans-serif; padding:10px 20px 20px; position: relative; margin: 0 auto;}
