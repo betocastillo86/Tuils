@@ -1,0 +1,39 @@
+﻿@model Nop.Web.Models.Sales.ShowAllPlansModel
+
+@{
+    Html.AddTitleParts(T("PageTitle.Plans").Text);
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+}
+
+
+
+<div id="divMainSection" class="master-wrapper-page container hd">
+    <div class="conte_planes">
+        <nav class="menu_planes">
+            <li><a href="javascript:;" for="plan_personas"><span class="icon-user"></span> @T("showplans.users")</a></li>
+            <li><a href="javascript:;" for="plan_empresas"><span class="icon-tienda"></span> @T("showplans.market")</a></li>
+            <br />
+        </nav>
+
+        <!----Planes de personas -->
+        <div for="show_plan_personas" style="display:none" >
+            @Html.Partial("_InfoPlan", Model.UserPlans)
+        </div>
+        <!----Planes de empresa -->
+        <div for="show_plan_empresas" style="display:none">
+            @Html.Partial("_InfoPlan", Model.MarketPlans)
+        </div>
+        
+        <div class="legal_plan">Consulta los <a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })" target="_blank">Términos de uso</a> para obtener más información.</div>
+        @Html.ActionLink(T("showplans.selectPlanMarket").Text, "SelectPlanVendor", new { }, new { @class = "btn_continue button-1", @for = "show_plan_empresas" })
+        @Html.ActionLink(T("showplans.selectPlanUser").Text, "Index", new { }, new { @class = "btn_continue button-1", @for = "show_plan_personas" })
+        <br />
+        <div class="contact-plan" for="show_plan_empresas" style="display:none">
+            <h3>@T("showplans.contactForBetterPlanQuestion")</h3>
+            <p>@T("showplans.contactForBetterPlan")</p>
+            <a class="button-1 " href="javascript:;">@T("showplans.contactForBetterPlanButton")</a>
+        </div>
+    </div>
+   
+</div>
+

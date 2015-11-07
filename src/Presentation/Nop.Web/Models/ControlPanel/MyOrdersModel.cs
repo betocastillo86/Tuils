@@ -19,6 +19,8 @@ namespace Nop.Web.Models.ControlPanel
         public int VendorId { get; set; }
         public bool ShowCurrentPlan { get; set; }
 
+        public bool ShowAlertUpgradePlan { get; set; }
+
         public CurrentPlanModel CurrentPlan { get; set; }
 
         public List<OrderItemModel> Orders { get; set; }

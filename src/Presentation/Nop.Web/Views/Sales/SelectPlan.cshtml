@@ -4,50 +4,15 @@
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 }
 
-@{
-    bool first = true;   
-}
+
 <div id="divMainSection">
 
 
     @using (Html.BeginForm())
     {
-        foreach (var plan in Model.Plans)
-        {
-            if (first)
-            {
-                <div>
-                    <ul>
-                        @foreach (var spec in Model.Plans.Last().Specifications)
-                        {
-                            <li>@spec.Name</li>
-                        }
-                    </ul>
-                </div>
-                        first = false;
-            }
-
-            
-            
-            <div>
-                <ul>
-                    <li><h2>@plan.Name</h2></li>
-                    <li><h3>@plan.Price</h3></li>
-                    @foreach (var spec in plan.Specifications)
-                    {
-                        <li>@spec.Value</li>
-                    }
-                </ul>
-            </div>
-            if (!Model.DisabledPlans.Contains(plan.Id) 
-                && !(Model.DisableFreePlan && plan.PriceDecimal == 0)
-                )
-            {
-                <input name="SelectedPlan" type="radio" value="@plan.Id" data-name="@plan.Name" />
-            }
-
-
-        }
+        
+        @Html.Partial("_InfoPlan", Model)
+        
         <div id="divAdditionalInfo" style="display:none">
             <table>
                 <tr>

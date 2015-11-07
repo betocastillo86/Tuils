@@ -1114,6 +1114,31 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Vendors.List.ShowOnHome", "Vendedores en el Home");
                 newLocaleStringResources.Add("Admin.Vendors.List.WithPlan", "Vendedores con plan");
                 newLocaleStringResources.Add("Admin.Vendors.Fields.PlanExpiredOnUtc", "Plan expira en");
+
+
+                newLocaleStringResources.Add("showplans.users", "Personas");
+                newLocaleStringResources.Add("showplans.market", "Empresas");
+                newLocaleStringResources.Add("showplans.specificationattributedisplayorder.2", "Media");
+                newLocaleStringResources.Add("showplans.specificationattributedisplayorder.1", "Alta");
+                newLocaleStringResources.Add("showplans.specificationattributedisplayorder.0", "La mejor");
+
+
+                newLocaleStringResources.Add("showplans.selectPlanMarket", "Comprar plan");
+                newLocaleStringResources.Add("showplans.selectPlanUser", "Publicar producto destacado");
+
+
+                newLocaleStringResources.Add("showplans.contactForBetterPlanQuestion", "¿Necesita un plan más especifico?");
+                newLocaleStringResources.Add("showplans.contactForBetterPlan", "Ya sea una tienda , taller, una empresa de producción o un concesionario, tenemos la solución perfecta para sus necesidades.");
+                newLocaleStringResources.Add("showplans.contactForBetterPlanButton", "Ver soluciones para empresas");
+                newLocaleStringResources.Add("OurPlans", "Nuestros planes");
+                newLocaleStringResources.Add("OurPlans.Market", "Planes para empresas");
+                newLocaleStringResources.Add("OurPlans.Users", "Planes para personas");
+                
+                
+                
+                
+                
+                
                 
                 
                 

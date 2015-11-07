@@ -732,6 +732,13 @@ namespace Nop.Web.Infrastructure
                new { controller = "Sales", action = "SelectFeaturedAttributesByPlan", id = UrlParameter.Optional },
                new[] { "Nop.Web.Controllers" }
                );
+
+
+            routes.MapLocalizedRoute("ShowPlans",
+               "planes/{tab}",
+               new { controller = "Sales", action = "Plans", tab = UrlParameter.Optional },
+               new[] { "Nop.Web.Controllers" }
+               );
             #endregion
             
 

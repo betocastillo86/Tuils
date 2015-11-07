@@ -191,6 +191,26 @@ namespace Nop.Web.Controllers
 
         #region Planes Pagos
         /// <summary>
+        /// Muestra el listado de planes
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Plans(string tab)
+        {
+            var model = new ShowAllPlansModel();
+
+            model.MarketPlans = new SelectPlanModel() { Plans = LoadPlansByVendorType(VendorType.Market) };
+            model.UserPlans = new SelectPlanModel() { Plans = LoadPlansByVendorType(VendorType.User) };
+
+
+            model.MarketPlans.FeaturedPlan = model.MarketPlans.Plans.Count > 1 ? model.MarketPlans.Plans[1].Id : _planSettings.PlanStoresFree;
+            model.UserPlans.FeaturedPlan = model.UserPlans.Plans.Count > 1 ? model.UserPlans.Plans[1].Id : _planSettings.PlanProductsFree;
+
+            return View(model);
+        }
+        
+        
+        /// <summary>
         /// Funcionalidad que permite seleccionar un plan desde un producto seleccionado o publicado
         /// </summary>
         /// <returns></returns>
@@ -237,45 +257,13 @@ namespace Nop.Web.Controllers
 
         private void PrepareSelectPlanModel(SelectPlanModel model, SelectPlanRequest command)
         {
-            //Consulta de acuerdo al tipo de vendedor la categoria desde la cual va sacar los planes
-            int categoryPlanId = _workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.User ? _planSettings.CategoryProductPlansId : _planSettings.CategoryStorePlansId;
 
-            string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_ACTIVE_PLANS_MODEL_KEY, categoryPlanId);
-            model.Plans = _cacheManager.Get(cacheKey, () =>
-            {
-
-                //Consulta tdos los productos pertenecientes a la categoria de los planes
-                var plans = _productService.SearchProducts(categoryIds: new List<int>() { categoryPlanId }, hidden:true);
-
-                var listPlans = new List<SelectPlanModel.PlanModel>();
-
-                foreach (var plan in plans)
-                {
-                    var planModel = new SelectPlanModel.PlanModel();
-                    planModel.Id = plan.Id;
-                    planModel.Name = plan.Name;
-                    planModel.Price = _priceFormatter.FormatPrice(plan.Price);
-                    planModel.PriceDecimal = plan.Price;
-
-                    //Agrega las caracteristicas del plan
-                    foreach (var spec in plan.ProductSpecificationAttributes)
-                    {
-                        planModel.Specifications.Add(new SelectPlanModel.SpecificationPlan()
-                        {
-                            Name = spec.SpecificationAttributeOption.SpecificationAttribute.Name,
-                            SpecificationAttributeId = spec.SpecificationAttributeOption.SpecificationAttributeId,
-                            Value = string.IsNullOrEmpty(spec.CustomValue) ? spec.SpecificationAttributeOption.Name : spec.CustomValue
-                        });
-                    }
-
-                    listPlans.Add(planModel);
-                }
-
-                return listPlans;
-            });
-
-
-
+            //Carga los planes de cache
+            model.Plans = LoadPlansByVendorType(_workContext.CurrentVendor.VendorType);
+            //Carga el plan del vendor para saber cual destacar
+            var vendorPlan = _workContext.CurrentVendor.GetCurrentPlan(_productService, _planSettings);
+            model.FeaturedPlan = vendorPlan.ProductId;
+            
             //Si viene forzado deshabilita los planes que no se adecuen
             if (command.force.HasValue && command.force.Value)
             {
@@ -312,6 +300,84 @@ namespace Nop.Web.Controllers
             model.CustomerInformation.PhoneNumber = _workContext.CurrentCustomer.GetAttribute<string>(SystemCustomerAttributeNames.Phone);
             model.CustomerInformation.FullName = _workContext.CurrentCustomer.GetFullName();
             model.IsTest = _planSettings.RunLikeTest;
+        }
+
+        /// <summary>
+        /// Carga los planes dependiendo del tipo de vendedor
+        /// </summary>
+        /// <param name="vendorType"></param>
+        /// <returns></returns>
+        private List<Models.Sales.PlanModel> LoadPlansByVendorType(VendorType vendorType)
+        {
+            //Consulta de acuerdo al tipo de vendedor la categoria desde la cual va sacar los planes
+            int categoryPlanId = vendorType == Core.Domain.Vendors.VendorType.User ? _planSettings.CategoryProductPlansId : _planSettings.CategoryStorePlansId;
+
+            string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_ACTIVE_PLANS_MODEL_KEY, categoryPlanId);
+            return _cacheManager.Get(cacheKey, () =>
+            {
+
+                //Consulta tdos los productos pertenecientes a la categoria de los planes
+                var plans = _productService.SearchProducts(categoryIds: new List<int>() { categoryPlanId }, hidden: true, orderBy: ProductSortingEnum.PriceAsc);
+
+                var listPlans = new List<Nop.Web.Models.Sales.PlanModel>();
+
+                foreach (var plan in plans)
+                {
+                    var planModel = new Nop.Web.Models.Sales.PlanModel();
+                    planModel.Id = plan.Id;
+                    planModel.Name = plan.Name;
+                    planModel.Price = _priceFormatter.FormatPrice(plan.Price);
+                    planModel.PriceDecimal = plan.Price;
+
+                    //Agrega las caracteristicas del plan
+                    foreach (var spec in plan.ProductSpecificationAttributes)
+                    {
+                        //Busca si el atributo fue agregado previamente
+                        var specAddedPreviously = planModel.Specifications.FirstOrDefault(s => s.SpecificationAttributeId == spec.SpecificationAttributeOption.SpecificationAttributeId);
+                        //Si no fue agregada la agrega
+                        if (specAddedPreviously == null)
+                        {
+                            string specValue = string.IsNullOrEmpty(spec.CustomValue) ? spec.SpecificationAttributeOption.Name : spec.CustomValue;
+                            int specAttributeId = spec.SpecificationAttributeOption.SpecificationAttributeId;
+
+                            bool showWithCheck = false;
+                            if (vendorType == VendorType.Market)
+                            { 
+                                //Solo muestra en la interfaz el check y el numero para las siguientes caracteristicas
+                                showWithCheck = specAttributeId == _planSettings.SpecificationAttributeIdProductsFeaturedOnSliders 
+                                    || specAttributeId == _planSettings.SpecificationAttributeIdProductsOnHomePage
+                                    || specAttributeId == _planSettings.SpecificationAttributeIdProductsOnSocialNetworks;
+                            }
+                            
+                            
+                            //Para el valor de las bandas rotativas solo actualiza con un Si
+                            if (specAttributeId == _planSettings.SpecificationAttributeIdSliders)
+                                specValue = "Si";
+                            else if (specAttributeId == _planSettings.SpecificationAttributeIdDisplayOrder)
+                                specValue = _localizationService.GetResource(string.Format("showplans.specificationAttributeDisplayOrder.{0}", specValue));
+                            
+                            planModel.Specifications.Add(new Nop.Web.Models.Sales.PlanModel.SpecificationPlanModel()
+                            {
+                                Name = spec.SpecificationAttributeOption.SpecificationAttribute.Name,
+                                SpecificationAttributeId = specAttributeId,
+                                Value = specValue,
+                                ShowWithCheck = showWithCheck
+                            });
+                        }
+                        //else
+                        //{ 
+                        //    //Sino actualiza el valor
+                        //    string specValue = string.IsNullOrEmpty(spec.CustomValue) ? spec.SpecificationAttributeOption.Name : spec.CustomValue;
+                        //    specAddedPreviously.Value = string.Concat(specAddedPreviously.Value, specValue);
+                        //}
+
+                    }
+
+                    listPlans.Add(planModel);
+                }
+
+                return listPlans;
+            });
         }
 
         [HttpGet]

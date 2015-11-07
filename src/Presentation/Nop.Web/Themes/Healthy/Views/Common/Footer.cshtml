@@ -36,6 +36,8 @@
             @*<li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("privacyinfo") })">@T("PrivacyNotice")</a></li>
             <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("shippinginfo") })">@T("ShippingReturns")</a></li>*@
             <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })">@T("ConditionsOfUse")</a></li>
+            <li><a href="@Url.RouteUrl("ShowPlans", new { tab = "empresas" })">@T("OurPlans.Market")</a></li>
+            <li><a href="@Url.RouteUrl("ShowPlans", new { tab = "personas" })">@T("OurPlans.Users")</a></li>
             @if (Model.NewsEnabled)
             {
                 <li><a href="@Url.RouteUrl("NewsArchive")">@T("News")</a></li>

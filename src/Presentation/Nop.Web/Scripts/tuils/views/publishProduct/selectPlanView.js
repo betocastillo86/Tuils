@@ -3,7 +3,8 @@
         var SelectPlanView = BaseView.extend({
             productId : 0,
             events: {
-                'click #btnPay' : 'createOrder'
+                'click #btnPay' : 'createOrder',
+                'click .selectNewPlan' : 'selectPlan'
             },
             bindings: {
                 'input[name="SelectedPlan"]': {
@@ -25,6 +26,12 @@
                 this.model.on('sync', this.successCreatingOrder, this);
                 
                 this.render();
+            },
+            selectPlan: function (obj) {
+                var plan = $(obj.currentTarget).attr('data-id');
+                this.$("#selectedPlan_" + plan).click();
+                this.$("[data-sel='" + plan + "']").addClass("selected");
+                this.$("[data-sel!='" + plan + "']").removeClass("selected");
             },
             changePlan: function (obj) {
                 var isFree = this.isFreePlan();

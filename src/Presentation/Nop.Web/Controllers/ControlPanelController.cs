@@ -523,14 +523,14 @@ namespace Nop.Web.Controllers
             if (_workContext.CurrentVendor != null && _workContext.CurrentVendor.CurrentOrderPlan != null && _workContext.CurrentVendor.PlanExpiredOnUtc > DateTime.Now)
             {
                 model.ShowCurrentPlan = true;
-                
+
                 var currentOrder = _workContext.CurrentVendor.CurrentOrderPlan;
                 var selectedPlan = currentOrder.OrderItems.FirstOrDefault().Product;
 
                 model.CurrentPlan.NumDaysToExpirePlan = Convert.ToInt32(_workContext.CurrentVendor.PlanExpiredOnUtc.Value.Subtract(DateTime.UtcNow).TotalDays);
-                model.CurrentPlan.ShowRenovateButton = _workContext.CurrentVendor.PlanExpiredOnUtc < DateTime.UtcNow.AddDays(10);
+                model.CurrentPlan.ShowRenovateButton = _workContext.CurrentVendor.VendorType == VendorType.Market && _workContext.CurrentVendor.PlanExpiredOnUtc < DateTime.UtcNow.AddDays(10);
                 model.CurrentPlan.ShowUpgradeButton = true;
-                
+
 
                 //Carga los datos basicos de la orden
                 model.CurrentPlan.Order = new OrderItemModel
@@ -577,6 +577,10 @@ namespace Nop.Web.Controllers
                     model.CurrentPlan.NumProductsLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdLimitProducts][0];
                     model.CurrentPlan.NumProductsByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdLimitProducts][1];
                 }
+            }
+            else
+            {
+                model.ShowAlertUpgradePlan = _workContext.CurrentVendor.VendorType == VendorType.Market;
             }
             #endregion
             

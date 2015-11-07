@@ -2675,7 +2675,7 @@ namespace Nop.Services.Catalog
             if (vendor.VendorType == VendorType.Market)
             {
                 //Consulta el plan seleccionado por la tienda o sino el gratis
-                var selectedPlan = GetPlanById(vendor.CurrentOrderPlanId.HasValue && vendor.PlanExpiredOnUtc > DateTime.UtcNow ? vendor.CurrentOrderPlan.OrderItems.FirstOrDefault().ProductId : _planSettings.PlanStoresFree);
+                var selectedPlan = vendor.GetCurrentPlan(this, _planSettings);
                 limit = selectedPlan.NumProducts;
                 return products.TotalCount >= limit;
             }
@@ -2889,8 +2889,8 @@ namespace Nop.Services.Catalog
         {
 
             //Si el plan ya expiró, carga los datos del plan gratis
-            int planId = vendor.PlanExpiredOnUtc > DateTime.UtcNow ? vendor.CurrentOrderPlan.OrderItems.FirstOrDefault().ProductId : _planSettings.PlanStoresFree;
-            var selectedPlan = GetPlanById(planId);
+            //int planId = vendor.PlanExpiredOnUtc > DateTime.UtcNow ? vendor.CurrentOrderPlan.OrderItems.FirstOrDefault().ProductId : _planSettings.PlanStoresFree;
+            var selectedPlan = vendor.GetCurrentPlan(Nop.Core.Infrastructure.EngineContext.Current.Resolve<IProductService>(), _planSettings);
             //Si el plan no se le ha vencido al vendor la fecha es la del vencimiento
             //Si el plan ya se vencio, la fecha es la del plan gratis
             var newExpirationDate = vendor.PlanExpiredOnUtc > DateTime.UtcNow ? vendor.PlanExpiredOnUtc : DateTime.UtcNow.AddDays(selectedPlan.DaysPlan);

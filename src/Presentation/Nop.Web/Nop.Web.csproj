@@ -414,11 +414,13 @@
     <Compile Include="Models\Catalog\FeaturedAttributesByPlanRequest.cs" />
     <Compile Include="Models\Sales\ConfirmationWithoutPlanModel.cs" />
     <Compile Include="Models\Sales\PaymentResponseModel.cs" />
+    <Compile Include="Models\Sales\PlanModel.cs" />
     <Compile Include="Models\Sales\PublishProductModel.cs" />
     <Compile Include="Models\Catalog\SelectFeaturedAttributesByPlanModel.cs" />
     <Compile Include="Models\Sales\SelectPlanModel.cs" />
     <Compile Include="Models\Sales\SelectPlanRequest.cs" />
     <Compile Include="Models\Sales\SelectPublishCategoryModel.cs" />
+    <Compile Include="Models\Sales\ShowAllPlansModel.cs" />
     <Compile Include="Models\ShoppingCart\MiniShoppingCartModel.cs" />
     <Compile Include="Models\ShoppingCart\WishlistEmailAFriendModel.cs" />
     <Compile Include="Models\ShoppingCart\WishlistModel.cs" />
@@ -1185,6 +1187,7 @@
     <Content Include="Scripts\tuils\views\publishProduct\previousProductCreatedView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\publishView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\selectPlanView.js" />
+    <Content Include="Scripts\tuils\views\publishProduct\showPlansView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
     <Content Include="Scripts\tuils\views\utilities\imagesSelectorView.js" />
     <Content Include="Scripts\tuils\views\utilities\htmlEditorView.js" />
@@ -2600,6 +2603,8 @@
     <Content Include="Views\Sales\ConfirmationWithoutPlan.cshtml" />
     <Content Include="Views\ControlPanel\_VendorProductsPopup.cshtml" />
     <Content Include="Views\Catalog\VendorsHomePage.cshtml" />
+    <Content Include="Views\Sales\_InfoPlan.cshtml" />
+    <Content Include="Views\Sales\Plans.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

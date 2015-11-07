@@ -21,7 +21,7 @@ namespace Nop.Web.Models.Sales
         /// Listado de planes
         /// </summary>
         public List<PlanModel>  Plans { get; set; }
-
+        
         /// <summary>
         /// Planes que son deshabilitados en los casos de UPGRADE
         /// </summary>
@@ -29,6 +29,9 @@ namespace Nop.Web.Models.Sales
 
 
         public SelectList StateProvinces { get; set; }
+
+
+        public int FeaturedPlan { get; set; }
 
         /// <summary>
         /// Url a la que se envia el formulario
@@ -57,30 +60,9 @@ namespace Nop.Web.Models.Sales
         public CustomerInfo CustomerInformation { get; set; }
 
 
-        public class PlanModel : BaseNopEntityModel
-        {
-            public PlanModel()
-            {
-                Specifications = new List<SpecificationPlan>();
-            }
-            public IList<SpecificationPlan> Specifications { get; set; }
+        
 
-            public string Name { get; set; }
-
-            public string Price { get; set; }
-
-            public decimal PriceDecimal { get; set; }
-
-        }
-
-        public class SpecificationPlan
-        {
-            public int SpecificationAttributeId { get; set; }
-
-            public string Name { get; set; }
-
-            public string Value { get; set; }
-        }
+        
         
         public class CustomerAddress
         {

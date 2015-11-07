@@ -5,139 +5,136 @@
     Layout = "~/Views/Shared/_PanelLayoutTwo.cshtml";
 }
 
-<h2 class="tit_sec">@T("MyOrders.Title")</h2>
-<p>@T("MyOrders.Description")</p>
-<div class="help_table"><span></span><p>Visualizar tabla horizontalmente</p><br></div>
-<div class="conte_sale">
 
 
 
+<div class="panel-control">
+    <h2 class="tit_sec">@T("MyOrders.Title")</h2>
+    <p>@T("MyOrders.Description")</p>
 
-    @*@if (Model.Orders.Count > 0)
-        {
-            <div class="table-header">
-                <div class="td-img">img</div>
-                <div class="td-pdt">@T("MyOrders.Product")</div>
-                <div class="td-vend">@T("MyOrders.Status")</div>
-                <div class="td-cal">@T("MyOrders.Rating") / @T("MyOrders.Date")</div>
-                <div class="td-prec">@T("MyOrders.Price")</div>
-                <br />
-            </div>
-        }*@
-
-
-    @Html.HiddenFor(m => m.VendorId)
-    <div id="productsViewPopup"></div>
-    @Html.Partial("_VendorProductsPopup")
-
-    @if (Model.ShowCurrentPlan)
+    @if (Model.ShowCurrentPlan && Model.CurrentPlan.ShowRenovateButton)
     {
-
-
-
-        if (Model.CurrentPlan.ShowRenovateButton)
-        {
-            <div class="alert-public"><span class="icon-alert"></span> <p>@T("MyOrders.SoonPlanWillExpire", Model.CurrentPlan.NumDaysToExpirePlan)</p>@Html.ActionLink(T("MyOrders.RenovatePlanNow").Text, "SelectPlanVendor", "Sales", new { }, new { @class = "btn-azul" })<br /></div>
-        }
-
-
-
-        <li>
-            <div class="td-pdt">
-                <p>@Model.CurrentPlan.Order.Product.Name</p>
-                <ul>
-                    <li>
-                        @T("SelectFeaturedAttributesByPlan.SelectOnHome")
-                        <b>
-                            Puede coger @Model.CurrentPlan.NumProductsOnHomeByPlan
-                            <a href="javascript:;" class="filterFeatured" data-filter="home">Quedan (@Model.CurrentPlan.NumProductsOnHomeLeft)</a>
-                        </b>
-                    </li>
-                    <li>
-                        @T("SelectFeaturedAttributesByPlan.SelectOnSliders")
-                        <b>
-                            Puede coger @Model.CurrentPlan.NumProductsOnSlidersByPlan
-                            <a href="javascript:;" class="filterFeatured" data-filter="sliders">Quedan (@Model.CurrentPlan.NumProductsOnSlidersLeft)</a>
-                        </b>
-                    </li>
-                    <li>
-                        @T("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks")
-                        <b>
-                            Puede coger @Model.CurrentPlan.NumProductsOnSocialNetworksByPlan
-                            <a href="javascript:;" class="filterFeatured" data-filter="SN"> Quedan (@Model.CurrentPlan.NumProductsOnSocialNetworksLeft)</a>
-                        </b>
-                    </li>
-                </ul>
-            </div>
-            <div class="td-vend">
-                <p>@T("Myorders.Active")</p>
-            </div>
-            <div class="td-cal">
-                <p>
-                    @Model.CurrentPlan.Order.PlanStartOnUtc
-                    @Model.CurrentPlan.Order.PlanExpirationOnUtc
-                </p>
-            </div>
-            <div class="td-prec">
-
-
-
-                @Model.CurrentPlan.Order.Price
-                <div class="conte_btn">
-                    @if (Model.CurrentPlan.ShowRenovateButton)
-                    {
-                        @Html.ActionLink(T("MyOrders.RenovatePlan").Text, "SelectPlanVendor", "Sales", new { }, new { @class = "btn-azul" })
-                    }
-
-                    @Html.ActionLink(T("MyOrders.UpgradePlan").Text, "SelectPlanVendor", "Sales", new { force = true, limit = Model.CurrentPlan.NumProductsByPlan }, new { @class = "btn-azul" })
-                </div>
-
-            </div>
+        <div class="alert-public"><span class="icon-alert"></span> <p></p><br /></div>
+        <div class="alert-public">
+            <span class="icon-alert"></span> <p style="width:auto;">@T("MyOrders.SoonPlanWillExpire", Model.CurrentPlan.NumDaysToExpirePlan)</p>
+            @Html.ActionLink(T("MyOrders.RenovatePlanNow").Text, "SelectPlanVendor", "Sales", new { }, new { @class = "btn_extra" })
             <br />
-        </li>
+        </div>
     }
-    else
+
+    @if (Model.ShowAlertUpgradePlan)
     {
         <div class="alert-public"><span class="icon-alert"></span> <p>@T("MyOrders.BuyAPlan")</p>@Html.ActionLink(T("MyOrders.BuyAPlanButton").Text, "SelectPlanVendor", "Sales", new { }, new { @class = "btn btn-azul" })<br /></div>
     }
 
 
-    @foreach (var item in Model.Orders)
-    {
-        if (Model.CurrentPlan.Order != null && item.Id == Model.CurrentPlan.Order.Id)
+
+    <ul class="list_plan">
+
+        @if (Model.ShowCurrentPlan)
         {
-            continue;
+
+            <li class="plan-actual">
+                <div class="plan-detail">
+                    <h3>@Model.CurrentPlan.Order.Product.Name</h3>
+                    <p>@T("SelectFeaturedAttributesByPlan.SelectOnHome") <b class="rest-plan">@(Model.CurrentPlan.NumProductsOnHomeByPlan - Model.CurrentPlan.NumProductsOnHomeLeft) de @Model.CurrentPlan.NumProductsOnHomeByPlan</b></p>
+                    <p>@T("SelectFeaturedAttributesByPlan.SelectOnSliders") <b class="rest-plan">@(Model.CurrentPlan.NumProductsOnHomeByPlan - Model.CurrentPlan.NumProductsOnSlidersLeft) de @Model.CurrentPlan.NumProductsOnHomeByPlan</b></p>
+                    <p>@T("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks") <b class="rest-plan">@(Model.CurrentPlan.NumProductsOnSocialNetworksByPlan - Model.CurrentPlan.NumProductsOnSocialNetworksLeft) de @Model.CurrentPlan.NumProductsOnSocialNetworksByPlan</b></p>
+                </div>
+                <div class="plan-date">
+                    <h3>@T("Myorders.Active")</h3>
+                    <p>Fecha inicio: @Model.CurrentPlan.Order.PlanStartOnUtc</p>
+                    <p>Fecha cierre: @Model.CurrentPlan.Order.PlanExpirationOnUtc</p>
+                    <div class="conte_btn">
+
+                        @if (Model.CurrentPlan.ShowRenovateButton)
+                        {
+                            @Html.ActionLink(T("MyOrders.RenovatePlan").Text, "SelectPlanVendor", "Sales", new { }, new { @class = "btn-naranja" })
+                        }
+
+                        @Html.ActionLink(T("MyOrders.UpgradePlan").Text, "SelectPlanVendor", "Sales", new { force = true, limit = Model.CurrentPlan.NumProductsByPlan }, new { @class = "btn-azul" })
+
+                        @*@Model.CurrentPlan.Order.Price*@
+                    </div>
+                </div>
+                <br />
+            </li>
+
         }
-            
-        
-        <li>
-            <div class="td-pdt">
-                <p>@item.Product.Name</p>
-                <span>@item.CreatedOn</span>
-            </div>
-            <div class="td-vend">
-                <p>@item.OrderStatus</p>
-                <span>Pago: @item.PaymentStatus</span>
 
-            </div>
-            <div class="td-cal">
-                <p>
-                    @item.PlanStartOnUtc
-                    @item.PlanExpirationOnUtc
-                </p>
-            </div>
-            <div class="td-prec">@item.Price</div>
-            <br />
-        </li>
 
-    }
 
+
+
+
+        @foreach (var item in Model.Orders)
+        {
+            if (Model.CurrentPlan.Order != null && item.Id == Model.CurrentPlan.Order.Id)
+            {
+                continue;
+            }
+
+
+
+
+
+
+            <li>
+                <div class="plan-detail">
+                    <h3>@item.Product.Name</h3>
+                    <p>Valor: @item.Price</p>
+                </div>
+                <div class="plan-date">
+                    <h3>@item.OrderStatus</h3>
+                    @*@item.PaymentStatus*@
+                    @*@item.CreatedOn*@
+                    <p>Fecha inicio: @item.PlanStartOnUtc</p>
+                    <p>Fecha cierre: @item.PlanExpirationOnUtc</p>
+                </div>
+                <br />
+            </li>
+
+
+
+        }
+
+
+    </ul>
     @Html.Partial("_NoRows", new NoRowsModel() { List = Model.Orders, ResourceMessage = Model.ResorceMessageNoRows, ShowSimilarSearches = true })
 
     <div class="pager">
         @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
     </div>
-
 </div>
+
+
+
+
+
+
+
+@Html.HiddenFor(m => m.VendorId)
+<div id="productsViewPopup"></div>
+@Html.Partial("_VendorProductsPopup")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

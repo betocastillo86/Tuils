@@ -1,0 +1,159 @@
+﻿@model Nop.Web.Models.Sales.SelectPlanModel
+
+
+
+
+@helper ShowSelectedPlan(Nop.Web.Models.Sales.PlanModel plan)
+{
+    if (plan.Id == Model.FeaturedPlan)
+    {
+        @:selected
+    }
+
+}
+
+
+<div class="planSelectionContainer">
+    <h2>Seleccione el plan ideal para su empresa</h2>
+    <p>Puede cambiar a un plan inferior o superior en cualquier momento</p>
+    <div class="planTable">
+        <div class="headerRow">
+            <div class="columnHeader"></div>
+            @foreach (var plan in Model.Plans)
+            {
+                var isPlanEnabled = !Model.DisabledPlans.Contains(plan.Id) && !(Model.DisableFreePlan && plan.PriceDecimal == 0);
+                
+                <div class="cell-p">
+                   
+                        <a href="javascript:;" class="@(isPlanEnabled ?"selectNewPlan": string.Empty )" data-id="@plan.Id">
+                            <div class="plan-name @ShowSelectedPlan(plan)" data-sel="@plan.Id">@plan.Name</div>
+                            <div class="plan-price @ShowSelectedPlan(plan)" data-sel="@plan.Id">@plan.Price</div>
+                        </a>
+                    
+                </div>
+                if (isPlanEnabled)
+                {
+                    <input id="selectedPlan_@plan.Id" name="SelectedPlan" type="radio" value="@plan.Id" data-name="@plan.Name" style="display:none" />
+                }
+            }
+        </div>
+    </div>
+    <div class="planTable planOptions">
+
+
+        @foreach (var spec in Model.Plans.Last().Specifications)
+        {
+            <div class="alt">@spec.Name</div>
+            <div class="plan-row">
+                <div class="columnHeader">@spec.Name</div>
+
+                @foreach (var plan in Model.Plans)
+                {
+                    var specByPlan = plan.Specifications.FirstOrDefault(s => s.SpecificationAttributeId == spec.SpecificationAttributeId);
+                    if (specByPlan != null)
+                    {
+                        if (specByPlan.Value.Equals("Si"))
+                        {
+                            <div class="cell-p" data-sel="@plan.Id"><span class="icon-check"></span></div>
+                        }
+                        else
+                        {
+                            if (specByPlan.ShowWithCheck)
+                            {
+                                <div class="cell-e" data-sel="@plan.Id"><span class="icon-check"></span><span class="cant-plan">@specByPlan.Value</span></div>
+                            }
+                            else
+                            {
+                                <div class="cell-p" data-sel="@plan.Id">@specByPlan.Value</div>
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        <div class="cell-p" data-sel="@plan.Id"><span class="icon-close"></span></div>
+                    }
+                }
+            </div>
+        }
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@foreach (var plan in Model.Plans)
+    {
+        if (first)
+        {
+            <div>
+                <ul>
+                    @foreach (var spec in Model.Plans.Last().Specifications)
+                    {
+                        <li>@spec.Name</li>
+                    }
+                </ul>
+            </div>
+                    first = false;
+        }
+
+
+
+        <div>
+            <ul>
+                <li><h2>@plan.Name</h2></li>
+                <li><h3>@plan.Price</h3></li>
+                @foreach (var spec in plan.Specifications)
+                {
+                    <li>@spec.Value</li>
+                }
+            </ul>
+        </div>
+        if (!Model.DisabledPlans.Contains(plan.Id)
+            && !(Model.DisableFreePlan && plan.PriceDecimal == 0)
+            )
+        {
+            <input name="SelectedPlan" type="radio" value="@plan.Id" data-name="@plan.Name" />
+        }
+
+
+    }*@

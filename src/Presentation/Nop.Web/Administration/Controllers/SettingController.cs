@@ -1008,7 +1008,7 @@ namespace Nop.Admin.Controllers
             //Sino no
             if (model.CategoryProductPlansId > 0)
             {
-                foreach (var product in _productService.SearchProducts(categoryIds: new List<int>() { model.CategoryProductPlansId }))
+                foreach (var product in _productService.SearchProducts(categoryIds: new List<int>() { model.CategoryProductPlansId }, hidden: true))
                 {
                     model.AvailableProductsPlans.Add(new SelectListItem() { 
                         Text = product.Name,
@@ -1023,7 +1023,7 @@ namespace Nop.Admin.Controllers
             //Sino no
             if (model.CategoryStorePlansId > 0)
             {
-                foreach (var product in _productService.SearchProducts(categoryIds: new List<int>() { model.CategoryStorePlansId }))
+                foreach (var product in _productService.SearchProducts(categoryIds: new List<int>() { model.CategoryStorePlansId }, hidden:true))
                 {
                     model.AvailableStoresPlans.Add(new SelectListItem()
                     {

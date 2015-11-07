@@ -698,5 +698,13 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="product">Producto a actualizar</param>
         void EnableProduct(Product product);
+
+
+        /// <summary>
+        /// Trae el modelo de un plan dependiendo del id enviado
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        PlanModel GetPlanById(int id);
     }
 }
