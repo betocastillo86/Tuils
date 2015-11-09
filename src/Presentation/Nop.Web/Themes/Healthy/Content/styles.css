@@ -1987,6 +1987,18 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 .resumen-plan ul{margin:10px 0 0; padding: 0; list-style: none;}
 .resumen-plan ul li{padding: 4px 0;}
 .resumen-plan .price_plan{float:right; text-align: right; color: #f94c2a;}
+
+.conte_planConfirm{}
+.conte_planConfirm .img_mjs{float: left; height: 100px; margin: 0 20px 0 0; width: 100px; border-radius: 50px; background: #d8dee6; font-size: 75px; color: #627a9c; text-align: center; box-sizing:border-box;}
+.conte_planConfirm .icon-alert{float: left; height: 100px; margin: 0 20px 0 0; width: 100px; font-size: 100px; display: block; color: #fa4c2a; text-align: center; box-sizing:border-box;}
+.plan-confirm{float: left; width: calc(100% - 120px);}
+.plan-confirm h2{color: #3a5983; font-size: 20px; font-weight: 500;}
+.plan-confirm h3{font-size: 14px; font-weight: 500; margin:7px 0;}
+.plan-confirm h4{color: #f94c2a; font-size: 25px; font-weight: 400;}
+.plan-confirm ul{margin: 0; padding: 0; list-style: none;}
+.plan-confirm ul li{padding: 3px 0;}
+.plan-confirm ul b{color: #f94c2a; font-weight: 500;}
+.plan-confirm .conte_btn{margin: 20px 0 0;}
 /*FIN PLANES*/
 /*MODAL*/
 .modal{font-family: 'Ubuntu', sans-serif; padding:10px 20px 20px; position: relative; margin: 0 auto;}
