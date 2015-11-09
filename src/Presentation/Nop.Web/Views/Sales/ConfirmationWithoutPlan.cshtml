@@ -11,9 +11,9 @@
     </div>
     <div class="resumen-final">
         <h2>@T("PublishProduct.PublishFinished")</h2>
-        <p>@Model.ProductDetails.Name </p>
-        <h2>@Model.ProductDetails.ProductPrice.Price</h2>
-        <h3>@T("PublishProduct.TimeOutPost", Model.LimitDaysOfProductPublished)</h3>
+        <h3>@Model.ProductDetails.Name </h3>
+        <h4>@Model.ProductDetails.ProductPrice.Price</h4>
+        <p>@T("PublishProduct.TimeOutPost", Model.LimitDaysOfProductPublished)</p>
         @Html.ActionLink(T("SelectFeaturedAttributesByPlan.gotoMyProducts").Text, "MyProducts", "ControlPanel")
     </div>
 

@@ -5,9 +5,9 @@
     </div>
     <div class="resumen-final">
         <h2>@T("PublishProduct.PublishFinished")</h2>
-        <p>{{Name}} </p>
-        <h2>{{{Price}}}</h2>
-        <h3>@T("PublishProduct.TimeOutPost", Model.LimitDaysOfProductPublished)</h3>
+        <h3>{{Name}} </h3>
+        <h4>{{{Price}}}</h4>
+        <p>@T("PublishProduct.TimeOutPost", Model.LimitDaysOfProductPublished)</p>
         @Html.ActionLink(T("PublishProduct.PublishSimilar").Text, "Index", "Home")
         @*@Html.ActionLink(T("PublishProduct.GotoPublishing").Text, "MyProducts", "ControlPanel")*@
         @*<input type="button" class="btn_2 button-1" value="Ver publicación">*@

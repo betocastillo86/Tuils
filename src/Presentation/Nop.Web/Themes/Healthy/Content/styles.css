@@ -1636,7 +1636,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
         .picture-uploader li .icon-delete:hover{color: #fa4c2a;}
         hr{margin: 20px 0 10px; border-top: solid 1px #D8DEE6; clear: both;}
 
-    .resumen-product{width: 50%; float: left;}
+    .resumen-product{width: 50%; float: left; margin: 0 0 20px;}
     .resumen-product p{margin: 0; padding: 3px 0;}
     .picture-resume{margin: 0 auto; padding: 0; width:auto; list-style: none;}
     .picture-resume li{box-sizing: border-box; width:calc(25% - 20px); height:126px; background:#F9FDFF; border: 1px dashed #D8DEE6; text-align: center; color: #899CB5; font-size: 12px; float: left; margin:10px 20px 10px 0; overflow: hidden;}
@@ -1646,17 +1646,20 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 
     .imgPublicada{ width: 200px; height: 200px; float: left; margin: 0 20px 0 0; overflow: hidden;}
     .imgPublicada img {width: 100%;}
-    .resumen-final{float: left; width: auto;}
+    .resumen-final{float: left; width:calc(100% - 220px);}
     .resumen-final h2{color:#3A5983; font-weight: 500; font-size: 20px;}
-    .resumen-final h3{font-weight: 500; font-size: 16px; margin: 0 0 20px;}
-    .resumen-final p{margin:0; padding: 7px 0;}
-    .resumen-final b{color:#F44D19; font-weight: 500;}
+    .resumen-final h3{font-weight: 500; font-size: 16px; color: #292732; margin: 10px 0 0;}
+    .resumen-final h4{color: #f94c2a; font-size: 25px; font-weight: 400;}
+    .resumen-final p{margin:0; padding: 7px 0; margin: 0 0 10px;}
+    .resumen-final b{font-weight: 500;}
     .resumen-final a{color:#F94C2A; text-decoration: underline; margin: 0 30px 0 0;}
     .btn_2{margin: 20px 0 0 !important; padding: 7px 25px !important; display: block;}
     .retoma_publi{margin: 50px 0;}
     .retoma_publi .icon-publica{float: left; color: #fb7055; text-align: center; font-size: 80px; width: 120px; height: 80px; margin:15px 0; display: block;}
     .retoma_publi .resumen-final{width: calc(100% - 120px);}
     .retoma_publi .resumen-final p{margin: 0 0 10px;}
+
+    .resumen-final .resumen-product p { margin: 0; padding: 3px 0;}
 
     #divStep_3 .title{color: #f84c2a; font-size: 16px; font-weight: 500; margin: 0 0 10px;}
 
@@ -1968,6 +1971,22 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .plan-date .conte_btn a{transition:ease all 0.4s; border-radius:2px; display:block; float: left; padding: 6px 10px; color: #FFF; margin: 0 0 0 10px;}
 .plan-actual .plan-detail h3{color: #3b5a83;}
 .plan-actual .plan-date h3{color: #F97053;}
+
+.tus_destacados{list-style: none; margin: 0; padding: 0;}
+.tus_destacados li{border-bottom: 1px solid #e5e5e5; padding: 10px 5px;}
+	.img_tus{float: left; overflow: hidden; width: 50px; height: 50px; margin: 0 10px 0 0;}
+	.img_tus img{width:100%;}
+	.txt_tus{float: left; width: calc(100% - 60px);}
+	.txt_tus h3{text-overflow:ellipsis; white-space: nowrap; overflow: hidden;}
+	.txt_tus .price-modal{color: #f94c2a; font-size: 20px; font-weight: 500;}
+	.conte_planes form{width: 100%;}
+
+.resumen-plan{background: #f3f5f7; border-radius: 3px; width: 100%; padding: 15px; box-sizing:border-box; margin: 0 0 20px; position: relative;}
+.tit_res{color:#f94c2a; font-weight: 500;}
+.resumen-plan h4{color: #899cb5; font-size: 20px; width: 100%;}
+.resumen-plan ul{margin:10px 0 0; padding: 0; list-style: none;}
+.resumen-plan ul li{padding: 4px 0;}
+.resumen-plan .price_plan{float:right; text-align: right; color: #f94c2a;}
 /*FIN PLANES*/
 /*MODAL*/
 .modal{font-family: 'Ubuntu', sans-serif; padding:10px 20px 20px; position: relative; margin: 0 auto;}
