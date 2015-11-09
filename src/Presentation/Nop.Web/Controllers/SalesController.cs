@@ -262,7 +262,19 @@ namespace Nop.Web.Controllers
             model.Plans = LoadPlansByVendorType(_workContext.CurrentVendor.VendorType);
             //Carga el plan del vendor para saber cual destacar
             var vendorPlan = _workContext.CurrentVendor.GetCurrentPlan(_productService, _planSettings);
-            model.FeaturedPlan = vendorPlan.ProductId;
+
+            //Si es un upgrade no le marca ningún plan al usuario
+            if (!command.limit.HasValue)
+            {
+                model.FeaturedPlan = vendorPlan.ProductId;
+
+                //Si lo que se va a hacer es refrendar un plan, carga los datos adicionales abiertos
+                if (vendorPlan.ProductId != _planSettings.PlanStoresFree)
+                    model.AutoShowAdditionalData = true;
+
+            }
+            
+            
             
             //Si viene forzado deshabilita los planes que no se adecuen
             if (command.force.HasValue && command.force.Value)

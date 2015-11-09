@@ -832,8 +832,8 @@ namespace Nop.Web.Controllers
                 //Valida que no tenga submodulos activos, que corresponda a la misma acción y que los parametros adicionales coincidan todos
                 var queryStringParent = ControllerContext.ParentActionViewContext.RequestContext.HttpContext.Request.QueryString;
                 if (module.SubModules.Count == 0
-                    && module.Action.Equals(currentAction)
-                    && module.Controller.Equals(currentController)
+                    && module.Action.ToLower().Equals(currentAction)
+                    && module.Controller.ToLower().Equals(currentController)
                     && validateQueryString(queryStringParent, module.Parameters, module.OptionalParameters))
                     return module.Name;
                 else

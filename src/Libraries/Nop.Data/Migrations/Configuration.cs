@@ -1133,17 +1133,27 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("OurPlans", "Nuestros planes");
                 newLocaleStringResources.Add("OurPlans.Market", "Planes para empresas");
                 newLocaleStringResources.Add("OurPlans.Users", "Planes para personas");
+
+
+                newLocaleStringResources.Add("selectplan.buttonpay", "Pagar");
+                newLocaleStringResources.Add("featuredProduct.ProductInformationTitle", "Detalles del producto");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.Success", "Pago realizado correctamente");
+                newLocaleStringResources.Add("publishproduct.timeToActivate", "Recuerda que en pocos minutos podrás ver tu producto activado");
+                newLocaleStringResources.Add("selectplan.continuewithoutplan", "Continuar sin destacar");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnHome.Alt", "Número de productos destacados en la pagina de inicio");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnSliders.Alt", "Número de productos destacados en la pagina en las bandas rotativas");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks.Alt", "Número de productos destacados en Facebook");
+
+
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.Error", "Lo sentimos, el pago no pudo realizarse");
+                newLocaleStringResources.Add("Plugins.PayUExternal.ContinueWithoutPlan", "Publicar sin destacar");
+                newLocaleStringResources.Add("Plugins.PayUExternal.TryAgain", "Volver a intentar");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.SuccessPlan", "Gracias, el pago de su plan se ha hecho correctamente");
+                
+
                 
                 
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
                 
 
                 //Recorre todas las llaves que desea adicional

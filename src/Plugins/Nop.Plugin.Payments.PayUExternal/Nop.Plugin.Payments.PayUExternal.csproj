@@ -141,6 +141,12 @@
     <Content Include="Views\PayUExternal\ErrorResponse.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Views\PayUExternal\_PaymentResponseError.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\PayUExternal\_PaymentResponseOnlyPlan.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="web.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

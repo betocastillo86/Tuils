@@ -49,6 +49,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
         private readonly IDateTimeHelper _dateTimeHelper;
         private readonly IOrderProcessingService _orderProcessingService;
         private readonly IVendorService _vendorService;
+        private readonly IPictureService _pictureService;
         
         public PayUExternalController(PayUExternalSettings settings,
             ISettingService settingService,
@@ -61,7 +62,8 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
             ILogger logger,
             IDateTimeHelper datetimeHelper,
             IOrderProcessingService orderProcessingService,
-            IVendorService vendorService)
+            IVendorService vendorService,
+            IPictureService pictureService)
         {
             this._settings = settings;
             this._settingService = settingService;
@@ -75,6 +77,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
             this._dateTimeHelper = datetimeHelper;
             this._orderProcessingService = orderProcessingService;
             this._vendorService = vendorService;
+            this._pictureService = pictureService;
         }
 
         #region Configure
@@ -173,7 +176,14 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
             {
                 var product = _productService.GetProductById(selectedProductId);
                 model.ProductName = product.Name;
-                model.ProductId = product.Id;    
+                model.ProductId = product.Id;
+                model.ProductPrice = _priceFormater.FormatPrice(product.Price);
+                
+                if(product.ProductPictures.Count > 0)
+                {
+                    model.ProductImageUrl = _pictureService.GetPictureUrl(product.ProductPictures.FirstOrDefault().Picture);
+                }
+                
             }
             
 
@@ -190,7 +200,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
                 {
                     model.RedirectToFeatureProduct = true;
                     model.RedirectToFeaturedKey = _orderProcessingService.GetPaymentPlanValidationKeys(order, selectedProductId);
-
+                    model.IsFeaturedProduct = true;
                     
                     //return RedirectToAction("SelectFeaturedAttributesByPlan", "Sales",
                     //    new
@@ -354,9 +364,9 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
                     case TransactionState.Declined:
                     case TransactionState.Expired:
                     case TransactionState.Error:
-                        if (_orderProcessingService.CanVoid(order))
+                        if (_orderProcessingService.CanCancelOrder(order))
                         {
-                            _orderProcessingService.Void(order);
+                            _orderProcessingService.CancelOrder(order, true);
                             scope.Complete();
                         }
                         else

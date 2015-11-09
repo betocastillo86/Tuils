@@ -5,65 +5,93 @@
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 }
 
+
+
+
+
+
 @if (Model.HasReachedLimitOfProducts)
 {
     <div class="alert-public"><span class="icon-alert"></span> <p>@T("SelectFeaturedAttributesByPlan.HasReachedLimitOfProducts", Model.NumLimitOfProducts)</p> @Html.ActionLink(T("SelectFeaturedAttributesByPlan.SelectPlan").Text, "SelectPlan", "Sales", new { id = Model.ProductDetails.Id, force = "true", limit = Model.NumLimitOfProducts }, new { })<br /></div>
 }
-@Html.Partial("_ProductBox", Model.ProductDetails)
-
 @using (Html.BeginForm())
 {
-
-
-    <div>
-        <ul>
-            <li>
-                @T("SelectFeaturedAttributesByPlan.SelectOnHome")
-
-                @if (Model.SelectOnHome || Model.NumProductsOnHomeLeft > 0)
+    <div class="product-public">
+        <div class="content-public">
+            <div class="imgPublicada">
+                @if (Model.ProductDetails.DefaultPictureModel != null)
                 {
-                    @Html.CheckBoxFor(m => m.SelectOnHome)
+                    <img src="@Model.ProductDetails.DefaultPictureModel.FullSizeImageUrl" />
                 }
+            </div>
+            <div class="resumen-final">
+                <div class="resumen-product">
+                    <div class="title">@T("featuredProduct.ProductInformationTitle")</div>
+                    <p><b>@T("publishproduct.producttitle"):</b>  @Model.ProductDetails.Name</p>
+                    <p><b>@T("myorders.price"):</b>  @Model.ProductDetails.ProductPrice.Price</p>
 
-                <b>
-                    Puede coger @Model.NumProductsOnHomeByPlan
-                    Quedan (@Model.NumProductsOnHomeLeft)
-                </b>
-            </li>
-            <li>
-                @T("SelectFeaturedAttributesByPlan.SelectOnSliders")
+                    @if (Model.ProductDetails.Manufacturers.Count > 0)
+                    {
+                        <p><b>@T("publishproduct.manufacturer"):</b>  @Model.ProductDetails.Manufacturers.FirstOrDefault().Name</p>
+                    }
 
-                @if (Model.SelectOnSliders || Model.NumProductsOnSlidersLeft > 0)
-                {
-                    @Html.CheckBoxFor(m => m.SelectOnSliders)
-                }
+                    @*<p><b>Realiza Envíos/Domicilios:</b>  No</p>*@
+                        @*<p><b>@T("myproducts.availableenddate"):</b>  @Model.ProductDetails.AvailableEndDate.ToShortDateString()</p>*@
+                    </div>
 
-                <b>
-                    Puede coger @Model.NumProductsOnSlidersByPlan
-                    Quedan (@Model.NumProductsOnSlidersLeft)
-                </b>
-            </li>
-            <li>
-                @T("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks")
+                    <div class="resumen-product">
+                        <div class="title">¿Como desea destacar su producto?</div>
+                        <p>
+                            @if (Model.SelectOnHome || Model.NumProductsOnHomeLeft > 0)
+                            {
+                                @Html.CheckBoxFor(m => m.SelectOnHome)
+                            }
+                            else
+                            {
+                                <input type="checkbox" disabled="disabled">
+                            }
 
-                @if (Model.SelectOnSocialNetworks || Model.NumProductsOnSocialNetworksLeft > 0)
-                {
-                    @Html.CheckBoxFor(m => m.SelectOnSocialNetworks)
-                }
+                            @T("SelectFeaturedAttributesByPlan.SelectOnHome") <span class="rest-plan">(@Model.NumProductsOnHomeLeft de @Model.NumProductsOnHomeByPlan disponible)</span>
+                        </p>
 
-                <b>
-                    Puede coger @Model.NumProductsOnSocialNetworksByPlan
-                    Quedan (@Model.NumProductsOnSocialNetworksLeft)
-                </b>
-            </li>
-        </ul>
-    </div>
+                        <p>
+                            @if (Model.SelectOnSliders || Model.NumProductsOnSlidersLeft > 0)
+                            {
+                                @Html.CheckBoxFor(m => m.SelectOnSliders)
+                            }
+                            else
+                            {
+                                <input type="checkbox" disabled="disabled">
+                            }
+                            @T("SelectFeaturedAttributesByPlan.SelectOnSliders") <span class="rest-plan">(@Model.NumProductsOnSlidersLeft de @Model.NumProductsOnSlidersByPlan disponible)</span>
+                        </p>
+                        <p>
+                            @if (Model.SelectOnSocialNetworks || Model.NumProductsOnSocialNetworksLeft > 0)
+                            {
+                                @Html.CheckBoxFor(m => m.SelectOnSocialNetworks)
+                            }
+                            else
+                            {
+                                <input type="checkbox" disabled="disabled">
+                            }
+                            @T("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks") <span class="rest-plan">(@Model.NumProductsOnSocialNetworksLeft de @Model.NumProductsOnSocialNetworksByPlan disponible)</span>
+                        </p>
+                    </div>
 
-    <input type="submit" value="@T("SelectFeaturedAttributesByPlan.Save")" />
+                </div>
 
-    if (Model.ShowGoToMyProductsButton)
-    {
-        @Html.ActionLink(T("SelectFeaturedAttributesByPlan.gotoMyProducts").Text, "MyProducts", "ControlPanel")
-    }
 
+
+                <div>
+                    <input type="submit" value="@T("SelectFeaturedAttributesByPlan.Save")" class="btn_continue button-1" />
+
+                    @if (Model.ShowGoToMyProductsButton)
+                    {
+                        @Html.ActionLink(T("SelectFeaturedAttributesByPlan.gotoMyProducts").Text, "MyProducts", "ControlPanel")
+                    }
+                </div>
+                <br />
+
+            </div>
+        </div>
 }

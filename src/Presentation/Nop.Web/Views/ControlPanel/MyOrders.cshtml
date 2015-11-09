@@ -14,7 +14,6 @@
 
     @if (Model.ShowCurrentPlan && Model.CurrentPlan.ShowRenovateButton)
     {
-        <div class="alert-public"><span class="icon-alert"></span> <p></p><br /></div>
         <div class="alert-public">
             <span class="icon-alert"></span> <p style="width:auto;">@T("MyOrders.SoonPlanWillExpire", Model.CurrentPlan.NumDaysToExpirePlan)</p>
             @Html.ActionLink(T("MyOrders.RenovatePlanNow").Text, "SelectPlanVendor", "Sales", new { }, new { @class = "btn_extra" })
@@ -24,11 +23,15 @@
 
     @if (Model.ShowAlertUpgradePlan)
     {
-        <div class="alert-public"><span class="icon-alert"></span> <p>@T("MyOrders.BuyAPlan")</p>@Html.ActionLink(T("MyOrders.BuyAPlanButton").Text, "SelectPlanVendor", "Sales", new { }, new { @class = "btn btn-azul" })<br /></div>
+        <div class="alert-public">
+            <span class="icon-alert"></span> <p style="width:auto;">@T("MyOrders.BuyAPlan")</p>
+            @Html.ActionLink(T("MyOrders.BuyAPlanButton").Text, "SelectPlanVendor", "Sales", new { }, new { @class = "btn_extra" })
+            <br />
+        </div>
     }
 
 
-
+    
     <ul class="list_plan">
 
         @if (Model.ShowCurrentPlan)
@@ -37,14 +40,16 @@
             <li class="plan-actual">
                 <div class="plan-detail">
                     <h3>@Model.CurrentPlan.Order.Product.Name</h3>
-                    <p>@T("SelectFeaturedAttributesByPlan.SelectOnHome") <b class="rest-plan">@(Model.CurrentPlan.NumProductsOnHomeByPlan - Model.CurrentPlan.NumProductsOnHomeLeft) de @Model.CurrentPlan.NumProductsOnHomeByPlan</b></p>
-                    <p>@T("SelectFeaturedAttributesByPlan.SelectOnSliders") <b class="rest-plan">@(Model.CurrentPlan.NumProductsOnHomeByPlan - Model.CurrentPlan.NumProductsOnSlidersLeft) de @Model.CurrentPlan.NumProductsOnHomeByPlan</b></p>
-                    <p>@T("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks") <b class="rest-plan">@(Model.CurrentPlan.NumProductsOnSocialNetworksByPlan - Model.CurrentPlan.NumProductsOnSocialNetworksLeft) de @Model.CurrentPlan.NumProductsOnSocialNetworksByPlan</b></p>
+                    <p>@T("SelectFeaturedAttributesByPlan.SelectOnHome") <a href="javascript:;" class="filterFeatured" data-filter="home" title="@T("SelectFeaturedAttributesByPlan.SelectOnHome.Alt")"><b class="rest-plan">@(Model.CurrentPlan.NumProductsOnHomeByPlan - Model.CurrentPlan.NumProductsOnHomeLeft) de @Model.CurrentPlan.NumProductsOnHomeByPlan</b></a></p>
+                    <p>@T("SelectFeaturedAttributesByPlan.SelectOnSliders") <a href="javascript:;" class="filterFeatured" data-filter="sliders" title="@T("SelectFeaturedAttributesByPlan.SelectOnSliders.Alt")"><b class="rest-plan">@(Model.CurrentPlan.NumProductsOnSlidersByPlan - Model.CurrentPlan.NumProductsOnSlidersLeft) de @Model.CurrentPlan.NumProductsOnSlidersByPlan</b></a></p>
+                    <p>@T("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks") <a href="javascript:;" class="filterFeatured" data-filter="SN" title="@T("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks.Alt")"><b class="rest-plan">@(Model.CurrentPlan.NumProductsOnSocialNetworksByPlan - Model.CurrentPlan.NumProductsOnSocialNetworksLeft) de @Model.CurrentPlan.NumProductsOnSocialNetworksByPlan</b></a></p>
                 </div>
                 <div class="plan-date">
                     <h3>@T("Myorders.Active")</h3>
+                    
                     <p>Fecha inicio: @Model.CurrentPlan.Order.PlanStartOnUtc</p>
                     <p>Fecha cierre: @Model.CurrentPlan.Order.PlanExpirationOnUtc</p>
+                    
                     <div class="conte_btn">
 
                         @if (Model.CurrentPlan.ShowRenovateButton)
@@ -75,10 +80,6 @@
             }
 
 
-
-
-
-
             <li>
                 <div class="plan-detail">
                     <h3>@item.Product.Name</h3>
@@ -88,13 +89,19 @@
                     <h3>@item.OrderStatus</h3>
                     @*@item.PaymentStatus*@
                     @*@item.CreatedOn*@
-                    <p>Fecha inicio: @item.PlanStartOnUtc</p>
-                    <p>Fecha cierre: @item.PlanExpirationOnUtc</p>
+
+                    @if (!string.IsNullOrEmpty(item.PlanStartOnUtc))
+                    {
+                        <p>Fecha inicio: @item.PlanStartOnUtc</p>
+                        <p>Fecha cierre: @item.PlanExpirationOnUtc</p>
+                    }
+                    else
+                    {
+                        <p>Inicio de compra: @item.CreatedOn</p>
+                    }
                 </div>
                 <br />
             </li>
-
-
 
         }
 

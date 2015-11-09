@@ -35,7 +35,7 @@
                 PlanId : 'Plan',
                 Address : 'Dirección',
                 StateProvinceId: 'Departamento',
-                City: 'City',
+                City: 'Ciudad',
                 PhoneNumber : 'Teléfono'
             },
 

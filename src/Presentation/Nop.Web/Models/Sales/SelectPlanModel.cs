@@ -34,6 +34,11 @@ namespace Nop.Web.Models.Sales
         public int FeaturedPlan { get; set; }
 
         /// <summary>
+        /// True: Muestra con la carga el formulario de datos adicionales
+        /// </summary>
+        public bool AutoShowAdditionalData { get; set; }
+
+        /// <summary>
         /// Url a la que se envia el formulario
         /// </summary>
         public string RedirectUrl { get; set; }

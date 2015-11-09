@@ -33,7 +33,7 @@
                 </div>
                 if (isPlanEnabled)
                 {
-                    <input id="selectedPlan_@plan.Id" name="SelectedPlan" type="radio" value="@plan.Id" data-name="@plan.Name" style="display:none" />
+                    <input id="selectedPlan_@plan.Id" name="SelectedPlan" type="radio" value="@plan.Id" data-name="@plan.Name" style="display:none" @(plan.Id == Model.FeaturedPlan ? "checked" : string.Empty)/>
                 }
             }
         </div>

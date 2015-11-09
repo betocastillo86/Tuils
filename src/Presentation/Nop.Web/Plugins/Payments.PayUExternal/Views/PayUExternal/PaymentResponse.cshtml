@@ -3,36 +3,74 @@
     Layout = null;
 }
 @model Nop.Plugin.Payments.PayUExternal.Models.PaymentResponseModel
-<div>
-   <div>@T("Plugins.PayUExternal.PaymentResponse.SelectedPlanName"): @Model.SelectedPlanName</div>
-    
-    <div>@T("Plugins.PayUExternal.PaymentResponse.ReferenceCode"): @Model.ReferenceCode</div>
-    <div>@T("Plugins.PayUExternal.PaymentResponse.ReferencePayUCode"): @Model.ReferencePayUCode</div>
-    <div>@T("Plugins.PayUExternal.PaymentResponse.State"): @Model.State</div>
-    <div>@T("Plugins.PayUExternal.PaymentResponse.TransactionValue"): @Model.TransactionValue</div>
-    <div>@T("Plugins.PayUExternal.PaymentResponse.Currency"): @Model.Currency</div>
-    <div>@T("Plugins.PayUExternal.PaymentResponse.TransactionDate"): @Model.TransactionDate</div>
 
-    @if (Model.IsFeaturedProduct)
-    {
-        <div>@T("Plugins.PayUExternal.PaymentResponse.ProductName"): @Model.ProductName</div>
-    }
-    else if (!Model.TransactionRejected)
-    { 
-        @Html.ActionLink(T("Plugins.PayUExternal.PaymentResponse.PublishProduct").Text, "Index", "Sales")
-    }
-    
 
-    
-    
-    @if (Model.TransactionRejected)
-    { 
-        @Html.ActionLink("Intenar con otro medio de pago", "SelectPlan", "Sales", new { id = Model.ProductId }, new { })
-    }
-    
-    @if (Model.RedirectToFeatureProduct)
-    { 
-        @Html.ActionLink("IR A DESTACAR PRODUCTO", "SelectFeaturedAttributesByPlan", "Catalog", new { id = Model.ProductId, orderId = Model.OrderId, sign = Model.RedirectToFeaturedKey, from = "publish" }, new { })
-    }
+<div class="product-public">
+    <div class="content-public">
 
+        @if (!Model.TransactionRejected)
+        {
+
+            if (Model.ProductId > 0)
+            {
+                <div class="imgPublicada">
+                    <img src="@Model.ProductImageUrl" />
+                </div>
+                <div class="resumen-final">
+                    <div class="resumen-plan">
+                        <div class="tit_res">@T("Plugins.PayUExternal.PaymentResponse.Success")</div>
+                        <h4>@Model.SelectedPlanName <div class="price_plan">@Model.TransactionValue @Model.Currency</div></h4>
+                        <ul>
+                            <li>@T("Plugins.PayUExternal.PaymentResponse.ReferenceCode"): <b>@Model.ReferenceCode </b></li>
+                            <li>@T("Plugins.PayUExternal.PaymentResponse.ReferencePayUCode"):<b>@Model.ReferencePayUCode</b></li>
+                            <li>@T("Plugins.PayUExternal.PaymentResponse.State"): @Model.State</li>
+                            <li>@T("Plugins.PayUExternal.PaymentResponse.TransactionDate"): @Model.TransactionDate</li>
+                        </ul>
+                    </div>
+
+                    @if (Model.IsFeaturedProduct)
+                    {
+                        <h2>@T("publishproduct.publishfinished")</h2>
+                        <h3>@Model.ProductName</h3>
+                        <h4>@Model.ProductPrice</h4>
+                        <p>@T("publishproduct.timeToActivate")</p>
+
+                        @Html.ActionLink(T("controlpanel.MyProducts").Text, "MyProducts", "ControlPanel", new { }, new { @class = "btn_continue button-1" })
+                    }
+                    //else if (!Model.TransactionRejected)
+                    else
+                    {
+                        @Html.ActionLink(T("Plugins.PayUExternal.PaymentResponse.PublishProduct").Text, "Index", "Sales", new { @class = "btn_continue button-1" })
+                    }
+
+
+
+                    @if (Model.RedirectToFeatureProduct)
+                    {
+                        @Html.ActionLink(T("myproducts.featureByProduct").Text, "SelectFeaturedAttributesByPlan", "Catalog", new { id = Model.ProductId, orderId = Model.OrderId, sign = Model.RedirectToFeaturedKey, from = "publish" }, new { @class = "btn_continue button-1" })
+                    }
+
+
+
+                </div>
+            }
+            else
+            { 
+                /**Plantilla que contiene la respuesta cuando no se selecciona un producto al momento de comprar el plan **/
+                @Html.Partial("~/Plugins/Payments.PayUExternal/Views/PayUExternal/_PaymentResponseOnlyPlan.cshtml", Model)
+            }
+
+
+        }
+        else
+        {
+            @Html.Partial("~/Plugins/Payments.PayUExternal/Views/PayUExternal/_PaymentResponseError.cshtml", Model)
+        }
+
+
+
+        
+
+        <br />
+    </div>
 </div>

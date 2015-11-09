@@ -1,22 +1,32 @@
-﻿<script  type="text/x-handlebars" id="templateVendorProductsPopup">
-    
-    {{#if this.length}}
-    
-    <table>
-        {{#each this}}
-        <tr>
-            <td>
-                {{Name}}
-                <b>{{PriceFormatted}}</b>
-                <img  src="{{ImageUrl}}" width="40" height="40"/>
-            </td>
-        </tr>
-        {{/each}}
-    </table>
-    {{else}}
+﻿<script type="text/x-handlebars" id="templateVendorProductsPopup">
 
-    NO HAY PRODUCTOS DESTACADOS DE ESTE TIPO
 
-    {{/if}}
+    <div class="modal">
+        {{#if this.length}}
+        <ul class="tus_destacados">
+
+            {{#each this}}
+
+            <li>
+                <div class="img_tus">
+                    <img src="{{ImageUrl}}" />
+                </div>
+                <div class="txt_tus">
+                    <h3>{{Name}}</h3>
+                    <div class="price-modal">{{PriceFormatted}}</div>
+                </div>
+                <br />
+            </li>
+
+            {{/each}}
+
+        </ul>
+        {{else}}
+
+        NO HAY PRODUCTOS DESTACADOS DE ESTE TIPO
+
+        {{/if}}
+    </div>
+
 
 </script>

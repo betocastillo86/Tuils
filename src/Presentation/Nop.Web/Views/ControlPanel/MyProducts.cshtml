@@ -76,7 +76,7 @@
                             @Html.ActionLink(T("myproducts.featureByProduct").Text, "SelectPlan", "Sales", new { id = product.Id }, new { @class = "btn-azul" })
                         }
 
-                        <a class="btnUnpublish btn-naranja" data-id="@product.Id" title="@T("myproducts.disable.alt")">@T("myproducts.disable")</a>
+                        <a class="btnUnpublish btn-naranja" data-id="@product.Id" title="@T("myproducts.disable.alt")" href="javascript:void(0)">@T("myproducts.disable")</a>
                         <a class="btn-azul"  href="@Url.Action("EditProduct", "ControlPanel", new { id = product.Id })">@T("myproducts.editProduct")</a>
                     </div>
                 }
@@ -84,7 +84,9 @@
                 {
                     if (product.Published)
                     {
-                        <a class="btnPublishMyProducts btn-naranja" data-id="@product.Id" title="@T("myproducts.enable.alt")">@T("myproducts.enable")</a>
+                        <div class="conte_btn">
+                            <a class="btnPublishMyProducts btn-naranja" data-id="@product.Id" title="@T("myproducts.enable.alt")" href="javascript:void(0)">@T("myproducts.enable")</a>
+                        </div>
                     }
                 }
             </div>

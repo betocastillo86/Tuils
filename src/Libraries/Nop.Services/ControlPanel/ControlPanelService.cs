@@ -97,17 +97,18 @@ namespace Nop.Services.ControlPanel
                             Action = "ChangePassword",
                             IconMini = "icon-cc",
                             IconBig = "icon-cc"
-                        },
-                        new ControlPanelModule()
-                        {
-                            Name = "MyOrders",
-                            Controller = "ControlPanel",
-                            Action = "MyOrders",
-                            IconMini = "icon-compra",
-                            IconBig = "icon-compra"
                         }
                     }
 
+            });
+
+            modules.Add(new ControlPanelModule()
+            {
+                Name = "MyOrders",
+                Controller = "ControlPanel",
+                Action = "MyOrders",
+                IconMini = "icon-compra",
+                IconBig = "icon-compra"
             });
 
             //Tienda

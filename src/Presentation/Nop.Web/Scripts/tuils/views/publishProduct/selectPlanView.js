@@ -11,7 +11,7 @@
                     observe: 'PlanId',
                     preBind : false
                 },
-                '#ddlStateProvince': 'StateProvinceId',
+                '#ddlStateProvinceId': 'StateProvinceId',
                 '#CustomerAddressInformation_Address': 'Address',
                 '#CustomerAddressInformation_City': 'City',
                 '#CustomerAddressInformation_PhoneNumber': 'PhoneNumber',
@@ -24,6 +24,10 @@
                 this.model.on('change:PlanId', this.changePlan, this);
                 this.model.on('error', this.errorCreatingOrder, this);
                 this.model.on('sync', this.successCreatingOrder, this);
+
+                var preselectedPlan = parseInt($("input[name='SelectedPlan']:checked").val());
+                if (!isNaN(preselectedPlan))
+                    this.model.set('PlanId', preselectedPlan);
                 
                 this.render();
             },
@@ -32,6 +36,8 @@
                 this.$("#selectedPlan_" + plan).click();
                 this.$("[data-sel='" + plan + "']").addClass("selected");
                 this.$("[data-sel!='" + plan + "']").removeClass("selected");
+                this.scrollFocusObject('#divAdditionalInfo', -200);
+                
             },
             changePlan: function (obj) {
                 var isFree = this.isFreePlan();

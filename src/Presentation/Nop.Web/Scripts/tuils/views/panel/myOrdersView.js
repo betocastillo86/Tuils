@@ -17,7 +17,7 @@
             },
             showProductsPopup: function (obj) {
 
-                var filter = $(obj.target).attr('data-filter');
+                var filter = $(obj.currentTarget).attr('data-filter');
                 this.productsView.show(filter);
             },
             render: function () {

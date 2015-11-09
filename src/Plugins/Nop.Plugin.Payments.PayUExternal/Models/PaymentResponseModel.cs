@@ -59,5 +59,16 @@ namespace Nop.Plugin.Payments.PayUExternal.Models
         /// </summary>
         public string ProductName { get; set; }
 
+
+        /// <summary>
+        /// Nombre del producto que se desea destacar
+        /// </summary>
+        public string ProductPrice { get; set; }
+
+
+        public string ProductImageUrl { get; set; }
+
+
+
     }
 }
