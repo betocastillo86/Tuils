@@ -913,7 +913,7 @@ html.oldie .container { width: 940px; }
 
     input[type="text"],input[type="password"], select{width:300px;}
     .inputs{height: 71px;}
-    .inputs label, .inputs_mid label{text-align: left; width: 90%;}
+    .inputs label, .inputs_mid label{text-align: left; width: 100%; box-sizing:border-box;}
     .text-character{margin: 0;}
     .field-validation-error{margin: 0 68px 0 0;}
     .master-wrapper-page .center-2.columns.ten input[type="text"], .master-wrapper-page .center-2.columns.ten select{width: 235px;}
@@ -1222,6 +1222,9 @@ html.oldie .container { width: 940px; }
     .picture-uploader{font-size: 12px;}
     .txt-terminos{font-size: 12px;}
 
+    .imgPublicada{margin: 0 auto 20px; float: none; width: 120px; height: 120px;}
+    .resumen-final{width: 100%; float: none;}
+
     /*panel de contrlo*/
     .panel-items li{float: none; width: 100%; margin:0 0 15px; text-align: left; height: auto; padding: 15px;}
         .panel-items li span{font-size: 30px; width: 30px; float:left; text-align:center; margin: 0 10px 0 0;}
@@ -1273,6 +1276,7 @@ html.oldie .container { width: 940px; }
     .planTable .columnHeader{display: none;}
     .planTable .alt{display: block; font-size: 14px; position: absolute; text-align: center; width:calc(100% - 20px);}
     .legal_plan{margin: 0 0 20px;}
+
     /*FIN PLANES*/
 }
 @media screen and (max-width:568px) {
