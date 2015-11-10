@@ -24,8 +24,8 @@
             '#txtBike': {
                 observe: 'Bike',
                 controlToMark: '.tagit-new input[type="text"]'
-            }
-            //"#txtPassword": "Password",
+            },
+            "#txtPassword": "Password",
             //"#chkTerms": "TermsOfUse"
         },
         intervalAuthentication: undefined,

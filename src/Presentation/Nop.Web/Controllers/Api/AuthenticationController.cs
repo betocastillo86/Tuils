@@ -54,9 +54,11 @@ namespace Nop.Web.Controllers.Api
         #endregion
             
         [HttpPost]
+        [BasicAuthentication]
         [Route("api/auth/register")]
         public IHttpActionResult Register(CustomerBaseModel model)
         {
+            
             //Si hay un usuario autenticado no permite la creación
             if (_workContext.CurrentCustomer.IsRegistered())
             {
@@ -64,6 +66,10 @@ namespace Nop.Web.Controllers.Api
                 ModelState.AddModelError("errorMessage", CodeNopException.HasSessionActive.GetLocalizedEnum(_localizationService, _workContext));
                 return BadRequest(ModelState); 
             }
+
+            string password = Request.GetRouteData().Values.ContainsKey("password") ? Request.GetRouteData().Values["password"].ToString() : null;
+            if (string.IsNullOrEmpty(password))
+                ModelState.AddModelError("errorMessage", "No viene password");
                 
 
             if (ModelState.IsValid)
@@ -71,8 +77,9 @@ namespace Nop.Web.Controllers.Api
                 //Convierte a entidad e intenta realizar el registro
                 var attributes = new Dictionary<string, object>();
                 var entityCustomer = model.ToEntity(out attributes, _categoryService);
+                entityCustomer.Password = password;
 
-                var result = _customerRegistrationService.Register(entityCustomer, attributes, model.VendorType, true);
+                var result = _customerRegistrationService.Register(entityCustomer, attributes, model.VendorType);
                 if (result.Success)
                 {
                     //Si el registro es exitoso se autentca

@@ -18,10 +18,10 @@ namespace Nop.Core.Domain.Vendors
         /// <summary>
         /// Tipo tienda que desea realizar ventas
         /// </summary>
-        Market,
+        Market
         /// <summary>
         /// Tipo Taller 
         /// </summary>
-        RepairShop
+        //RepairShop
     }
 }

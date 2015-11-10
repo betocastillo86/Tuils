@@ -525,9 +525,6 @@ namespace Nop.Services.Customers
                         case VendorType.Market:
                             newSuscription = Core.Domain.Messages.NewsLetterSuscriptionType.Shop;
                             break;
-                        case VendorType.RepairShop:
-                            newSuscription = Core.Domain.Messages.NewsLetterSuscriptionType.RepairShop;
-                            break;
                         default:
                             break;
                     }

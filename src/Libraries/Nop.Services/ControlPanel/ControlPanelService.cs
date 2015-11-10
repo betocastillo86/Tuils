@@ -61,15 +61,15 @@ namespace Nop.Services.ControlPanel
             };
 
             //Solo pueden vender servicios los que tienen tienda
-            if (vendor != null && vendor.VendorType == Core.Domain.Vendors.VendorType.RepairShop)
-                salesModule.SubModules.Add(new ControlPanelModule()
-                {
-                    Name = "PublishProductService",
-                    Controller = "Sales",
-                    Action = "PublishProductService",
-                    IconMini = "icon-publica",
-                    IconBig = "icon-publica"
-                });
+            //if (vendor != null && vendor.VendorType == Core.Domain.Vendors.VendorType.RepairShop)
+            //    salesModule.SubModules.Add(new ControlPanelModule()
+            //    {
+            //        Name = "PublishProductService",
+            //        Controller = "Sales",
+            //        Action = "PublishProductService",
+            //        IconMini = "icon-publica",
+            //        IconBig = "icon-publica"
+            //    });
 
             modules.Add(salesModule);
 

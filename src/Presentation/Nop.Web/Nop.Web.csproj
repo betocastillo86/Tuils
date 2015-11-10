@@ -1162,6 +1162,7 @@
     <Content Include="Scripts\tuils\views\common\topMenuView.js" />
     <Content Include="Scripts\tuils\views\home\categoriesHomeView.js" />
     <Content Include="Scripts\tuils\views\home\homeView.js" />
+    <Content Include="Scripts\tuils\views\home\vendorsHomeView.js" />
     <Content Include="Scripts\tuils\views\login\createUser.js" />
     <Content Include="Scripts\tuils\views\login\login.js" />
     <Content Include="Scripts\tuils\views\panel\addAddressView.js" />
