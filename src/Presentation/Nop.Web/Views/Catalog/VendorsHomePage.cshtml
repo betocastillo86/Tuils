@@ -3,24 +3,21 @@
 @{
     Layout = null;
 }
-<div class="conte_categories">
-    <h3 class="title">@T("Homepage.Vendors")</h3>
-    @foreach (var vendor in Model.Vendors)
-    {
-        <div class="product-item">
-            <div class="picture">
-                <a href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })" title="@vendor.Name">
-                    <img alt="@vendor.Name" src="@vendor.Picture.ImageUrl " width="200" height="200" />
-                </a>
-            </div>
-            <div class="details">
-                <h3 class="product-title">
-                    <a href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">@vendor.Name</a>
-                </h3>
-                <div class="description">
-                    @Html.Raw(vendor.Description)
-                </div>
-            </div>
-        </div>
-    }
+
+
+
+<div class="home-tiendas_grid">
+@foreach (var vendor in Model.Vendors)
+{
+    <div class="item-tienda">
+        <a href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">
+            <img alt="@vendor.Name" title="@vendor.Name" src="@vendor.Picture.ImageUrl">
+        </a>
+        <p style="display:none">@vendor.Name</p>
+        <a class="btn_tienda" href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">Ir a tienda</a>
+    </div>
+}
 </div>
+
+
+

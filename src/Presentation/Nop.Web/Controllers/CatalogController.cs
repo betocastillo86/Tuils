@@ -1529,7 +1529,7 @@ namespace Nop.Web.Controllers
             });
             var model = new VendorsHomePageModel();
             model.Vendors = vendors.OrderBy(v => Guid.NewGuid())
-                .Take(_catalogSettings.NumberOfVendorsOnHome)
+                .Take(Request.Browser.IsMobileDevice ? 6 : _catalogSettings.NumberOfVendorsOnHome)
                 .ToList();
 
             return View(model);
