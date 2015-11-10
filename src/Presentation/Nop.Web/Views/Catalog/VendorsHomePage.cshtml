@@ -6,18 +6,16 @@
 
 
 
-<div class="home-tiendas_grid">
-@foreach (var vendor in Model.Vendors)
-{
-    <div class="item-tienda">
-        <a href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">
-            <img alt="@vendor.Name" title="@vendor.Name" src="@vendor.Picture.ImageUrl">
-        </a>
-        <p style="display:none">@vendor.Name</p>
-        <a class="btn_tienda" href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">Ir a tienda</a>
-    </div>
-}
+<div id="vendorCarousel" class="home-tiendas_grid" style="width:1170px">
+    @foreach (var vendor in Model.Vendors)
+    {
+        <div class="item-tienda" style="width:90%">
+            <a href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">
+                    <img alt="@vendor.Name" title="@vendor.Name" src="@vendor.Picture.ImageUrl">
+                </a>
+                <p style="display:none">@vendor.Name</p>
+                <a class="btn_tienda" href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">Ir a tienda</a>
+        </div>
+    }
 </div>
-
-
 

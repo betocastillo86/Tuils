@@ -1,14 +1,16 @@
 ﻿
-define(['jquery', 'underscore', 'baseView','tuils/views/home/categoriesHomeView', 'jqueryui', 'slide'],
-    function ($, _, BaseView, CategoriesHomeView) {
+define(['jquery', 'underscore', 'baseView','tuils/views/home/categoriesHomeView', 'tuils/views/home/vendorsHomeView', 'jqueryui', 'slide'],
+    function ($, _, BaseView, CategoriesHomeView, VendorsHomeView) {
 
     var HomeView = BaseView.extend({
         initialize: function (args) {
             this.loadSlider();
             this.loadCategories();
+            this.loadVendors();
         },
 
-        viewCategories : undefined,
+        viewCategories: undefined,
+        viewVendors : undefined,
         loadSlider : function()
         {
             var totalSlides = $(".rslides li").length;
@@ -40,6 +42,9 @@ define(['jquery', 'underscore', 'baseView','tuils/views/home/categoriesHomeView'
             {
                 this.viewCategories = new CategoriesHomeView({ el: '.conte_categories' });
             }
+        },
+        loadVendors: function () {
+            this.viewVendors = new VendorsHomeView({ el : '#vendorCarousel' });
         },
         resizeBanner: function () {
             //Si es pantalla pequeña recalcula el alto del banner
