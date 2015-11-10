@@ -1127,7 +1127,9 @@ html.oldie .container { width: 940px; }
     /*FIN PLANES*/
 }
 @media screen and (max-width:667px) {
-
+    .item-tienda{width:calc(20% - 10px);}
+    .item-tienda p{font-size: 13px; height: 33px;}
+    .btn_tienda{font-size: 14px; margin: 2px 0;}
 }
 @media screen and (max-width:640px) {
     /*header*/
@@ -1285,7 +1287,7 @@ html.oldie .container { width: 940px; }
     /*FIN PLANES*/
 }
 @media screen and (max-width:568px) {
-
+    .item-tienda{width: calc(25% - 10px);}
 }
 @media screen and (max-width:480px) {
     /*Header*/
@@ -1363,6 +1365,9 @@ html.oldie .container { width: 940px; }
     .retoma_publi .button-1{padding: 8px 5px;}
     .retoma_publi .icon-publica{font-size: 50px; height: 50px;}
     .retoma_publi .resumen-final h2{font-size: 16px;}
+    /*PAGOS*/
+    .item-tienda{width: calc(33.3% - 10px);}
+    /*FIN PAGOS*/
 }
 @media screen and (max-width:414px) {
     /* PRODUCTS IN GRID - TEMPLATE */

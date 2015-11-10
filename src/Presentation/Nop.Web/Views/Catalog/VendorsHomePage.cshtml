@@ -13,7 +13,7 @@
         <a href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">
             <img alt="@vendor.Name" title="@vendor.Name" src="@vendor.Picture.ImageUrl">
         </a>
-        <p style="display:none">@vendor.Name</p>
+        <p>@vendor.Name</p>
         <a class="btn_tienda" href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">Ir a tienda</a>
     </div>
 }

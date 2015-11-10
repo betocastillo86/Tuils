@@ -2001,10 +2001,12 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 .plan-confirm .conte_btn{margin: 20px 0 0;}
 
 .home-tiendas_grid{width: 100%; overflow: hidden;}
-.item-tienda{ background: #f3f5f7; border-radius: 3px; box-shadow: 0 2px 1px rgba(41, 40, 50, 0.2); box-sizing: border-box; float: left; margin: 0 5px 15px; padding: 10px; width: calc(16.6% - 10px); min-height: 175px; cursor: pointer;}
+.item-tienda{ background: #f3f5f7; border-radius: 3px; box-shadow: 0 2px 1px rgba(41, 40, 50, 0.2); box-sizing: border-box; float: left; margin: 0 5px 15px; padding: 10px; width: calc(16.6% - 10px); cursor: pointer;}
+	.item-tienda:hover p{display: none;}
+	.item-tienda:hover .btn_tienda{display: block;}
 .item-tienda img{width: 100%; background: #FFF; margin: 0 0 5px;}
-.item-tienda p{text-align: center; color: #3a5983; font-weight: 500; font-size: 15px;}
-.btn_tienda{background: #fb7055; border-radius: 3px; text-align: center; width: 100%; display: block; padding: 5px 0; font-size: 16px; color: #FFF; box-sizing: border-box; transition:ease all 0.3s;}
+.item-tienda p{text-align: center; color: #3a5983; font-weight: 500; font-size: 15px; overflow: hidden; height:37px;}
+.btn_tienda{display:none; background: #fb7055; border-radius: 3px; text-align: center; width: 100%; padding: 5px 0; margin: 4px 0; font-size: 16px; color: #FFF; box-sizing: border-box; transition:ease all 0.3s;}
 .btn_tienda:hover{background: #3b5a83; color: #FFF;}
 /*FIN PLANES*/
 /*MODAL*/
