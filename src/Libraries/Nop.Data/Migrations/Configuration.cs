@@ -1149,6 +1149,12 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Plugins.PayUExternal.ContinueWithoutPlan", "Publicar sin destacar");
                 newLocaleStringResources.Add("Plugins.PayUExternal.TryAgain", "Volver a intentar");
                 newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.SuccessPlan", "Gracias, el pago de su plan se ha hecho correctamente");
+                newLocaleStringResources.Add("selectPlan.fields.stateprovince", "Departamento");
+                newLocaleStringResources.Add("selectplan.subtitle.market", "Seleccione el plan ideal para su empresa");
+                newLocaleStringResources.Add("selectplan.subtitle.user", "Selecciona el plan ideal para tu producto");
+                newLocaleStringResources.Add("selectplan.additionalMessage.market", "Puede cambiar a un plan inferior o superior en cualquier momento");
+                newLocaleStringResources.Add("selectplan.additionalMessage.user", "Puedes escoger el que quieras al momento de publicar tu producto");
+                
                 
 
                 

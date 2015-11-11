@@ -199,8 +199,8 @@ namespace Nop.Web.Controllers
         {
             var model = new ShowAllPlansModel();
 
-            model.MarketPlans = new SelectPlanModel() { Plans = LoadPlansByVendorType(VendorType.Market) };
-            model.UserPlans = new SelectPlanModel() { Plans = LoadPlansByVendorType(VendorType.User) };
+            model.MarketPlans = new SelectPlanModel() { VendorType = Core.Domain.Vendors.VendorType.Market, Plans = LoadPlansByVendorType(VendorType.Market) };
+            model.UserPlans = new SelectPlanModel() { VendorType = Core.Domain.Vendors.VendorType.User, Plans = LoadPlansByVendorType(VendorType.User) };
 
 
             model.MarketPlans.FeaturedPlan = model.MarketPlans.Plans.Count > 1 ? model.MarketPlans.Plans[1].Id : _planSettings.PlanStoresFree;
@@ -232,7 +232,7 @@ namespace Nop.Web.Controllers
 
             var model = new SelectPlanModel() { ProductId = id };
             //Carga los planes para seleccionar
-            PrepareSelectPlanModel(model, command);
+            PrepareSelectPlanModel(model, command, product);
 
             return View(model);
         }
@@ -255,7 +255,13 @@ namespace Nop.Web.Controllers
             return View("SelectPlan", model);
         }
 
-        private void PrepareSelectPlanModel(SelectPlanModel model, SelectPlanRequest command)
+        /// <summary>
+        /// Selected product
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="command"></param>
+        /// <param name="product"></param>
+        private void PrepareSelectPlanModel(SelectPlanModel model, SelectPlanRequest command, Product product = null)
         {
 
             //Carga los planes de cache
@@ -264,12 +270,12 @@ namespace Nop.Web.Controllers
             var vendorPlan = _workContext.CurrentVendor.GetCurrentPlan(_productService, _planSettings);
 
             //Si es un upgrade no le marca ningún plan al usuario
-            if (!command.limit.HasValue)
+            if (!command.limit.HasValue || command.plan.HasValue)
             {
-                model.FeaturedPlan = vendorPlan.ProductId;
+                model.FeaturedPlan = command.plan.HasValue ? command.plan.Value : vendorPlan.ProductId;
 
                 //Si lo que se va a hacer es refrendar un plan, carga los datos adicionales abiertos
-                if (vendorPlan.ProductId != _planSettings.PlanStoresFree)
+                if (vendorPlan.ProductId != _planSettings.PlanStoresFree || command.plan.HasValue)
                     model.AutoShowAdditionalData = true;
 
             }
@@ -301,12 +307,24 @@ namespace Nop.Web.Controllers
                 model.CustomerAddressInformation.City = address.City;
                 model.CustomerAddressInformation.StateProvinceId = address.StateProvinceId.Value;
             }
+            else
+            {
+                //Si viene con producto seleccionado asigna la ciudad del producto al formulario
+                if (product != null)
+                    model.CustomerAddressInformation.StateProvinceId = product.StateProvinceId.Value;
+                
+                model.CustomerAddressInformation.PhoneNumber = _workContext.CurrentVendor.PhoneNumber;
+            }
 
             string cacheStatesKey = string.Format(ModelCacheEventConsumer.STATEPROVINCES_BY_COUNTRY_MODEL_KEY, _tuilsSettings.defaultCountry, "empty", _workContext.WorkingLanguage.Id);
             model.StateProvinces = new SelectList(
                 _cacheManager.Get(cacheStatesKey, () => { return _stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry); })
                 , "Id", "Name",
                 model.CustomerAddressInformation.StateProvinceId);
+
+            //Carga el tipo de vendedor
+            if (_workContext.CurrentVendor != null)
+                model.VendorType = _workContext.CurrentVendor.VendorType;
 
             model.CustomerInformation.Email = _workContext.CurrentCustomer.Email;
             model.CustomerInformation.PhoneNumber = _workContext.CurrentCustomer.GetAttribute<string>(SystemCustomerAttributeNames.Phone);

@@ -85,7 +85,7 @@
                     this.disableButtonForSeconds(obj);
                     this.vendorUrl = obj.attr('data-vendorUrl');
                     //Traquea que un usuario a intentado comprar un producto
-                    this.trackGAEvent('Compra', 'Intento');
+                    //this.trackGAEvent('Compra', 'Intento');
                 }
 
                 this.validateAuthorization();

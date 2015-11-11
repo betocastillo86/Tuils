@@ -1,4 +1,5 @@
-﻿using Nop.Web.Framework.Mvc;
+﻿using Nop.Core.Domain.Vendors;
+using Nop.Web.Framework.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +64,8 @@ namespace Nop.Web.Models.Sales
         public CustomerAddress CustomerAddressInformation { get; set; }
 
         public CustomerInfo CustomerInformation { get; set; }
+
+        public VendorType VendorType { get; set; }
 
 
         

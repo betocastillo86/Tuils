@@ -373,6 +373,9 @@ namespace Nop.Web.Controllers
 
         public ActionResult MyOrders(MyOrdersPagingFilteringModel command)
         {
+            if (_workContext.CurrentVendor == null)
+                return RedirectToAction("Index");
+            
             var model = PrepareMyOrdersModel(command, true);
             return View(model);
         }
@@ -677,7 +680,7 @@ namespace Nop.Web.Controllers
                 return View(model);
             }
             else
-                return InvokeHttp404();
+                return RedirectToAction("Index");
         }
 
 

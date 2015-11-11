@@ -15,6 +15,9 @@ namespace Nop.Plugin.Payments.PayUExternal.Models
         /// </summary>
         public string SelectedPlanName { get; set; }
 
+
+        public int SelectedPlanId { get; set; }
+
         public string ReferenceCode { get; set; }
 
         public string ReferencePayUCode { get; set; }

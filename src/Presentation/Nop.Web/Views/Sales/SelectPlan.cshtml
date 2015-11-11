@@ -17,7 +17,7 @@
         <div id="divAdditionalInfo" style="@(Model.AutoShowAdditionalData ? string.Empty : "display:none")">
 
             <div class="inputs">
-                @Html.DropDownRequired("StateProvinceId", Model.StateProvinces, labelResource: "account.fields.stateprovince")
+                @Html.DropDownRequired("StateProvinceId", Model.StateProvinces, labelResource: "selectPlan.fields.stateprovince")
             </div>
             <div class="inputs">
                 @Html.TextBoxRequiredFor(m => m.CustomerAddressInformation.City, labelText: T("account.fields.city").Text)
@@ -40,6 +40,15 @@
             <input id="responseUrl" name="responseUrl" type="hidden" value="">
             <input id="confirmationUrl" name="confirmationUrl" type="hidden" value="">
             <input id="extra1" name="extra1" type="hidden" value="@Model.ProductId">
+            
+            <input id="billingAddress" name="billingAddress" type="hidden" />
+            <input id="shippingAddress" name="shippingAddress" type="hidden" />
+            <input id="payerPhone" name="payerPhone" type="hidden" />
+            <input id="billingCity" name="billingCity" type="hidden" />
+            <input id="shippingCity" name="shippingCity" type="hidden" />
+            
+            
+            
 
 
             <input name="tax" type="hidden" value="0">

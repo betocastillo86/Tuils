@@ -160,6 +160,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
 
             var model = new PaymentResponseModel();
             model.SelectedPlanName = selectedPlan.Name;
+            model.SelectedPlanId = selectedPlan.Id;
             model.ReferenceCode = command.referenceCode.ToString();
             model.ReferencePayUCode = command.reference_pol;
             model.State = _localizationService.GetResource(string.Format("Plugins.PayUExternal.TransactionState.{0}", command.transactionState));

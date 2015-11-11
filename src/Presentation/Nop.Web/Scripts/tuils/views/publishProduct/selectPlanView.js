@@ -28,7 +28,11 @@
                 var preselectedPlan = parseInt($("input[name='SelectedPlan']:checked").val());
                 if (!isNaN(preselectedPlan))
                     this.model.set('PlanId', preselectedPlan);
-                
+                if (this.$('#CustomerAddressInformation_PhoneNumber').val().length > 0)
+                    this.model.set('PhoneNumber', this.$('#CustomerAddressInformation_PhoneNumber').val());
+                if (this.$('#ddlStateProvinceId').val().length > 0)
+                    this.model.set('StateProvinceId', this.$('#ddlStateProvinceId').val());
+
                 this.render();
             },
             selectPlan: function (obj) {
@@ -62,7 +66,19 @@
                 this.$("#responseUrl").val(resp.get('ResponseUrl'));
                 this.$("#confirmationUrl").val(resp.get('ConfirmationUrl'));
                 this.$("#description").val(this.$('input[name="SelectedPlan"]:checked').attr('data-name'));
+
+
+                this.$("#billingAddress").val(this.$("#CustomerAddressInformation_Address").val());
+                this.$("#shippingAddress").val(this.$("#CustomerAddressInformation_Address").val());
+                this.$("#billingCity").val(this.$("#CustomerAddressInformation_City").val());
+                this.$("#shippingCity").val(this.$("#CustomerAddressInformation_City").val());
+                this.$("#payerPhone").val(this.$("#CustomerAddressInformation_PhoneNumber").val());
+
+
+
+
                 this.$("form").attr("action", resp.get('UrlPayment'));
+
                 this.$("form").submit();
             },
             errorCreatingOrder: function (resp, err) {

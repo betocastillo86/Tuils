@@ -14,22 +14,25 @@
 
 
 <div class="planSelectionContainer">
-    <h2>Seleccione el plan ideal para su empresa</h2>
-    <p>Puede cambiar a un plan inferior o superior en cualquier momento</p>
+    
+    <h2>@T("selectplan.subtitle." + Model.VendorType.ToString())</h2>
+
+    <p>@T("selectplan.additionalMessage."+ Model.VendorType.ToString())</p>
+
     <div class="planTable">
         <div class="headerRow">
             <div class="columnHeader"></div>
             @foreach (var plan in Model.Plans)
             {
                 var isPlanEnabled = !Model.DisabledPlans.Contains(plan.Id) && !(Model.DisableFreePlan && plan.PriceDecimal == 0);
-                
+
                 <div class="cell-p">
-                   
+
                         <a href="javascript:;" class="@(isPlanEnabled ?"selectNewPlan": string.Empty )" data-id="@plan.Id">
                             <div class="plan-name @ShowSelectedPlan(plan)" data-sel="@plan.Id">@plan.Name</div>
                             <div class="plan-price @ShowSelectedPlan(plan)" data-sel="@plan.Id">@plan.Price</div>
                         </a>
-                    
+
                 </div>
                 if (isPlanEnabled)
                 {

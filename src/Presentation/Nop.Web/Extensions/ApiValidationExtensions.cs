@@ -18,7 +18,7 @@ namespace Nop.Web.Extensions.Api
         /// </summary>
         /// <param name="model">Datos del modelo que se desea validar</param>
         /// <returns>True: Datos validos</returns>
-        public static bool Validate(this ProductBaseModel model)
+        public static bool Validate(this ProductBaseModel model, System.Web.Http.ModelBinding.ModelStateDictionary modelState)
         {
             var tuilsSettings = EngineContext.Current.Resolve<TuilsSettings>();
 
@@ -26,20 +26,32 @@ namespace Nop.Web.Extensions.Api
             {
                 //Si es tipo producto
                 //debe tener marca
-                if (model.ManufacturerId == 0) return false;
+                if (model.ManufacturerId == 0)
+                {
+                    modelState.AddModelError("ManufacturerId", "No se seleccionó una marca");
+                    return false;  
+                } 
             }
             else if (model.ProductTypeId == tuilsSettings.productBaseTypes_bike)
             {
                 //si es de tipo motocicleta debe tener
                 //Color, Placa, Recorrido y Año
                 //if (model.Color == 0 || string.IsNullOrEmpty(model.CarriagePlate) || model.Kms == 0 || model.Year == 0) return false;
-                if (string.IsNullOrEmpty(model.CarriagePlate) || model.Kms == 0 || model.Year == 0) return false;
+                if (string.IsNullOrEmpty(model.CarriagePlate) || model.Year == 0)
+                {
+                    modelState.AddModelError("CarriagePlateYear", "No se seleccionó placa o año");
+                    return false;
+                } 
             }
             else if (model.ProductTypeId == tuilsSettings.productBaseTypes_service)
             {
                 //Si el envio está habilitado y no está detallado el valor
                 //Si NO incluye insumos y no está especificado el valor de estos
-                if ((model.IsShipEnabled && string.IsNullOrEmpty(model.DetailShipping)) || (!model.IncludeSupplies && model.SuppliesValue == 0)) return false;
+                if ((model.IsShipEnabled && string.IsNullOrEmpty(model.DetailShipping)) || (!model.IncludeSupplies && model.SuppliesValue == 0))
+                {
+                    modelState.AddModelError("DetailShipping", "Detallar mejor los datos del envío");
+                    return false;
+                } 
             }
             //No puede existir oto tipo de producto
             else

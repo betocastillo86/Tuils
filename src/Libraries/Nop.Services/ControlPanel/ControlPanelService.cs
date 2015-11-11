@@ -102,14 +102,20 @@ namespace Nop.Services.ControlPanel
 
             });
 
-            modules.Add(new ControlPanelModule()
+            if (vendor != null)
             {
-                Name = "MyOrders",
-                Controller = "ControlPanel",
-                Action = "MyOrders",
-                IconMini = "icon-compra",
-                IconBig = "icon-compra"
-            });
+                modules.Add(new ControlPanelModule()
+                {
+                    Name = "MyOrders",
+                    Controller = "ControlPanel",
+                    Action = "MyOrders",
+                    IconMini = "icon-compra",
+                    IconBig = "icon-compra"
+                });
+                
+            }
+
+            
 
             //Tienda
             if (vendor != null && vendor.VendorType != Core.Domain.Vendors.VendorType.User)

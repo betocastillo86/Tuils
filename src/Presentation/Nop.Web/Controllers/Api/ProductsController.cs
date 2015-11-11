@@ -75,10 +75,9 @@ namespace Nop.Web.Controllers.Api
         [AuthorizeApi]
         public IHttpActionResult PublishProduct(ProductBaseModel model)
         {
-            if (ModelState.IsValid && model.Validate())
+            if (ModelState.IsValid && model.Validate(ModelState))
             {
                
-
                 try
                 {
                     //Si llegan más valores de los posibles para categorias especiales, toma solo los permitidos
@@ -124,7 +123,13 @@ namespace Nop.Web.Controllers.Api
             }
             else
             {
-                return Conflict();
+                //var errors = new System.Text.StringBuilder();
+                //foreach (var error in ModelState.Values)
+                //{
+                //    errors.AppendFormat("{0}\n", error);
+                //}
+
+                return BadRequest(ModelState);
             }
         }
 

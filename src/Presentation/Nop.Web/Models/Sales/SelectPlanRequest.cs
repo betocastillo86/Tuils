@@ -16,5 +16,11 @@ namespace Nop.Web.Models.Sales
         /// Limite de productos que tiene seleccionado en el plan actual
         /// </summary>
         public int? limit { get; set; }
+
+
+        /// <summary>
+        /// Puede venir preseleccionado un plan, posiblemente cuando una de las transacciones falla
+        /// </summary>
+        public int? plan { get; set; }
     }
 }
