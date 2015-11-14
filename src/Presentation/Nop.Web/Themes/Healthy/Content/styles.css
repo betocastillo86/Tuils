@@ -1644,9 +1644,9 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .txt-terminos{color:#A9A9AC; text-align: right; margin: 5px 0;}
     .txt-terminos a{color: #F24C19;}
 
-    .imgPublicada{ width: 200px; height: 200px; float: left; margin: 0 20px 0 0; overflow: hidden;}
+    .imgPublicada{ width: 200px; height: 200px; float: left; margin: 20px 20px 0 0; overflow: hidden;}
     .imgPublicada img {width: 100%;}
-    .resumen-final{float: left; width:calc(100% - 220px);}
+    .resumen-final{float: left; width:calc(100% - 220px); margin: 20px 0 0;}
     .resumen-final h2{color:#3A5983; font-weight: 500; font-size: 20px;}
     .resumen-final h3{font-weight: 500; font-size: 16px; color: #292732; margin: 10px 0 0;}
     .resumen-final h4{color: #f94c2a; font-size: 25px; font-weight: 400;}
@@ -1785,8 +1785,9 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
             .product-detail:hover{background:#F8F8F9; border-bottom: 3px solid #FDB7AA; padding: 0;}
         .product-dtl-img{width: 125px; height:125px; float:left; overflow: hidden;}
             .product-dtl-img img{width: 100%;}
-        .product-dtl-txt{float: left; width: calc(100% - 365px); margin: 10px 0 10px 15px;}
+        .product-dtl-txt{float: left; width: calc(100% - 420px); margin: 10px 0 10px 15px;}
             .product-dtl-txt h3{font-size:16px; color:#282632; font-weight: 500; padding: 0 0 6px;}
+            .tag-desta{background:#fa4c2a; border-radius: 2px; color: #FFF; font-size: 12px; padding: 2px 5px; margin: 0 5px 0 0; display: inline-block; box-sizing:border-box;}
             .product-dtl-txt ul{list-style: none; margin:0; padding-left:0;}
                 .product-dtl-txt ul li{float: left; width: 50%;}
                 .product-dtl-txt ul li a{color:#FD4B1A; text-decoration:underline;}
@@ -1925,7 +1926,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 
 /*FIN QUIENES SOMOS*/
 /*PLANES*/
-.conte_planes{margin:0 0 30px;}
+.conte_planes{margin:20px 0 30px;}
 .menu_planes{color: #fa4c2a; font-size: 30px; padding: 0; list-style: none; margin:0 auto 50px; width: 395px;}
 .menu_planes li{float: left; text-align: center; padding:0 30px;}
 .menu_planes li a{color: #fdb7aa; transition:ease all 0.3s;}
