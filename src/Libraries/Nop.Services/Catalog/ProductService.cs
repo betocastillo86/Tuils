@@ -2316,6 +2316,11 @@ namespace Nop.Services.Catalog
             product.StockQuantity = _tuilsSettings.defaultStockQuantity;
 
             var vendor = _workContext.CurrentVendor;
+
+
+            //Ya que al publicar todavía no se cuenta con la compra del plan se selecciona el plan gratis
+            var selectedPlan = GetPlanById(vendor.VendorType != VendorType.Market ? _planSettings.PlanProductsFree : _planSettings.PlanStoresFree);
+
             //Si el producto es de una tienda, realiza validaciones de las fechas de expiración
             if (vendor.VendorType == VendorType.Market)
             {
@@ -2326,12 +2331,12 @@ namespace Nop.Services.Catalog
                 }
                 else
                 {
-                    product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(_catalogSettings.LimitDaysOfStoreProductPublished);
+                    product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(selectedPlan.DaysPlan);
                 }
             }
             else
             {
-                product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(_catalogSettings.LimitDaysOfProductPublished);
+                product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(selectedPlan.DaysPlan);
             }
 
             //Guarda los datos del producto, intenta enviar el correo
@@ -2684,9 +2689,9 @@ namespace Nop.Services.Catalog
                 int totalPublishedWiouthPaying = products.Where(p => !p.OrderPlanId.HasValue).Count();
                 limit = _catalogSettings.ProductLimitPublished;
                 //Si hay limite realiza la validación
-                if (_catalogSettings.ProductLimitPublished > 0)
+                if (limit > 0)
                 {
-                    return totalPublishedWiouthPaying >= _catalogSettings.ProductLimitPublished;
+                    return totalPublishedWiouthPaying >= limit;
                 }
             }
             
@@ -3005,7 +3010,7 @@ namespace Nop.Services.Catalog
                 //Actualiza las caracteristcas del plan como activo
                 //Pero elimina todas las caracteristicas que pueden ser para destacar el producto
                 product.Sold = false;
-                product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(_catalogSettings.LimitDaysOfProductPublished);
+                product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(GetPlanById(vendor.VendorType != VendorType.Market ? _planSettings.PlanProductsFree : _planSettings.PlanStoresFree).DaysPlan);
                 product.OrderPlanId = null;
 
                 product.LeftFeatured = false;
@@ -3056,6 +3061,7 @@ namespace Nop.Services.Catalog
                            p.AvailableEndDateTimeUtc > DateTime.UtcNow &&
                            !p.OrderPlanId.HasValue)
                        .Count();
+
 
                 //Si el numero de productos publicados por el usuario es mayor o igual que el cupo que se tiene gratis
                 //el usuario no puede reactivarlo

@@ -1118,10 +1118,8 @@ namespace Nop.Admin.Controllers
                 model.DisplayTaxShippingInfoProductBoxes_OverrideForStore = _settingService.SettingExists(catalogSettings, x => x.DisplayTaxShippingInfoProductBoxes, storeScope);
                 model.DisplayTaxShippingInfoWishlist_OverrideForStore = _settingService.SettingExists(catalogSettings, x => x.DisplayTaxShippingInfoWishlist, storeScope);
                 model.DisplayTaxShippingInfoOrderDetailsPage_OverrideForStore = _settingService.SettingExists(catalogSettings, x => x.DisplayTaxShippingInfoOrderDetailsPage, storeScope);
-                model.ProductLimitPublished_OverrideForStore = _settingService.SettingExists(catalogSettings, x => x.ProductLimitPublished, storeScope);
-                model.LimitDaysOfStoreProductPublished_OverrideForStore = _settingService.SettingExists(catalogSettings, x => x.LimitDaysOfStoreProductPublished, storeScope);
-                model.LimitDaysOfProductPublished_OverrideForStore = _settingService.SettingExists(catalogSettings, x => x.LimitDaysOfProductPublished, storeScope);
                 model.NumberOfVendorsOnHome_OverrideForStore = _settingService.SettingExists(catalogSettings, x => x.NumberOfVendorsOnHome, storeScope);
+                model.ProductLimitPublished_OverrideForStore = _settingService.SettingExists(catalogSettings, x => x.ProductLimitPublished, storeScope);
             }
 
             model.ExpirationBikeReferencesKey = _tuilsSettings.ExpirationBikeReferencesKey;
@@ -1412,17 +1410,6 @@ namespace Nop.Admin.Controllers
                 _settingService.SaveSetting(catalogSettings, x => x.ProductLimitPublished, storeScope, false);
             else if (storeScope > 0)
                 _settingService.DeleteSetting(catalogSettings, x => x.ProductLimitPublished, storeScope);
-
-
-            if (model.LimitDaysOfProductPublished_OverrideForStore || storeScope == 0)
-                _settingService.SaveSetting(catalogSettings, x => x.LimitDaysOfProductPublished, storeScope, false);
-            else if (storeScope > 0)
-                _settingService.DeleteSetting(catalogSettings, x => x.LimitDaysOfProductPublished, storeScope);
-
-            if (model.LimitDaysOfStoreProductPublished_OverrideForStore || storeScope == 0)
-                _settingService.SaveSetting(catalogSettings, x => x.LimitDaysOfStoreProductPublished, storeScope, false);
-            else if (storeScope > 0)
-                _settingService.DeleteSetting(catalogSettings, x => x.LimitDaysOfStoreProductPublished, storeScope);
 
             if (model.NumberOfVendorsOnHome_OverrideForStore || storeScope == 0)
                 _settingService.SaveSetting(catalogSettings, x => x.NumberOfVendorsOnHome, storeScope, false);

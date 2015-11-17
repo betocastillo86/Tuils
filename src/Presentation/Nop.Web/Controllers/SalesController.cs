@@ -453,7 +453,8 @@ namespace Nop.Web.Controllers
             model.ProductDetails.DefaultPictureModel = product.GetPicture(_localizationService, _mediaSettings, _pictureService);
             
             //De acuerdo a si es tienda o no carga el limite de dias de publicación
-            model.LimitDaysOfProductPublished = _workContext.CurrentVendor.VendorType == VendorType.Market ? _catalogSettings.LimitDaysOfStoreProductPublished : _catalogSettings.LimitDaysOfProductPublished;
+            model.LimitDaysOfProductPublished = _productService.GetPlanById(_workContext.CurrentVendor.VendorType != VendorType.Market ? _planSettings.PlanProductsFree : _planSettings.PlanStoresFree).DaysPlan;
+            
 
             return View(model);
         }
@@ -462,8 +463,10 @@ namespace Nop.Web.Controllers
         #region Metodos Privados
         private PublishProductModel GetPublishModel()
         {
+            var selectedPlan = _productService.GetPlanById(_workContext.CurrentVendor.VendorType != VendorType.Market ? _planSettings.PlanProductsFree : _planSettings.PlanStoresFree);
+            
             var model = new PublishProductModel();
-            model.LimitDaysOfProductPublished = _catalogSettings.LimitDaysOfProductPublished;
+            model.LimitDaysOfProductPublished = selectedPlan.DaysPlan;
 
             string cacheStatesKey = string.Format(ModelCacheEventConsumer.STATEPROVINCES_BY_COUNTRY_MODEL_KEY, _tuilsSettings.defaultCountry, "empty", _workContext.WorkingLanguage.Id);
 

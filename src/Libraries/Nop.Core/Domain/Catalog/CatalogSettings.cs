@@ -366,16 +366,6 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public int LimitOfSpecialCategories { get; set; }
 
-        /// <summary>
-        /// Dias que dura publicado un producto
-        /// </summary>
-        public int LimitDaysOfProductPublished { get; set; }
-
-        /// <summary>
-        /// Dias que dura publicado un producto gratis en las tiendas
-        /// </summary>
-        public int LimitDaysOfStoreProductPublished { get; set; }
-
 
         /// <summary>
         /// Opción por defecto seleccinada por tipo de producto

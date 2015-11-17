@@ -370,26 +370,6 @@
         </tr>
         <tr>
             <td class="adminTitle">
-                @Html.OverrideStoreCheckboxFor(model => model.LimitDaysOfProductPublished_OverrideForStore, model => model.LimitDaysOfProductPublished, Model.ActiveStoreScopeConfiguration)
-                @Html.NopLabelFor(model => model.LimitDaysOfProductPublished):
-            </td>
-            <td class="adminData">
-                @Html.EditorFor(model => model.LimitDaysOfProductPublished)
-                @Html.ValidationMessageFor(model => model.LimitDaysOfProductPublished)
-            </td>
-        </tr>
-        <tr>
-            <td class="adminTitle">
-                @Html.OverrideStoreCheckboxFor(model => model.LimitDaysOfStoreProductPublished_OverrideForStore, model => model.LimitDaysOfStoreProductPublished, Model.ActiveStoreScopeConfiguration)
-                @Html.NopLabelFor(model => model.LimitDaysOfStoreProductPublished):
-            </td>
-            <td class="adminData">
-                @Html.EditorFor(model => model.LimitDaysOfStoreProductPublished)
-                @Html.ValidationMessageFor(model => model.LimitDaysOfStoreProductPublished)
-            </td>
-        </tr>
-        <tr>
-            <td class="adminTitle">
                 @Html.OverrideStoreCheckboxFor(model => model.NumberOfVendorsOnHome_OverrideForStore, model => model.NumberOfVendorsOnHome, Model.ActiveStoreScopeConfiguration)
                 @Html.NopLabelFor(model => model.NumberOfVendorsOnHome):
             </td>

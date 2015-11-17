@@ -86,7 +86,7 @@ define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars
                 //}
                 
 
-                this.productProperties.push({ name: 'Fecha Cierre Publicación', value: TuilsConfiguration.catalog.limitDaysOfProductPublished + ' dias' });
+                //this.productProperties.push({ name: 'Fecha Cierre Publicación', value: TuilsConfiguration.catalog.limitDaysOfProductPublished + ' dias' });
                 this.productProperties.push({ name: 'Categoría', value: TuilsUtil.toStringWithSeparator(this.model.get('breadCrumb'), ' > ') });
 
                 function pushProperty(ctx, field, isName) {

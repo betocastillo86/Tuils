@@ -1154,6 +1154,8 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("selectplan.subtitle.user", "Selecciona el plan ideal para tu producto");
                 newLocaleStringResources.Add("selectplan.additionalMessage.market", "Puede cambiar a un plan inferior o superior en cualquier momento");
                 newLocaleStringResources.Add("selectplan.additionalMessage.user", "Puedes escoger el que quieras al momento de publicar tu producto");
+                newLocaleStringResources.Add("Admin.Vendors.List.VendorType", "Tipo de vendedor");
+                newLocaleStringResources.Add("Admin.Vendors.List.VendorType.Hint", "Tipo de vendedor");
                 
                 
 
@@ -2454,7 +2456,6 @@ namespace Nop.Data.Migrations
                 settings.Add("CatalogSettings.ShowMyBikeProductsOnHomepage", "True");
                 settings.Add("CatalogSettings.NumberOfProductsMyBikeOnHomepage", "8");
                 settings.Add("CatalogSettings.LimitOfSpecialCategories", "5");
-                settings.Add("CatalogSettings.LimitDaysOfProductPublished", "18");
                 settings.Add("CatalogSettings.DefaultSpecificationAttributeTopMenu", "6");
 
                 settings.Add("tuilssettings.specificationattributeIsNew", "1");

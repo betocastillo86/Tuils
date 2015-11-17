@@ -229,16 +229,6 @@ namespace Nop.Admin.Models.Settings
         public string ExpirationBikeReferencesKey { get; set; }
         public bool ExpirationBikeReferencesKey_OverrideForStore { get; set; }
 
-
-        [NopResourceDisplayName("Admin.Configuration.Settings.Catalog.LimitDaysOfProductPublished")]
-        public int LimitDaysOfProductPublished { get; set; }
-        public bool LimitDaysOfProductPublished_OverrideForStore { get; set; }
-
-        [NopResourceDisplayName("Admin.Configuration.Settings.Catalog.LimitDaysOfStoreProductPublished")]
-        public int LimitDaysOfStoreProductPublished { get; set; }
-        public bool LimitDaysOfStoreProductPublished_OverrideForStore { get; set; }
-
-
         [NopResourceDisplayName("Admin.Configuration.Settings.Catalog.NumberOfVendorsOnHome")]
         public int NumberOfVendorsOnHome { get; set; }
         public bool NumberOfVendorsOnHome_OverrideForStore { get; set; }

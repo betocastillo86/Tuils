@@ -11,6 +11,8 @@ using Nop.Services.Vendors;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
 using Nop.Services.Configuration;
+using System;
+using System.Collections.Generic;
 
 namespace Nop.Admin.Controllers
 {
@@ -120,7 +122,8 @@ namespace Nop.Admin.Controllers
 
             var vendors = _vendorService.GetAllVendors(model.SearchName, command.Page - 1, command.PageSize, true, 
                 showOnHomePage: model.ShowOnHome ? (bool?) true : null,
-                withPlan: model.WithPlan ? (bool?) true : null);
+                withPlan: model.WithPlan ? (bool?) true : null,
+                vendorType : model.VendorType != -1 ? (VendorType?)model.VendorType : (VendorType?)null);
             var gridModel = new DataSourceResult
             {
                 Data = vendors.Select(x =>

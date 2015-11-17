@@ -41,6 +41,20 @@
         </td>
     </tr>
     <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.VendorType):
+        </td>
+        <td class="adminData">
+            @*@Html.DropDownListFor(model => model.VendorType, Model.VendorTypes, "-")*@
+
+            <select id="VendorType" name="VendorType">
+                <option value="-1">-</option>
+                <option value="0">Usuario</option>
+                <option value="1">Tienda</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
         <td colspan="2">
             <input type="button" id="btnSearch" class="k-button" value="@T("Admin.Common.Search")" />
         </td>
@@ -146,6 +160,7 @@
             SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
             ShowOnHome: $('#@Html.FieldIdFor(model => model.ShowOnHome)').is(':checked'),
             WithPlan: $('#@Html.FieldIdFor(model => model.WithPlan)').is(':checked'),
+            VendorType: $('#VendorType').val()
                     };
                 }
             </script>
