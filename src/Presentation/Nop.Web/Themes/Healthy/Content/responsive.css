@@ -1001,7 +1001,7 @@ html.oldie .container { width: 940px; }
     .descript_pro{width: calc(100% - 290px);}
     /*Mis productos*/
     .product-dtl-img{width: 100px; height: 100px; margin: 10px 0 0;}
-    .product-dtl-txt{width: calc(100% - 335px);}
+    .product-dtl-txt{width: calc(100% - 395px);}
         .product-dtl-txt ul li{float: none; width:100%;}
     /*fin panel de control*/
 
@@ -1257,7 +1257,7 @@ html.oldie .container { width: 940px; }
     .help_table span{background:url(images/table_respon.gif) no-repeat; width: 50px; height: 50px; margin: 0 5px 0 0; display: block; float: left;}
     .help_table p{float: left; width: calc(100% - 70px); padding: 16px 0;}
     /*Mis productos*/
-    .product-dtl-txt{width:calc(100% - 120px);}
+    .product-dtl-txt{width:calc(100% - 120px); min-height: 95px;}
     .product-dtl-date{float:left; text-align: left; width: auto; margin:15px;}
         .product-dtl-date .conte_btn{float:left;}
         .product-dtl-date .conte_btn a{margin: 0 10px 0 0;}
