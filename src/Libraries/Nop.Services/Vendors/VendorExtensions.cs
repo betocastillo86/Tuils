@@ -29,6 +29,16 @@ namespace Nop.Services.Vendors
             return productService.GetPlanById(planId);
         }
 
+        /// <summary>
+        /// Muestra si un usuario tiene un plan activo o no
+        /// </summary>
+        /// <param name="vendor"></param>
+        /// <returns></returns>
+        public static bool HasActivePlan(this Vendor vendor)
+        {
+            return vendor.CurrentOrderPlanId.HasValue && vendor.PlanExpiredOnUtc > DateTime.UtcNow;
+        }
+
 
     }
 }

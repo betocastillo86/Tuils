@@ -82,6 +82,7 @@
                 @Html.ValidationMessageFor(model => model.Locales[item].Name)
             </td>
         </tr>
+
         <tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.Locales[item].Description):
@@ -120,6 +121,44 @@
                 </table>
                                             ))
     <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.VendorType):
+            </td>
+            <td class="adminData">
+                <select id="VendorType" name="VendorType" >
+                    <option value="0" @(Model.VendorType == Nop.Core.Domain.Vendors.VendorType.User ? "selected" : string.Empty)>Usuario</option>
+                    <option value="1" @(Model.VendorType == Nop.Core.Domain.Vendors.VendorType.Market ? "selected" : string.Empty)>Empresa</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.HasPlan):
+            </td>
+            <td class="adminData">
+                @(Model.HasPlan ? "Si" : "No")
+            </td>
+        </tr>
+        @if (Model.HasPlan)
+        {
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.PlanExpiredOnUtc):
+                </td>
+                <td class="adminData">
+                    @Html.DisplayFor(model => model.PlanExpiredOnUtc)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.PlanName):
+                </td>
+                <td class="adminData">
+                    @Html.DisplayFor(model => model.PlanName)
+                </td>
+            </tr>
+        }
         <tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.Email):

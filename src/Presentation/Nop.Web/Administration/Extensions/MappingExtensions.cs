@@ -107,7 +107,9 @@ namespace Nop.Admin.Extensions
 
         public static VendorModel ToModel(this Vendor entity)
         {
-            return entity.MapTo<Vendor, VendorModel>();
+            var model = entity.MapTo<Vendor, VendorModel>();
+            model.HasPlan = entity.CurrentOrderPlanId.HasValue;
+            return model;
         }
 
         public static Vendor ToEntity(this VendorModel model)

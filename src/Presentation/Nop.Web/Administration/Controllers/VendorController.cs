@@ -13,6 +13,7 @@ using Nop.Web.Framework.Kendoui;
 using Nop.Services.Configuration;
 using System;
 using System.Collections.Generic;
+using Nop.Core.Infrastructure;
 
 namespace Nop.Admin.Controllers
 {
@@ -196,7 +197,10 @@ namespace Nop.Admin.Controllers
                 //No vendor found with the specified id
                 return RedirectToAction("List");
 
+
             var model = vendor.ToModel();
+            model.PlanName = vendor.GetCurrentPlan(EngineContext.Current.Resolve<Nop.Services.Catalog.IProductService>(), EngineContext.Current.Resolve<Nop.Core.Domain.Catalog.PlanSettings>()).Name;
+
             //locales
             AddLocales(_languageService, model.Locales, (locale, languageId) =>
             {
@@ -230,6 +234,12 @@ namespace Nop.Admin.Controllers
             if (ModelState.IsValid)
             {
                 vendor = model.ToEntity(vendor);
+
+                //Cuando se cambia el tipo de vendedor actualiz al aimagen
+                if (vendor.VendorType != model.VendorType && model.VendorType == VendorType.Market)
+                    vendor.BackgroundPictureId = _vendorSettings.GetRandomCover();
+                
+                vendor.VendorTypeId = Convert.ToInt32(model.VendorType);
                 _vendorService.UpdateVendor(vendor);
                 //search engine name
                 model.SeName = vendor.ValidateSeName(model.SeName, vendor.Name, true);

@@ -413,6 +413,16 @@ namespace Nop.Admin.Models.Catalog
         public CopyProductModel CopyProductModel { get; set; }
 
         public bool HasReachedLimitOfProducts { get; set; }
+
+        /// <summary>
+        /// True: tiene plan ya sea de una tienda o de un usuario simple
+        /// </summary>
+        public bool HasPlan { get; set; }
+
+        /// <summary>
+        /// Nombre de la ciudad asociada al producto
+        /// </summary>
+        public string StateProvinceName { get; set; }
         
         #region Nested classes
 

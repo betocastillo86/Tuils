@@ -639,6 +639,19 @@ namespace Nop.Admin.Controllers
                 model.SelectedDiscountIds = product.AppliedDiscounts.Select(d => d.Id).ToArray();
             }
 
+            //has plan
+            if (product.OrderPlanId.HasValue)
+                model.HasPlan = true;
+            else
+            {
+                //Si el tienda valida que el plan este activo
+                if (product.Vendor.VendorType == Core.Domain.Vendors.VendorType.Market)
+                    model.HasPlan = product.Vendor.HasActivePlan();
+            }
+
+            if(product.StateProvinceId.HasValue)
+                model.StateProvinceName = product.StateProvince.Name;
+
             //default values
             if (setPredefinedValues)
             {
@@ -988,6 +1001,7 @@ namespace Nop.Admin.Controllers
                     locale.SeName = product.GetSeName(languageId, false, false);
                 });
 
+            
             int limit;
             if (model.VendorId > 0)
                 model.HasReachedLimitOfProducts = _productService.HasReachedLimitOfProducts(_vendorService.GetVendorById(model.VendorId), out limit);

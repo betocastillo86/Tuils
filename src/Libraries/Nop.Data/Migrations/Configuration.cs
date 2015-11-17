@@ -1156,11 +1156,12 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("selectplan.additionalMessage.user", "Puedes escoger el que quieras al momento de publicar tu producto");
                 newLocaleStringResources.Add("Admin.Vendors.List.VendorType", "Tipo de vendedor");
                 newLocaleStringResources.Add("Admin.Vendors.List.VendorType.Hint", "Tipo de vendedor");
-                
-                
-
-                
-                
+                newLocaleStringResources.Add("Admin.Vendors.Fields.VendorType", "Tipo de vendedor");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.VendorType.Hint", "Tipo de vendedor");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.HasPlan", "Tiene plan");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.HasPlan.Hint", "Tiene plan");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.PlanName", "Plan seleccionado");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.PlanName.Hint", "Plan seleccionado");
 
                 
 

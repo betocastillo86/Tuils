@@ -43,7 +43,7 @@ namespace Nop.Services.Vendors
 
         /// <summary>
         /// Updates the vendor
-        /// </summary>
+        /// </summary>  
         /// <param name="vendor">Vendor</param>
         bool UpdateVendor(Vendor vendor);
 

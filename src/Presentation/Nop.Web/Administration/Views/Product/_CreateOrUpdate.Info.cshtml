@@ -481,6 +481,14 @@
             @Html.ValidationMessageFor(model => model.VendorId)
         </td>
     </tr>
+    <tr >
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.StateProvinceName):
+        </td>
+        <td class="adminData">
+            @Html.DisplayFor(model => model.StateProvinceName)
+        </td>
+    </tr>
     <tr @(Model.IsLoggedInAsVendor ? Html.Raw("style='display: none;'") : null)>
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.ShowOnHomePage):
@@ -1335,6 +1343,10 @@
             @if (Model.HasReachedLimitOfProducts && !Model.Published)
             { 
                 <div style="color:red">Este vendedor ha alcanzado el limite de productos. Validar si se puede publicar o no.</div>    
+            }
+            @if (Model.HasPlan)
+            { 
+                @Html.ActionLink("Tiene plan", "Edit", "Vendor", new { id = Model.VendorId }, new { })
             }
         </td>
     </tr>
