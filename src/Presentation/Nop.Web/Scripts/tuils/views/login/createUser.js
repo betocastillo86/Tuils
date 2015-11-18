@@ -145,6 +145,14 @@
                 title: Resources.account.newCustomer,
                 modal:true
             });
+
+            //Valida si debe seleccionar por defecto alguno de los tipos de usuarios
+            if (this.sourceModel.get('default_reg'))
+            {
+                var active = this.sourceModel.get('default_reg') == 'empresas' ? 1 : 0;
+                this.$("#step1 a[tuils-action='" + active + "']").click();
+            }
+
         },
         tagBikeReferences: function () {
 

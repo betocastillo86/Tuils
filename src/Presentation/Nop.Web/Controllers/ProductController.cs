@@ -1017,7 +1017,8 @@ namespace Nop.Web.Controllers
                     var products = _productService.SearchProducts(categoryIds: new List<int>() { mainCategory.CategoryId }, 
                         pageIndex: 0, 
                         pageSize: pagesize, 
-                        featuredProducts:_catalogSettings.ShowRelatedProductsAsFeatured ? (bool?) true : null);
+                        featuredProducts:_catalogSettings.ShowRelatedProductsAsFeatured ? (bool?) true : null,
+                        sold:false);
                     return PrepareProductOverviewModels(products, true, true, productThumbPictureSize).ToList();
                 }
                     //_productService.GetRelatedProductsByProductId1(productId).Select(x => x.ProductId2).ToArray()

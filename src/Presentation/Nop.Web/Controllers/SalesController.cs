@@ -199,6 +199,15 @@ namespace Nop.Web.Controllers
         {
             var model = new ShowAllPlansModel();
 
+            if (tab.Equals("empresas")
+                && !_workContext.CurrentCustomer.IsGuest()
+                && _workContext.CurrentVendor != null && _workContext.CurrentVendor.VendorType == VendorType.Market)
+                return RedirectToAction("SelectPlanVendor");
+
+
+
+            model.IsAuthenticated = !_workContext.CurrentCustomer.IsGuest();
+
             model.MarketPlans = new SelectPlanModel() { VendorType = Core.Domain.Vendors.VendorType.Market, Plans = LoadPlansByVendorType(VendorType.Market) };
             model.UserPlans = new SelectPlanModel() { VendorType = Core.Domain.Vendors.VendorType.User, Plans = LoadPlansByVendorType(VendorType.User) };
 

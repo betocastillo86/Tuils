@@ -1162,6 +1162,9 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Vendors.Fields.HasPlan.Hint", "Tiene plan");
                 newLocaleStringResources.Add("Admin.Vendors.Fields.PlanName", "Plan seleccionado");
                 newLocaleStringResources.Add("Admin.Vendors.Fields.PlanName.Hint", "Plan seleccionado");
+                newLocaleStringResources.Add("PageTitle.Plans", "Escoge el plan que más se adecue para tus productos y vende muy fácil");
+                newLocaleStringResources.Add("LoginMessage.GetPlanMarketLikeUserError", "No puedes seleccionar un plan de empresas ya que te encuentras registrado como persona. Si deseas cambiar el tipo de registro envianos un correo a info@tuils.com y te ayudaremos con todo gusto.");
+                
 
                 
 

@@ -14,6 +14,8 @@ using Nop.Services.Logging;
 using Nop.Services.Localization;
 using Nop.Web.Framework.Security;
 using Nop.Services.Catalog;
+using Nop.Core.Domain.Vendors;
+using Nop.Services.Vendors;
 
 namespace Nop.Web.Controllers.Api
 {
@@ -29,6 +31,7 @@ namespace Nop.Web.Controllers.Api
         private readonly ICustomerActivityService _customerActivityService;
         private readonly ILocalizationService _localizationService;
         private readonly ICategoryService _categoryService;
+        private readonly IVendorService _vendorService;
         #endregion
 
         #region Ctor
@@ -40,7 +43,8 @@ namespace Nop.Web.Controllers.Api
             IAuthenticationService authenticationService,
             ICustomerActivityService customerActivityService,
             ILocalizationService localizationService,
-            ICategoryService categoryService)
+            ICategoryService categoryService,
+            IVendorService vendorService)
         {
             this._customerService = customerService;
             this._workContext = workContext;
@@ -50,6 +54,7 @@ namespace Nop.Web.Controllers.Api
             this._customerActivityService = customerActivityService;
             this._localizationService = localizationService;
             this._categoryService = categoryService;
+            this._vendorService = vendorService;
         }
         #endregion
             
@@ -84,7 +89,7 @@ namespace Nop.Web.Controllers.Api
                 {
                     //Si el registro es exitoso se autentca
                     _authenticationService.SignIn(entityCustomer, true);
-                    return Ok(new { Email = model.Email, Name = entityCustomer.GetFullName() });
+                    return Ok(new { Email = model.Email, Name = entityCustomer.GetFullName(), VendorType = Convert.ToInt32(model.VendorType) });
                 }
                 else
                 {
@@ -128,7 +133,15 @@ namespace Nop.Web.Controllers.Api
                             _authenticationService.SignIn(customer, false);
                             _customerActivityService.InsertActivity("PublicStore.Login", _localizationService.GetResource("ActivityLog.PublicStore.Login"), customer);
 
-                            return Ok(new { Email = username, Name = customer.GetFullName() });
+
+                            //Consulta adicinalmente el tipo de usuario que es
+                            var vendorType = VendorType.User;
+                            if (customer.VendorId > 0)
+                            {
+                                vendorType = _vendorService.GetVendorById(customer.VendorId).VendorType;
+                            }
+
+                            return Ok(new { Email = username, Name = customer.GetFullName(), VendorType = Convert.ToInt32(vendorType) });
                         }
                     //Si hay algún error retorna un BadRequest
                     case CustomerLoginResults.CustomerNotExist:

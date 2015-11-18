@@ -1448,8 +1448,11 @@ namespace Nop.Services.Catalog
                 .GroupBy(r => r.ProductId)
                 .Select(r => new { Best = r.Max(g => g.Rating), Worst = r.Min(g => g.Rating) });
 
-            bestRating = maxMin.FirstOrDefault().Best;
-            worstRating = maxMin.FirstOrDefault().Worst;
+            var result = maxMin.FirstOrDefault();
+
+            bestRating = result != null ? result.Best : 0;
+            worstRating = result != null ? result.Worst : 0;
+
         }
 
         /// <summary>

@@ -131,7 +131,8 @@ namespace Nop.Web.Framework.Mvc
                 {
                     publishProduct = _localizationService.GetResource("LoginMessage.PublishProduct", languageId),
                     showVendor = _localizationService.GetResource("LoginMessage.ShowVendor", languageId),
-                    askQuestion = _localizationService.GetResource("LoginMessage.AskQuestion", languageId)
+                    askQuestion = _localizationService.GetResource("LoginMessage.AskQuestion", languageId),
+                    getPlanMarketLikeUserError = _localizationService.GetResource("LoginMessage.GetPlanMarketLikeUserError", languageId),
                 },
                 confirm = new
                 {

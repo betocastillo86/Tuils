@@ -10,5 +10,7 @@ namespace Nop.Web.Models.Sales
         public SelectPlanModel UserPlans { get; set; }
 
         public SelectPlanModel MarketPlans { get; set; }
+
+        public bool IsAuthenticated { get; set; }
     }
 }
