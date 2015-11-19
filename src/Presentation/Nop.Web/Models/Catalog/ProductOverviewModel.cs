@@ -74,6 +74,7 @@ namespace Nop.Web.Models.Catalog
 
         public bool IsFeatured { get { return ShowOnHomePage || ShowOnSliders || ShowOnSocialNetworks; } }
 
+        public string Status { get; set; }
 
 		#region Nested Classes
 

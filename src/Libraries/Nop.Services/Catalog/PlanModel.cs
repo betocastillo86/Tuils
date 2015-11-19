@@ -35,5 +35,10 @@ namespace Nop.Services.Catalog
         /// Orden en el que se muestran los productos publicados con el plan seleccionado
         /// </summary>
         public int DisplayOrder { get; set; }
+
+        /// <summary>
+        /// Numero de fotos que puede publicar en el plan por producto
+        /// </summary>
+        public int NumPictures { get; set; }
     }
 }

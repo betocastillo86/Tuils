@@ -1166,6 +1166,11 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("PageTitle.Plans", "Escoge el plan que más se adecue para tus productos y vende muy fácil");
                 newLocaleStringResources.Add("LoginMessage.GetPlanMarketLikeUserError", "No puedes seleccionar un plan de empresas ya que te encuentras registrado como persona. Si deseas cambiar el tipo de registro envianos un correo a info@tuils.com y te ayudaremos con todo gusto.");
                 newLocaleStringResources.Add("myproducts.hasReachedLimitFeaturedAlert", "Ha alcanzado el limite de productos a destacar. Si desea puede  <a href='/mis-productos/seleccionar-plan'>adquirir un plan con mejores privilegios</a>");
+                newLocaleStringResources.Add("Admin.Catalog.Products.Pictures.Fields.Active", "Activo");
+                newLocaleStringResources.Add("Admin.Catalog.Products.Pictures.Fields.Active.Hint", "Activo");
+                newLocaleStringResources.Add("myproducts.noPublished", "Pendiente aprobación");
+                newLocaleStringResources.Add("myproducts.outOfDate", "Vencido");
+                
                 
                 
 

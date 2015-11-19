@@ -2278,6 +2278,9 @@ namespace Nop.Services.Catalog
         /// <param name="product">Datos del producto</param>
         public void PublishProduct(Product product)
         {
+
+            //Busca cual es el plan gratis y cara el valor DisplayOrder por defecto
+            var freePlan = GetPlanById(_planSettings.PlanProductsFree);
             
             var rootCategory = _categoryService.GetRootCategoryByCategoryId(product.ProductCategories.FirstOrDefault().CategoryId);
             if (rootCategory == null)
@@ -2288,13 +2291,16 @@ namespace Nop.Services.Catalog
             //Si tiene imagenes temporales por cargar las crea
             if (product.TempFiles.Count > 0)
             {
+                
                 var pictures = _pictureService.InsertPicturesFromTempFiles(product.TempFiles.ToArray());
                 for (int i = 0; i < pictures.Count; i++)
                 {
                     product.ProductPictures.Add(new ProductPicture()
                     {
                         PictureId = pictures[i].Id,
-                        DisplayOrder = i
+                        DisplayOrder = i,
+                        //Solo deja activas las fotos que cumplen con la especificación del plan
+                        Active = i < freePlan.NumPictures
                     });
                 }
             }
@@ -2302,8 +2308,7 @@ namespace Nop.Services.Catalog
 
            #region DisplayOrder
 
-            //Busca cual es el plan gratis y cara el valor DisplayOrder por defecto
-            var freePlan = GetPlanById(_planSettings.PlanProductsFree);
+            
             product.DisplayOrder = freePlan.DisplayOrder;
 
             #endregion
@@ -2768,24 +2773,26 @@ namespace Nop.Services.Catalog
                 var valueAttributeSelected = attributeValues.SpecificationAttributeOption.Name;
 
                 //valida si el atributo es el número de días que va estar la publicación activa
-                if (attribute.Id == _planSettings.SpecificationAttributeIdLimitDays)
+                if (attribute.Id == _planSettings.SpecificationAttributePlanDays)
                 {
                     //Actualiza la fecha de cierre del producto de acuerdo al valor en dias del plan
                     product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(Convert.ToInt32(valueAttributeSelected));
                 }
-                //si el atributo es el número de fotografías inhabilita las sobrantes
+                //si el atributo es el número de fotografías las habilita
                 else if (attribute.Id == _planSettings.SpecificationAttributeIdPictures)
                 {
                     int maxNum = Convert.ToInt32(valueAttributeSelected);
-                    //Si las fotos son más que las que puede publicar las desactiva
-                    if (product.ProductPictures.Count > maxNum)
-                    {
-                        product.ProductPictures.Skip(maxNum)
+                    //Activa el numero de fotografías correspondientes al plan
+                    product.ProductPictures.Take(maxNum)
                             .ToList()
-                            .ForEach(p => {
-                                _productPictureRepository.Delete(p);
+                            .ForEach(p =>
+                            {
+                                if (!p.Active)
+                                {
+                                    p.Active = true;
+                                    _productPictureRepository.Update(p);
+                                }
                             });
-                    }
                 }
                 //si el atributo es la exposición que tiene el producto lo actualiza
                 else if (attribute.Id == _planSettings.SpecificationAttributeIdDisplayOrder)
@@ -2882,6 +2889,8 @@ namespace Nop.Services.Catalog
                         model.DaysPlan = Convert.ToInt32(option.Name);
                     else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdDisplayOrder)
                         model.DisplayOrder = Convert.ToInt32(option.Name);
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdPictures)
+                        model.NumPictures = Convert.ToInt32(option.Name);
                 }
 
                 return model;

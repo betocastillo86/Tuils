@@ -63,16 +63,6 @@
             </tr>
         }
         
-        
-        <tr>
-            <td class="adminTitle">
-                @Html.LabelFor(m => m.SpecificationAttributeIdLimitDays):
-            </td>
-            <td class="adminData">
-                @Html.DropDownListFor(m => m.SpecificationAttributeIdLimitDays, Model.AvailableSpecificationAttributes)
-                @Html.ValidationMessageFor(m => m.SpecificationAttributeIdLimitDays)
-            </td>
-        </tr>
         <tr>
             <td class="adminTitle">
                 @Html.LabelFor(m => m.SpecificationAttributeIdPictures):

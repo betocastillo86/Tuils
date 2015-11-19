@@ -2300,7 +2300,7 @@ namespace Nop.Admin.Controllers
 
         #region Product pictures
 
-        public ActionResult ProductPictureAdd(int pictureId, int displayOrder, int productId)
+        public ActionResult ProductPictureAdd(int pictureId, int displayOrder, int productId, bool active)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
@@ -2321,6 +2321,7 @@ namespace Nop.Admin.Controllers
                 PictureId = pictureId,
                 ProductId = productId,
                 DisplayOrder = displayOrder,
+                Active = active
             });
 
             _pictureService.SetSeoFilename(pictureId, _pictureService.GetPictureSeName(product.Name));
@@ -2352,7 +2353,8 @@ namespace Nop.Admin.Controllers
                     ProductId = x.ProductId,
                     PictureId = x.PictureId,
                     PictureUrl = _pictureService.GetPictureUrl(x.PictureId),
-                    DisplayOrder = x.DisplayOrder
+                    DisplayOrder = x.DisplayOrder,
+                    Active = x.Active
                 })
                 .ToList();
 
@@ -2386,6 +2388,8 @@ namespace Nop.Admin.Controllers
             }
 
             productPicture.DisplayOrder = model.DisplayOrder;
+            productPicture.Active = model.Active;
+            
             _productService.UpdateProductPicture(productPicture);
 
             return new NullJsonResult();

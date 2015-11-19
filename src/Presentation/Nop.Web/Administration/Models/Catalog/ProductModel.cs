@@ -508,6 +508,11 @@ namespace Nop.Admin.Models.Catalog
 
             [NopResourceDisplayName("Admin.Catalog.Products.Pictures.Fields.DisplayOrder")]
             public int DisplayOrder { get; set; }
+
+
+            [NopResourceDisplayName("Admin.Catalog.Products.Pictures.Fields.Active")]
+            public bool Active { get; set; }
+
         }
         
         public partial class ProductCategoryModel : BaseNopEntityModel

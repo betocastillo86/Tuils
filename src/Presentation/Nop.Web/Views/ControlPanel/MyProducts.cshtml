@@ -50,7 +50,9 @@
                     <ul>
                         @*<li>@T("myproducts.visits"): @product.Visits</li>*@
                         @*<li>@T("myproducts.totalsales"): @product.TotalSales</li>*@
-                        <li>@T("myproducts.ApprovedTotalReviews"): @product.ApprovedTotalReviews</li>
+                        
+                        
+                        @*<li>@T("myproducts.ApprovedTotalReviews"): @product.ApprovedTotalReviews</li>*@
                         <li>@T("myproducts.NumClicksForMoreInfo"): @product.NumClicksForMoreInfo</li>
 
                         @if (product.Published)
@@ -67,7 +69,28 @@
                     </ul>
                 </div>
                 <div class="product-dtl-date">
-                    <h3>@(product.Published ? T("myproducts.publised") : T("myproducts.nopublised"))</h3>
+                    <h3>
+                    @if (!product.Published)
+                    {
+                        @T("myproducts.noPublished")
+                    }
+                    else if (product.Sold)
+                    { 
+                        @T("products.sold")
+                    }
+                    /**Si el producto no está disponible pero no se ha vendido y si está publicado es porque está vencido**/
+                    else if(!product.Available && !product.Sold && product.Published)
+                    {
+                        @T("myproducts.outOfDate")
+                    }
+                    else
+                    { 
+                        @T("myproducts.publised")
+                    }
+                    </h3>
+
+
+
                     <p>@T("myproducts.AvailableStartDate"): @product.AvailableStartDate.ToShortDateString()</p>
                     <p>@T("myproducts.AvailableEndDate"): @product.AvailableEndDate.ToShortDateString()</p>
 

@@ -23,8 +23,6 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public int PlanStoresFree { get; set; }
 
-        public int SpecificationAttributeIdLimitDays { get; set; }
-
         public int SpecificationAttributeIdPictures { get; set; }
 
         public int SpecificationAttributeIdDisplayOrder { get; set; }

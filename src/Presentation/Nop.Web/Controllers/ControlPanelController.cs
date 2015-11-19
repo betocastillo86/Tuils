@@ -654,7 +654,8 @@ namespace Nop.Web.Controllers
                     HasPlanSelected = p.OrderPlanId.HasValue,
                     ShowOnHomePage = p.ShowOnHomePage,
                     ShowOnSliders = p.FeaturedForSliders,
-                    ShowOnSocialNetworks = p.SocialNetworkFeatured
+                    ShowOnSocialNetworks = p.SocialNetworkFeatured,
+                    Sold = p.Sold
                 }).ToList();
 
                 model.PagingFilteringContext.q = command.q;

@@ -37,9 +37,6 @@ namespace Nop.Admin.Models.Settings
         public int PlanStoresFree { get; set; }
 
 
-        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributeIdLimitDays")]
-        public int SpecificationAttributeIdLimitDays { get; set; }
-
         [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributeIdPictures")]
         public int SpecificationAttributeIdPictures { get; set; }
 
