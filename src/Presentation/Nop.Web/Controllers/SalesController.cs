@@ -233,7 +233,7 @@ namespace Nop.Web.Controllers
                 _workContext.CurrentVendor.CurrentOrderPlanId.HasValue && _workContext.CurrentVendor.PlanExpiredOnUtc > DateTime.UtcNow
                 && (!command.force.HasValue || !command.force.Value) )
             {
-                return RedirectToAction("SelectFeaturedAttributesByPlan", "Catalog", new { id = id });
+                return RedirectToAction("SelectFeaturedAttributesByPlan", "Catalog", new { id = id, from = "publish" });
             }
 
             if (product.Sold)
@@ -472,7 +472,7 @@ namespace Nop.Web.Controllers
         #region Metodos Privados
         private PublishProductModel GetPublishModel()
         {
-            var selectedPlan = _productService.GetPlanById(_workContext.CurrentVendor.VendorType != VendorType.Market ? _planSettings.PlanProductsFree : _planSettings.PlanStoresFree);
+            var selectedPlan = _productService.GetPlanById(_workContext.CurrentVendor != null && _workContext.CurrentVendor.VendorType != VendorType.Market ? _planSettings.PlanProductsFree : _planSettings.PlanStoresFree);
             
             var model = new PublishProductModel();
             model.LimitDaysOfProductPublished = selectedPlan.DaysPlan;

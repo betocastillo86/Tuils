@@ -2302,6 +2302,10 @@ namespace Nop.Web.Controllers
                 model.NumProductsOnSlidersLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders][0];
                 model.NumProductsOnSlidersByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders][1];
             }
+
+            model.HasReachedLimitOfFeature = model.NumProductsOnSlidersLeft + model.NumProductsOnSocialNetworksByPlan + model.NumProductsOnHomeLeft <= 0;
+
+            model.ShowFinishPublishingButton = command.from == "publish";
         }
 
         #endregion

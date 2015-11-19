@@ -125,7 +125,8 @@ namespace Nop.Web.Framework.Mvc
                 },
                 products = new
                 {
-                    confirmBuy = _localizationService.GetResource("products.confirmBuy", languageId)
+                    confirmBuy = _localizationService.GetResource("products.confirmBuy", languageId),
+                    hasReachedLimitFeaturedAlert = _localizationService.GetResource("myproducts.hasReachedLimitFeaturedAlert", languageId)
                 },
                 loginMessages = new
                 {

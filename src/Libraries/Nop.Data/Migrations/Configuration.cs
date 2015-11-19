@@ -1087,7 +1087,8 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("myproducts.featureByPlan", "Destacar");
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.gotoMyProducts", "Volver a mis productos");
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdLimitProducts", "Limite de productos publicados");
-                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.HasReachedLimitOfProducts", "No puedes destacar este producto ya que el plan que posees a alcanzado su limite máximo ({0} productos)");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.HasReachedLimitOfProducts", "Su plan ha llegado al limite de productos a publicar ({0} productos). Adquiera un plan más alto para poder destacar mejor sus productos");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.HasReachedLimitOfFeature", "No puede destacar este producto ya que el plan que posee a alcanzado el limite máximo de destacados");
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectPlan", "Adquirir Plan");
                 newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.PublishProduct", "Publicar producto");
                 newLocaleStringResources.Add("myproducts.featureByProduct", "Destacar");
@@ -1164,6 +1165,8 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Vendors.Fields.PlanName.Hint", "Plan seleccionado");
                 newLocaleStringResources.Add("PageTitle.Plans", "Escoge el plan que más se adecue para tus productos y vende muy fácil");
                 newLocaleStringResources.Add("LoginMessage.GetPlanMarketLikeUserError", "No puedes seleccionar un plan de empresas ya que te encuentras registrado como persona. Si deseas cambiar el tipo de registro envianos un correo a info@tuils.com y te ayudaremos con todo gusto.");
+                newLocaleStringResources.Add("myproducts.hasReachedLimitFeaturedAlert", "Ha alcanzado el limite de productos a destacar. Si desea puede  <a href='/mis-productos/seleccionar-plan'>adquirir un plan con mejores privilegios</a>");
+                
                 
 
                 

@@ -1,5 +1,5 @@
 ﻿@model MyProductsModel
-           @using Nop.Web.Models.ControlPanel
+@using Nop.Web.Models.ControlPanel
 @{
     Html.AddTitleParts(T("PageTitle.MyProducts").Text);
     Layout = "~/Views/Shared/_PanelLayoutTwo.cshtml";
@@ -18,7 +18,7 @@
             <a href="@Model.UrlFilterByProducts.Url" class="@(Model.UrlFilterByProducts.Active ? "active" : string.Empty)" title="@T("common.filterByProduct")">@T("controlpanel.publishproduct")</a>
             <a href="@Model.UrlFilterByBikes.Url" class="@(Model.UrlFilterByBikes.Active ? "active" : string.Empty)" title="@T("common.filterByBikes")">@T("controlpanel.publishproductbike")</a>
         </div>
-        
+
         <div class="search-pdt">
             <input type="text" class="searchinput" value="@Model.PagingFilteringContext.q" />
             <a class="btn_search"><span class="icon-lupa"></span></a>
@@ -30,73 +30,94 @@
         @foreach (var product in Model.Products)
         {
             <li class="product-detail" data-id="@product.Id">
-            <div class="product-dtl-img">
-                <a href="@(product.Published ? Url.Action("ProductDetails", "Product", new { seName = product.SeName }) : "#")">
-                <img title="@product.Name" src="@product.DefaultPictureModel.ImageUrl" alt="@product.Name">
-                </a>
-            </div>
-            <div class="product-dtl-txt">
-                <h3><div class="tag-desta"><span class="icon-star"></span> Destacado</div><a href="@(product.Published ? Url.Action("ProductDetails", "Product", new { seName = product.SeName }) : "#")">@product.Name</a></h3>
-                <ul>
-                    @*<li>@T("myproducts.visits"): @product.Visits</li>*@
-                    @*<li>@T("myproducts.totalsales"): @product.TotalSales</li>*@
-                    <li>@T("myproducts.ApprovedTotalReviews"): @product.ApprovedTotalReviews</li>
-                    <li>@T("myproducts.NumClicksForMoreInfo"): @product.NumClicksForMoreInfo</li>
-                    
-                    @if (product.Published)
-                    { 
-                        if (product.UnansweredQuestions > 0)
-                        { 
-                            <li><a href="@Url.Action("Questions", "ControlPanel", new { p = product.Id })">@T("myproducts.UnansweredQuestions"): @product.UnansweredQuestions</a></li>
-                        }
-                        else
-                        { 
-                            <li>@T("myproducts.noPendingQuestions")</li>
-                        }
-                    }
-                </ul>
-            </div>
-            <div class="product-dtl-date">
-                <h3>@(product.Published ? T("myproducts.publised") : T("myproducts.nopublised"))</h3>
-                <p>@T("myproducts.AvailableStartDate"): @product.AvailableStartDate.ToShortDateString()</p>
-                <p>@T("myproducts.AvailableEndDate"): @product.AvailableEndDate.ToShortDateString()</p>
-                
-                @if (product.Available)
-                { 
-                    <div class="conte_btn">
-                        @*<a class="btn-azul" href="javascript:;"><span class="icon-mail"></span>Editar</a>*@
-                        @*<a class="btn-naranja" href="@Url.Action("ProductDetails", "Product", new { seName = product.SeName })">@T("myproducts.viewOnline")</a>*@
+                <div class="product-dtl-img">
+                    <a href="@(product.Published ? Url.Action("ProductDetails", "Product", new { seName = product.SeName }) : "#")">
+                        <img title="@product.Name" src="@product.DefaultPictureModel.ImageUrl" alt="@product.Name">
+                    </a>
+                </div>
+                <div class="product-dtl-txt">
 
-                        @if (Model.ShowButtonFeatureByPlan)
-                        { 
-                            @Html.ActionLink(T("myproducts.featureByPlan").Text, "SelectFeaturedAttributesByPlan", "Catalog", new { id = product.Id }, new { @class = "btn-naranja" })
-                        }
-                        else if (!product.HasPlanSelected)
-                        { 
-                            @Html.ActionLink(T("myproducts.featureByProduct").Text, "SelectPlan", "Sales", new { id = product.Id }, new { @class = "btn-naranja" })
-                        }
 
-                        <a class="btn-naranja"  href="@Url.Action("EditProduct", "ControlPanel", new { id = product.Id })">@T("myproducts.editProduct")</a>
-                        <a class="btnUnpublish btn-azul" data-id="@product.Id" title="@T("myproducts.disable.alt")" href="javascript:void(0)">@T("myproducts.disable")</a>
-                    </div>
-                }
-                else
-                {
-                    if (product.Published)
+                    <h3>
+
+                        @if (product.IsFeatured)
+                        {
+                            <div class="tag-desta"><span class="icon-star"></span> Destacado</div>
+                        }
+                        <a href="@(product.Published ? Url.Action("ProductDetails", "Product", new { seName = product.SeName }) : "#")">@product.Name</a>
+                    </h3>
+
+                    <ul>
+                        @*<li>@T("myproducts.visits"): @product.Visits</li>*@
+                        @*<li>@T("myproducts.totalsales"): @product.TotalSales</li>*@
+                        <li>@T("myproducts.ApprovedTotalReviews"): @product.ApprovedTotalReviews</li>
+                        <li>@T("myproducts.NumClicksForMoreInfo"): @product.NumClicksForMoreInfo</li>
+
+                        @if (product.Published)
+                        {
+                            if (product.UnansweredQuestions > 0)
+                            {
+                                <li><a href="@Url.Action("Questions", "ControlPanel", new { p = product.Id })">@T("myproducts.UnansweredQuestions"): @product.UnansweredQuestions</a></li>
+                            }
+                            else
+                            {
+                                <li>@T("myproducts.noPendingQuestions")</li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="product-dtl-date">
+                    <h3>@(product.Published ? T("myproducts.publised") : T("myproducts.nopublised"))</h3>
+                    <p>@T("myproducts.AvailableStartDate"): @product.AvailableStartDate.ToShortDateString()</p>
+                    <p>@T("myproducts.AvailableEndDate"): @product.AvailableEndDate.ToShortDateString()</p>
+
+                    @if (product.Available)
                     {
                         <div class="conte_btn">
-                            <a class="btnPublishMyProducts btn-naranja" data-id="@product.Id" title="@T("myproducts.enable.alt")" href="javascript:void(0)">@T("myproducts.enable")</a>
+                            @*<a class="btn-azul" href="javascript:;"><span class="icon-mail"></span>Editar</a>*@
+                            @*<a class="btn-naranja" href="@Url.Action("ProductDetails", "Product", new { seName = product.SeName })">@T("myproducts.viewOnline")</a>*@
+
+                            @if (Model.ShowButtonFeatureByPlan)
+                            {
+                                if (Model.HasReachedLimitOfFeature && !product.IsFeatured)
+                                {
+                                    //Cuando el un producto no se puede destacar porque se ha alcanzado el limite
+                                    //Solo se muestra si el producto actual no está destacado de ningúna manera
+                                    <a class="HasReachedLimitOfFeature btn-naranja">@T("myproducts.featureByPlan").Text</a>
+                                }
+                                else
+                                {
+                                    //Este botón sale cuando una tienda puede destacar un producto
+                                    @Html.ActionLink(T("myproducts.featureByPlan").Text, "SelectFeaturedAttributesByPlan", "Catalog", new { id = product.Id }, new { @class = "btn-naranja" })
+                                }
+                            }
+                            else if (!product.HasPlanSelected)
+                            {
+                                //Este boton sale cuando una tienda no tiene plan seleccionado. Es decir al darle "destacar" el sitio lo lleva a comprar un plan
+                                @Html.ActionLink(T("myproducts.featureByProduct").Text, "SelectPlan", "Sales", new { id = product.Id }, new { @class = "btn-naranja" })
+                            }
+
+                            <a class="btn-naranja" href="@Url.Action("EditProduct", "ControlPanel", new { id = product.Id })">@T("myproducts.editProduct")</a>
+                            <a class="btnUnpublish btn-azul" data-id="@product.Id" title="@T("myproducts.disable.alt")" href="javascript:void(0)">@T("myproducts.disable")</a>
                         </div>
                     }
-                }
-            </div>
-            <br />
-        </li>
+                    else
+                    {
+                        if (product.Published)
+                        {
+                            <div class="conte_btn">
+                                <a class="btnPublishMyProducts btn-naranja" data-id="@product.Id" title="@T("myproducts.enable.alt")" href="javascript:void(0)">@T("myproducts.enable")</a>
+                            </div>
+                        }
+                    }
+                </div>
+                <br />
+            </li>
         }
 
     </ul>
 
-    @Html.Partial("_NoRows", new NoRowsModel() { List = Model.Products, ResourceMessage = Model.ResorceMessageNoRows, ShowPublishProduct=true })
+    @Html.Partial("_NoRows", new NoRowsModel() { List = Model.Products, ResourceMessage = Model.ResorceMessageNoRows, ShowPublishProduct = true })
 
     <div class="pager">
         @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")

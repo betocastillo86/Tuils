@@ -1,11 +1,12 @@
-﻿define(['jquery', 'underscore', 'baseView', 'util', 'productModel', 'tuils/models/panel/myProduct'],
-    function ($, _, BaseView, TuilsUtil, ProductModel, MyProductModel) {
+﻿define(['jquery', 'underscore', 'baseView', 'util', 'productModel', 'tuils/models/panel/myProduct', 'resources'],
+    function ($, _, BaseView, TuilsUtil, ProductModel, MyProductModel, TuilsResources) {
             
         var MyProductsView = BaseView.extend({
             events: {
                 'keyup .search-pdt .searchinput': 'search',
                 'click .btnUnpublish': 'remove',
-                'click .btnPublishMyProducts' : 'activate'
+                'click .btnPublishMyProducts': 'activate',
+                'click .HasReachedLimitOfFeature' : 'showLimitMessage'
             },
             initialize: function(args){
             
@@ -36,6 +37,9 @@
             productActivated: function (model) {
                 this.$('.product-detail[data-id="' + model.get('Id') + '"]').fadeOut();
                 this.alert('El producto fue habilitado correctamente');
+            },
+            showLimitMessage: function () {
+                this.alert({ message: TuilsResources.products.hasReachedLimitFeaturedAlert , duration : 10000});
             },
             productErrorRemoved: function () {
                 this.alert('No fue posible deshabilitar el producto. Intenta de nuevo o comentanos tu problema a info@tuils.com');

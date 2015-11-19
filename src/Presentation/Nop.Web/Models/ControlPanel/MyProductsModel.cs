@@ -29,6 +29,8 @@ namespace Nop.Web.Models.ControlPanel
         /// </summary>
         public bool ShowButtonFeatureByPlan { get; set; }
 
+        public bool HasReachedLimitOfFeature { get; set; }
+
 
         public CatalogPagingFilteringModel PagingFilteringContext { get; set; }
 

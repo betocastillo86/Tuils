@@ -14,6 +14,10 @@
 {
     <div class="alert-public"><span class="icon-alert"></span> <p>@T("SelectFeaturedAttributesByPlan.HasReachedLimitOfProducts", Model.NumLimitOfProducts)</p> @Html.ActionLink(T("SelectFeaturedAttributesByPlan.SelectPlan").Text, "SelectPlan", "Sales", new { id = Model.ProductDetails.Id, force = "true", limit = Model.NumLimitOfProducts }, new { })<br /></div>
 }
+@if (Model.HasReachedLimitOfFeature)
+{
+    <div class="alert-public"><span class="icon-alert"></span> <p>@T("SelectFeaturedAttributesByPlan.HasReachedLimitOfFeature")</p> @Html.ActionLink(T("SelectFeaturedAttributesByPlan.SelectPlan").Text, "SelectPlan", "Sales", new { id = Model.ProductDetails.Id, force = "true", limit = Model.NumLimitOfProducts }, new { })<br /></div>
+}
 @using (Html.BeginForm())
 {
     <div class="product-public">
@@ -83,7 +87,17 @@
 
 
                 <div>
-                    <input type="submit" value="@T("SelectFeaturedAttributesByPlan.Save")" class="btn_continue button-1" />
+                    @if (!Model.HideFeatureButton)
+                    {
+                        <input type="submit" value="@T("SelectFeaturedAttributesByPlan.Save")" class="btn_continue button-1" />
+                    }
+                    
+
+                    @if (Model.ShowFinishPublishingButton)
+                    { 
+                        @Html.ActionLink(T("common.continue").Text, "ConfirmationWithoutPlan", "Sales", new { id = Model.ProductDetails.Id }, new { @class = "btn_continue button-1" })
+                    }
+
 
                     @if (Model.ShowGoToMyProductsButton)
                     {

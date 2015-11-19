@@ -630,7 +630,9 @@ namespace Nop.Web.Controllers
                 if (command.pt.HasValue)
                     categoriesIds = GetChildCategoryIds(command.pt.Value);
 
-                var products = _productService.SearchProducts(showHidden: !showPublished, categoryIds: categoriesIds, vendorId: _workContext.CurrentVendor.Id,
+                var vendor =_workContext.CurrentVendor;
+
+                var products = _productService.SearchProducts(showHidden: !showPublished, categoryIds: categoriesIds, vendorId: vendor.Id,
                     pageSize: command.PageSize, pageIndex: command.PageIndex, keywords: keywordsSearch, 
                     orderBy: ProductSortingEnum.UpdatedOn, published: showPublished);
 
@@ -649,7 +651,10 @@ namespace Nop.Web.Controllers
                     Published = p.Published,
                     DefaultPictureModel = p.GetPicture(_localizationService, _mediaSettings, _pictureService),
                     NumClicksForMoreInfo = p.NumClicksForMoreInfo,
-                    HasPlanSelected = p.OrderPlanId.HasValue
+                    HasPlanSelected = p.OrderPlanId.HasValue,
+                    ShowOnHomePage = p.ShowOnHomePage,
+                    ShowOnSliders = p.FeaturedForSliders,
+                    ShowOnSocialNetworks = p.SocialNetworkFeatured
                 }).ToList();
 
                 model.PagingFilteringContext.q = command.q;
@@ -658,7 +663,7 @@ namespace Nop.Web.Controllers
                 //Carga la cadena de respuesta cuando no  hay resultados del filtro
                 model.ResorceMessageNoRows = string.Format("MyProducts.NoRows.{0}", showPublished ? "Active" : "Inactive");
                 //Solo puede mostrar el botón de los planes si es un vendor
-                model.ShowButtonFeatureByPlan = _workContext.CurrentVendor.VendorType == VendorType.Market;
+                model.ShowButtonFeatureByPlan = vendor.VendorType == VendorType.Market;
 
                 string url = _webHelper.GetThisPageUrl(true);
                 model.UrlFilterByServices = new MyProductsModel.LinkFilter()
@@ -676,6 +681,46 @@ namespace Nop.Web.Controllers
                     Url = _webHelper.ModifyQueryString(url, "pt=" + _tuilsSettings.productBaseTypes_product, null),
                     Active = command.pt.HasValue && command.pt.Value == _tuilsSettings.productBaseTypes_product
                 };
+
+
+
+
+
+                #region HasReachedLimitFeature
+                if (_workContext.CurrentVendor.VendorType == VendorType.Market && _workContext.CurrentVendor.HasActivePlan())
+                {
+                    //Valida cuantos productos les queda disponibles para destacar en cada uno de las caraceteristicas
+                    var leftProductsOnPlan = _productService.CountLeftFeaturedPlacesByVendor(vendor.CurrentOrderPlan, vendor.Id);
+
+                    //Cuenta los productos que le quedan por destacar posibles
+                    int countLeft = 0;
+                    //Valida que tenga productos en el home
+                    if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsOnHomePage))
+                        countLeft += leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnHomePage][0];
+                    
+                    //valida productos en redes sociales
+                    if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsOnSocialNetworks))
+                        countLeft += leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnSocialNetworks][0];
+                    
+                    //Valida productos en sliders
+                    if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders))
+                        countLeft += leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders][0];
+
+                    model.HasReachedLimitOfFeature = countLeft <= 0;
+                }
+                #endregion
+
+                
+
+
+
+
+
+
+
+
+
+
 
                 return View(model);
             }

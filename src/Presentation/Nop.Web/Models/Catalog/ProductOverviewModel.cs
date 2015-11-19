@@ -66,6 +66,14 @@ namespace Nop.Web.Models.Catalog
 
         public bool HasPlanSelected { get; set; }
 
+        public bool ShowOnHomePage { get; set; }
+
+        public bool ShowOnSliders { get; set; }
+
+        public bool ShowOnSocialNetworks { get; set; }
+
+        public bool IsFeatured { get { return ShowOnHomePage || ShowOnSliders || ShowOnSocialNetworks; } }
+
 
 		#region Nested Classes
 

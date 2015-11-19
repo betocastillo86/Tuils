@@ -59,6 +59,8 @@
                     message = args;
                 if (args.message)
                     message = args.message;
+                if (args.duration)
+                    this.duration = args.duration;
 
                 if (args && args.afterClose)
                     this.afterClose = args.afterClose;
