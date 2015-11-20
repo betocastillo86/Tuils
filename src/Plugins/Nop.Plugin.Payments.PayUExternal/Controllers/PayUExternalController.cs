@@ -159,6 +159,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
             _orderService.UpdateOrder(order);
 
             var model = new PaymentResponseModel();
+            model.VendorType = _workContext.CurrentVendor.VendorType;
             model.SelectedPlanName = selectedPlan.Name;
             model.SelectedPlanId = selectedPlan.Id;
             model.ReferenceCode = command.referenceCode.ToString();
@@ -166,7 +167,7 @@ namespace Nop.Plugin.Payments.PayUExternal.Controllers
             model.State = _localizationService.GetResource(string.Format("Plugins.PayUExternal.TransactionState.{0}", command.transactionState));
             model.TransactionValue = _priceFormater.FormatPrice(order.OrderTotal);
             model.Currency = command.currency;
-            model.TransactionDate = Convert.ToDateTime(command.processingDate).ToShortDateString();
+            model.TransactionDate = DateTime.Now.ToShortDateString();
             model.OrderId = order.Id;
             model.TransactionRejected = command.transactionState == TransactionState.Declined || command.transactionState == TransactionState.Error || command.transactionState == TransactionState.Expired;
 

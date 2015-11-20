@@ -286,9 +286,9 @@ namespace Nop.Web.Controllers
                 //Si lo que se va a hacer es refrendar un plan, carga los datos adicionales abiertos
                 if (vendorPlan.ProductId != _planSettings.PlanStoresFree || command.plan.HasValue)
                     model.AutoShowAdditionalData = true;
-
             }
-            
+            else
+                model.IsUpgrade = true;
             
             
             //Si viene forzado deshabilita los planes que no se adecuen

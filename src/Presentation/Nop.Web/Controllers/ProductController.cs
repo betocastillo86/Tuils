@@ -264,31 +264,35 @@ namespace Nop.Web.Controllers
             //vendor
             if (_vendorSettings.ShowVendorOnProductDetailsPage)
             {
-                //_orderService.getorder
-
-                //if (!_workContext.CurrentCustomer.IsGuest())
-                //    model.ProductAlreadyBought = _orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, product.Id);
-
-                //Si el producto ya fue comprado consulta el vendor
-                
-                var vendor = _vendorService.GetVendorById(product.VendorId);
-                if (vendor != null && !vendor.Deleted && vendor.Active)
+                //Solo se muestra la información del vendedor si no está registrado como vendedor
+                //O si el producto no es del mismo usuario
+                if (_workContext.CurrentVendor == null || product.VendorId != _workContext.CurrentVendor.Id)
                 {
-                    model.ShowVendor = true;
+                    //Si el producto ya fue comprado consulta el vendor
 
-                    model.VendorModel = new VendorBriefInfoModel
+                    var vendor = _vendorService.GetVendorById(product.VendorId);
+                    if (vendor != null && !vendor.Deleted && vendor.Active)
                     {
-                        Id = vendor.Id,
-                        Name = vendor.GetLocalized(x => x.Name),
-                        SeName = vendor.GetSeName(),
-                        VendorShippingEnabled = vendor.EnableShipping ?? false,
-                        CreditCardEnabled = vendor.EnableCreditCardPayment ?? false,
-                        PhoneNumber = vendor.PhoneNumber,
-                        VendorType = vendor.VendorType
-                    };
+                        model.ShowVendor = true;
 
-                    //Solo muestra productos del mismo vendedor si este es Tienda o taller
-                    model.ShowProductsOfVendor = vendor.VendorType != VendorType.User;
+                        model.VendorModel = new VendorBriefInfoModel
+                        {
+                            Id = vendor.Id,
+                            Name = vendor.GetLocalized(x => x.Name),
+                            SeName = vendor.GetSeName(),
+                            VendorShippingEnabled = vendor.EnableShipping ?? false,
+                            CreditCardEnabled = vendor.EnableCreditCardPayment ?? false,
+                            PhoneNumber = vendor.PhoneNumber,
+                            VendorType = vendor.VendorType
+                        };
+
+                        //Solo muestra productos del mismo vendedor si este es Tienda o taller
+                        model.ShowProductsOfVendor = vendor.VendorType != VendorType.User;
+                    }
+                }
+                else
+                {
+                    model.ShowVendor = false;
                 }
                 
             }

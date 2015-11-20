@@ -12,6 +12,31 @@ namespace Nop.Web.Extensions.Api
     public static class ApiValidationExtensions
     {
 
+        #region ModelState
+        /// <summary>
+        /// Retorna los errores del ModelState en una cadena para ser retornados
+        /// </summary>
+        /// <param name="modelState"></param>
+        /// <returns></returns>
+        public static string ToErrorString(this System.Web.Http.ModelBinding.ModelStateDictionary modelState)
+        {
+            var errorsStr = new System.Text.StringBuilder();
+
+            foreach (var item in modelState)
+            {
+                if (item.Value != null && item.Value.Errors != null)
+                {
+                    foreach (var error in item.Value.Errors)
+	                {
+                        errorsStr.AppendFormat("{0} \n", !string.IsNullOrEmpty(error.ErrorMessage) ? error.ErrorMessage : error.Exception.Message);
+	                }
+                    
+                }
+            }
+            return errorsStr.ToString();
+        }
+        #endregion
+
         #region ProductBaseModel
         /// <summary>
         /// Realiza validaciones adicionales a los modelos que no se encuentran en los atributos

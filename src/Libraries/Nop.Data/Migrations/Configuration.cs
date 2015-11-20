@@ -1170,6 +1170,7 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Catalog.Products.Pictures.Fields.Active.Hint", "Activo");
                 newLocaleStringResources.Add("myproducts.noPublished", "Pendiente aprobación");
                 newLocaleStringResources.Add("myproducts.outOfDate", "Vencido");
+                newLocaleStringResources.Add("Plugins.PayUExternal.Doubt", "Si tienes alguna sugerencia o pregunta no dudes en contactarnos a nuestro correo electrónico info@tuils.com");
                 
                 
                 

@@ -25,15 +25,28 @@
                 this.model.on('error', this.errorCreatingOrder, this);
                 this.model.on('sync', this.successCreatingOrder, this);
 
-                var preselectedPlan = parseInt($("input[name='SelectedPlan']:checked").val());
+                var preselectedPlan = parseInt(this.$("input[name='SelectedPlan']:checked").val());
                 if (!isNaN(preselectedPlan))
                     this.model.set('PlanId', preselectedPlan);
                 if (this.$('#CustomerAddressInformation_PhoneNumber').val().length > 0)
                     this.model.set('PhoneNumber', this.$('#CustomerAddressInformation_PhoneNumber').val());
                 if (this.$('#ddlStateProvinceId').val().length > 0)
                     this.model.set('StateProvinceId', this.$('#ddlStateProvinceId').val());
-
+                
                 this.render();
+                this.preselectUpgrade();
+            },
+            /**Preselecciona un plan para hacer upgrade*/
+            preselectUpgrade : function(){
+                //Si es upgrade, preselecciona el primer plan disponible
+                if (this.$("#IsUpgrade").val() == "True")
+                {
+                    //Si hay planes para escoger por defecto escoge el primero posible
+                    var firstPlan = $('input[name="SelectedPlan"]:first');
+                    
+                    if (firstPlan.length > 0)
+                        this.$('.selectNewPlan[data-id="' + firstPlan.val() + '"]').click();
+                }
             },
             selectPlan: function (obj) {
                 var plan = $(obj.currentTarget).attr('data-id');

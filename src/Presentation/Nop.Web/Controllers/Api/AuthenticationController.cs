@@ -98,7 +98,7 @@ namespace Nop.Web.Controllers.Api
             }
             else
             {
-                return BadRequest();
+                return BadRequest(ModelState.ToErrorString());
             }
         }
 

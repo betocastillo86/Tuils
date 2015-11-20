@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nop.Core.Domain.Vendors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -70,6 +71,9 @@ namespace Nop.Plugin.Payments.PayUExternal.Models
 
 
         public string ProductImageUrl { get; set; }
+
+        public VendorType VendorType { get; set; }
+
 
 
 

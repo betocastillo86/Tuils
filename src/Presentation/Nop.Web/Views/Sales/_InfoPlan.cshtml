@@ -19,6 +19,8 @@
 
     <p>@T("selectplan.additionalMessage."+ Model.VendorType.ToString())</p>
 
+    @Html.HiddenFor(model => model.IsUpgrade)
+
     <div class="planTable">
         <div class="headerRow">
             <div class="columnHeader"></div>
