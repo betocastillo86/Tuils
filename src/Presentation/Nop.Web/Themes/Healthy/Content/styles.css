@@ -1644,7 +1644,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .txt-terminos{color:#A9A9AC; text-align: right; margin: 5px 0;}
     .txt-terminos a{color: #F24C19;}
 
-    .imgPublicada{ width: 200px; height: 200px; float: left; margin: 20px 20px 0 0; overflow: hidden;}
+    .imgPublicada{ width: 200px; height: 200px; float: left; margin: 20px 20px 20px 0; overflow: hidden;}
     .imgPublicada img {width: 100%;}
     .resumen-final{float: left; width:calc(100% - 220px); margin: 20px 0 0;}
     .resumen-final h2{color:#3A5983; font-weight: 500; font-size: 20px;}
@@ -1989,9 +1989,10 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 .resumen-plan ul li{padding: 4px 0;}
 .resumen-plan .price_plan{float:right; text-align: right; color: #f94c2a;}
 
-.conte_planConfirm{}
+.conte_planConfirm{margin: 20px 0 0;}
 .conte_planConfirm .img_mjs{float: left; height: 100px; margin: 0 20px 0 0; width: 100px; border-radius: 50px; background: #d8dee6; font-size: 75px; color: #627a9c; text-align: center; box-sizing:border-box;}
 .conte_planConfirm .icon-alert{float: left; height: 100px; margin: 0 20px 0 0; width: 100px; font-size: 100px; display: block; color: #fa4c2a; text-align: center; box-sizing:border-box;}
+	.img_mjs [class^="icon-"]{padding:10px; display: block;}
 .plan-confirm{float: left; width: calc(100% - 120px);}
 .plan-confirm h2{color: #3a5983; font-size: 20px; font-weight: 500;}
 .plan-confirm h3{font-size: 14px; font-weight: 500; margin:7px 0;}

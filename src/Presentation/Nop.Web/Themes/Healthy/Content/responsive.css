@@ -1281,6 +1281,7 @@ html.oldie .container { width: 940px; }
 
     .conte_planConfirm .img_mjs{margin: 0 auto 20px; float: none; width: 50px; height: 50px; font-size: 40px;}
     .conte_planConfirm .icon-alert{margin: 0 auto 20px; float: none; width: 50px; height: 50px; font-size: 50px;}
+        .img_mjs [class^="icon-"]{padding: 6px 0 0;}
     .plan-confirm{width: 100%; float: none;}
     .plan-confirm h2{font-size: 16px;}
 

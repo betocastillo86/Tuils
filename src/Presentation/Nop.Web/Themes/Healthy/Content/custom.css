@@ -83,7 +83,7 @@ p {margin: 0;}
 .related-products-grid .title,
 .also-purchased-products-grid .title,
 .product-tags-box .title,
-.product-specs-box .title { color: #666; font-size: 17px; font-weight: normal; line-height: 23px; margin: 0 0 10px 0; text-align: left; text-transform: uppercase; }
+.product-specs-box .title { color: #292733; font-size: 18px; font-weight: 500; line-height: 23px; margin: 0 0 10px 0; text-align: left; text-transform: uppercase; }
 .sub-category-grid a, .manufacturer-grid a { color: #666; font-size: 1.2em; font-weight: 400; }
 
 a:hover { text-decoration: none; }
