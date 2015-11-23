@@ -14,6 +14,7 @@ using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Customers;
 using Nop.Services.Catalog;
 using Nop.Core.Domain.Orders;
+using Nop.Services.Common;
 
 namespace Nop.Services.Vendors
 {
@@ -466,11 +467,11 @@ namespace Nop.Services.Vendors
             //y el plan que tiene actualmente no ha expirado, le suma los dias
             if (vendor.CurrentOrderPlanId.HasValue && vendor.PlanExpiredOnUtc > DateTime.UtcNow)
             {
-                vendor.PlanExpiredOnUtc = vendor.PlanExpiredOnUtc.Value.AddDays(planDays);
+                vendor.PlanExpiredOnUtc = vendor.PlanExpiredOnUtc.Value.AddDaysToPlan(planDays);
             }
             else
             {
-                vendor.PlanExpiredOnUtc = DateTime.UtcNow.AddDays(planDays);
+                vendor.PlanExpiredOnUtc = DateTime.UtcNow.AddDaysToPlan(planDays);
             }
 
             vendor.PlanFinishedMessageSent = false;

@@ -369,7 +369,7 @@ namespace Nop.Web.Controllers
                     planModel.PriceDecimal = plan.Price;
 
                     //Agrega las caracteristicas del plan
-                    foreach (var spec in plan.ProductSpecificationAttributes)
+                    foreach (var spec in plan.ProductSpecificationAttributes.Where(ps => ps.ShowOnProductPage))
                     {
                         //Busca si el atributo fue agregado previamente
                         var specAddedPreviously = planModel.Specifications.FirstOrDefault(s => s.SpecificationAttributeId == spec.SpecificationAttributeOption.SpecificationAttributeId);

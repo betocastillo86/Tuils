@@ -24,6 +24,7 @@ using Nop.Services.Orders;
 using Nop.Services.Logging;
 using Nop.Core.Domain.Vendors;
 using Nop.Core.Domain.Media;
+using Nop.Services.Common;
 
 namespace Nop.Services.Catalog
 {
@@ -2339,12 +2340,12 @@ namespace Nop.Services.Catalog
                 }
                 else
                 {
-                    product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(selectedPlan.DaysPlan);
+                    product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDaysToPlan(selectedPlan.DaysPlan);
                 }
             }
             else
             {
-                product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(selectedPlan.DaysPlan);
+                product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDaysToPlan(selectedPlan.DaysPlan);
             }
 
             //Guarda los datos del producto, intenta enviar el correo
@@ -2568,12 +2569,9 @@ namespace Nop.Services.Catalog
         /// <param name="validatePlan">True: Debe validar que el plan este activo. Si no debe validar el parametro order no puede venir nulo</param>
         /// <param name="order">Cuando no se valida el plan directamente contra la base de datos es el plan que seleccionó el usuario</param>
         /// <returns>
-        /// Diccionario con la siguiente estructure:
-        ///     Llave: ID del SpecificationAttribute relacionado del plan (Ej: SpecificationAttributeId de Numero de productos publicados en el home)
-        ///     Valor: Array en posicion 0: Conteo de los productos que le quedan disponibles al vendor
-        ///            Array en posicion 1: Conteo de los productos que puede seleccionar en el plan
+        /// Listado de datos que le quedan al usuario
         /// </returns>
-        public Dictionary<int, int[]> CountLeftFeaturedPlacesByVendor(Product product, bool validatePlan, Order order = null)
+        public LeftFeaturedByVendorModel CountLeftFeaturedPlacesByVendor(Product product, bool validatePlan, Order order = null)
         {
             if (product == null)
                 throw new ArgumentNullException("product");
@@ -2582,7 +2580,7 @@ namespace Nop.Services.Catalog
             if(!validatePlan && order == null)
                 throw new ArgumentNullException("order");
 
-            var leftProducts = new Dictionary<int,int[]>();
+            var leftProducts = new LeftFeaturedByVendorModel();
 
             //El plan del vendedor debe estar activo
             if ((product.Vendor.CurrentOrderPlanId.HasValue && product.Vendor.PlanExpiredOnUtc > DateTime.UtcNow) || !validatePlan)
@@ -2593,8 +2591,13 @@ namespace Nop.Services.Catalog
             return leftProducts;
         }
 
-
-        public Dictionary<int, int[]> CountLeftFeaturedPlacesByVendor(Order order, int vendorId)
+        /// <summary>
+        /// Realiza el conteo de los productos que le quedan al usuario por publicar
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        public LeftFeaturedByVendorModel CountLeftFeaturedPlacesByVendor(Order order, int vendorId)
         {
             var leftProducts = new Dictionary<int, int[]>();
             
@@ -2606,28 +2609,40 @@ namespace Nop.Services.Catalog
             //Consulta los productos activos del vendor
             var products = SearchProducts(vendorId: vendorId, sold:false);
 
+            var model = new LeftFeaturedByVendorModel();
+
             //Cuenta los destacados en las bandas rotativas y cuantos hay por el plan y saca las diferencias
             //int productsFeaturedOnSlider = products.Where(p => p.FeaturedForSliders && p.Id != product.Id).Count();
             int productsFeaturedOnSlider = products.Where(p => p.FeaturedForSliders).Count();
             int productsFeaturedOnSliderByPlan = selectedPlan.NumProductsOnSliders;
-            leftProducts.Add(_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders, new int[] { productsFeaturedOnSliderByPlan - productsFeaturedOnSlider, productsFeaturedOnSliderByPlan });
+            model.SlidersLeft = productsFeaturedOnSliderByPlan - productsFeaturedOnSlider;
+            model.SlidersByPlan = productsFeaturedOnSliderByPlan;
+            //leftProducts.Add(_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders, new int[] { productsFeaturedOnSliderByPlan - productsFeaturedOnSlider, productsFeaturedOnSliderByPlan });
 
             //Cuenta los destacados en el home y cuantos hay por el plan y saca las diferencias
             int productsOnHome = products.Where(p => p.ShowOnHomePage).Count();
             int productsOnHomeByPlan = selectedPlan.NumProductsOnHome;
-            leftProducts.Add(_planSettings.SpecificationAttributeIdProductsOnHomePage, new int[] { productsOnHomeByPlan - productsOnHome, productsOnHomeByPlan });
+            model.HomePageLeft = productsOnHomeByPlan - productsOnHome;
+            model.HomePageByPlan = productsOnHomeByPlan;
+            //leftProducts.Add(_planSettings.SpecificationAttributeIdProductsOnHomePage, new int[] { productsOnHomeByPlan - productsOnHome, productsOnHomeByPlan });
 
             //Cuenta los destacados en el home y cuantos hay por el plan y saca las diferencias
             int productsOnSocialNetworks = products.Where(p => p.SocialNetworkFeatured).Count();
             int productsOnSocialNetworksByPlan = selectedPlan.NumProductsOnSocialNetworks;
-            leftProducts.Add(_planSettings.SpecificationAttributeIdProductsOnSocialNetworks, new int[] { productsOnSocialNetworksByPlan - productsOnSocialNetworks, productsOnSocialNetworksByPlan });
+            model.SocialNetworkLeft = productsOnSocialNetworksByPlan - productsOnSocialNetworks;
+            model.SocialNetworkByPlan = productsOnSocialNetworksByPlan;
+            //leftProducts.Add(_planSettings.SpecificationAttributeIdProductsOnSocialNetworks, new int[] { productsOnSocialNetworksByPlan - productsOnSocialNetworks, productsOnSocialNetworksByPlan });
 
             //Cuenta los productos que hacen parte del plan
             int productsPublished = products.Count;
             int productsPublishedByPlan = selectedPlan.NumProducts;
-            leftProducts.Add(_planSettings.SpecificationAttributeIdLimitProducts, new int[] { productsPublishedByPlan - productsPublished, productsPublishedByPlan });
+            model.ProductsLeft = productsPublishedByPlan - productsPublished;
+            model.ProductsByPlan = productsPublishedByPlan;
+            //leftProducts.Add(_planSettings.SpecificationAttributeIdLimitProducts, new int[] { productsPublishedByPlan - productsPublished, productsPublishedByPlan });
 
-            return leftProducts;
+            model.DisplayOrder = selectedPlan.DisplayOrder;
+
+            return model;
         }
 
 
@@ -2776,7 +2791,7 @@ namespace Nop.Services.Catalog
                 if (attribute.Id == _planSettings.SpecificationAttributePlanDays)
                 {
                     //Actualiza la fecha de cierre del producto de acuerdo al valor en dias del plan
-                    product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(Convert.ToInt32(valueAttributeSelected));
+                    product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDaysToPlan(Convert.ToInt32(valueAttributeSelected));
                 }
                 //si el atributo es el número de fotografías las habilita
                 else if (attribute.Id == _planSettings.SpecificationAttributeIdPictures)
@@ -2891,6 +2906,8 @@ namespace Nop.Services.Catalog
                         model.DisplayOrder = Convert.ToInt32(option.Name);
                     else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdPictures)
                         model.NumPictures = Convert.ToInt32(option.Name);
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdMostExpensivePlan)
+                        model.IsMostExpensive = true;
                 }
 
                 return model;
@@ -2998,10 +3015,11 @@ namespace Nop.Services.Catalog
         /// <summary>
         /// Realiza las validaciones necesarias para habilitar nuevamente un producto que fue desactivado por el usuario
         /// </summary>
+        /// <param name="forceEnable">Fuerza la habilitación del producto</param>
         /// <param name="product"></param>
-        public void EnableProduct(Product product)
+        public void EnableProduct(Product product, bool forceEnable = false, bool updateProduct = true)
         {
-            var vendor = _workContext.CurrentVendor;
+            var vendor = product.Vendor;
 
             //Bandera para controlar si se debe actualizar el producto deshabilitando las caracteristicas
             //de destacado
@@ -3014,7 +3032,7 @@ namespace Nop.Services.Catalog
             }
             else
             {
-                activateDisablingFeatured = EnableProductStore(product, vendor);
+                activateDisablingFeatured = EnableProductStore(product, vendor, forceEnable);
             }
 
             if (activateDisablingFeatured)
@@ -3041,10 +3059,10 @@ namespace Nop.Services.Catalog
                     manufacturer.IsFeaturedProduct = false;
                 }
             }
-
+            
             //Actualiza los datos
-            UpdateProduct(product);
-
+            if(updateProduct)
+                UpdateProduct(product);
         }
 
         /// <summary>
@@ -3092,8 +3110,9 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="product">Datos del producto</param>
         /// <param name="vendor">Datos del vendedor</param>
+        /// <param name="forceEnable">Fuerza la habilitación del producto sin lanzar la excepción</param>
         /// <returns>true: Debe desactivar destacados del producto False: Solo debe actualizar el producto</returns>
-        private bool EnableProductStore(Product product, Vendor vendor)
+        private bool EnableProductStore(Product product, Vendor vendor, bool forceEnable = false)
         {
             //Si el vendor tiene plan activo, activa la publicacion con fecha limite como la del plan
             if (vendor.CurrentOrderPlanId.HasValue && vendor.PlanExpiredOnUtc > DateTime.UtcNow)
@@ -3101,20 +3120,20 @@ namespace Nop.Services.Catalog
                 var productsCounted = CountLeftFeaturedPlacesByVendor(product, false, vendor.CurrentOrderPlan);
 
 
-                if (productsCounted[_planSettings.SpecificationAttributeIdLimitProducts][0] <= 0)
+                if (!forceEnable && productsCounted.ProductsLeft <= 0)
                     throw new NopException("No se pueden habilitar más productos para este plan");
 
                 product.Sold = false;
                 product.AvailableEndDateTimeUtc = vendor.PlanExpiredOnUtc;
 
                 //Si el producto está publicado en el home y no tiene mas espacios lo deshabilita
-                if (product.ShowOnHomePage && productsCounted[_planSettings.SpecificationAttributeIdProductsOnHomePage][0] <= 0)
+                if (product.ShowOnHomePage && productsCounted.HomePageLeft <= 0)
                     product.ShowOnHomePage = false;
 
-                if (product.SocialNetworkFeatured && productsCounted[_planSettings.SpecificationAttributeIdProductsOnSocialNetworks][0] <= 0)
+                if (product.SocialNetworkFeatured && productsCounted.SocialNetworkLeft <= 0)
                     product.SocialNetworkFeatured = false;
 
-                if (product.FeaturedForSliders && productsCounted[_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders][0] <= 0)
+                if (product.FeaturedForSliders && productsCounted.SlidersLeft <= 0)
                 {
                     product.FeaturedForSliders = false;
 
@@ -3128,6 +3147,8 @@ namespace Nop.Services.Catalog
                         manufacturer.IsFeaturedProduct = false;
                     }
                 }
+
+                product.DisplayOrder = productsCounted.DisplayOrder;
 
                 return false;
             }

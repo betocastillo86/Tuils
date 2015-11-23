@@ -335,7 +335,7 @@ namespace Nop.Web.Controllers
             });
         }
 
-       
+
 
 
         [NonAction]
@@ -532,7 +532,7 @@ namespace Nop.Web.Controllers
                         var pictureModel = new PictureModel
                         {
                             FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
-                            ImageUrl = _pictureService.GetPictureUrl(picture, pictureSize, crop:true),
+                            ImageUrl = _pictureService.GetPictureUrl(picture, pictureSize, crop: true),
                             Title = string.Format(_localizationService.GetResource("Media.Category.ImageLinkTitleFormat"), subCatModel.Name),
                             AlternateText = string.Format(_localizationService.GetResource("Media.Category.ImageAlternateTextFormat"), subCatModel.Name)
                         };
@@ -652,9 +652,9 @@ namespace Nop.Web.Controllers
                 orderBy: (ProductSortingEnum)command.OrderBy,
                 pageIndex: command.PageNumber - 1,
                 pageSize: command.PageSize,
-                manufacturerId:manufacturerId ?? 0,
+                manufacturerId: manufacturerId ?? 0,
                 stateProvinceId: stateProvinceId,
-                specialCategoryId:specialCategoryId);
+                specialCategoryId: specialCategoryId);
             model.Products = PrepareProductOverviewModels(products).ToList();
 
             model.PagingFilteringContext.LoadPagedList(products);
@@ -709,7 +709,7 @@ namespace Nop.Web.Controllers
             string filtersUrl = GetTitleParts(model.PagingFilteringContext);
 
             if (!string.IsNullOrEmpty(model.MetaTitle))
-                model.MetaTitle = string.Format(model.MetaTitle,  filtersUrl);
+                model.MetaTitle = string.Format(model.MetaTitle, filtersUrl);
             else
                 model.MetaTitle = string.Format(_localizationService.GetResource("PageTitle.Search"), model.Name, filtersUrl);
 
@@ -921,7 +921,7 @@ namespace Nop.Web.Controllers
         ////////    return result;
         ////////}
         #endregion
-        
+
 
 
         [ChildActionOnly]
@@ -958,13 +958,13 @@ namespace Nop.Web.Controllers
             //Toma aleatoreamente un número de registros para ser mostrados dividido entre dos
             model.Manufacturers = cachedManufacturers
                 .OrderBy(elem => Guid.NewGuid())
-                .Take(_catalogSettings.NumberManufacturersOnHome/2)
+                .Take(_catalogSettings.NumberManufacturersOnHome / 2)
                 .ToList();
 
             //Toma aleatoreamente un número de registros para ser mostrados dividido entre dos
             model.Categories = cachedCategories
                .OrderBy(elem => Guid.NewGuid())
-               .Take(_catalogSettings.NumberManufacturersOnHome/2)
+               .Take(_catalogSettings.NumberManufacturersOnHome / 2)
                .ToList();
 
             return View(model);
@@ -1024,7 +1024,8 @@ namespace Nop.Web.Controllers
         {
             var cacheKey = ModelCacheEventConsumer.CATEGORIES_HOMEPAGE;
 
-            var cachedCategories = _cacheManager.Get(cacheKey, () => {
+            var cachedCategories = _cacheManager.Get(cacheKey, () =>
+            {
 
                 var model = new CategoriesHomePageModel();
                 model.Categories = new List<CategoriesHomePageModel.CategoryHomePageModel>();
@@ -1033,7 +1034,7 @@ namespace Nop.Web.Controllers
                 var categoriesHomePage = _categoryService.GetCategoryOrganizationHomeMenu()
                     .OrderBy(c => c.ColumnId)
                     .OrderBy(c => c.Order);
-                
+
                 int column = 0;
                 foreach (var parentCategory in categoriesHomePage)
                 {
@@ -1041,7 +1042,8 @@ namespace Nop.Web.Controllers
                     var category = _categoryService.GetCategoryById(parentCategory.CategoryId);
 
                     //Inicial el modelo con los datos de la categoría
-                    var categoryModel = new CategoriesHomePageModel.CategoryHomePageModel() { 
+                    var categoryModel = new CategoriesHomePageModel.CategoryHomePageModel()
+                    {
                         CategoryId = parentCategory.CategoryId,
                         Name = category.Name,
                         SeName = category.GetSeName(),
@@ -1050,20 +1052,21 @@ namespace Nop.Web.Controllers
                         Column = parentCategory.ColumnId
                     };
 
-                    
+
 
                     //recorre los hijos y los agrega a la lista
                     categoryModel.ChildrenCategories = new List<CategoriesHomePageModel.CategoryHomePageModel>();
                     foreach (var childCategory in parentCategory.ChildrenCategories)
-	                {
-		                var child = _categoryService.GetCategoryById(childCategory.CategoryId);
-                        categoryModel.ChildrenCategories.Add(new CategoriesHomePageModel.CategoryHomePageModel(){
-                           CategoryId = child.Id,
+                    {
+                        var child = _categoryService.GetCategoryById(childCategory.CategoryId);
+                        categoryModel.ChildrenCategories.Add(new CategoriesHomePageModel.CategoryHomePageModel()
+                        {
+                            CategoryId = child.Id,
                             Name = child.Name,
                             SeName = child.GetSeName(),
-                            Order = childCategory.Order 
+                            Order = childCategory.Order
                         });
-	                }
+                    }
 
 
                     model.Categories.Add(categoryModel);
@@ -1080,7 +1083,7 @@ namespace Nop.Web.Controllers
             return View(cachedCategories);
         }
 
-        
+
         #endregion
 
 
@@ -1396,12 +1399,12 @@ namespace Nop.Web.Controllers
 
             //products
 
-            
+
             Dictionary<int, int> filterableSpecificationAttributeOptionIds;
             IPagedList<Product> products = null;
 
 
-            
+
             //Por defecto no se muestran las especificaciones adidcionales, pero si está filtrado por Id
             bool prepareSpecificationAttributes = false;
             bool prepareManufacturers = false;
@@ -1435,8 +1438,8 @@ namespace Nop.Web.Controllers
                     keywords: string.IsNullOrWhiteSpace(command.q) ? null : command.q);
             }
 
-            
-            model.Products = PrepareProductOverviewModels(products, prepareSpecificationAttributes:prepareSpecificationAttributes, prepareManufacturer: prepareManufacturers).ToList();
+
+            model.Products = PrepareProductOverviewModels(products, prepareSpecificationAttributes: prepareSpecificationAttributes, prepareManufacturer: prepareManufacturers).ToList();
 
             model.TotalActiveProducts = _productService.CountActiveProductsByVendorId(vendor.Id);
 
@@ -1523,7 +1526,8 @@ namespace Nop.Web.Controllers
         public ActionResult VendorsHomePage()
         {
             string cacheKey = ModelCacheEventConsumer.VENDOR_HOMEPAGE_KEY;
-            var vendors = _cacheManager.Get(cacheKey, () => {
+            var vendors = _cacheManager.Get(cacheKey, () =>
+            {
                 return _vendorService.GetAllVendors(showOnHomePage: true)
                     .ToModels(_workContext, _pictureService, _localizationService, _mediaSettings, _vendorService);
             });
@@ -1664,8 +1668,8 @@ namespace Nop.Web.Controllers
                 model = new SearchModel();
 
             model.IsMobileDevice = Request.Browser.IsMobileDevice;
-            
-           
+
+
 
             if (model.Q == null)
                 model.Q = "";
@@ -1970,7 +1974,7 @@ namespace Nop.Web.Controllers
             }
 
 
-            
+
         }
 
         [ChildActionOnly]
@@ -2044,10 +2048,11 @@ namespace Nop.Web.Controllers
                 model.IsMobileDevice = Request.Browser.IsMobileDevice;
                 model.Q = string.IsNullOrEmpty(model.Q) ? string.Empty : model.Q.Trim();
 
-                var pagedProducts = _cacheManager.Get(cacheKey, () => {
+                var pagedProducts = _cacheManager.Get(cacheKey, () =>
+                {
 
                     IPagedList<Product> products = new PagedList<Product>(new List<Product>(), 0, 1);
-                    
+
                     if (!string.IsNullOrEmpty(model.Q))
                     {
                         //Solo si tiene un filto por speficicación puede buscar
@@ -2106,7 +2111,7 @@ namespace Nop.Web.Controllers
                                 stateProvinceId: stateProvinceId,
                                 specialCategoryId: specialCategoryId);
 
-                            
+
                         }
                     }
 
@@ -2115,7 +2120,7 @@ namespace Nop.Web.Controllers
 
                 });
 
-                model.Products = PrepareProductOverviewModels(pagedProducts, utm_source:command.ana_source, utm_medium:command.ana_medium, utm_campaign:command.ana_campaign).ToList();
+                model.Products = PrepareProductOverviewModels(pagedProducts, utm_source: command.ana_source, utm_medium: command.ana_medium, utm_campaign: command.ana_campaign).ToList();
                 model.PagingFilteringContext.LoadPagedList(pagedProducts);
 
                 return View(model);
@@ -2138,7 +2143,7 @@ namespace Nop.Web.Controllers
             //    return HttpNotFound();
 
             var model = new SelectFeaturedAttributesByPlanModel();
-            
+
             try
             {
                 PrepareSelectFeaturedAttributesByPlanModel(id, command, product, model);
@@ -2155,7 +2160,7 @@ namespace Nop.Web.Controllers
                 else
                     return RedirectToAction("MyProducts", "ControlPanel");
             }
-            
+
             return View(model);
         }
 
@@ -2164,11 +2169,11 @@ namespace Nop.Web.Controllers
         [SameVendorProduct]
         public ActionResult SelectFeaturedAttributesByPlan(int id, FeaturedAttributesByPlanRequest command, SelectFeaturedAttributesByPlanModel model, Product product)
         {
-            
+
             //var product = _productService.GetProductById(id);
             //if (product == null)
             //    return HttpNotFound();
-            
+
             try
             {
                 //Procesa las validaciones y carga nuevamente el modelo
@@ -2179,7 +2184,7 @@ namespace Nop.Web.Controllers
                 return RedirectToAction("MyProducts", "ControlPanel");
             }
 
-            
+
             //Si el producto lo quiere seleccionar destacado en el home
             //lo actualiza asi como con las demás propiedades
             //Si se está activando el producto en esta caracteristica
@@ -2231,11 +2236,10 @@ namespace Nop.Web.Controllers
             _productService.UpdateProduct(product);
 
             //Si viene de la publicación confirma la publicación
-            //if (string.Equals(command.from, "publish"))
-            //    return RedirectToAction("PublishConfirmation", "Sales", new { id = id });
-            //else
-            //    return RedirectToAction("MyProducts", "ControlPanel");
-            return RedirectToAction("MyProducts", "ControlPanel");
+            if (string.Equals(command.from, "publish"))
+                return RedirectToAction("ConfirmationWithoutPlan", "Sales", new { id = id });
+            else
+                return RedirectToAction("MyProducts", "ControlPanel");
         }
 
 
@@ -2243,7 +2247,7 @@ namespace Nop.Web.Controllers
         {
             Order order = null;
             bool validatePlan = true;
-            
+
             //Si la llave NO viene nula significa que debe validarla. 
             if (!string.IsNullOrEmpty(command.sign))
             {
@@ -2285,23 +2289,17 @@ namespace Nop.Web.Controllers
 
 
             //Valida que tenga productos en el home
-            if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsOnHomePage))
-            {
-                model.NumProductsOnHomeLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnHomePage][0];
-                model.NumProductsOnHomeByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnHomePage][1];
-            }
+            model.NumProductsOnHomeLeft = leftProductsOnPlan.HomePageLeft;
+            model.NumProductsOnHomeByPlan = leftProductsOnPlan.HomePageByPlan;
+
             //valida productos en redes sociales
-            if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsOnSocialNetworks))
-            {
-                model.NumProductsOnSocialNetworksLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnSocialNetworks][0];
-                model.NumProductsOnSocialNetworksByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnSocialNetworks][1];
-            }
+            model.NumProductsOnSocialNetworksLeft = leftProductsOnPlan.SocialNetworkLeft;
+            model.NumProductsOnSocialNetworksByPlan = leftProductsOnPlan.SocialNetworkByPlan;
+
             //Valida productos en sliders
-            if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders))
-            {
-                model.NumProductsOnSlidersLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders][0];
-                model.NumProductsOnSlidersByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders][1];
-            }
+            model.NumProductsOnSlidersLeft = leftProductsOnPlan.SlidersLeft;
+            model.NumProductsOnSlidersByPlan = leftProductsOnPlan.SlidersByPlan;
+
 
             model.HasReachedLimitOfFeature = model.NumProductsOnSlidersLeft + model.NumProductsOnSocialNetworksByPlan + model.NumProductsOnHomeLeft <= 0;
 

@@ -31,6 +31,8 @@ namespace Nop.Services.Catalog
 
         public int DaysPlan { get; set; }
 
+        public bool IsMostExpensive { get; set; }
+
         /// <summary>
         /// Orden en el que se muestran los productos publicados con el plan seleccionado
         /// </summary>

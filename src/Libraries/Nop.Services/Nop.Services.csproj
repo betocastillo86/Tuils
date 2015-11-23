@@ -150,6 +150,7 @@
     <Compile Include="Catalog\CategoryTemplateService.cs" />
     <Compile Include="Catalog\IBackInStockSubscriptionService.cs" />
     <Compile Include="Catalog\IManufacturerTemplateService.cs" />
+    <Compile Include="Catalog\LeftFeaturedByVendorModel.cs" />
     <Compile Include="Catalog\PlanModel.cs" />
     <Compile Include="Catalog\RoundingHelper.cs" />
     <Compile Include="Catalog\ManufacturerTemplateService.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Common\AddressAttributeExtensions.cs" />
     <Compile Include="Common\AddressAttributeParser.cs" />
     <Compile Include="Common\AddressAttributeService.cs" />
+    <Compile Include="Common\DateTimeExtensions.cs" />
     <Compile Include="Common\IAddressAttributeParser.cs" />
     <Compile Include="Common\IAddressAttributeService.cs" />
     <Compile Include="Common\ISearchTermService.cs" />

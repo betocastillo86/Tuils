@@ -1365,6 +1365,7 @@ namespace Nop.Web.Controllers
                     PrepareProductOverviewModels(
                         _productService.SearchProducts(storeId: _storeContext.CurrentStore.Id,
                                                     leftFeatured: true,
+                                                    sold : false,
                                                     orderBySpecialCategoryId: orderBySpecialCategoryId), true, true, productThumbPictureSize)
                                                     .ToList() 
                     );

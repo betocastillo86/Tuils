@@ -1043,6 +1043,12 @@ namespace Nop.Admin.Controllers
                 //product
                 product = model.ToEntity(product);
                 product.UpdatedOnUtc = DateTime.UtcNow;
+
+
+                //Si se esta activando valida los limites de los destacados
+                if (product.Published && !model.PreviousPublisedProduct)
+                    ValidateFeaturedLimits(product);
+
                 _productService.UpdateProduct(product);
                 //search engine name
                 model.SeName = product.ValidateSeName(model.SeName, product.Name, true);
@@ -1059,6 +1065,8 @@ namespace Nop.Admin.Controllers
                 SaveStoreMappings(product, model);
                 //picture seo names
                 UpdatePictureSeoNames(product);
+
+
                 //discounts
                 var allDiscounts = _discountService.GetAllDiscounts(DiscountType.AssignedToSkus, null, true);
                 foreach (var discount in allDiscounts)
@@ -1097,7 +1105,11 @@ namespace Nop.Admin.Controllers
 
                 //Si fue aprobado y antes no lo estaba envía notificación al vendedor
                 if (product.Published && !model.PreviousPublisedProduct)
+                {
+                    //Envia el correo de aprobacion de la publciación
                     _workflowMessageService.SendPublishApprovedNotificationMessage(product, _workContext.WorkingLanguage.Id);
+                }
+                    
 
                 //activity log
                 _customerActivityService.InsertActivity("EditProduct", _localizationService.GetResource("ActivityLog.EditProduct"), product.Name);
@@ -1119,6 +1131,26 @@ namespace Nop.Admin.Controllers
             PrepareAclModel(model, product, true);
             PrepareStoresMappingModel(model, product, true);
             return View(model);
+        }
+        
+        
+        /// <summary>
+        /// Realiza las validaciones para determinar si se puede destacar o no el producto, sino se puede entonces lo deja sin destacar
+        /// </summary>
+        /// <param name="product"></param>
+        private void ValidateFeaturedLimits(Product product)
+        {
+            //Si tiene plan realiza las validaciones
+            /*if (product.Vendor.HasActivePlan())
+            {
+                var plan = _productService.GetPlanById(product.Id);
+                var leftProducts = _productService.CountLeftFeaturedPlacesByVendor(product, false, product.OrderPlan);
+                //Si no tiene disp
+                if(product.ShowOnHomePage && leftProducts.HomePageLeft <= 0)
+
+
+            }*/
+            _productService.EnableProduct(product, true, false);
         }
 
         //delete product

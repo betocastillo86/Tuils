@@ -52,6 +52,9 @@ namespace Nop.Admin.Models.Settings
         [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributeIdSocialNetworks")]
         public int SpecificationAttributeIdSocialNetworks { get; set; }
 
+        [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributeIdMostExpensivePlan")]
+        public int SpecificationAttributeIdMostExpensivePlan { get; set; }
+
 
         #region tiendas
         [NopResourceDisplayName("Admin.Configuration.Settings.Plans.SpecificationAttributePlanDays")]

@@ -183,6 +183,15 @@
         </tr>
         <tr>
             <td class="adminTitle">
+                @Html.LabelFor(m => m.SpecificationAttributeIdMostExpensivePlan):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.SpecificationAttributeIdMostExpensivePlan, Model.AvailableSpecificationAttributes)
+                @Html.ValidationMessageFor(m => m.SpecificationAttributeIdMostExpensivePlan)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
                 @Html.LabelFor(m => m.RunLikeTest):
             </td>
             <td class="adminData">

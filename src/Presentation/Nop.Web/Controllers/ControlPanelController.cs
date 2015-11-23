@@ -153,14 +153,14 @@ namespace Nop.Web.Controllers
                 var vendorSellings = _orderService.SearchOrders(vendorId: _workContext.CurrentVendor.Id);
                 model.SoldProducts = vendorSellings.Count;
 
-                if(model.PublishedProducts > 0)
+                if (model.PublishedProducts > 0)
                     //Suma el numero de preguntas sin responder
                     model.UnansweredQuestions = _productService.CountUnansweredQuestionsByVendorId(_workContext.CurrentVendor.Id);
 
                 model.VendorType = _workContext.CurrentVendor.VendorType;
             }
 
-            
+
 
             return model;
 
@@ -212,7 +212,7 @@ namespace Nop.Web.Controllers
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.BikeYear, model.BikeYear);
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.BikeCarriagePlate, model.BikeCarriagePlate);
 
-                    _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.Newsletter, Core.Domain.Messages.NewsLetterSuscriptionType.General, customer.GetFullName() );
+                    _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.Newsletter, Core.Domain.Messages.NewsLetterSuscriptionType.General, customer.GetFullName());
                     _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.NewsletterBrand, Core.Domain.Messages.NewsLetterSuscriptionType.MyBrand, customer.GetFullName());
                     _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.NewsletterReference, Core.Domain.Messages.NewsLetterSuscriptionType.MyReference, customer.GetFullName());
 
@@ -220,7 +220,7 @@ namespace Nop.Web.Controllers
                     if (_workContext.CurrentVendor != null)
                     {
                         _workContext.CurrentVendor.PhoneNumber = model.Phone;
-                        _vendorService.UpdateVendor(_workContext.CurrentVendor); 
+                        _vendorService.UpdateVendor(_workContext.CurrentVendor);
                     }
 
                     model.ConfirmMessage = _localizationService.GetResource("MyAccount.Confirm");
@@ -375,7 +375,7 @@ namespace Nop.Web.Controllers
         {
             if (_workContext.CurrentVendor == null)
                 return RedirectToAction("Index");
-            
+
             var model = PrepareMyOrdersModel(command, true);
             return View(model);
         }
@@ -510,7 +510,7 @@ namespace Nop.Web.Controllers
                     //    };
                     //}
                     #endregion
-                   
+
 
                 }
                 else
@@ -528,11 +528,11 @@ namespace Nop.Web.Controllers
                 model.ShowCurrentPlan = true;
 
                 var currentOrder = _workContext.CurrentVendor.CurrentOrderPlan;
-                var selectedPlan = currentOrder.OrderItems.FirstOrDefault().Product;
+                var selectedPlan = _productService.GetPlanById(currentOrder.OrderItems.FirstOrDefault().Product.Id); //currentOrder.OrderItems.FirstOrDefault().Product;
 
                 model.CurrentPlan.NumDaysToExpirePlan = Convert.ToInt32(_workContext.CurrentVendor.PlanExpiredOnUtc.Value.Subtract(DateTime.UtcNow).TotalDays);
                 model.CurrentPlan.ShowRenovateButton = _workContext.CurrentVendor.VendorType == VendorType.Market && _workContext.CurrentVendor.PlanExpiredOnUtc < DateTime.UtcNow.AddDays(10);
-                model.CurrentPlan.ShowUpgradeButton = true;
+                model.CurrentPlan.ShowUpgradeButton = !selectedPlan.IsMostExpensive;
 
 
                 //Carga los datos basicos de la orden
@@ -548,7 +548,7 @@ namespace Nop.Web.Controllers
                 //Carga los dats del producto
                 model.CurrentPlan.Order.Product = new Models.Catalog.ProductOverviewModel()
                 {
-                    Id = selectedPlan.Id,
+                    Id = selectedPlan.ProductId,
                     Name = selectedPlan.Name
                 };
 
@@ -557,36 +557,32 @@ namespace Nop.Web.Controllers
 
                 var leftProductsOnPlan = _productService.CountLeftFeaturedPlacesByVendor(currentOrder, _workContext.CurrentVendor.Id);
                 //Carga los datos de los productos que han sido destacados en el plan
-                if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsOnHomePage))
-                {
-                    model.CurrentPlan.NumProductsOnHomeLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnHomePage][0];
-                    model.CurrentPlan.NumProductsOnHomeByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnHomePage][1];
-                }
+
+                model.CurrentPlan.NumProductsOnHomeLeft = leftProductsOnPlan.HomePageLeft;
+                model.CurrentPlan.NumProductsOnHomeByPlan = leftProductsOnPlan.HomePageByPlan;
+
                 //valida productos en redes sociales
-                if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsOnSocialNetworks))
-                {
-                    model.CurrentPlan.NumProductsOnSocialNetworksLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnSocialNetworks][0];
-                    model.CurrentPlan.NumProductsOnSocialNetworksByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnSocialNetworks][1];
-                }
+
+                model.CurrentPlan.NumProductsOnSocialNetworksLeft = leftProductsOnPlan.SocialNetworkLeft;
+                model.CurrentPlan.NumProductsOnSocialNetworksByPlan = leftProductsOnPlan.SocialNetworkByPlan;
+
                 //Valida productos en sliders
-                if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders))
-                {
-                    model.CurrentPlan.NumProductsOnSlidersLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders][0];
-                    model.CurrentPlan.NumProductsOnSlidersByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders][1];
-                }
+
+                model.CurrentPlan.NumProductsOnSlidersLeft = leftProductsOnPlan.SlidersLeft;
+                model.CurrentPlan.NumProductsOnSlidersByPlan = leftProductsOnPlan.SlidersByPlan;
+
                 //Valida productos
-                if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdLimitProducts))
-                {
-                    model.CurrentPlan.NumProductsLeft = leftProductsOnPlan[_planSettings.SpecificationAttributeIdLimitProducts][0];
-                    model.CurrentPlan.NumProductsByPlan = leftProductsOnPlan[_planSettings.SpecificationAttributeIdLimitProducts][1];
-                }
+
+                model.CurrentPlan.NumProductsLeft = leftProductsOnPlan.ProductsLeft;
+                model.CurrentPlan.NumProductsByPlan = leftProductsOnPlan.ProductsByPlan;
+
             }
             else
             {
                 model.ShowAlertUpgradePlan = _workContext.CurrentVendor.VendorType == VendorType.Market;
             }
             #endregion
-            
+
 
 
             model.PagingFilteringContext.LoadPagedList(orders);
@@ -630,10 +626,10 @@ namespace Nop.Web.Controllers
                 if (command.pt.HasValue)
                     categoriesIds = GetChildCategoryIds(command.pt.Value);
 
-                var vendor =_workContext.CurrentVendor;
+                var vendor = _workContext.CurrentVendor;
 
                 var products = _productService.SearchProducts(showHidden: !showPublished, categoryIds: categoriesIds, vendorId: vendor.Id,
-                    pageSize: command.PageSize, pageIndex: command.PageIndex, keywords: keywordsSearch, 
+                    pageSize: command.PageSize, pageIndex: command.PageIndex, keywords: keywordsSearch,
                     orderBy: ProductSortingEnum.UpdatedOn, published: showPublished);
 
                 model.Products = products.Select(p => new ProductOverviewModel()
@@ -696,22 +692,19 @@ namespace Nop.Web.Controllers
                     //Cuenta los productos que le quedan por destacar posibles
                     int countLeft = 0;
                     //Valida que tenga productos en el home
-                    if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsOnHomePage))
-                        countLeft += leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnHomePage][0];
-                    
+                    countLeft += leftProductsOnPlan.HomePageLeft;
+
                     //valida productos en redes sociales
-                    if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsOnSocialNetworks))
-                        countLeft += leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsOnSocialNetworks][0];
-                    
+                    countLeft += leftProductsOnPlan.SocialNetworkLeft;
+
                     //Valida productos en sliders
-                    if (leftProductsOnPlan.ContainsKey(_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders))
-                        countLeft += leftProductsOnPlan[_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders][0];
+                    countLeft += leftProductsOnPlan.SlidersLeft;
 
                     model.HasReachedLimitOfFeature = countLeft <= 0;
                 }
                 #endregion
 
-                
+
 
 
 

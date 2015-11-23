@@ -57,7 +57,11 @@
                             @Html.ActionLink(T("MyOrders.RenovatePlan").Text, "SelectPlanVendor", "Sales", new { }, new { @class = "btn-naranja" })
                         }
 
+                        @if (Model.CurrentPlan.ShowUpgradeButton)
+                        { 
                         @Html.ActionLink(T("MyOrders.UpgradePlan").Text, "SelectPlanVendor", "Sales", new { force = true, limit = Model.CurrentPlan.NumProductsByPlan }, new { @class = "btn-azul" })
+                        }
+
 
                         @*@Model.CurrentPlan.Order.Price*@
                     </div>

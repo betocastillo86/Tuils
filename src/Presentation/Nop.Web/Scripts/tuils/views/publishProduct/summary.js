@@ -111,7 +111,7 @@ define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars
                 }
                 else
                 {
-                    this.markErrorsOnForm(this.errors, this.bindings);
+                    this.markErrorsOnForm(this.errors, { "PhoneNumber": "#PhoneNumber" });
                     return false;
                 }
             },

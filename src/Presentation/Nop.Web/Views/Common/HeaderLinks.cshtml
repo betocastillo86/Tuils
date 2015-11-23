@@ -55,7 +55,7 @@
         }
         @if (Model.WishlistEnabled)
         {
-            <li style="padding:0 5px;">
+            <li style="padding:0 5px;@(Model.WishlistItems == 0  ? "display:none" : string.Empty) " id="divWishlist">
                 <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">
                     <span class="icon-corazon"></span>
                     <span class="wishlist-label">@T("Wishlist")</span>

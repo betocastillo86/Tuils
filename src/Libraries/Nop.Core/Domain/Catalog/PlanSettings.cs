@@ -33,6 +33,8 @@ namespace Nop.Core.Domain.Catalog
 
         public int SpecificationAttributeIdSocialNetworks { get; set; }
 
+        public int SpecificationAttributeIdMostExpensivePlan { get; set; }
+
         public bool RunLikeTest { get; set; }
 
 

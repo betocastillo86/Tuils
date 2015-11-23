@@ -636,7 +636,7 @@ namespace Nop.Services.Catalog
         ///     Valor: Array en posicion 0: Conteo de los productos que le quedan disponibles al vendor
         ///            Array en posicion 1: Conteo de los productos que puede seleccionar en el plan
         /// </returns>
-        Dictionary<int, int[]> CountLeftFeaturedPlacesByVendor(Product product, bool validatePlan, Order order = null);
+        LeftFeaturedByVendorModel CountLeftFeaturedPlacesByVendor(Product product, bool validatePlan, Order order = null);
 
         /// <summary>
         /// Cuenta la cantidad de lugares que le quedan disponibles a un vendedor dependiendo del plan seleccionado
@@ -652,7 +652,7 @@ namespace Nop.Services.Catalog
         ///     Valor: Array en posicion 0: Conteo de los productos que le quedan disponibles al vendor
         ///            Array en posicion 1: Conteo de los productos que puede seleccionar en el plan
         /// </returns>
-        Dictionary<int, int[]> CountLeftFeaturedPlacesByVendor(Order order, int vendorId);
+        LeftFeaturedByVendorModel CountLeftFeaturedPlacesByVendor(Order order, int vendorId);
 
         /// <summary>
         /// Trae los productos que están a punto de finalizar dependiendo de un numero de dias previos
@@ -696,8 +696,10 @@ namespace Nop.Services.Catalog
         /// <summary>
         /// Realiza las validaciones para habilitar un producto y lo actualiza
         /// </summary>
+        /// <param name="forceEnable">Fuerza la habilitación del producto sin importar si tiene o no disponibles</param>
+        /// <param name="updateProduct">True: Actualiza el producto en base de datos</param>
         /// <param name="product">Producto a actualizar</param>
-        void EnableProduct(Product product);
+        void EnableProduct(Product product, bool forceEnable = false, bool updateProduct = true);
 
 
         /// <summary>

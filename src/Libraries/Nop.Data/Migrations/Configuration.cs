@@ -1171,6 +1171,12 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("myproducts.noPublished", "Pendiente aprobación");
                 newLocaleStringResources.Add("myproducts.outOfDate", "Vencido");
                 newLocaleStringResources.Add("Plugins.PayUExternal.Doubt", "Si tienes alguna sugerencia o pregunta no dudes en contactarnos a nuestro correo electrónico info@tuils.com");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdMostExpensivePlan", "Caracteristica del plan más caro");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdMostExpensivePlan.Hint", "Caracteristica del plan más caro");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.ShowOnHomePage", "Mostrar en el home");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.ShowOnHomePage.Hint", "Mostrar en el home");
+                
+                
                 
                 
                 
