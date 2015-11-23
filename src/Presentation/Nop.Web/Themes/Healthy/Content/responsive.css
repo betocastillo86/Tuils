@@ -1001,7 +1001,7 @@ html.oldie .container { width: 940px; }
     .descript_pro{width: calc(100% - 290px);}
     /*Mis productos*/
     .product-dtl-img{width: 100px; height: 100px; margin: 10px 0 0;}
-    .product-dtl-txt{width: calc(100% - 395px);}
+    .product-dtl-txt{width: calc(100% - 415px);}
         .product-dtl-txt ul li{float: none; width:100%;}
     /*fin panel de control*/
 
