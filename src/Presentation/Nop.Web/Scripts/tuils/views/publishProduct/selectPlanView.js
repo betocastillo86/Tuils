@@ -62,10 +62,12 @@
                 this.$("#btnContinue").css('display', isFree ? 'block' : 'none');
                 this.$("#btnPay").css('display', isFree ? 'none' : 'block');
             },
-            createOrder: function () {
+            createOrder: function (obj) {
                 var errors = this.validateControls();
                 if (this.model.isValid())
                 {
+                    this.disableButtonForSeconds($(obj.currentTarget));
+                    this.showLoadingAll();
                     this.model.newOrder();
                 }
             },

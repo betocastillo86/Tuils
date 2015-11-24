@@ -46,7 +46,9 @@
                 this.$("[data-sel='" + plan + "']").addClass("selected");
                 this.$("[data-sel!='" + plan + "']").removeClass("selected");
                 //Deshabilita el boton de comprar plan cuando es gratis
-                this.$('a.btn_continue[for="show_plan_' + this.currentTab + '"]').css('display', this.isFreePlan() ? 'none' : 'block');
+                var btnBuy = this.$('a.btn_continue[for="show_plan_' + this.currentTab + '"]');
+                if(btnBuy.length > 0)
+                    btnBuy.css('display', this.isFreePlan() ? 'none' : 'block');
             },
             activeTab: function (tab) {
                 this.currentTab = tab;

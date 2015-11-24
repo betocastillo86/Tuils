@@ -384,7 +384,7 @@ namespace Nop.Core.Domain.Catalog
         /// <summary>
         /// Limite de productos publicados por usuario
         /// </summary>
-        public int ProductLimitPublished { get; set; }
+        //public int ProductLimitPublished { get; set; }
         /// <summary>
         /// Numero máximo de productos destacados  en el home
         /// </summary>

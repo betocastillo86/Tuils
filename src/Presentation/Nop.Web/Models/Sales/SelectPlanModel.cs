@@ -74,9 +74,6 @@ namespace Nop.Web.Models.Sales
 
 
         
-
-        
-        
         public class CustomerAddress
         {
             public int AddressId { get; set; }

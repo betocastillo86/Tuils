@@ -26,24 +26,35 @@
         
         <div class="legal_plan">Consulta los <a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })" target="_blank">Términos de uso</a> para obtener más información.</div>
 
-        
-        @if (Model.IsAuthenticated)
-        { 
-            @Html.ActionLink(T("showplans.selectPlanMarket").Text, "SelectPlanVendor", new { }, new { @class = "btn_continue button-1", @for = "show_plan_empresas" })
-        }
-        else
+        @if (!Model.HideBuyButtonForMarket)
         {
-            <input id="btnGetPlanVendor" class="btn_continue button-1" for="show_plan_empresas" value="@T("showplans.selectPlanMarket").Text" type="button" />
+            if (Model.IsAuthenticated)
+            {
+                @Html.ActionLink(T("showplans.selectPlanMarket").Text, "SelectPlanVendor", new { }, new { @class = "btn_continue button-1", @for = "show_plan_empresas" })
+            }
+            else
+            {
+                <input id="btnGetPlanVendor" class="btn_continue button-1" for="show_plan_empresas" value="@T("showplans.selectPlanMarket").Text" type="button" />
+            }
+        }
+
+
+        @if (!Model.HideBuyButtonForUsers)
+        { 
+         @Html.ActionLink(T("showplans.selectPlanUser").Text, "Index", new { }, new { @class = "btn_continue button-1", @for = "show_plan_personas" })
+        }
+        
+        <br />
+        @if (!Model.HideBuyButtonForMarket)
+        {
+            <div class="contact-plan" for="show_plan_empresas" style="display:none">
+                <h3>@T("showplans.contactForBetterPlanQuestion")</h3>
+                <p>@T("showplans.contactForBetterPlan")</p>
+                <a class="button-1 " href="javascript:;">@T("showplans.contactForBetterPlanButton")</a>
+            </div>
         }
 
         
-        @Html.ActionLink(T("showplans.selectPlanUser").Text, "Index", new { }, new { @class = "btn_continue button-1", @for = "show_plan_personas" })
-        <br />
-        <div class="contact-plan" for="show_plan_empresas" style="display:none">
-            <h3>@T("showplans.contactForBetterPlanQuestion")</h3>
-            <p>@T("showplans.contactForBetterPlan")</p>
-            <a class="button-1 " href="javascript:;">@T("showplans.contactForBetterPlanButton")</a>
-        </div>
     </div>
    
 </div>

@@ -22,5 +22,10 @@ namespace Nop.Web.Models.Sales
         /// Puede venir preseleccionado un plan, posiblemente cuando una de las transacciones falla
         /// </summary>
         public int? plan { get; set; }
+
+        /// <summary>
+        /// True, es un reintento de un pago fallido
+        /// </summary>
+        public bool retry { get; set; }
     }
 }

@@ -2710,7 +2710,7 @@ namespace Nop.Services.Catalog
             else
             {
                 int totalPublishedWiouthPaying = products.Where(p => !p.OrderPlanId.HasValue).Count();
-                limit = _catalogSettings.ProductLimitPublished;
+                limit = GetPlanById(_planSettings.PlanProductsFree).NumProducts;
                 //Si hay limite realiza la validación
                 if (limit > 0)
                 {
@@ -3092,10 +3092,10 @@ namespace Nop.Services.Catalog
                            !p.OrderPlanId.HasValue)
                        .Count();
 
-
+                int productLimitPublished = GetPlanById(_planSettings.PlanProductsFree).NumProducts;
                 //Si el numero de productos publicados por el usuario es mayor o igual que el cupo que se tiene gratis
                 //el usuario no puede reactivarlo
-                if (numProductsVendor >= _catalogSettings.ProductLimitPublished)
+                if (numProductsVendor >= productLimitPublished)
                 {
                     throw new NopException("Ha alcanzado el limite de publicaciones gratis");
                 }
