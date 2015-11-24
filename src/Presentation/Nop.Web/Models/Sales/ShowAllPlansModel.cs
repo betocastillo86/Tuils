@@ -12,5 +12,9 @@ namespace Nop.Web.Models.Sales
         public SelectPlanModel MarketPlans { get; set; }
 
         public bool IsAuthenticated { get; set; }
+
+        public bool HideBuyButtonForUsers { get; set; }
+
+        public bool HideBuyButtonForMarket { get; set; }
     }
 }

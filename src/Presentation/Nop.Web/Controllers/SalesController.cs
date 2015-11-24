@@ -199,14 +199,21 @@ namespace Nop.Web.Controllers
         {
             var model = new ShowAllPlansModel();
 
+            var vendor = _workContext.CurrentVendor;
+
             if (tab.Equals("empresas")
                 && !_workContext.CurrentCustomer.IsGuest()
-                && _workContext.CurrentVendor != null && _workContext.CurrentVendor.VendorType == VendorType.Market)
+                && vendor != null && vendor.VendorType == VendorType.Market)
                 return RedirectToAction("SelectPlanVendor");
 
 
 
             model.IsAuthenticated = !_workContext.CurrentCustomer.IsGuest();
+
+            //El boton de comprar para usuarios se oculta si una tienda está autenticada
+            model.HideBuyButtonForUsers = model.IsAuthenticated && vendor != null && vendor.VendorType == VendorType.Market;
+            //El boton de comprar para tiendas se oculta si un usuario está autenticada
+            model.HideBuyButtonForMarket = model.IsAuthenticated && vendor != null && vendor.VendorType == VendorType.User;
 
             model.MarketPlans = new SelectPlanModel() { VendorType = Core.Domain.Vendors.VendorType.Market, Plans = LoadPlansByVendorType(VendorType.Market) };
             model.UserPlans = new SelectPlanModel() { VendorType = Core.Domain.Vendors.VendorType.User, Plans = LoadPlansByVendorType(VendorType.User) };
@@ -339,6 +346,7 @@ namespace Nop.Web.Controllers
             model.CustomerInformation.PhoneNumber = _workContext.CurrentCustomer.GetAttribute<string>(SystemCustomerAttributeNames.Phone);
             model.CustomerInformation.FullName = _workContext.CurrentCustomer.GetFullName();
             model.IsTest = _planSettings.RunLikeTest;
+            model.DisableFreePlan = command.retry;
         }
 
         /// <summary>

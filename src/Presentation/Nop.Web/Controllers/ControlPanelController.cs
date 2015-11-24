@@ -220,6 +220,7 @@ namespace Nop.Web.Controllers
                     if (_workContext.CurrentVendor != null)
                     {
                         _workContext.CurrentVendor.PhoneNumber = model.Phone;
+                        _workContext.CurrentVendor.Email = model.Email;
                         _vendorService.UpdateVendor(_workContext.CurrentVendor);
                     }
 

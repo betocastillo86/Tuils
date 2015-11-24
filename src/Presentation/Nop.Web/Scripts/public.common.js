@@ -18,10 +18,12 @@ define(['jquery'], function ($) {
 
     window.displayAjaxLoading = function(display) {
         if (display) {
-            $('.ajax-loading-block-window').show();
+            //$('.ajax-loading-block-window').show();
+            $("#divFullLoading").addClass('loading');
         }
         else {
-            $('.ajax-loading-block-window').hide('slow');
+            //$('.ajax-loading-block-window').hide('slow');
+            $("#divFullLoading").removeClass('loading');
         }
     }
 

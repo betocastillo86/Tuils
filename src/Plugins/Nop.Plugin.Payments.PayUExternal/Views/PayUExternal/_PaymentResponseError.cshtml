@@ -16,7 +16,7 @@
             @*<li>Dirección: Calle 30 b sur # 8a - 13</li>*@
         </ul>
         <div class="conte_btn">
-            @Html.ActionLink(T("Plugins.PayUExternal.TryAgain").Text, Model.VendorType == Nop.Core.Domain.Vendors.VendorType.User ? "SelectPlan" : "SelectPlanVendor", "Sales", Model.ProductId > 0 ? (object)new { id = Model.ProductId, plan = Model.SelectedPlanId } : (object)new { plan = Model.SelectedPlanId }, new { @class = "button-1 btnBack left" })
+            @Html.ActionLink(T("Plugins.PayUExternal.TryAgain").Text, Model.VendorType == Nop.Core.Domain.Vendors.VendorType.User ? "SelectPlan" : "SelectPlanVendor", "Sales", Model.ProductId > 0 ? (object)new { id = Model.ProductId, plan = Model.SelectedPlanId, retry = true } : (object)new { plan = Model.SelectedPlanId, retry = true }, new { @class = "button-1 btnBack left" })
             @if (Model.ProductId > 0)
             { 
                 @Html.ActionLink(T("Plugins.PayUExternal.ContinueWithoutPlan").Text, "ConfirmationWithoutPlan", "Sales", new { id = Model.ProductId } , new { @class = "button-1 left" })

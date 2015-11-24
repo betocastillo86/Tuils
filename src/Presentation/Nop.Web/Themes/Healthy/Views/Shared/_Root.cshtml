@@ -56,11 +56,11 @@
                     @RenderSection("ContentSliderSection")
                 }
                 @*added*@
-                    @*ajax loading window*@
-                    <div class="ajax-loading-block-window" style="display: none">
-                        <div class="loading-image">
-                        </div>
-                    </div>
+                    @*ajax loading windo
+    <div class="ajax-loading-block-window" style="display: none">
+        <div class="loading-image">
+        </div>
+    </div>w*@
             <div class="@(this.ViewData["noWidth"] != null && Convert.ToBoolean(this.ViewData["noWidth"]) ? string.Empty : "master-wrapper-main")">
                 @RenderBody()
             </div>
