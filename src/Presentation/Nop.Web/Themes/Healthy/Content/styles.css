@@ -768,6 +768,7 @@ td.fieldname{font-size:12px;}
 .product-viewmode{margin:0 auto 10px;float:right;}
 .product-page-size{width:165px;margin:0 auto;text-align:center;}
 /*FILTROS*/
+.content-filter{margin:20px 0;}
 .product-filters-wrapper{background: #f1f1f1;}
 .product-filters-wrapper ul{ margin:0; list-style: none;}
 .product-filters-wrapper .tit_fil{background:#292732; box-sizing:border-box; color:#a9a9ad; text-transform: uppercase; font-weight: 500; padding: 12px 20px;}
