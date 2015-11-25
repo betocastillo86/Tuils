@@ -108,6 +108,8 @@ namespace Nop.Web.Controllers
                 model.NumLimitOfProducts = limit;
             }
 
+            model.VendorType = _workContext.CurrentVendor != null ? _workContext.CurrentVendor.VendorType : VendorType.User;
+
             return View(model);
         }
 
@@ -468,9 +470,10 @@ namespace Nop.Web.Controllers
             model.ProductDetails.Name = product.Name;
             model.ProductDetails.ProductPrice.Price = _priceFormatter.FormatPrice(product.Price);
             model.ProductDetails.DefaultPictureModel = product.GetPicture(_localizationService, _mediaSettings, _pictureService);
-            
+
             //De acuerdo a si es tienda o no carga el limite de dias de publicación
-            model.LimitDaysOfProductPublished = _productService.GetPlanById(_workContext.CurrentVendor.VendorType != VendorType.Market ? _planSettings.PlanProductsFree : _planSettings.PlanStoresFree).DaysPlan;
+            model.LimitDaysOfProductPublished = _workContext.CurrentVendor.GetCurrentPlan(_productService, _planSettings).DaysPlan;
+            model.VendorType = _workContext.CurrentVendor.VendorType;
             
 
             return View(model);
@@ -496,6 +499,7 @@ namespace Nop.Web.Controllers
             model.IsMobileDevice = Request.Browser.IsMobileDevice;
             int limit;
             model.HasReachedLimitOfProducts = HasReachedLimitOfProducts(out limit);
+            model.VendorType = _workContext.CurrentVendor != null ? _workContext.CurrentVendor.VendorType : VendorType.User;
             model.NumLimitOfProducts = limit;
             model.MaxSizeFileUpload = _tuilsSettings.maxFileUploadSize;
             if (_workContext.CurrentVendor != null)

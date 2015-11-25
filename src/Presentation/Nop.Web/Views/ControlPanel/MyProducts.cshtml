@@ -10,14 +10,14 @@
 <div class="panel-control">
     <h2 class="tit_sec">@T("MyProducts.Title")</h2>
     <div class="header_myProduct">
-        @Html.ActionLink(T("common.publishProduct").Text, "Index", "Sales", new { }, new { @class = "button-1" })
+        @Html.ActionLink(T("common.publishProductNoFree").Text, "Index", "Sales", new { }, new { @class = "button-1" })
 
-        <div class="filters">
+        @*<div class="filters">
             Filtrar solo:
             <a href="@Model.UrlFilterByServices.Url" class="@(Model.UrlFilterByServices.Active ? "active" : string.Empty)" title="@T("common.filterByService")">@T("controlpanel.publishproductservice")</a>
             <a href="@Model.UrlFilterByProducts.Url" class="@(Model.UrlFilterByProducts.Active ? "active" : string.Empty)" title="@T("common.filterByProduct")">@T("controlpanel.publishproduct")</a>
             <a href="@Model.UrlFilterByBikes.Url" class="@(Model.UrlFilterByBikes.Active ? "active" : string.Empty)" title="@T("common.filterByBikes")">@T("controlpanel.publishproductbike")</a>
-        </div>
+        </div>*@
 
         <div class="search-pdt">
             <input type="text" class="searchinput" value="@Model.PagingFilteringContext.q" />

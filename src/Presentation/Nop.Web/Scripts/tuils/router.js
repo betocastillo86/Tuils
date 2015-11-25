@@ -52,6 +52,7 @@
                 'buscar(/*query)': 'search',
                 'recordar-clave': 'passwordRecovery',
                 'mapa-del-sitio': 'sitemap',
+                'quiero-vender/confirmacion/:id':'loadSubViews',
                 'condiciones-de-uso': 'useConditions',
                 'contacto': 'contactUs',
                 'quienes-somos': 'aboutUs',

@@ -2855,6 +2855,8 @@ namespace Nop.Services.Catalog
                     }
                     //IMPORTANTE. Para los destacados como relacionados se va dejar el mismo OptionAttributeFeaturedCategories
                     //al filtrar los productos de la misma categoría del producto que se está mostrando
+                    
+                    product.FeaturedForSliders = true;
                 }
                 //Destaca los del home
                 else if (attribute.Id == _planSettings.SpecificationAttributeIdHomePage)

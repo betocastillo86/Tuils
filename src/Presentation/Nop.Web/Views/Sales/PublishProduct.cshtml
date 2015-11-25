@@ -42,7 +42,7 @@
                     </ol>
                     @if (Model.HasReachedLimitOfProducts)
                     {
-                        <div class="alert-public"><span class="icon-alert"></span> <p>@T("PublishProduct.HasReachedLimitOfProducts", Model.NumLimitOfProducts)</p><br/></div>
+                        <div class="alert-public"><span class="icon-alert"></span> <p>@T(string.Concat("PublishProduct.HasReachedLimitOfProducts", Model.VendorType), Model.NumLimitOfProducts)</p><br/></div>
                     }
 
                     <div id="divStep_1">

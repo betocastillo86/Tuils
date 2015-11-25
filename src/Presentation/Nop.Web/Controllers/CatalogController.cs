@@ -2301,7 +2301,7 @@ namespace Nop.Web.Controllers
             model.NumProductsOnSlidersByPlan = leftProductsOnPlan.SlidersByPlan;
 
 
-            model.HasReachedLimitOfFeature = model.NumProductsOnSlidersLeft + model.NumProductsOnSocialNetworksByPlan + model.NumProductsOnHomeLeft <= 0;
+            model.HasReachedLimitOfFeature = model.NumProductsOnSlidersLeft + model.NumProductsOnSocialNetworksLeft + model.NumProductsOnHomeLeft <= 0;
 
             model.ShowFinishPublishingButton = command.from == "publish";
         }

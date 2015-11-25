@@ -689,7 +689,8 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("PublishProduct.PublishSimilar", "Publicar similar");
                 newLocaleStringResources.Add("PublishProduct.GotoPublishing", "Ir a publicaciones");
                 newLocaleStringResources.Add("PublishProduct.PublishFinished", "¡Listo ya publicaste!");
-                newLocaleStringResources.Add("PublishProduct.TimeOutPost", "¡Tu publicación es Gratuita y durará {0} días!");
+                newLocaleStringResources.Add("PublishProduct.TimeOutPostUser", "Recuerda que tu publicación estará publicada durante {0} días.");
+                newLocaleStringResources.Add("PublishProduct.TimeOutPostMarket", "Recuerde que su publicación estará publicada durante {0} días.");
                 newLocaleStringResources.Add("PublishProduct.StepMenu2_Service", "Detalle del servicio");
                 newLocaleStringResources.Add("PublishProduct.TitleDoorToDoor", "Domicilios");
                 newLocaleStringResources.Add("PublishProduct.IsDoorToDoor", "Se hacen domicilios");
@@ -760,7 +761,8 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("VendorServices.References", "Referencias Especializadas");
                 newLocaleStringResources.Add("MyOrdersModel.Title", "Mis Compras");
                 newLocaleStringResources.Add("PageTitle.MyOrders", "Mira lo que has comprado en Tuils");
-                newLocaleStringResources.Add("MyOrders.Description", "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500");
+                newLocaleStringResources.Add("MyOrders.DescriptionUser", "Abajo encuentras todas las veces en las que has pagado por destacar uno de tus productos");
+                newLocaleStringResources.Add("MyOrders.DescriptionMarket", "A continuación encuentra los planes que ha adquirido a lo largo de la historia. El plan que se encuentre en estado Activo es el que posee actualmente.");
                 newLocaleStringResources.Add("MyOrders.Product", "Producto");
                 newLocaleStringResources.Add("MyOrders.Vendor", "Vendedor");
                 newLocaleStringResources.Add("MyOrders.Rating", "Calificación");
@@ -819,7 +821,7 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Filtering.ManufacturerFilter.CurrentlyFilteredBy", "Estas filtrando por marca");
                 newLocaleStringResources.Add("Filtering.ManufacturerFilter.Remove", "Quitar filtro");
                 newLocaleStringResources.Add("controlpanel.changePassword", "Cambiar clave");
-                newLocaleStringResources.Add("common.publishProduct", "Publica tu anuncio");
+                newLocaleStringResources.Add("common.publishProduct", "Publica tu anuncio gratis");
                 newLocaleStringResources.Add("common.filterByService", "Filtrar por servicios");
                 newLocaleStringResources.Add("common.filterByProduct", "Filtrar por producto");
                 newLocaleStringResources.Add("common.filterByBike", "FIltrar por motocicletas");
@@ -988,7 +990,8 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Configuration.Settings.GeneralCommon.DisableRobotsForTestingSite", "Este sitio es de pruebas y es necesario deshabilitarle el robots.txt");
                 newLocaleStringResources.Add("MySales.Date", "Fecha compra");
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.ProductLimit", "Limite de productos publicados por usuario");
-                newLocaleStringResources.Add("PublishProduct.HasReachedLimitOfProducts", "Has alcanzado el limite de publicaciones, es posible que tu producto no sea publicado. Si quieres realizar más publicaciones contactate con nosotros {0}");
+                newLocaleStringResources.Add("PublishProduct.HasReachedLimitOfProductsUser", "Has alcanzado el limite de publicaciones gratis ({0}), te recomendamos destacar tu producto con alguno de nuestros planes.");
+                newLocaleStringResources.Add("PublishProduct.HasReachedLimitOfProductsMarket", "Ha alcanzado el limite de productos a publicar en el plan que posee({0} productos). Adquiera un plan más alto para poder destacar mejor sus productos");
 
                 newLocaleStringResources.Add("controlpanelindex.greeting.complement", "Para nosotros es un gusto recibirte en esta gran plataforma. Recuerda que aquí puedes publicar productos de forma GRATUITA para que logres hacer negocios como compras, ventas, adquisición de servicios, y mucho más.");
                 newLocaleStringResources.Add("controlpanelindex.greeting.complement.shops", "Para nosotros es un gusto recibirte en esta gran plataforma. Recuerda que aquí puedes publicar productos para que logres hacer negocios como compras, ventas, adquisición de servicios, y mucho más.");
@@ -1079,16 +1082,16 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdProductsOnHomePage", "Atributo productos en homepage");
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdProductsOnSocialNetworks", "Atributo productos en redes sociales");
 
-                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnHome", "Destacados en el home");
-                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnSliders", "Destacados en los sliders");
-                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks", "Destacados en redes sociales");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnHome", "Página principal");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnSliders", "Página principal de categorías y marcas");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks", "En redes sociales (Facebook, Instagram)");
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.Save", "Destacar");
 
                 newLocaleStringResources.Add("myproducts.featureByPlan", "Destacar");
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.gotoMyProducts", "Volver a mis productos");
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdLimitProducts", "Limite de productos publicados");
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.HasReachedLimitOfProducts", "Su plan ha llegado al limite de productos a publicar ({0} productos). Adquiera un plan más alto para poder destacar mejor sus productos");
-                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.HasReachedLimitOfFeature", "No puede destacar este producto ya que el plan que posee a alcanzado el limite máximo de destacados");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.HasReachedLimitOfFeature", "Ha alcanzado el limite de productos destacados para el plan que tiene, por esta razón este producto no podrá ser destacado.");
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectPlan", "Adquirir Plan");
                 newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.PublishProduct", "Publicar producto");
                 newLocaleStringResources.Add("myproducts.featureByProduct", "Destacar");
@@ -1138,7 +1141,7 @@ namespace Nop.Data.Migrations
 
                 newLocaleStringResources.Add("selectplan.buttonpay", "Pagar");
                 newLocaleStringResources.Add("featuredProduct.ProductInformationTitle", "Detalles del producto");
-                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.Success", "Pago realizado correctamente");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.Success", "El pago fue efectuado de manera correcta");
                 newLocaleStringResources.Add("publishproduct.timeToActivate", "Recuerda que en pocos minutos podrás ver tu producto activado");
                 newLocaleStringResources.Add("selectplan.continuewithoutplan", "Continuar sin destacar");
                 newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnHome.Alt", "Número de productos destacados en la pagina de inicio");
@@ -1151,10 +1154,10 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Plugins.PayUExternal.TryAgain", "Volver a intentar");
                 newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.SuccessPlan", "Gracias, el pago de su plan se ha hecho correctamente");
                 newLocaleStringResources.Add("selectPlan.fields.stateprovince", "Departamento");
-                newLocaleStringResources.Add("selectplan.subtitle.market", "Seleccione el plan ideal para su empresa");
-                newLocaleStringResources.Add("selectplan.subtitle.user", "Selecciona el plan ideal para tu producto");
-                newLocaleStringResources.Add("selectplan.additionalMessage.market", "Puede cambiar a un plan inferior o superior en cualquier momento");
-                newLocaleStringResources.Add("selectplan.additionalMessage.user", "Puedes escoger el que quieras al momento de publicar tu producto");
+                newLocaleStringResources.Add("selectplan.subtitle.market", "Seleccione el tipo de plan ideal que desea para su empresa");
+                newLocaleStringResources.Add("selectplan.subtitle.user", "Selecciona el tipo de publicación que deseas");
+                newLocaleStringResources.Add("selectplan.additionalMessage.market", "A mayor visibilidad, tendrá más oportunidades de vender");
+                newLocaleStringResources.Add("selectplan.additionalMessage.user", "A mayor visibilidad, tendrás más oportunidades de vendero");
                 newLocaleStringResources.Add("Admin.Vendors.List.VendorType", "Tipo de vendedor");
                 newLocaleStringResources.Add("Admin.Vendors.List.VendorType.Hint", "Tipo de vendedor");
                 newLocaleStringResources.Add("Admin.Vendors.Fields.VendorType", "Tipo de vendedor");
@@ -1183,7 +1186,16 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowOnSN", "En redes sociales");
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.DefaultServicePicture", "Imagen por defecto categoría");
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.DefaultServicePicture.Hint", "Imagen por defecto categoría");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.ChooseOne", "Escoja la manera en que desea destacar su producto");
+                newLocaleStringResources.Add("PageTitle.ConfirmationWithoutPlanUser", "Felicitaciones. Tu anuncio ha sido envíado de forma exitosa!");
+                newLocaleStringResources.Add("PageTitle.ConfirmationWithoutPlanMarket", "Felicitaciones. Su anuncio ha sido envíado de forma exitosa!");
+                newLocaleStringResources.Add("PublishProduct.PublishFinishedUser", "!Tu anuncio ha sido envíado de forma exitosa!");
+                newLocaleStringResources.Add("PublishProduct.PublishFinishedMarket", "!Su anuncio ha sido publicado de forma exitosa!");
+                newLocaleStringResources.Add("common.publishProductNoFree", "Publica tu anuncio");
+                
 
+                
+                
                 
                 
 

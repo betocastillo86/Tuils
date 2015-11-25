@@ -30,12 +30,12 @@
 
                     @if (Model.IsFeaturedProduct)
                     {
-                        <h2>@T("publishproduct.publishfinished")</h2>
+                        <h2>@T(string.Concat("PublishProduct.PublishFinished", Model.VendorType))</h2>
                         <h3>@Model.ProductName</h3>
                         <h4>@Model.ProductPrice</h4>
                         <p>@T("publishproduct.timeToActivate")</p>
 
-                        @Html.ActionLink(T("controlpanel.MyProducts").Text, "MyProducts", "ControlPanel", new { }, new { @class = "btn_continue button-1" })
+                        @Html.ActionLink(T("controlpanel.MyProducts").Text, "MyProducts", "ControlPanel", new { p=false }, new { @class = "btn_continue button-1" })
                     }
                     //else if (!Model.TransactionRejected)
                     else

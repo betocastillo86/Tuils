@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nop.Core.Domain.Vendors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,5 +15,7 @@ namespace Nop.Web.Models.Sales
 
         public int NumLimitOfProducts { get; set; }
         public bool CanSelectService { get; set; }
+
+        public VendorType VendorType { get; set; }
     }
 }
