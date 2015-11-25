@@ -1130,6 +1130,9 @@ html.oldie .container { width: 940px; }
     .item-tienda{width:calc(20% - 10px);}
     .item-tienda p{font-size: 13px; height: 33px;}
     .btn_tienda{font-size: 14px; margin: 2px 0;}
+    .caja_edtsedes .picture-uploader li{margin:7px; width: 76px; height: 76px;}
+    .caja_edtsedes .picture-uploader li:nth-child(3n){margin-right: 7px;}
+    .caja_edtsedes .picture-uploader li span{font-size: 50px; margin:11px 11px 0;}
 }
 @media screen and (max-width:640px) {
     /*header*/
@@ -1366,9 +1369,16 @@ html.oldie .container { width: 940px; }
     .retoma_publi .button-1{padding: 8px 5px;}
     .retoma_publi .icon-publica{font-size: 50px; height: 50px;}
     .retoma_publi .resumen-final h2{font-size: 16px;}
+
+    .picture-uploader li:nth-child(3n){margin-right: 0;}
     /*PAGOS*/
     .item-tienda{width: calc(33.3% - 10px);}
     /*FIN PAGOS*/
+}
+@media screen and (max-width:440px) {
+    .picture-uploader li:nth-child(3n){margin-right: auto;}
+    .picture-uploader li, .picture-uploader li.picture_principal{width:100px; height: 100px; margin: 7px;}
+    .picture-uploader li span, .picture-uploader li.picture_principal span{margin: 19px 19px 0;}
 }
 @media screen and (max-width:414px) {
     /* PRODUCTS IN GRID - TEMPLATE */
@@ -1389,6 +1399,8 @@ html.oldie .container { width: 940px; }
     .txt_quienes{text-align: justify; font-size: 14px; margin: 0 0 15px;}
     .txt_quienes:after{display: none;}
     /*FIN QUIENES SOMOS*/
+    .picture-uploader li, .picture-uploader li.picture_principal{width:calc(33.3% - 14px); height: 100px; margin: 7px;}
+    .picture-uploader li span, .picture-uploader li.picture_principal span{font-size: 45px; margin: 24px 24px 0; width: 45px; height: 45px;}
 }
 @media screen and (max-width:360px) {
     /* PRODUCTS IN GRID - TEMPLATE */
@@ -1399,8 +1411,7 @@ html.oldie .container { width: 940px; }
     .product-details-page .gallery .picture a{height:200px;}
 
 
-    .picture-uploader li, .picture-uploader li.picture_principal{width: 96px; height: 96px; margin:7px;}
-    .picture-uploader li span, .picture-uploader li.picture_principal span{font-size: 45px; margin: 24px 24px 0; width: 45px; height: 45px;}
+    .picture-uploader li, .picture-uploader li.picture_principal{width:calc(33.3% - 14px); height: 96px; margin:7px;}
     .conte_pgt p{width: 100%; float: none; padding: 10px 0 0;}
     .date_pgt{float: none; padding: 0 0 10px; margin: 0;}
 }
@@ -1417,7 +1428,7 @@ html.oldie .container { width: 940px; }
     /*publicar producto*/
     .picture-resume li{height:53px;}
 
-    .picture-uploader li, .picture-uploader li.picture_principal{width: 82px; height: 82px; margin:7px;}
+    .picture-uploader li, .picture-uploader li.picture_principal{height: 82px; margin:7px;}
     .picture-uploader li span, .picture-uploader li.picture_principal span{font-size: 45px; margin:17px 17px 0; width: 45px; height: 45px;}    
 
     /* REGISTRATION */
