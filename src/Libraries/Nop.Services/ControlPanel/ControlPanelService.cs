@@ -106,11 +106,11 @@ namespace Nop.Services.ControlPanel
             {
                 modules.Add(new ControlPanelModule()
                 {
-                    Name = "MyOrders",
+                    Name = string.Concat( "MyOrders", vendor.VendorType == Core.Domain.Vendors.VendorType.Market ? "Market" : string.Empty),
                     Controller = "ControlPanel",
                     Action = "MyOrders",
-                    IconMini = "icon-compra",
-                    IconBig = "icon-compra"
+                    IconMini = "icon-planes",
+                    IconBig = "icon-planes"
                 });
                 
             }

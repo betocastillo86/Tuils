@@ -1175,13 +1175,18 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdMostExpensivePlan.Hint", "Caracteristica del plan más caro");
                 newLocaleStringResources.Add("Admin.Vendors.Fields.ShowOnHomePage", "Mostrar en el home");
                 newLocaleStringResources.Add("Admin.Vendors.Fields.ShowOnHomePage.Hint", "Mostrar en el home");
-                
-                
-                
+                newLocaleStringResources.Add("myordersmarket.title", "Mi plan");
+                newLocaleStringResources.Add("myordersmarketmodel.title", "Mi plan");
+                newLocaleStringResources.Add("controlpanel.myordersmarket", "Mi plan");
+                newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowOnHomePage", "En el home");
+                newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowOnSliders", "En sliders");
+                newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowOnSN", "En redes sociales");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.DefaultServicePicture", "Imagen por defecto categoría");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.DefaultServicePicture.Hint", "Imagen por defecto categoría");
+
                 
                 
 
-                
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)

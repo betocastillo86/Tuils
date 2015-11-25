@@ -2292,7 +2292,7 @@ namespace Nop.Services.Catalog
             //Si tiene imagenes temporales por cargar las crea
             if (product.TempFiles.Count > 0)
             {
-                
+
                 var pictures = _pictureService.InsertPicturesFromTempFiles(product.TempFiles.ToArray());
                 for (int i = 0; i < pictures.Count; i++)
                 {
@@ -2305,6 +2305,17 @@ namespace Nop.Services.Catalog
                     });
                 }
             }
+            else
+            {
+                //Carga la imagen por defecto de los servicios
+                product.ProductPictures.Add(new ProductPicture()
+                {
+                    PictureId = _catalogSettings.DefaultServicePicture,
+                    DisplayOrder = 0,
+                    Active = true
+                });
+            }
+
 
 
            #region DisplayOrder

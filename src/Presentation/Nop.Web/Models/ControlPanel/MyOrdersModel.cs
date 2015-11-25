@@ -1,4 +1,5 @@
-﻿using Nop.Web.Models.Catalog;
+﻿using Nop.Core.Domain.Vendors;
+using Nop.Web.Models.Catalog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace Nop.Web.Models.ControlPanel
 
         public int VendorId { get; set; }
         public bool ShowCurrentPlan { get; set; }
+
+        public VendorType VendorType { get; set; }
 
         public bool ShowAlertUpgradePlan { get; set; }
 

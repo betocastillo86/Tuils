@@ -360,16 +360,6 @@
         </tr>
         <tr>
             <td class="adminTitle">
-                @Html.OverrideStoreCheckboxFor(model => model.ProductLimitPublished_OverrideForStore, model => model.ProductLimitPublished, Model.ActiveStoreScopeConfiguration)
-                @Html.NopLabelFor(model => model.ProductLimitPublished):
-            </td>
-            <td class="adminData">
-                @Html.EditorFor(model => model.ProductLimitPublished)
-                @Html.ValidationMessageFor(model => model.ProductLimitPublished)
-            </td>
-        </tr>
-        <tr>
-            <td class="adminTitle">
                 @Html.OverrideStoreCheckboxFor(model => model.NumberOfVendorsOnHome_OverrideForStore, model => model.NumberOfVendorsOnHome, Model.ActiveStoreScopeConfiguration)
                 @Html.NopLabelFor(model => model.NumberOfVendorsOnHome):
             </td>
@@ -696,6 +686,16 @@
             <td class="adminData">
                 @Html.EditorFor(model => model.DisplayTaxShippingInfoOrderDetailsPage)
                 @Html.ValidationMessageFor(model => model.DisplayTaxShippingInfoOrderDetailsPage)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.DefaultServicePicture_OverrideForStore, model => model.DefaultServicePicture, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.DefaultServicePicture):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.DefaultServicePicture)
+                @Html.ValidationMessageFor(model => model.DefaultServicePicture)
             </td>
         </tr>
     </table>

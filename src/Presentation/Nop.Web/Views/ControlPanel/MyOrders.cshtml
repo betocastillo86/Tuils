@@ -9,7 +9,7 @@
 
 
 <div class="panel-control">
-    <h2 class="tit_sec">@T("MyOrders.Title")</h2>
+    <h2 class="tit_sec">@T(string.Format("MyOrders{0}.Title", Model.VendorType == Nop.Core.Domain.Vendors.VendorType.Market ? "Market" : string.Empty) )</h2>
     <p>@T("MyOrders.Description")</p>
 
     @if (Model.ShowCurrentPlan && Model.CurrentPlan.ShowRenovateButton)

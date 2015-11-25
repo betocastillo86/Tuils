@@ -405,5 +405,10 @@ namespace Nop.Core.Domain.Catalog
         /// Numero de vendors que se mostrarán en el home
         /// </summary>
         public int NumberOfVendorsOnHome { get; set; }
+
+        /// <summary>
+        /// Imagen por defecto relacionada a los servicios
+        /// </summary>
+        public int DefaultServicePicture { get; set; }
     }
 }
