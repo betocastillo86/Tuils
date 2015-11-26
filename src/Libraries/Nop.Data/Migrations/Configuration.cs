@@ -1210,6 +1210,8 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("showplans.specificationAttributeDescription.Market.15", "La exposición es que tan arriba y resaltados se verán sus productos cuando un usuario realice una busqueda. Hay cuatro tipos de exposición: <ul><li><b>La mejor:</b> Su producto saldrá en la parte más alta de los listados y tendrá una etiqueta que lo resalte.</li><li><b>Muy alta:</b> Su producto saldrá en la parte alta de los listados debajo de 'la mejor'.</li><li><b>Alta:</b> Su producto saldrá en la parte media alta de los listados debajo de los que se encuentran en 'muy alta'.</li><li><b>Media:</b> Su producto saldrá debajo de todos los demás resultados.</li></ul>");
                 newLocaleStringResources.Add("showplans.specificationAttributeDescription.User.15", "La exposición es que tan arriba y resaltados se verá tu producto cuando un usuario realice una busqueda. Hay cuatro tipos de exposición: <ul><li><b>La mejor:</b> Tu producto saldrá en la parte más alta de los listados y tendrá una etiqueta que lo resalte.</li><li><b>Muy alta:</b> Tu producto saldrá en la parte alta de los listados debajo de 'la mejor'.</li><li><b>Alta:</b> Tu producto saldrá en la parte media alta de los listados debajo de los que se encuentran en 'muy alta'.</li><li><b>Media:</b> Tu producto saldrá debajo de todos los demás resultados.</li></ul>");
                 newLocaleStringResources.Add("showplans.specificationAttributeDescription.User.14", "Número de fotografías que podrás mostrar en tu producto");
+                newLocaleStringResources.Add("account.login.fields.email.required", "Ingresa el correo electrónico");
+                
                 
 
                 //Recorre todas las llaves que desea adicional
