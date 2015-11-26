@@ -842,7 +842,7 @@ td.fieldname{font-size:12px;}
 .login-page .returning-wrapper .buttons{float:right;margin:5px 30px;}
 .login-page .returning-wrapper label{width:100px;display:inline-block;margin-right:10px;white-space:nowrap;vertical-align:middle;font-weight:700;}
 .login-page .email,.login-page .username,.login-page .password{width:170px;}
-.login-page .returning-customer .reversed label{width:auto;font-weight:400;}
+.login-page .returning-conte .reversed label{width:auto !important;font-weight:400;}
 .login-page .forgot-password{display:block;margin-top:20px;font-weight:700;}
 .login-page .field-validation-error{display:block;}
 .external-auth-errors{text-align:center;border:solid 1px #d3d3d3;vertical-align:top;width:100%;color:Red;margin-bottom:20px;}
@@ -851,7 +851,10 @@ td.fieldname{font-size:12px;}
 .external-auth-association{text-align:center;border:solid 1px #d3d3d3;vertical-align:top;width:100%;margin-bottom:20px;}
 .external-auth-association .identifier{}
 .external-auth-association .remove{color:#B80709;}
-
+.returning-conte{border: 1px solid #e5e5e5; text-align: center; padding:20px; margin: 0 auto; border-radius: 5px;}
+.login-page .returning-conte .reversed{width:50%; text-align: left; padding: 12px 0; float: left;}
+.login-page .returning-conte .button-1{width: 50%; float: right;}
+.login-page .returning-conte .inputs input[type="text"]{width: 100% !important;}
 
 /* REGISTRATION */
 .registration-modal{width:325px; color:#525259;}
@@ -1851,9 +1854,9 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
             .pr-perfil textarea{width:910px; resize:none; height: 55px; background: #f3f5f7; border-radius: 3px; margin:0 0 17px; padding: 9px 10px; box-sizing: border-box; color:#53525A; font-family: 'Ubuntu', sans-serif;}
             .conte_perfil .items-ctl, .conte_perfil2 .items-ctl{float: left; margin: 16px 0; background:none; padding: 0;}
             .btn_perfil{float: right; margin: 10px 0 10px 20px !important; padding: 7px 10px; text-align: center;}
-    	.phone_initial{}
+    	.phone_initial{padding: 10px 0 0; display: block;}
     	.phone_initial .icon-tel{float: left; display: block; font-size: 23px; color:#fb7055; }
-    	.phone_initial span{display: block; float: left; font-size: 20px;}
+    	.phone_initial span{display: block; float: left; font-size: 20px; margin:0 0 0 5px;}
 
     .conte_perfil2{background:#F3F5F7; height:auto; margin: 0 0 20px; text-align: left; padding:20px 20px 0;}
         .img_user{background:url(images/img_user.jpg) center no-repeat #EBEEF2; position:relative; float: left; width: 140px; height: 140px;}
@@ -1879,7 +1882,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     	.sede-noresult{padding:30px 20px; box-sizing:border-box; text-align: center;}
     	.sede-noresult .icon-loc{color: #fb7055; font-size: 37px;}
     	.sede-noresult p{font-size: 20px; color:#b1bdcd; padding: 10px 0;}
-    .conte-spc{background:#D8DEE6; width:427px; height: auto; margin: 20px 0 0;}
+    .conte-spc{background:#D8DEE6; width:427px; height: auto; margin: 20px 0 20px;}
         .conte-spc h3{background: #3B5A83; font-size: 16px; color: #FFF; font-weight: 500; padding: 11px 15px;}
         .conte-spc h3 span{cursor: pointer; color: #FFF;}
         .conte-spc li{list-style: none; color: #3A5983; padding:15px; font-size: 16px;}

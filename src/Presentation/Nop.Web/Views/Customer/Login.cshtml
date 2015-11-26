@@ -23,8 +23,8 @@
     @Html.Partial("_ExternalAuthentication.AssociateMessage")
     @Html.Partial("_ExternalAuthentication.Errors")
     <div class="page-body">
-        <div class="customer-blocks">
-            @*@if (Model.CheckoutAsGuest)
+        @*<div class="customer-blocks">
+            @if (Model.CheckoutAsGuest)
             {
                 <div class="new-wrapper checkout-as-guest-or-register-block">
                     <div class="title">
@@ -52,11 +52,9 @@
                         <input type="button" class="button-1 register-button" onclick="location.href='@registerUrl'" value="@T("Account.Register")" />
                     </div>
                 </div>
-            }*@
+            }
             <div class="returning-wrapper">
-                <div class="title">
-                    <strong>@T("Account.Login.ReturningCustomer")</strong>
-                </div>
+                <div class="title">@T("Account.Login.ReturningCustomer")</div>
                 <div class="form-fields">
                     @using (Html.BeginForm())
                     {
@@ -104,9 +102,34 @@
                     }
                 </div>
             </div>
-        </div>
-        <div class="external-authentication">
+        </div>*@
+        @*<div class="external-authentication">
             @Html.Action("ExternalMethods", "ExternalAuthentication")
+        </div>*@
+        <div class="returning-conte registration-modal">
+            <form>
+                <div class="inputs">
+                    <input type="text" placeholder="Correo electrónico">
+                    <span class="field-validation-error"></span>
+                </div>
+                <div class="inputs">
+                    <input type="password" placeholder="Contraseña">
+                    <span class="field-validation-error"></span>
+                </div>
+                <input type="button" class="button-1" value="Inicia Sesión">
+                <div class="reversed">
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.LabelFor(m => m.RememberMe)
+                </div>
+                <br/>
+            </form>
+            <div class="rgt-login">
+                <a href="javascript:;">¿Olvidaste tu contraseña?</a>
+            </div>
+            <a href="javascript:;" class="rgt-login">¿Aún no te has registrado?</a>
+            <div class="external-authentication">
+                <a target="_blank" class="fb-btn" href="javascript:;">Inicia sesión con Facebook</a>
+            </div>
         </div>
         @*@Html.Action("TopicBlock", "Topic", new { systemName = "LoginRegistrationInfo" })*@
     </div>
