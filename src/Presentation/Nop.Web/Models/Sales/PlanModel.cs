@@ -28,6 +28,8 @@ namespace Nop.Web.Models.Sales
 
             public string Value { get; set; }
 
+            public string Description { get; set; }
+
             /// <summary>
             /// True: En la interfaz muestra el check con el numero
             /// </summary>

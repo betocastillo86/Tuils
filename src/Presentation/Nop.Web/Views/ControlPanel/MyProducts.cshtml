@@ -40,7 +40,9 @@
 
                     <h3>
 
-                        @if (product.IsFeatured)
+                        @if (product.IsFeatured
+                            /**La etiqueta de destacado cuando un producto no está disponible solo la muestra para usuarios**/
+                            && (product.Available || (!product.Available && Model.VendorType == Nop.Core.Domain.Vendors.VendorType.User)))
                         {
                             <div class="tag-desta"><span class="icon-star"></span> Destacado</div>
                         }

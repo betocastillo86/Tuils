@@ -381,7 +381,7 @@ namespace Nop.Web.Controllers
                     //Agrega las caracteristicas del plan
                     foreach (var spec in plan.ProductSpecificationAttributes.Where(ps => ps.ShowOnProductPage))
                     {
-                        //Busca si el atributo fue agregado previamente
+                        //Busca si el atributo fue agregado previamente principalmente para sliders
                         var specAddedPreviously = planModel.Specifications.FirstOrDefault(s => s.SpecificationAttributeId == spec.SpecificationAttributeOption.SpecificationAttributeId);
                         //Si no fue agregada la agrega
                         if (specAddedPreviously == null)
@@ -410,6 +410,7 @@ namespace Nop.Web.Controllers
                                 Name = spec.SpecificationAttributeOption.SpecificationAttribute.Name,
                                 SpecificationAttributeId = specAttributeId,
                                 Value = specValue,
+                                Description = _localizationService.GetResource(string.Format("showplans.specificationAttributeDescription.{0}.{1}", vendorType, specAttributeId)),
                                 ShowWithCheck = showWithCheck
                             });
                         }

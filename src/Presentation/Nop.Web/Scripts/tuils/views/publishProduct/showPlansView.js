@@ -8,7 +8,8 @@
             events: {
                 'click nav.menu_planes a': 'changeTab',
                 'click #btnGetPlanVendor': 'authToVendorPlans',
-                'click .selectNewPlan': 'selectPlan'
+                'click .selectNewPlan': 'selectPlan',
+                'click .linkPlanSpecDescription': 'showSpecDescription'
             },
             initialize: function (args) {
                 this.on('user-authenticated', this.redirectVendorPlans, this);
@@ -38,6 +39,10 @@
                     this.activeTab('personas');
                 }
 
+            },
+            showSpecDescription: function (obj) {
+                var description = $(obj.currentTarget).attr('data-description');
+                this.alert(description);
             },
             selectPlan: function (obj) {
                 var plan = $(obj.currentTarget).attr('data-id');
