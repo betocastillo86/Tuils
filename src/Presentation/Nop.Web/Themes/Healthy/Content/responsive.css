@@ -1227,7 +1227,7 @@ html.oldie .container { width: 940px; }
     .picture-uploader{font-size: 12px;}
     .txt-terminos{font-size: 12px;}
 
-    .imgPublicada{margin: 0 auto 20px; float: none; width: 120px; height: 120px;}
+    .imgPublicada{margin: 20px auto 20px; float: none; width: 120px; height: 120px;}
     .resumen-final{width: 100%; float: none;}
 
     /*panel de contrlo*/
@@ -1401,6 +1401,12 @@ html.oldie .container { width: 940px; }
     /*FIN QUIENES SOMOS*/
     .picture-uploader li, .picture-uploader li.picture_principal{width:calc(33.3% - 14px); height: 100px; margin: 7px;}
     .picture-uploader li span, .picture-uploader li.picture_principal span{font-size: 45px; margin: 24px 24px 0; width: 45px; height: 45px;}
+    /*LOGIN*/
+    .returning-conte{width: auto !important;}
+    .returning-conte{padding: 10px; border: none;}
+    .login-page .returning-conte .reversed{float: none; padding: 10px 0 0;}
+    .login-page .returning-conte .button-1{width: 100%; float: none;}
+    /*FIN LOGIN*/
 }
 @media screen and (max-width:360px) {
     /* PRODUCTS IN GRID - TEMPLATE */
