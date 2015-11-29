@@ -1,4 +1,5 @@
-﻿using Nop.Web.Models.Catalog;
+﻿using Nop.Core.Domain.Vendors;
+using Nop.Web.Models.Catalog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,9 @@ namespace Nop.Web.Models.ControlPanel
         public bool ShowButtonFeatureByPlan { get; set; }
 
         public bool HasReachedLimitOfFeature { get; set; }
+
+        public VendorType VendorType { get; set; }
+
 
 
         public CatalogPagingFilteringModel PagingFilteringContext { get; set; }

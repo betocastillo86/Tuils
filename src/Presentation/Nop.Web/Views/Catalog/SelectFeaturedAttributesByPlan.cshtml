@@ -97,6 +97,10 @@
                     { 
                         @Html.ActionLink(T("common.continue").Text, "ConfirmationWithoutPlan", "Sales", new { id = Model.ProductDetails.Id }, new { @class = "btn_continue button-1" })
                     }
+                    else
+                    { 
+                        @Html.ActionLink(T("common.cancel").Text, "MyProducts", "ControlPanel", new {  }, new { @class = "btn_continue button-1" })
+                    }
 
 
                     @if (Model.ShowGoToMyProductsButton)

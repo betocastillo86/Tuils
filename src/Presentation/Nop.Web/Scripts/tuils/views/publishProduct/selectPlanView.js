@@ -4,7 +4,8 @@
             productId : 0,
             events: {
                 'click #btnPay' : 'createOrder',
-                'click .selectNewPlan' : 'selectPlan'
+                'click .selectNewPlan': 'selectPlan',
+                'click .linkPlanSpecDescription' : 'showSpecDescription'
             },
             bindings: {
                 'input[name="SelectedPlan"]': {
@@ -70,6 +71,10 @@
                     this.showLoadingAll();
                     this.model.newOrder();
                 }
+            },
+            showSpecDescription: function (obj) {
+                var description = $(obj.currentTarget).attr('data-description');
+                this.alert(description);
             },
             successCreatingOrder: function (resp) {
                 this.$("#merchantId").val(resp.get('MerchantId'));

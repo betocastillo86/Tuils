@@ -706,16 +706,7 @@ namespace Nop.Web.Controllers
                 #endregion
 
 
-
-
-
-
-
-
-
-
-
-
+                model.VendorType = _workContext.CurrentVendor.VendorType;
 
                 return View(model);
             }
