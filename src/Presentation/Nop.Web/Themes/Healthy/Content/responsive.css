@@ -1336,7 +1336,7 @@ html.oldie .container { width: 940px; }
     .category-column{width:100%; display: block; height:auto; margin: 0 0 20px; padding: 0; background: none; box-shadow: none;}
     .category-column select{width: 100%;}
     .category-column ul{font-size: 14px;}
-    .btn_continue{float: none; margin: 0 auto !important; display: block;}
+    .btn_continue{float: none; margin: 0 auto; display: block;}
     .txt-terminos{font-size: 14px; text-align: center; padding: 0 10px;}
     .col-producto .title{width: auto; display: block;}
     .search-pdt{width: 100%; display: block; margin: 0 0 20px;}
@@ -1370,6 +1370,9 @@ html.oldie .container { width: 940px; }
     .retoma_publi .resumen-final h2{font-size: 16px;}
 
     .picture-uploader li:nth-child(3n){margin-right: 0;}
+    .conte_btnDoble .btn_continue{width: calc(50% - 10px); box-sizing:border-box; float: right;}
+    .conte_btnDoble .btnBack{margin: 0 20px 0 0;}
+    .conte_btnDoble .link_back{display: block; float: right; margin: 15px 0 0; text-align: center; width: 100%;}
     /*PAGOS*/
     .item-tienda{width: calc(33.3% - 10px);}
     /*FIN PAGOS*/

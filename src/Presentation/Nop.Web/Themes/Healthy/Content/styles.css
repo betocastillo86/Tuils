@@ -19,7 +19,7 @@ br{clear: both;}
 /* OTHER RESET STYLESHEET (HTML GENERAL) */
 body{text-align:center;font-family: 'Ubuntu', sans-serif;font-size:14px;background:repeat scroll 0 0 #F6F6F4;color:#5C5B5B;line-height:normal; font-weight: 400;}
 body.popup-window{background:none;}
-a{color:#5C5B5B;text-decoration:none;}
+a{color:#f84c2a;text-decoration:none;}
 a:hover{color:#fa4c2a;text-decoration:underline;}
 h1,h2,h3,h4,h5,h6{font-family: 'Ubuntu', sans-serif;}
 h2,h3{font-size:16px;}
@@ -266,7 +266,7 @@ ul.language-list li:hover{cursor:pointer;}
 td{vertical-align:middle;}
 td.fieldname{font-size:12px;}
 .captcha-box{}
-.button-1,.button-2{text-align: center; text-decoration:none;padding:3px 7px;/*position: relative;*/position:static;display:inline-block;border-radius:2px;cursor:pointer;height:auto;width:auto;overflow:visible; -webkit-appearance:none; cursor: pointer;}
+.button-1,.button-2{text-align: center; text-decoration:none !important;padding:3px 7px;/*position: relative;*/position:static;display:inline-block;border-radius:2px;cursor:pointer;height:auto;width:auto;overflow:visible; -webkit-appearance:none; cursor: pointer;}
 .noscript{border:1px solid #ddd;border-width:0 0 1px;background:#ffff90;font-size:12px;line-height:1.25;text-align:center;color:#2f2f2f;}
 .fieldset{padding:10px;margin-bottom:15px;border:1px solid #eee;border-radius:5px;}
 .fieldset .title{margin:0 0 14px;}
@@ -1665,6 +1665,8 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .retoma_publi .resumen-final p{margin: 0 0 10px;}
 
     .resumen-final .resumen-product p { margin: 0; padding: 3px 0;}
+    .conte_btnDoble .link_back{text-decoration: underline;}
+    .conte_btnDoble .link_back:hover{color: #3b5a83; text-decoration: underline;}
 
     #divStep_3 .title{color: #f84c2a; font-size: 16px; font-weight: 500; margin: 0 0 10px;}
 
