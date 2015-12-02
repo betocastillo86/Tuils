@@ -16,7 +16,7 @@
         registerUrl = webHelper.ModifyQueryString(registerUrl, "returnurl=" + HttpUtility.UrlEncode(this.Context.Request.QueryString["returnUrl"]), null);
     }
 }
-<div class="page login-page">
+<div class="page login-page" id="divMainSection">
     <div class="page-title">
         <h1>@T("Account.Login.Welcome")</h1>
     </div>
@@ -141,6 +141,7 @@
                 <div class="rgt-login">
                     @Html.RouteLink(T("Account.Login.ForgotPassword").Text, "PasswordRecovery")
                 </div>
+                <a id="createNewUser" class="rgt-login" href="javascript:;">@T("Login.RegisterButton")</a>
                 @*<a href="javascript:;" class="rgt-login">¿Aún no te has registrado?</a>*@
                 <div class="external-authentication">
                     @Html.Action("ExternalMethods", "ExternalAuthentication")

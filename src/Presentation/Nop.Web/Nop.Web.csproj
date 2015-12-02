@@ -1165,6 +1165,7 @@
     <Content Include="Scripts\tuils\views\home\vendorsHomeView.js" />
     <Content Include="Scripts\tuils\views\login\createUser.js" />
     <Content Include="Scripts\tuils\views\login\login.js" />
+    <Content Include="Scripts\tuils\views\login\staticLoginView.js" />
     <Content Include="Scripts\tuils\views\panel\addAddressView.js" />
     <Content Include="Scripts\tuils\views\panel\editProductPicturesView.js" />
     <Content Include="Scripts\tuils\views\panel\editProductView.js" />

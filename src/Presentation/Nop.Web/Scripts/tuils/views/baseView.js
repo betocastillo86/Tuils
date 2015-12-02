@@ -39,6 +39,9 @@
         {
             this.trigger('unauthorized', model);
         },
+        showRegister: function (model) {
+            this.trigger('unauthorized-register', model);
+        },
         validateAuthorization: function ()
         {
             this.validateSendRequestAfterSession = true;
