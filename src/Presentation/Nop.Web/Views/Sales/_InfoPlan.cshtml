@@ -48,10 +48,10 @@
 
         @foreach (var spec in Model.Plans.Last().Specifications)
         {
-            <div class="alt"><h3>@spec.Name</h3></div>
+            <div class="alt">@spec.Name <a href="javascript:void(0)" class="linkPlanSpecDescription" data-description="@spec.Description"><span class="icon-help"></span></a></div>
             <div class="plan-row">
-                <div class="columnHeader">
-                    <a href="javascript:void(0)" class="linkPlanSpecDescription" data-description="@spec.Description">@spec.Name</a> </div>
+                <div class="columnHeader">@spec.Name
+                    <a href="javascript:void(0)" class="linkPlanSpecDescription" data-description="@spec.Description"><span class="icon-help"></span></a></div>
                 @*<div id="linkPlanSpecDescription" style="display:none">@spec.Description</div>*@
                 @foreach (var plan in Model.Plans)
                 {
@@ -66,7 +66,7 @@
                         {
                             if (specByPlan.ShowWithCheck)
                             {
-                                <div class="cell-e" data-sel="@plan.Id"><span class="icon-check"></span><span class="cant-plan">@specByPlan.Value</span></div>
+                                <div class="cell-p" data-sel="@plan.Id"><span class="icon-check"></span><span class="cant-plan">@specByPlan.Value</span></div>
                             }
                             else
                             {

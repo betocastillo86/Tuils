@@ -25,6 +25,11 @@
         </div>
         <br />
     </div>
+    <div class="conven_desta">
+        <div style="margin:0 0 8px;">Producto destacados:</div>
+        <div class="tag-desta fb"><span class="icon-fb"></span> En facebook</div>
+        <div class="tag-desta"><span class="icon-home"></span> En home</div>
+    </div>
     <ul class="product_list">
 
         @foreach (var product in Model.Products)
@@ -45,6 +50,8 @@
                             && (product.Available || (!product.Available && Model.VendorType == Nop.Core.Domain.Vendors.VendorType.User)))
                         {
                             <div class="tag-desta"><span class="icon-star"></span> Destacado</div>
+                            <div class="tag-desta fb"><span class="icon-fb"></span></div>
+                            <div class="tag-desta"><span class="icon-home"></span></div>
                         }
                         <a href="@(product.Published ? Url.Action("ProductDetails", "Product", new { seName = product.SeName }) : "#")">@product.Name</a>
                     </h3>

@@ -413,7 +413,7 @@
     /*.master-wrapper-page .master-wrapper-content { display: table; }*/
     .container .master-wrapper-main .columns.twelve { width: auto; float: none; }
     .master-wrapper-page .center-2.columns.ten { width: 100%; float: right; }
-    .master-wrapper-main .side-2.columns.two { width: 200px; display: block; float: left; }
+    .master-wrapper-main .side-2.columns.two { width: 200px; display: block; float: left; margin: 20px 0; }
 
     /*Header*/
     .header-selectors-wrapper { float: right; }
@@ -535,7 +535,6 @@
     #mm-mainMenu, #my-mobile-menu { display: none !important;}
 
     .master-wrapper-page .center-2.columns.ten { width: 530px; float: right; }
-    .master-wrapper-main .side-2.columns.two { }
     .container .master-wrapper-main .columns.twelve { width: auto; float: none; }
     .master-wrapper-main .center-2.columns.ten { float: right; padding-left: 10px; width: 720px; }
 
@@ -863,7 +862,7 @@ html.oldie .container { width: 940px; }
     /*FIN QUIENES SOMOS*/
     .alert-public p{font-size:14px;}
     /*PLANES*/
-    .menu_planes{font-size: 25px; width: 350px; margin: 0 auto 30px;}
+    .menu_planes{font-size: 25px; width: 360px; margin: 0 auto 30px;}
     .menu_planes li{padding: 0 20px;}
     /*FIN PLANES*/
 }
@@ -1118,7 +1117,7 @@ html.oldie .container { width: 940px; }
     .desta_quienes h4{font-size: 16px; height: auto;}
     /*FIN QUIENES SOMOS*/
     /*PLANES*/
-    .menu_planes{font-size: 20px; width: 270px;}
+    .menu_planes{font-size: 20px; width: 305px;}
     .plan-name{font-size: 14px; width: 70px; height: 70px; line-height: 70px;}
     .plan-price{font-size: 18px;}
     .planSelectionContainer h2{font-size: 20px; text-align: center;}
@@ -1261,7 +1260,7 @@ html.oldie .container { width: 940px; }
     .help_table p{float: left; width: calc(100% - 70px); padding: 16px 0;}
     /*Mis productos*/
     .product-dtl-txt{width:calc(100% - 120px); min-height: 95px;}
-    .product-dtl-date{float:left; text-align: left; width: auto; margin:15px;}
+    .product-dtl-date{float:left; text-align: left; width: auto; margin:15px 0 15px 15px;}
         .product-dtl-date .conte_btn{float:left;}
         .product-dtl-date .conte_btn a{margin: 0 10px 0 0;}
     
@@ -1279,7 +1278,8 @@ html.oldie .container { width: 940px; }
     .planTable .cell-p, .headerRow .cell-p{width:33.3%; padding: 8px; box-sizing:border-box;}
     .planTable .cell-e, .headerRow .cell-e{width: 25%; padding: 8px; box-sizing:border-box;}
     .planTable .columnHeader{display: none;}
-    .planTable .alt{display: block; font-size: 14px; position: absolute; text-align: center; width:calc(100% - 20px);}
+    .planTable .alt{display: block; font-size: 14px; position: absolute; text-align: center; width:calc(100% - 40px);}
+
     .legal_plan{margin: 0 0 20px;}
 
     .conte_planConfirm .img_mjs{margin: 0 auto 20px; float: none; width: 50px; height: 50px; font-size: 40px;}
@@ -1337,7 +1337,7 @@ html.oldie .container { width: 940px; }
     .category-column{width:100%; display: block; height:auto; margin: 0 0 20px; padding: 0; background: none; box-shadow: none;}
     .category-column select{width: 100%;}
     .category-column ul{font-size: 14px;}
-    .btn_continue{float: none; margin: 0 auto !important; display: block;}
+    .btn_continue{float: none; margin: 0 auto; display: block;}
     .txt-terminos{font-size: 14px; text-align: center; padding: 0 10px;}
     .col-producto .title{width: auto; display: block;}
     .search-pdt{width: 100%; display: block; margin: 0 0 20px;}
@@ -1371,6 +1371,9 @@ html.oldie .container { width: 940px; }
     .retoma_publi .resumen-final h2{font-size: 16px;}
 
     .picture-uploader li:nth-child(3n){margin-right: 0;}
+    .conte_btnDoble .btn_continue{width: calc(50% - 10px); box-sizing:border-box; float: right;}
+    .conte_btnDoble .btnBack{margin: 0 20px 0 0;}
+    .conte_btnDoble .link_back{display: block; float: right; margin: 15px 0 0; text-align: center; width: 100%;}
     /*PAGOS*/
     .item-tienda{width: calc(33.3% - 10px);}
     /*FIN PAGOS*/
@@ -1407,6 +1410,8 @@ html.oldie .container { width: 940px; }
     .login-page .returning-conte .reversed{float: none; padding: 10px 0 0;}
     .login-page .returning-conte .button-1{width: 100%; float: none;}
     /*FIN LOGIN*/
+    /*Mis productos*/
+    .product-dtl-txt h3 a{display: block;}
 }
 @media screen and (max-width:360px) {
     /* PRODUCTS IN GRID - TEMPLATE */

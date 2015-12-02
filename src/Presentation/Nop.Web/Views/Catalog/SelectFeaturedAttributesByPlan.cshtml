@@ -12,11 +12,11 @@
 
 @if (Model.HasReachedLimitOfProducts)
 {
-    <div class="alert-public"><span class="icon-alert"></span> <p>@T("SelectFeaturedAttributesByPlan.HasReachedLimitOfProducts", Model.NumLimitOfProducts)</p> @Html.ActionLink(T("SelectFeaturedAttributesByPlan.SelectPlan").Text, "SelectPlan", "Sales", new { id = Model.ProductDetails.Id, force = "true", limit = Model.NumLimitOfProducts }, new { })<br /></div>
+    <div class="alert-public"><span class="icon-alert"></span> <p>@T("SelectFeaturedAttributesByPlan.HasReachedLimitOfProducts", Model.NumLimitOfProducts)</p> @Html.ActionLink(T("SelectFeaturedAttributesByPlan.SelectPlan").Text, "SelectPlan", "Sales", new { id = Model.ProductDetails.Id, force = "true", limit = Model.NumLimitOfProducts }, new { @class = "btn_extra" })<br /></div>
 }
 @if (Model.HasReachedLimitOfFeature)
 {
-    <div class="alert-public"><span class="icon-alert"></span> <p>@T("SelectFeaturedAttributesByPlan.HasReachedLimitOfFeature")</p> @Html.ActionLink(T("SelectFeaturedAttributesByPlan.SelectPlan").Text, "SelectPlan", "Sales", new { id = Model.ProductDetails.Id, force = "true", limit = Model.NumLimitOfProducts }, new { })<br /></div>
+    <div class="alert-public"><span class="icon-alert"></span> <p>@T("SelectFeaturedAttributesByPlan.HasReachedLimitOfFeature")</p> @Html.ActionLink(T("SelectFeaturedAttributesByPlan.SelectPlan").Text, "SelectPlan", "Sales", new { id = Model.ProductDetails.Id, force = "true", limit = Model.NumLimitOfProducts }, new { @class = "btn_extra" })<br /></div>
 }
 @using (Html.BeginForm())
 {
@@ -84,9 +84,7 @@
 
                 </div>
 
-
-
-                <div>
+                <div class="conte_btnDoble">
                     @if (!Model.HideFeatureButton)
                     {
                         <input type="submit" value="@T("SelectFeaturedAttributesByPlan.Save")" class="btn_continue button-1" />
@@ -99,14 +97,15 @@
                     }
                     else
                     { 
-                        @Html.ActionLink(T("common.cancel").Text, "MyProducts", "ControlPanel", new {  }, new { @class = "btn_continue button-1" })
+                        @Html.ActionLink(T("common.cancel").Text, "MyProducts", "ControlPanel", new {  }, new { @class = "btn_continue button-1 btnBack" })
                     }
 
 
                     @if (Model.ShowGoToMyProductsButton)
                     {
-                        @Html.ActionLink(T("SelectFeaturedAttributesByPlan.gotoMyProducts").Text, "MyProducts", "ControlPanel")
+                        @Html.ActionLink(T("SelectFeaturedAttributesByPlan.gotoMyProducts").Text, "MyProducts", "ControlPanel", new { @class = "link_back" })
                     }
+                    <br/>
                 </div>
                 <br />
 
