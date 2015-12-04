@@ -180,7 +180,7 @@
                 this.loadTwoColumns();
             },
             product: function () {
-                that.currentView = new ProductDetailView({ el: this.defaultEl });
+                this.currentView = new ProductDetailView({ el: this.defaultEl });
                 this.loadSubViews();
             },
             loadTwoColumns : function()

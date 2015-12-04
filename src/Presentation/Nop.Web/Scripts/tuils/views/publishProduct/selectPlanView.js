@@ -74,7 +74,7 @@
             },
             showSpecDescription: function (obj) {
                 var description = $(obj.currentTarget).attr('data-description');
-                this.alert(description);
+                this.alert({ message: description, duration: 30000, autoclose: false, height: 400 });
             },
             successCreatingOrder: function (resp) {
                 this.$("#merchantId").val(resp.get('MerchantId'));

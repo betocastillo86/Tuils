@@ -605,6 +605,19 @@ namespace Nop.Admin.Controllers
                         result.Append(", ");
                 }
                 model.ProductTags = result.ToString();
+
+                //has plan
+                if (product.OrderPlanId.HasValue)
+                    model.HasPlan = true;
+                else
+                {
+                    //Si el tienda valida que el plan este activo
+                    if (product.Vendor.VendorType == Core.Domain.Vendors.VendorType.Market)
+                        model.HasPlan = product.Vendor.HasActivePlan();
+                }
+
+                if (product.StateProvinceId.HasValue)
+                    model.StateProvinceName = product.StateProvince.Name;
             }
 
             //tax categories
@@ -639,18 +652,9 @@ namespace Nop.Admin.Controllers
                 model.SelectedDiscountIds = product.AppliedDiscounts.Select(d => d.Id).ToArray();
             }
 
-            //has plan
-            if (product.OrderPlanId.HasValue)
-                model.HasPlan = true;
-            else
-            {
-                //Si el tienda valida que el plan este activo
-                if (product.Vendor.VendorType == Core.Domain.Vendors.VendorType.Market)
-                    model.HasPlan = product.Vendor.HasActivePlan();
-            }
+           
 
-            if(product.StateProvinceId.HasValue)
-                model.StateProvinceName = product.StateProvince.Name;
+            
 
             //default values
             if (setPredefinedValues)

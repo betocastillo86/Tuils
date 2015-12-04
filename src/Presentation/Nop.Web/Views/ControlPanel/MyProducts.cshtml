@@ -50,8 +50,16 @@
                             && (product.Available || (!product.Available && Model.VendorType == Nop.Core.Domain.Vendors.VendorType.User)))
                         {
                             <div class="tag-desta"><span class="icon-star"></span> Destacado</div>
-                            <div class="tag-desta fb"><span class="icon-fb"></span></div>
-                            <div class="tag-desta"><span class="icon-home"></span></div>
+                            
+                            if (product.ShowOnSocialNetworks)
+                            {
+                                <div class="tag-desta fb"><span class="icon-fb"></span></div>
+                            }
+                            
+                            if (product.ShowOnHomePage)
+                            {
+                                <div class="tag-desta"><span class="icon-home"></span></div>
+                            }
                         }
                         <a href="@(product.Published ? Url.Action("ProductDetails", "Product", new { seName = product.SeName }) : "#")">@product.Name</a>
                     </h3>

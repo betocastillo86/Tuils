@@ -51,7 +51,7 @@
             <div class="alt">@spec.Name <a href="javascript:void(0)" class="linkPlanSpecDescription" data-description="@spec.Description"><span class="icon-help"></span></a></div>
             <div class="plan-row">
                 <div class="columnHeader">@spec.Name
-                    <a href="javascript:void(0)" class="linkPlanSpecDescription" data-description="@spec.Description"><span class="icon-help"></span></a></div>
+                    <a href="javascript:void(0)" class="linkPlanSpecDescription" data-description="@spec.Description" title="¿Qué es @spec.Name?"><span class="icon-help"></span></a></div>
                 @*<div id="linkPlanSpecDescription" style="display:none">@spec.Description</div>*@
                 @foreach (var plan in Model.Plans)
                 {
@@ -70,7 +70,7 @@
                             }
                             else
                             {
-                                <div class="cell-p" data-sel="@plan.Id">@specByPlan.Value</div>
+                                <div class="cell-p" data-sel="@plan.Id">@Html.Raw(specByPlan.Value)</div>
                             }
 
                         }

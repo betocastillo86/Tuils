@@ -2709,6 +2709,13 @@ namespace Nop.Services.Catalog
         /// <returns></returns>
         public bool HasReachedLimitOfProducts(Vendor vendor, out int limit)
         {
+            if (_planSettings.PlanProductsFree == 0)
+            {
+                limit = 0;
+                return false;
+            }
+                
+            
             var products = SearchProducts(vendorId: vendor.Id, sold:false);
             
             if (vendor.VendorType == VendorType.Market)

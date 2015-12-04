@@ -42,7 +42,7 @@
             },
             showSpecDescription: function (obj) {
                 var description = $(obj.currentTarget).attr('data-description');
-                this.alert(description);
+                this.alert({ message: description  , duration : 30000, autoclose : false, height : 400 });
             },
             selectPlan: function (obj) {
                 var plan = $(obj.currentTarget).attr('data-id');

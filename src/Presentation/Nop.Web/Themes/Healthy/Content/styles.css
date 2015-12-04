@@ -2172,3 +2172,8 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     transform: rotate(360deg);
   }
 }
+
+/*.ui-dialog-content {
+    padding-left:10px;
+    padding-right:10px;
+}*/

@@ -8,6 +8,8 @@
 
             autoclose: true,
 
+            height: 150,
+
             afterClose: function () { },
 
             duration:3000,
@@ -26,7 +28,7 @@
                 this.$el.dialog({
                         autoOpen : false,
                         modal: true,
-                        height: 150,
+                        height: that.height,
                         hide: {
                             effect: 'fade',
                             duration: 200
@@ -59,13 +61,25 @@
                     message = args;
                 if (args.message)
                     message = args.message;
+
+                if (args.autoclose != undefined)
+                    this.autoclose = args.autoclose;
+
                 if (args.duration)
                     this.duration = args.duration;
+
+                if (args.height)
+                {
+                    this.height = args.height;
+                    this.$el.dialog("option", "height", this.height);
+                }
+                    
 
                 if (args && args.afterClose)
                     this.afterClose = args.afterClose;
 
                 this.$el.html(message)
+                
                 this.$el.dialog('open');
             },
             render: function () {
