@@ -1401,7 +1401,7 @@ namespace Nop.Web.Controllers
                 .Take(_catalogSettings.NumberOfBestsellersOnHomepage)
                 .ToList();
 
-            return PartialView(model);
+            return PartialView(new FeaturedLeftMenuModel() { Products = model });
         }
 
         #endregion

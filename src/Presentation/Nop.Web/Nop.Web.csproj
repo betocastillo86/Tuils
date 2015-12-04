@@ -306,6 +306,7 @@
     <Compile Include="Models\Catalog\CategorySimpleModel.cs" />
     <Compile Include="Models\Catalog\CompareProductsModel.cs" />
     <Compile Include="Models\Catalog\EditProductModel.cs" />
+    <Compile Include="Models\Catalog\FeaturedLeftMenuModel.cs" />
     <Compile Include="Models\Catalog\IComparableModel.cs" />
     <Compile Include="Models\Catalog\IWishableModel.cs" />
     <Compile Include="Models\Catalog\ManufacturerHomePageModel.cs" />
