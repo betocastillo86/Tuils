@@ -1216,7 +1216,7 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("showplans.specificationattributedisplayorder.1", "<span class='icon-star'></span><span class='icon-star'></span><span class='icon-star'></span><span class='icon-star'></span>");
                 newLocaleStringResources.Add("showplans.specificationattributedisplayorder.2", "<span class='icon-star'></span><span class='icon-star'></span><span class='icon-star'></span>");
                 newLocaleStringResources.Add("showplans.specificationattributedisplayorder.3", "<span class='icon-star'></span><span class='icon-star'></span>");
-                
+                newLocaleStringResources.Add("Home.Vendors.Title", "Almacenes y talleres de confianza");
                 
                 
 
@@ -2534,8 +2534,9 @@ namespace Nop.Data.Migrations
                 settings.Add("vendorSettings.MinHeightCover", "500");
                 settings.Add("ShoppingCartSettings.allowgueststoaddcart", "False");
                 settings.Add("CatalogSettings.ShowRelatedProductsAsFeatured", "False");
-                settings.Add("CatalogSettings.NumberOfVendorsOnHome", "5");
+                settings.Add("CatalogSettings.NumberOfVendorsOnHome", "6");
                 settings.Add("ordersettings.minutesbeforecanaddplantocart", "2");
+
                 
                 
 

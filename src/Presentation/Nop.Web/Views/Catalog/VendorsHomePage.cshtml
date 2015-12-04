@@ -4,10 +4,12 @@
     Layout = null;
 }
 
+<div class="title">
+    <strong>@T("Home.Vendors.Title")</strong>
+</div>
 
-
-
-    <div id="vendorCarousel" class="home-tiendas_grid" style="width:1170px">
+<div class="home-tiendas_grid">
+    <div id="vendorCarousel">
         @foreach (var vendor in Model.Vendors)
         {
             <div class="item-tienda" style="width:90%">
@@ -19,4 +21,6 @@
             </div>
         }
     </div>
+</div>
+    
 

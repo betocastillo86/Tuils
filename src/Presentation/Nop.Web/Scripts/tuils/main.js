@@ -175,7 +175,7 @@
         wysihtml5: 'wysihtml5-0.3.0.min',
         resize: 'resize',
         canvasBlob: 'canvas-to-blob.min',
-        carousel: 'owl.carousel',
+        carousel: 'owl.carousel.min',
         slide: 'responsiveslides.min',
         jzoom: 'jquery.jqzoom-core-pack',
         jpopup: 'jquery.magnific-popup',
