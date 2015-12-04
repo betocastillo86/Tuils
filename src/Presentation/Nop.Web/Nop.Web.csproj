@@ -215,6 +215,7 @@
     <Compile Include="Controllers\BoardsController.cs" />
     <Compile Include="Controllers\BackInStockSubscriptionController.cs" />
     <Compile Include="Controllers\ControlPanelController.cs" />
+    <Compile Include="Controllers\Api\ErrorsController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="Models\Api\AddressPictureModel.cs" />
     <Compile Include="Models\Api\BaseApiModel.cs" />
     <Compile Include="Models\Api\CreateOrderResult.cs" />
+    <Compile Include="Models\Api\ErrorJavascriptModel.cs" />
     <Compile Include="Models\Api\FilterProductsModel.cs" />
     <Compile Include="Models\Api\MinifiedJson.cs" />
     <Compile Include="Models\Api\OrderModel.cs" />

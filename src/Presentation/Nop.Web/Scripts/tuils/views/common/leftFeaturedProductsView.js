@@ -8,8 +8,9 @@
             this.$("#owl-home-page-bestsellers").owlCarousel({
                 loop: true,
                 margin: 10,
+                items:1
                 //nav:true,
-                responsive: {
+                /*responsive: {
                     0: {
                         items: 1
                     },
@@ -22,7 +23,7 @@
                     768: {
                         items: 1
                     }
-                }
+                }*/
             });
         },
         render: function () {
