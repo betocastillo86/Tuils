@@ -2016,7 +2016,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 .plan-confirm ul b{color: #f94c2a; font-weight: 500;}
 .plan-confirm .conte_btn{margin: 20px 0 0;}
 
-.home-tiendas_grid{width: 100%; overflow: hidden;}
+.home-tiendas_grid{width: 1180px; overflow: hidden;}
 .item-tienda{ background: #f3f5f7; border-radius: 3px; box-shadow: 0 2px 1px rgba(41, 40, 50, 0.2); box-sizing: border-box; float: left; margin: 0 5px 15px; padding: 10px; width: calc(16.6% - 10px); cursor: pointer;}
 	.item-tienda:hover p{display: none;}
 	.item-tienda:hover .btn_tienda{display: block;}
