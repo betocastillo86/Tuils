@@ -1276,11 +1276,12 @@ html.oldie .container { width: 940px; }
     /*PLANES*/
     .headerRow .columnHeader{display: none;}
     .planOptions{border-collapse:separate; border-spacing:0 27px;}
+    .cell-e.name-plan, .cell-e.name-plan{border: none !important;}
     .planTable .plan-row{border-bottom: 0;}
     .cell-p:nth-child(3){border-left:1px solid #e8ebef; border-right: 1px solid #e8ebef;}
     .cell-e:nth-child(2), .cell-e:nth-child(3), .cell-e:nth-child(4){border-right: 1px solid #e8ebef;}
-    .planTable .cell-p, .headerRow .cell-p{width:33.3%; padding: 8px; box-sizing:border-box;}
-    .planTable .cell-e, .headerRow .cell-e{width: 25%; padding: 8px; box-sizing:border-box;}
+    .planTable .cell-p, .headerRow .cell-p{width:33.3%; padding:8px 0; box-sizing:border-box;}
+    .planTable .cell-e, .headerRow .cell-e{width: 25%; padding:8px 0; box-sizing:border-box;}
     .planTable .columnHeader{display: none;}
     .planTable .alt{display: block; font-size: 14px; position: absolute; text-align: center; width:calc(100% - 40px);}
 
@@ -1383,6 +1384,9 @@ html.oldie .container { width: 940px; }
     .item-tienda{width: calc(33.3% - 10px);}
     .home-tiendas_grid{width: 460px;}
     /*FIN PAGOS*/
+    /*PLANES*/
+    .cell-p .icon-star, .cell-e .icon-star{font-size: 16px;}
+    /*FIN PLANES*/
 }
 @media screen and (max-width:440px) {
     .picture-uploader li:nth-child(3n){margin-right: auto;}
@@ -1420,6 +1424,10 @@ html.oldie .container { width: 940px; }
     .product-dtl-txt h3 a{display: block;}
     /*home*/
     .home-tiendas_grid{width: 355px;}
+    /*PLANES*/
+    .cell-p .icon-star, .cell-e .icon-star{font-size: 14px;}
+    .plan-name{border-radius: 5px;}
+    /*FIN PLANES*/
 }
 @media screen and (max-width:360px) {
     /*home*/
@@ -1435,6 +1443,9 @@ html.oldie .container { width: 940px; }
     .picture-uploader li, .picture-uploader li.picture_principal{width:calc(33.3% - 14px); height: 96px; margin:7px;}
     .conte_pgt p{width: 100%; float: none; padding: 10px 0 0;}
     .date_pgt{float: none; padding: 0 0 10px; margin: 0;}
+    /*PLANES*/
+    .cell-p .icon-star, .cell-e .icon-star{font-size: 12px;}
+    /*FIN PLANES*/
 }
 @media screen and (max-width:320px) {
     /*home*/
