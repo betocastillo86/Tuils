@@ -76,6 +76,7 @@ namespace Nop.Web.Controllers
         private readonly IStateProvinceService _stateProvinceService;
         private readonly IOrderService _orderService;
         private readonly IOrderProcessingService _orderProcessingService;
+        private readonly IAddressService _addressService;
         private readonly PlanSettings _planSettings;
 
 
@@ -118,7 +119,8 @@ namespace Nop.Web.Controllers
             IOrderService orderService,
             TuilsSettings tuilsSettings,
             IOrderProcessingService orderProcessingService,
-            PlanSettings planSettings)
+            PlanSettings planSettings,
+            IAddressService addressService)
         {
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
@@ -156,6 +158,7 @@ namespace Nop.Web.Controllers
             this._tuilsSettings = tuilsSettings;
             this._orderProcessingService = orderProcessingService;
             this._planSettings = planSettings;
+            this._addressService = addressService;
         }
 
         #endregion
@@ -1458,7 +1461,7 @@ namespace Nop.Web.Controllers
 
         public VendorModel PrepareVendorModel(Vendor vendor)
         {
-            return vendor.ToModel(_workContext, _pictureService, _localizationService, _mediaSettings, _vendorService);
+            return vendor.ToModel(_workContext, _pictureService, _localizationService, _mediaSettings, _vendorService, _addressService);
         }
 
 
@@ -1488,6 +1491,7 @@ namespace Nop.Web.Controllers
 
             return View(model);
         }
+
 
         [ChildActionOnly]
         public ActionResult VendorNavigation()

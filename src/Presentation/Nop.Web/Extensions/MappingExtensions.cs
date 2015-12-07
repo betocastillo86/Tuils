@@ -176,7 +176,8 @@ namespace Nop.Web.Extensions
             IPictureService pictureService, 
             ILocalizationService localizationService,
             MediaSettings mediaSettings,
-            IVendorService vendorService)
+            IVendorService vendorService,
+            IAddressService addressService = null)
         {
             var model = new VendorModel
             {
@@ -219,6 +220,11 @@ namespace Nop.Web.Extensions
 
             model.MetaDescription = model.MetaDescription ?? model.Description;
 
+
+            if (addressService != null)
+                //Agrega los datos de las direcciones del vendor
+                model.Offices =  Nop.Web.Extensions.Api.ApiMappingExtensions.ToModels( addressService.GetAddressesByVendorId(vendor.Id));
+
             return model;
         }
 
@@ -228,12 +234,13 @@ namespace Nop.Web.Extensions
             IPictureService pictureService,
             ILocalizationService localizationService,
             MediaSettings mediaSettings,
-            IVendorService vendorService)
+            IVendorService vendorService,
+            IAddressService addressService = null)
         {
             var models = new List<VendorModel>();
             foreach (var vendor in vendors)
             {
-                models.Add(vendor.ToModel(workContext, pictureService, localizationService, mediaSettings, vendorService));
+                models.Add(vendor.ToModel(workContext, pictureService, localizationService, mediaSettings, vendorService, addressService));
             }
             return models;
         }

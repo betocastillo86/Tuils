@@ -2,7 +2,7 @@
 
 @using Nop.Web.Models.Catalog;
 @using Nop.Core.Infrastructure;
-@if (Model.Products > 0)
+@if (Model.Products.Count > 0)
 {
     var supportRtl = EngineContext.Current.Resolve<Nop.Core.IWorkContext>().WorkingLanguage.Rtl;
    <div class="product-grid bestsellers">

@@ -330,6 +330,7 @@
     <Compile Include="Models\Catalog\ManufacturerModel.cs" />
     <Compile Include="Models\Catalog\ManufacturerNavigationModel.cs" />
     <Compile Include="Models\Catalog\ProductDetailsModel.cs" />
+    <Compile Include="Models\Catalog\VendorOfficesModel.cs" />
     <Compile Include="Models\Catalog\VendorsHomePageModel.cs" />
     <Compile Include="Models\Checkout\CheckoutShippingAddressModel.cs" />
     <Compile Include="Models\Checkout\CheckoutProgressModel.cs" />
@@ -2557,7 +2558,6 @@
     <Content Include="Views\ControlPanel\MyShop.cshtml" />
     <Content Include="Views\ControlPanel\Offices.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Header.cshtml" />
-    <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Offices.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Reviews.cshtml" />
     <Content Include="Views\Shared\_PanelLayoutTwo.cshtml" />
     <Content Include="Views\Shared\_PanelRoot.cshtml" />
@@ -2610,6 +2610,7 @@
     <Content Include="Views\Catalog\VendorsHomePage.cshtml" />
     <Content Include="Views\Sales\_InfoPlan.cshtml" />
     <Content Include="Views\Sales\Plans.cshtml" />
+    <Content Include="Themes\Healthy\Views\Catalog\VendorOffices.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
