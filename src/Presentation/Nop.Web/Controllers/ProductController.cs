@@ -264,31 +264,35 @@ namespace Nop.Web.Controllers
             //vendor
             if (_vendorSettings.ShowVendorOnProductDetailsPage)
             {
-                //_orderService.getorder
-
-                //if (!_workContext.CurrentCustomer.IsGuest())
-                //    model.ProductAlreadyBought = _orderService.CustomerBoughtProduct(_workContext.CurrentCustomer.Id, product.Id);
-
-                //Si el producto ya fue comprado consulta el vendor
-                
-                var vendor = _vendorService.GetVendorById(product.VendorId);
-                if (vendor != null && !vendor.Deleted && vendor.Active)
+                //Solo se muestra la información del vendedor si no está registrado como vendedor
+                //O si el producto no es del mismo usuario
+                if (_workContext.CurrentVendor == null || product.VendorId != _workContext.CurrentVendor.Id)
                 {
-                    model.ShowVendor = true;
+                    //Si el producto ya fue comprado consulta el vendor
 
-                    model.VendorModel = new VendorBriefInfoModel
+                    var vendor = _vendorService.GetVendorById(product.VendorId);
+                    if (vendor != null && !vendor.Deleted && vendor.Active)
                     {
-                        Id = vendor.Id,
-                        Name = vendor.GetLocalized(x => x.Name),
-                        SeName = vendor.GetSeName(),
-                        VendorShippingEnabled = vendor.EnableShipping ?? false,
-                        CreditCardEnabled = vendor.EnableCreditCardPayment ?? false,
-                        PhoneNumber = vendor.PhoneNumber,
-                        VendorType = vendor.VendorType
-                    };
+                        model.ShowVendor = true;
 
-                    //Solo muestra productos del mismo vendedor si este es Tienda o taller
-                    model.ShowProductsOfVendor = vendor.VendorType != VendorType.User;
+                        model.VendorModel = new VendorBriefInfoModel
+                        {
+                            Id = vendor.Id,
+                            Name = vendor.GetLocalized(x => x.Name),
+                            SeName = vendor.GetSeName(),
+                            VendorShippingEnabled = vendor.EnableShipping ?? false,
+                            CreditCardEnabled = vendor.EnableCreditCardPayment ?? false,
+                            PhoneNumber = vendor.PhoneNumber,
+                            VendorType = vendor.VendorType
+                        };
+
+                        //Solo muestra productos del mismo vendedor si este es Tienda o taller
+                        model.ShowProductsOfVendor = vendor.VendorType != VendorType.User;
+                    }
+                }
+                else
+                {
+                    model.ShowVendor = false;
                 }
                 
             }
@@ -409,7 +413,7 @@ namespace Nop.Web.Controllers
             var productPicturesCacheKey = string.Format(ModelCacheEventConsumer.PRODUCT_DETAILS_PICTURES_MODEL_KEY, product.Id, defaultPictureSize, isAssociatedProduct, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
             var cachedPictures = _cacheManager.Get(productPicturesCacheKey, () =>
             {
-                var pictures = _pictureService.GetPicturesByProductId(product.Id);
+                var pictures = _pictureService.GetPicturesByProductId(product.Id, onlyActive:true);
 
                 var defaultPictureModel = new PictureModel
                 {
@@ -1013,7 +1017,12 @@ namespace Nop.Web.Controllers
             //Se cambia para que el cache sea por la categoría
             var model = _cacheManager.Get(string.Format(ModelCacheEventConsumer.PRODUCTS_RELATED_IDS_KEY, mainCategory.CategoryId, _storeContext.CurrentStore.Id),
                 () => {
-                    var products = _productService.SearchProducts(categoryIds: new List<int>() { mainCategory.CategoryId }, pageIndex: 0, pageSize: 20, orderBy:ProductSortingEnum.Random);
+                    int pagesize = _catalogSettings.ShowRelatedProductsAsFeatured ? int.MaxValue : 20;
+                    var products = _productService.SearchProducts(categoryIds: new List<int>() { mainCategory.CategoryId }, 
+                        pageIndex: 0, 
+                        pageSize: pagesize, 
+                        featuredProducts:_catalogSettings.ShowRelatedProductsAsFeatured ? (bool?) true : null,
+                        sold:false);
                     return PrepareProductOverviewModels(products, true, true, productThumbPictureSize).ToList();
                 }
                     //_productService.GetRelatedProductsByProductId1(productId).Select(x => x.ProductId2).ToArray()
@@ -1356,6 +1365,7 @@ namespace Nop.Web.Controllers
                     PrepareProductOverviewModels(
                         _productService.SearchProducts(storeId: _storeContext.CurrentStore.Id,
                                                     leftFeatured: true,
+                                                    sold : false,
                                                     orderBySpecialCategoryId: orderBySpecialCategoryId), true, true, productThumbPictureSize)
                                                     .ToList() 
                     );
@@ -1391,7 +1401,7 @@ namespace Nop.Web.Controllers
                 .Take(_catalogSettings.NumberOfBestsellersOnHomepage)
                 .ToList();
 
-            return PartialView(model);
+            return PartialView(new FeaturedLeftMenuModel() { Products = model });
         }
 
         #endregion

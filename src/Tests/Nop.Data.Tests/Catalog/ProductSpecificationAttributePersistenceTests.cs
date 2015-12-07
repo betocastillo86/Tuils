@@ -23,7 +23,8 @@ namespace Nop.Data.Tests.Catalog
                     Published = true,
                     Deleted = false,
                     CreatedOnUtc = new DateTime(2010, 01, 01),
-                    UpdatedOnUtc = new DateTime(2010, 01, 02)
+                    UpdatedOnUtc = new DateTime(2010, 01, 02),
+                    VendorId = 2
                 },
                 SpecificationAttributeOption = new SpecificationAttributeOption
                 {

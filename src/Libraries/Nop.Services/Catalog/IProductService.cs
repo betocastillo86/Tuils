@@ -4,6 +4,7 @@ using Nop.Core;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Shipping;
+using Nop.Core.Domain.Vendors;
 
 namespace Nop.Services.Catalog
 {
@@ -115,7 +116,11 @@ namespace Nop.Services.Catalog
             int? orderBySpecialCategoryId = null,
            int? stateProvinceId = null,
             bool? leftFeatured = null,
-            bool? sold = null);
+            bool? sold = null,
+            bool hidden = false,
+            bool? showOnHomePage = null,
+            bool? showOnSliders = null,
+            bool? showOnSocialNetworks = null);
 
 
 
@@ -150,7 +155,11 @@ namespace Nop.Services.Catalog
             int? orderBySpecialCategoryId = null,
            int? stateProvinceId = null,
             bool? leftFeatured = null,
-             bool? sold = null);
+             bool? sold = null,
+            bool hidden = false,
+            bool? showOnHomePage = null,
+            bool? showOnSliders = null,
+            bool? showOnSocialNetworks = null);
 
 
         /// <summary>
@@ -244,7 +253,11 @@ namespace Nop.Services.Catalog
             int? orderBySpecialCategoryId = null,
             bool? loadPriceRange = false,
             bool? leftFeatured = null,
-            bool? sold = null);
+            bool? sold = null,
+            bool hidden = false,
+            bool? showOnHomePage = null,
+            bool? showOnSliders = null,
+            bool? showOnSocialNetworks = null);
 
 
         /// <summary>
@@ -605,7 +618,41 @@ namespace Nop.Services.Catalog
 
         void DeleteSpecialCategoryProduct(SpecialCategoryProduct specialCategory);
 
-        bool HasReachedLimitOfProducts(int vendorId);
+        bool HasReachedLimitOfProducts(Vendor vendor, out int limit);
+        
+        /// <summary>
+        /// Cuenta la cantidad de lugares que le quedan disponibles a un vendedor dependiendo del plan seleccionado
+        /// para destacar sus productos
+        /// </summary>
+        /// <param name="product">
+        ///     Producto producto que se intenta agregar. Sirve para saber si el producto se debe contar o no en la lista.
+        ///     internamente contiene el Id del vendor
+        /// </param>
+        /// <param name="validatePlan">True: Debe validar que el plan este activo. Si no debe validar el parametro order no puede venir nulo</param>
+        /// <param name="order">Cuando no se valida el plan directamente contra la base de datos es el plan que seleccionó el usuario</param>
+        /// <returns>
+        /// Diccionario con la siguiente estructure:
+        ///     Llave: ID del SpecificationAttribute relacionado del plan (Ej: SpecificationAttributeId de Numero de productos publicados en el home)
+        ///     Valor: Array en posicion 0: Conteo de los productos que le quedan disponibles al vendor
+        ///            Array en posicion 1: Conteo de los productos que puede seleccionar en el plan
+        /// </returns>
+        LeftFeaturedByVendorModel CountLeftFeaturedPlacesByVendor(Product product, bool validatePlan, Order order = null);
+
+        /// <summary>
+        /// Cuenta la cantidad de lugares que le quedan disponibles a un vendedor dependiendo del plan seleccionado
+        /// para destacar sus productos
+        /// </summary>
+        /// <param name="order">
+        ///     Orden que sobre la que se quiere consultar el plan
+        /// </param>
+        /// <param name="vendorId">Id del vendor que consulta los datos</param>
+        /// <returns>
+        /// Diccionario con la siguiente estructure:
+        ///     Llave: ID del SpecificationAttribute relacionado del plan (Ej: SpecificationAttributeId de Numero de productos publicados en el home)
+        ///     Valor: Array en posicion 0: Conteo de los productos que le quedan disponibles al vendor
+        ///            Array en posicion 1: Conteo de los productos que puede seleccionar en el plan
+        /// </returns>
+        LeftFeaturedByVendorModel CountLeftFeaturedPlacesByVendor(Order order, int vendorId);
 
         /// <summary>
         /// Trae los productos que están a punto de finalizar dependiendo de un numero de dias previos
@@ -631,5 +678,35 @@ namespace Nop.Services.Catalog
         /// <param name="bestRating">Variable de salida con la mejor calificacion</param>
         /// <param name="worstRating">Varibale de salida con la peor calificación</param>
         void GetBestWorstRating(int productId, out int bestRating, out int worstRating);
+
+        /// <summary>
+        /// Agrega las caracteristicas de un plan a un producto después de que este fue pago
+        /// </summary>
+        /// <param name="product">datos del producto a marcar</param>
+        /// <param name="order">datos de la orden relacionada</param>
+        void AddPlanToProduct(int productId, Order order);
+
+        /// <summary>
+        /// Inactiva caracteristicas destacadas en los productos de un vendor de acuerdo a un plan seleccionado
+        /// </summary>
+        /// <param name="vendor"></param>
+        void ValidateProductLimitsByVendorPlan(Vendor vendor);
+
+
+        /// <summary>
+        /// Realiza las validaciones para habilitar un producto y lo actualiza
+        /// </summary>
+        /// <param name="forceEnable">Fuerza la habilitación del producto sin importar si tiene o no disponibles</param>
+        /// <param name="updateProduct">True: Actualiza el producto en base de datos</param>
+        /// <param name="product">Producto a actualizar</param>
+        void EnableProduct(Product product, bool forceEnable = false, bool updateProduct = true);
+
+
+        /// <summary>
+        /// Trae el modelo de un plan dependiendo del id enviado
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        PlanModel GetPlanById(int id);
     }
 }

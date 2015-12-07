@@ -24,6 +24,7 @@ using Nop.Services.Orders;
 using Nop.Services.Logging;
 using Nop.Core.Domain.Vendors;
 using Nop.Core.Domain.Media;
+using Nop.Services.Common;
 
 namespace Nop.Services.Catalog
 {
@@ -44,6 +45,15 @@ namespace Nop.Services.Catalog
         /// Key pattern to clear cache
         /// </summary>
         private const string PRODUCTS_PATTERN_KEY = "Nop.product.";
+
+        /// <summary>
+        /// Key para guardar el detalle de un plan
+        /// </summary>
+        private const string PRODUCTS_PLAN_PATTERN = "Nop.product.";
+        /// <summary>
+        /// Key para guardar el detalle de un plan
+        /// </summary>
+        private const string PRODUCTS_PLAN_BY_ID_KEY = "Nop.product.{0}";
         #endregion
 
         #region Fields
@@ -83,6 +93,7 @@ namespace Nop.Services.Catalog
         private readonly ILogger _logger;
         private readonly ICategoryService _categoryService;
         private readonly ILocalizationService _localizationService;
+        private readonly PlanSettings _planSettings;
         
 
 
@@ -153,7 +164,8 @@ namespace Nop.Services.Catalog
             ILogger logger,
             ICategoryService categoryService,
             ILocalizationService localizacionService,
-            IRepository<Vendor> vendorRepository)
+            IRepository<Vendor> vendorRepository,
+            PlanSettings planSettings)
         {
             this._cacheManager = cacheManager;
             this._productRepository = productRepository;
@@ -190,6 +202,7 @@ namespace Nop.Services.Catalog
             this._categoryService = categoryService;
             this._localizationService = localizacionService;
             this._vendorRepository = vendorRepository;
+            this._planSettings = planSettings;
         }
 
         #endregion
@@ -411,7 +424,11 @@ namespace Nop.Services.Catalog
             int? orderBySpecialCategoryId = null,
            int? stateProvinceId = null,
             bool? leftFeatured = null,
-             bool? sold = null)
+             bool? sold = null,
+            bool hidden = false,
+            bool? showOnHomePage = null,
+            bool? showOnSliders = null,
+            bool? showOnSocialNetworks = null)
         {
             Dictionary<int, int> filterableSpecificationAttributeOptionCount;
             return SearchProducts(
@@ -421,7 +438,8 @@ namespace Nop.Services.Catalog
                 parentGroupedProductId, productType, visibleIndividuallyOnly, featuredProducts,
                 priceMin, priceMax, productTagId, keywords, searchDescriptions, searchSku,
                 searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published, 
-                specialCategoryId, orderBySpecialCategoryId, stateProvinceId, leftFeatured, sold);
+                specialCategoryId, orderBySpecialCategoryId, stateProvinceId, leftFeatured, sold, hidden,
+                showOnHomePage, showOnSliders, showOnSocialNetworks);
         }
 
 
@@ -455,7 +473,11 @@ namespace Nop.Services.Catalog
             int? orderBySpecialCategoryId = null,
            int? stateProvinceId = null,
             bool? leftFeatured = null,
-             bool? sold = null)
+             bool? sold = null,
+            bool hidden = false,
+            bool? showOnHomePage = null,
+            bool? showOnSliders = null,
+            bool? showOnSocialNetworks = null)
         {
             Dictionary<int, int> filterableCategoryCount;
             Dictionary<int, int> filterableStateProvinceCount;
@@ -475,8 +497,9 @@ namespace Nop.Services.Catalog
                 storeId, vendorId, warehouseId,
                 parentGroupedProductId, productType, visibleIndividuallyOnly, featuredProducts,
                 priceMin, priceMax, productTagId, keywords, searchDescriptions, searchSku,
-                searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published, 
-                stateProvinceId, specialCategoryId, orderBySpecialCategoryId, false,leftFeatured, sold);
+                searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published,
+                stateProvinceId, specialCategoryId, orderBySpecialCategoryId, false, leftFeatured, sold, hidden,
+                showOnHomePage, showOnSliders, showOnSocialNetworks);
         }
 
 
@@ -519,6 +542,7 @@ namespace Nop.Services.Catalog
         /// <param name="orderBy">Order by</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <param name="published">Si viene null no filtra por el campo Published. Si no viene null si filtra por el campo dependiendo de su valor</param>
+        /// <param name="hidden">Campo Hidden de la tabla Product</param>
         /// <returns>Products</returns>
         public virtual IPagedList<Product> SearchProducts(
             out Dictionary<int, int> filterableSpecificationAttributeOptionCount,
@@ -560,7 +584,11 @@ namespace Nop.Services.Catalog
             int? orderBySpecialCategoryId = null,
             bool? loadPriceRange = false,
             bool? leftFeatured = null,
-             bool? sold = null)
+             bool? sold = null,
+            bool hidden = false,
+            bool? showOnHomePage = null,
+            bool? showOnSliders = null,
+            bool? showOnSocialNetworks = null)
         {
             filterableSpecificationAttributeOptionCount = new Dictionary<int, int>();
             filterableCategoryCount = new Dictionary<int, int>();
@@ -772,6 +800,29 @@ namespace Nop.Services.Catalog
             pShowHidden.Value = showHidden;
             pShowHidden.DbType = DbType.Boolean;
 
+
+            var pHidden = _dataProvider.GetParameter();
+            pHidden.ParameterName = "hidden";
+            pHidden.Value = hidden;
+            pHidden.DbType = DbType.Boolean;
+
+
+            var pShowOnHomePage = _dataProvider.GetParameter();
+            pShowOnHomePage.ParameterName = "showOnHomePage";
+            pShowOnHomePage.Value = showOnHomePage.HasValue ? (object)showOnHomePage : DBNull.Value;
+            pShowOnHomePage.DbType = DbType.Boolean;
+
+            var pShowOnSliders = _dataProvider.GetParameter();
+            pShowOnSliders.ParameterName = "showOnSliders";
+            pShowOnSliders.Value = showOnSliders.HasValue ? (object)showOnSliders : DBNull.Value;
+            pShowOnSliders.DbType = DbType.Boolean;
+
+            var pShowOnSocialNetworks = _dataProvider.GetParameter();
+            pShowOnSocialNetworks.ParameterName = "ShowOnSocialNetworks";
+            pShowOnSocialNetworks.Value = showOnSocialNetworks.HasValue ? (object)showOnSocialNetworks : DBNull.Value;
+            pShowOnSocialNetworks.DbType = DbType.Boolean;
+
+
             var pPublished = _dataProvider.GetParameter();
             pPublished.ParameterName = "Published";
             pPublished.Value = published != null ? (object)published : DBNull.Value;
@@ -915,6 +966,10 @@ namespace Nop.Services.Catalog
                 pPageIndex,
                 pPageSize,
                 pShowHidden,
+                pHidden,
+                pShowOnHomePage,
+                pShowOnSliders,
+                pShowOnSocialNetworks,
                 pPublished,
                 pSold,
                 pStateProvinceId,
@@ -1394,8 +1449,11 @@ namespace Nop.Services.Catalog
                 .GroupBy(r => r.ProductId)
                 .Select(r => new { Best = r.Max(g => g.Rating), Worst = r.Min(g => g.Rating) });
 
-            bestRating = maxMin.FirstOrDefault().Best;
-            worstRating = maxMin.FirstOrDefault().Worst;
+            var result = maxMin.FirstOrDefault();
+
+            bestRating = result != null ? result.Best : 0;
+            worstRating = result != null ? result.Worst : 0;
+
         }
 
         /// <summary>
@@ -2221,26 +2279,51 @@ namespace Nop.Services.Catalog
         /// <param name="product">Datos del producto</param>
         public void PublishProduct(Product product)
         {
+
+            //Busca cual es el plan gratis y cara el valor DisplayOrder por defecto
+            var freePlan = GetPlanById(_planSettings.PlanProductsFree);
             
             var rootCategory = _categoryService.GetRootCategoryByCategoryId(product.ProductCategories.FirstOrDefault().CategoryId);
             if (rootCategory == null)
                 throw new NopException(CodeNopException.CategoryDoesntExist);
-            else if (rootCategory.Id == _tuilsSettings.productBaseTypes_service && _workContext.CurrentVendor.VendorType != Core.Domain.Vendors.VendorType.RepairShop)
+            else if (rootCategory.Id == _tuilsSettings.productBaseTypes_service && _workContext.CurrentVendor.VendorType != Core.Domain.Vendors.VendorType.Market)
                 throw new NopException(CodeNopException.UserTypeNotAllowedPublishProductType, _localizationService.GetResource("publishProduct.error.publishInvalidCategoryService"));
 
             //Si tiene imagenes temporales por cargar las crea
             if (product.TempFiles.Count > 0)
             {
+
                 var pictures = _pictureService.InsertPicturesFromTempFiles(product.TempFiles.ToArray());
                 for (int i = 0; i < pictures.Count; i++)
                 {
                     product.ProductPictures.Add(new ProductPicture()
                     {
                         PictureId = pictures[i].Id,
-                        DisplayOrder = i
+                        DisplayOrder = i,
+                        //Solo deja activas las fotos que cumplen con la especificación del plan
+                        Active = i < freePlan.NumPictures
                     });
                 }
             }
+            else
+            {
+                //Carga la imagen por defecto de los servicios
+                product.ProductPictures.Add(new ProductPicture()
+                {
+                    PictureId = _catalogSettings.DefaultServicePicture,
+                    DisplayOrder = 0,
+                    Active = true
+                });
+            }
+
+
+
+           #region DisplayOrder
+
+            
+            product.DisplayOrder = freePlan.DisplayOrder;
+
+            #endregion
 
             product.ProductTypeId = (int)ProductType.SimpleProduct;
             product.VisibleIndividually = true;
@@ -2251,18 +2334,43 @@ namespace Nop.Services.Catalog
             product.OrderMaximumQuantity = 1;
             product.OrderMaximumQuantity = 1;
             product.StockQuantity = _tuilsSettings.defaultStockQuantity;
-            product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(_catalogSettings.LimitDaysOfProductPublished);
+
+            var vendor = _workContext.CurrentVendor;
+
+
+            //Ya que al publicar todavía no se cuenta con la compra del plan se selecciona el plan gratis
+            var selectedPlan = GetPlanById(vendor.VendorType != VendorType.Market ? _planSettings.PlanProductsFree : _planSettings.PlanStoresFree);
+
+            //Si el producto es de una tienda, realiza validaciones de las fechas de expiración
+            if (vendor.VendorType == VendorType.Market)
+            {
+                //Si el vendor tiene un plan activo, deja la fecha de expiración del producto igual a la expiración del plan
+                if (vendor.CurrentOrderPlanId.HasValue && vendor.PlanExpiredOnUtc > DateTime.UtcNow)
+                {
+                    product.AvailableEndDateTimeUtc = vendor.PlanExpiredOnUtc;
+                }
+                else
+                {
+                    product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDaysToPlan(selectedPlan.DaysPlan);
+                }
+            }
+            else
+            {
+                product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDaysToPlan(selectedPlan.DaysPlan);
+            }
+
+            //Guarda los datos del producto, intenta enviar el correo
+            InsertProduct(product);
 
             try
             {
-                InsertProduct(product);
                 //Despues de insertar envía la notificación
                 if (product.Id > 0)
                     _workflowMessageService.SendProductPublishedNotificationMessage(product, _workContext.WorkingLanguage.Id);
             }
             catch (Exception e)
             {
-                throw e;
+                _logger.Error(e.ToString(), e);
             }
 
         }
@@ -2461,7 +2569,97 @@ namespace Nop.Services.Catalog
         }
 
 
+        /// <summary>
+        /// Cuenta la cantidad de lugares que le quedan disponibles a un vendedor dependiendo del plan seleccionado
+        /// para destacar sus productos
+        /// </summary>
+        /// <param name="product">
+        ///     Producto producto que se intenta agregar. Sirve para saber si el producto se debe contar o no en la lista.
+        ///     internamente contiene el Id del vendor
+        /// </param>
+        /// <param name="validatePlan">True: Debe validar que el plan este activo. Si no debe validar el parametro order no puede venir nulo</param>
+        /// <param name="order">Cuando no se valida el plan directamente contra la base de datos es el plan que seleccionó el usuario</param>
+        /// <returns>
+        /// Listado de datos que le quedan al usuario
+        /// </returns>
+        public LeftFeaturedByVendorModel CountLeftFeaturedPlacesByVendor(Product product, bool validatePlan, Order order = null)
+        {
+            if (product == null)
+                throw new ArgumentNullException("product");
+
+            //Si seleccionó que no se valide el plan directamente debe venir la orden con la solicitud del plan del usuario
+            if(!validatePlan && order == null)
+                throw new ArgumentNullException("order");
+
+            var leftProducts = new LeftFeaturedByVendorModel();
+
+            //El plan del vendedor debe estar activo
+            if ((product.Vendor.CurrentOrderPlanId.HasValue && product.Vendor.PlanExpiredOnUtc > DateTime.UtcNow) || !validatePlan)
+            {
+                leftProducts = CountLeftFeaturedPlacesByVendor(!validatePlan && !product.Vendor.CurrentOrderPlanId.HasValue ? order : product.Vendor.CurrentOrderPlan, product.VendorId);
+            }
+
+            return leftProducts;
+        }
+
+        /// <summary>
+        /// Realiza el conteo de los productos que le quedan al usuario por publicar
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        public LeftFeaturedByVendorModel CountLeftFeaturedPlacesByVendor(Order order, int vendorId)
+        {
+            var leftProducts = new Dictionary<int, int[]>();
+            
+            //Busca el plan seleccionado del vendedor
+            //Si no tiene plan pago todavía lo busca en el enviado
+            var selectedPlan = GetPlanById(order.OrderItems.FirstOrDefault().Product.Id);
+            //var attributesPlan = order.OrderItems.FirstOrDefault().Product.ProductSpecificationAttributes;
+
+            //Consulta los productos activos del vendor
+            var products = SearchProducts(vendorId: vendorId, sold:false);
+
+            var model = new LeftFeaturedByVendorModel();
+
+            //Cuenta los destacados en las bandas rotativas y cuantos hay por el plan y saca las diferencias
+            //int productsFeaturedOnSlider = products.Where(p => p.FeaturedForSliders && p.Id != product.Id).Count();
+            int productsFeaturedOnSlider = products.Where(p => p.FeaturedForSliders).Count();
+            int productsFeaturedOnSliderByPlan = selectedPlan.NumProductsOnSliders;
+            model.SlidersLeft = productsFeaturedOnSliderByPlan - productsFeaturedOnSlider;
+            model.SlidersByPlan = productsFeaturedOnSliderByPlan;
+            //leftProducts.Add(_planSettings.SpecificationAttributeIdProductsFeaturedOnSliders, new int[] { productsFeaturedOnSliderByPlan - productsFeaturedOnSlider, productsFeaturedOnSliderByPlan });
+
+            //Cuenta los destacados en el home y cuantos hay por el plan y saca las diferencias
+            int productsOnHome = products.Where(p => p.ShowOnHomePage).Count();
+            int productsOnHomeByPlan = selectedPlan.NumProductsOnHome;
+            model.HomePageLeft = productsOnHomeByPlan - productsOnHome;
+            model.HomePageByPlan = productsOnHomeByPlan;
+            //leftProducts.Add(_planSettings.SpecificationAttributeIdProductsOnHomePage, new int[] { productsOnHomeByPlan - productsOnHome, productsOnHomeByPlan });
+
+            //Cuenta los destacados en el home y cuantos hay por el plan y saca las diferencias
+            int productsOnSocialNetworks = products.Where(p => p.SocialNetworkFeatured).Count();
+            int productsOnSocialNetworksByPlan = selectedPlan.NumProductsOnSocialNetworks;
+            model.SocialNetworkLeft = productsOnSocialNetworksByPlan - productsOnSocialNetworks;
+            model.SocialNetworkByPlan = productsOnSocialNetworksByPlan;
+            //leftProducts.Add(_planSettings.SpecificationAttributeIdProductsOnSocialNetworks, new int[] { productsOnSocialNetworksByPlan - productsOnSocialNetworks, productsOnSocialNetworksByPlan });
+
+            //Cuenta los productos que hacen parte del plan
+            int productsPublished = products.Count;
+            int productsPublishedByPlan = selectedPlan.NumProducts;
+            model.ProductsLeft = productsPublishedByPlan - productsPublished;
+            model.ProductsByPlan = productsPublishedByPlan;
+            //leftProducts.Add(_planSettings.SpecificationAttributeIdLimitProducts, new int[] { productsPublishedByPlan - productsPublished, productsPublishedByPlan });
+
+            model.DisplayOrder = selectedPlan.DisplayOrder;
+
+            return model;
+        }
+
+
         #endregion
+
+        
 
         #region SpecialCategories
         public IList<SpecialCategoryProduct> GetSpecialCategoriesByProductId(int productId)
@@ -2509,14 +2707,35 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="vendorId"></param>
         /// <returns></returns>
-        public bool HasReachedLimitOfProducts(int vendorId)
+        public bool HasReachedLimitOfProducts(Vendor vendor, out int limit)
         {
-            //Si hay limite realiza la validación
-            if (_catalogSettings.ProductLimitPublished > 0)
+            if (_planSettings.PlanProductsFree == 0)
             {
-                var products = SearchProducts(vendorId: vendorId, pageIndex: 0, pageSize: 0);
-                return products.TotalCount >= _catalogSettings.ProductLimitPublished;
+                limit = 0;
+                return false;
             }
+                
+            
+            var products = SearchProducts(vendorId: vendor.Id, sold:false);
+            
+            if (vendor.VendorType == VendorType.Market)
+            {
+                //Consulta el plan seleccionado por la tienda o sino el gratis
+                var selectedPlan = vendor.GetCurrentPlan(this, _planSettings);
+                limit = selectedPlan.NumProducts;
+                return products.TotalCount >= limit;
+            }
+            else
+            {
+                int totalPublishedWiouthPaying = products.Where(p => !p.OrderPlanId.HasValue).Count();
+                limit = GetPlanById(_planSettings.PlanProductsFree).NumProducts;
+                //Si hay limite realiza la validación
+                if (limit > 0)
+                {
+                    return totalPublishedWiouthPaying >= limit;
+                }
+            }
+            
             return false;
         }
 
@@ -2555,6 +2774,424 @@ namespace Nop.Services.Catalog
             return query.ToList();
         }
         #endregion
-       
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="order"></param>
+        /// <param name="planId"></param>
+        public void AddPlanToProduct(int productId, Order order)
+        {
+            if (order == null)
+                throw new ArgumentNullException("order");
+
+            var product = GetProductById(productId);
+            if (product == null)
+                throw new ArgumentNullException("productId");
+
+
+            //La orden y el producto deben ser del mismo usuario
+            if (order.Customer.VendorId != product.VendorId)
+                throw new NopException("El cliente de la orden no corresponde con el del vendedor del producto");
+
+            //Agrega las caracteristicas del plan al producto
+            var selectedPlan = order.OrderItems.FirstOrDefault().Product;
+            foreach (var attributeValues in selectedPlan.ProductSpecificationAttributes)
+            {
+                //Recorre todos los atributos asignados al PLAN para despues asignar las propiedades al producto
+                var attribute = attributeValues.SpecificationAttributeOption.SpecificationAttribute;
+
+                var valueAttributeSelected = attributeValues.SpecificationAttributeOption.Name;
+
+                //valida si el atributo es el número de días que va estar la publicación activa
+                if (attribute.Id == _planSettings.SpecificationAttributePlanDays)
+                {
+                    //Actualiza la fecha de cierre del producto de acuerdo al valor en dias del plan
+                    product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDaysToPlan(Convert.ToInt32(valueAttributeSelected));
+                }
+                //si el atributo es el número de fotografías las habilita
+                else if (attribute.Id == _planSettings.SpecificationAttributeIdPictures)
+                {
+                    int maxNum = Convert.ToInt32(valueAttributeSelected);
+                    //Activa el numero de fotografías correspondientes al plan
+                    product.ProductPictures.Take(maxNum)
+                            .ToList()
+                            .ForEach(p =>
+                            {
+                                if (!p.Active)
+                                {
+                                    p.Active = true;
+                                    _productPictureRepository.Update(p);
+                                }
+                            });
+                }
+                //si el atributo es la exposición que tiene el producto lo actualiza
+                else if (attribute.Id == _planSettings.SpecificationAttributeIdDisplayOrder)
+                {
+                    //Actualiza la propiedad del orden en el que se deben mostrar los productos
+                    product.DisplayOrder = Convert.ToInt32(valueAttributeSelected);
+                }
+                //Si es banda rotativa actualiza los valores correspondientes
+                else if (attribute.Id == _planSettings.SpecificationAttributeIdSliders)
+                {
+                    //So el valor asignado es el de categorias, destaca las categorías
+                    if (attributeValues.SpecificationAttributeOptionId == _planSettings.OptionAttributeFeaturedCategories)
+                    {
+                        //Busca las categorias del producto para destacarlas
+                        foreach (var category in product.ProductCategories)
+                        {
+                            category.IsFeaturedProduct = true;
+                            _eventPublisher.EntityUpdated(category);
+                        }
+                    }
+                    //So el valor asignado es el de marcas, destaca las marcas
+                    else if (attributeValues.SpecificationAttributeOptionId == _planSettings.OptionAttributeFeaturedManufacturers)
+                    {
+                        //Busca las marcas del producto para destacarlas
+                        foreach (var manufacturer in product.ProductManufacturers)
+                        {
+                            manufacturer.IsFeaturedProduct = true;
+                            _eventPublisher.EntityUpdated(manufacturer);
+                        }
+                    }
+                    else if (attributeValues.SpecificationAttributeOptionId == _planSettings.OptionAttributeFeaturedLeft)
+                    {
+                        product.LeftFeatured = true;
+                    }
+                    //IMPORTANTE. Para los destacados como relacionados se va dejar el mismo OptionAttributeFeaturedCategories
+                    //al filtrar los productos de la misma categoría del producto que se está mostrando
+                    
+                    product.FeaturedForSliders = true;
+                }
+                //Destaca los del home
+                else if (attribute.Id == _planSettings.SpecificationAttributeIdHomePage)
+                {
+                    product.ShowOnHomePage = true;
+                }
+                //Destaca los de las redes sociales
+                else if (attribute.Id == _planSettings.SpecificationAttributeIdSocialNetworks)
+                {
+                    product.SocialNetworkFeatured = true;
+                }
+            }
+
+            product.OrderPlanId = order.Id;
+
+            //Actualiza el producto con las acciones realizadas
+            UpdateProduct(product);
+
+
+        }
+
+        /// <summary>
+        /// Trae el modelo de un plan dependiendo del id enviado
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public PlanModel GetPlanById(int id)
+        {
+            string cacheKey = string.Format(PRODUCTS_PLAN_BY_ID_KEY, id);
+            return _cacheManager.Get(cacheKey, () => {
+                var product = GetProductById(id);
+                var model = new PlanModel();
+                model.ProductId = product.Id;
+                model.Name = product.Name;
+
+                bool isPlanForStores = product.ProductCategories.FirstOrDefault().CategoryId == _planSettings.CategoryStorePlansId;
+
+
+                foreach (var spec in product.ProductSpecificationAttributes)
+                {
+                    var option = spec.SpecificationAttributeOption;
+
+                    if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdLimitProducts)
+                        model.NumProducts = Convert.ToInt32(option.Name);
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsOnHomePage)
+                        model.NumProductsOnHome = Convert.ToInt32(option.Name);
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsOnSocialNetworks)
+                        model.NumProductsOnSocialNetworks = Convert.ToInt32(option.Name);
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdProductsFeaturedOnSliders)
+                        model.NumProductsOnSliders = Convert.ToInt32(option.Name);
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdHomePage)
+                        model.ShowOnHomePage = true;
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdSliders)
+                        model.ShowOnSliders = true;
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdSocialNetworks)
+                        model.ShowOnSocialNetworks = true;
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributePlanDays)
+                        model.DaysPlan = Convert.ToInt32(option.Name);
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdDisplayOrder)
+                        model.DisplayOrder = Convert.ToInt32(option.Name);
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdPictures)
+                        model.NumPictures = Convert.ToInt32(option.Name);
+                    else if (option.SpecificationAttributeId == _planSettings.SpecificationAttributeIdMostExpensivePlan)
+                        model.IsMostExpensive = true;
+                }
+
+                return model;
+
+            });
+        }
+
+        /// <summary>
+        /// Inactiva los productos de un vendor de acuerdo a un plan seleccionado
+        /// </summary>
+        /// <param name="vendor"></param>
+        public void ValidateProductLimitsByVendorPlan(Vendor vendor)
+        {
+
+            //Si el plan ya expiró, carga los datos del plan gratis
+            //int planId = vendor.PlanExpiredOnUtc > DateTime.UtcNow ? vendor.CurrentOrderPlan.OrderItems.FirstOrDefault().ProductId : _planSettings.PlanStoresFree;
+            var selectedPlan = vendor.GetCurrentPlan(Nop.Core.Infrastructure.EngineContext.Current.Resolve<IProductService>(), _planSettings);
+            //Si el plan no se le ha vencido al vendor la fecha es la del vencimiento
+            //Si el plan ya se vencio, la fecha es la del plan gratis
+            var newExpirationDate = vendor.PlanExpiredOnUtc > DateTime.UtcNow ? vendor.PlanExpiredOnUtc : DateTime.UtcNow.AddDays(selectedPlan.DaysPlan);
+            
+            int iProduct = 0;
+            //Conteo de los productos con las caracteristicas seleccionadas
+            int iProductHome = 0;
+            int iProductSliders = 0;
+            int iProductSocialNetworks = 0;
+
+            //Consulta todos los productos 
+            var products = _productRepository.Table
+                .Where(p => p.VendorId == vendor.Id && p.Published)
+                .OrderByDescending(p => p.UpdatedOnUtc)
+                .ToList();
+
+            //Trae todos los productos existentes y le aumenta el tiempo de muestra 
+            //solo al máximo de productos permitidos por el plan
+            foreach (var product in products)
+            {
+                bool updateProduct = false;
+                
+                //Valida si el producto está dentro de las caracteristicas mostradas 
+                if (product.IsTotallyAvailable() && product.ShowOnHomePage)
+                    iProductHome++;
+                if (product.IsTotallyAvailable() && product.FeaturedForSliders)
+                    iProductSliders++;
+                if (product.IsTotallyAvailable() && product.SocialNetworkFeatured)
+                    iProductSocialNetworks++;
+                
+                //Actualiza la fecha de cierre a la fecha del plan
+                if (iProduct < selectedPlan.NumProducts && !product.Sold)
+                {
+                    product.AvailableEndDateTimeUtc = newExpirationDate;
+                    product.DisplayOrder = selectedPlan.DisplayOrder;
+                    updateProduct = true;
+                    iProduct++;
+                }
+                else
+                {
+                    if (product.AvailableEndDateTimeUtc > DateTime.UtcNow)
+                    {
+                        var freePlan = GetPlanById(_planSettings.PlanStoresFree);
+                        //Los demás productos los desactiva por fecha siempre y cuando no esten vencidos ya
+                        product.AvailableEndDateTimeUtc = DateTime.UtcNow;
+                        product.SocialNetworkFeatured = false;
+                        product.ShowOnHomePage = false;
+                        product.FeaturedForSliders = false;
+                        updateProduct = true;
+                        product.DisplayOrder = freePlan.DisplayOrder;
+                    }
+                }
+
+                //Si se pasa del numero permitido en el plan lso empieza a desactivar
+                if (iProductSocialNetworks > selectedPlan.NumProductsOnSocialNetworks)
+                {
+                    product.SocialNetworkFeatured = false;
+                    updateProduct = true;
+                }
+                if (iProductHome > selectedPlan.NumProductsOnHome)
+                {
+                    product.ShowOnHomePage = false;
+                    updateProduct = true;
+                }
+                if (iProductSliders > selectedPlan.NumProductsOnSliders)
+                {
+                    product.FeaturedForSliders = false;
+                    product.LeftFeatured = false;
+                    updateProduct = true;
+                    foreach (var category in product.ProductCategories)
+                    {
+                        category.IsFeaturedProduct = false;
+                    }
+                    foreach (var manufacturer in product.ProductManufacturers)
+                    {
+                        manufacturer.IsFeaturedProduct = false;
+                    }
+                }
+
+                //Si se realizó algún cambio en el producto lo actualiza en Base de datos
+                if (updateProduct)
+                    UpdateProduct(product);
+                
+            }
+
+        }
+
+        /// <summary>
+        /// Realiza las validaciones necesarias para habilitar nuevamente un producto que fue desactivado por el usuario
+        /// </summary>
+        /// <param name="forceEnable">Fuerza la habilitación del producto</param>
+        /// <param name="product"></param>
+        public void EnableProduct(Product product, bool forceEnable = false, bool updateProduct = true)
+        {
+            var vendor = product.Vendor;
+
+            //Bandera para controlar si se debe actualizar el producto deshabilitando las caracteristicas
+            //de destacado
+            bool activateDisablingFeatured = false;
+
+            //realiza validaciones para usuarios tipo persona
+            if (vendor.VendorType == VendorType.User)
+            {
+                activateDisablingFeatured = EnableProductUser(product, vendor);
+            }
+            else
+            {
+                activateDisablingFeatured = EnableProductStore(product, vendor, forceEnable);
+            }
+
+            if (activateDisablingFeatured)
+            { 
+                //Actualiza las caracteristcas del plan como activo
+                //Pero elimina todas las caracteristicas que pueden ser para destacar el producto
+                product.Sold = false;
+                product.AvailableEndDateTimeUtc = DateTime.UtcNow.AddDays(GetPlanById(vendor.VendorType != VendorType.Market ? _planSettings.PlanProductsFree : _planSettings.PlanStoresFree).DaysPlan);
+                product.OrderPlanId = null;
+
+                product.LeftFeatured = false;
+                product.FeaturedForSliders = false;
+                product.DisplayOrder = 3; //TODO: Quitar quemado
+                product.ShowOnHomePage = false;
+                product.SocialNetworkFeatured = false;
+
+                //Quita el destacado en categoarias y marcas
+                foreach (var category in product.ProductCategories)
+                {
+                    category.IsFeaturedProduct = false;
+                }
+                foreach (var manufacturer in product.ProductManufacturers)
+                {
+                    manufacturer.IsFeaturedProduct = false;
+                }
+            }
+            
+            //Actualiza los datos
+            if(updateProduct)
+                UpdateProduct(product);
+        }
+
+        /// <summary>
+        /// Realiza las validaciones a un producto que va ser republicado por un usuario simple.
+        /// NO actualiza datos
+        /// </summary>
+        /// <param name="product">Datos del producto</param>
+        /// <param name="vendor">Datos del vendedor</param>
+        /// <returns>true: Debe desactivar destacados del producto False: Solo debe actualizar el producto</returns>
+        private bool EnableProductUser(Product product, Vendor vendor)
+        {
+            //Si tiene plan y todavia está activo reactiva el producto
+            if (product.OrderPlanId.HasValue && product.AvailableEndDateTimeUtc > DateTime.UtcNow)
+            {
+                product.Sold = false;
+                return false;
+            }
+            else
+            {
+                //Cuenta los productos publicados por el vendedor actualmente
+                //Que no tienen plan
+                var numProductsVendor = _productRepository.Table
+                       .Where(p =>
+                           p.VendorId == vendor.Id &&
+                           p.Published && !p.Sold &&
+                           p.AvailableEndDateTimeUtc > DateTime.UtcNow &&
+                           !p.OrderPlanId.HasValue)
+                       .Count();
+
+                int productLimitPublished = GetPlanById(_planSettings.PlanProductsFree).NumProducts;
+                //Si el numero de productos publicados por el usuario es mayor o igual que el cupo que se tiene gratis
+                //el usuario no puede reactivarlo
+                if (numProductsVendor >= productLimitPublished)
+                {
+                    throw new NopException("Ha alcanzado el limite de publicaciones gratis");
+                }
+                
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Realiza las validaciones a un producto que va ser republicado por un usuario Tienda.
+        /// NO actualiza datos
+        /// </summary>
+        /// <param name="product">Datos del producto</param>
+        /// <param name="vendor">Datos del vendedor</param>
+        /// <param name="forceEnable">Fuerza la habilitación del producto sin lanzar la excepción</param>
+        /// <returns>true: Debe desactivar destacados del producto False: Solo debe actualizar el producto</returns>
+        private bool EnableProductStore(Product product, Vendor vendor, bool forceEnable = false)
+        {
+            //Si el vendor tiene plan activo, activa la publicacion con fecha limite como la del plan
+            if (vendor.CurrentOrderPlanId.HasValue && vendor.PlanExpiredOnUtc > DateTime.UtcNow)
+            {
+                var productsCounted = CountLeftFeaturedPlacesByVendor(product, false, vendor.CurrentOrderPlan);
+
+
+                if (!forceEnable && productsCounted.ProductsLeft <= 0)
+                    throw new NopException("No se pueden habilitar más productos para este plan");
+
+                product.Sold = false;
+                product.AvailableEndDateTimeUtc = vendor.PlanExpiredOnUtc;
+
+                //Si el producto está publicado en el home y no tiene mas espacios lo deshabilita
+                if (product.ShowOnHomePage && productsCounted.HomePageLeft <= 0)
+                    product.ShowOnHomePage = false;
+
+                if (product.SocialNetworkFeatured && productsCounted.SocialNetworkLeft <= 0)
+                    product.SocialNetworkFeatured = false;
+
+                if (product.FeaturedForSliders && productsCounted.SlidersLeft <= 0)
+                {
+                    product.FeaturedForSliders = false;
+
+                    //Quita el destacado en categoarias y marcas
+                    foreach (var category in product.ProductCategories)
+                    {
+                        category.IsFeaturedProduct = false;
+                    }
+                    foreach (var manufacturer in product.ProductManufacturers)
+                    {
+                        manufacturer.IsFeaturedProduct = false;
+                    }
+                }
+
+                product.DisplayOrder = productsCounted.DisplayOrder;
+
+                return false;
+            }
+            else
+            {
+                var numProductsVendor = _productRepository.Table
+                       .Where(p =>
+                           p.VendorId == vendor.Id &&
+                           p.Published && !p.Sold &&
+                           p.AvailableEndDateTimeUtc > DateTime.UtcNow)
+                       .Count();
+
+                var basicPlan = GetPlanById(_planSettings.PlanStoresFree);
+
+                //Si el numero de productos publicados gratis por la tienda es mayor o igual que el cupo que se tiene gratis
+                //el usuario no puede reactivarlo
+                if (numProductsVendor >= basicPlan.NumProducts)
+                {
+                    throw new NopException("Ha alcanzado el limite de publicaciones gratis");
+                }
+
+                return true;
+            }
+        }
     }
 }

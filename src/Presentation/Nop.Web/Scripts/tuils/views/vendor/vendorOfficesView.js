@@ -17,31 +17,47 @@
 
             officeCollection: undefined,
 
-            galleryCollection : undefined,
+            galleryCollection: undefined,
+
+            domOffices: undefined,
+
+            domCurrentOffice: undefined,
 
             initialize: function (args)
             {
-                this.templateOffice= Handlebars.compile($("#templateSelectedOffice").html());
+                //this.templateOffice= Handlebars.compile($("#templateSelectedOffice").html());
                 this.id = args.id;
                 this.loadControls();
                 this.render();
             },
             loadControls: function () {
-                this.loadOffices();
                 this.loadMap();
+                this.loadOffices();
+                
             },
             loadOffices : function()
             {
-                this.collection = new AddressCollection();
+                /*this.collection = new AddressCollection();
                 this.collection.on("sync", this.showOffices, this);
-                this.collection.getOfficesByVendor(this.id);
+                this.collection.getOfficesByVendor(this.id);*/
+
+
+                //por defecto solo muestra la primera oficina
+                this.domOffices = this.$('.caja-sede');
+                var objOffice = this.domOffices.first();
+                if (objOffice.length)
+                {
+                    this.showMap();
+                    var officeId = parseInt(objOffice.attr('data-id'));
+                    this.changeOffice(officeId);
+                }
             },
             loadMap : function()
             {
                 this.viewMap = new SingleMapView({ el: ".mapa" });
                 this.viewMap.on("point-selected", this.changeOffice, this);
             },
-            showOffices: function (resp) {
+            /*showOffices: function (resp) {
                 this.officeCollection = resp.toJSON();
                 this.showMap();
 
@@ -56,10 +72,11 @@
 
                 this.$('.btn-sedes').css('display', this.officeCollection.length > 1 ? "block" : "none");
                 return this;
-            },
+            },*/
             changeOffice: function (officeId) {
-                var office = _.findWhere(this.officeCollection, { Id: officeId });
-                this.$(".caja-sede").html(this.templateOffice(office));
+
+                this.domOffices.hide();
+                this.domCurrentOffice = this.domOffices.closest("[data-id='" + officeId + "']").show();
                 this.viewMap.setCurrentMarker(officeId);
                 this.currentOffice = officeId;
                 this.loadGallery();
@@ -73,20 +90,22 @@
             moveOffice : function(move)
             {
                 var that = this;
-                var index = _.findLastIndex(this.officeCollection, { Id: this.currentOffice });;
+                var index = _.findLastIndex(this.officeCollection, { id: this.currentOffice });;
                 index = index == -1 ? 0 : index;
                 //Si el valor es positivo intenta mover la colección hacia el indice. Si se pasa del tamaño de la lista toma el primero, si es menor que 0 toma el ultimo
                 //Envia la siguiente o anterior oficina
-                this.changeOffice(this.officeCollection[move > 0 ? (index + move >= this.officeCollection.length ? 0 : index + move) : index + move < 0 ? this.officeCollection.length - 1 : index+move].Id);
+                this.changeOffice(this.officeCollection[move > 0 ? (index + move >= this.officeCollection.length ? 0 : index + move) : index + move < 0 ? this.officeCollection.length - 1 : index+move].id);
             },
             showMap : function()
             {
-                var locations = new Array();
-                _.each(this.officeCollection, function (element, index) {
-                    locations.push({ lat : element.Latitude, lon : element.Longitude, id : element.Id });
+                var that = this;
+                this.officeCollection = new Array();
+                _.each(this.domOffices, function (element, index) {
+                    element = $(element);
+                    that.officeCollection.push({ lat: parseFloat(element.attr('data-lat').replace(",", ".")), lon: parseFloat(element.attr('data-lon').replace(",", ".")), id: parseInt(element.attr('data-id')) });
                 });
 
-                this.viewMap.loadMap({ locations : locations});
+                this.viewMap.loadMap({ locations: this.officeCollection });
             },
             loadGallery : function()
             {
@@ -100,7 +119,8 @@
             showGallery : function()
             {
                 var show = this.galleryCollection.toJSON().length > 0;
-                this.$('#btnViewGallery').css('display', show ? '' : 'none');
+                var btnGallery = this.domCurrentOffice.find('.btnViewGallery');
+                btnGallery.css('display', show ? '' : 'none');
                 if (show)
                 {
                     var pictures = new Array();
@@ -108,7 +128,7 @@
                         pictures.push({ src: element.FullSizeImageUrl });
                     });
 
-                    this.$('#btnViewGallery').magnificPopup({ items: pictures, gallery: { enabled: true }, type: 'image' });
+                    btnGallery.magnificPopup({ items: pictures, gallery: { enabled: true }, type: 'image' });
                 }
             },
             render: function () {

@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Customers;
 using Nop.Services.Catalog;
+using Nop.Core.Domain.Orders;
+using Nop.Services.Common;
 
 namespace Nop.Services.Vendors
 {
@@ -117,13 +119,27 @@ namespace Nop.Services.Vendors
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
         public virtual IPagedList<Vendor> GetAllVendors(string name = "",
-            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false)
+            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false, bool? showOnHomePage = null, bool? withPlan = null, VendorType? vendorType = null)
         {
             var query = _vendorRepository.Table;
             if (!String.IsNullOrWhiteSpace(name))
                 query = query.Where(v => v.Name.Contains(name));
             if (!showHidden)
                 query = query.Where(v => v.Active);
+
+            if (showOnHomePage.HasValue)
+                query = query.Where(v => v.ShowOnHomePage == showOnHomePage.Value);
+
+            if (withPlan.HasValue && withPlan.Value)
+                query = query.Where(v => v.CurrentOrderPlanId != null);
+
+            if (vendorType.HasValue)
+            {
+                int vendorTypeId = Convert.ToInt32(vendorType);
+                query = query.Where(v => v.VendorTypeId == vendorTypeId);
+            }
+                
+
             query = query.Where(v => !v.Deleted);
             query = query.OrderBy(v => v.DisplayOrder).ThenBy(v => v.Name);
 
@@ -411,14 +427,53 @@ namespace Nop.Services.Vendors
                 UpdateVendor(vendor);
             }
         }
+
+
+
+
         #endregion
 
+        public Vendor AddPlanToVendor(Order order)
+        {
+            if(order == null)
+                throw new ArgumentNullException("order");
+
+            //consulta el vendor de la orden
+            var vendor = GetVendorById(order.Customer.VendorId);
+
+            //Valida que no este intentando aplicar la orden dos veces
+            if(vendor.CurrentOrderPlanId.HasValue && vendor.CurrentOrderPlanId.Value == order.Id)
+                throw new NopException("No se puede aplicar la misma orden del plan dos veces");
+
+            //Consulta el plan que desea agregar
+            var selectedPlan = order.OrderItems.FirstOrDefault().Product;
+
+            var planSettings = Nop.Core.Infrastructure.EngineContext.Current.Resolve<PlanSettings>();
+            var planDays = Convert.ToInt32(selectedPlan.ProductSpecificationAttributes.FirstOrDefault(p => p.SpecificationAttributeOption.SpecificationAttributeId == planSettings.SpecificationAttributePlanDays).SpecificationAttributeOption.Name);
+            //Si tiene asignada la caracteristica que sale en el home la aplica para el vendor
+            bool showOnHome = selectedPlan.ProductSpecificationAttributes.FirstOrDefault(p => p.SpecificationAttributeOption.SpecificationAttributeId == planSettings.SpecificationAttributeIdHomePage) != null;
 
 
+            //Si el vendedor ya tenia un plan previamente calcula la fecha de cierre
+            //y el plan que tiene actualmente no ha expirado, le suma los dias
+            if (vendor.CurrentOrderPlanId.HasValue && vendor.PlanExpiredOnUtc > DateTime.UtcNow)
+            {
+                vendor.PlanExpiredOnUtc = vendor.PlanExpiredOnUtc.Value.AddDaysToPlan(planDays);
+            }
+            else
+            {
+                vendor.PlanExpiredOnUtc = DateTime.UtcNow.AddDaysToPlan(planDays);
+            }
+
+            vendor.PlanFinishedMessageSent = false;
+            vendor.ExpirationPlanMessageSent = false;
+            vendor.ShowOnHomePage = showOnHome;
+            vendor.CurrentOrderPlanId = order.Id;
+
+            UpdateVendor(vendor);
 
 
-
-
-       
+            return vendor;
+        }
     }
 }

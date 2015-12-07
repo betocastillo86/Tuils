@@ -41,6 +41,7 @@ namespace Nop.Web.Controllers.Api
         private readonly ILocalizationService _localizationService;
         private readonly MediaSettings _mediaSettings;
         private readonly IPictureService _pictureService;
+        private readonly IPriceFormatter _priceFormatter;
         #endregion
 
         #region Ctor
@@ -53,7 +54,8 @@ namespace Nop.Web.Controllers.Api
             IGenericAttributeService genericAttributeService,
             ILocalizationService localizationService,
             MediaSettings mediaSettings,
-            IPictureService pictureService)
+            IPictureService pictureService,
+            IPriceFormatter priceFormatter)
         {
             this._productService = productService;
             this._workContext = workContext;
@@ -65,6 +67,7 @@ namespace Nop.Web.Controllers.Api
             this._localizationService = localizationService;
             this._mediaSettings = mediaSettings;
             this._pictureService = pictureService;
+            this._priceFormatter = priceFormatter;
         }
         #endregion
         [Route("api/products")]
@@ -72,10 +75,9 @@ namespace Nop.Web.Controllers.Api
         [AuthorizeApi]
         public IHttpActionResult PublishProduct(ProductBaseModel model)
         {
-            if (ModelState.IsValid && model.Validate())
+            if (ModelState.IsValid && model.Validate(ModelState))
             {
                
-
                 try
                 {
                     //Si llegan más valores de los posibles para categorias especiales, toma solo los permitidos
@@ -95,8 +97,9 @@ namespace Nop.Web.Controllers.Api
                     else
                     {
                         product.VendorId = _workContext.CurrentVendor.Id;
-                        if(_productService.HasReachedLimitOfProducts(_workContext.CurrentVendor.Id))
-                            throw new NopException(CodeNopException.UserHasReachedLimitOfProducts, _localizationService.GetResource("PublishProduct.HasReachedLimitOfProducts"));
+                        //int limitProduts;
+                        //if(_productService.HasReachedLimitOfProducts(_workContext.CurrentVendor, out limitProduts))
+                        //    throw new NopException(CodeNopException.UserHasReachedLimitOfProducts, _localizationService.GetResource("PublishProduct.HasReachedLimitOfProducts", limitProduts));
                     }
 
                     //Guarda el número telefónico de contacto
@@ -120,7 +123,13 @@ namespace Nop.Web.Controllers.Api
             }
             else
             {
-                return Conflict();
+                //var errors = new System.Text.StringBuilder();
+                //foreach (var error in ModelState.Values)
+                //{
+                //    errors.AppendFormat("{0}\n", error);
+                //}
+
+                return BadRequest(ModelState);
             }
         }
 
@@ -152,6 +161,43 @@ namespace Nop.Web.Controllers.Api
                 return BadRequest(ModelState);
             }
 
+        }
+
+
+        [Route("api/products/{id}/enable")]
+        [HttpPut]
+        [AuthorizeApi]
+        public IHttpActionResult Enable(int id)
+        {
+            if (_workContext.CurrentVendor == null)
+                return Unauthorized();
+
+            var product = _productService.GetProductById(id);
+
+            if (product != null)
+            {
+                if (product.VendorId == _workContext.CurrentVendor.Id)
+                {
+                    try
+                    {
+                        _productService.EnableProduct(product);
+                        return Ok(product.ToModel(_priceFormatter, _localizationService, _mediaSettings, _pictureService));
+                    }
+                    catch (NopException e)
+                    {
+                        //ModelState.AddModelError("ErrorEnabling", e.ToString());
+                        return BadRequest(e.Message);
+                    }
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [Route("api/products/{id}")]
@@ -267,8 +313,61 @@ namespace Nop.Web.Controllers.Api
             else
                 return BadRequest();
         }
+
+
+        /// <summary>
+        /// Permite ver más información del producto, suma la vista
+        /// </summary>
+        /// <param name="id">id del producto que se desea ver más info</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("api/products/{productId}/moreinfo")]
+        public IHttpActionResult SeeMoreInfo(int productId)
+        {
+            if (productId <= 0)
+                return NotFound();
+
+            //Consulta y valida que el producto exista
+            var product = _productService.GetProductById(productId);
+            if (product == null)
+                return NotFound();
+
+            //Suma la visita
+            product.NumClicksForMoreInfo++;
+            _productService.UpdateProduct(product);
+
+            return Ok( new { Id = product.Id });
+        }
+
         #endregion
 
-       
+        #region ProductsByVendor
+        [HttpGet]
+        [Route("api/vendors/{id}/products", Order = 1)]
+        public IHttpActionResult GetProductsByVendor(int id, [FromUri]FilterProductsModel filter)
+        {
+            if (id <= 0)
+                return NotFound();
+
+            var products = _productService.SearchProducts(vendorId:id);
+
+
+            IQueryable<Product> query = products.AsQueryable();
+
+            if (filter.OnHome.HasValue && filter.OnHome.Value)
+                query = query.Where(p => p.ShowOnHomePage);
+
+            if(filter.OnSliders.HasValue && filter.OnSliders.Value)
+                query = query.Where(p => p.FeaturedForSliders);
+
+            if (filter.OnSN.HasValue && filter.OnSN.Value)
+                query = query.Where(p => p.SocialNetworkFeatured);
+
+            return Ok(query.ToList().ToModels(_priceFormatter, 
+                _localizationService, 
+                _mediaSettings, 
+                _pictureService));
+        }
+        #endregion
     }
 }

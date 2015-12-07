@@ -49,6 +49,11 @@ namespace System.Web.Mvc.Html
             return ControlRequiredFor(helper, ControlType.TextBox, expression, htmlAttributes, labelText, required, showLabel, showAsterisk);
         }
 
+        public static MvcHtmlString PasswordRequiredFor<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null, string labelText = null, bool required = true, bool showLabel = true, bool showAsterisk = true)
+        {
+            return ControlRequiredFor(helper, ControlType.Password, expression, htmlAttributes, labelText, required, showLabel, showAsterisk);
+        }
+
         public static MvcHtmlString TextAreaRequiredFor<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null, string labelText = null, bool required = true, bool showLabel = true, bool showAsterisk = true)
         {
             return ControlRequiredFor(helper, ControlType.TextArea, expression, htmlAttributes, labelText, required, showLabel, showAsterisk);
@@ -82,7 +87,7 @@ namespace System.Web.Mvc.Html
                     htmlControl.Append(helper.TextAreaFor(expression, htmlAttributes));
                     break;
                 case ControlType.Password:
-                    //htmlControl.Append(helper.Password(string.Concat("txt", field), value ?? string.Empty, controlHtmlAttributes).ToHtmlString());
+                    htmlControl.Append(helper.PasswordFor(expression, htmlAttributes));
                     break;
                 default:
                     break;

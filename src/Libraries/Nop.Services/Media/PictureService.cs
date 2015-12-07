@@ -650,15 +650,23 @@ namespace Nop.Services.Media
         /// </summary>
         /// <param name="productId">Product identifier</param>
         /// <param name="recordsToReturn">Number of records to return. 0 if you want to get all items</param>
+        /// <param name="onlyActive">Solo retorna las activas, por defecto está apagado</param>
         /// <returns>Pictures</returns>
-        public virtual IList<Picture> GetPicturesByProductId(int productId, int recordsToReturn = 0)
+        public virtual IList<Picture> GetPicturesByProductId(int productId, int recordsToReturn = 0, bool onlyActive = false)
         {
             if (productId == 0)
                 return new List<Picture>();
 
-            
+            var productPicture = _productPictureRepository.Table.Where(p => p.ProductId == productId);
+
+            //Si es solo activo, debe filtrar los productos
+            if (onlyActive)
+                productPicture = productPicture.Where(p => p.Active);
+
+
             var query = from p in _pictureRepository.Table
-                        join pp in _productPictureRepository.Table on p.Id equals pp.PictureId
+                        //join pp in _productPictureRepository.Table on p.Id equals pp.PictureId
+                        join pp in productPicture on p.Id equals pp.PictureId
                         orderby pp.DisplayOrder
                         where pp.ProductId == productId
                         select p;

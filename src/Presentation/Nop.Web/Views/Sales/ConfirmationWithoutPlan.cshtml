@@ -1,0 +1,21 @@
+﻿@model Nop.Web.Models.Sales.ConfirmationWithoutPlanModel
+@{
+    ViewBag.Title = "ConfirmationWithoutPlan";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+    Html.AddTitleParts(T(string.Concat("PageTitle.ConfirmationWithoutPlan", Model.VendorType)).Text);
+}
+
+
+
+    <div class="imgPublicada">
+        <img src="@Model.ProductDetails.DefaultPictureModel.ImageUrl" />
+    </div>
+    <div class="resumen-final">
+        <h2>@T(string.Concat("PublishProduct.PublishFinished", Model.VendorType))</h2>
+        <h3>@Model.ProductDetails.Name </h3>
+        <h4>@Model.ProductDetails.ProductPrice.Price</h4>
+        <p>@T("PublishProduct.TimeOutPost"+Model.VendorType, Model.LimitDaysOfProductPublished)</p>
+        @Html.ActionLink(T("SelectFeaturedAttributesByPlan.gotoMyProducts").Text, "MyProducts", "ControlPanel", new { p = false }, new { })
+    </div>
+
+

@@ -220,6 +220,7 @@
     <Compile Include="Models\Payments\PaymentMethodRestrictionModel.cs" />
     <Compile Include="Models\Plugins\OfficialFeedListModel.cs" />
     <Compile Include="Models\Plugins\PluginListModel.cs" />
+    <Compile Include="Models\Settings\PlansSettingsModel.cs" />
     <Compile Include="Models\Settings\VendorSettingsModel.cs" />
     <Compile Include="Models\Shipping\WarehouseModel.cs" />
     <Compile Include="Models\Shipping\DeliveryDateModel.cs" />
@@ -435,6 +436,7 @@
     <Content Include="Views\Category\HomeMenu.cshtml" />
     <Content Include="Views\Vendor\DefaultCovers.cshtml" />
     <Content Include="Views\Product\_CreateOrUpdate.SpecialCategories.cshtml" />
+    <Content Include="Views\Setting\Plans.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Category\Create.cshtml" />

@@ -366,11 +366,6 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public int LimitOfSpecialCategories { get; set; }
 
-        /// <summary>
-        /// Dias que dura publicado un producto
-        /// </summary>
-        public int LimitDaysOfProductPublished { get; set; }
-
 
         /// <summary>
         /// Opción por defecto seleccinada por tipo de producto
@@ -389,7 +384,7 @@ namespace Nop.Core.Domain.Catalog
         /// <summary>
         /// Limite de productos publicados por usuario
         /// </summary>
-        public int ProductLimitPublished { get; set; }
+        //public int ProductLimitPublished { get; set; }
         /// <summary>
         /// Numero máximo de productos destacados  en el home
         /// </summary>
@@ -399,5 +394,21 @@ namespace Nop.Core.Domain.Catalog
         /// Numero de imagenes que se pueden publicar para un producto
         /// </summary>
         public int LimitNumPictures { get; set; }
+
+        /// <summary>
+        /// True: Muestra los productos relacionados como los destacados de la misma categoría
+        /// False: Muestra los productos relacionados como los de la misma categoria sin necesidad que sean destacados
+        /// </summary>
+        public bool ShowRelatedProductsAsFeatured { get; set; }
+
+        /// <summary>
+        /// Numero de vendors que se mostrarán en el home
+        /// </summary>
+        public int NumberOfVendorsOnHome { get; set; }
+
+        /// <summary>
+        /// Imagen por defecto relacionada a los servicios
+        /// </summary>
+        public int DefaultServicePicture { get; set; }
     }
 }

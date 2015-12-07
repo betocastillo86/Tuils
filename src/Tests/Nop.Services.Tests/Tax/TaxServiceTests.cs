@@ -159,18 +159,18 @@ namespace Nop.Services.Tests.Tax
         {
             //remove? this method requires Internet access
 
-            string name, address;
-            Exception exception;
+            //string name, address;
+            //Exception exception;
 
-            VatNumberStatus vatNumberStatus1 = _taxService.DoVatCheck("GB", "523 2392 69",
-                out name, out address, out exception);
-            vatNumberStatus1.ShouldEqual(VatNumberStatus.Valid);
-            exception.ShouldBeNull();
+            //VatNumberStatus vatNumberStatus1 = _taxService.DoVatCheck("GB", "523 2392 69",
+            //    out name, out address, out exception);
+            //vatNumberStatus1.ShouldEqual(VatNumberStatus.Valid);
+            //exception.ShouldBeNull();
 
-            VatNumberStatus vatNumberStatus2 = _taxService.DoVatCheck("GB", "000 0000 00",
-                out name, out address, out exception);
-            vatNumberStatus2.ShouldEqual(VatNumberStatus.Invalid);
-            exception.ShouldBeNull();
+            //VatNumberStatus vatNumberStatus2 = _taxService.DoVatCheck("GB", "000 0000 00",
+            //    out name, out address, out exception);
+            //vatNumberStatus2.ShouldEqual(VatNumberStatus.Invalid);
+            //exception.ShouldBeNull();
         }
 
         [Test]

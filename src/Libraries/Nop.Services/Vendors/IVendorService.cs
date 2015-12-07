@@ -1,5 +1,6 @@
 using Nop.Core;
 using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Vendors;
 using System.Collections.Generic;
 
@@ -32,7 +33,7 @@ namespace Nop.Services.Vendors
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
         IPagedList<Vendor> GetAllVendors(string name = "", 
-            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false);
+            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false, bool? showOnHomePage = null, bool? withPlan = null, VendorType? vendorType = null);
 
         /// <summary>
         /// Inserts a vendor
@@ -42,7 +43,7 @@ namespace Nop.Services.Vendors
 
         /// <summary>
         /// Updates the vendor
-        /// </summary>
+        /// </summary>  
         /// <param name="vendor">Vendor</param>
         bool UpdateVendor(Vendor vendor);
 
@@ -100,5 +101,12 @@ namespace Nop.Services.Vendors
         /// </summary>
         /// <param name="vendorId">Vendedor a ser actualziado</param>
         void UpdateRatings(int vendorId);
+
+        /// <summary>
+        /// Actualiza el plan del vendor de acuerdo a la orden que se está comprando
+        /// Unicamente recibe la orden ya que con ese dato se puede saber quién es el vendor
+        /// </summary>
+        /// <param name="order">Orden de la que se desea agregar al plan</param>
+        Vendor AddPlanToVendor(Order order);
     }
 }

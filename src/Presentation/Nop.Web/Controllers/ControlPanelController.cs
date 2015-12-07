@@ -66,6 +66,7 @@ namespace Nop.Web.Controllers
         private readonly IPermissionService _permissionService;
         private readonly MediaSettings _mediaSettings;
         private readonly ControlPanelSettings _controlPanelSettings;
+        private readonly PlanSettings _planSettings;
 
 
         #endregion
@@ -93,7 +94,8 @@ namespace Nop.Web.Controllers
             IPictureService pictureService,
             ILocalizationService localizationService,
             ControlPanelSettings controlPanelSettings,
-            IProductService productService)
+            IProductService productService,
+            PlanSettings planSettings)
         {
             this._customerService = customerService;
             this._workContext = workContext;
@@ -118,6 +120,7 @@ namespace Nop.Web.Controllers
             this._pictureService = pictureService;
             this._controlPanelSettings = controlPanelSettings;
             this._productService = productService;
+            this._planSettings = planSettings;
         }
         #endregion
 
@@ -150,14 +153,14 @@ namespace Nop.Web.Controllers
                 var vendorSellings = _orderService.SearchOrders(vendorId: _workContext.CurrentVendor.Id);
                 model.SoldProducts = vendorSellings.Count;
 
-                if(model.PublishedProducts > 0)
+                if (model.PublishedProducts > 0)
                     //Suma el numero de preguntas sin responder
                     model.UnansweredQuestions = _productService.CountUnansweredQuestionsByVendorId(_workContext.CurrentVendor.Id);
 
                 model.VendorType = _workContext.CurrentVendor.VendorType;
             }
 
-            
+
 
             return model;
 
@@ -209,7 +212,7 @@ namespace Nop.Web.Controllers
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.BikeYear, model.BikeYear);
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.BikeCarriagePlate, model.BikeCarriagePlate);
 
-                    _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.Newsletter, Core.Domain.Messages.NewsLetterSuscriptionType.General, customer.GetFullName() );
+                    _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.Newsletter, Core.Domain.Messages.NewsLetterSuscriptionType.General, customer.GetFullName());
                     _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.NewsletterBrand, Core.Domain.Messages.NewsLetterSuscriptionType.MyBrand, customer.GetFullName());
                     _newsLetterSubscriptionService.SwitchNewsletterByEmail(customer.Email, model.NewsletterReference, Core.Domain.Messages.NewsLetterSuscriptionType.MyReference, customer.GetFullName());
 
@@ -217,7 +220,8 @@ namespace Nop.Web.Controllers
                     if (_workContext.CurrentVendor != null)
                     {
                         _workContext.CurrentVendor.PhoneNumber = model.Phone;
-                        _vendorService.UpdateVendor(_workContext.CurrentVendor); 
+                        _workContext.CurrentVendor.Email = model.Email;
+                        _vendorService.UpdateVendor(_workContext.CurrentVendor);
                     }
 
                     model.ConfirmMessage = _localizationService.GetResource("MyAccount.Confirm");
@@ -370,6 +374,9 @@ namespace Nop.Web.Controllers
 
         public ActionResult MyOrders(MyOrdersPagingFilteringModel command)
         {
+            if (_workContext.CurrentVendor == null)
+                return RedirectToAction("Index");
+
             var model = PrepareMyOrdersModel(command, true);
             return View(model);
         }
@@ -383,43 +390,46 @@ namespace Nop.Web.Controllers
         [NonAction]
         protected virtual MyOrdersModel PrepareMyOrdersModel(MyOrdersPagingFilteringModel command, bool isMyOrders)
         {
-            var model = new MyOrdersModel();
+            var model = new MyOrdersModel() { VendorId = _workContext.CurrentVendor.Id, VendorType = _workContext.CurrentVendor.VendorType };
 
             //configura el paginador
             PreparePageSizeOptions(model.PagingFilteringContext, command);
 
-            bool? publishedProducts = null;
-            bool? withRating = null;
+            //bool? publishedProducts = null;
+            //bool? withRating = null;
 
-            switch (command.Filter)
-            {
-                case "rating":
-                    withRating = true;
-                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.Rating", isMyOrders ? "MyOrders": "MySales");
-                    break;
-                case "norating":
-                    withRating = false;
-                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.NoRating", isMyOrders ? "MyOrders": "MySales");
-                    break;
-                case "active":
-                    publishedProducts = true;
-                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.Active", isMyOrders ? "MyOrders" : "MySales");
-                    break;
-                default:
-                    model.ResorceMessageNoRows = string.Format("{0}.NoRows.General", isMyOrders ? "MyOrders" : "MySales");
-                    break;
-            }
+            //switch (command.Filter)
+            //{
+            //    case "rating":
+            //        withRating = true;
+            //        model.ResorceMessageNoRows = string.Format("{0}.NoRows.Rating", isMyOrders ? "MyOrders": "MySales");
+            //        break;
+            //    case "norating":
+            //        withRating = false;
+            //        model.ResorceMessageNoRows = string.Format("{0}.NoRows.NoRating", isMyOrders ? "MyOrders": "MySales");
+            //        break;
+            //    case "active":
+            //        publishedProducts = true;
+            //        model.ResorceMessageNoRows = string.Format("{0}.NoRows.Active", isMyOrders ? "MyOrders" : "MySales");
+            //        break;
+            //    default:
+            //        model.ResorceMessageNoRows = string.Format("{0}.NoRows.General", isMyOrders ? "MyOrders" : "MySales");
+            //        break;
+            //}
 
 
-            IPagedList<Order> orders = null;
-            if (isMyOrders)
-                orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
-                    customerId: _workContext.CurrentCustomer.Id, pageIndex: command.PageIndex, pageSize: command.PageSize,
-                    publishedProducts: publishedProducts, withRating: withRating);
-            else
-                orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
-                    vendorId: _workContext.CurrentVendor.Id, pageIndex: command.PageIndex, pageSize: command.PageSize,
-                    publishedProducts: publishedProducts, withRating: withRating);
+            //IPagedList<Order> orders = null;
+            //if (isMyOrders)
+            //    orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
+            //        customerId: _workContext.CurrentCustomer.Id, pageIndex: command.PageIndex, pageSize: command.PageSize,
+            //        publishedProducts: publishedProducts, withRating: withRating);
+            //else
+            //    orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
+            //        vendorId: _workContext.CurrentVendor.Id, pageIndex: command.PageIndex, pageSize: command.PageSize,
+            //        publishedProducts: publishedProducts, withRating: withRating);
+
+            var orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
+                customerId: _workContext.CurrentCustomer.Id, pageIndex: command.PageIndex, pageSize: command.PageSize);
 
 
             foreach (var order in orders)
@@ -427,8 +437,17 @@ namespace Nop.Web.Controllers
                 var orderModel = new OrderItemModel
                 {
                     Id = order.Id,
-                    CreatedOn = _dateTimeHelper.ConvertToUserTime(order.CreatedOnUtc, DateTimeKind.Utc),
+                    CreatedOn = order.CreatedOnUtc.ToShortDateString(),
+                    PlanExpirationOnUtc = order.PlanExpirationOnUtc.HasValue ? order.PlanExpirationOnUtc.Value.ToShortDateString() : string.Empty,
+                    PlanStartOnUtc = order.PlanStartOnUtc.HasValue ? order.PlanStartOnUtc.Value.ToShortDateString() : string.Empty,
+                    PaymentStatus = order.PaymentStatus.GetLocalizedEnum(_localizationService, _workContext)
                 };
+
+                //Si la orden fue completada y la fecha de expiracion es menor que la actual: Cambia el nombre del estado
+                if (order.OrderStatus == OrderStatus.Complete && order.PlanExpirationOnUtc.HasValue && order.PlanExpirationOnUtc.Value < DateTime.UtcNow)
+                    orderModel.OrderStatus = _localizationService.GetResource("Myorders.Expired");
+                else
+                    orderModel.OrderStatus = order.OrderStatus.GetLocalizedEnum(_localizationService, _workContext);
 
                 var orderTotalInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderTotal, order.CurrencyRate);
                 orderModel.Price = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
@@ -438,15 +457,15 @@ namespace Nop.Web.Controllers
                     var item = order.OrderItems.FirstOrDefault();
 
                     //Consulta el review de una orden
-                    var review = _productService.GetAllProductReviews(orderItemId: item.Id, approved: isMyOrders ? (bool?)null : true).FirstOrDefault();
-                    if (review != null)
-                    {
-                        orderModel.Rating = review.Rating;
-                        orderModel.RatingApproved = review.IsApproved;
-                        //Solo muestra la calificacion si ya fue aprobada
-                        //Con excepción que si son "Mis Compras" si muesta que ya fue calificado
-                        orderModel.ShowRating = (review.IsApproved && !isMyOrders) || isMyOrders;
-                    }
+                    //var review = _productService.GetAllProductReviews(orderItemId: item.Id, approved: isMyOrders ? (bool?)null : true).FirstOrDefault();
+                    //if (review != null)
+                    //{
+                    //    orderModel.Rating = review.Rating;
+                    //    orderModel.RatingApproved = review.IsApproved;
+                    //    //Solo muestra la calificacion si ya fue aprobada
+                    //    //Con excepción que si son "Mis Compras" si muesta que ya fue calificado
+                    //    orderModel.ShowRating = (review.IsApproved && !isMyOrders) || isMyOrders;
+                    //}
 
                     orderModel.Product = new Models.Catalog.ProductOverviewModel()
                     {
@@ -473,23 +492,26 @@ namespace Nop.Web.Controllers
                     });
                     #endregion
 
-                    if (isMyOrders)
-                        orderModel.Vendor = new Models.Catalog.VendorModel()
-                        {
-                            Id = item.Product.VendorId,
-                            Name = item.Product.Vendor.Name,
-                            SeName = item.Product.Vendor.GetSeName()
-                        };
-                    else
-                    {
-                        orderModel.Customer = new CustomerInfoModel()
-                        {
-                            FirstName = order.Customer.GetAttribute<string>("FirstName"),
-                            LastName = order.Customer.GetAttribute<string>("LastName"),
-                            Phone = order.Customer.GetAttribute<string>("Phone"),
-                            Email = order.Customer.Email
-                        };
-                    }
+                    #region Anterior Logica
+                    //if (isMyOrders)
+                    //    orderModel.Vendor = new Models.Catalog.VendorModel()
+                    //    {
+                    //        Id = item.Product.VendorId,
+                    //        Name = item.Product.Vendor.Name,
+                    //        SeName = item.Product.Vendor.GetSeName()
+                    //    };
+                    //else
+                    //{
+                    //    orderModel.Customer = new CustomerInfoModel()
+                    //    {
+                    //        FirstName = order.Customer.GetAttribute<string>("FirstName"),
+                    //        LastName = order.Customer.GetAttribute<string>("LastName"),
+                    //        Phone = order.Customer.GetAttribute<string>("Phone"),
+                    //        Email = order.Customer.Email
+                    //    };
+                    //}
+                    #endregion
+
 
                 }
                 else
@@ -499,6 +521,70 @@ namespace Nop.Web.Controllers
 
                 model.Orders.Add(orderModel);
             }
+
+            #region CurrentPlan
+            //Carga los datos del plan actual del usuario si no lo tiene vencido
+            if (_workContext.CurrentVendor != null && _workContext.CurrentVendor.CurrentOrderPlan != null && _workContext.CurrentVendor.PlanExpiredOnUtc > DateTime.Now)
+            {
+                model.ShowCurrentPlan = true;
+
+                var currentOrder = _workContext.CurrentVendor.CurrentOrderPlan;
+                var selectedPlan = _productService.GetPlanById(currentOrder.OrderItems.FirstOrDefault().Product.Id); //currentOrder.OrderItems.FirstOrDefault().Product;
+
+                model.CurrentPlan.NumDaysToExpirePlan = Convert.ToInt32(_workContext.CurrentVendor.PlanExpiredOnUtc.Value.Subtract(DateTime.UtcNow).TotalDays);
+                model.CurrentPlan.ShowRenovateButton = _workContext.CurrentVendor.VendorType == VendorType.Market && _workContext.CurrentVendor.PlanExpiredOnUtc < DateTime.UtcNow.AddDays(10);
+                model.CurrentPlan.ShowUpgradeButton = !selectedPlan.IsMostExpensive;
+
+
+                //Carga los datos basicos de la orden
+                model.CurrentPlan.Order = new OrderItemModel
+                {
+                    Id = currentOrder.Id,
+                    CreatedOn = currentOrder.CreatedOnUtc.ToShortDateString(),
+                    PlanExpirationOnUtc = _workContext.CurrentVendor.PlanExpiredOnUtc.Value.ToShortDateString(),
+                    PlanStartOnUtc = currentOrder.PlanStartOnUtc.HasValue ? currentOrder.PlanStartOnUtc.Value.ToShortDateString() : string.Empty,
+                    PaymentStatus = currentOrder.PaymentStatus.GetLocalizedEnum(_localizationService, _workContext)
+                };
+
+                //Carga los dats del producto
+                model.CurrentPlan.Order.Product = new Models.Catalog.ProductOverviewModel()
+                {
+                    Id = selectedPlan.ProductId,
+                    Name = selectedPlan.Name
+                };
+
+                var orderTotalInCustomerCurrency = _currencyService.ConvertCurrency(currentOrder.OrderTotal, currentOrder.CurrencyRate);
+                model.CurrentPlan.Order.Price = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, currentOrder.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
+
+                var leftProductsOnPlan = _productService.CountLeftFeaturedPlacesByVendor(currentOrder, _workContext.CurrentVendor.Id);
+                //Carga los datos de los productos que han sido destacados en el plan
+
+                model.CurrentPlan.NumProductsOnHomeLeft = leftProductsOnPlan.HomePageLeft;
+                model.CurrentPlan.NumProductsOnHomeByPlan = leftProductsOnPlan.HomePageByPlan;
+
+                //valida productos en redes sociales
+
+                model.CurrentPlan.NumProductsOnSocialNetworksLeft = leftProductsOnPlan.SocialNetworkLeft;
+                model.CurrentPlan.NumProductsOnSocialNetworksByPlan = leftProductsOnPlan.SocialNetworkByPlan;
+
+                //Valida productos en sliders
+
+                model.CurrentPlan.NumProductsOnSlidersLeft = leftProductsOnPlan.SlidersLeft;
+                model.CurrentPlan.NumProductsOnSlidersByPlan = leftProductsOnPlan.SlidersByPlan;
+
+                //Valida productos
+
+                model.CurrentPlan.NumProductsLeft = leftProductsOnPlan.ProductsLeft;
+                model.CurrentPlan.NumProductsByPlan = leftProductsOnPlan.ProductsByPlan;
+
+            }
+            else
+            {
+                model.ShowAlertUpgradePlan = _workContext.CurrentVendor.VendorType == VendorType.Market;
+            }
+            #endregion
+
+
 
             model.PagingFilteringContext.LoadPagedList(orders);
 
@@ -533,15 +619,19 @@ namespace Nop.Web.Controllers
                 //Carga los tamaños de la paginación
                 PreparePageSizeOptions(model.PagingFilteringContext, command);
 
+                bool showPublished = command.p.HasValue ? command.p.Value : true;
+
                 string keywordsSearch = !string.IsNullOrWhiteSpace(command.q) ? command.q : null;
 
                 IList<int> categoriesIds = null;
                 if (command.pt.HasValue)
                     categoriesIds = GetChildCategoryIds(command.pt.Value);
 
-                var products = _productService.SearchProducts(showHidden: !command.p, categoryIds: categoriesIds, vendorId: _workContext.CurrentVendor.Id,
+                var vendor = _workContext.CurrentVendor;
+
+                var products = _productService.SearchProducts(showHidden: !showPublished, categoryIds: categoriesIds, vendorId: vendor.Id,
                     pageSize: command.PageSize, pageIndex: command.PageIndex, keywords: keywordsSearch,
-                    orderBy: ProductSortingEnum.UpdatedOn, published: command.p, sold : command.p ? (bool?) false : (bool?) null);
+                    orderBy: ProductSortingEnum.UpdatedOn, published: showPublished);
 
                 model.Products = products.Select(p => new ProductOverviewModel()
                 {
@@ -554,17 +644,24 @@ namespace Nop.Web.Controllers
                     TotalSales = p.TotalSales,
                     AvailableStartDate = p.AvailableStartDateTimeUtc ?? DateTime.UtcNow,
                     AvailableEndDate = p.AvailableEndDateTimeUtc ?? DateTime.UtcNow,
-                    Published = p.Published && p.AvailableEndDateTimeUtc > DateTime.UtcNow,
+                    Available = p.IsTotallyAvailable(),
+                    Published = p.Published,
                     DefaultPictureModel = p.GetPicture(_localizationService, _mediaSettings, _pictureService),
-                    NumClicksForMoreInfo = p.NumClicksForMoreInfo
+                    NumClicksForMoreInfo = p.NumClicksForMoreInfo,
+                    HasPlanSelected = p.OrderPlanId.HasValue,
+                    ShowOnHomePage = p.ShowOnHomePage,
+                    ShowOnSliders = p.FeaturedForSliders,
+                    ShowOnSocialNetworks = p.SocialNetworkFeatured,
+                    Sold = p.Sold
                 }).ToList();
 
                 model.PagingFilteringContext.q = command.q;
                 model.PagingFilteringContext.LoadPagedList(products);
 
-
                 //Carga la cadena de respuesta cuando no  hay resultados del filtro
-                model.ResorceMessageNoRows = string.Format("MyProducts.NoRows.{0}", command.p ? "Active" : "Inactive");
+                model.ResorceMessageNoRows = string.Format("MyProducts.NoRows.{0}", showPublished ? "Active" : "Inactive");
+                //Solo puede mostrar el botón de los planes si es un vendor
+                model.ShowButtonFeatureByPlan = vendor.VendorType == VendorType.Market;
 
                 string url = _webHelper.GetThisPageUrl(true);
                 model.UrlFilterByServices = new MyProductsModel.LinkFilter()
@@ -583,10 +680,38 @@ namespace Nop.Web.Controllers
                     Active = command.pt.HasValue && command.pt.Value == _tuilsSettings.productBaseTypes_product
                 };
 
+
+
+
+
+                #region HasReachedLimitFeature
+                if (_workContext.CurrentVendor.VendorType == VendorType.Market && _workContext.CurrentVendor.HasActivePlan())
+                {
+                    //Valida cuantos productos les queda disponibles para destacar en cada uno de las caraceteristicas
+                    var leftProductsOnPlan = _productService.CountLeftFeaturedPlacesByVendor(vendor.CurrentOrderPlan, vendor.Id);
+
+                    //Cuenta los productos que le quedan por destacar posibles
+                    int countLeft = 0;
+                    //Valida que tenga productos en el home
+                    countLeft += leftProductsOnPlan.HomePageLeft;
+
+                    //valida productos en redes sociales
+                    countLeft += leftProductsOnPlan.SocialNetworkLeft;
+
+                    //Valida productos en sliders
+                    countLeft += leftProductsOnPlan.SlidersLeft;
+
+                    model.HasReachedLimitOfFeature = countLeft <= 0;
+                }
+                #endregion
+
+
+                model.VendorType = _workContext.CurrentVendor.VendorType;
+
                 return View(model);
             }
             else
-                return InvokeHttp404();
+                return RedirectToAction("Index");
         }
 
 
@@ -741,8 +866,8 @@ namespace Nop.Web.Controllers
                 //Valida que no tenga submodulos activos, que corresponda a la misma acción y que los parametros adicionales coincidan todos
                 var queryStringParent = ControllerContext.ParentActionViewContext.RequestContext.HttpContext.Request.QueryString;
                 if (module.SubModules.Count == 0
-                    && module.Action.Equals(currentAction)
-                    && module.Controller.Equals(currentController)
+                    && module.Action.ToLower().Equals(currentAction)
+                    && module.Controller.ToLower().Equals(currentController)
                     && validateQueryString(queryStringParent, module.Parameters, module.OptionalParameters))
                     return module.Name;
                 else

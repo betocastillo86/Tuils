@@ -250,5 +250,17 @@ namespace Nop.Services.Orders
         /// <param name="cart">Shopping cart</param>
         /// <returns>true - OK; false - minimum order total amount is not reached</returns>
         bool ValidateMinOrderTotalAmount(IList<ShoppingCartItem> cart);
+
+
+
+        /// <summary>
+        /// Ya que los planes no se pueden adquirir automaicamente ya que dependen de la respuesta Confirmation
+        /// Se crearon dos llaves para validar la selección de caracteristicas destacadas del producto en el plan
+        /// Es una validación minima para evitar que por querystring realicen esta autenticacion
+        /// </summary>
+        /// <param name="orderId">numero de la orden</param>
+        /// <param name="productId">producto que se desea destcaar en el plan</param>
+        /// <returns>Llave calculada</returns>
+        string GetPaymentPlanValidationKeys(Order order, int productId);
     }
 }

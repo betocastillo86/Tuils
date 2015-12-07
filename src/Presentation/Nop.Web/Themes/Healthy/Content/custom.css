@@ -64,9 +64,10 @@ nav #mega-menu li .sub li.mega-hdr a.mega-hdr-a {
     /*width: 940px;
     min-height: 400px;*/
 }
-.block .title, .bestsellers .title {border-radius:0;-webkit-border-radius: 0; -moz-border-radius: 0; -o-border-radius:0;-icab-border-radius:0;-khtml-border-radius:0; color: #A9A9AD; font: 400 15px/20px 'Ubuntu',sans-serif; margin-bottom: 1px; padding: 10px 0 12px 18px;text-align:left; text-transform: uppercase; margin: 0 -1px; position: relative;}
+.block .title, .bestsellers .title {border-radius:0; color: #A9A9AD; font: 400 15px/20px 'Ubuntu',sans-serif; margin-bottom: 1px; padding: 10px 0 12px 18px;text-align:left; text-transform: uppercase; margin: 0 -1px; position: relative;}
+.block .title a, .bestsellers .title a{color: #FFF;}
 .block .title:after, .bestsellers .title:after {border-top: 10px solid #292733; border-right: 8px solid transparent; content: ""; top: 40px; right: 12px; position: absolute;}
-.block-category-navigation .active > a, .block-manufacturer-navigation .active a { color: #666; font-weight: 400; text-decoration: none; }
+.block-category-navigation .active > a, .block-manufacturer-navigation .active a { font-weight: 400; text-decoration: none; }
 .block a:hover { color: #D61323; text-decoration: none; font-weight: normal; }
 .block-category-navigation ul.sublist .inactive a:hover { color: #D51222; font-weight: 400; }
 .price-range-filter .filter-title { background: none repeat scroll 0 0 transparent; padding: 0 0 0 10px; }
@@ -83,7 +84,7 @@ p {margin: 0;}
 .related-products-grid .title,
 .also-purchased-products-grid .title,
 .product-tags-box .title,
-.product-specs-box .title { color: #666; font-size: 17px; font-weight: normal; line-height: 23px; margin: 0 0 10px 0; text-align: left; text-transform: uppercase; }
+.product-specs-box .title { color: #292733; font-size: 18px; font-weight: 500; line-height: 23px; margin: 0 0 10px 0; text-align: left; text-transform: uppercase; }
 .sub-category-grid a, .manufacturer-grid a { color: #666; font-size: 1.2em; font-weight: 400; }
 
 a:hover { text-decoration: none; }

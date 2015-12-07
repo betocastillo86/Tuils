@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'baseView', 'tuils/models/order', 'resources','tuils/models/review', 'tuils/views/product/reviewView','tuils/views/product/questionView', 'jpopup', 'jtabs'],
-    function ($, _, BaseView, OrderModel, Resources, ReviewModel, ReviewView, QuestionView) {
+﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'resources','tuils/models/review', 'tuils/views/product/reviewView','tuils/views/product/questionView', 'jpopup', 'jtabs'],
+    function ($, _, BaseView, ProductModel, Resources, ReviewModel, ReviewView, QuestionView) {
 
         var ProductDetailView = BaseView.extend({
 
@@ -24,10 +24,10 @@
 
                 this.loadControls();
 
-                this.model = new OrderModel();
+                this.model = new ProductModel();
                 this.model.on('sync', this.redirectToVendor, this);
-                this.model.set('ProductId', this.productId);
-                this.on("user-authenticated", this.createOrder, this);
+                this.model.set('Id', this.productId);
+                //this.on("user-authenticated", this.createOrder, this);
 
             },
             loadControls: function () {
@@ -85,12 +85,12 @@
                     this.disableButtonForSeconds(obj);
                     this.vendorUrl = obj.attr('data-vendorUrl');
                     //Traquea que un usuario a intentado comprar un producto
-                    this.trackGAEvent('Compra', 'Intento');
+                    //this.trackGAEvent('Compra', 'Intento');
                 }
 
                 this.validateAuthorization();
                 this.showLoadingAll();
-                this.model.newOrder();
+                this.model.moreInfo();
             },
             //userAuthenticated: function () {
             //    //Si quería comprar el producto, despues de aautenticarse realiza de nuevo un intento
@@ -102,7 +102,7 @@
             //},
             redirectToVendor: function () {
                 //Traquea que un usuario a intentado comprar un producto
-                this.trackGAEvent('Compra', 'Exitosa');
+                //this.trackGAEvent('Compra', 'Exitosa');
                 if (this.vendorUrl) {
                     displayAjaxLoading(true);
                     document.location.href = this.vendorUrl;

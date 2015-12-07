@@ -1,2 +1,2 @@
 DataProvider: sqlserver
-DataConnectionString: Data Source=ASUS_BETO\SQL_ASUS;Initial Catalog=Tuils;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=Temporal1
+DataConnectionString: Data Source=ASUS_BETO\SQL_ASUS;Initial Catalog=TuilsPagos;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=Temporal1

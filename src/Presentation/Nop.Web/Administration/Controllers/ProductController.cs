@@ -605,6 +605,19 @@ namespace Nop.Admin.Controllers
                         result.Append(", ");
                 }
                 model.ProductTags = result.ToString();
+
+                //has plan
+                if (product.OrderPlanId.HasValue)
+                    model.HasPlan = true;
+                else
+                {
+                    //Si el tienda valida que el plan este activo
+                    if (product.Vendor.VendorType == Core.Domain.Vendors.VendorType.Market)
+                        model.HasPlan = product.Vendor.HasActivePlan();
+                }
+
+                if (product.StateProvinceId.HasValue)
+                    model.StateProvinceName = product.StateProvince.Name;
             }
 
             //tax categories
@@ -638,6 +651,10 @@ namespace Nop.Admin.Controllers
             {
                 model.SelectedDiscountIds = product.AppliedDiscounts.Select(d => d.Id).ToArray();
             }
+
+           
+
+            
 
             //default values
             if (setPredefinedValues)
@@ -839,7 +856,12 @@ namespace Nop.Admin.Controllers
                 //esto se ve en el storeprocedure en el ELSE la condicion @Published = 0 AND @ShowHidden = 1
                 showHidden: !model.ShowUnpublised,
                 //ENvia el filtro de los que no están publicados
-                published: model.ShowUnpublised ? (bool?)false : null
+                published: model.ShowUnpublised ? (bool?)false : null,
+                //hidden = true son los que son planes
+                hidden: model.ShowHidden,
+                showOnHomePage: model.ShowOnHomePage ? (bool?)true : null,
+                showOnSliders: model.ShowOnSliders? (bool?)true : null,
+                showOnSocialNetworks: model.ShowOnSN ? (bool?)true : null
             );
 
             var gridModel = new DataSourceResult();
@@ -983,9 +1005,10 @@ namespace Nop.Admin.Controllers
                     locale.SeName = product.GetSeName(languageId, false, false);
                 });
 
-
+            
+            int limit;
             if (model.VendorId > 0)
-                model.HasReachedLimitOfProducts = _productService.HasReachedLimitOfProducts(model.VendorId);
+                model.HasReachedLimitOfProducts = _productService.HasReachedLimitOfProducts(_vendorService.GetVendorById(model.VendorId), out limit);
 
             PrepareAclModel(model, product, false);
             PrepareStoresMappingModel(model, product, false);
@@ -1024,6 +1047,12 @@ namespace Nop.Admin.Controllers
                 //product
                 product = model.ToEntity(product);
                 product.UpdatedOnUtc = DateTime.UtcNow;
+
+
+                //Si se esta activando valida los limites de los destacados
+                if (product.Published && !model.PreviousPublisedProduct)
+                    ValidateFeaturedLimits(product);
+
                 _productService.UpdateProduct(product);
                 //search engine name
                 model.SeName = product.ValidateSeName(model.SeName, product.Name, true);
@@ -1040,6 +1069,8 @@ namespace Nop.Admin.Controllers
                 SaveStoreMappings(product, model);
                 //picture seo names
                 UpdatePictureSeoNames(product);
+
+
                 //discounts
                 var allDiscounts = _discountService.GetAllDiscounts(DiscountType.AssignedToSkus, null, true);
                 foreach (var discount in allDiscounts)
@@ -1057,6 +1088,11 @@ namespace Nop.Admin.Controllers
                             product.AppliedDiscounts.Remove(discount);
                     }
                 }
+
+                //Cuando el vendor tiene un plan pago, debe poner como fecha limite uno de los dos
+                if (product.Vendor.CurrentOrderPlanId.HasValue && product.Vendor.PlanExpiredOnUtc.Value > DateTime.UtcNow)
+                    product.AvailableEndDateTimeUtc = product.Vendor.PlanExpiredOnUtc;
+
                 _productService.UpdateProduct(product);
                 _productService.UpdateHasDiscountsApplied(product);
                 //back in stock notifications
@@ -1073,7 +1109,11 @@ namespace Nop.Admin.Controllers
 
                 //Si fue aprobado y antes no lo estaba envía notificación al vendedor
                 if (product.Published && !model.PreviousPublisedProduct)
+                {
+                    //Envia el correo de aprobacion de la publciación
                     _workflowMessageService.SendPublishApprovedNotificationMessage(product, _workContext.WorkingLanguage.Id);
+                }
+                    
 
                 //activity log
                 _customerActivityService.InsertActivity("EditProduct", _localizationService.GetResource("ActivityLog.EditProduct"), product.Name);
@@ -1095,6 +1135,26 @@ namespace Nop.Admin.Controllers
             PrepareAclModel(model, product, true);
             PrepareStoresMappingModel(model, product, true);
             return View(model);
+        }
+        
+        
+        /// <summary>
+        /// Realiza las validaciones para determinar si se puede destacar o no el producto, sino se puede entonces lo deja sin destacar
+        /// </summary>
+        /// <param name="product"></param>
+        private void ValidateFeaturedLimits(Product product)
+        {
+            //Si tiene plan realiza las validaciones
+            /*if (product.Vendor.HasActivePlan())
+            {
+                var plan = _productService.GetPlanById(product.Id);
+                var leftProducts = _productService.CountLeftFeaturedPlacesByVendor(product, false, product.OrderPlan);
+                //Si no tiene disp
+                if(product.ShowOnHomePage && leftProducts.HomePageLeft <= 0)
+
+
+            }*/
+            _productService.EnableProduct(product, true, false);
         }
 
         //delete product
@@ -2276,7 +2336,7 @@ namespace Nop.Admin.Controllers
 
         #region Product pictures
 
-        public ActionResult ProductPictureAdd(int pictureId, int displayOrder, int productId)
+        public ActionResult ProductPictureAdd(int pictureId, int displayOrder, int productId, bool active)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
@@ -2297,6 +2357,7 @@ namespace Nop.Admin.Controllers
                 PictureId = pictureId,
                 ProductId = productId,
                 DisplayOrder = displayOrder,
+                Active = active
             });
 
             _pictureService.SetSeoFilename(pictureId, _pictureService.GetPictureSeName(product.Name));
@@ -2328,7 +2389,8 @@ namespace Nop.Admin.Controllers
                     ProductId = x.ProductId,
                     PictureId = x.PictureId,
                     PictureUrl = _pictureService.GetPictureUrl(x.PictureId),
-                    DisplayOrder = x.DisplayOrder
+                    DisplayOrder = x.DisplayOrder,
+                    Active = x.Active
                 })
                 .ToList();
 
@@ -2362,6 +2424,8 @@ namespace Nop.Admin.Controllers
             }
 
             productPicture.DisplayOrder = model.DisplayOrder;
+            productPicture.Active = model.Active;
+            
             _productService.UpdateProductPicture(productPicture);
 
             return new NullJsonResult();

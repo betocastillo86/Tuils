@@ -120,13 +120,14 @@
             },
             save: function (obj)
             {
-                this.validateControls();
-                if (this.model.isValid())
-                {
+                var errors = this.validateControls();
+                if (this.model.isValid()) {
                     this.model.once('sync', this.saved, this);
                     this.btnSave.attr('disabled', true);
                     this.model.insert();
                 }
+                
+                this.$('#errorSelectMap').css('display', (errors && (errors.Latitude || errors.Longitude)) ? 'block' : 'none');
             },
             saved: function ()
             {

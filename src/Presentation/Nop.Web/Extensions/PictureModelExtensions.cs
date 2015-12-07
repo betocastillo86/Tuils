@@ -107,5 +107,26 @@ namespace Nop.Web.Extensions
             };
             return pictureModel;
         }
+
+
+        public static PictureModel GetLogo(this Manufacturer manufacturer,
+            ILocalizationService localizationService,
+            MediaSettings mediaSettings,
+            IPictureService pictureService,
+            int? pictureSize = null)
+        {
+            if (!pictureSize.HasValue)
+                pictureSize = mediaSettings.ManufacturerThumbPictureSize;
+
+            var picture = pictureService.GetPictureById(manufacturer.PictureId);
+            var pictureModel = new PictureModel
+            {
+                FullSizeImageUrl = pictureService.GetPictureUrl(picture),
+                ImageUrl = pictureService.GetPictureUrl(picture, pictureSize.Value),
+                Title = string.Format(localizationService.GetResource("Media.Manufacturer.ImageLinkTitleFormat"), manufacturer.Name),
+                AlternateText = string.Format(localizationService.GetResource("Media.Manufacturer.ImageAlternateTextFormat"), manufacturer.Name)
+            };
+            return pictureModel;
+        }
     }
 }

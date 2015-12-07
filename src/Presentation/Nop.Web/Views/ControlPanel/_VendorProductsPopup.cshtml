@@ -1,0 +1,32 @@
+﻿<script type="text/x-handlebars" id="templateVendorProductsPopup">
+
+
+    <div class="modal">
+        {{#if this.length}}
+        <ul class="tus_destacados">
+
+            {{#each this}}
+
+            <li>
+                <div class="img_tus">
+                    <img src="{{ImageUrl}}" />
+                </div>
+                <div class="txt_tus">
+                    <h3>{{Name}}</h3>
+                    <div class="price-modal">{{PriceFormatted}}</div>
+                </div>
+                <br />
+            </li>
+
+            {{/each}}
+
+        </ul>
+        {{else}}
+
+        NO HAY PRODUCTOS DESTACADOS DE ESTE TIPO
+
+        {{/if}}
+    </div>
+
+
+</script>

@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Nop.Admin.Models.Settings
 {
@@ -221,16 +222,19 @@ namespace Nop.Admin.Models.Settings
         public bool DisplayTaxShippingInfoOrderDetailsPage_OverrideForStore { get; set; }
 
 
-        [NopResourceDisplayName("Admin.Configuration.Settings.Catalog.ProductLimit")]
-        public int ProductLimitPublished { get; set; }
-        public bool ProductLimitPublished_OverrideForStore { get; set; }
-
         [NopResourceDisplayName("Admin.Configuration.Settings.Catalog.ExpirationBikeReferencesKey")]
         public string ExpirationBikeReferencesKey { get; set; }
         public bool ExpirationBikeReferencesKey_OverrideForStore { get; set; }
 
+        [NopResourceDisplayName("Admin.Configuration.Settings.Catalog.NumberOfVendorsOnHome")]
+        public int NumberOfVendorsOnHome { get; set; }
+        public bool NumberOfVendorsOnHome_OverrideForStore { get; set; }
 
-        
+        [UIHint("Picture")]
+        [NopResourceDisplayName("Admin.Configuration.Settings.Catalog.DefaultServicePicture")]
+        public int DefaultServicePicture { get; set; }
+        public bool DefaultServicePicture_OverrideForStore { get; set; }
+
 
     }
 }

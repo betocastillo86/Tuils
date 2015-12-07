@@ -14,6 +14,8 @@ using Nop.Services.Seo;
 using Nop.Services.Helpers;
 using Nop.Services.Directory;
 using Nop.Services.Catalog;
+using Nop.Services.Localization;
+using Nop.Services.Media;
 
 namespace Nop.Web.Extensions.Api
 {
@@ -109,7 +111,7 @@ namespace Nop.Web.Extensions.Api
 
             //La placa es exclusiva de las motos
             if (!string.IsNullOrEmpty(model.CarriagePlate))
-                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.CarriagePlate, SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionCarriagePlate, ShowOnProductPage = true });
+                entity.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { AttributeType = SpecificationAttributeType.CustomText, CustomValue = model.CarriagePlate, SpecificationAttributeOptionId = _tuilsSettings.specificationAttributeOptionCarriagePlate, ShowOnProductPage = false });
 
             //El año es esclusivo de las motos
             if (model.Year > 0)
@@ -147,10 +149,38 @@ namespace Nop.Web.Extensions.Api
 
 
             #endregion
-
-
             return entity;
         }
+
+
+        public static IList<ProductBaseModel> ToModels(this IList<Product> products, IPriceFormatter priceFormatter,
+            ILocalizationService localizationService,
+            MediaSettings mediaSettings,
+            IPictureService pictureService)
+        {
+            IList<ProductBaseModel> models = new List<ProductBaseModel>();
+            foreach (var product in products)
+            {
+                models.Add(product.ToModel(priceFormatter, localizationService, mediaSettings, pictureService));
+            }
+            return models;
+        }
+
+        public static ProductBaseModel ToModel(this Product entity, 
+            IPriceFormatter priceFormatter, 
+            ILocalizationService localizationService,
+            MediaSettings mediaSettings,
+            IPictureService pictureService)
+        {
+            var model = new ProductBaseModel();
+            model.Id = entity.Id;
+            model.Name = entity.Name;
+            model.Price = entity.Price;
+            model.PriceFormatted = priceFormatter.FormatPrice(entity.Price);
+            model.ImageUrl = entity.GetPicture(localizationService, mediaSettings, pictureService).ImageUrl;
+            return model;
+        }
+
         #endregion
 
         #region SpecificationAttribute

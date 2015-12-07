@@ -32,6 +32,7 @@ namespace Nop.Web.Framework.Mvc
             var dateSettings = EngineContext.Current.Resolve<DateTimeSettings>();
             var mediaSettings = EngineContext.Current.Resolve<MediaSettings>();
             var vendorSettings = EngineContext.Current.Resolve<VendorSettings>();
+            var planSettings = EngineContext.Current.Resolve<PlanSettings>();
 
             var config = new
             {
@@ -71,6 +72,10 @@ namespace Nop.Web.Framework.Mvc
                     vendorBackgroundThumbPictureSize = mediaSettings.VendorBackgroundThumbPictureSize,
                     productthumbpicturesizeonproductdetailspage = mediaSettings.ProductThumbPictureSizeOnProductDetailsPage
                 },
+                plan = new {
+                    planProductsFree = planSettings.PlanProductsFree,
+                    planStoresFree = planSettings.PlanStoresFree
+                },
                 vendor = new
                 {
                     reviewsPageSize = vendorSettings.DefaultReviewsPageSize,
@@ -80,7 +85,7 @@ namespace Nop.Web.Framework.Mvc
                 catalog = new
                 {
                     limitOfSpecialCategories = catalogSettings.LimitOfSpecialCategories,
-                    limitDaysOfProductPublished = catalogSettings.LimitDaysOfProductPublished,
+                    //limitDaysOfProductPublished = catalogSettings.LimitDaysOfProductPublished,
                     limitNumPictures = catalogSettings.LimitNumPictures
                 },
                 errorCodes = new
@@ -120,18 +125,20 @@ namespace Nop.Web.Framework.Mvc
                 },
                 products = new
                 {
-                    confirmBuy = _localizationService.GetResource("products.confirmBuy", languageId)
+                    confirmBuy = _localizationService.GetResource("products.confirmBuy", languageId),
+                    hasReachedLimitFeaturedAlert = _localizationService.GetResource("myproducts.hasReachedLimitFeaturedAlert", languageId)
                 },
                 loginMessages = new
                 {
                     publishProduct = _localizationService.GetResource("LoginMessage.PublishProduct", languageId),
                     showVendor = _localizationService.GetResource("LoginMessage.ShowVendor", languageId),
-                    askQuestion = _localizationService.GetResource("LoginMessage.AskQuestion", languageId)
+                    askQuestion = _localizationService.GetResource("LoginMessage.AskQuestion", languageId),
+                    getPlanMarketLikeUserError = _localizationService.GetResource("LoginMessage.GetPlanMarketLikeUserError", languageId),
                 },
                 confirm = new
                 {
                     myAccount = _localizationService.GetResource("MyAccount.Confirm", languageId),
-                    offices = _localizationService.GetResource("MyOffices.Confirm", languageId),
+                    //offices = _localizationService.GetResource("MyOffices.Confirm", languageId),
                     closeButton = _localizationService.GetResource("Common.CloseButtonDialog", languageId),
                     userRegistered = _localizationService.GetResource("createuser.ConfirmMessage", languageId)
                 }

@@ -3,12 +3,14 @@
 ,'tuils/views/product/productDetailView','tuils/views/common/newsletterView','tuils/views/common/searcherView','tuils/views/common/leftFeaturedProductsView'	
 , 'tuils/views/common/header', 'tuils/views/panel/offices', 'tuils/views/panel/menu', 'tuils/views/panel/myProductsView', 'tuils/views/home/homeView',
 'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView', 'tuils/views/publishProduct/publishView',
-'tuils/views/common/footerView', 'tuils/views/panel/editProductView',
+'tuils/views/common/footerView', 'tuils/views/panel/editProductView', 'tuils/views/publishProduct/selectPlanView', 'tuils/views/panel/myOrdersView',
+'tuils/views/publishProduct/showPlansView', 'tuils/views/login/staticLoginView',
 'ajaxCart', 'nopCommon'],
     function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView,
         MyAccountView,VendorServicesView ,QuestionsView ,VendorDetailView,
         ProductDetailView, NewsletterView, SearcherView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
-        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView, EditProductView) {
+        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView, EditProductView, SelectPlanView, MyOrdersView,
+        ShowPlansView, StaticLoginView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -36,6 +38,7 @@
                 "mi-cuenta/mis-compras(/:query)": "myOrders",
                 "mi-cuenta/mis-ventas(/:query)": "myOrders",
                 "mi-cuenta/mis-productos(/:query)": "myProducts",
+                "mis-productos/seleccionar-plan(/:id)": "selectPlan",
                 "mi-cuenta/preguntas-pendientes(/:query)": "questions",
                 "ControlPanel/EditProduct(/:id)": "editProduct",
                 "mis-deseos(/:customerGuid)": 'wishlist',
@@ -49,11 +52,13 @@
                 'buscar(/*query)': 'search',
                 'recordar-clave': 'passwordRecovery',
                 'mapa-del-sitio': 'sitemap',
+                'quiero-vender/confirmacion/:id':'loadSubViews',
                 'condiciones-de-uso': 'useConditions',
                 'contacto': 'contactUs',
                 'quienes-somos': 'aboutUs',
                 'tarifas-y-precios': 'aboutUs',
-                'passwordrecovery/confirm(/*query)' : 'passwordRecovery'
+                'passwordrecovery/confirm(/*query)' : 'passwordRecovery',
+                'planes(/:tab)' : 'plans'
             },
             home : function()
             {
@@ -74,6 +79,10 @@
             sellService: function (step) {
                 this.sellSwitch(TuilsConfiguration.productBaseTypes.service);
             },
+            selectPlan: function (id) {
+                this.currentView = new SelectPlanView({ el: this.defaultEl, id: parseInt(id) });
+                this.loadSubViews();
+            },
             sellSwitch: function (type) {
                 if (!this.currentView) {
                     this.currentView = new PublishProductView({ el: this.defaultEl, productType: type });
@@ -86,17 +95,20 @@
                 this.loadSubViews();
             },
             myAccount: function () {
-                var that = this;
-                that.currentView = new MyAccountView({ el: that.defaultEl });
+                this.currentView = new MyAccountView({ el: this.defaultEl });
                 this.loadSubViewsPanel();
             },
             myOffices: function () {
-                var that = this;
-                that.currentView = new OfficesView({ el: that.defaultEl });
+                this.currentView = new OfficesView({ el: this.defaultEl });
                 this.loadSubViewsPanel();
             },
             myOrders: function () {
+                this.currentView = new MyOrdersView({ el: this.defaultEl });
                 this.loadSubViewsPanel();
+            },
+            plans : function(tab){
+                this.currentView = new ShowPlansView({ el : this.defaultEl, tab : tab });
+                this.loadSubViews();
             },
             changePassword : function()
             {
@@ -164,12 +176,12 @@
                 this.loadTwoColumns();
             },
             login: function () {
+                this.currentView = new StaticLoginView({ el: this.defaultEl });
                 this.loadTwoColumns();
             },
             product: function () {
-                var that = this;
-                that.currentView = new ProductDetailView({ el: that.defaultEl });
-                that.loadSubViews();
+                this.currentView = new ProductDetailView({ el: this.defaultEl });
+                this.loadSubViews();
             },
             loadTwoColumns : function()
             {
@@ -203,6 +215,8 @@
                 {
                     //se atacha al evento de solicitud de ingreso
                     that.currentView.on('unauthorized', that.viewHeader.showLogin, that.viewHeader);
+                    //se atacha al evento de solicitud de registro
+                    that.currentView.on('unauthorized-register', that.viewHeader.showRegister, that.viewHeader);
                     //evento para cerrar el menu responsive
                     that.currentView.on('close-menu-responsive', that.viewHeader.closeMenuResponsive, that.viewHeader);
                     //atacha a la vista actual al evento cuando el usuario se autenticó

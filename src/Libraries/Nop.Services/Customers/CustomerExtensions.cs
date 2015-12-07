@@ -8,6 +8,7 @@ using Nop.Core.Infrastructure;
 using Nop.Services.Common;
 using Nop.Services.Localization;
 using Nop.Services.Catalog;
+using System.Linq;
 
 namespace Nop.Services.Customers
 {
@@ -38,6 +39,22 @@ namespace Nop.Services.Customers
             }
             return fullName;
         }
+
+
+        public static string GetFirstName(this Customer customer)
+        {
+            if (customer == null)
+                throw new ArgumentNullException("customer");
+            return customer.GetAttribute<string>(SystemCustomerAttributeNames.FirstName);
+        }
+
+        public static string GetLastName(this Customer customer)
+        {
+            if (customer == null)
+                throw new ArgumentNullException("customer");
+            return customer.GetAttribute<string>(SystemCustomerAttributeNames.LastName);
+        }
+
 
         /// <summary>
         /// Formats the customer name
@@ -112,6 +129,7 @@ namespace Nop.Services.Customers
 
             return null;
         }
+
 
 
         #region Gift cards

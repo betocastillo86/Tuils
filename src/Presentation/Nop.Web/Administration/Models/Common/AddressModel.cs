@@ -5,6 +5,7 @@ using Nop.Admin.Validators.Common;
 using Nop.Core.Domain.Catalog;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Mvc;
+using System;
 
 namespace Nop.Admin.Models.Common
 {
@@ -75,6 +76,29 @@ namespace Nop.Admin.Models.Common
         //address in HTML format (usually used in grids)
         [NopResourceDisplayName("Admin.Address")]
         public string AddressHtml { get; set; }
+
+
+        ///// <summary>
+        ///// Gets or sets the date and time of instance creation
+        ///// </summary>
+        //public DateTime CreatedOnUtc { get; set; }
+
+        //public double? Longitude { get; set; }
+
+        //public double? Latitude { get; set; }
+
+        //public string Schedule { get; set; }
+
+        //public bool Active { get; set; }
+
+        //public bool Deleted { get; set; }
+
+        ///// <summary>
+        ///// El vendor puede aplicar o no
+        ///// </summary>
+        //public int? VendorId { get; set; }
+
+        //public int DisplayOrder { get; set; }
 
         //formatted custom address attributes
         public string FormattedCustomAddressAttributes { get; set; }

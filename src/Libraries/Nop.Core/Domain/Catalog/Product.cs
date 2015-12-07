@@ -6,6 +6,7 @@ using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Seo;
 using Nop.Core.Domain.Stores;
 using Nop.Core.Domain.Directory;
+using Nop.Core.Domain.Orders;
 
 namespace Nop.Core.Domain.Catalog
 {
@@ -457,6 +458,11 @@ namespace Nop.Core.Domain.Catalog
         public Nullable<int> Year { get; set; }
 
         /// <summary>
+        /// Número de la orden relacionada con el plan que se seleccionó para exponer el producto
+        /// </summary>
+        public Nullable<int> OrderPlanId { get; set; }
+
+        /// <summary>
         /// Valida si el producto que se vende es nuevo o no
         /// </summary>
         public bool IsNew { get; set; }
@@ -464,7 +470,16 @@ namespace Nop.Core.Domain.Catalog
         /// <summary>
         /// Ubicación geografica de la mercancia
         /// </summary>
-        public int StateProvinceId { get; set; }
+        public Nullable<int> StateProvinceId { get; set; }
+
+        public bool Hidden { get; set; }
+
+        /// <summary>
+        /// Propiedad que permite validar rapidamente si un producto está siendo destacado para las bandas rotativas
+        /// </summary>
+        public bool FeaturedForSliders { get; set; }
+
+
 
         /// <summary>
         /// True: Se envío mensaje advirtiendo de expriación de la publicación
@@ -480,6 +495,11 @@ namespace Nop.Core.Domain.Catalog
         /// Productos destacados en el menú izquierdo
         /// </summary>
         public Nullable<bool> LeftFeatured { get; set; }
+
+        /// <summary>
+        /// Productos destacados en redes sociales
+        /// </summary>
+        public bool SocialNetworkFeatured { get; set; }
 
         /// <summary>
         /// Número de clicks que han dado los usuarios que desean saber más información acerca de un producto
@@ -735,6 +755,10 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public virtual StateProvince StateProvince { get; set; }
 
+        /// <summary>
+        /// Plan relacionado al producto
+        /// </summary>
+        public virtual Order OrderPlan { get; set; }
 
         /// <summary>
         /// Detalle de cobertura de lo senvíos

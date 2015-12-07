@@ -49,5 +49,7 @@ namespace Nop.Web.Models.Catalog
         public IList<ProductOverviewModel> Products { get; set; }
 
         public List<SpecialCategoryVendorModel> SpecialCategories { get; set; }
+        
+        public List<Nop.Web.Models.Api.AddressModel> Offices { get; set; }
     }
 }

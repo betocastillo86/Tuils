@@ -1,10 +1,12 @@
-﻿define(['jquery', 'underscore', 'baseView', 'util', 'productModel'],
-    function ($, _, BaseView, TuilsUtil, ProductModel) {
+﻿define(['jquery', 'underscore', 'baseView', 'util', 'productModel', 'tuils/models/panel/myProduct', 'resources'],
+    function ($, _, BaseView, TuilsUtil, ProductModel, MyProductModel, TuilsResources) {
             
         var MyProductsView = BaseView.extend({
             events: {
                 'keyup .search-pdt .searchinput': 'search',
-                'click .btnUnpublish': 'remove'
+                'click .btnUnpublish': 'remove',
+                'click .btnPublishMyProducts': 'activate',
+                'click .HasReachedLimitOfFeature' : 'showLimitMessage'
             },
             initialize: function(args){
             
@@ -19,12 +21,36 @@
                     product.remove();
                 }
             },
+            activate: function (obj) {
+                if (confirm("¿Seguro deseas reactivar este producto?")) {
+                    var id = parseInt($(obj.target).attr('data-id'));
+                    var product = new MyProductModel({ Id: id });
+                    product.on('sync', this.productActivated, this);
+                    product.on('error', this.productErrorActivated, this);
+                    product.enable();
+                }
+            },
             productRemoved : function(model){
                 this.$('.product-detail[data-id="' + model.get('Id') + '"]').fadeOut();
                 this.alert('El producto fue deshabilitado correctamente');
             },
+            productActivated: function (model) {
+                this.$('.product-detail[data-id="' + model.get('Id') + '"]').fadeOut();
+                this.alert('El producto fue habilitado correctamente');
+            },
+            showLimitMessage: function () {
+                this.alert({ message: TuilsResources.products.hasReachedLimitFeaturedAlert , duration : 10000});
+            },
             productErrorRemoved: function () {
                 this.alert('No fue posible deshabilitar el producto. Intenta de nuevo o comentanos tu problema a info@tuils.com');
+            },
+            productErrorActivated: function (resp, err) {
+                if (err.responseJSON.Message) {
+                    this.alert(err.responseJSON.Message);
+                }
+                else {
+                    this.alert('No fue posible habilitar el producto. Intenta de nuevo o comentanos tu problema a info@tuils.com');
+                }
             },
             search: function (obj) {
                 if (obj.keyCode != 13) {

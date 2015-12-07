@@ -17,6 +17,11 @@ using Nop.Services.Stores;
 using Nop.Tests;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Nop.Services.Logging;
+using Nop.Core;
+using Nop.Services.Vendors;
+using Nop.Services.Seo;
+using Nop.Services.Media;
 
 namespace Nop.Services.Tests.Customers
 {
@@ -40,6 +45,14 @@ namespace Nop.Services.Tests.Customers
         private IStoreService _storeService;
         private RewardPointsSettings _rewardPointsSettings;
         private SecuritySettings _securitySettings;
+        private ILogger _logger;
+        private IWorkflowMessageService _workflowMessageService;
+        private IWorkContext _workContext;
+        private IVendorService _vendorService;
+        private IUrlRecordService _urlRecordService;
+        private ILanguageService _languageService;
+        private ILocalizedEntityService _localizedEntityService;
+        private IPictureService _pictureService;
 
         [SetUp]
         public new void SetUp()
@@ -124,6 +137,16 @@ namespace Nop.Services.Tests.Customers
 
             _genericAttributeService = MockRepository.GenerateMock<IGenericAttributeService>();
             _newsLetterSubscriptionService = MockRepository.GenerateMock<INewsLetterSubscriptionService>();
+
+
+            _logger = MockRepository.GenerateMock<ILogger>();
+            _workflowMessageService = MockRepository.GenerateMock<IWorkflowMessageService>();
+            _workContext = MockRepository.GenerateMock<IWorkContext>();
+            _vendorService = MockRepository.GenerateMock<IVendorService>();
+            _urlRecordService = MockRepository.GenerateMock<IUrlRecordService>();
+            _languageService = MockRepository.GenerateMock<ILanguageService>();
+            _localizedEntityService = MockRepository.GenerateMock<ILocalizedEntityService>();
+            _pictureService = MockRepository.GenerateMock<IPictureService>();
             
             _localizationService = MockRepository.GenerateMock<ILocalizationService>();
             _customerService = new CustomerService(new NopNullCache(), _customerRepo, _customerRoleRepo,
@@ -132,7 +155,8 @@ namespace Nop.Services.Tests.Customers
                 _genericAttributeService, null, null, _eventPublisher, _customerSettings, null);
             _customerRegistrationService = new CustomerRegistrationService(_customerService,
                 _encryptionService, _newsLetterSubscriptionService, _localizationService,
-                _storeService, _rewardPointsSettings, _customerSettings);
+                _storeService, _rewardPointsSettings, _customerSettings, _genericAttributeService, _logger, _workflowMessageService, _workContext,
+                _vendorService, _urlRecordService, _languageService, _localizedEntityService, _pictureService );
         }
 
         //[Test]

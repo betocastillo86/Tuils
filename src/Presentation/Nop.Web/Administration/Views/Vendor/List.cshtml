@@ -25,6 +25,36 @@
         </td>
     </tr>
     <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.ShowOnHome):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.ShowOnHome)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.WithPlan):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.WithPlan)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.VendorType):
+        </td>
+        <td class="adminData">
+            @*@Html.DropDownListFor(model => model.VendorType, Model.VendorTypes, "-")*@
+
+            <select id="VendorType" name="VendorType">
+                <option value="-1">-</option>
+                <option value="0">Usuario</option>
+                <option value="1">Tienda</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
         <td colspan="2">
             <input type="button" id="btnSearch" class="k-button" value="@T("Admin.Common.Search")" />
         </td>
@@ -81,13 +111,23 @@
                             title: "@T("Admin.Vendors.Fields.Email")",
                             width: 300
                         }, {
+                            field: "PlanExpiredOnUtc",
+                            title: "@T("Admin.Vendors.Fields.PlanExpiredOnUtc")",
+                            width: 300,
+                            type: "date",
+                            format: "{0:G}"
+                        },
+                        {
                             field: "Active",
                             title: "@T("Admin.Vendors.Fields.Active")",
                             width: 100,
-                            headerAttributes: { style: "text-align:center" },
-                            attributes: { style: "text-align:center" },
-                            template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=Active#.gif" />'
-                        }, {
+                    headerAttributes: { style: "text-align:center" },
+                    attributes: { style: "text-align:center" },
+                    template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=Active#.gif" />'
+                },
+                        
+                        
+                        {
                             field: "Id",
                             title: "@T("Admin.Common.Edit")",
                             width: 100,
@@ -97,27 +137,30 @@
                 });
             </script>
             <script type="text/javascript">
-                $(document).ready(function () {
-                    //search button
-                    $('#btnSearch').click(function () {
-                        //search
-                        var grid = $('#vendors-grid').data('kendoGrid');
-                        grid.dataSource.page(1); //new search. Set page size to 1
-                        //grid.dataSource.read(); we already loaded the grid above using "page" function
-                        return false;
-                    });
+    $(document).ready(function () {
+        //search button
+        $('#btnSearch').click(function () {
+            //search
+            var grid = $('#vendors-grid').data('kendoGrid');
+            grid.dataSource.page(1); //new search. Set page size to 1
+            //grid.dataSource.read(); we already loaded the grid above using "page" function
+            return false;
+        });
 
-                    $("#@Html.FieldIdFor(model => model.SearchName)").keydown(function (event) {
-                        if (event.keyCode == 13) {
-                            $("#btnSearch").click();
-                            return false;
-                        }
-                    });
-                });
+        $("#@Html.FieldIdFor(model => model.SearchName)").keydown(function (event) {
+            if (event.keyCode == 13) {
+                $("#btnSearch").click();
+                return false;
+            }
+        });
+    });
 
-                function additionalData() {
-                    return {
-                        SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val()
+    function additionalData() {
+        return {
+            SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
+            ShowOnHome: $('#@Html.FieldIdFor(model => model.ShowOnHome)').is(':checked'),
+            WithPlan: $('#@Html.FieldIdFor(model => model.WithPlan)').is(':checked'),
+            VendorType: $('#VendorType').val()
                     };
                 }
             </script>

@@ -1,0 +1,85 @@
+﻿@model Nop.Web.Models.Sales.SelectPlanModel
+@{
+    Html.AddTitleParts(T("PageTitle.SelectPlan").Text);
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+}
+
+
+<div id="divMainSection" class="conte_planes">
+
+
+
+
+    @Html.Partial("_InfoPlan", Model)
+    @using (Html.BeginForm())
+    {
+
+        <div id="divAdditionalInfo" style="@(Model.AutoShowAdditionalData ? string.Empty : "display:none")">
+
+            <div class="inputs">
+                @Html.DropDownRequired("StateProvinceId", Model.StateProvinces, labelResource: "selectPlan.fields.stateprovince")
+            </div>
+            <div class="inputs">
+                @Html.TextBoxRequiredFor(m => m.CustomerAddressInformation.City, labelText: T("account.fields.city").Text)
+            </div>
+            <div class="inputs">
+                @Html.TextBoxRequiredFor(m => m.CustomerAddressInformation.PhoneNumber, labelText: T("account.fields.phone").Text)
+            </div>
+            <div class="inputs">
+                @Html.TextBoxRequiredFor(m => m.CustomerAddressInformation.Address, labelText: T("account.youraddress").Text)
+                @Html.HiddenFor(m => m.CustomerAddressInformation.AddressId)
+            </div>
+            <br />
+
+            <input id="merchantId" name="merchantId" type="hidden" value="">
+            <input id="referenceCode" name="referenceCode" type="hidden" value="">
+            <input id="amount" name="amount" type="hidden" value="">
+            <input id="accountId" name="accountId" type="hidden" value="">
+            <input id="signature" name="signature" type="hidden" value="">
+            <input id="currency" name="currency" type="hidden" value="">
+            <input id="responseUrl" name="responseUrl" type="hidden" value="">
+            <input id="confirmationUrl" name="confirmationUrl" type="hidden" value="">
+            <input id="extra1" name="extra1" type="hidden" value="@Model.ProductId">
+            
+            <input id="billingAddress" name="billingAddress" type="hidden" />
+            <input id="shippingAddress" name="shippingAddress" type="hidden" />
+            <input id="payerPhone" name="payerPhone" type="hidden" />
+            <input id="billingCity" name="billingCity" type="hidden" />
+            <input id="shippingCity" name="shippingCity" type="hidden" />
+            
+            
+            
+
+
+            <input name="tax" type="hidden" value="0">
+            <input name="taxReturnBase" type="hidden" value="0">
+
+
+            <input id="description" name="description" type="hidden" value="Nombre del plan que se desea comprar">
+            <input name="buyerEmail" type="hidden" value="@Model.CustomerInformation.Email">
+            <input name="payerFullName" type="hidden" value="@Model.CustomerInformation.FullName">
+            <input name="mobilePhone" type="hidden" value="@Model.CustomerInformation.PhoneNumber">
+
+            <input name="test" type="hidden" value="@(Model.IsTest ? "1" : "0")">
+
+
+
+            
+
+
+
+
+
+
+        </div>
+
+        <div class="legal_plan">Consulta los <a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })" target="_blank">Términos de uso</a> para obtener más información.</div>
+        <input id="btnPay" name="Submit" type="button" value="@T("selectplan.buttonpay")" style="@(Model.AutoShowAdditionalData ? string.Empty : "display:none")" class="btn_continue button-1">
+        @Html.ActionLink(T("SelectPlan.ContinueWithoutPlan").Text, "ConfirmationWithoutPlan", "Sales", new { id = Model.ProductId }, new { style = "display:none", @class = "btn_continue button-1", id = "btnContinue" })
+        <br />
+
+    }
+
+
+
+</div>

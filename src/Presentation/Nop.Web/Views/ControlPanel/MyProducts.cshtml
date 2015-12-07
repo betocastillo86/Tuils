@@ -1,5 +1,5 @@
 ﻿@model MyProductsModel
-           @using Nop.Web.Models.ControlPanel
+@using Nop.Web.Models.ControlPanel
 @{
     Html.AddTitleParts(T("PageTitle.MyProducts").Text);
     Layout = "~/Views/Shared/_PanelLayoutTwo.cshtml";
@@ -10,74 +10,154 @@
 <div class="panel-control">
     <h2 class="tit_sec">@T("MyProducts.Title")</h2>
     <div class="header_myProduct">
-        @Html.ActionLink(T("common.publishProduct").Text, "Index", "Sales", new { }, new { @class = "button-1" })
+        @Html.ActionLink(T("common.publishProductNoFree").Text, "Index", "Sales", new { }, new { @class = "button-1" })
 
-        <div class="filters">
+        @*<div class="filters">
             Filtrar solo:
             <a href="@Model.UrlFilterByServices.Url" class="@(Model.UrlFilterByServices.Active ? "active" : string.Empty)" title="@T("common.filterByService")">@T("controlpanel.publishproductservice")</a>
             <a href="@Model.UrlFilterByProducts.Url" class="@(Model.UrlFilterByProducts.Active ? "active" : string.Empty)" title="@T("common.filterByProduct")">@T("controlpanel.publishproduct")</a>
             <a href="@Model.UrlFilterByBikes.Url" class="@(Model.UrlFilterByBikes.Active ? "active" : string.Empty)" title="@T("common.filterByBikes")">@T("controlpanel.publishproductbike")</a>
-        </div>
-        
+        </div>*@
+
         <div class="search-pdt">
             <input type="text" class="searchinput" value="@Model.PagingFilteringContext.q" />
             <a class="btn_search"><span class="icon-lupa"></span></a>
         </div>
         <br />
     </div>
+    <div class="conven_desta">
+        <div style="margin:0 0 8px;">Producto destacados:</div>
+        <div class="tag-desta fb"><span class="icon-fb"></span> En facebook</div>
+        <div class="tag-desta"><span class="icon-home"></span> En home</div>
+    </div>
     <ul class="product_list">
 
         @foreach (var product in Model.Products)
         {
             <li class="product-detail" data-id="@product.Id">
-            <div class="product-dtl-img">
-                <a href="@(product.Published ? Url.Action("ProductDetails", "Product", new { seName = product.SeName }) : "#")">
-                <img title="@product.Name" src="@product.DefaultPictureModel.ImageUrl" alt="@product.Name">
-                </a>
-            </div>
-            <div class="product-dtl-txt">
-                <h3><a href="@(product.Published ? Url.Action("ProductDetails", "Product", new { seName = product.SeName }) : "#")">@product.Name</a></h3>
-                <ul>
-                    @*<li>@T("myproducts.visits"): @product.Visits</li>*@
-                    @*<li>@T("myproducts.totalsales"): @product.TotalSales</li>*@
-                    <li>@T("myproducts.ApprovedTotalReviews"): @product.ApprovedTotalReviews</li>
-                    <li>@T("myproducts.NumClicksForMoreInfo"): @product.NumClicksForMoreInfo</li>
-                    
-                    @if (product.Published)
-                    { 
-                        if (product.UnansweredQuestions > 0)
-                        { 
-                            <li><a href="@Url.Action("Questions", "ControlPanel", new { p = product.Id })">@T("myproducts.UnansweredQuestions"): @product.UnansweredQuestions</a></li>
+                <div class="product-dtl-img">
+                    <a href="@(product.Published ? Url.Action("ProductDetails", "Product", new { seName = product.SeName }) : "#")">
+                        <img title="@product.Name" src="@product.DefaultPictureModel.ImageUrl" alt="@product.Name">
+                    </a>
+                </div>
+                <div class="product-dtl-txt">
+
+
+                    <h3>
+
+                        @if (product.IsFeatured
+                            /**La etiqueta de destacado cuando un producto no está disponible solo la muestra para usuarios**/
+                            && (product.Available || (!product.Available && Model.VendorType == Nop.Core.Domain.Vendors.VendorType.User)))
+                        {
+                            <div class="tag-desta"><span class="icon-star"></span> Destacado</div>
+                            
+                            if (product.ShowOnSocialNetworks)
+                            {
+                                <div class="tag-desta fb"><span class="icon-fb"></span></div>
+                            }
+                            
+                            if (product.ShowOnHomePage)
+                            {
+                                <div class="tag-desta"><span class="icon-home"></span></div>
+                            }
                         }
-                        else
-                        { 
-                            <li>@T("myproducts.noPendingQuestions")</li>
+                        <a href="@(product.Published ? Url.Action("ProductDetails", "Product", new { seName = product.SeName }) : "#")">@product.Name</a>
+                    </h3>
+
+                    <ul>
+                        @*<li>@T("myproducts.visits"): @product.Visits</li>*@
+                        @*<li>@T("myproducts.totalsales"): @product.TotalSales</li>*@
+                        
+                        
+                        @*<li>@T("myproducts.ApprovedTotalReviews"): @product.ApprovedTotalReviews</li>*@
+                        <li>@T("myproducts.NumClicksForMoreInfo"): @product.NumClicksForMoreInfo</li>
+
+                        @if (product.Published)
+                        {
+                            if (product.UnansweredQuestions > 0)
+                            {
+                                <li><a href="@Url.Action("Questions", "ControlPanel", new { p = product.Id })">@T("myproducts.UnansweredQuestions"): @product.UnansweredQuestions</a></li>
+                            }
+                            else
+                            {
+                                <li>@T("myproducts.noPendingQuestions")</li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="product-dtl-date">
+                    <h3>
+                    @if (!product.Published)
+                    {
+                        @T("myproducts.noPublished")
+                    }
+                    else if (product.Sold)
+                    { 
+                        @T("products.sold")
+                    }
+                    /**Si el producto no está disponible pero no se ha vendido y si está publicado es porque está vencido**/
+                    else if(!product.Available && !product.Sold && product.Published)
+                    {
+                        @T("myproducts.outOfDate")
+                    }
+                    else
+                    { 
+                        @T("myproducts.publised")
+                    }
+                    </h3>
+
+
+
+                    <p>@T("myproducts.AvailableStartDate"): @product.AvailableStartDate.ToShortDateString()</p>
+                    <p>@T("myproducts.AvailableEndDate"): @product.AvailableEndDate.ToShortDateString()</p>
+
+                    @if (product.Available)
+                    {
+                        <div class="conte_btn">
+                            @*<a class="btn-azul" href="javascript:;"><span class="icon-mail"></span>Editar</a>*@
+                            @*<a class="btn-naranja" href="@Url.Action("ProductDetails", "Product", new { seName = product.SeName })">@T("myproducts.viewOnline")</a>*@
+
+                            @if (Model.ShowButtonFeatureByPlan)
+                            {
+                                if (Model.HasReachedLimitOfFeature && !product.IsFeatured)
+                                {
+                                    //Cuando el un producto no se puede destacar porque se ha alcanzado el limite
+                                    //Solo se muestra si el producto actual no está destacado de ningúna manera
+                                    <a class="HasReachedLimitOfFeature btn-naranja">@T("myproducts.featureByPlan").Text</a>
+                                }
+                                else
+                                {
+                                    //Este botón sale cuando una tienda puede destacar un producto
+                                    @Html.ActionLink(T("myproducts.featureByPlan").Text, "SelectFeaturedAttributesByPlan", "Catalog", new { id = product.Id }, new { @class = "btn-naranja" })
+                                }
+                            }
+                            else if (!product.HasPlanSelected)
+                            {
+                                //Este boton sale cuando una tienda no tiene plan seleccionado. Es decir al darle "destacar" el sitio lo lleva a comprar un plan
+                                @Html.ActionLink(T("myproducts.featureByProduct").Text, "SelectPlan", "Sales", new { id = product.Id }, new { @class = "btn-naranja" })
+                            }
+
+                            <a class="btn-naranja" href="@Url.Action("EditProduct", "ControlPanel", new { id = product.Id })">@T("myproducts.editProduct")</a>
+                            <a class="btnUnpublish btn-azul" data-id="@product.Id" title="@T("myproducts.disable.alt")" href="javascript:void(0)">@T("myproducts.disable")</a>
+                        </div>
+                    }
+                    else
+                    {
+                        if (product.Published)
+                        {
+                            <div class="conte_btn">
+                                <a class="btnPublishMyProducts btn-naranja" data-id="@product.Id" title="@T("myproducts.enable.alt")" href="javascript:void(0)">@T("myproducts.enable")</a>
+                            </div>
                         }
                     }
-                </ul>
-            </div>
-            <div class="product-dtl-date">
-                <h3>@(product.Published ? T("myproducts.publised") : T("myproducts.nopublised"))</h3>
-                <p>@T("myproducts.AvailableStartDate"): @product.AvailableStartDate.ToShortDateString()</p>
-                <p>@T("myproducts.AvailableEndDate"): @product.AvailableEndDate.ToShortDateString()</p>
-
-                @if (product.Published)
-                { 
-                    <div class="conte_btn">
-                        @*<a class="btn-azul" href="javascript:;"><span class="icon-mail"></span>Editar</a>*@
-                        @*<a class="btn-naranja" href="@Url.Action("ProductDetails", "Product", new { seName = product.SeName })">@T("myproducts.viewOnline")</a>*@
-                        <a class="btnUnpublish btn-naranja" data-id="@product.Id" title="@T("myproducts.disable.alt")">@T("myproducts.disable")</a>
-                        <a class="btn-azul"  href="@Url.Action("EditProduct", "ControlPanel", new { id = product.Id })">@T("myproducts.editProduct")</a>
-                    </div>
-                }
-            </div>
-            <br />
-        </li>
+                </div>
+                <br />
+            </li>
         }
 
     </ul>
 
-    @Html.Partial("_NoRows", new NoRowsModel() { List = Model.Products, ResourceMessage = Model.ResorceMessageNoRows, ShowPublishProduct=true })
+    @Html.Partial("_NoRows", new NoRowsModel() { List = Model.Products, ResourceMessage = Model.ResorceMessageNoRows, ShowPublishProduct = true })
 
     <div class="pager">
         @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")

@@ -694,6 +694,31 @@ namespace Nop.Services.Orders
             return interval.TotalSeconds > _orderSettings.MinimumOrderPlacementInterval;
         }
 
+
+        /// <summary>
+        /// Valida si un usuario puede agregar items al carrito teniendo en cuenta:
+        /// Si el usuario no tiene ordenes pendientes de pago : True
+        /// Si el usuario ya tiene ordenes pendientes de pago y han sido agregados hace más de X minutos : True
+        /// Si el usuario ya tiene ordenes pendientes de pago y han sido agregados hace menos de X minutos: false 
+        /// </summary>
+        /// <returns></returns>
+        public bool CustomerCanAddPlanToCart(int customerId)
+        {
+            //Cuenta las ordenes que están pendientes de pago y que han sido creadas en los ultimos 20 minutos
+            int paymentPending= Convert.ToInt32(PaymentStatus.Pending);
+            int orderStatusPending = Convert.ToInt32(PaymentStatus.Pending);
+            DateTime limitDate = DateTime.UtcNow.AddMinutes(_orderSettings.MinutesBeforeCanAddPlanToCart * -1);
+            var orders = _orderRepository.Table
+                .Where(o => o.CustomerId == customerId
+                    //&& o.PaymentStatusId == paymentPending
+                    && o.OrderStatusId == orderStatusPending
+                    && o.CreatedOnUtc > limitDate)
+                .ToList();
+
+            //Solo cuando no tiene ordenes con las condiciones dadas puede agregar el plan
+            return orders.Count == 0;
+        }
+
        
         
         #endregion

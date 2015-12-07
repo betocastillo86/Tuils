@@ -42,6 +42,7 @@ namespace Nop.Data.Tests.Catalog
             return new Product
             {
                 Name = "Product name 1",
+                VendorId = 2,
                 CreatedOnUtc = new DateTime(2010, 01, 03),
                 UpdatedOnUtc = new DateTime(2010, 01, 04),
             };

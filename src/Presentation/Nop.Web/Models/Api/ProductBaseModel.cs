@@ -32,6 +32,8 @@ namespace Nop.Web.Models.Api
         [Required]
         public decimal Price { get; set; }
 
+        public string PriceFormatted { get; set; }
+
         public List<SpecialCategoryProduct> SpecialCategories { get; set; }
 
         public int? Color { get; set; }
@@ -65,5 +67,6 @@ namespace Nop.Web.Models.Api
 
         public string PhoneNumber { get; set; }
 
+        public string ImageUrl { get; set; }
     }
 }

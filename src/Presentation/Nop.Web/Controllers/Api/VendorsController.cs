@@ -113,14 +113,13 @@ namespace Nop.Web.Controllers.Api
         #region Files
 
         [AuthorizeApi]
-        [Route("api/vendors/{id}/{type}")]
+        [Route("api/vendors/{id}/{type:regex(backgroundPicture|picture)}", Order = 2)]
         [HttpPost]
         public async Task<IHttpActionResult> SaveBackground(int id, string type)
         {
             if (id > 0 &&
                 _workContext.CurrentVendor != null &&
                 _workContext.CurrentVendor.Id == id &&
-                (type.Equals("backgroundPicture") || type.Equals("picture")) &&
                 Request.Content.IsMimeMultipartContent())
             {
 

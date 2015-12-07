@@ -329,6 +329,17 @@ namespace Nop.Core.Domain.Orders
         /// </summary>
         public DateTime CreatedOnUtc { get; set; }
 
+
+        /// <summary>
+        /// Contiene la fecha de expiración de un plan si la orden contiene planes
+        /// </summary>
+        public DateTime? PlanStartOnUtc { get; set; }
+
+        /// <summary>
+        /// Contiene la fecha de expiración de un plan si la orden contiene planes
+        /// </summary>
+        public DateTime? PlanExpirationOnUtc { get; set; }
+
         #endregion
 
         #region Navigation properties

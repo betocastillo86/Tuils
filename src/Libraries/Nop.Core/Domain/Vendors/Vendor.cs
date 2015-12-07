@@ -98,6 +98,32 @@ namespace Nop.Core.Domain.Vendors
 
         public int? BackgroundPosition { get; set; }
 
+        /// <summary>
+        /// Contiene la orden que va relacionada al tipo de plan seleccionado por el usuario
+        /// </summary>
+        public int? CurrentOrderPlanId { get; set; }
+        
+        /// <summary>
+        /// Fecha en la que expira el plan
+        /// </summary>
+        public System.DateTime? PlanExpiredOnUtc { get; set; }
+
+
+        /// <summary>
+        /// True: Se envío mensaje advirtiendo de expriación del plan
+        /// </summary>
+        public bool ExpirationPlanMessageSent { get; set; }
+
+        /// <summary>
+        /// True: Se envío mensaje advirtiendo que su plan finalizó
+        /// </summary>
+        public bool PlanFinishedMessageSent { get; set; }
+
+        /// <summary>
+        /// True: Muestra la tienda en el home
+        /// </summary>
+        public bool ShowOnHomePage { get; set; }
+
 
         public VendorType VendorType
         {
@@ -108,6 +134,10 @@ namespace Nop.Core.Domain.Vendors
         public virtual Picture Picture { get; set; }
 
         public virtual Picture BackgroundPicture { get; set; }
+
+        public virtual Nop.Core.Domain.Orders.Order CurrentOrderPlan { get; set; } 
+
+        
 
         /// <summary>
         /// Numero de veces que ha sido calificado un producto vendido por el usuario

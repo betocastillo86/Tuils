@@ -106,5 +106,10 @@ namespace Nop.Core.Domain.Orders
         /// Gets or sets a value indicating whether a customer will see quantity of attribute values associated to products (when qty > 1)
         /// </summary>
         public bool RenderAssociatedAttributeValueQuantity { get; set; }
+
+
+        public bool AllowGuestsToAddCart { get; set; }
+
+
     }
 }

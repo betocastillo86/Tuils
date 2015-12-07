@@ -1,0 +1,253 @@
+﻿@model  PlansSettingsModel
+@{
+    //page title
+    ViewBag.Title = T("Admin.Configuration.Settings.Catalog").Text;
+}
+@using (Html.BeginForm())
+{
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-configuration.png")" alt="" />
+            @T("Admin.Configuration.Settings.Plans")
+        </div>
+        <div class="options">
+            <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />
+        </div>
+    </div>
+    
+    @Html.Action("StoreScopeConfiguration", "Setting")
+    @Html.ValidationSummary(false)
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.CategoryProductPlansId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.CategoryProductPlansId, Model.AvailableCategories)
+                @Html.ValidationMessageFor(m => m.CategoryProductPlansId)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.CategoryStorePlansId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.CategoryStorePlansId, Model.AvailableCategories)
+                @Html.ValidationMessageFor(m => m.CategoryStorePlansId)
+            </td>
+        </tr>
+
+        @if (Model.AvailableProductsPlans.Count > 0)
+        {
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(m => m.PlanProductsFree):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(m => m.PlanProductsFree, Model.AvailableProductsPlans)
+                    @Html.ValidationMessageFor(m => m.PlanProductsFree)
+                </td>
+            </tr>
+        }
+        
+        @if (Model.AvailableStoresPlans.Count > 0)
+        {
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(m => m.PlanStoresFree):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(m => m.PlanStoresFree, Model.AvailableStoresPlans)
+                    @Html.ValidationMessageFor(m => m.PlanStoresFree)
+                </td>
+            </tr>
+        }
+        
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.SpecificationAttributeIdPictures):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.SpecificationAttributeIdPictures, Model.AvailableSpecificationAttributes)
+                @Html.ValidationMessageFor(m => m.SpecificationAttributeIdPictures)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.SpecificationAttributeIdDisplayOrder):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.SpecificationAttributeIdDisplayOrder, Model.AvailableSpecificationAttributes)
+                @Html.ValidationMessageFor(m => m.SpecificationAttributeIdDisplayOrder)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.SpecificationAttributeIdSliders):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.SpecificationAttributeIdSliders, Model.AvailableSpecificationAttributes)
+                @Html.ValidationMessageFor(m => m.SpecificationAttributeIdSliders)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.SpecificationAttributeIdHomePage):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.SpecificationAttributeIdHomePage, Model.AvailableSpecificationAttributes)
+                @Html.ValidationMessageFor(m => m.SpecificationAttributeIdHomePage)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.SpecificationAttributeIdSocialNetworks):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.SpecificationAttributeIdSocialNetworks, Model.AvailableSpecificationAttributes)
+                @Html.ValidationMessageFor(m => m.SpecificationAttributeIdSocialNetworks)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.SpecificationAttributePlanDays):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.SpecificationAttributePlanDays, Model.AvailableSpecificationAttributes)
+                @Html.ValidationMessageFor(m => m.SpecificationAttributePlanDays)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.SpecificationAttributeIdOwnStore):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.SpecificationAttributeIdOwnStore, Model.AvailableSpecificationAttributes)
+                @Html.ValidationMessageFor(m => m.SpecificationAttributeIdOwnStore)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.SpecificationAttributeIdFeaturedManufacturers):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.SpecificationAttributeIdFeaturedManufacturers, Model.AvailableSpecificationAttributes)
+                @Html.ValidationMessageFor(m => m.SpecificationAttributeIdFeaturedManufacturers)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.SpecificationAttributeIdProductsFeaturedOnSliders):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.SpecificationAttributeIdProductsFeaturedOnSliders, Model.AvailableSpecificationAttributes)
+                @Html.ValidationMessageFor(m => m.SpecificationAttributeIdProductsFeaturedOnSliders)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.SpecificationAttributeIdProductsOnHomePage):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.SpecificationAttributeIdProductsOnHomePage, Model.AvailableSpecificationAttributes)
+                @Html.ValidationMessageFor(m => m.SpecificationAttributeIdProductsOnHomePage)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.SpecificationAttributeIdProductsOnSocialNetworks):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.SpecificationAttributeIdProductsOnSocialNetworks, Model.AvailableSpecificationAttributes)
+                @Html.ValidationMessageFor(m => m.SpecificationAttributeIdProductsOnSocialNetworks)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.SpecificationAttributeIdHelpWithStore):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.SpecificationAttributeIdHelpWithStore, Model.AvailableSpecificationAttributes)
+                @Html.ValidationMessageFor(m => m.SpecificationAttributeIdHelpWithStore)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.SpecificationAttributeIdLimitProducts):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.SpecificationAttributeIdLimitProducts, Model.AvailableSpecificationAttributes)
+                @Html.ValidationMessageFor(m => m.SpecificationAttributeIdLimitProducts)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.SpecificationAttributeIdMostExpensivePlan):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.SpecificationAttributeIdMostExpensivePlan, Model.AvailableSpecificationAttributes)
+                @Html.ValidationMessageFor(m => m.SpecificationAttributeIdMostExpensivePlan)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.RunLikeTest):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.RunLikeTest)
+            </td>
+        </tr>
+    </table>
+    
+    if (Model.SpecificationAttributeIdSliders > 0)
+    {
+        <hr />
+        <table>
+            <tr>
+                <td colspan="2">TIPOS DE BANDAS ROTATIVAS</td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(m => m.OptionAttributeFeaturedCategories):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(m => m.OptionAttributeFeaturedCategories, Model.AvailableSpecificationAttributeOptionsSliders)
+                    @Html.ValidationMessageFor(m => m.OptionAttributeFeaturedCategories)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(m => m.OptionAttributeFeaturedManufacturers):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(m => m.OptionAttributeFeaturedManufacturers, Model.AvailableSpecificationAttributeOptionsSliders)
+                    @Html.ValidationMessageFor(m => m.OptionAttributeFeaturedManufacturers)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(m => m.OptionAttributeFeaturedRelated):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(m => m.OptionAttributeFeaturedRelated, Model.AvailableSpecificationAttributeOptionsSliders)
+                    @Html.ValidationMessageFor(m => m.OptionAttributeFeaturedRelated)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(m => m.OptionAttributeFeaturedLeft):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(m => m.OptionAttributeFeaturedLeft, Model.AvailableSpecificationAttributeOptionsSliders)
+                    @Html.ValidationMessageFor(m => m.OptionAttributeFeaturedLeft)
+                </td>
+            </tr>
+        </table>
+    }
+
+
+}

@@ -63,6 +63,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<Address, AddressModel>()
                 .ForMember(dest => dest.AddressHtml, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomAddressAttributes, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.FormattedCustomAddressAttributes, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableCountries, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableStates, mo => mo.Ignore())
@@ -95,23 +96,29 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.CreatedOnUtc, mo => mo.Ignore())
                 .ForMember(dest => dest.Country, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomAttributes, mo => mo.Ignore())
+                .ForMember(dest => dest.Vendor, mo => mo.Ignore())
+                .ForMember(dest => dest.AddressPictures, mo => mo.Ignore())
                 .ForMember(dest => dest.StateProvince, mo => mo.Ignore());
 
             //countries
             Mapper.CreateMap<CountryModel, Country>()
                 .ForMember(dest => dest.StateProvinces, mo => mo.Ignore())
+
                 .ForMember(dest => dest.RestrictedShippingMethods, mo => mo.Ignore());
             Mapper.CreateMap<Country, CountryModel>()
                 .ForMember(dest => dest.NumberOfStates, mo => mo.MapFrom(src => src.StateProvinces != null ? src.StateProvinces.Count : 0))
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableStores, mo => mo.Ignore())
                 .ForMember(dest => dest.SelectedStoreIds, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             //state/provinces
             Mapper.CreateMap<StateProvince, StateProvinceModel>()
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<StateProvinceModel, StateProvince>()
+                .ForMember(dest => dest.Products, mo => mo.Ignore())
                 .ForMember(dest => dest.Country, mo => mo.Ignore());
 
             //language
@@ -120,6 +127,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.AvailableCurrencies, mo => mo.Ignore())
                 .ForMember(dest => dest.SelectedStoreIds, mo => mo.Ignore())
                 .ForMember(dest => dest.FlagFileNames, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<LanguageModel, Language>()
                 .ForMember(dest => dest.LocaleStringResources, mo => mo.Ignore());
@@ -128,6 +136,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.Password, mo => mo.Ignore()) 
                 .ForMember(dest => dest.IsDefaultEmailAccount, mo => mo.Ignore()) 
                 .ForMember(dest => dest.SendTestEmailTo, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<EmailAccountModel, EmailAccount>()
                 .ForMember(dest => dest.Password, mo => mo.Ignore());
@@ -136,6 +145,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.AllowedTokens, mo => mo.Ignore())
                 .ForMember(dest => dest.HasAttachedDownload, mo => mo.Ignore())
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableEmailAccounts, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableStores, mo => mo.Ignore())
                 .ForMember(dest => dest.ListOfStores, mo => mo.Ignore())
@@ -146,6 +156,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<QueuedEmail, QueuedEmailModel>()
                 .ForMember(dest => dest.EmailAccountName, mo => mo.MapFrom(src => src.EmailAccount != null ? src.EmailAccount.FriendlyName : string.Empty))
                 .ForMember(dest => dest.CreatedOn, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.SentOn, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<QueuedEmailModel, QueuedEmail>()
@@ -162,6 +173,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.AllowedTokens, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableStores, mo => mo.Ignore())
                 .ForMember(dest => dest.TestEmail, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<CampaignModel, Campaign>()
                 .ForMember(dest => dest.CreatedOnUtc, mo => mo.Ignore());
@@ -170,6 +182,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.Url, mo => mo.Ignore())
                 .ForMember(dest => dest.SeName, mo => mo.MapFrom(src => src.GetSeName(0, true, false)))
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableStores, mo => mo.Ignore())
                 .ForMember(dest => dest.SelectedStoreIds, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
@@ -180,7 +193,10 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.AvailableCategoryTemplates, mo => mo.Ignore())
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
                 .ForMember(dest => dest.Breadcrumb, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableCategories, mo => mo.Ignore())
+                .ForMember(dest => dest.ShowSpecificationAttribute, mo => mo.Ignore())
+                .ForMember(dest => dest.SpecificationAttributeOptions, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableDiscounts, mo => mo.Ignore())
                 .ForMember(dest => dest.SelectedDiscountIds, mo => mo.Ignore())
                 .ForMember(dest => dest.SeName, mo => mo.MapFrom(src => src.GetSeName(0, true, false)))
@@ -193,12 +209,19 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.HasDiscountsApplied, mo => mo.Ignore())
                 .ForMember(dest => dest.CreatedOnUtc, mo => mo.Ignore())
                 .ForMember(dest => dest.UpdatedOnUtc, mo => mo.Ignore())
+                .ForMember(dest => dest.ChildrenCategoriesStr, mo => mo.Ignore())
+                .ForMember(dest => dest.SpecificationAttributeOption, mo => mo.Ignore())
+                .ForMember(dest => dest.SubCategories, mo => mo.Ignore())
+                .ForMember(dest => dest.Manufacturers, mo => mo.Ignore())
+                .ForMember(dest => dest.SpecialCategoriesByProduct, mo => mo.Ignore())
+                .ForMember(dest => dest.SpecialCategoriesByVendor, mo => mo.Ignore())
                 .ForMember(dest => dest.Deleted, mo => mo.Ignore())
                 .ForMember(dest => dest.AppliedDiscounts, mo => mo.Ignore());
             //manufacturer
             Mapper.CreateMap<Manufacturer, ManufacturerModel>()
                 .ForMember(dest => dest.AvailableManufacturerTemplates, mo => mo.Ignore())
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.SeName, mo => mo.MapFrom(src => src.GetSeName(0, true, false)))
                 .ForMember(dest => dest.AvailableCustomerRoles, mo => mo.Ignore())
                 .ForMember(dest => dest.SelectedCustomerRoleIds, mo => mo.Ignore())
@@ -209,6 +232,7 @@ namespace Nop.Admin.Infrastructure
 
             Mapper.CreateMap<ManufacturerModel, Manufacturer>()
                 .ForMember(dest => dest.CreatedOnUtc, mo => mo.Ignore())
+                .ForMember(dest => dest.Categories, mo => mo.Ignore())
                 .ForMember(dest => dest.UpdatedOnUtc, mo => mo.Ignore())
                 .ForMember(dest => dest.Deleted, mo => mo.Ignore());
 
@@ -216,9 +240,18 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<Vendor, VendorModel>()
                 .ForMember(dest => dest.AssociatedCustomerEmails, mo => mo.Ignore())
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
+
+
+
+
                 .ForMember(dest => dest.SeName, mo => mo.MapFrom(src => src.GetSeName(0, true, false)))
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<VendorModel, Vendor>()
+                .ForMember(dest => dest.Picture, mo => mo.Ignore())
+                .ForMember(dest => dest.BackgroundPicture, mo => mo.Ignore())
+                .ForMember(dest => dest.Addresses, mo => mo.Ignore())
+                .ForMember(dest => dest.SpecialCategories, mo => mo.Ignore())
                 .ForMember(dest => dest.Deleted, mo => mo.Ignore());
 
             //products
@@ -227,12 +260,14 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.AssociatedToProductId, mo => mo.Ignore())
                 .ForMember(dest => dest.AssociatedToProductName, mo => mo.Ignore())
                 .ForMember(dest => dest.CreatedOn, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.UpdatedOn, mo => mo.Ignore())
                 .ForMember(dest => dest.ProductTags, mo => mo.Ignore())
                 .ForMember(dest => dest.PictureThumbnailUrl, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableVendors, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableProductTemplates, mo => mo.Ignore())
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
+                
                 .ForMember(dest => dest.AvailableCategories, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableManufacturers, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableProductAttributes, mo => mo.Ignore())
@@ -252,6 +287,8 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.BaseDimensionIn, mo => mo.Ignore())
                 .ForMember(dest => dest.BaseWeightIn, mo => mo.Ignore())
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
+                .ForMember(dest => dest.PreviousPublisedProduct, mo => mo.Ignore())
+                .ForMember(dest => dest.HasReachedLimitOfProducts, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableDiscounts, mo => mo.Ignore())
                 .ForMember(dest => dest.SelectedDiscountIds, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableDeliveryDates, mo => mo.Ignore())
@@ -264,10 +301,30 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.ParentGroupedProductId, mo => mo.Ignore())
                 .ForMember(dest => dest.ProductType, mo => mo.Ignore())
                 .ForMember(dest => dest.Deleted, mo => mo.Ignore())
+                .ForMember(dest => dest.Hidden, mo => mo.Ignore())
+                .ForMember(dest => dest.Vendor, mo => mo.Ignore())
                 .ForMember(dest => dest.ApprovedRatingSum, mo => mo.Ignore())
                 .ForMember(dest => dest.NotApprovedRatingSum, mo => mo.Ignore())
                 .ForMember(dest => dest.ApprovedTotalReviews, mo => mo.Ignore())
                 .ForMember(dest => dest.NotApprovedTotalReviews, mo => mo.Ignore())
+                .ForMember(dest => dest.Year, mo => mo.Ignore())
+                .ForMember(dest => dest.OrderPlanId, mo => mo.Ignore())
+                .ForMember(dest => dest.IsNew, mo => mo.Ignore())
+                .ForMember(dest => dest.StateProvinceId, mo => mo.Ignore())
+                .ForMember(dest => dest.ExpirationMessageSent, mo => mo.Ignore())
+                .ForMember(dest => dest.PublishingFinishedMessageSent, mo => mo.Ignore())
+                .ForMember(dest => dest.NumClicksForMoreInfo, mo => mo.Ignore())
+                .ForMember(dest => dest.SpecialCategories, mo => mo.Ignore())
+                .ForMember(dest => dest.TempFiles, mo => mo.Ignore())
+                .ForMember(dest => dest.StateProvince, mo => mo.Ignore())
+                .ForMember(dest => dest.OrderPlan, mo => mo.Ignore())
+                .ForMember(dest => dest.DetailShipping, mo => mo.Ignore())
+                .ForMember(dest => dest.IncludeSupplies, mo => mo.Ignore())
+                .ForMember(dest => dest.SuppliesValue, mo => mo.Ignore())
+                .ForMember(dest => dest.Visits, mo => mo.Ignore())
+                .ForMember(dest => dest.TotalSales, mo => mo.Ignore())
+                .ForMember(dest => dest.UnansweredQuestions, mo => mo.Ignore())
+                .ForMember(dest => dest.FeaturedBySpecialCategory, mo => mo.Ignore())
                 .ForMember(dest => dest.ProductCategories, mo => mo.Ignore())
                 .ForMember(dest => dest.ProductManufacturers, mo => mo.Ignore())
                 .ForMember(dest => dest.ProductPictures, mo => mo.Ignore())
@@ -291,6 +348,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<Log, LogModel>()
                 .ForMember(dest => dest.CustomerEmail, mo => mo.Ignore())
                 .ForMember(dest => dest.CreatedOn, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<LogModel, Log>()
                 .ForMember(dest => dest.CreatedOnUtc, mo => mo.Ignore())
@@ -300,10 +358,12 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<ActivityLogTypeModel, ActivityLogType>()
                 .ForMember(dest => dest.SystemKeyword, mo => mo.Ignore());
             Mapper.CreateMap<ActivityLogType, ActivityLogTypeModel>()
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<ActivityLog, ActivityLogModel>()
                 .ForMember(dest => dest.ActivityLogTypeName, mo => mo.MapFrom(src => src.ActivityLogType.Name))
                 .ForMember(dest => dest.CustomerEmail, mo => mo.MapFrom(src => src.Customer.Email))
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CreatedOn, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             //currencies
@@ -312,6 +372,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.IsPrimaryExchangeRateCurrency, mo => mo.Ignore())
                 .ForMember(dest => dest.IsPrimaryStoreCurrency, mo => mo.Ignore())
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableStores, mo => mo.Ignore())
                 .ForMember(dest => dest.SelectedStoreIds, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
@@ -321,11 +382,13 @@ namespace Nop.Admin.Infrastructure
             //measure weights
             Mapper.CreateMap<MeasureWeight, MeasureWeightModel>()
                 .ForMember(dest => dest.IsPrimaryWeight, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<MeasureWeightModel, MeasureWeight>();
             //measure dimensions
             Mapper.CreateMap<MeasureDimension, MeasureDimensionModel>()
                 .ForMember(dest => dest.IsPrimaryDimension, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<MeasureDimensionModel, MeasureDimension>();
             //tax providers
@@ -333,22 +396,26 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.FriendlyName, mo => mo.MapFrom(src => src.PluginDescriptor.FriendlyName))
                 .ForMember(dest => dest.SystemName, mo => mo.MapFrom(src => src.PluginDescriptor.SystemName))
                 .ForMember(dest => dest.IsPrimaryTaxProvider, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.ConfigurationActionName, mo => mo.Ignore())
                 .ForMember(dest => dest.ConfigurationControllerName, mo => mo.Ignore())
                 .ForMember(dest => dest.ConfigurationRouteValues, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             //tax categories
             Mapper.CreateMap<TaxCategory, TaxCategoryModel>()
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<TaxCategoryModel, TaxCategory>();
             //shipping methods
             Mapper.CreateMap<ShippingMethod, ShippingMethodModel>()
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<ShippingMethodModel, ShippingMethod>()
                 .ForMember(dest => dest.RestrictedCountries, mo => mo.Ignore());
             //delivery dates
             Mapper.CreateMap<DeliveryDate, DeliveryDateModel>()
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<DeliveryDateModel, DeliveryDate>();
@@ -356,6 +423,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<IShippingRateComputationMethod, ShippingRateComputationMethodModel>()
                 .ForMember(dest => dest.FriendlyName, mo => mo.MapFrom(src => src.PluginDescriptor.FriendlyName))
                 .ForMember(dest => dest.SystemName, mo => mo.MapFrom(src => src.PluginDescriptor.SystemName))
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.DisplayOrder, mo => mo.MapFrom(src => src.PluginDescriptor.DisplayOrder))
                 .ForMember(dest => dest.IsActive, mo => mo.Ignore())
                 .ForMember(dest => dest.LogoUrl, mo => mo.Ignore())
@@ -367,6 +435,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<IPaymentMethod, PaymentMethodModel>()
                 .ForMember(dest => dest.FriendlyName, mo => mo.MapFrom(src => src.PluginDescriptor.FriendlyName))
                 .ForMember(dest => dest.SystemName, mo => mo.MapFrom(src => src.PluginDescriptor.SystemName))
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.DisplayOrder, mo => mo.MapFrom(src => src.PluginDescriptor.DisplayOrder))
                 .ForMember(dest => dest.RecurringPaymentType, mo => mo.MapFrom(src => src.RecurringPaymentType.ToString()))
                 .ForMember(dest => dest.IsActive, mo => mo.Ignore())
@@ -380,6 +449,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.FriendlyName, mo => mo.MapFrom(src => src.PluginDescriptor.FriendlyName))
                 .ForMember(dest => dest.SystemName, mo => mo.MapFrom(src => src.PluginDescriptor.SystemName))
                 .ForMember(dest => dest.DisplayOrder, mo => mo.MapFrom(src => src.PluginDescriptor.DisplayOrder))
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.IsActive, mo => mo.Ignore())
                 .ForMember(dest => dest.ConfigurationActionName, mo => mo.Ignore())
                 .ForMember(dest => dest.ConfigurationControllerName, mo => mo.Ignore())
@@ -389,6 +459,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<IWidgetPlugin, WidgetModel>()
                 .ForMember(dest => dest.FriendlyName, mo => mo.MapFrom(src => src.PluginDescriptor.FriendlyName))
                 .ForMember(dest => dest.SystemName, mo => mo.MapFrom(src => src.PluginDescriptor.SystemName))
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.DisplayOrder, mo => mo.MapFrom(src => src.PluginDescriptor.DisplayOrder))
                 .ForMember(dest => dest.IsActive, mo => mo.Ignore())
                 .ForMember(dest => dest.ConfigurationActionName, mo => mo.Ignore())
@@ -399,6 +470,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<PluginDescriptor, PluginModel>()
                 .ForMember(dest => dest.ConfigurationUrl, mo => mo.Ignore())
                 .ForMember(dest => dest.CanChangeEnabled, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.IsEnabled, mo => mo.Ignore())
                 .ForMember(dest => dest.LogoUrl, mo => mo.Ignore())
                 .ForMember(dest => dest.LimitedToStores, mo => mo.Ignore())
@@ -409,15 +481,19 @@ namespace Nop.Admin.Infrastructure
             //newsLetter subscriptions
             Mapper.CreateMap<NewsLetterSubscription, NewsLetterSubscriptionModel>()
                 .ForMember(dest => dest.StoreName, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CreatedOn, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<NewsLetterSubscriptionModel, NewsLetterSubscription>()
                 .ForMember(dest => dest.StoreId, mo => mo.Ignore())
                 .ForMember(dest => dest.CreatedOnUtc, mo => mo.Ignore())
+                .ForMember(dest => dest.SuscriptionTypeId, mo => mo.Ignore())
+                .ForMember(dest => dest.AdditionalInfo, mo => mo.Ignore())
                 .ForMember(dest => dest.NewsLetterSubscriptionGuid, mo => mo.Ignore());
             //forums
             Mapper.CreateMap<ForumGroup, ForumGroupModel>()
                 .ForMember(dest => dest.CreatedOn, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<ForumGroupModel, ForumGroup>()
                 .ForMember(dest => dest.CreatedOnUtc, mo => mo.Ignore())
@@ -425,6 +501,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.Forums, mo => mo.Ignore());
             Mapper.CreateMap<Forum, ForumModel>()
                 .ForMember(dest => dest.CreatedOn, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.ForumGroups, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<ForumModel, Forum>()
@@ -441,6 +518,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<BlogPost, BlogPostModel>()
                 .ForMember(dest => dest.SeName, mo => mo.MapFrom(src => src.GetSeName(src.LanguageId, true, false)))
                 .ForMember(dest => dest.Comments, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.StartDate, mo => mo.Ignore())
                 .ForMember(dest => dest.EndDate, mo => mo.Ignore())
                 .ForMember(dest => dest.CreatedOn, mo => mo.Ignore())
@@ -458,6 +536,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<NewsItem, NewsItemModel>()
                 .ForMember(dest => dest.SeName, mo => mo.MapFrom(src => src.GetSeName(src.LanguageId, true, false)))
                 .ForMember(dest => dest.Comments, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.StartDate, mo => mo.Ignore())
                 .ForMember(dest => dest.EndDate, mo => mo.Ignore())
                 .ForMember(dest => dest.CreatedOn, mo => mo.Ignore())
@@ -471,9 +550,10 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.StartDateUtc, mo => mo.Ignore())
                 .ForMember(dest => dest.EndDateUtc, mo => mo.Ignore())
                 .ForMember(dest => dest.CreatedOnUtc, mo => mo.Ignore());
-            //news
+            //polls
             Mapper.CreateMap<Poll, PollModel>()
                 .ForMember(dest => dest.StartDate, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.EndDate, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<PollModel, Poll>()
@@ -484,6 +564,7 @@ namespace Nop.Admin.Infrastructure
             //customer roles
             Mapper.CreateMap<CustomerRole, CustomerRoleModel>()
                 .ForMember(dest => dest.PurchasedWithProductName, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<CustomerRoleModel, CustomerRole>()
                 .ForMember(dest => dest.PermissionRecords, mo => mo.Ignore());
@@ -491,17 +572,20 @@ namespace Nop.Admin.Infrastructure
             //product attributes
             Mapper.CreateMap<ProductAttribute, ProductAttributeModel>()
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<ProductAttributeModel, ProductAttribute>();
             //specification attributes
             Mapper.CreateMap<SpecificationAttribute, SpecificationAttributeModel>()
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<SpecificationAttributeModel, SpecificationAttribute>()
                 .ForMember(dest => dest.SpecificationAttributeOptions, mo => mo.Ignore());
             Mapper.CreateMap<SpecificationAttributeOption, SpecificationAttributeOptionModel>()
                 .ForMember(dest => dest.NumberOfAssociatedProducts, mo => mo.Ignore())
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<SpecificationAttributeOptionModel, SpecificationAttributeOption>()
                 .ForMember(dest => dest.SpecificationAttribute, mo => mo.Ignore())
@@ -510,6 +594,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<CheckoutAttribute, CheckoutAttributeModel>()
                 .ForMember(dest => dest.AvailableTaxCategories, mo => mo.Ignore())
                 .ForMember(dest => dest.AttributeControlTypeName, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableStores, mo => mo.Ignore())
                 .ForMember(dest => dest.SelectedStoreIds, mo => mo.Ignore())
@@ -520,6 +605,7 @@ namespace Nop.Admin.Infrastructure
             //customer attributes
             Mapper.CreateMap<CustomerAttribute, CustomerAttributeModel>()
                 .ForMember(dest => dest.AttributeControlTypeName, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<CustomerAttributeModel, CustomerAttribute>()
@@ -528,6 +614,7 @@ namespace Nop.Admin.Infrastructure
             //address attributes
             Mapper.CreateMap<AddressAttribute, AddressAttributeModel>()
                 .ForMember(dest => dest.AttributeControlTypeName, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<AddressAttributeModel, AddressAttribute>()
@@ -537,6 +624,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<Discount, DiscountModel>()
                 .ForMember(dest => dest.PrimaryStoreCurrencyCode, mo => mo.Ignore())
                 .ForMember(dest => dest.AddDiscountRequirement, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.AvailableDiscountRequirementRules, mo => mo.Ignore())
                 .ForMember(dest => dest.DiscountRequirementMetaInfos, mo => mo.Ignore())
                 .ForMember(dest => dest.AppliedToCategoryModels, mo => mo.Ignore())
@@ -552,6 +640,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<GiftCard, GiftCardModel>()
                 .ForMember(dest => dest.PurchasedWithOrderId, mo => mo.Ignore())
                 .ForMember(dest => dest.AmountStr, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.RemainingAmountStr, mo => mo.Ignore())
                 .ForMember(dest => dest.CreatedOn, mo => mo.Ignore())
                 .ForMember(dest => dest.PrimaryStoreCurrencyCode, mo => mo.Ignore())
@@ -566,6 +655,7 @@ namespace Nop.Admin.Infrastructure
             //stores
             Mapper.CreateMap<Store, StoreModel>()
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<StoreModel, Store>();
 
@@ -574,6 +664,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.DefaultTaxAddress, mo => mo.Ignore())
                 .ForMember(dest => dest.TaxDisplayTypeValues, mo => mo.Ignore())
                 .ForMember(dest => dest.TaxBasedOnValues, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.PaymentMethodAdditionalFeeTaxCategories, mo => mo.Ignore())
                 .ForMember(dest => dest.ShippingTaxCategories, mo => mo.Ignore())
                 .ForMember(dest => dest.EuVatShopCountries, mo => mo.Ignore())
@@ -606,6 +697,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<NewsSettings, NewsSettingsModel>()
                 .ForMember(dest => dest.ActiveStoreScopeConfiguration, mo => mo.Ignore())
                 .ForMember(dest => dest.Enabled_OverrideForStore, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.AllowNotRegisteredUsersToLeaveComments_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.NotifyAboutNewNewsComments_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.ShowNewsOnMainPage_OverrideForStore, mo => mo.Ignore())
@@ -617,6 +709,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<ForumSettings, ForumSettingsModel>()
                 .ForMember(dest => dest.ForumEditorValues, mo => mo.Ignore())
                 .ForMember(dest => dest.ActiveStoreScopeConfiguration, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.ForumsEnabled_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.RelativeDateTimeFormattingEnabled_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.ShowCustomersPostCount_OverrideForStore, mo => mo.Ignore())
@@ -655,6 +748,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.ActiveStoreScopeConfiguration, mo => mo.Ignore())
                 .ForMember(dest => dest.Enabled_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.PostsPageSize_OverrideForStore, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.AllowNotRegisteredUsersToLeaveComments_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.NotifyAboutNewBlogComments_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.NumberOfTags_OverrideForStore, mo => mo.Ignore())
@@ -663,10 +757,23 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<BlogSettingsModel, BlogSettings>();
             Mapper.CreateMap<VendorSettings, VendorSettingsModel>()
                 .ForMember(dest => dest.ActiveStoreScopeConfiguration, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.VendorsBlockItemsToDisplay_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.ShowVendorOnProductDetailsPage_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<VendorSettingsModel, VendorSettings>()
+                .ForMember(dest => dest.DefaultPageSize, mo => mo.Ignore())
+                .ForMember(dest => dest.DefaultReviewsPageSize, mo => mo.Ignore())
+                .ForMember(dest => dest.MinWidthCover, mo => mo.Ignore())
+                .ForMember(dest => dest.MinHeightCover, mo => mo.Ignore())
+                .ForMember(dest => dest.DefaultPicture1, mo => mo.Ignore())
+                .ForMember(dest => dest.DefaultPicture2, mo => mo.Ignore())
+                .ForMember(dest => dest.DefaultPicture3, mo => mo.Ignore())
+                .ForMember(dest => dest.DefaultPicture4, mo => mo.Ignore())
+                .ForMember(dest => dest.DefaultPicture5, mo => mo.Ignore())
+                .ForMember(dest => dest.DefaultPicture6, mo => mo.Ignore())
+                .ForMember(dest => dest.DefaultPicture7, mo => mo.Ignore())
+                .ForMember(dest => dest.DefaultPicture8, mo => mo.Ignore())
                 .ForMember(dest => dest.DefaultVendorPageSizeOptions, mo => mo.Ignore());
             Mapper.CreateMap<ShippingSettings, ShippingSettingsModel>()
                 .ForMember(dest => dest.ShippingOriginAddress, mo => mo.Ignore())
@@ -677,6 +784,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.FreeShippingOverXEnabled_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.FreeShippingOverXValue_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.FreeShippingOverXIncludingTax_OverrideForStore, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.EstimateShippingEnabled_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.DisplayShipmentEventsToCustomers_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.DisplayShipmentEventsToStoreOwner_OverrideForStore, mo => mo.Ignore())
@@ -684,12 +792,14 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.ShippingOriginAddress_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<ShippingSettingsModel, ShippingSettings>()
+
                 .ForMember(dest => dest.ActiveShippingRateComputationMethodSystemNames, mo => mo.Ignore())
                 .ForMember(dest => dest.ReturnValidOptionsIfThereAreAny, mo => mo.Ignore())
                 .ForMember(dest => dest.UseCubeRootMethod, mo => mo.Ignore());
             Mapper.CreateMap<CatalogSettings, CatalogSettingsModel>()
                 .ForMember(dest => dest.ActiveStoreScopeConfiguration, mo => mo.Ignore())
                 .ForMember(dest => dest.ShowProductSku_OverrideForStore, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.ShowManufacturerPartNumber_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.ShowGtin_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.ShowFreeShippingNotification_OverrideForStore, mo => mo.Ignore())
@@ -739,6 +849,10 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.DisplayTaxShippingInfoFooter_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.DisplayTaxShippingInfoProductDetailsPage_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.DisplayTaxShippingInfoProductBoxes_OverrideForStore, mo => mo.Ignore())
+                .ForMember(dest => dest.NumberOfVendorsOnHome_OverrideForStore, mo => mo.Ignore())
+                .ForMember(dest => dest.DefaultServicePicture_OverrideForStore, mo => mo.Ignore())
+                //.ForMember(dest => dest.ExpirationBikeReferencesKey, mo => mo.Ignore())
+                .ForMember(dest => dest.ExpirationBikeReferencesKey_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.DisplayTaxShippingInfoWishlist_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.DisplayTaxShippingInfoOrderDetailsPage_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
@@ -746,6 +860,24 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.DefaultViewMode, mo => mo.Ignore())
                 .ForMember(dest => dest.DefaultProductRatingValue, mo => mo.Ignore())
                 .ForMember(dest => dest.ProductSearchTermMinimumLength, mo => mo.Ignore())
+
+                .ForMember(dest => dest.ProductSearchAutoCompleteWithSearchTerms, mo => mo.Ignore())
+                .ForMember(dest => dest.ShowMyBikeProductsOnHomepage, mo => mo.Ignore())
+                .ForMember(dest => dest.NumberOfProductsMyBikeOnHomepage, mo => mo.Ignore())
+                .ForMember(dest => dest.NumberOfProductsVendorProductsProductPage, mo => mo.Ignore())
+                .ForMember(dest => dest.ShowManufacturersHomePage, mo => mo.Ignore())
+                .ForMember(dest => dest.NumberManufacturersOnHome, mo => mo.Ignore())
+                .ForMember(dest => dest.ShowSimilarSearches, mo => mo.Ignore())
+                .ForMember(dest => dest.NumSuggestionSimilarSearches, mo => mo.Ignore())
+                .ForMember(dest => dest.NumSuggestionSimilarSearchesHome, mo => mo.Ignore())
+                .ForMember(dest => dest.LimitOfSpecialCategories, mo => mo.Ignore())
+                .ForMember(dest => dest.DefaultSpecificationAttributeTopMenu, mo => mo.Ignore())
+                .ForMember(dest => dest.CategoryOrganizationHomeMenu, mo => mo.Ignore())
+                .ForMember(dest => dest.MaxColumnsCategoriesHome, mo => mo.Ignore())
+                .ForMember(dest => dest.NumberOfFeaturedProductsOnHomepage, mo => mo.Ignore())
+                .ForMember(dest => dest.LimitNumPictures, mo => mo.Ignore())
+
+
                 .ForMember(dest => dest.IncludeFeaturedProductsInNormalLists, mo => mo.Ignore())
                 .ForMember(dest => dest.DefaultCategoryPageSizeOptions, mo => mo.Ignore())
                 .ForMember(dest => dest.DefaultManufacturerPageSizeOptions, mo => mo.Ignore())
@@ -756,6 +888,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<RewardPointsSettings, RewardPointsSettingsModel>()
                 .ForMember(dest => dest.PrimaryStoreCurrencyCode, mo => mo.Ignore())
                 .ForMember(dest => dest.ActiveStoreScopeConfiguration, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.Enabled_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.ExchangeRate_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.MinimumRewardPointsToUse_OverrideForStore, mo => mo.Ignore())
@@ -773,12 +906,14 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.GiftCards_Deactivated_OrderStatuses, mo => mo.Ignore())
                 .ForMember(dest => dest.PrimaryStoreCurrencyCode, mo => mo.Ignore())
                 .ForMember(dest => dest.OrderIdent, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.ActiveStoreScopeConfiguration, mo => mo.Ignore())
                 .ForMember(dest => dest.IsReOrderAllowed_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.MinOrderSubtotalAmount_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.MinOrderTotalAmount_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.AnonymousCheckoutAllowed_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.TermsOfServiceOnShoppingCartPage_OverrideForStore, mo => mo.Ignore())
+                .ForMember(dest => dest.MinutesBeforeCanAddPlanToCart_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.TermsOfServiceOnOrderConfirmPage_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.OnePageCheckoutEnabled_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.OnePageCheckoutDisplayOrderTotalsOnPaymentInfoTab_OverrideForStore, mo => mo.Ignore())
@@ -797,6 +932,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<ShoppingCartSettings, ShoppingCartSettingsModel>()
                 .ForMember(dest => dest.ActiveStoreScopeConfiguration, mo => mo.Ignore())
                 .ForMember(dest => dest.DisplayCartAfterAddingProduct_OverrideForStore, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.DisplayWishlistAfterAddingProduct_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.MaximumShoppingCartItems_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.MaximumWishlistItems_OverrideForStore, mo => mo.Ignore())
@@ -822,6 +958,8 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.PicturesStoredIntoDatabase, mo => mo.Ignore())
                 .ForMember(dest => dest.ActiveStoreScopeConfiguration, mo => mo.Ignore())
                 .ForMember(dest => dest.AvatarPictureSize_OverrideForStore, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
+
                 .ForMember(dest => dest.ProductThumbPictureSize_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.ProductDetailsPictureSize_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.ProductThumbPictureSizeOnProductDetailsPage_OverrideForStore, mo => mo.Ignore())
@@ -836,9 +974,17 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<MediaSettingsModel, MediaSettings>()
                 .ForMember(dest => dest.DefaultPictureZoomEnabled, mo => mo.Ignore())
                 .ForMember(dest => dest.DefaultImageQuality, mo => mo.Ignore())
+                .ForMember(dest => dest.VendorMainThumbPictureSize, mo => mo.Ignore())
+
+                .ForMember(dest => dest.VendorBackgroundThumbPictureSize, mo => mo.Ignore())
+                .ForMember(dest => dest.OfficeThumbPictureSizeOnControlPanel, mo => mo.Ignore())
+                .ForMember(dest => dest.ProductImageMaxSizeResize, mo => mo.Ignore())
+                .ForMember(dest => dest.CoverImageMaxSizeResize, mo => mo.Ignore())
+                .ForMember(dest => dest.LogoImageMaxSizeResize, mo => mo.Ignore())
                 .ForMember(dest => dest.ProductThumbPerRowOnProductDetailsPage, mo => mo.Ignore())
                 .ForMember(dest => dest.AutoCompleteSearchThumbPictureSize, mo => mo.Ignore());
             Mapper.CreateMap<CustomerSettings, CustomerUserSettingsModel.CustomerSettingsModel>()
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<CustomerUserSettingsModel.CustomerSettingsModel, CustomerSettings>()
                 .ForMember(dest => dest.HashedPasswordFormat, mo => mo.Ignore())
@@ -848,20 +994,35 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.OnlineCustomerMinutes, mo => mo.Ignore())
                 .ForMember(dest => dest.SuffixDeletedCustomers, mo => mo.Ignore());
             Mapper.CreateMap<AddressSettings, CustomerUserSettingsModel.AddressSettingsModel>()
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<CustomerUserSettingsModel.AddressSettingsModel, AddressSettings>();
 
+            //Plan settings
+            Mapper.CreateMap<PlansSettingsModel, PlanSettings>();
+            Mapper.CreateMap<PlanSettings, PlansSettingsModel>()
+                .ForMember(dest => dest.AvailableCategories, mo => mo.Ignore())
+                .ForMember(dest => dest.AvailableProductsPlans, mo => mo.Ignore())
+                .ForMember(dest => dest.AvailableStoresPlans, mo => mo.Ignore())
+                .ForMember(dest => dest.AvailableSpecificationAttributes, mo => mo.Ignore())
+                .ForMember(dest => dest.AvailableSpecificationAttributeOptions, mo => mo.Ignore())
+                .ForMember(dest => dest.AvailableSpecificationAttributeOptionsSliders, mo => mo.Ignore())
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
+                .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
 
             //category template
             Mapper.CreateMap<CategoryTemplate, CategoryTemplateModel>()
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<CategoryTemplateModel, CategoryTemplate>();
             //manufacturer template
             Mapper.CreateMap<ManufacturerTemplate, ManufacturerTemplateModel>()
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<ManufacturerTemplateModel, ManufacturerTemplate>();
             //product template
             Mapper.CreateMap<ProductTemplate, ProductTemplateModel>()
+                .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<ProductTemplateModel, ProductTemplate>();
         }

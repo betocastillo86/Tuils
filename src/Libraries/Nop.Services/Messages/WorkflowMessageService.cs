@@ -1688,6 +1688,88 @@ namespace Nop.Services.Messages
 
         #endregion
 
+        #region Vendor
+        /// <summary>
+        /// Envia notifcación que el plan está a punto de expirar
+        /// </summary>
+        /// <param name="vendor">datos del vendor</param>
+        /// <param name="expirationDays">Dias previos a expirar</param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        public virtual int SendVendorPlanExpirationNotificationMessage(Vendor vendor, int expirationDays, int languageId)
+        {
+            if (vendor == null)
+                throw new ArgumentNullException("vendor");
+
+            var store = _storeContext.CurrentStore;
+            languageId = EnsureLanguageIsActive(languageId, store.Id);
+
+            var messageTemplate = GetActiveMessageTemplate("Vendor.ExpirationPlan", store.Id);
+            if (messageTemplate == null)
+                return 0;
+
+            //email account
+            var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);
+
+            //tokens
+            var tokens = new List<Token>();
+            _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
+            _messageTokenProvider.AddVendorTokens(tokens, vendor);
+
+            //Agrega los dias para que el producto finalice la publicación
+            tokens.Add(new Token("Common.ExpirationLimitDays", expirationDays.ToString()));
+
+            //event notification
+            _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
+
+            var toEmail = vendor.Email;
+            var toName = emailAccount.DisplayName;
+            return SendNotification(messageTemplate, emailAccount,
+                languageId, tokens,
+                toEmail, toName);
+        }
+
+        // <summary>
+        /// Envia notifcación que el plan del vendor ya finalizó por tiempo
+        /// </summary>
+        /// <param name="vendor">datos del vendor</param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        public int SendVendorPlanFinishedNotificationMessage(Vendor vendor, int languageId)
+        {
+            if (vendor == null)
+                throw new ArgumentNullException("vendor");
+
+            var store = _storeContext.CurrentStore;
+            languageId = EnsureLanguageIsActive(languageId, store.Id);
+
+            var messageTemplate = GetActiveMessageTemplate("Vendor.PlanFinished", store.Id);
+            if (messageTemplate == null)
+                return 0;
+
+            //email account
+            var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);
+
+            //tokens
+            var tokens = new List<Token>();
+            _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
+            _messageTokenProvider.AddVendorTokens(tokens, vendor);
+
+            //event notification
+            _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
+
+            var toEmail = vendor.Email;
+            var toName = emailAccount.DisplayName;
+            return SendNotification(messageTemplate, emailAccount,
+                languageId, tokens,
+                toEmail, toName);
+        }
+
         #endregion
+
+        #endregion
+
+
+
     }
 }

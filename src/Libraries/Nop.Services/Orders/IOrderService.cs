@@ -243,5 +243,14 @@ namespace Nop.Services.Orders
         /// <param name="orderId"></param>
         /// <param name="rated"></param>
         void MarkOrderItemAsRated(int orderItemId, bool rated = true);
+        
+        /// <summary>
+        /// Valida si un usuario puede agregar items al carrito teniendo en cuenta:
+        /// Si el usuario no tiene ordenes pendientes de pago : True
+        /// Si el usuario ya tiene ordenes pendientes de pago y han sido agregados hace más de X minutos : True
+        /// Si el usuario ya tiene ordenes pendientes de pago y han sido agregados hace menos de X minutos: false 
+        /// </summary>
+        /// <returns></returns>
+        bool CustomerCanAddPlanToCart(int customerId);
     }
 }

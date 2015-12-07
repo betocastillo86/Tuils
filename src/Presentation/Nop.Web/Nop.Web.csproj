@@ -204,6 +204,7 @@
     <Compile Include="Controllers\Api\CategoriesController.cs" />
     <Compile Include="Controllers\Api\FilesController.cs" />
     <Compile Include="Controllers\Api\ManufacturersController.cs" />
+    <Compile Include="Controllers\Api\OrderPlansController.cs" />
     <Compile Include="Controllers\Api\OrdersController.cs" />
     <Compile Include="Controllers\Api\PicturesController.cs" />
     <Compile Include="Controllers\Api\ProductsController.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="Controllers\BoardsController.cs" />
     <Compile Include="Controllers\BackInStockSubscriptionController.cs" />
     <Compile Include="Controllers\ControlPanelController.cs" />
+    <Compile Include="Controllers\Api\ErrorsController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
@@ -264,8 +266,12 @@
     <Compile Include="Models\Api\AddressModel.cs" />
     <Compile Include="Models\Api\AddressPictureModel.cs" />
     <Compile Include="Models\Api\BaseApiModel.cs" />
+    <Compile Include="Models\Api\CreateOrderResult.cs" />
+    <Compile Include="Models\Api\ErrorJavascriptModel.cs" />
+    <Compile Include="Models\Api\FilterProductsModel.cs" />
     <Compile Include="Models\Api\MinifiedJson.cs" />
     <Compile Include="Models\Api\OrderModel.cs" />
+    <Compile Include="Models\Api\OrderPlanModel.cs" />
     <Compile Include="Models\Api\PictureOrderedModel.cs" />
     <Compile Include="Models\Api\ProductBaseModel.cs" />
     <Compile Include="Models\Api\ProductQuestionModel.cs" />
@@ -300,6 +306,7 @@
     <Compile Include="Models\Catalog\CategorySimpleModel.cs" />
     <Compile Include="Models\Catalog\CompareProductsModel.cs" />
     <Compile Include="Models\Catalog\EditProductModel.cs" />
+    <Compile Include="Models\Catalog\FeaturedLeftMenuModel.cs" />
     <Compile Include="Models\Catalog\IComparableModel.cs" />
     <Compile Include="Models\Catalog\IWishableModel.cs" />
     <Compile Include="Models\Catalog\ManufacturerHomePageModel.cs" />
@@ -323,6 +330,8 @@
     <Compile Include="Models\Catalog\ManufacturerModel.cs" />
     <Compile Include="Models\Catalog\ManufacturerNavigationModel.cs" />
     <Compile Include="Models\Catalog\ProductDetailsModel.cs" />
+    <Compile Include="Models\Catalog\VendorOfficesModel.cs" />
+    <Compile Include="Models\Catalog\VendorsHomePageModel.cs" />
     <Compile Include="Models\Checkout\CheckoutShippingAddressModel.cs" />
     <Compile Include="Models\Checkout\CheckoutProgressModel.cs" />
     <Compile Include="Models\Checkout\CheckoutBillingAddressModel.cs" />
@@ -406,8 +415,16 @@
     <Compile Include="Models\Profile\ProfileIndexModel.cs" />
     <Compile Include="Models\Profile\PostsModel.cs" />
     <Compile Include="Models\Profile\ProfilePostsModel.cs" />
+    <Compile Include="Models\Catalog\FeaturedAttributesByPlanRequest.cs" />
+    <Compile Include="Models\Sales\ConfirmationWithoutPlanModel.cs" />
+    <Compile Include="Models\Sales\PaymentResponseModel.cs" />
+    <Compile Include="Models\Sales\PlanModel.cs" />
     <Compile Include="Models\Sales\PublishProductModel.cs" />
+    <Compile Include="Models\Catalog\SelectFeaturedAttributesByPlanModel.cs" />
+    <Compile Include="Models\Sales\SelectPlanModel.cs" />
+    <Compile Include="Models\Sales\SelectPlanRequest.cs" />
     <Compile Include="Models\Sales\SelectPublishCategoryModel.cs" />
+    <Compile Include="Models\Sales\ShowAllPlansModel.cs" />
     <Compile Include="Models\ShoppingCart\MiniShoppingCartModel.cs" />
     <Compile Include="Models\ShoppingCart\WishlistEmailAFriendModel.cs" />
     <Compile Include="Models\ShoppingCart\WishlistModel.cs" />
@@ -1111,6 +1128,8 @@
     <Content Include="Scripts\tuils\collections\files.js" />
     <Content Include="Scripts\tuils\collections\manufacturers.js" />
     <Content Include="Scripts\tuils\collections\pictures.js" />
+    <Content Include="Scripts\tuils\models\orderPlan.js" />
+    <Content Include="Scripts\tuils\models\panel\myProduct.js" />
     <Content Include="Scripts\tuils\models\panel\updateProduct.js" />
     <Content Include="Scripts\tuils\models\picture.js" />
     <Content Include="Scripts\tuils\collections\products.js" />
@@ -1147,17 +1166,21 @@
     <Content Include="Scripts\tuils\views\common\topMenuView.js" />
     <Content Include="Scripts\tuils\views\home\categoriesHomeView.js" />
     <Content Include="Scripts\tuils\views\home\homeView.js" />
+    <Content Include="Scripts\tuils\views\home\vendorsHomeView.js" />
     <Content Include="Scripts\tuils\views\login\createUser.js" />
     <Content Include="Scripts\tuils\views\login\login.js" />
+    <Content Include="Scripts\tuils\views\login\staticLoginView.js" />
     <Content Include="Scripts\tuils\views\panel\addAddressView.js" />
     <Content Include="Scripts\tuils\views\panel\editProductPicturesView.js" />
     <Content Include="Scripts\tuils\views\panel\editProductView.js" />
     <Content Include="Scripts\tuils\views\panel\menu.js" />
     <Content Include="Scripts\tuils\views\panel\myAccount.js" />
+    <Content Include="Scripts\tuils\views\panel\myOrdersView.js" />
     <Content Include="Scripts\tuils\views\panel\myProductsView.js" />
     <Content Include="Scripts\tuils\views\panel\offices.js" />
     <Content Include="Scripts\tuils\views\panel\questionsView.js" />
     <Content Include="Scripts\tuils\views\panel\responseQuestionView.js" />
+    <Content Include="Scripts\tuils\views\panel\vendorProductsPopupView.js" />
     <Content Include="Scripts\tuils\views\panel\vendorServices.js" />
     <Content Include="Scripts\tuils\views\product\manufacturerView.js" />
     <Content Include="Scripts\tuils\views\product\filterSearchView.js" />
@@ -1169,6 +1192,8 @@
     <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\previousProductCreatedView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\publishView.js" />
+    <Content Include="Scripts\tuils\views\publishProduct\selectPlanView.js" />
+    <Content Include="Scripts\tuils\views\publishProduct\showPlansView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\summary.js" />
     <Content Include="Scripts\tuils\views\utilities\imagesSelectorView.js" />
     <Content Include="Scripts\tuils\views\utilities\htmlEditorView.js" />
@@ -1243,6 +1268,7 @@
     <Content Include="App_Readme\Handlebarsjs_README.md" />
     <Content Include="App_Readme\Handlebarsjs_LICENSE" />
     <Content Include="Scripts\handelbars.helpers.js" />
+    <None Include="Properties\PublishProfiles\PagosPruebas-Release.pubxml" />
     <None Include="Properties\PublishProfiles\Produccion-Release.pubxml" />
     <None Include="Properties\PublishProfiles\Pruebas-Release.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -2532,7 +2558,6 @@
     <Content Include="Views\ControlPanel\MyShop.cshtml" />
     <Content Include="Views\ControlPanel\Offices.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Header.cshtml" />
-    <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Offices.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\_Vendor.Reviews.cshtml" />
     <Content Include="Views\Shared\_PanelLayoutTwo.cshtml" />
     <Content Include="Views\Shared\_PanelRoot.cshtml" />
@@ -2577,6 +2602,15 @@
     <Content Include="Views\ControlPanel\EditProduct.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\ExternalSearch.cshtml" />
     <Content Include="Themes\Healthy\Views\Shared\_ExternalLayout.cshtml" />
+    <Content Include="Views\Sales\SelectPlan.cshtml" />
+    <Content Include="Views\Sales\PaymentResponse.cshtml" />
+    <Content Include="Views\Catalog\SelectFeaturedAttributesByPlan.cshtml" />
+    <Content Include="Views\Sales\ConfirmationWithoutPlan.cshtml" />
+    <Content Include="Views\ControlPanel\_VendorProductsPopup.cshtml" />
+    <Content Include="Views\Catalog\VendorsHomePage.cshtml" />
+    <Content Include="Views\Sales\_InfoPlan.cshtml" />
+    <Content Include="Views\Sales\Plans.cshtml" />
+    <Content Include="Themes\Healthy\Views\Catalog\VendorOffices.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

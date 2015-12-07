@@ -1,0 +1,78 @@
+﻿@model Nop.Web.Models.Catalog.VendorModel
+<div class="conte-sede" id="infoContacto">
+
+
+    @if (Model.Offices.Count > 0)
+    {
+        <div class="mapa"></div>
+        <div class="btn-sedes">
+            <a id="btnBack"><span class="icon-prev"></span></a>
+            <a id="btnNext"><span class="icon-next"></span></a>
+        </div>
+
+        foreach (var office in Model.Offices)
+        {
+            <div class="caja-sede" data-id="@office.Id" data-lat="@office.Latitude" data-lon="@office.Longitude" style="display:none">
+                <h3>@office.Name - @office.Address</h3>
+                <p><span class="icon-loc"></span> @office.StateProvinceName</p>
+                <p><span class="icon-tel"></span><a href="tel:+57@(office.PhoneNumber)">@office.PhoneNumber</a></p>
+                <p><span class="icon-mail"></span>@office.Email</p>
+                <a class="button-1 btnViewGallery">Ver galeria</a>
+            </div>
+        }
+
+
+        <script type="application/ld+json">
+            @{
+                var storeContext = Nop.Core.Infrastructure.EngineContext.Current.Resolve<Nop.Core.IStoreContext>();  
+            }
+            @foreach (var office in Model.Offices)
+            {
+                string paymentAccepted = string.Format("Cash,{0}", Model.EnableCreditCardPayment ? "Credit Card" : string.Empty) ;
+                <text>
+                    {
+                        "@@context" : "http://schema.org",
+                        "@@type" : "MotorcycleDealer",
+                        "name" : "@Model.Name @office.Name",
+                        "address" :{
+                            "@@type" : "PostalAddress",
+                            "streetAddress" : "@office.Address",
+                            "addressLocality" : "@office.StateProvinceName",
+                            "addressCountry":"CO"
+                        },
+                        "geo" :{
+                            "@@type" : "GeoCoordinates",
+                            "latitude" : @office.Latitude.ToString(new System.Globalization.CultureInfo("en-US")),
+                            "longitude" : @office.Longitude.ToString(new System.Globalization.CultureInfo("en-US"))
+                        },
+                        "url" : "@storeContext.CurrentStore.Url@Url.RouteUrl("Vendor", new { seName = Model.SeName })",
+                        "telephone" : "+57@(Model.PhoneNumber)",
+                        "paymentAccepted" : "@paymentAccepted",
+                        "logo" : "@Model.Picture.ImageUrl"
+                    }
+                </text>
+
+
+            }
+        </script>
+
+        <div id="divGallery"></div>
+
+        if (Model.AllowEdit)
+        {
+            @Html.ActionLink(T("Vendor.offices.editar").Text, "Offices", "ControlPanel", new { }, new { id = "btnConfigOfficesWithRows", @class = "button-1", title = T("Vendor.offices.editar.alt").Text })
+        }
+    }
+    else
+    {
+        <div class="sede-noresult" id="divOfficesNoResults">
+            <span class="icon-loc"></span>
+            <p>@T("Vendor.Offices.NoRows")</p>
+            @if (Model.AllowEdit)
+            {
+                @Html.ActionLink(T("Vendor.offices.editar").Text, "Offices", "ControlPanel", new { }, new { @class = "button-1", title = T("Vendor.offices.editar.alt").Text })
+            }
+        </div>
+    }
+
+</div>

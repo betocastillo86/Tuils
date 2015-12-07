@@ -61,15 +61,15 @@ namespace Nop.Services.ControlPanel
             };
 
             //Solo pueden vender servicios los que tienen tienda
-            if (vendor != null && vendor.VendorType == Core.Domain.Vendors.VendorType.RepairShop)
-                salesModule.SubModules.Add(new ControlPanelModule()
-                {
-                    Name = "PublishProductService",
-                    Controller = "Sales",
-                    Action = "PublishProductService",
-                    IconMini = "icon-publica",
-                    IconBig = "icon-publica"
-                });
+            //if (vendor != null && vendor.VendorType == Core.Domain.Vendors.VendorType.RepairShop)
+            //    salesModule.SubModules.Add(new ControlPanelModule()
+            //    {
+            //        Name = "PublishProductService",
+            //        Controller = "Sales",
+            //        Action = "PublishProductService",
+            //        IconMini = "icon-publica",
+            //        IconBig = "icon-publica"
+            //    });
 
             modules.Add(salesModule);
 
@@ -101,6 +101,21 @@ namespace Nop.Services.ControlPanel
                     }
 
             });
+
+            if (vendor != null)
+            {
+                modules.Add(new ControlPanelModule()
+                {
+                    Name = string.Concat( "MyOrders", vendor.VendorType == Core.Domain.Vendors.VendorType.Market ? "Market" : string.Empty),
+                    Controller = "ControlPanel",
+                    Action = "MyOrders",
+                    IconMini = "icon-planes",
+                    IconBig = "icon-planes"
+                });
+                
+            }
+
+            
 
             //Tienda
             if (vendor != null && vendor.VendorType != Core.Domain.Vendors.VendorType.User)
@@ -204,7 +219,7 @@ namespace Nop.Services.ControlPanel
                     Action = "MyProducts",
                     IconMini = "icon-scooter",
                     IconBig = "icon-scooter",
-                    Parameters = new { p = true },
+                    //Parameters = new { p = true },
                     SubModules = new List<ControlPanelModule>() { 
                     new ControlPanelModule()
                     {
@@ -212,8 +227,7 @@ namespace Nop.Services.ControlPanel
                         Controller = "ControlPanel",
                         Action = "MyProducts",
                         IconMini = "icon-scooter",
-                        IconBig = "icon-scooter",
-                        Parameters = new { p = true }
+                        IconBig = "icon-scooter"
                     },
                     new ControlPanelModule()
                     {
@@ -222,7 +236,7 @@ namespace Nop.Services.ControlPanel
                         Action = "MyProducts",
                         IconMini = "icon-scooter",
                         IconBig = "icon-scooter",
-                        OptionalParameters = new { p = false }
+                        Parameters = new { p = false }
                     }
                 }
 

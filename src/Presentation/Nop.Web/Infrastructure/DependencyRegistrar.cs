@@ -45,6 +45,11 @@ namespace Nop.Web.Infrastructure
             
             //installation localization service
             builder.RegisterType<InstallationLocalizationService>().As<IInstallationLocalizationService>().InstancePerLifetimeScope();
+
+
+            //Se registra el cache para el controler de ventas
+            builder.RegisterType<SalesController>()
+                .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"));
         }
 
         public int Order

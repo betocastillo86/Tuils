@@ -17,8 +17,8 @@ namespace Nop.Data.Tests
             #pragma warning disable 0618
             Database.DefaultConnectionFactory = new SqlCeConnectionFactory("System.Data.SqlServerCe.4.0");
             context = new NopObjectContext(GetTestDbName());
-            context.Database.Delete();
-            context.Database.Create();
+            //context.Database.Delete();
+            //context.Database.Create();
         }
 
         protected string GetTestDbName()

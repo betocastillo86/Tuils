@@ -207,6 +207,42 @@
     <Compile Include="Migrations\201510011958307_AddColumn_Sold_Table_Product.Designer.cs">
       <DependentUpon>201510011958307_AddColumn_Sold_Table_Product.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510061802540_AddColumn_PlanIdHiddenStateProvinceId_Table_Product.cs" />
+    <Compile Include="Migrations\201510061802540_AddColumn_PlanIdHiddenStateProvinceId_Table_Product.Designer.cs">
+      <DependentUpon>201510061802540_AddColumn_PlanIdHiddenStateProvinceId_Table_Product.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510131524351_RemoveColumn_PLanId_Table_Product.cs" />
+    <Compile Include="Migrations\201510131524351_RemoveColumn_PLanId_Table_Product.Designer.cs">
+      <DependentUpon>201510131524351_RemoveColumn_PLanId_Table_Product.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510131531592_AddColumn_OrderPLanId_Table_Product.cs" />
+    <Compile Include="Migrations\201510131531592_AddColumn_OrderPLanId_Table_Product.Designer.cs">
+      <DependentUpon>201510131531592_AddColumn_OrderPLanId_Table_Product.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510221916520_AddColumn_SocialNetworkFeatured_Table_Product.cs" />
+    <Compile Include="Migrations\201510221916520_AddColumn_SocialNetworkFeatured_Table_Product.Designer.cs">
+      <DependentUpon>201510221916520_AddColumn_SocialNetworkFeatured_Table_Product.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510262013201_AddColumn_OrderPlan_DatePlan_FeatureSliders_Table_Product_Vendor.cs" />
+    <Compile Include="Migrations\201510262013201_AddColumn_OrderPlan_DatePlan_FeatureSliders_Table_Product_Vendor.Designer.cs">
+      <DependentUpon>201510262013201_AddColumn_OrderPlan_DatePlan_FeatureSliders_Table_Product_Vendor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510282332179_AddColumn_MessageSent_Column_Vendor.cs" />
+    <Compile Include="Migrations\201510282332179_AddColumn_MessageSent_Column_Vendor.Designer.cs">
+      <DependentUpon>201510282332179_AddColumn_MessageSent_Column_Vendor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510301453160_AddColumn_PlanExpirationOnUtc_PlanStartOnUtc_Table_Order.cs" />
+    <Compile Include="Migrations\201510301453160_AddColumn_PlanExpirationOnUtc_PlanStartOnUtc_Table_Order.Designer.cs">
+      <DependentUpon>201510301453160_AddColumn_PlanExpirationOnUtc_PlanStartOnUtc_Table_Order.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511041525452_AddColumn_ShowOnHomePage_Table_Vendor.cs" />
+    <Compile Include="Migrations\201511041525452_AddColumn_ShowOnHomePage_Table_Vendor.Designer.cs">
+      <DependentUpon>201511041525452_AddColumn_ShowOnHomePage_Table_Vendor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511191817261_AddColumn_Active_Table_ProductPicture.cs" />
+    <Compile Include="Migrations\201511191817261_AddColumn_Active_Table_ProductPicture.Designer.cs">
+      <DependentUpon>201511191817261_AddColumn_Active_Table_ProductPicture.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -433,6 +469,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510011958307_AddColumn_Sold_Table_Product.resx">
       <DependentUpon>201510011958307_AddColumn_Sold_Table_Product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510061802540_AddColumn_PlanIdHiddenStateProvinceId_Table_Product.resx">
+      <DependentUpon>201510061802540_AddColumn_PlanIdHiddenStateProvinceId_Table_Product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510131524351_RemoveColumn_PLanId_Table_Product.resx">
+      <DependentUpon>201510131524351_RemoveColumn_PLanId_Table_Product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510131531592_AddColumn_OrderPLanId_Table_Product.resx">
+      <DependentUpon>201510131531592_AddColumn_OrderPLanId_Table_Product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510221916520_AddColumn_SocialNetworkFeatured_Table_Product.resx">
+      <DependentUpon>201510221916520_AddColumn_SocialNetworkFeatured_Table_Product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510262013201_AddColumn_OrderPlan_DatePlan_FeatureSliders_Table_Product_Vendor.resx">
+      <DependentUpon>201510262013201_AddColumn_OrderPlan_DatePlan_FeatureSliders_Table_Product_Vendor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510282332179_AddColumn_MessageSent_Column_Vendor.resx">
+      <DependentUpon>201510282332179_AddColumn_MessageSent_Column_Vendor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510301453160_AddColumn_PlanExpirationOnUtc_PlanStartOnUtc_Table_Order.resx">
+      <DependentUpon>201510301453160_AddColumn_PlanExpirationOnUtc_PlanStartOnUtc_Table_Order.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511041525452_AddColumn_ShowOnHomePage_Table_Vendor.resx">
+      <DependentUpon>201511041525452_AddColumn_ShowOnHomePage_Table_Vendor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511191817261_AddColumn_Active_Table_ProductPicture.resx">
+      <DependentUpon>201511191817261_AddColumn_Active_Table_ProductPicture.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

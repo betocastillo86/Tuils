@@ -25,9 +25,7 @@
                 pattern : 'email'
             },
             Password: {
-                required: function (val, attr, computed) {
-                    return !computed.IsRegister;
-                },
+                required: true,
                 minLength : 5
             },
             CompanyName: {
@@ -42,24 +40,28 @@
         labels: {
             Name: "Nombre",
             Email: "Correo electrónico",
-            Password: "Clave",
+            Password: "Contraseña",
             CompanyName : "Nombre establecimiento",
             TermsOfUse: "Terminos y condiciones",
             Bike : 'con tu Motocicleta'
         },
-        login: function () {
-            
+        oAuth: function () {
             this.credentials = {
                 username: this.get('Email'),
                 password: this.get('Password')
             };
 
             this.set('Password', this.credentials.password.replace(/./gi, "*"));
+        },
+        login: function () {
+            
+            this.oAuth();
 
             this.url = this.baseUrl;
             this.save();
         },
         register: function () {
+            this.oAuth();
             this.url = this.baseUrl + '/register';
             this.save();
         },

@@ -102,5 +102,12 @@ namespace Nop.Core.Domain.Orders
         /// Gets or sets an order placement interval in seconds (prevent 2 orders being placed within an X seconds time frame).
         /// </summary>
         public int MinimumOrderPlacementInterval { get; set; }
+
+        /// <summary>
+        /// Número de minutos después de los que se puede reiniciar el carrito de compras
+        /// cuando se desea adquirir un plan
+        /// </summary>
+        public int MinutesBeforeCanAddPlanToCart { get; set; }
+
     }
 }

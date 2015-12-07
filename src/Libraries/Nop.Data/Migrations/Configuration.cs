@@ -3,9 +3,11 @@ namespace Nop.Data.Migrations
     using Nop.Core.Data;
     using Nop.Core.Domain.Catalog;
     using Nop.Core.Domain.Configuration;
+    using Nop.Core.Domain.Customers;
     using Nop.Core.Domain.Directory;
     using Nop.Core.Domain.Localization;
     using Nop.Core.Domain.Messages;
+    using Nop.Core.Domain.Security;
     using Nop.Core.Domain.Seo;
     using Nop.Core.Domain.Tasks;
     using Nop.Core.Infrastructure;
@@ -35,9 +37,15 @@ namespace Nop.Data.Migrations
             bool runManufacturers = false;
             bool runManufacturersCategories = false;
             bool runSettings = true;
-            bool runTemplatesEmails = false;
+            bool runTemplatesEmails = true;
             bool runUrls = false;
-            bool runTasks = false;
+            bool runTasks = true;
+            bool runPermissions = false;
+            
+            /***DEBUG***/
+            //if (System.Diagnostics.Debugger.IsAttached == false)
+            //    System.Diagnostics.Debugger.Launch();
+
 
             #region Specification Attribute
 
@@ -113,7 +121,21 @@ namespace Nop.Data.Migrations
                     new SpecificationAttribute() { Id = 9, Name = "Recorrido", DisplayOrder = 0 },
                     new SpecificationAttribute() { Id = 10, Name = "Año/Modelo", DisplayOrder = 0 },
                     new SpecificationAttribute() { Id = 11, Name = "Placa", DisplayOrder = 0 },
-                    new SpecificationAttribute() { Id = 12, Name = "Insumos", DisplayOrder = 0 }
+                    new SpecificationAttribute() { Id = 12, Name = "Insumos", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 13, Name = "Duracion Fotos", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 14, Name = "Número Fotos", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 15, Name = "Exposición", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 16, Name = "Bandas rotativas", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 17, Name = "Pagina Inicio", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 18, Name = "Redes sociales", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 19, Name = "Duración del plan", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 20, Name = "Tienda virtual propia", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 21, Name = "Marcas especializadas", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 22, Name = "Productos publicados", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 23, Name = "Productos destacados", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 24, Name = "Productos en Home Page", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 25, Name = "Productos en redes sociales", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 26, Name = "Elaboración de la pagina", DisplayOrder = 0 }
                 };
                 specificationAttributeTable.AddOrUpdate(sa => sa.Id, specificationAttributes);
                 #endregion
@@ -667,7 +689,8 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("PublishProduct.PublishSimilar", "Publicar similar");
                 newLocaleStringResources.Add("PublishProduct.GotoPublishing", "Ir a publicaciones");
                 newLocaleStringResources.Add("PublishProduct.PublishFinished", "¡Listo ya publicaste!");
-                newLocaleStringResources.Add("PublishProduct.TimeOutPost", "¡Tu publicación es Gratuita y durará {0} días!");
+                newLocaleStringResources.Add("PublishProduct.TimeOutPostUser", "Recuerda que tu anuncio será revisado y aprobado dentro de los próximos minutos y estará publicado durante {0} días.");
+                newLocaleStringResources.Add("PublishProduct.TimeOutPostMarket", "Recuerde que su anuncio será revisado y aprobado dentro de los próximos minutos y estará publicado hasta la vigencia de su plan.");
                 newLocaleStringResources.Add("PublishProduct.StepMenu2_Service", "Detalle del servicio");
                 newLocaleStringResources.Add("PublishProduct.TitleDoorToDoor", "Domicilios");
                 newLocaleStringResources.Add("PublishProduct.IsDoorToDoor", "Se hacen domicilios");
@@ -738,7 +761,8 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("VendorServices.References", "Referencias Especializadas");
                 newLocaleStringResources.Add("MyOrdersModel.Title", "Mis Compras");
                 newLocaleStringResources.Add("PageTitle.MyOrders", "Mira lo que has comprado en Tuils");
-                newLocaleStringResources.Add("MyOrders.Description", "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500");
+                newLocaleStringResources.Add("MyOrders.DescriptionUser", "Abajo encuentras todas las veces en las que has pagado por destacar uno de tus productos");
+                newLocaleStringResources.Add("MyOrders.DescriptionMarket", "A continuación encuentra los planes que ha adquirido a lo largo de la historia. El plan que se encuentre en estado Activo es el que posee actualmente.");
                 newLocaleStringResources.Add("MyOrders.Product", "Producto");
                 newLocaleStringResources.Add("MyOrders.Vendor", "Vendedor");
                 newLocaleStringResources.Add("MyOrders.Rating", "Calificación");
@@ -797,7 +821,7 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Filtering.ManufacturerFilter.CurrentlyFilteredBy", "Estas filtrando por marca");
                 newLocaleStringResources.Add("Filtering.ManufacturerFilter.Remove", "Quitar filtro");
                 newLocaleStringResources.Add("controlpanel.changePassword", "Cambiar clave");
-                newLocaleStringResources.Add("common.publishProduct", "Publica tu anuncio");
+                newLocaleStringResources.Add("common.publishProduct", "Publica tu anuncio gratis");
                 newLocaleStringResources.Add("common.filterByService", "Filtrar por servicios");
                 newLocaleStringResources.Add("common.filterByProduct", "Filtrar por producto");
                 newLocaleStringResources.Add("common.filterByBike", "FIltrar por motocicletas");
@@ -966,7 +990,8 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Configuration.Settings.GeneralCommon.DisableRobotsForTestingSite", "Este sitio es de pruebas y es necesario deshabilitarle el robots.txt");
                 newLocaleStringResources.Add("MySales.Date", "Fecha compra");
                 newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.ProductLimit", "Limite de productos publicados por usuario");
-                newLocaleStringResources.Add("PublishProduct.HasReachedLimitOfProducts", "Has alcanzado el limite de publicaciones, es posible que tu producto no sea publicado. Si quieres realizar más publicaciones contactate con nosotros {0}");
+                newLocaleStringResources.Add("PublishProduct.HasReachedLimitOfProductsUser", "Has alcanzado el limite de publicaciones gratis ({0}), te recomendamos destacar tu producto con alguno de nuestros planes.");
+                newLocaleStringResources.Add("PublishProduct.HasReachedLimitOfProductsMarket", "Ha alcanzado el limite de productos a publicar en el plan que posee({0} productos). Adquiera un plan más alto para poder destacar mejor sus productos");
 
                 newLocaleStringResources.Add("controlpanelindex.greeting.complement", "Para nosotros es un gusto recibirte en esta gran plataforma. Recuerda que aquí puedes publicar productos de forma GRATUITA para que logres hacer negocios como compras, ventas, adquisición de servicios, y mucho más.");
                 newLocaleStringResources.Add("controlpanelindex.greeting.complement.shops", "Para nosotros es un gusto recibirte en esta gran plataforma. Recuerda que aquí puedes publicar productos para que logres hacer negocios como compras, ventas, adquisición de servicios, y mucho más.");
@@ -1003,11 +1028,196 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Catalog.Products.SpecialCategories.Fields.Category.Hint", "Categoría");
                 newLocaleStringResources.Add("HeaderLinks.Home", "Home");
                 newLocaleStringResources.Add("Account.SocialNetworks", "Nuestras redes:");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans", "Planes Settings");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.CategoryProductPlans", "Categoría Planes Productos");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.CategoryStorePlans", "Categoría Planes Tiendas");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdLimitDays", "Especificación limite de días");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdPictures", "Especificación Limite de fotos");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdDisplayOrder", "Especificación Orden de Exposición");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdSliders", "Especificación Bandas rotativas");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdHomePage", "Especificación HomePage");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdSocialNetworks", "Especificación redes sociales");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.PlanProductsFree", "Plan gratis para productos");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.PlanStoresFree", "Plan gratis para tiendas");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Order.MinutesBeforeCanAddPlanToCart", "Minutos para liberar carrito");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Order.MinutesBeforeCanAddPlanToCart.Hint", "Número de minutos después de los que se puede reiniciar el carrito de compras cuando se desea adquirir un plan");
+                newLocaleStringResources.Add("PageTitle.ResponsePayment", "Respuesta del pago realizado");
+                newLocaleStringResources.Add("PageTitle.SelectPlan", "Selecciona un plan para destacar tus productos");
+
+
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.SelectedPlanName", "Plan seleccionado");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.ReferenceCode", "Referencia 1");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.ReferencePayUCode", "Referencia 2");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.State", "Estado de la transacción");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.TransactionValue", "Valor del pago");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.Currency", "Moneda");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.TransactionDate", "Fecha");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.ProductName", "Producto destacado");
+                newLocaleStringResources.Add("Plugins.PayUExternal.TransactionState.Approved", "Aprobado");
+                newLocaleStringResources.Add("Plugins.PayUExternal.TransactionState.Declined", "Rechazado");
+                newLocaleStringResources.Add("Plugins.PayUExternal.TransactionState.Expired", "Expirado");
+                newLocaleStringResources.Add("Plugins.PayUExternal.TransactionState.Pending", "Pendiente");
+                newLocaleStringResources.Add("Plugins.PayUExternal.TransactionState.Error", "Error");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.CreditCard", "Tarjeta de credito");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.PSE", "PSE");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.ACH", "ACH");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.DebitCard", "Debito");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.Cash", "Efectivo");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.Referenced", "Pago Referenciado");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentMethodType.BankReferenced", "Pago en bancos");
+                newLocaleStringResources.Add("Plugins.PayUExternal.ErrorResponse.External", "No fue posible procesar tu orden. Comunicate con servicio al cliente con la referencia {0} y codigo de error {1}");
+
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.OptionAttributeFeaturedCategories", "Destacado en Categorias");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.OptionAttributeFeaturedManufacturers", "Destacado en marcas");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.OptionAttributeFeaturedRelated", "Destacado en productos relacionados");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.OptionAttributeFeaturedLeft", "Destacado a la izquierda");
+                newLocaleStringResources.Add("Admin.Catalog.Products.Fields.SocialNetworkFeatured", "Destacado en redes sociales");
+                newLocaleStringResources.Add("Admin.Catalog.Products.Fields.SocialNetworkFeatured.Hint", "Destacado en redes sociales");
+
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributePlanDays", "Atributo Duración del plan");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdOwnStore", "Atributo propia tienda");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdFeaturedManufacturers", "Atributo marcas especializadas");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdHelpWithStore", "Atributo ayuda con tienda");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdProductsFeaturedOnSliders", "Atributo productos destacados");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdProductsOnHomePage", "Atributo productos en homepage");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdProductsOnSocialNetworks", "Atributo productos en redes sociales");
+
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnHome", "Página principal");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnSliders", "Página principal de categorías y marcas");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks", "En redes sociales (Facebook, Instagram)");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.Save", "Destacar");
+
+                newLocaleStringResources.Add("myproducts.featureByPlan", "Destacar");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.gotoMyProducts", "Volver a mis productos");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdLimitProducts", "Limite de productos publicados");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.HasReachedLimitOfProducts", "Su plan ha llegado al limite de productos a publicar ({0} productos). Adquiera un plan más alto para poder destacar mejor sus productos");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.HasReachedLimitOfFeature", "Ha alcanzado el limite de productos destacados para el plan que tiene, por esta razón este producto no podrá ser destacado.");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectPlan", "Adquirir Plan");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.PublishProduct", "Publicar producto");
+                newLocaleStringResources.Add("myproducts.featureByProduct", "Destacar");
+                newLocaleStringResources.Add("MyOrders.Status", "Estado");
+                newLocaleStringResources.Add("Myorders.Expired", "Vencido");
+                newLocaleStringResources.Add("Myorders.Active", "Activo");
+                newLocaleStringResources.Add("MyOrders.RenovatePlan", "Renovar");
+                newLocaleStringResources.Add("MyOrders.UpgradePlan", "Subir el plan");
+                newLocaleStringResources.Add("MyOrders.RenovatePlanNow", "Renovar Ahora");
+                newLocaleStringResources.Add("MyOrders.SoonPlanWillExpire", "Quedan {0} días para que el plan que tiene actualmente expire. Lo puede renovar.");
+                newLocaleStringResources.Add("MyOrders.BuyAPlan", "No pierdas la oporunidad de vender más. Adquiere uno de nuestros planes a muy bajo costo.");
+                newLocaleStringResources.Add("MyOrders.BuyAPlanButton", "Comprar plan");
+
+                newLocaleStringResources.Add("myproducts.enable", "Reactivar");
+                newLocaleStringResources.Add("myproducts.enable.hint", "Permite que se puede visualizar nuevamente el producto");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.NumberOfVendorsOnHome", "Número de vendors en el home");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.NumberOfVendorsOnHome.Hint", "Número de vendors en el home");
+                newLocaleStringResources.Add("Homepage.Vendors", "Vendedores destacados");
+                newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowHidden", "Mostrar productos ocultos");
+                newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowHidden.Hint", "Mostrar productos ocultos");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.RunLikeTest", "Sitio de Pruebas");
+
+
+                newLocaleStringResources.Add("Admin.Vendors.List.ShowOnHome", "Vendedores en el Home");
+                newLocaleStringResources.Add("Admin.Vendors.List.WithPlan", "Vendedores con plan");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.PlanExpiredOnUtc", "Plan expira en");
+
+
+                newLocaleStringResources.Add("showplans.users", "Personas");
+                newLocaleStringResources.Add("showplans.market", "Empresas");
                 
                 
+                newLocaleStringResources.Add("showplans.selectPlanMarket", "Comprar plan");
+                newLocaleStringResources.Add("showplans.selectPlanUser", "Publicar producto destacado");
+
+
+                newLocaleStringResources.Add("showplans.contactForBetterPlanQuestion", "¿Necesita un plan más especifico?");
+                newLocaleStringResources.Add("showplans.contactForBetterPlan", "Ya sea una tienda , taller, una empresa de producción o un concesionario, tenemos la solución perfecta para sus necesidades.");
+                newLocaleStringResources.Add("showplans.contactForBetterPlanButton", "Ver soluciones para empresas");
+                newLocaleStringResources.Add("OurPlans", "Nuestros planes");
+                newLocaleStringResources.Add("OurPlans.Market", "Planes para empresas");
+                newLocaleStringResources.Add("OurPlans.Users", "Planes para personas");
+
+
+                newLocaleStringResources.Add("selectplan.buttonpay", "Pagar");
+                newLocaleStringResources.Add("featuredProduct.ProductInformationTitle", "Detalles del producto");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.Success", "El pago fue efectuado de manera correcta");
+                newLocaleStringResources.Add("publishproduct.timeToActivate", "Recuerda que en pocos minutos podrás ver tu producto activado");
+                newLocaleStringResources.Add("selectplan.continuewithoutplan", "Continuar sin destacar");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnHome.Alt", "Número de productos destacados en la pagina de inicio");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnSliders.Alt", "Número de productos destacados en la pagina en las bandas rotativas");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.SelectOnSocialNetworks.Alt", "Número de productos destacados en Facebook");
+
+
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.Error", "Lo sentimos, el pago no pudo realizarse");
+                newLocaleStringResources.Add("Plugins.PayUExternal.ContinueWithoutPlan", "Publicar sin destacar");
+                newLocaleStringResources.Add("Plugins.PayUExternal.TryAgain", "Volver a intentar");
+                newLocaleStringResources.Add("Plugins.PayUExternal.PaymentResponse.SuccessPlan", "Gracias, el pago de su plan se ha hecho correctamente");
+                newLocaleStringResources.Add("selectPlan.fields.stateprovince", "Departamento");
+                newLocaleStringResources.Add("selectplan.subtitle.market", "Seleccione el tipo de plan ideal que desea para su empresa");
+                newLocaleStringResources.Add("selectplan.subtitle.user", "Selecciona el tipo de publicación que deseas");
+                newLocaleStringResources.Add("selectplan.additionalMessage.market", "A mayor visibilidad, tendrá más oportunidades de vender");
+                newLocaleStringResources.Add("selectplan.additionalMessage.user", "A mayor visibilidad, tendrás más oportunidades de vendero");
+                newLocaleStringResources.Add("Admin.Vendors.List.VendorType", "Tipo de vendedor");
+                newLocaleStringResources.Add("Admin.Vendors.List.VendorType.Hint", "Tipo de vendedor");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.VendorType", "Tipo de vendedor");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.VendorType.Hint", "Tipo de vendedor");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.HasPlan", "Tiene plan");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.HasPlan.Hint", "Tiene plan");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.PlanName", "Plan seleccionado");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.PlanName.Hint", "Plan seleccionado");
+                newLocaleStringResources.Add("PageTitle.Plans", "Escoge el plan que más se adecue para tus productos y vende muy fácil");
+                newLocaleStringResources.Add("LoginMessage.GetPlanMarketLikeUserError", "No puedes seleccionar un plan de empresas ya que te encuentras registrado como persona. Si deseas cambiar el tipo de registro envianos un correo a info@tuils.com y te ayudaremos con todo gusto.");
+                newLocaleStringResources.Add("myproducts.hasReachedLimitFeaturedAlert", "Ha alcanzado el limite de productos a destacar. Si desea puede  <a href='/mis-productos/seleccionar-plan'>adquirir un plan con mejores privilegios</a>");
+                newLocaleStringResources.Add("Admin.Catalog.Products.Pictures.Fields.Active", "Activo");
+                newLocaleStringResources.Add("Admin.Catalog.Products.Pictures.Fields.Active.Hint", "Activo");
+                newLocaleStringResources.Add("myproducts.noPublished", "Pendiente aprobación");
+                newLocaleStringResources.Add("myproducts.outOfDate", "Vencido");
+                newLocaleStringResources.Add("Plugins.PayUExternal.Doubt", "Si tienes alguna sugerencia o pregunta no dudes en contactarnos a nuestro correo electrónico info@tuils.com");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdMostExpensivePlan", "Caracteristica del plan más caro");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Plans.SpecificationAttributeIdMostExpensivePlan.Hint", "Caracteristica del plan más caro");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.ShowOnHomePage", "Mostrar en el home");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.ShowOnHomePage.Hint", "Mostrar en el home");
+                newLocaleStringResources.Add("myordersmarket.title", "Mi plan");
+                newLocaleStringResources.Add("myordersmarketmodel.title", "Mi plan");
+                newLocaleStringResources.Add("controlpanel.myordersmarket", "Mi plan");
+                newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowOnHomePage", "En el home");
+                newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowOnSliders", "En sliders");
+                newLocaleStringResources.Add("Admin.Catalog.Products.List.ShowOnSN", "En redes sociales");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.DefaultServicePicture", "Imagen por defecto categoría");
+                newLocaleStringResources.Add("Admin.Configuration.Settings.Catalog.DefaultServicePicture.Hint", "Imagen por defecto categoría");
+                newLocaleStringResources.Add("SelectFeaturedAttributesByPlan.ChooseOne", "Escoja la manera en que desea destacar su producto");
+                newLocaleStringResources.Add("PageTitle.ConfirmationWithoutPlanUser", "Felicitaciones. Tu anuncio ha sido envíado de forma exitosa!");
+                newLocaleStringResources.Add("PageTitle.ConfirmationWithoutPlanMarket", "Felicitaciones. Su anuncio ha sido envíado de forma exitosa!");
+                newLocaleStringResources.Add("PublishProduct.PublishFinishedUser", "!Tu anuncio ha sido envíado de forma exitosa!");
+                newLocaleStringResources.Add("PublishProduct.PublishFinishedMarket", "!Su anuncio ha sido publicado de forma exitosa!");
+                newLocaleStringResources.Add("common.publishProductNoFree", "Publica tu anuncio");
+
+                /***SOLO CORRER UNA VEZ***/
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.Market.26", "Darémos asistencia completa para la configuración de su tienda virtual en Tuils. Tomamos fotografías profesionales de la sede principal * y las configuramos en su tienda virtual.  <br><br><div style='font-size:10px'>La toma de fotografías solo aplica en Bogotá y no incluye toma de fotografías de productos</div>");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.Market.25", "Número de productos que aparecerán en nuestras redes sociales de Facebook e Instagram. Si escogé un plan que permita publicar 2 productos en redes sociales, estos dos saldrán publicados en el transcurso del mes.* <br><br><div style='font-size:10px'>Solo se garantiza la publicación por redes sociales una vez por mes por producto</div>");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.Market.24", "Número de productos que aparecerán en la pagina principal de Tuils. Si escogé un plan que permita publicar 2 productos en la página principal, estos dos saldrán publicados en el transcurso del mes.* <br><br><div style='font-size:10px'>Debido a la cantidad de productos publicados en la página princial es posible que no todas las veces que recargue su navegador el producto salga en la pagina principal. Tenga en cuenta que debido a la gran cantidad de visitas que tenemos en Tuils mucha gente verá su producto destacado</div>");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.Market.23", "Número de productos que aparecerán en las paginas principales de categorías y marcas. Cuando seleccione un plan con esta característica los productos se verán en la parte superior de la categoría correspondiente al producto, así como a su correspondiente marca. Adicionalmente saldrá destacado como relacionado de productos que se encuentren en la misma categoría. * <br><br><div style='font-size:10px'>Debido a la cantidad de productos publicados como destacados es posible que no todas las veces que recargue su navegador el producto salga en la pagina principal. Tenga en cuenta que debido a la gran cantidad de visitas que tenemos en Tuils mucha gente verá su producto destacado.</div>");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.Market.22", "Número de productos que podrá publicar durante el tiempo que posea el plan.");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.Market.20", "Es como tener una pagina web propia. Podrá configurar nombre, logo, imagenes, productos, sedes y servicios que presta entre otros.");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.Market.19", "Número de días que estará vigente el plan. Después de pasado este tiempo los productos se despublicarán automáticamente y las ventajas de tener plan pago se perderán. En el caso de no poseer plan, los productos durarán publicados el tiempo especulado en la tabla de planes.");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.User.19", "Número de días tu producto estará publicado y activo");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.Market.18", "Su empresa será publicada en nuestras redes sociales Facebook e Instagram en el transcurso del mes.*<br><br> <div style='font-size:10px'>Solo se garantiza la publicación por redes sociales una vez por mes.</div>");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.User.18", "Tu producto será pulicado en nuestras redes sociales en el transcurso de los 3 primeros días después de la publicación.* <br><br><div style='font-size:10px'>Solo se garantiza la publicación por redes sociales una vez por publicación.</div>");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.Market.17", "Su empresa aparecerá en la pagina principal de Tuils durante el transcurso del plan.* <br><br><div style='font-size:10px'>Debido a la cantidad de productos publicados en la página princial es posible que no todas las veces que recargue su navegador el producto salga en la pagina principal. Tenga en cuenta que debido a la gran cantidad de visitas que tenemos en Tuils mucha gente verá su producto destacado</div>");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.User.17", "Tu producto aparecerá en la pagina principal de Tuils.* <br><br><div style='font-size:10px'>Debido a la cantidad de productos publicados en la página princial es posible que no todas las veces que recargues el navegador veas tu producto en la pagina principal.  Pero ten en cuenta que debido a la gran cantidad de visitas que tenemos en Tuils mucha gente seguramente verá tu producto ;).</div>");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.User.16", "Tu producto aparecerá en la pagina principales de la categoría y la marca a la que pertenece tu producto. Adicionalmente saldrá como producto relacionado de los productos que esten en la misma categoría de tu producto. * <br><br> <div style='font-size:10px'>Debido a la cantidad de productos publicados como destacados es posible que no todas las veces que recargues tu navegador veas tu producto. Pero ten en cuenta que ya que tenemos muchas visitas en Tuils mucha gente seguramente verá tu producto ;).</div>");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.Market.15", "La exposición es que tan arriba y resaltados se verán sus productos cuando un usuario realice una busqueda. Hay cuatro tipos de exposición: <ul><li><b>La mejor:</b> Su producto saldrá en la parte más alta de los listados y tendrá una etiqueta que lo resalte.</li><li><b>Muy alta:</b> Su producto saldrá en la parte alta de los listados debajo de 'la mejor'.</li><li><b>Alta:</b> Su producto saldrá en la parte media alta de los listados debajo de los que se encuentran en 'muy alta'.</li><li><b>Media:</b> Su producto saldrá debajo de todos los demás resultados.</li></ul>");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.User.15", "La exposición es que tan arriba y resaltados se verá tu producto cuando un usuario realice una busqueda. Hay cuatro tipos de exposición: <ul><li><b>La mejor:</b> Tu producto saldrá en la parte más alta de los listados y tendrá una etiqueta que lo resalte.</li><li><b>Muy alta:</b> Tu producto saldrá en la parte alta de los listados debajo de 'la mejor'.</li><li><b>Alta:</b> Tu producto saldrá en la parte media alta de los listados debajo de los que se encuentran en 'muy alta'.</li><li><b>Media:</b> Tu producto saldrá debajo de todos los demás resultados.</li></ul>");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.User.14", "Número de fotografías que podrás mostrar en tu producto");
+                newLocaleStringResources.Add("showplans.specificationAttributeDescription.User.28", "Vamos con una camara profesional a tomar las fotografías de tu motocicleta.*<br><br><div style='font-size:10px'>Solo aplica para la ciudad de Bogotá</div>");
+                newLocaleStringResources.Add("account.login.fields.email.required", "Ingresa el correo electrónico");
+                newLocaleStringResources.Add("PageTitle.SelectFeaturedAttributesByPlan", "Destacar productos de acuerdo al plan");
+                newLocaleStringResources.Add("admin.catalog.products.specificationattributes.fields.attributetype", "Tipo de atributo");
+                newLocaleStringResources.Add("admin.catalog.products.specificationattributes.fields.value", "Valor");
+                newLocaleStringResources.Add("showplans.specificationattributedisplayorder.0", "<span class='icon-star'></span><span class='icon-star'></span><span class='icon-star'></span><span class='icon-star'></span><span class='icon-star'></span>");
+                newLocaleStringResources.Add("showplans.specificationattributedisplayorder.1", "<span class='icon-star'></span><span class='icon-star'></span><span class='icon-star'></span><span class='icon-star'></span>");
+                newLocaleStringResources.Add("showplans.specificationattributedisplayorder.2", "<span class='icon-star'></span><span class='icon-star'></span><span class='icon-star'></span>");
+                newLocaleStringResources.Add("showplans.specificationattributedisplayorder.3", "<span class='icon-star'></span><span class='icon-star'></span>");
+                newLocaleStringResources.Add("Home.Vendors.Title", "Almacenes y talleres de confianza");
                 
-                
-            
                 
 
                 //Recorre todas las llaves que desea adicional
@@ -2302,7 +2512,6 @@ namespace Nop.Data.Migrations
                 settings.Add("CatalogSettings.ShowMyBikeProductsOnHomepage", "True");
                 settings.Add("CatalogSettings.NumberOfProductsMyBikeOnHomepage", "8");
                 settings.Add("CatalogSettings.LimitOfSpecialCategories", "5");
-                settings.Add("CatalogSettings.LimitDaysOfProductPublished", "18");
                 settings.Add("CatalogSettings.DefaultSpecificationAttributeTopMenu", "6");
 
                 settings.Add("tuilssettings.specificationattributeIsNew", "1");
@@ -2323,6 +2532,14 @@ namespace Nop.Data.Migrations
                 settings.Add("tuilsSettings.MaxNumberOptionsToShowOnFilters", "4");
                 settings.Add("vendorSettings.MinWidthCover", "1200");
                 settings.Add("vendorSettings.MinHeightCover", "500");
+                settings.Add("ShoppingCartSettings.allowgueststoaddcart", "False");
+                settings.Add("CatalogSettings.ShowRelatedProductsAsFeatured", "False");
+                settings.Add("CatalogSettings.NumberOfVendorsOnHome", "6");
+                settings.Add("ordersettings.minutesbeforecanaddplantocart", "2");
+
+                
+                
+
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var setting in settings)
@@ -2513,6 +2730,24 @@ namespace Nop.Data.Migrations
                         IsActive = true,
                         EmailAccountId = 1
                     },
+                    new MessageTemplate()
+                    {
+                        Id = 51,
+                        Name = "Vendor.ExpirationPlan",
+                        Subject = "%Store.Name%. El plan seleccionado para publicar está a punto de expirar",
+                        Body = "<p>Tu plan expirará en %Vendor.PlanExpiredOnUtc%. Te invitamos a renovarlo </p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 52,
+                        Name = "Vendor.PlanFinished",
+                        Subject = "%Store.Name%. El plan seleccionado ha expirado",
+                        Body = "<p> Los productos se desactivarán atumáticamente para vvolverlos a activar compre el plan de nuevo </p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
                     
                 };
 
@@ -2524,6 +2759,26 @@ namespace Nop.Data.Migrations
                         context.Set<MessageTemplate>().Add(template);
                     }
                 }
+            }
+
+            #endregion
+
+            #region PermissionRecords
+
+            if (runPermissions)
+            {
+                //var permissionTable = context.Set<PermissionRecord>();
+
+                ////Consulta los permisos y empieza a agregarle todos los roles si es necesario
+                //var pmEnableShoppingCart = permissionTable.FirstOrDefault(p => p.SystemName.Equals("EnableShoppingCart"));
+
+                //var roles = context.Set<CustomerRole>();
+                //foreach (var role in roles)
+                //{
+                //   if(pmEnableShoppingCart.CustomerRoles.FirstOrDefault(r => r.Id == role.Id) == null)
+                //        pmEnableShoppingCart.CustomerRoles.Add(role);
+                //}
+
             }
 
             #endregion
@@ -2589,6 +2844,15 @@ namespace Nop.Data.Migrations
                         Enabled = true,
                         StopOnError = false,
                         Type = "Nop.Services.Common.PublishingAlmostFinishedTask, Nop.Services"
+                    },
+                    new ScheduleTask()
+                    {
+                        Id = 11,
+                        Name = "Vencimiento de planes",
+                        Seconds = 43200,
+                        Enabled = true,
+                        StopOnError = false,
+                        Type = "Nop.Services.Vendors.ValidateVendorExpiredPlansTask, Nop.Services"
                     }
 
                 };

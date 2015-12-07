@@ -33,7 +33,7 @@
 
                 <div class="col-sedes">
                     <div id="divOffices">
-                        @Html.Partial("_Vendor.Offices", Model)
+                        @Html.Partial("VendorOffices")
                     </div>
                     <ul class="conte-spc">
                         @if (Model.SpecialCategories.Count == 0)
@@ -173,9 +173,10 @@
                     </div>
                 </div>
                 <br />
-                <div class="conte-comment">
+
+                @*<div class="conte-comment">
                     @Html.Partial("_Vendor.Reviews")
-                </div>
+                </div>*@
             </div>
         </div>
     </div>

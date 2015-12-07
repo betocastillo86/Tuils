@@ -9,6 +9,7 @@ define(['jquery'], function ($) {
         usepopupnotifications: false,
         topcartselector: '',
         topwishlistselector: '.wishlist-qty i',
+        topwishlistselectorcomplete: '#divWishlist',
         flyoutcartselector: '',
 
         init: function (usepopupnotifications, topcartselector, topwishlistselector, flyoutcartselector) {
@@ -65,6 +66,8 @@ define(['jquery'], function ($) {
             }
             if (response.updatetopwishlistsectionhtml) {
                 $(AjaxCart.topwishlistselector).html(response.updatetopwishlistsectionhtml);
+                $(AjaxCart.topwishlistselectorcomplete).show();
+                
             }
             if (response.updateflyoutcartsectionhtml) {
                 $(AjaxCart.flyoutcartselector).replaceWith(response.updateflyoutcartsectionhtml);

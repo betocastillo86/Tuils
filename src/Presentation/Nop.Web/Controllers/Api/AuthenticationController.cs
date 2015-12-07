@@ -14,6 +14,8 @@ using Nop.Services.Logging;
 using Nop.Services.Localization;
 using Nop.Web.Framework.Security;
 using Nop.Services.Catalog;
+using Nop.Core.Domain.Vendors;
+using Nop.Services.Vendors;
 
 namespace Nop.Web.Controllers.Api
 {
@@ -29,6 +31,7 @@ namespace Nop.Web.Controllers.Api
         private readonly ICustomerActivityService _customerActivityService;
         private readonly ILocalizationService _localizationService;
         private readonly ICategoryService _categoryService;
+        private readonly IVendorService _vendorService;
         #endregion
 
         #region Ctor
@@ -40,7 +43,8 @@ namespace Nop.Web.Controllers.Api
             IAuthenticationService authenticationService,
             ICustomerActivityService customerActivityService,
             ILocalizationService localizationService,
-            ICategoryService categoryService)
+            ICategoryService categoryService,
+            IVendorService vendorService)
         {
             this._customerService = customerService;
             this._workContext = workContext;
@@ -50,13 +54,16 @@ namespace Nop.Web.Controllers.Api
             this._customerActivityService = customerActivityService;
             this._localizationService = localizationService;
             this._categoryService = categoryService;
+            this._vendorService = vendorService;
         }
         #endregion
             
         [HttpPost]
+        [BasicAuthentication]
         [Route("api/auth/register")]
         public IHttpActionResult Register(CustomerBaseModel model)
         {
+            
             //Si hay un usuario autenticado no permite la creación
             if (_workContext.CurrentCustomer.IsRegistered())
             {
@@ -64,6 +71,10 @@ namespace Nop.Web.Controllers.Api
                 ModelState.AddModelError("errorMessage", CodeNopException.HasSessionActive.GetLocalizedEnum(_localizationService, _workContext));
                 return BadRequest(ModelState); 
             }
+
+            string password = Request.GetRouteData().Values.ContainsKey("password") ? Request.GetRouteData().Values["password"].ToString() : null;
+            if (string.IsNullOrEmpty(password))
+                ModelState.AddModelError("errorMessage", "No viene password");
                 
 
             if (ModelState.IsValid)
@@ -71,13 +82,14 @@ namespace Nop.Web.Controllers.Api
                 //Convierte a entidad e intenta realizar el registro
                 var attributes = new Dictionary<string, object>();
                 var entityCustomer = model.ToEntity(out attributes, _categoryService);
+                entityCustomer.Password = password;
 
-                var result = _customerRegistrationService.Register(entityCustomer, attributes, model.VendorType, true);
+                var result = _customerRegistrationService.Register(entityCustomer, attributes, model.VendorType);
                 if (result.Success)
                 {
                     //Si el registro es exitoso se autentca
                     _authenticationService.SignIn(entityCustomer, true);
-                    return Ok(new { Email = model.Email, Name = entityCustomer.GetFullName() });
+                    return Ok(new { Email = model.Email, Name = entityCustomer.GetFullName(), VendorType = Convert.ToInt32(model.VendorType) });
                 }
                 else
                 {
@@ -86,7 +98,7 @@ namespace Nop.Web.Controllers.Api
             }
             else
             {
-                return BadRequest();
+                return BadRequest(ModelState.ToErrorString());
             }
         }
 
@@ -121,7 +133,15 @@ namespace Nop.Web.Controllers.Api
                             _authenticationService.SignIn(customer, false);
                             _customerActivityService.InsertActivity("PublicStore.Login", _localizationService.GetResource("ActivityLog.PublicStore.Login"), customer);
 
-                            return Ok(new { Email = username, Name = customer.GetFullName() });
+
+                            //Consulta adicinalmente el tipo de usuario que es
+                            var vendorType = VendorType.User;
+                            if (customer.VendorId > 0)
+                            {
+                                vendorType = _vendorService.GetVendorById(customer.VendorId).VendorType;
+                            }
+
+                            return Ok(new { Email = username, Name = customer.GetFullName(), VendorType = Convert.ToInt32(vendorType) });
                         }
                     //Si hay algún error retorna un BadRequest
                     case CustomerLoginResults.CustomerNotExist:

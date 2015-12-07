@@ -677,13 +677,17 @@ namespace Nop.Web.Infrastructure
 
 
             /************NUEVAS RUTAS TUILS ******/
+
+
             //Javascript de recursos
             routes.MapLocalizedRoute("JsResources",
                "Scripts/tuils/resources",
                new { controller = "Common", action = "JsResources" },
                new[] { "Nop.Web.Controllers" }
                );
-
+            
+            
+            #region Sales
             //publicar producto
             routes.MapLocalizedRoute("PublishNewItem",
                 "quiero-vender",
@@ -710,6 +714,45 @@ namespace Nop.Web.Infrastructure
                new { controller = "Sales", action = "PublishProductService", id = UrlParameter.Optional },
                new[] { "Nop.Web.Controllers" }
                );
+
+            routes.MapLocalizedRoute("SelectPlan",
+               "mis-productos/seleccionar-plan/{id}",
+               new { controller = "Sales", action = "SelectPlan" },
+               new[] { "Nop.Web.Controllers" }
+               );
+
+            routes.MapLocalizedRoute("SelectPlanVendor",
+               "mis-productos/seleccionar-plan",
+               new { controller = "Sales", action = "SelectPlanVendor" },
+               new[] { "Nop.Web.Controllers" }
+               );
+
+            routes.MapLocalizedRoute("SelectFeaturedAttributesByPlan",
+               "mis-productos/destacar/{id}",
+               new { controller = "Catalog", action = "SelectFeaturedAttributesByPlan", id = UrlParameter.Optional },
+               new[] { "Nop.Web.Controllers" }
+               );
+
+
+            routes.MapLocalizedRoute("ConfirmationWithoutPlan",
+               "quiero-vender/confirmacion/{id}",
+               new { controller = "Sales", action = "ConfirmationWithoutPlan", id = UrlParameter.Optional },
+               new[] { "Nop.Web.Controllers" }
+               );
+
+
+            routes.MapLocalizedRoute("ShowPlans",
+               "planes/{tab}",
+               new { controller = "Sales", action = "Plans", tab = UrlParameter.Optional },
+               new[] { "Nop.Web.Controllers" }
+               );
+
+            
+
+
+            
+            #endregion
+            
 
             
 

@@ -62,6 +62,7 @@ namespace Nop.Data.Tests.Catalog
                 Name = "Product name 1",
                 CreatedOnUtc = new DateTime(2010, 01, 03),
                 UpdatedOnUtc = new DateTime(2010, 01, 04),
+                VendorId = 2
             };
         }
     }

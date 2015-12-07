@@ -22,6 +22,11 @@ namespace Nop.Core.Domain.Catalog
         /// Gets or sets the display order
         /// </summary>
         public int DisplayOrder { get; set; }
+
+        /// <summary>
+        /// True: La imagen se muestra, false: queda oculta
+        /// </summary>
+        public bool Active { get; set; }
         
         /// <summary>
         /// Gets the picture

@@ -173,6 +173,11 @@ namespace Nop.Web.Infrastructure.Cache
         public const string VENDOR_NAVIGATION_PATTERN_KEY = "Nop.pres.vendor.navigation";
 
         /// <summary>
+        /// Llave de los vendedores en el home
+        /// </summary>
+        public const string VENDOR_HOMEPAGE_KEY = "Nop.pres.vendor.onHome";
+
+        /// <summary>
         /// Key for caching of a value indicating whether a manufacturer has featured products
         /// </summary>
         /// <remarks>
@@ -269,6 +274,17 @@ namespace Nop.Web.Infrastructure.Cache
         /// </remarks>
         public const string CATEGORY_CHILD_IDENTIFIERS_MODEL_KEY = "Nop.pres.category.childidentifiers-{0}-{1}-{2}";
         public const string CATEGORY_CHILD_IDENTIFIERS_PATTERN_KEY = "Nop.pres.category.childidentifiers";
+
+
+
+        /// <summary>
+        /// Llaves de cache que Contienen los planes activos en el sitio
+        /// </summary>
+        /// <remarks>
+        /// {0} : Tipo de planes. Empresas o personas
+        /// </remarks>
+        public const string CATEGORY_ACTIVE_PLANS_MODEL_KEY = "Nop.pres.plans.activePlans-{0}";
+        public const string CATEGORY_ACTIVE_PLANS_PATTERN_KEY = "Nop.pres.plans.activePlans";
 
 
         
@@ -476,7 +492,7 @@ namespace Nop.Web.Infrastructure.Cache
         /// Key for "related" product identifiers displayed on the product details page
         /// </summary>
         /// <remarks>
-        /// {0} : current product id
+        /// {0} : current CATEGORY
         /// {1} : current store ID
         /// </remarks>
         public const string PRODUCTS_RELATED_IDS_KEY = "Nop.pres.related-{0}-{1}";
@@ -761,14 +777,24 @@ namespace Nop.Web.Infrastructure.Cache
         public void HandleEvent(EntityInserted<Vendor> eventMessage)
         {
             _cacheManager.RemoveByPattern(VENDOR_NAVIGATION_PATTERN_KEY);
+
+            if(eventMessage.Entity.VendorType == VendorType.Market)
+                _cacheManager.Remove(VENDOR_HOMEPAGE_KEY);
+
         }
         public void HandleEvent(EntityUpdated<Vendor> eventMessage)
         {
             _cacheManager.RemoveByPattern(VENDOR_NAVIGATION_PATTERN_KEY);
+
+            if (eventMessage.Entity.VendorType == VendorType.Market)
+                _cacheManager.Remove(VENDOR_HOMEPAGE_KEY);
         }
         public void HandleEvent(EntityDeleted<Vendor> eventMessage)
         {
             _cacheManager.RemoveByPattern(VENDOR_NAVIGATION_PATTERN_KEY);
+
+            if (eventMessage.Entity.VendorType == VendorType.Market)
+                _cacheManager.Remove(VENDOR_HOMEPAGE_KEY);
         }
 
         //manufacturers
@@ -898,7 +924,7 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(PRODUCTS_ALSO_PURCHASED_IDS_PATTERN_KEY);
             _cacheManager.RemoveByPattern(PRODUCTS_RELATED_IDS_PATTERN_KEY);
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
-            _cacheManager.RemoveByPattern(HOMEPAGE_FEATURED_PRODUCTS_KEY);
+            _cacheManager.Remove(HOMEPAGE_FEATURED_PRODUCTS_KEY);
 
             //Limpia el cache de los destacados a la izquierda solo si se actualizan
             if (eventMessage.Entity.LeftFeatured.HasValue && eventMessage.Entity.LeftFeatured.Value)
@@ -1206,6 +1232,8 @@ namespace Nop.Web.Infrastructure.Cache
         {
             _cacheManager.RemoveByPattern(CART_PICTURE_PATTERN_KEY);
         }
+
+
         
     }
 }

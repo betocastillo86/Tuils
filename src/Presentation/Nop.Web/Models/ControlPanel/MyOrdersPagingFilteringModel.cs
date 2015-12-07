@@ -13,7 +13,7 @@ namespace Nop.Web.Models.ControlPanel
         /// <summary>
         /// Solo productos publicados
         /// </summary>
-        public bool p { get; set; }
+        public bool? p { get; set; }
 
         /// <summary>
         /// Valor de la consulta por texto

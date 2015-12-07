@@ -52,6 +52,11 @@ namespace Nop.Web.Models.Catalog
         public DateTime AvailableEndDate { get; set; }
 
         public bool Published { get; set; }
+        
+        /// <summary>
+        /// Propiedad que realiza la validacion de published, fechas, sold, hidden y demás
+        /// </summary>
+        public bool Available { get; set; }
 
         public bool CompareProductsEnabled { get; set; }
 
@@ -59,6 +64,17 @@ namespace Nop.Web.Models.Catalog
 
         public int NumClicksForMoreInfo { get; set; }
 
+        public bool HasPlanSelected { get; set; }
+
+        public bool ShowOnHomePage { get; set; }
+
+        public bool ShowOnSliders { get; set; }
+
+        public bool ShowOnSocialNetworks { get; set; }
+
+        public bool IsFeatured { get { return ShowOnHomePage || ShowOnSliders || ShowOnSocialNetworks; } }
+
+        public string Status { get; set; }
 
 		#region Nested Classes
 

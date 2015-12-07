@@ -42,7 +42,7 @@
                     </ol>
                     @if (Model.HasReachedLimitOfProducts)
                     {
-                        <div class="alert-public"><span class="icon-alert"></span> <p>@T("PublishProduct.HasReachedLimitOfProducts")</p><br/></div>
+                        <div class="alert-public"><span class="icon-alert"></span> <p>@T(string.Concat("PublishProduct.HasReachedLimitOfProducts", Model.VendorType), Model.NumLimitOfProducts)</p><br/></div>
                     }
 
                     <div id="divStep_1">
@@ -67,15 +67,17 @@
                     <div id="divStep_3" style="display:none">
                         <div class="title">@T("PublishProduct.SelectImagesDescription")</div>
                         @Html.Partial("_ImageSelector")
-                        <input type="button" class="btn_continue button-1 btnNext" value="@T("PublishProduct.NextStep")">
-                        <input type="button" class="btn_continue button-1 btnBack" value="@T("PublishProduct.BackStep")">
+                        <div class="conte_btnDoble">
+                            <input type="button" class="btn_continue button-1 btnNext" value="@T("PublishProduct.NextStep")">
+                            <input type="button" class="btn_continue button-1 btnBack" value="@T("PublishProduct.BackStep")">
+                        </div>
                     </div>
                     <div id="divStep_4" style="display:none">
                         @Html.Partial("_Summary")
                     </div>
-                    <div id="divStep_5" style="display:none">
+                    @*<div id="divStep_5" style="display:none">
                         @Html.Partial("_Finish")
-                    </div>
+                    </div>*@
                     <div id="divStep_0" style="display:none">
                         @Html.Partial("_PreviousProductCreated")
                     </div>

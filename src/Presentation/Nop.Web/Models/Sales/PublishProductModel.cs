@@ -1,4 +1,5 @@
 ﻿using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Vendors;
 using Nop.Web.Controllers;
 using Nop.Web.Framework.Mvc;
 using Nop.Web.Models.Catalog;
@@ -63,6 +64,10 @@ namespace Nop.Web.Models.Sales
         public string PhoneNumber { get; set; }
 
         public bool HasReachedLimitOfProducts { get; set; }
+
+        public VendorType VendorType { get; set; }
+
+        public int NumLimitOfProducts { get; set; }
 
         public long MaxSizeFileUpload { get; set; }
     }

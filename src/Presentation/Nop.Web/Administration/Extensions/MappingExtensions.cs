@@ -107,7 +107,9 @@ namespace Nop.Admin.Extensions
 
         public static VendorModel ToModel(this Vendor entity)
         {
-            return entity.MapTo<Vendor, VendorModel>();
+            var model = entity.MapTo<Vendor, VendorModel>();
+            model.HasPlan = entity.CurrentOrderPlanId.HasValue;
+            return model;
         }
 
         public static Vendor ToEntity(this VendorModel model)
@@ -883,6 +885,14 @@ namespace Nop.Admin.Extensions
             return model.MapTo(destination);
         }
 
+        public static PlansSettingsModel ToModel(this PlanSettings entity)
+        {
+            return entity.MapTo<PlanSettings, PlansSettingsModel>();
+        }
+        public static PlanSettings ToEntity(this PlansSettingsModel model, PlanSettings destination)
+        {
+            return model.MapTo(destination);
+        }
 
         public static ShippingSettingsModel ToModel(this ShippingSettings entity)
         {
