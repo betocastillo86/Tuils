@@ -4,23 +4,25 @@
     Layout = null;
 }
 
-<div class="title">
-    <strong>@T("Home.Vendors.Title")</strong>
-</div>
-
-<div class="home-tiendas_grid">
-    <div id="vendorCarousel">
-        @foreach (var vendor in Model.Vendors)
-        {
-            <div class="item-tienda" style="width:90%">
-                <a href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">
-                    <img alt="@vendor.Name" title="@vendor.Name" src="@vendor.Picture.ImageUrl">
-                </a>
-                <p>@vendor.Name</p>
-                <a class="btn_tienda" href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">Ir a tienda</a>
-            </div>
-        }
+@if (Model.Vendors.Count > 0)
+{
+    <div class="title">
+        <strong>@T("Home.Vendors.Title")</strong>
     </div>
-</div>
-    
+
+    <div class="home-tiendas_grid">
+        <div id="vendorCarousel">
+            @foreach (var vendor in Model.Vendors)
+            {
+                <div class="item-tienda" style="width:90%">
+                    <a href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">
+                        <img alt="@vendor.Name" title="@vendor.Name" src="@vendor.Picture.ImageUrl">
+                    </a>
+                    <p>@vendor.Name</p>
+                    <a class="btn_tienda" href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">Ir a tienda</a>
+                </div>
+            }
+        </div>
+    </div>
+}
 

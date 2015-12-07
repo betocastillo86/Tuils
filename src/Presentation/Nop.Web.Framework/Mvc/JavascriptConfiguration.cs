@@ -138,7 +138,7 @@ namespace Nop.Web.Framework.Mvc
                 confirm = new
                 {
                     myAccount = _localizationService.GetResource("MyAccount.Confirm", languageId),
-                    offices = _localizationService.GetResource("MyOffices.Confirm", languageId),
+                    //offices = _localizationService.GetResource("MyOffices.Confirm", languageId),
                     closeButton = _localizationService.GetResource("Common.CloseButtonDialog", languageId),
                     userRegistered = _localizationService.GetResource("createuser.ConfirmMessage", languageId)
                 }
