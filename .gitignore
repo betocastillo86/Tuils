@@ -204,6 +204,7 @@ src/Presentation/Nop.Web/Content/Images/*
 #Plugins
 src/Presentation/Nop.Web/Plugins/Payments.ExternalPayU/*
 src/Presentation/Nop.Web/Plugins/Payments.PayPalDirect/*
+src/Presentation/Nop.Web/Plugins/**
 
 #PluginsRecompilados
 src/Presentation/Nop.Web/Plugins/Misc.MailChimp/Nop.Plugin.Misc.MailChimp.dll
