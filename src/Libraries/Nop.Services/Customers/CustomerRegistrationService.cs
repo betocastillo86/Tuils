@@ -31,6 +31,7 @@ namespace Nop.Services.Customers
         private readonly IStoreService _storeService;
         private readonly RewardPointsSettings _rewardPointsSettings;
         private readonly CustomerSettings _customerSettings;
+        private readonly VendorSettings _vendorSettings;
         private readonly IGenericAttributeService _genericAttributeService;
         private readonly ILogger _logger;
         private readonly IWorkflowMessageService _workflowMessageService;
@@ -70,7 +71,8 @@ namespace Nop.Services.Customers
             IUrlRecordService urlRecordService,
             ILanguageService languageService,
             ILocalizedEntityService localizedEntityService,
-            IPictureService pictureService)
+            IPictureService pictureService,
+            VendorSettings vendorSettings)
         {
             this._customerService = customerService;
             this._encryptionService = encryptionService;
@@ -88,6 +90,7 @@ namespace Nop.Services.Customers
             this._languageService = languageService;
             this._localizedEntityService = localizedEntityService;
             this._pictureService = pictureService;
+            this._vendorSettings = vendorSettings;
         }
 
         #endregion
@@ -425,8 +428,12 @@ namespace Nop.Services.Customers
         /// Realiza las operaciones necesarias para registrar un usuario
         /// </summary>
         /// <param name="customer"></param>
+        /// <param name="vendorSubType">Subtipo de vendedor, principalmente para las empresas</param>
+        ///<param name="createPassword">Automaticamente crea la clave</param>
         /// <returns></returns>
-        public CustomerRegistrationResult Register(Customer customer, Dictionary<string, object> attributes, VendorType vendorType = VendorType.User, VendorSubType vendorSubType = VendorSubType.User, bool createPassword = false)
+        public CustomerRegistrationResult Register(Customer customer, Dictionary<string, object> attributes, 
+            VendorType vendorType = VendorType.User, VendorSubType vendorSubType = VendorSubType.User,
+            bool createPassword = false)
         {
 
             try
@@ -460,6 +467,12 @@ namespace Nop.Services.Customers
                             //search engine name
                             var seName = vendor.ValidateSeName(null, vendor.Name, true);
                             _urlRecordService.SaveSlug(vendor, seName, 0);
+
+
+                            //Programa los correos de actualización de tienda en 2 y 30 dias
+                            _workflowMessageService.SendVendorUpdateVirtualShop(vendor, 2, DateTime.Now.AddDays(_vendorSettings.DaysUpdateShopFirstEmail));
+                            _workflowMessageService.SendVendorUpdateVirtualShop(vendor, 2, DateTime.Now.AddDays(_vendorSettings.DaysUpdateShopSecondEmail));
+
 
                             //Actualiza los lenguajes
 

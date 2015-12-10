@@ -247,6 +247,10 @@
     <Compile Include="Migrations\201512101333009_AddColumn_VendorSubType_Table_Vendor.Designer.cs">
       <DependentUpon>201512101333009_AddColumn_VendorSubType_Table_Vendor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512101611060_AddColumn_ScheduledOnUtc_Table_QueueEmail.cs" />
+    <Compile Include="Migrations\201512101611060_AddColumn_ScheduledOnUtc_Table_QueueEmail.Designer.cs">
+      <DependentUpon>201512101611060_AddColumn_ScheduledOnUtc_Table_QueueEmail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -503,6 +507,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512101333009_AddColumn_VendorSubType_Table_Vendor.resx">
       <DependentUpon>201512101333009_AddColumn_VendorSubType_Table_Vendor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512101611060_AddColumn_ScheduledOnUtc_Table_QueueEmail.resx">
+      <DependentUpon>201512101611060_AddColumn_ScheduledOnUtc_Table_QueueEmail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

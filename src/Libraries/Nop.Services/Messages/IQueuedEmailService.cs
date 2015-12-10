@@ -51,11 +51,12 @@ namespace Nop.Services.Messages
         /// <param name="loadNewest">A value indicating whether we should sort queued email descending; otherwise, ascending.</param>
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
+        /// <param name="scheduledOnUtc">Fecha en la que se programó el correo para ser enviado</param>
         /// <returns>Email item collection</returns>
         IPagedList<QueuedEmail> SearchEmails(string fromEmail,
             string toEmail, DateTime? createdFromUtc, DateTime? createdToUtc, 
             bool loadNotSentItemsOnly, int maxSendTries,
-            bool loadNewest, int pageIndex, int pageSize);
+            bool loadNewest, int pageIndex, int pageSize, DateTime? scheduledOnUtc = null);
 
         /// <summary>
         /// Delete all queued emails

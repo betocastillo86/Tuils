@@ -69,7 +69,7 @@ namespace Nop.Services.Messages
             EmailAccount emailAccount, int languageId, IEnumerable<Token> tokens,
             string toEmailAddress, string toName,
             string attachmentFilePath = null, string attachmentFileName = null,
-            string replyToEmailAddress = null, string replyToName = null)
+            string replyToEmailAddress = null, string replyToName = null, DateTime? scheduledOnUtc = null)
         {
             //retrieve localized message template data
             var bcc = messageTemplate.GetLocalized(mt => mt.BccEmailAddresses, languageId);
@@ -97,7 +97,8 @@ namespace Nop.Services.Messages
                 AttachmentFileName = attachmentFileName,
                 AttachedDownloadId = messageTemplate.AttachedDownloadId,
                 CreatedOnUtc = DateTime.UtcNow,
-                EmailAccountId = emailAccount.Id
+                EmailAccountId = emailAccount.Id,
+                ScheduledOnUtc = scheduledOnUtc
             };
 
             _queuedEmailService.InsertQueuedEmail(email);
@@ -1764,6 +1765,44 @@ namespace Nop.Services.Messages
                 languageId, tokens,
                 toEmail, toName);
         }
+
+        /// <summary>
+        /// Envia el correo a las tiendas recordandoles que deben actualizar sus tiendas virtuales
+        /// </summary>
+        /// <param name="vendor"></param>
+        /// <param name="languageId"></param>
+        /// <param name="scheduledOnUtc">Fecha en la que se va programar el correo</param>
+        /// <returns></returns>
+        public int SendVendorUpdateVirtualShop(Vendor vendor, int languageId, DateTime scheduledOnUtc)
+        {
+            if (vendor == null)
+                throw new ArgumentNullException("vendor");
+
+            var store = _storeContext.CurrentStore;
+            languageId = EnsureLanguageIsActive(languageId, store.Id);
+
+            var messageTemplate = GetActiveMessageTemplate("Vendor.UpdateVirtualShop", store.Id);
+            if (messageTemplate == null)
+                return 0;
+
+            //email account
+            var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);
+
+            //tokens
+            var tokens = new List<Token>();
+            _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
+            _messageTokenProvider.AddVendorTokens(tokens, vendor);
+
+            //event notification
+            _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
+
+            var toEmail = vendor.Email;
+            var toName = emailAccount.DisplayName;
+            return SendNotification(messageTemplate, emailAccount,
+                languageId, tokens,
+                toEmail, toName, scheduledOnUtc:scheduledOnUtc);
+        }
+
 
         #endregion
 

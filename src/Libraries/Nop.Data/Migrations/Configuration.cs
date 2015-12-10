@@ -2536,6 +2536,8 @@ namespace Nop.Data.Migrations
                 settings.Add("CatalogSettings.ShowRelatedProductsAsFeatured", "False");
                 settings.Add("CatalogSettings.NumberOfVendorsOnHome", "6");
                 settings.Add("ordersettings.minutesbeforecanaddplantocart", "2");
+                settings.Add("vendorsettings.DaysUpdateShopFirstEmail", "2");
+                settings.Add("vendorsettings.DaysUpdateShopSecondEmail", "30");
 
                 
                 
@@ -2745,6 +2747,15 @@ namespace Nop.Data.Migrations
                         Name = "Vendor.PlanFinished",
                         Subject = "%Store.Name%. El plan seleccionado ha expirado",
                         Body = "<p> Los productos se desactivarán atumáticamente para vvolverlos a activar compre el plan de nuevo </p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 53,
+                        Name = "Vendor.UpdateVirtualShop",
+                        Subject = "%Store.Name%. Actualice su tienda virtual",
+                        Body = "<p> Actualice su tienda virtual, le mostramos como. </p>",
                         IsActive = true,
                         EmailAccountId = 1
                     },

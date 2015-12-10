@@ -93,6 +93,11 @@ namespace Nop.Core.Domain.Messages
         public DateTime? SentOnUtc { get; set; }
 
         /// <summary>
+        /// Cuando un correo se debe enviar en el futuro, se programa el correo
+        /// </summary>
+        public DateTime? ScheduledOnUtc { get; set; }
+
+        /// <summary>
         /// Gets or sets the used email account identifier
         /// </summary>
         public int EmailAccountId { get; set; }

@@ -139,7 +139,7 @@ namespace Nop.Services.Messages
         public virtual IPagedList<QueuedEmail> SearchEmails(string fromEmail,
             string toEmail, DateTime? createdFromUtc, DateTime? createdToUtc, 
             bool loadNotSentItemsOnly, int maxSendTries,
-            bool loadNewest, int pageIndex, int pageSize)
+            bool loadNewest, int pageIndex, int pageSize, DateTime? scheduledOnUtc = null)
         {
             fromEmail = (fromEmail ?? String.Empty).Trim();
             toEmail = (toEmail ?? String.Empty).Trim();
@@ -155,6 +155,10 @@ namespace Nop.Services.Messages
                 query = query.Where(qe => qe.CreatedOnUtc <= createdToUtc);
             if (loadNotSentItemsOnly)
                 query = query.Where(qe => !qe.SentOnUtc.HasValue);
+            //El filtro de fecha toma las que tienen valor nulo, o las que están programadas para antes de esa fecha
+            if (scheduledOnUtc.HasValue)
+                query = query.Where(qe => qe.ScheduledOnUtc == null || qe.ScheduledOnUtc <= scheduledOnUtc);
+
             query = query.Where(qe => qe.SentTries < maxSendTries);
             query = query.OrderByDescending(qe => qe.Priority);
             query = loadNewest ? 

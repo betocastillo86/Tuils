@@ -391,6 +391,15 @@ namespace Nop.Services.Messages
         /// <param name="languageId"></param>
         /// <returns></returns>
         int SendVendorPlanFinishedNotificationMessage(Vendor vendor, int languageId);
+
+        /// <summary>
+        /// Envia el correo a las tiendas recordandoles que deben actualizar sus tiendas virtuales
+        /// </summary>
+        /// <param name="vendor">datos del vendor</param>
+        /// <param name="languageId">idioma</param>
+        /// <param name="scheduledOnUtc">Fecha en la que se va programar el correo</param>
+        /// <returns></returns>
+        int SendVendorUpdateVirtualShop(Vendor vendor, int languageId, System.DateTime scheduledOnUtc);
         #endregion
     }
 }

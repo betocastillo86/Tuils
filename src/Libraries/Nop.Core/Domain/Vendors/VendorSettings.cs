@@ -33,6 +33,16 @@ namespace Nop.Core.Domain.Vendors
         public int DefaultReviewsPageSize { get; set; }
 
         /// <summary>
+        /// Dias para programar primer correo de actualizacion de tienda
+        /// </summary>
+        public int DaysUpdateShopFirstEmail { get; set; }
+
+        /// <summary>
+        /// Dias para programar segundo correo de actualizacion de tienda
+        /// </summary>
+        public int DaysUpdateShopSecondEmail { get; set; }
+
+        /// <summary>
         /// Ancho minimo para cargar una imagen de cover
         /// </summary>
         public int MinWidthCover { get; set; }
