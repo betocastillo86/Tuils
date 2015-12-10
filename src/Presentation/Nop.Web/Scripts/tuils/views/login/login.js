@@ -67,7 +67,7 @@
 
             //Si el origen del registro es por darle clic en el boton registro
             //cuando termine lo redirecciona al panel de control
-            if (model.get('ga_action') == 'Registro')
+            if (this.sourceModel && this.sourceModel.get('ga_action') == 'Registro')
                 document.location.href = '/mi-cuenta';
 
         },

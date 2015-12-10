@@ -138,7 +138,7 @@
         },
         back: function () {
             this.close();
-            this.trigger("login");
+            this.trigger("login", this.sourceModel) ;
         },
         show: function () {
             this.$el.dialog({

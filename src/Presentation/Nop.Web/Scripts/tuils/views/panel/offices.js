@@ -5,7 +5,8 @@
     var OfficesView = BaseView.extend({
 
         events: {
-            'click #btnEditAddress': 'loadAddress',
+            /*'click #btnEditAddress': 'loadAddress',*/
+            'click .headerAccordion': 'loadAddress',
             'click #btnDeleteAddress': 'removeAddress',
             'click #btnNewAddress': 'loadAddress'
         },
@@ -62,7 +63,8 @@
         loadAddressById: function (id) {
             if (this.viewAddAddress) {
                 this.viewAddAddress.undelegateEvents();
-                //this.viewAddAddress.remove();
+                //Limpia el contenido de la vista por problema de los mapas duplicados
+                this.viewAddAddress.$el.empty();
             }
 
             //this.viewAddressesCollection.push({ id: id, view : this.viewAddAddress });
