@@ -13,6 +13,7 @@
         currentControlImage: -1,
         //controls
         attributeFile: "tuils-file",
+        attributeFileUsed: "tuils-used",
 
         minFilesUploaded : 1,
 
@@ -113,44 +114,68 @@
             }
         },
         uploadImage: function (obj) {
-            var file = obj.target.files[0];
-            var that = this;
-            if (file) {
 
-                if (TuilsUtilities.isValidSize(obj.target)) {
-                    if (TuilsUtilities.isValidExtension(obj.target, 'image')) {
-                        var fileModel = new FileModel();
-                        var controlImage = this.currentControlImage;
-                        fileModel.set('control', controlImage);
-                        this.showLoadingBack(fileModel, controlImage);
-                        fileModel.on("file-saved", this.fileUploaded, this);
-                        fileModel.on("file-error", this.fileErrorUpload, this)
-                        this.resizer.photo(file, TuilsConfiguration.media.productImageMaxSizeResize, 'file', function (resizedFile) {
+            var controlImage = this.currentControlImage;
 
-                            that.resizer.photoCrop(resizedFile, 400, 'dataURL', function (thumbnail) {
-                                fileModel.set({ src: thumbnail, file: resizedFile });
-                                //Hasta que la imagen no haya sido subida 
-                                fileModel.on('sync', function () {
-                                    that.switchImage(thumbnail, controlImage);
-                                });
-                                fileModel.upload({ saveUrl: that.urlSave });
+            for (var iFile = 0; iFile < obj.target.files.length; iFile++) {
+                var file = obj.target.files[iFile];
+                var that = this;
+                if (file) {
 
-                            });
-                        });
+                    if (TuilsUtilities.isValidSize(obj.target)) {
+                        if (TuilsUtilities.isValidExtension(obj.target, 'image')) {
+                            var fileModel = new FileModel();
+
+                            //Si ya tiene cargado un archivo, toma otro archivo que no tenga imagen, si no hay espacio no sube la imagen
+                            if (controlImage.attr(this.attributeFileUsed))
+                            {
+                                var availableControls = this.$('.addImageGalery:not(['+this.attributeFileUsed+'])');
+                                if (availableControls.length > 0) {
+                                    controlImage = availableControls.first();
+                                }
+                                else
+                                    return false;
+                            }
+                                
+                            controlImage.attr('tuils-used', '1');
+                            fileModel.set('control', controlImage);
+                            this.showLoadingBack(fileModel, controlImage);
+                            fileModel.on("file-saved", this.fileUploaded, this);
+                            fileModel.on("file-error", this.fileErrorUpload, this);
+                            this.resizeImage(file, fileModel);
+                            
+                        }
+                        else {
+                            this.alert("Las imágenes tienen que estar en formatos .jpg, .gif o .png.");
+                            return false;
+                        }
+
                     }
                     else {
-                        this.alert("Las imágenes tienen que estar en formatos .jpg, .gif o .png.");
+                        this.alert("El tamaño máximo permitido para tus archivos es de " + TuilsConfiguration.maxFileUploadSize / 1024000 + "Mb");
                         return false;
                     }
 
                 }
-                else {
-                    this.alert("El tamaño máximo permitidopar tus archivos es de " + TuilsConfiguration.maxFileUploadSize / 1024000 + "Mb");
-                    return false;
-                }
-
             }
 
+            
+
+        },
+        resizeImage: function (file, fileModel) {
+            var that = this;
+            this.resizer.photo(file, TuilsConfiguration.media.productImageMaxSizeResize, 'file', function (resizedFile) {
+
+                that.resizer.photoCrop(resizedFile, 400, 'dataURL', function (thumbnail) {
+                    fileModel.set({ src: thumbnail, file: resizedFile });
+                    //Hasta que la imagen no haya sido subida 
+                    fileModel.on('sync', function () {
+                        that.switchImage(thumbnail, fileModel.get('control'));
+                    });
+                    fileModel.upload({ saveUrl: that.urlSave });
+
+                });
+            });
         },
         switchImage : function(urlImage, ctrl)
         {
@@ -161,6 +186,7 @@
             else {
                 ctrl.find("img").removeAttr("src").hide();
                 ctrl.removeAttr(this.attributeFile);
+                ctrl.removeAttr(this.attributeFileUsed);
                 ctrl.find("span").show();
             }
 
