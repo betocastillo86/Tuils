@@ -239,12 +239,16 @@
         },
         //Mueve el cursor y la vista del usuario a una posición de un objeto
         scrollFocusObject: function (selector, addPixels) {
+            //Valida que el selector exista
+            var obj = $(selector);
+            if (!obj.length)
+                return;
             if (addPixels == undefined)
                 addPixels = 0;
 
             var position = 0;
-            if ($(selector).offset() != undefined)
-                position = $(selector).offset().top;
+            if (obj.offset() != undefined)
+                position = obj.offset().top;
             $('html, body').animate({
                 scrollTop: position + addPixels
             }, 500);

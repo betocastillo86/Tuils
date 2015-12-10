@@ -2,6 +2,7 @@
 @{
     Html.AddTitleParts(T("PageTitle.Account").Text);
     Layout = "~/Views/Shared/_PanelLayoutTwo.cshtml";
+    Html.AppendCssFileParts("~/Content/weekline/jquery.weekline.css");
 }
 
 <div class="panel-control">
@@ -10,12 +11,12 @@
     <div id="divListOffices">
 
     </div>
-    
+
 </div>
 
 <script id="templateListOffices" type="text/x-handlebars-template">
-    <div class="help_table" style="margin-top:0;"><span></span><p>Visualizar tabla horizontalmente</p><br/></div>
-    
+    <div class="help_table" style="margin-top:0;"><span></span><p>Visualizar tabla horizontalmente</p><br /></div>
+
     {{#if this.length}}
     <div class="conte-edit-sede">
         <div class="table-header">
@@ -61,13 +62,13 @@
         <a href="@Url.Action("Vendor", "Catalog", new { seName = Model.VendorSeName })">@T("Offices.GoVendor")</a>
         <a class="button-1" href="javascript:;" id="btnNewAddress">@T("Offices.New")</a>
     </div>
-    <br/>
+    <br />
 
 </script>
 
 <script id="templateOfficeDetail" type="text/x-handlebars-template">
 
-    <div class="sede-edited" id="" >
+    <div class="sede-edited" id="">
         <form class="form-sedes">
             <div class="title">Detalles</div>
             <div class="inputs">
@@ -77,10 +78,10 @@
                 @Html.TextBoxRequired("Email", labelResource: "Offices.Email", required: false)
             </div>
             <div class="inputs">
-                @Html.TextBoxRequired("PhoneNumber", labelResource: "Offices.PhoneNumber")
+                @Html.TextBoxRequired("PhoneNumber", labelResource: "Offices.PhoneNumber", controlHtmlAttributes: new { tuils_val = "int" })
             </div>
             <div class="inputs">
-                @Html.TextBoxRequired("FaxNumber", labelResource: "Offices.FaxNumber", required: false)
+                @Html.TextBoxRequired("FaxNumber", labelResource: "Offices.FaxNumber", required: false, controlHtmlAttributes: new { tuils_val = "int" })
             </div>
             <div class="inputs">
                 @Html.DropDownRequired("StateProvinceId", new SelectList(Model.States, "Id", "Name"), labelResource: "Offices.StateProvinceId")
@@ -89,15 +90,23 @@
                 @Html.TextBoxRequired("Address", labelResource: "Offices.Address1")
             </div>
             <div class="inputs">
-                @Html.TextBoxRequired("Schedule", labelResource: "Offices.Schedule")
+                <label for="Horario">@T("Offices.Schedule")</label>
+                <span class="spanSchedule"></span>
+                <span class="required">*</span><div class="text-character"></div><span class="field-validation-error" tuils-val-for="Schedule"></span>
+                <input type="hidden" id="txtSchedule" />
             </div>
+            <div class="inputs">
+                <label for="Horario2"> </label>
+                De @RenderScheduleControl("Open", 8) a @RenderScheduleControl("Close", 17)
+            </div>
+
             <input type="file" style="display:none" />
         </form>
         <div class="caja_edtsedes">
             <div class="title">Mapa</div>
             <div id="canvasMapAddress" class="mapa"></div>
             @*<span tuils-val-for="Latitude"></span>
-            <span tuils-val-for="Longitude"></span>*@
+                <span tuils-val-for="Longitude"></span>*@
             <div id="errorSelectMap" class="alert-public" style="display:none"><span class="icon-alert"></span> <p>Selecciona un punto en el mapa</p><br></div>
 
 
@@ -114,11 +123,26 @@
 
 
 </script>
+
+@helper RenderScheduleControl(string name, int defaultHour)
+{
+    <select id="txt@(name)Hour" style="width:120px" class="timeHourSchedule">
+        @for (int i = 0; i < 24; i++)
+        {
+            var iText = i < 10 ? "0" + i : i.ToString();
+            var selected = defaultHour == i ?"selected" : string.Empty;
+            
+            <option @selected>@iText:00</option>
+            <option>@iText:30</option>
+        }
+    </select>
+}
+
 <script type="text/x-handlebars-template" id="templatePictures">
     <ul class="picture-uploader">
         {{#each pictures}}
         <li data-id="{{Id}}">
-            <i class="icon-delete" data-id="{{Id}}" ></i>
+            <i class="icon-delete" data-id="{{Id}}"></i>
             <img src="{{ImageUrl}}?r={{random}}" title="{{Title}}" alt="{{AlternateText}}" />
         </li>
         {{/each}}

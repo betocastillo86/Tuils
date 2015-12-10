@@ -14,6 +14,7 @@
         {
             <div class="caja-sede" data-id="@office.Id" data-lat="@office.Latitude" data-lon="@office.Longitude" style="display:none">
                 <h3>@office.Name - @office.Address</h3>
+                <p><span class="icon-loc"></span> @office.Schedule</p>
                 <p><span class="icon-loc"></span> @office.StateProvinceName</p>
                 <p><span class="icon-tel"></span><a href="tel:+57@(office.PhoneNumber)">@office.PhoneNumber</a></p>
                 <p><span class="icon-mail"></span>@office.Email</p>
@@ -48,7 +49,8 @@
                         "url" : "@storeContext.CurrentStore.Url@Url.RouteUrl("Vendor", new { seName = Model.SeName })",
                         "telephone" : "+57@(Model.PhoneNumber)",
                         "paymentAccepted" : "@paymentAccepted",
-                        "logo" : "@Model.Picture.ImageUrl"
+                        "logo" : "@Model.Picture.ImageUrl",
+                        "openingHours" : "@office.Schedule.Replace("Lun", "Mo").Replace("Mar", "Tu").Replace("Mie", "We").Replace("Jue", "Th").Replace("Vie", "Fr").Replace("Sab", "Sa").Replace("Dom", "Su")"
                     }
                 </text>
 

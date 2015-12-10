@@ -84,8 +84,8 @@
         fileUploaded: function (file) {
             this.trigger("file-saved", file);
         },
-        fileErrorUpload: function () {
-            this.trigger("file-error");
+        fileErrorUpload: function (error) {
+            this.trigger("file-error", error);
         },
         deleteById: function (id) {
             this.url = this.baseUrl + '/' + id;
