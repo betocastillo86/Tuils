@@ -19,6 +19,7 @@
 
         bindings: {
             "#txtName": "Name",
+            'input[name="rbVendorSubType"]' : 'VendorSubType',
             "#txtCompanyName": "CompanyName",
             "#txtEmail": "Email",
             '#txtBike': {

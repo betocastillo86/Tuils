@@ -51,5 +51,7 @@ namespace Nop.Web.Models.Catalog
         public List<SpecialCategoryVendorModel> SpecialCategories { get; set; }
         
         public List<Nop.Web.Models.Api.AddressModel> Offices { get; set; }
+
+        public VendorSubType VendorSubType { get; set; }
     }
 }

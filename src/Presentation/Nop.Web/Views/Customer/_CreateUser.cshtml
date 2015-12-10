@@ -38,7 +38,12 @@
             <input id="txtBike" type="text" placeholder="@T("CreateUser.Bike")">
             <span class="field-validation-error" tuils-val-for="Bike"></span>
         </div>
-        
+        <div class="inputs" style="display:none" tuils-for="company">
+            <input type="radio" value="@Convert.ToInt32(Nop.Core.Domain.Vendors.VendorSubType.Store)" name="rbVendorSubType" /> Almacen
+            <input type="radio" value="@Convert.ToInt32(Nop.Core.Domain.Vendors.VendorSubType.RepairShop)" name="rbVendorSubType" /> Taller
+            <span class="field-validation-error" tuils-val-for="VendorSubType"></span>
+        </div>
+
         <div class="terminos">
             <span>Con el registro aceptas las <a href="/condiciones-de-uso" target="_blank">condiciones del servicio</a> de Tuils.</span>
         </div>

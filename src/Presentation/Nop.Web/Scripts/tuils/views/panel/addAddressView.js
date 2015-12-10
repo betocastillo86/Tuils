@@ -23,7 +23,7 @@
 
             fileUpload: undefined,
 
-            dayLabels : ["Lun", "Mar", "Mier", "Jue", "Vie", "Sab", "Dom"],
+            dayLabels : ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
 
             selectedPictureId : 0,
 

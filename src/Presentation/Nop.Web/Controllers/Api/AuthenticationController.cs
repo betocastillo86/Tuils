@@ -84,7 +84,7 @@ namespace Nop.Web.Controllers.Api
                 var entityCustomer = model.ToEntity(out attributes, _categoryService);
                 entityCustomer.Password = password;
 
-                var result = _customerRegistrationService.Register(entityCustomer, attributes, model.VendorType);
+                var result = _customerRegistrationService.Register(entityCustomer, attributes, model.VendorType, model.VendorSubType);
                 if (result.Success)
                 {
                     //Si el registro es exitoso se autentca

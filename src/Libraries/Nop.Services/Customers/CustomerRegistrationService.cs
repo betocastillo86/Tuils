@@ -426,7 +426,7 @@ namespace Nop.Services.Customers
         /// </summary>
         /// <param name="customer"></param>
         /// <returns></returns>
-        public CustomerRegistrationResult Register(Customer customer, Dictionary<string, object> attributes, VendorType vendorType = VendorType.User, bool createPassword = false)
+        public CustomerRegistrationResult Register(Customer customer, Dictionary<string, object> attributes, VendorType vendorType = VendorType.User, VendorSubType vendorSubType = VendorSubType.User, bool createPassword = false)
         {
 
             try
@@ -451,6 +451,7 @@ namespace Nop.Services.Customers
                         {
                             vendor.Name = attributes[SystemCustomerAttributeNames.Company].ToString();
                             vendor.Email = customer.Email;
+                            vendor.VendorSubTypeId = Convert.ToInt32(vendorSubType);
                             vendor.Description = string.Empty;
                             vendor.Active = true;
                             vendor.VendorTypeId = (int)vendorType;

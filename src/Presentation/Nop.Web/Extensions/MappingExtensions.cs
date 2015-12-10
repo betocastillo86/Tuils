@@ -193,7 +193,8 @@ namespace Nop.Web.Extensions
                 EnableShipping = vendor.EnableShipping ?? false,
                 AllowEdit = workContext.CurrentVendor != null && workContext.CurrentVendor.Id == vendor.Id,
                 BackgroundPosition = vendor.BackgroundPosition,
-                PhoneNumber = vendor.PhoneNumber
+                PhoneNumber = vendor.PhoneNumber,
+                VendorSubType = vendor.VendorSubType
             };
             //Cargan las imagenes
 

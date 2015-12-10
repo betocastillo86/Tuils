@@ -540,6 +540,7 @@
     <Content Include="Content\Images\ogProduct.png" />
     <Content Include="Content\Images\ogService.jpg" />
     <Content Include="Content\Images\ogService.png" />
+    <Content Include="Content\weekline\jquery.weekline.css" />
     <Content Include="Content\kendo\2014.1.318\Black\editor.png" />
     <Content Include="Content\kendo\2014.1.318\Black\imagebrowser.png" />
     <Content Include="Content\kendo\2014.1.318\Black\indeterminate.gif" />

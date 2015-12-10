@@ -33,7 +33,7 @@
                 <text>
                     {
                         "@@context" : "http://schema.org",
-                        "@@type" : "MotorcycleDealer",
+                        "@@type" : "@(Model.VendorSubType == Nop.Core.Domain.Vendors.VendorSubType.RepairShop ? "MotorcycleRepair" : "MotorcycleDealer")",
                         "name" : "@Model.Name @office.Name",
                         "address" :{
                             "@@type" : "PostalAddress",

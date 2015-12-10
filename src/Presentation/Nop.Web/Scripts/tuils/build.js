@@ -20,6 +20,7 @@
        // accounting: 'empty:',
         jquery: 'empty:',
         jqueryui: 'empty:',
+        'jquery.weekline.min' : 'empty:'
        // jqueryunobtrusive: 'empty:',
        // jqueryvalidate: 'empty:',
        // jquerymigrate: 'empty:'

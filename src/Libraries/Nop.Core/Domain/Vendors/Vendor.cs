@@ -85,6 +85,12 @@ namespace Nop.Core.Domain.Vendors
         /// </summary>
         public int VendorTypeId { get; set; }
 
+        /// <summary>
+        /// Sub tipo de vendedor:
+        /// Sea usuario, tienda o taller
+        /// </summary>
+        public int VendorSubTypeId { get; set; }
+
 
         public bool? EnableCreditCardPayment { get; set; }
 
@@ -128,6 +134,11 @@ namespace Nop.Core.Domain.Vendors
         public VendorType VendorType
         {
             get { return (VendorType)VendorTypeId; }
+        }
+
+        public VendorSubType VendorSubType
+        {
+            get { return (VendorSubType)VendorSubTypeId; }
         }
 
 

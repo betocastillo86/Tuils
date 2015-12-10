@@ -240,6 +240,8 @@ namespace Nop.Services.Vendors
                 vendor.Email = customer.Email;
                 vendor.Description = string.Empty;
                 vendor.Active = true;
+                //Siempre el vendor subtype es usuario ya que cuando una tienda o taller se registran, se les crea un vendor por defecto
+                vendor.VendorSubTypeId = Convert.ToInt32(VendorSubType.User);
                 InsertVendor(vendor);
 
                 //Actualiza los datos del cliente con el codigo del vendedor

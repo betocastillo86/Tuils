@@ -121,6 +121,7 @@
     <Compile Include="Domain\Vendors\SpecialCategoryVendorType.cs" />
     <Compile Include="Domain\Vendors\VendorSettings.cs" />
     <Compile Include="Domain\Vendors\Vendor.cs" />
+    <Compile Include="Domain\Vendors\VendorSubType.cs" />
     <Compile Include="Domain\Vendors\VendorType.cs" />
     <Compile Include="IStoreContext.cs" />
     <Compile Include="Domain\Catalog\BackInStockSubscription.cs" />

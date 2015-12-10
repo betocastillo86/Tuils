@@ -243,6 +243,10 @@
     <Compile Include="Migrations\201511191817261_AddColumn_Active_Table_ProductPicture.Designer.cs">
       <DependentUpon>201511191817261_AddColumn_Active_Table_ProductPicture.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512101333009_AddColumn_VendorSubType_Table_Vendor.cs" />
+    <Compile Include="Migrations\201512101333009_AddColumn_VendorSubType_Table_Vendor.Designer.cs">
+      <DependentUpon>201512101333009_AddColumn_VendorSubType_Table_Vendor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -496,6 +500,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511191817261_AddColumn_Active_Table_ProductPicture.resx">
       <DependentUpon>201511191817261_AddColumn_Active_Table_ProductPicture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512101333009_AddColumn_VendorSubType_Table_Vendor.resx">
+      <DependentUpon>201512101333009_AddColumn_VendorSubType_Table_Vendor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

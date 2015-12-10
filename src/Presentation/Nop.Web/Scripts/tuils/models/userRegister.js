@@ -28,6 +28,11 @@
                 required: true,
                 minLength : 5
             },
+            VendorSubType: {
+                required: function (val, attr, computed) {
+                    return computed.VendorType != 0 && computed.IsRegister;
+                }
+            },
             CompanyName: {
                 required: function (val, attr, computed) {
                     return computed.VendorType != 0 && computed.IsRegister;
@@ -43,7 +48,8 @@
             Password: "Contraseña",
             CompanyName : "Nombre establecimiento",
             TermsOfUse: "Terminos y condiciones",
-            Bike : 'con tu Motocicleta'
+            Bike: 'con tu Motocicleta',
+            VendorSubType : 'Tipo de Empresa'
         },
         oAuth: function () {
             this.credentials = {

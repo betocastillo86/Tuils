@@ -32,5 +32,7 @@ namespace Nop.Web.Models.Api
         public string CompanyName { get; set; }
 
         public VendorType VendorType { get; set; }
+
+        public VendorSubType VendorSubType { get; set; }
     }
 }

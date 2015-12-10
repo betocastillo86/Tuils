@@ -52,6 +52,6 @@ namespace Nop.Services.Customers
         /// <param name="customer">Datos del usuario</param>
         /// <param name="attributes">Attributos adicionales del usuario</param>
         /// <returns>true, proceso ejecutado. False si tiene error</returns>
-        CustomerRegistrationResult Register(Customer customer, Dictionary<string, object> attributes, VendorType vendorType = VendorType.User, bool createPassword = false);
+        CustomerRegistrationResult Register(Customer customer, Dictionary<string, object> attributes, VendorType vendorType = VendorType.User, VendorSubType vendorSubType = VendorSubType.User, bool createPassword = false);
     }
 }
