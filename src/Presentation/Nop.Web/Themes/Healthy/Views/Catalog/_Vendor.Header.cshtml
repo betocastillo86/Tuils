@@ -46,7 +46,7 @@
                 <h2 tuils-for="show">@Model.Name</h2>
                 @if (Model.AllowEdit)
                 {
-                    @Html.TextBoxFor(m => m.Name, new { style = "display:none", tuils_for = "edit", maxLength = "80" })
+                    @Html.TextBoxFor(m => m.Name, new { style = "display:none", tuils_for = "edit", maxLength = "80", placeholder = "Ingrese el nombre de su negocio" })
                 }
                 <div class="product-review-box">
                     <div class="rating no-margin">
@@ -78,8 +78,9 @@
                 </p>
                 @if (Model.AllowEdit)
                 {
-                    @Html.TextAreaFor(m => m.Description, new { style = "display:none", tuils_for = "edit", maxLength = "300" })
+                    @Html.TextAreaFor(m => m.Description, new { style = "display:none", tuils_for = "edit", maxLength = "300", placeholder = "Ingrese una breve descripción de su negocio" })
                 }
+                
                 <div class="ctl-tarjetas" tuils-for="show">
                     <li id="liShipping" @(Model.EnableShipping ? string.Empty : "style=display:none") title="@T("vendor.enableShipping.description")">@T("vendor.enableShipping") <span class="icon-envio"></span></li>
                     <li id="liCreditCard" @(Model.EnableCreditCardPayment ? string.Empty : "style=display:none") title="@T("vendor.enableCreditCard.description")">@T("vendor.enableCreditCard") <span class="icon-card"></span></li>

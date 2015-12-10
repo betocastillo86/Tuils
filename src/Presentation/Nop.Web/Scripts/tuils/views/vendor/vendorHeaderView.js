@@ -12,6 +12,11 @@
                 "click #btnSaveCoverPosition": "saveCoverPosition",
                 'click .icon-foto': 'showCoverOptions'
             },
+            //No hace binding real pero sirve para marcar los errores
+            bindings: {
+                '#Name': 'Name',
+                '#Description' : 'Description'
+            },
 
 
             id: 0,

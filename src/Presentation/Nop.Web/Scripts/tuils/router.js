@@ -44,7 +44,7 @@
                 "mis-deseos(/:customerGuid)": 'wishlist',
                 "comparar": 'compare',
                 "customer/changepassword" : "changePassword",
-                "v/:query": "vendor",
+                //"v/:query": "vendor",
                 "c/:categoryName(/*query)": "category",
                 "m/:manufacturerName(/*query)": "manufacturer",
                 "p/:query": "product",
@@ -58,7 +58,16 @@
                 'quienes-somos': 'aboutUs',
                 'tarifas-y-precios': 'aboutUs',
                 'passwordrecovery/confirm(/*query)' : 'passwordRecovery',
-                'planes(/:tab)' : 'plans'
+                'planes(/:tab)' : 'plans',
+                '*path' : 'defaultRoute'
+            },
+            defaultRoute: function (path) {
+                //Lo usa para rutas no configuradas en el router, principalmente vendor
+                //Valida si existe el campo del vendor
+                if ($("#vendorPageBB").length)
+                    this.vendor(path);
+                else
+                    throw "Ruta sin configurar: " + document.location.href;
             },
             home : function()
             {
