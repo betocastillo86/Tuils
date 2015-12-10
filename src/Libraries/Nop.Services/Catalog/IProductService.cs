@@ -502,7 +502,7 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="productId"></param>
         ///<param name="pictureBinary">Datos del archivo</param>
-        ProductPicture InsertProductPicture(int productId, byte[] pictureBinary, string mimeType, string seoFilename, bool isNew, bool validateBinary = true, int displayOrder = 0);
+        ProductPicture InsertProductPicture(int productId, byte[] pictureBinary, string mimeType, string seoFilename, bool isNew, bool validateBinary = true, int displayOrder = 0, bool active = false);
 
         /// <summary>
         /// Updates a product picture

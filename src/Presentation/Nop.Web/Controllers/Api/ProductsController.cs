@@ -36,6 +36,7 @@ namespace Nop.Web.Controllers.Api
         private readonly IVendorService _vendorService;
         private readonly ICategoryService _categoryService;
         private readonly CatalogSettings _catalogSettings;
+        private readonly PlanSettings _planSettings;
         private readonly TuilsSettings _tuilsSettings;
         private readonly IGenericAttributeService _genericAttributeService;
         private readonly ILocalizationService _localizationService;
@@ -55,7 +56,8 @@ namespace Nop.Web.Controllers.Api
             ILocalizationService localizationService,
             MediaSettings mediaSettings,
             IPictureService pictureService,
-            IPriceFormatter priceFormatter)
+            IPriceFormatter priceFormatter,
+            PlanSettings planSettings)
         {
             this._productService = productService;
             this._workContext = workContext;
@@ -68,6 +70,7 @@ namespace Nop.Web.Controllers.Api
             this._mediaSettings = mediaSettings;
             this._pictureService = pictureService;
             this._priceFormatter = priceFormatter;
+            this._planSettings = planSettings;
         }
         #endregion
         [Route("api/products")]
@@ -242,7 +245,7 @@ namespace Nop.Web.Controllers.Api
         [Route("api/products/{productId}/pictures/{pictureId}")]
         [HttpDelete]
         [AuthorizeApi]
-        public IHttpActionResult GetPictures(int productId, int pictureId)
+        public IHttpActionResult DeleteProductPicture(int productId, int pictureId)
         {
 
             var product = _productService.GetProductById(productId);
@@ -253,14 +256,18 @@ namespace Nop.Web.Controllers.Api
             
             //Minimo puede quedar con una imagen en el producto
             if (product.ProductPictures.Count <= 1)
-                return Unauthorized();
+                return BadRequest("No se pueden eliminar todas las imagenes");
             
             var picture = product.ProductPictures.FirstOrDefault(p => p.PictureId == pictureId);
             if (picture == null)
                 return NotFound();
 
-            //elimina el modelo
-            _pictureService.DeletePicture(picture.Picture);
+            //Si la imagen que desea eliminar es la por defecto para servicios, solo elimina la relacion
+            if (picture.PictureId != _catalogSettings.DefaultServicePicture)
+                _pictureService.DeletePicture(picture.Picture);
+            else
+                _productService.DeleteProductPicture(picture);
+            
 
             return Ok(new { deleted = true });
         }
@@ -288,6 +295,9 @@ namespace Nop.Web.Controllers.Api
                 //Si viene id de la foto actualiza los datos, sino inserta una nueva
                 if (pictureId.HasValue)
                 {
+                    if (pictureId.Value == _catalogSettings.DefaultServicePicture)
+                        return BadRequest("No se puede modificar la imagen de servicios por defecto. Hay que eliminarla");
+                    
                     //Valida que la foto exista
                     var prodPicture = product.ProductPictures.FirstOrDefault(p => p.PictureId == pictureId);
                     if (prodPicture == null)
@@ -298,8 +308,11 @@ namespace Nop.Web.Controllers.Api
                 }
                 else
                 {
+                    //Compara las imagenes del plan contra las imagenes activas del usuario
+                    bool activeImage = product.ProductPictures.Count < _workContext.CurrentVendor.GetCurrentPlan(_productService, _planSettings).NumPictures;
+                    
                     //Inserta la imagen y la asocia
-                    picture = _productService.InsertProductPicture(productId, fileToUpload.Data, fileToUpload.ContentType, product.GetSeName(), true, displayOrder: product.ProductPictures.Count).Picture;
+                    picture = _productService.InsertProductPicture(productId, fileToUpload.Data, fileToUpload.ContentType, product.GetSeName(), true, displayOrder: product.ProductPictures.Count, active:activeImage).Picture;
                 }
 
                 //Retorna el modelo de la imagen

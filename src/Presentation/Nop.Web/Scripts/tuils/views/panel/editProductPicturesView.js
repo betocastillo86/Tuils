@@ -28,7 +28,6 @@
                 this.template = Handlebars.compile($("#templatePictures").html());
                 this.collection = new PictureCollection();
                 this.collection.on('sync', this.showPictures, this);
-                this.collection.on('add', this.showPictures, this);
                 this.collection.on('remove', this.showPictures, this);
                 this.loadPictures();
             },
@@ -43,7 +42,7 @@
 
                 if ($(obj.target).is(".icon-delete")) return false;
                 obj.preventDefault();
-                var selectedPicture = parseInt($(obj.target).attr('data-id'));
+                var selectedPicture = parseInt($(obj.currentTarget).attr('data-id'));
                 //Si es crear imagen o si acepta cambiar la imagen la carga
                 if(selectedPicture == 0 || confirm('¿Seguro deseas cambiar esta imagen?'))
                 {
@@ -56,11 +55,13 @@
                 //Valida que la extensión y tamaño sean validos
                 if (this.isValidFileUpload(file, obj.target, 'image'))
                 {
+                    var that = this;
                     //busca la imagen que desea eliminar
                     var picture = this.selectedPictureId == 0 ? new PictureModel() : this.collection.findWhere({ Id: this.selectedPictureId });
                     picture.on('sync', function () {
-                        if (this.selectedPictureId == 0)
-                            this.collection.add(picture);
+                        this.collection.once('add', that.showPictures, that);
+                        if (that.selectedPictureId == 0)
+                            that.collection.add(picture);
                     }, this);
                     this.showLoadingBack(picture, this.$('.picture-uploader li[data-id="' + this.selectedPictureId + '"]'));
                     //picture.savePictureToProduct(file, this.productId, 1800, TuilsConfiguration.media.productthumbpicturesizeonproductdetailspage);
@@ -70,7 +71,7 @@
             removeImage: function (obj) {
                 if (confirm('¿Deseas eliminar esta imagen?'))
                 {
-                    var pictureId = parseInt($(obj.target).attr("data-id"));
+                    var pictureId = parseInt($(obj.currentTarget).attr("data-id"));
                     var picture = this.collection.findWhere({ Id: pictureId });
                     picture.on('error', function () { this.alert('Error eliminando la imagen, intenta de nuevo'); }, this);
                     picture.removeFromProduct(this.productId);

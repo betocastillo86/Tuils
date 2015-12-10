@@ -540,6 +540,15 @@
     <Content Include="Content\Images\ogProduct.png" />
     <Content Include="Content\Images\ogService.jpg" />
     <Content Include="Content\Images\ogService.png" />
+    <Content Include="Content\news\images\correo.jpg" />
+    <Content Include="Content\news\images\fb_tuils.jpg" />
+    <Content Include="Content\news\images\ico_campana.gif" />
+    <Content Include="Content\news\images\ico_msn.gif" />
+    <Content Include="Content\news\images\ico_relojArena.gif" />
+    <Content Include="Content\news\images\img_default.gif" />
+    <Content Include="Content\news\images\logo.png" />
+    <Content Include="Content\news\images\whatsapp.jpg" />
+    <Content Include="Content\news\images\ytb_tuils.jpg" />
     <Content Include="Content\weekline\jquery.weekline.css" />
     <Content Include="Content\kendo\2014.1.318\Black\editor.png" />
     <Content Include="Content\kendo\2014.1.318\Black\imagebrowser.png" />

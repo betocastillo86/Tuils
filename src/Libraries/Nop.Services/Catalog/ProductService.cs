@@ -2155,7 +2155,7 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="productId"></param>
         /// <param name="picture"></param>
-        public virtual ProductPicture InsertProductPicture(int productId, byte[] pictureBinary, string mimeType, string seoFilename, bool isNew, bool validateBinary = true, int displayOrder = 0)
+        public virtual ProductPicture InsertProductPicture(int productId, byte[] pictureBinary, string mimeType, string seoFilename, bool isNew, bool validateBinary = true, int displayOrder = 0, bool active = false)
         {
            //Inserta la imagen
             var picture = _pictureService.InsertPicture(pictureBinary, mimeType, seoFilename, isNew, validateBinary);
@@ -2166,6 +2166,7 @@ namespace Nop.Services.Catalog
             productPicture.ProductId = productId;
             productPicture.PictureId = picture.Id;
             productPicture.DisplayOrder = displayOrder;
+            productPicture.Active = active;
 
             //Guarda
             InsertProductPicture(productPicture);

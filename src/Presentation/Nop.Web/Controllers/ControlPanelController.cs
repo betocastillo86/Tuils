@@ -35,6 +35,7 @@ using Nop.Web.Models.Catalog;
 using Nop.Core.Domain.Orders;
 using Nop.Web.Extensions.Api;
 using Nop.Services.Security;
+using Nop.Web.Framework;
 
 namespace Nop.Web.Controllers
 {
@@ -733,23 +734,14 @@ namespace Nop.Web.Controllers
         #endregion
 
         #region EditProductControlPanel
-        public ActionResult EditProduct(int id)
+        [Authorize]
+        [SameVendorProduct]
+        public ActionResult EditProduct(int id, Product product)
         {
-
-            //Consulta el producto que se desea editar
-            var product = _productService.GetProductById(id);
-
-            if (product == null || product.Deleted)
-                return InvokeHttp404();
-
             //Is published?
             //Check whether the current user has a "Manage catalog" permission
             //It allows him to preview a product before publishing
             if (!product.Published && !_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
-                return InvokeHttp404();
-
-            //Si el vendedor del producto que se desea editar no es el mismo, lo saca
-            if (product.VendorId != _workContext.CurrentVendor.Id)
                 return InvokeHttp404();
 
             var model = PrepareEditProductModel(product);
