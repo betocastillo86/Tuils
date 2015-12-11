@@ -245,6 +245,7 @@
                 if (file) {
                     if (TuilsUtilities.isValidSize(obj.target)) {
                         if (TuilsUtilities.isValidExtension(obj.target, 'image')) {
+                            this.showLoadingBack(this.model, this.$(this.selectedPictureId ? '.liOfficeImage[data-id="' + this.selectedPictureId + '"]' : '.liNewOfficeImage'));
                             this.model.saveImage(file, this.selectedPictureId);
                         }
                         else {

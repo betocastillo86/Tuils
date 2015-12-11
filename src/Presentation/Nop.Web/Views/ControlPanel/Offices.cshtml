@@ -110,7 +110,7 @@
             <div id="errorSelectMap" class="alert-public" style="display:none"><span class="icon-alert"></span> <p>Selecciona un punto en el mapa</p><br></div>
 
 
-            <div class="title">Imagenes de la sede</div>
+            <div class="title titleOffImg">Imagenes de la sede</div>
             <div id="divPictures"></div>
         </div>
         <hr />
@@ -141,13 +141,13 @@
 <script type="text/x-handlebars-template" id="templatePictures">
     <ul class="picture-uploader">
         {{#each pictures}}
-        <li data-id="{{Id}}">
+        <li class="liOfficeImage" data-id="{{Id}}">
             <i class="icon-delete" data-id="{{Id}}"></i>
             <img src="{{ImageUrl}}?r={{random}}" title="{{Title}}" alt="{{AlternateText}}" />
         </li>
         {{/each}}
         {{#if allowMoreImages }}
-        <li>
+        <li class="liNewOfficeImage">
             <i class="icon-delete" style="display:none"></i>
             <span class="icon-foto" data-id="0" title="@T("offices.newimagehelp")"></span>
         </li>

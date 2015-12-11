@@ -26,6 +26,7 @@
             this.template= HandleBars.compile($("#templateListOffices").html());
             this.vendorId = parseInt(this.$("#VendorId").val());
             this.loadControls();
+            this.hidePublishButton();
         },
         loadControls : function()
         {

@@ -9,7 +9,7 @@
                 'click .HasReachedLimitOfFeature' : 'showLimitMessage'
             },
             initialize: function(args){
-            
+                this.hidePublishButton();
             },
             remove: function (obj) {
                 if (confirm("¿Seguro desea eliminar este producto?"))

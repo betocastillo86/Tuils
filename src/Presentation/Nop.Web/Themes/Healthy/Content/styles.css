@@ -2173,6 +2173,9 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
   }
 }
 
+#divNewOffice .titleOffImg {
+    display:none;
+}
 /*.ui-dialog-content {
     padding-left:10px;
     padding-right:10px;

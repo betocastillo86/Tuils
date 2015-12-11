@@ -63,8 +63,7 @@
                     this.showCategories();
                 }
 
-                if (this.isMobile())
-                    $('.btn_anuncia').hide();
+                this.hidePublishButton();
             },
             showPreviousProductCreated: function () {
                 this.viewPreviousProductCreated = new PreviousProductCreatedView({ el: '#divStep_0', model: this.model });

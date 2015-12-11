@@ -3,8 +3,7 @@
         var PublishView = BaseView.extend({
 
             initialize: function (args) {
-                if (this.isMobile())
-                    $('.btn_anuncia').hide();
+                this.hidePublishButton();
                 this.render();
             },
             render: function () {

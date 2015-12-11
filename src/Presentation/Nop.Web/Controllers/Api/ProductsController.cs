@@ -309,7 +309,7 @@ namespace Nop.Web.Controllers.Api
                 else
                 {
                     //Compara las imagenes del plan contra las imagenes activas del usuario
-                    bool activeImage = product.ProductPictures.Count < _workContext.CurrentVendor.GetCurrentPlan(_productService, _planSettings).NumPictures;
+                    bool activeImage = product.ProductPictures.Where(p => p.Active).Count() < _workContext.CurrentVendor.GetCurrentPlan(_productService, _planSettings).NumPictures;
                     
                     //Inserta la imagen y la asocia
                     picture = _productService.InsertProductPicture(productId, fileToUpload.Data, fileToUpload.ContentType, product.GetSeName(), true, displayOrder: product.ProductPictures.Count, active:activeImage).Picture;

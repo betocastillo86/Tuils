@@ -135,8 +135,10 @@
                         if (TuilsUtilities.isValidExtension(obj.target, 'image')) {
                             if (this.imageType == 'back')
                             {
+                                var that = this;
                                 this.validateImageSize(file, TuilsConfiguration.vendor.minWidthCover, TuilsConfiguration.vendor.minHeightCover, function () {
-                                    this.model.saveBackground(file);
+                                    that.showLoadingBack(that.model.fileModel, that.$('.coverPerfil'));
+                                    that.model.saveBackground(file);
                                 },
                                 function (model) {
                                     this.alert(model.message);
@@ -144,7 +146,12 @@
                                // this.model.saveBackground(file);
                             }
                             else if (this.imageType == 'main')
+                            {
+                                this.$('.img_perfil img').attr('src', '');
+                                this.showLoadingBack(this.model, this.$('.img_perfil'));
                                 this.model.saveLogo(file);
+                            }
+                                
                         }
                         else {
                             alert("La extensión del archivo no es valida");

@@ -97,6 +97,10 @@
             this.stickit();
             this.basicValidations();
         },
+        hidePublishButton : function(){
+            if (this.isMobile())
+                $('.btn_anuncia').hide();
+        },
         basicValidations : function()
         {
             //agrega las caracteristicas de tipos de datos a los combos
