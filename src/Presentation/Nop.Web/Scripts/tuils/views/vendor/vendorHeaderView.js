@@ -57,8 +57,12 @@
             {
                 this.btnEdit = this.$("#btnEditVendorHeader");
                 this.fileUpload = this.$("input[type='file']");
-                if (this.allowEdit && !this.isMobile())
+                if (this.allowEdit  && !this.isMobile())
+                {
                     this.loadImageCover();
+                    require(['draggable_background']);
+                }
+                    
                     
             },
             loadImageCover : function()
@@ -175,29 +179,30 @@
                 }
             },
             enableMoveCover: function () {
+
+                this.$('#divMainCover').css("cursor", "move");
+                //Se agrega dinamicamente el estilo para mostrar y ocultar los controles para mover el fondo
+                $('<style type="text/css" id="styleMoveCover">.out_move_cover{ display: none; } .in_move_cover{ display:block !important; } </style>').appendTo('head');
                 
-                //Activa las propiedades para poder mover el fondo
-                this.$('#divMainCover').css('overflow', 'hidden').css('height', '300px').css("cursor", "move");
-                this.$('#btnMoveCover').hide();
-                this.$('#btnChangeCover').hide();
-                this.$('#btnEditVendorHeader').hide();
-                this.$('#btnSaveCoverPosition').show();
+                //Calcula cuanto debe mover el fondo con relación a la resoliución
+                var variableHeight = screen.height * 0.078;
+                var coverPerfil = this.$('.coverPerfil');
+                var heightCover = parseInt(coverPerfil.height());
+                var imageHeightCalc = this.heightBackground - heightCover + variableHeight;
+                //Calcula a cuantos pixeles corresponde el procentaje asignado 
+                coverPerfil.css('background-position-y', '-' + (parseInt(coverPerfil.css('background-position-y')) / 100) * imageHeightCalc + 'px');
 
-                var cover = this.$('.coverPerfil');
-                cover.css('position', 'relative');
-
-                var that  = this;
-                $('.coverPerfil').draggable({
-                    axis: 'y',
-                    stop: function (event, ui) {
-                        //Quita el top para reubicar la imagen y mueve el fondo en un porcentaje
-                        var perMovement = ((ui.originalPosition.top - ui.position.top) / that.heightBackground) * 100;
-                        that.initPositionBackground += perMovement;
-                        cover.css("background-position", 'center ' + that.initPositionBackground + '%');
-                        cover.css("top", '');
+                var that = this;
+                this.$('.coverPerfil').backgroundDraggable(
+                    {
+                        axis: 'y',
+                        done: function () {
+                            //Calcula cuanto porcentaje de la imagen se movió con relación a los pixeles 
+                            var perMovement = (parseInt(coverPerfil.css('background-position-y')) / imageHeightCalc) * 100;
+                            that.initPositionBackground = perMovement *-1;
+                        }
                     }
-
-                });
+                );
             },
             restartCoverPosition : function()
             {
@@ -206,16 +211,15 @@
             },
             saveCoverPosition : function()
             {
-                this.model.set('BackgroundPosition', parseInt(this.initPositionBackground));
-                this.model.saveCoverPosition();
-                this.$('.coverPerfil').draggable('destroy');
-                this.$('#btnMoveCover').show();
-                this.$('#btnChangeCover').show();
-                this.$('#btnEditVendorHeader').show();
-                
-                this.$('#btnSaveCoverPosition').hide();
-                this.$('#divMainCover').css('data-pos', this.initPositionBackground);
-                this.$('#divMainCover').css('overflow', '').css('height', '').css("cursor", "");
+                //Guarda con un nuevo modelo ya que se debe sincronizar diferente que el modelo general
+                var modelCover = new VendorHeaderModel({ Id: this.model.get('Id'), BackgroundPosition: parseInt(this.initPositionBackground) });
+                modelCover.on('sync', this.coverPositionSaved, this);
+                modelCover.saveCoverPosition();
+            },
+            coverPositionSaved: function () {
+                //Remueve los estilos relacionados con editar el header
+                $('#styleMoveCover').remove();
+                this.$('#divMainCover').css('data-pos', this.initPositionBackground).css("cursor", '');
                 this.showCoverOptions();
             },
             switchEnabled: function (editing)

@@ -12,19 +12,25 @@
                 <span class="icon-foto" title="@T("vendor.backgroudPicture.alt")"></span>
                 <i>@T("vendor.backgroudPicture")</i>
                 <ul class="menu-cover" style="display:none">
-                    <li id="btnChangeCover"  title="@T("vendor.backgroudPicture.alt")">@T("vendor.backgroudPicture")</li>
-                    <li id="btnMoveCover" title="@T("vendor.movecover.alt")">@T("vendor.movecover")</li>
-                    <li id="btnSaveCoverPosition" title="@T("vendor.save")" style="display:none">@T("vendor.save")</li>
+                    <li id="btnChangeCover" class=" out_move_cover" title="@T("vendor.backgroudPicture.alt")">@T("vendor.backgroudPicture")</li>
+                    <li id="btnMoveCover" class=" out_move_cover" title="@T("vendor.movecover.alt")">@T("vendor.movecover")</li>
+                    <li id="btnSaveCoverPosition" class=" in_move_cover" title="@T("vendor.save")">@T("vendor.save")</li>
                     @*<li>Eliminar</li>*@
                 </ul>
             </div>
+            <style>
+                .in_move_cover{
+                    display:none;
+                }
+            </style>
+            
         }
-        <div class="grad_cv"></div>
+        <div class="grad_cv out_move_cover"></div>
     </div>
 </div>
 <div class="conte_perfil">
     <div class="container hd">
-        <div class="pos-perfil">
+        <div class="pos-perfil out_move_cover">
 
             <div class="img_perfil">
                 @if (Model.AllowEdit)
@@ -64,23 +70,23 @@
                     }
                     else
                     {
-                        if(string.IsNullOrEmpty(Model.Description))
+                        if (string.IsNullOrEmpty(Model.Description))
                         {
 
-                            <span class="phone_initial"><i class="icon-tel"></i> <span>@Model.PhoneNumber</span><br/></span>
+                            <span class="phone_initial"><i class="icon-tel"></i> <span>@Model.PhoneNumber</span><br /></span>
                         }
                         else
                         {
-                          @Model.Description
+                            @Model.Description
                         }
 
-                   }    
+                    }
                 </p>
                 @if (Model.AllowEdit)
                 {
                     @Html.TextAreaFor(m => m.Description, new { style = "display:none", tuils_for = "edit", maxLength = "300", placeholder = "Ingrese una breve descripción de su negocio" })
                 }
-                
+
                 <div class="ctl-tarjetas" tuils-for="show">
                     <li id="liShipping" @(Model.EnableShipping ? string.Empty : "style=display:none") title="@T("vendor.enableShipping.description")">@T("vendor.enableShipping") <span class="icon-envio"></span></li>
                     <li id="liCreditCard" @(Model.EnableCreditCardPayment ? string.Empty : "style=display:none") title="@T("vendor.enableCreditCard.description")">@T("vendor.enableCreditCard") <span class="icon-card"></span></li>
@@ -103,7 +109,7 @@
                 <div class="btpfl">
                     @if (Model.AllowEdit)
                     {
-                        <div id="btnEditVendorHeader" class="button-1 btn_perfil" title="@T("vendor.edit.alt")" tuils-textedit="@T("vendor.edit")" tuils-textsave="@T("vendor.save")">@T("vendor.edit")</div>
+                        <div id="btnEditVendorHeader" class="button-1 btn_perfil  out_move_cover" title="@T("vendor.edit.alt")" tuils-textedit="@T("vendor.edit")" tuils-textsave="@T("vendor.save")">@T("vendor.edit")</div>
                     }
                     else
                     {

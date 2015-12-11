@@ -1067,6 +1067,7 @@
     <Content Include="Scripts\backbone.stickit.min.js" />
     <Content Include="Scripts\combined.js" />
     <Content Include="Scripts\css.js" />
+    <Content Include="Scripts\draggable_background.js" />
     <Content Include="Scripts\handlebars.amd.js" />
     <Content Include="Scripts\handlebars.amd.min.js" />
     <Content Include="Scripts\handlebars.js" />
