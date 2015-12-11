@@ -41,8 +41,11 @@
 
                 </li>
             }
-
-            <li id="nav-close-btn">Cerrar</li>
+            @*@if (Model.IsMobileDevice)
+            {
+                <li id="nav-close-btn">Cerrar</li>
+            }*@
+            
         </ul>
         @if (!Model.IsMobileDevice)
         {

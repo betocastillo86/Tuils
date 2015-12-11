@@ -80,19 +80,19 @@
                 this.currentView = new PublishView({ el : this.defaultEl });
             },
             sellProduct: function (step) {
-                this.sellSwitch(TuilsConfiguration.productBaseTypes.product);
+                this.sellSwitch(TuilsConfiguration.productBaseTypes.product, step);
             },
             sellBike: function (step) {
-                this.sellSwitch(TuilsConfiguration.productBaseTypes.bike);
+                this.sellSwitch(TuilsConfiguration.productBaseTypes.bike, step);
             },
             sellService: function (step) {
-                this.sellSwitch(TuilsConfiguration.productBaseTypes.service);
+                this.sellSwitch(TuilsConfiguration.productBaseTypes.service, step);
             },
             selectPlan: function (id) {
                 this.currentView = new SelectPlanView({ el: this.defaultEl, id: parseInt(id) });
                 this.loadSubViews();
             },
-            sellSwitch: function (type) {
+            sellSwitch: function (type, step) {
                 if (!this.currentView) {
                     this.currentView = new PublishProductView({ el: this.defaultEl, productType: type });
                 }
