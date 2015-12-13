@@ -202,6 +202,13 @@
             },
             setAddress : function(address){
                 this.model.set('Address', address.address);
+                var selectedCity = this.$("#ddlStateProvinceId option").filter(function () {
+                    return this.text == address.cityName;
+                });
+
+                if(selectedCity.length)
+                    this.model.set('StateProvinceId', selectedCity.val());
+                
             },
             render : function()
             {

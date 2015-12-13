@@ -3,6 +3,7 @@
     ViewBag.Title = "ConfirmationWithoutPlan";
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
     Html.AddTitleParts(T(string.Concat("PageTitle.ConfirmationWithoutPlan", Model.VendorType)).Text);
+    Html.AddHeadFacebookPixel("AddToCart");   
 }
 
 
@@ -17,5 +18,3 @@
         <p>@T("PublishProduct.TimeOutPost"+Model.VendorType, Model.LimitDaysOfProductPublished)</p>
         @Html.ActionLink(T("SelectFeaturedAttributesByPlan.gotoMyProducts").Text, "MyProducts", "ControlPanel", new { p = false }, new { })
     </div>
-
-

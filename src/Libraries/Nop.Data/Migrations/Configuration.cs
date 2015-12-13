@@ -2538,6 +2538,7 @@ namespace Nop.Data.Migrations
                 settings.Add("ordersettings.minutesbeforecanaddplantocart", "2");
                 settings.Add("vendorsettings.DaysUpdateShopFirstEmail", "2");
                 settings.Add("vendorsettings.DaysUpdateShopSecondEmail", "30");
+                settings.Add("commonSettings.ActiveFacebookPixels", "701079780023326");
 
                 
                 

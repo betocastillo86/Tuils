@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Nop.Core.Infrastructure;
+using Nop.Core.Domain.Common;
 
 namespace Nop.Web.Framework.UI
 {
@@ -296,6 +297,44 @@ namespace Nop.Web.Framework.UI
         {
             var pageHeadBuilder = EngineContext.Current.Resolve<IPageHeadBuilder>();
             pageHeadBuilder.AddHeadCustomParts(part);
+        }
+
+
+        public static void AddHeadFacebookPixel(this HtmlHelper html, string action, int part = 0)
+        {
+            var settings = EngineContext.Current.Resolve<CommonSettings>();
+
+            //Valida que la llave este configurada
+            if (!string.IsNullOrEmpty(settings.ActiveFacebookPixels))
+            {
+                //realiza split para buscar el pixel por indice
+                var activePixels = settings.ActiveFacebookPixels.Split(new char[]{ '-' });
+                if (activePixels.Length < part + 1)
+                    return;
+
+                string pixelId = activePixels[part];
+                
+                var pixelString = new System.Text.StringBuilder();
+                pixelString.Append("<!-- Facebook Pixel Code -->");
+                pixelString.Append("<script>");
+                pixelString.Append("!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?");
+                pixelString.Append("n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;");
+                pixelString.Append("n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;");
+                pixelString.Append("t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,");
+                pixelString.Append("document,'script','//connect.facebook.net/en_US/fbevents.js');");
+                pixelString.AppendFormat("fbq('init', '{0}');", pixelId);
+                pixelString.AppendFormat("fbq('track', \"{0}\");</script>", action);
+                pixelString.Append("<noscript><img height=\"1\" width=\"1\" style='display:none'");
+                pixelString.AppendFormat("src=\"https://www.facebook.com/tr?id={0}&ev={1}&noscript=1\"", pixelId, action);
+                pixelString.Append("/></noscript>");
+                pixelString.Append("<!-- End Facebook Pixel Code -->");
+
+                var pageHeadBuilder = EngineContext.Current.Resolve<IPageHeadBuilder>();
+                pageHeadBuilder.AddHeadCustomParts(pixelString.ToString());
+            }
+
+
+            
         }
 
         /// <summary>
