@@ -450,14 +450,23 @@ namespace Nop.Web.Controllers
             #region Product price
 
             model.ProductPrice.ProductId = product.Id;
-            model.ProductPrice.Price = _priceFormatter.FormatPrice(product.Price);
             model.ProductPrice.ShowSnippets = showRichSnippets;
-            if (product.SuppliesValue > 0)
+
+            if (product.CallForPrice)
             {
-                model.SuppliesValue = product.SuppliesValue;
-                model.SuppliesValueStr = _priceFormatter.FormatPrice(product.SuppliesValue);
+                model.ProductPrice.CallForPrice = true;
             }
-            
+            else
+            {
+                model.ProductPrice.Price = _priceFormatter.FormatPrice(product.Price);
+                
+                if (product.SuppliesValue > 0)
+                {
+                    model.SuppliesValue = product.SuppliesValue;
+                    model.SuppliesValueStr = _priceFormatter.FormatPrice(product.SuppliesValue);
+                }
+            }
+
 
             #region Codigo Eliminado
             //No es necesario realizar validaciones del precio ya que actualmente solo posee un único precio

@@ -301,17 +301,7 @@ namespace Nop.Web.Controllers
             {
                 int vendorId = _workContext.CurrentVendor.Id;
                 var model = new VendorServicesModel();
-                var specialCategories = _vendorService.GetSpecialCategoriesByVendorId(vendorId);
-                model.SpecializedCategories = specialCategories.Where(c => c.SpecialType == Core.Domain.Vendors.SpecialCategoryVendorType.SpecializedCategory)
-                    .Select(c => c.CategoryId)
-                    .ToList();
-                model.BikeReferences = specialCategories.Where(c => c.SpecialType == Core.Domain.Vendors.SpecialCategoryVendorType.BikeBrand)
-                    .Select(c => c.CategoryId)
-                    .ToList();
-                model.SpecializedCategoriesString = model.SpecializedCategories.ToStringSeparatedBy();
-                model.BikeReferencesString = model.BikeReferences.ToStringSeparatedBy();
-                model.VendorSeName = _workContext.CurrentVendor.GetSeName();
-
+                model = PrepareVendorServicesModel(model, vendorId);
                 return View(model);
             }
             else
@@ -324,6 +314,8 @@ namespace Nop.Web.Controllers
 
             if (_workContext.CurrentVendor != null)
             {
+                int vendorId = _workContext.CurrentVendor.Id;
+
                 //Toma la cadena separada por comas y crea una lista de categorias relacinoadas
                 List<SpecialCategoryVendor> bikeReferences;
                 if (!string.IsNullOrEmpty(model.BikeReferencesString))
@@ -360,6 +352,8 @@ namespace Nop.Web.Controllers
                 _vendorService.InsertUpdateVendorSpecialCategories(_workContext.CurrentVendor.Id, bikeReferences.Concat(specializedCategories).ToList());
 
                 model.ConfirmMessage = _localizationService.GetResource("VendorServices.Confirm");
+                //Actualiza los demás datos
+                PrepareVendorServicesModel(model, vendorId);
 
                 return View(model);
             }
@@ -368,6 +362,23 @@ namespace Nop.Web.Controllers
                 return this.HttpNotFound();
             }
 
+        }
+
+
+        private VendorServicesModel PrepareVendorServicesModel(VendorServicesModel model, int vendorId)
+        {
+            var specialCategories = _vendorService.GetSpecialCategoriesByVendorId(vendorId);
+            model.SpecializedCategories = specialCategories.Where(c => c.SpecialType == Core.Domain.Vendors.SpecialCategoryVendorType.SpecializedCategory)
+                .Select(c => c.CategoryId)
+                .ToList();
+            model.BikeReferences = specialCategories.Where(c => c.SpecialType == Core.Domain.Vendors.SpecialCategoryVendorType.BikeBrand)
+                .Select(c => c.CategoryId)
+                .ToList();
+            model.SpecializedCategoriesString = model.SpecializedCategories.ToStringSeparatedBy();
+            model.BikeReferencesString = model.BikeReferences.ToStringSeparatedBy();
+            model.VendorSeName = _workContext.CurrentVendor.GetSeName();
+
+            return model;
         }
         #endregion
 

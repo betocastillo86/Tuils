@@ -3,17 +3,26 @@
 
 <div class="prices">
 
-
-    <div class="product-price">
-        <span itemprop="price" class="price-value-@(Model.ProductId)">
-            @Html.Raw(Model.Price)
-        </span>
-        
-    </div>
-    @if (!String.IsNullOrEmpty(Model.CurrencyCode))
+    @if (Model.CallForPrice)
     {
-        <meta itemprop="priceCurrency" content="@Model.CurrencyCode" />
+        @*call for price*@
+        <div class="product-price call-for-price">
+            <span>@T("Products.CallForPrice")</span>
+        </div>
     }
-    <meta itemprop="price" content="@Model.PriceValue" />
+    else
+    {
+        <div class="product-price">
+            <span itemprop="price" class="price-value-@(Model.ProductId)">
+                @Html.Raw(Model.Price)
+            </span>
+
+        </div>
+        if (!String.IsNullOrEmpty(Model.CurrencyCode))
+        {
+            <meta itemprop="priceCurrency" content="@Model.CurrencyCode" />
+        }
+        <meta itemprop="price" content="@Model.PriceValue" />
+    }
 
 </div>

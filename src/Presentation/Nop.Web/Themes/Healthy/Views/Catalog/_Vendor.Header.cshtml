@@ -86,12 +86,17 @@
                 {
                     @Html.TextAreaFor(m => m.Description, new { style = "display:none", tuils_for = "edit", maxLength = "300", placeholder = "Ingrese una breve descripción de su negocio" })
                 }
+                
+                @if (Model.AllowEdit || Model.EnableShipping || Model.EnableCreditCardPayment)
+                {
+                    <div class="ctl-tarjetas" tuils-for="show" @((Model.EnableShipping || Model.EnableCreditCardPayment) ? string.Empty : "style=display:none")>
+                        <li id="liShipping" @(Model.EnableShipping ? string.Empty : "style=display:none") title="@T("vendor.enableShipping.description")">@T("vendor.enableShipping") <span class="icon-envio"></span></li>
+                        <li id="liCreditCard" @(Model.EnableCreditCardPayment ? string.Empty : "style=display:none") title="@T("vendor.enableCreditCard.description")">@T("vendor.enableCreditCard") <span class="icon-card"></span></li>
+                        <br />
+                    </div>
+                }
 
-                <div class="ctl-tarjetas" tuils-for="show">
-                    <li id="liShipping" @(Model.EnableShipping ? string.Empty : "style=display:none") title="@T("vendor.enableShipping.description")">@T("vendor.enableShipping") <span class="icon-envio"></span></li>
-                    <li id="liCreditCard" @(Model.EnableCreditCardPayment ? string.Empty : "style=display:none") title="@T("vendor.enableCreditCard.description")">@T("vendor.enableCreditCard") <span class="icon-card"></span></li>
-                    <br />
-                </div>
+                
                 @if (Model.AllowEdit)
                 {
                     <div class="ctl-switch" style="display:none" tuils-for="edit">

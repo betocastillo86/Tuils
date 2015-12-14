@@ -1217,6 +1217,9 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("showplans.specificationattributedisplayorder.2", "<span class='icon-star'></span><span class='icon-star'></span><span class='icon-star'></span>");
                 newLocaleStringResources.Add("showplans.specificationattributedisplayorder.3", "<span class='icon-star'></span><span class='icon-star'></span>");
                 newLocaleStringResources.Add("Home.Vendors.Title", "Almacenes y talleres de confianza");
+                newLocaleStringResources.Add("PublishProduct.CallForPrice.Alt", "Si el precio de su servicio solo se puede calcular por cotización marque la siguiente casilla");
+                newLocaleStringResources.Add("PublishProduct.CallForPrice", "Precio depende de cotización");
+                
                 
                 
 

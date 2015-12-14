@@ -93,6 +93,8 @@ namespace Nop.Web.Models.Catalog
 
             public bool ForceRedirectionAfterAddingToCart { get; set; }
 
+            public bool CallForPrice { get; set; }
+
             /// <summary>
             /// A value indicating whether we should display tax/shipping info (used in Germany)
             /// </summary>

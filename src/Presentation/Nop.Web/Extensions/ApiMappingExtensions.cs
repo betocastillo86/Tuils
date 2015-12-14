@@ -31,6 +31,7 @@ namespace Nop.Web.Extensions.Api
             entity.IsShipEnabled = model.IsShipEnabled;
             //entity.AdditionalShippingCharge = model.AdditionalShippingCharge;
             entity.Price = model.Price;
+            entity.CallForPrice = model.CallForPrice;
 
             var _tuilsSettings = EngineContext.Current.Resolve<TuilsSettings>();
 

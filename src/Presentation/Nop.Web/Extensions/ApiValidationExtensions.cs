@@ -47,6 +47,9 @@ namespace Nop.Web.Extensions.Api
         {
             var tuilsSettings = EngineContext.Current.Resolve<TuilsSettings>();
 
+            if(!model.CallForPrice && model.Price <= 0)
+                modelState.AddModelError("PriceId", "El precio es obligatorio");
+
             if (model.ProductTypeId == tuilsSettings.productBaseTypes_product)
             {
                 //Si es tipo producto

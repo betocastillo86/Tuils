@@ -17,6 +17,9 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                 this.on('change:IncludeSupplies', function (){
                     this.set('IncludeSuppliesName', this.get('IncludeSupplies') ? 'Si' : 'No')
                 }, this);
+                this.on('change:CallForPrice', function () {
+                    this.set('Price', this.get('CallForPrice') ? 0 : '');
+                });
             },
 
             validation: {
@@ -53,14 +56,14 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                     pattern: 'number'
                 },  
                 Price: {
-                    required: true,
+                    required: function (val, attr, computed) {
+                        //El precio es obligatorio si se debe llamar por el precio
+                        return !computed.CallForPrice;
+                    },
                     pattern: 'number'
                 },
                 Color: {
-                    required: function (val, attr, computed) {
-                        //return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.bike;
-                        return false;
-                    },
+                    required: false,
                     pattern: 'number'
                 },
                 PhoneNumber: {
@@ -103,6 +106,9 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                     required: true,
                     pattern: 'number'
                 },
+                CallForPrice: {
+                    required:false
+                },
                 DetailShipping: {
                     required: function (val, attr, computed) {
                         return computed.IsShipEnabled && computed.ProductTypeId == TuilsConfiguration.productBaseTypes.service;
@@ -142,7 +148,8 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                 IncludeSupplies : 'Incluye los insumos',
                 SuppliesValue: 'Valor de Insumos',
                 Supplies: 'Insumos',
-                PhoneNumber : 'Número de contacto'
+                PhoneNumber: 'Número de contacto',
+                CallPrice : 'Precio por cotización'
 
             },
             publish: function () {

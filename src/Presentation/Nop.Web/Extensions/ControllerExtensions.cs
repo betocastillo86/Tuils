@@ -330,7 +330,8 @@ namespace Nop.Web.Extensions
                     var priceModel = new ProductOverviewModel.ProductPriceModel
                     {
                         ForceRedirectionAfterAddingToCart = forceRedirectionAfterAddingToCart,
-                        Price = priceFormatter.FormatPrice(product.Price)
+                        Price = priceFormatter.FormatPrice(product.Price),
+                        CallForPrice = product.CallForPrice
                     };
 
                     model.ProductPrice = priceModel;

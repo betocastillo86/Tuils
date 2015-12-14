@@ -49,9 +49,11 @@ define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars
                 this.productProperties = new Array();
 
                 pushProperty(this, 'Name');
-                
-                this.productProperties.push({ name: this.model.labels.Price, value: this.model.get('Price').toPesos() });
 
+
+                if (this.model.get('Price'))
+                    this.productProperties.push({ name: this.model.labels.Price, value: this.model.get('Price').toPesos() });
+                
 
                 if (this.productType == TuilsConfiguration.productBaseTypes.product) {
                     pushProperty(this, 'ManufacturerId', true);

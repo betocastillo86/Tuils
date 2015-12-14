@@ -32,7 +32,7 @@
                 <div class="resumen-product">
                     <div class="title">@T("featuredProduct.ProductInformationTitle")</div>
                     <p><b>@T("publishproduct.producttitle"):</b>  @Model.ProductDetails.Name</p>
-                    <p><b>@T("myorders.price"):</b>  @Model.ProductDetails.ProductPrice.Price</p>
+                    <p><b>@T("myorders.price"):</b>  @(Model.ProductDetails.ProductPrice.CallForPrice ? T("Products.CallForPrice").Text : Model.ProductDetails.ProductPrice.Price)</p>
 
                     @if (Model.ProductDetails.Manufacturers.Count > 0)
                     {

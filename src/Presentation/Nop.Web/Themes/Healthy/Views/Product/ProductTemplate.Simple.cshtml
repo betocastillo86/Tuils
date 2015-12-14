@@ -103,7 +103,14 @@
                             </div>
                         }
                         <div class="product-infopluss">
-                            <h3>Información adicional</h3>
+
+                            @if (Model.SpecialCategories.Count > 0 ||
+                                Model.ProductManufacturers.Count > 0 ||
+                                Model.SuppliesValue > 0 || Model.IncludeSupplies)
+                            {
+                                <h3>Información adicional</h3>
+                            }
+
                             <!--product manufacturers-->
                             @Html.Partial("_ProductSpecialCategories", Model)
                             <!--product manufacturers-->

@@ -469,6 +469,8 @@ namespace Nop.Web.Controllers
         {
             var model = new ConfirmationWithoutPlanModel();
             model.ProductDetails.Name = product.Name;
+
+            model.ProductDetails.ProductPrice.CallForPrice = product.CallForPrice;
             model.ProductDetails.ProductPrice.Price = _priceFormatter.FormatPrice(product.Price);
             model.ProductDetails.DefaultPictureModel = product.GetPicture(_localizationService, _mediaSettings, _pictureService);
 

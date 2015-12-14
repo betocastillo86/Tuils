@@ -29,7 +29,6 @@ namespace Nop.Web.Models.Api
         //[RequiredIf("IsShipEnabled", true)]
         //public decimal AdditionalShippingCharge { get; set; }
 
-        [Required]
         public decimal Price { get; set; }
 
         public string PriceFormatted { get; set; }
@@ -68,5 +67,7 @@ namespace Nop.Web.Models.Api
         public string PhoneNumber { get; set; }
 
         public string ImageUrl { get; set; }
+
+        public bool CallForPrice { get; set; }
     }
 }

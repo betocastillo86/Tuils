@@ -10,7 +10,8 @@
             "click .btnBack": "back",
             "change #chkIsShipEnabled": "switchDoorToDoor",
             "change #chkIncludeSupplies": "switchSupplies",
-            "change #chkHasSpecialBikes" : 'switchBikeReferences'
+            "change #chkHasSpecialBikes": 'switchBikeReferences',
+            'change #chkCallForPrice' : 'switchCallForPrice'
         },
 
         bindings: {
@@ -54,6 +55,7 @@
                     return parseInt(value);
                 }
             },
+            '#chkCallForPrice': 'CallForPrice',
             "#txtBikeReferencesProduct": {
                 observe: "SpecialCategories",
                 onSet: function (value) {
@@ -166,6 +168,9 @@
             //this.switchShipping();
             if(this.productType != TuilsConfiguration.productBaseTypes.product)
                 this.myStickit();
+
+            if (this.model.get('CallForPrice'))
+                this.$('#divPrice').hide();
         },
         //loadHtmlEditor: function () {
         //    //el HTML no está habilitado para las motos
@@ -245,18 +250,16 @@
         //        this.$("[tuils-for='shipping']").hide();
         //},
         switchSupplies: function (obj) {
-            if (this.$("#chkIncludeSupplies").prop("checked")) {
-                this.$("[tuils-for='no-supplies']").hide();
-            }
-            else {
-                this.$("[tuils-for='no-supplies']").show();
-            }
+            this.$("[tuils-for='no-supplies']").css('display', !obj.currentTarget.checked ? 'block' : 'none');
         },
         switchDoorToDoor: function (obj) {
-            this.$("[tuils-for='no-doorToDoor']").css('display', this.$("#chkIsShipEnabled").prop("checked") ? 'block' : 'none');
+            this.$("[tuils-for='no-doorToDoor']").css('display', obj.currentTarget.checked ? 'block' : 'none');
         },
         switchBikeReferences: function (obj) {
-            this.$("#divBikeReferences").css("display", this.$("#chkHasSpecialBikes").prop("checked") ? "block" : "none");
+            this.$("#divBikeReferences").css("display", obj.currentTarget.checked ? "block" : "none");
+        },
+        switchCallForPrice: function (obj) {
+            this.$("#divPrice").css('display', obj.currentTarget.checked ? 'none' : 'block');
         },
         save: function () {
             //this.model.set({ FullDescription: this.$("#productHtml_textarea").val() });
