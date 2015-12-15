@@ -101,7 +101,7 @@
                 this.removeErrors();
                 this.model.clear();
                 this.model.set('VendorId', this.vendorId);
-                this.viewMap.loadMap({showAddress : true });
+                this.viewMap.loadMap({showAddress : true, draggable:true });
             },
             deleteById : function(id)
             {
@@ -113,7 +113,7 @@
             showAddress : function()
             {
                 this.$("#ddlStateProvinceId").val(this.model.get('StateProvinceId'));
-                this.viewMap.loadMap({ lat: this.model.get('Latitude'), lon: this.model.get('Longitude'), showAddress: true });
+                this.viewMap.loadMap({ lat: this.model.get('Latitude'), lon: this.model.get('Longitude'), showAddress: true, draggable:true });
 
                 //Carga el horario
                 this.setSchedule();

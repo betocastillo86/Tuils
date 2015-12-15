@@ -58,6 +58,7 @@
             this.validateControls(undefined, false);
 
             if (this.model.isValid()) {
+                this.showLoadingAll(this.model);
                 this.model.login();
             }
         },

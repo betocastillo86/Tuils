@@ -258,6 +258,7 @@
                 document.location.href = '/mis-productos/seleccionar-plan/' + this.model.get('Id');
             },
             save: function () {
+                this.showLoadingAll(this.model);
                 this.validateAuthorization();
                 this.model.publish();
             }

@@ -16,7 +16,8 @@
         loadMap: function (args) {
             this.locations = args.locations;
             var myOptions = {
-                zoom: 14,
+                zoom: 16,
+                draggable : args.draggable,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             this.map = new google.maps.Map(this.$el[0], myOptions);

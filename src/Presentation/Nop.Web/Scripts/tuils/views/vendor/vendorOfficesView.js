@@ -51,6 +51,9 @@
                     var officeId = parseInt(objOffice.attr('data-id'));
                     this.changeOffice(officeId);
                 }
+                
+                if(this.domOffices.length <= 1)
+                    this.$('.btn-sedes').hide();
             },
             loadMap : function()
             {
@@ -105,7 +108,7 @@
                     that.officeCollection.push({ lat: parseFloat(element.attr('data-lat').replace(",", ".")), lon: parseFloat(element.attr('data-lon').replace(",", ".")), id: parseInt(element.attr('data-id')) });
                 });
 
-                this.viewMap.loadMap({ locations: this.officeCollection });
+                this.viewMap.loadMap({ locations: this.officeCollection, draggable : false });
             },
             loadGallery : function()
             {

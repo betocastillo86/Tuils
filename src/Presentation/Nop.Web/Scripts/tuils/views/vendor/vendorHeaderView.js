@@ -10,7 +10,7 @@
                 "change input[type='file']": "saveImage",
                 "click #btnMoveCover": "enableMoveCover",
                 "click #btnSaveCoverPosition": "saveCoverPosition",
-                'click .icon-foto': 'showCoverOptions'
+                'click #divMainCover .cover-editor': 'showCoverOptions'
             },
             //No hace binding real pero sirve para marcar los errores
             bindings: {
@@ -18,7 +18,7 @@
                 '#Description' : 'Description'
             },
 
-
+            hideCoverOptions: function () { alert('a');},
             id: 0,
 
             allowEdit : false,
@@ -62,7 +62,6 @@
                     this.loadImageCover();
                     require(['draggable_background']);
                 }
-                    
                     
             },
             loadImageCover : function()
@@ -125,9 +124,21 @@
                 this.imageType = 'main';
                 this.fileUpload.click();
             },
-            showCoverOptions: function () {
-                var display = $('.cover-editor .menu-cover').css('display') == 'none' ? 'block' : 'none';
-                this.$('.cover-editor .menu-cover').css('display', display);
+            showCoverOptions: function (e) {
+
+                if (e.target.id == 'btnMoveCover')
+                    return;
+
+                //Si es desde un dispositivo movil abre automáticamente la carga de archivos
+                if (!this.isMobile())
+                {
+                    var display = $('.cover-editor .menu-cover').css('display') == 'none' ? 'block' : 'none';
+                    this.$('.cover-editor .menu-cover').css('display', display);
+                }
+                else
+                    this.changeBackgroundPicture();
+
+                
             },
             saveImage : function (obj)
             {
@@ -152,19 +163,19 @@
                             else if (this.imageType == 'main')
                             {
                                 this.$('.img_perfil img').attr('src', '');
-                                this.showLoadingBack(this.model, this.$('.img_perfil'));
+                                this.showLoadingBack(this.model.fileModel, this.$('.img_perfil'));
                                 this.model.saveLogo(file);
                             }
                                 
                         }
                         else {
-                            alert("La extensión del archivo no es valida");
+                            this.alert("La extensión del archivo no es valida");
                         }
                         
                     }
                     else
                     {
-                        alert("El tamaño excede el limite");
+                        this.alert("El tamaño excede el limite");
                     }
                 }
             },
