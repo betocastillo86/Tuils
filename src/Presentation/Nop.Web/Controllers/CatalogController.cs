@@ -1455,7 +1455,8 @@ namespace Nop.Web.Controllers
 
             //Agrega al view data que no cargue los estilos del ancho del template
             ViewData.Add("noWidth", true);
-
+            this.HidePublishButton();
+            model.IsMobileDevice = Request.Browser.IsMobileDevice;
             return View(model);
         }
 

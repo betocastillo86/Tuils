@@ -30,5 +30,15 @@ namespace Nop.Web.Controllers
             return new EmptyResult();
         }
 
+        
+        /// <summary>
+        /// Permite enviar un ViewData con la info para ocultar el boton de publicar
+        /// </summary>
+        [NonAction]
+        protected void HidePublishButton()
+        {
+            this.ViewData.Add("hidePublishButton", true);
+        }
+
     }
 }

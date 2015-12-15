@@ -1032,6 +1032,43 @@ html.oldie .container { width: 940px; }
         .btn_anuncia i{display: block;}
         .btn_anuncia b{display: none;}
 
+
+    .hide-button-resp {
+        display:none !important;
+    }
+
+    .btn_float_bottom {
+        position: fixed; 
+        bottom: 0; 
+        left: 0; 
+        border-radius: 0; 
+        width: 100%; 
+        top: auto; 
+        padding:15px 0; 
+        
+    }
+    .btn_contact_responsive {
+        background: rgb(246,113,78); 
+        transition:ease all 0.2s; 
+        background: -moz-linear-gradient(top,  rgba(246,113,78,1) 0%, rgba(245,78,26,1) 100%); 
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(246,113,78,1)), color-stop(100%,rgba(245,78,26,1))); 
+        background: -webkit-linear-gradient(top,  rgba(246,113,78,1) 0%,rgba(245,78,26,1) 100%); 
+        background: -o-linear-gradient(top,  rgba(246,113,78,1) 0%,rgba(245,78,26,1) 100%);
+        background: -ms-linear-gradient(top,  rgba(246,113,78,1) 0%,rgba(245,78,26,1) 100%);
+        background: linear-gradient(to bottom,  rgba(246,113,78,1) 0%,rgba(245,78,26,1) 100%); 
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6714e', endColorstr='#f54e1a',GradientType=0 );
+    }
+
+    .options-container {
+        position: fixed;
+        bottom: 60px;
+        background-color: #FFF;
+        margin: 10px;
+        width: calc(100% - 20px);
+        border-radius: 5px;
+    }
+
+
     input[type="text"],input[type="password"], select{width:calc(100% - 20px);}
     .field-validation-error{margin:0 20px 0 0;}
     .master-wrapper-page .center-2.columns.ten input[type="text"], .master-wrapper-page .center-2.columns.ten select{width:calc(100% - 20px);}

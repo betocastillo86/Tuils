@@ -25,7 +25,7 @@
     <div class="search-box">
         @Html.Action("SearchBox", "Catalog")
     </div>
-    <a href="@Url.Action("Index", "Sales")" class="btn_anuncia">
+    <a href="@Url.Action("Index", "Sales")" class="btn_anuncia @(this.ViewData["hidePublishButton"] != null && Convert.ToBoolean(this.ViewData["hidePublishButton"]) ? "hide-button-resp" : string.Empty)">
         <i>@T("header.publishproduct.widescreen")</i>
         <b>@T("header.publishproduct.mobile")</b>
     </a>

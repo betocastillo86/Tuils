@@ -11,17 +11,20 @@
 
             viewQuestions: undefined,
 
+            alreadyBougth : false,
+
             //Bandera que valida si el usuario efectivamente quería ver el vendedor
             //Esto ayuda a controlar que si el usuario se autentica no cargue información que no debe
            // wantedToShowVendor : false,
 
             events: {
                 'click #btnShowVendor': 'createOrder',
+                'click #btnShowVendorResponsive': 'createOrder',
+                'click #btnCancelMoreInfoResp' : 'cancelMoreInfoResp',
                 'click .rating a' : 'showReviews'
             },
 
             initialize: function (args) {
-
                 this.loadControls();
 
                 this.model = new ProductModel();
@@ -79,6 +82,12 @@
                 this.requiredViewsWithAuthentication.push(this.viewQuestions);
             },
             createOrder: function (e) {
+                if (this.alreadyBougth)
+                {
+                    this.redirectToVendor();
+                    return;
+                }
+                    
                 if (e && e.target)
                 {
                     var obj = $(e.target);
@@ -92,6 +101,9 @@
                 this.showLoadingAll();
                 this.model.moreInfo();
             },
+            cancelMoreInfoResp: function () {
+                this.$('#divVendorInfoResponsive').hide();
+            },
             //userAuthenticated: function () {
             //    //Si quería comprar el producto, despues de aautenticarse realiza de nuevo un intento
             //    //if (this.wantedToShowVendor)
@@ -101,17 +113,26 @@
             //   // }
             //},
             redirectToVendor: function () {
-                //Traquea que un usuario a intentado comprar un producto
-                //this.trackGAEvent('Compra', 'Exitosa');
-                if (this.vendorUrl) {
-                    displayAjaxLoading(true);
-                    document.location.href = this.vendorUrl;
+
+                if (this.isMinSize())
+                    this.$('#divVendorInfoResponsive').show();
+                else
+                {
+                    //Traquea que un usuario a intentado comprar un producto
+                    //this.trackGAEvent('Compra', 'Exitosa');
+                    if (this.vendorUrl) {
+                        displayAjaxLoading(true);
+                        document.location.href = this.vendorUrl;
+                    }
+                    else {
+                        this.$('#btnShowVendor').hide();
+                        this.$('.product-vendor').show();
+                        this.scrollFocusObject('.product-vendor', -50);
+                    }
                 }
-                else {
-                    this.$('#btnShowVendor').hide();
-                    this.$('.product-vendor').show();
-                    this.scrollFocusObject('.product-vendor', -50);
-                }  
+
+                this.alreadyBougth = true;
+
             }
         });
 

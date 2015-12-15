@@ -1012,6 +1012,8 @@ namespace Nop.Web.Controllers
 
             model.IsMobileDevice = Request.Browser.IsMobileDevice;
 
+
+            this.HidePublishButton();
             return View(model.ProductTemplateViewPath, model);
         }
 

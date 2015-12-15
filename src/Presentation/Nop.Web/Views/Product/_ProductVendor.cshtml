@@ -16,4 +16,28 @@
                 <p><span class="label">@T("Products.Vendor.Shop"): </span><span class="value"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })" itemprop="name">@Model.VendorModel.Name</a></span></p>
             }
         </div>
+
+
+        if (Model.IsMobileDevice)
+        {
+            <div id="divVendorInfoResponsive" class="options-container" style="display:none">
+                <ul>
+                    
+                    @if (Model.VendorModel.VendorType == Nop.Core.Domain.Vendors.VendorType.Market)
+                    {
+                        <li><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">Visitar @Model.VendorModel.Name</a></li>
+                    }
+                    <li><a href="#product-questions">Deja una pregunta</a></li>
+                    <li><a href="tel:@Model.VendorModel.PhoneNumber">Llamar a @Model.VendorModel.PhoneNumber</a></li>
+                    <li id="btnCancelMoreInfoResp">Cancelar</li>
+                </ul>
+            </div>
+
+            <a id="btnShowVendorResponsive" class="btn_float_bottom btn_contact_responsive">
+                <b>Mira la info del vendedor</b>
+            </a>
+        }
+
+
+
     }
