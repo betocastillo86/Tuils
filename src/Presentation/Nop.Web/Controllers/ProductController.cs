@@ -283,7 +283,8 @@ namespace Nop.Web.Controllers
                             VendorShippingEnabled = vendor.EnableShipping ?? false,
                             CreditCardEnabled = vendor.EnableCreditCardPayment ?? false,
                             PhoneNumber = vendor.PhoneNumber,
-                            VendorType = vendor.VendorType
+                            VendorType = vendor.VendorType,
+                            VendorSubType = vendor.VendorSubType
                         };
 
                         //Solo muestra productos del mismo vendedor si este es Tienda o taller

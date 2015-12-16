@@ -4,17 +4,37 @@
     @*Si el usuario ya compró el producto se muestra el link al vendedor*@
     @if (Model.ShowVendor)
     {
+        <div id="phoneHashed">
+            @if (!string.IsNullOrEmpty(Model.VendorModel.PhoneNumber) && Model.VendorModel.PhoneNumber.Length > 3)
+            { 
+                @(string.Format("{0}XXXXXXX", Model.VendorModel.PhoneNumber.Substring(Model.VendorModel.PhoneNumber.Length - 4, 3)))
+            }
+            
+        </div>
+        <input type="button" value="@T("Products.SeeVendor")" id="btnShowVendor" data-productid="@Model.Id" data-vendorurl="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName, pid = Model.Id })" class="button-2">
+
+
         <div class="product-vendor" itemprop="seller" itemscope itemtype="http://schema.org/Organization" style="display:@(!Model.ProductAlreadyBought ? "none" : string.Empty)">
             <h3>Informaci&oacute;n del vendedor</h3>
             
-            @if (Model.VendorModel.VendorType == Nop.Core.Domain.Vendors.VendorType.User)
+            @if (Model.VendorModel.VendorType == Nop.Core.Domain.Vendors.VendorType.Market)
             {
-                <p><span class="label"><span class="icon-tel"></span> @T("Products.Vendor.PhoneNumber"): </span><span class="value tel-vendor">@Model.VendorModel.PhoneNumber</span></p>
+                <p><span class="label"><span class="icon-loc"></span> @T("Products.Vendor.Shop"): </span><span class="value"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })" itemprop="name">@Model.VendorModel.Name</a></span></p>
             }
-            else
+
+            <p><span class="label"><span class="icon-tel"></span> @T("Products.Vendor.PhoneNumber"): </span><span class="value tel-vendor">@Model.VendorModel.PhoneNumber</span></p>
+
+
+            <a name="add-question" class="button-1 write-product-review-button" href="tel:@Model.VendorModel.PhoneNumber">Llamar</a>
+            <a name="add-question" class="button-1 write-product-review-button" href="#product-questions">E-Mail</a>
+            @if (Model.VendorModel.VendorType == Nop.Core.Domain.Vendors.VendorType.Market)
             {
-                <p><span class="label">@T("Products.Vendor.Shop"): </span><span class="value"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })" itemprop="name">@Model.VendorModel.Name</a></span></p>
+                <a name="add-question" class="button-1 write-product-review-button" href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">Visitar @(Model.VendorModel.VendorSubType == Nop.Core.Domain.Vendors.VendorSubType.Store ? "Almacen" : "Taller")</a>
             }
+            
+
+            
+
         </div>
 
 

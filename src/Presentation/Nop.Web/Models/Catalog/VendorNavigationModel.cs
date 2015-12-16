@@ -29,5 +29,7 @@ namespace Nop.Web.Models.Catalog
         public string PhoneNumber { get; set; }
 
         public VendorType VendorType { get; set; }
+
+        public VendorSubType VendorSubType { get; set; }
     }
 }

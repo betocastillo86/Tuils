@@ -120,7 +120,7 @@
                 {
                     //Traquea que un usuario a intentado comprar un producto
                     //this.trackGAEvent('Compra', 'Exitosa');
-                    if (this.vendorUrl) {
+                    /*if (this.vendorUrl) {
                         displayAjaxLoading(true);
                         document.location.href = this.vendorUrl;
                     }
@@ -128,7 +128,11 @@
                         this.$('#btnShowVendor').hide();
                         this.$('.product-vendor').show();
                         this.scrollFocusObject('.product-vendor', -50);
-                    }
+                    }*/
+                    this.$('#btnShowVendor').hide();
+                    this.$('.product-vendor').show();
+                    this.$('#phoneHashed').hide();
+                    //this.scrollFocusObject('.product-vendor', -50);
                 }
 
                 this.alreadyBougth = true;
