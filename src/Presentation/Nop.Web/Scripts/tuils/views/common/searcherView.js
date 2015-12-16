@@ -24,7 +24,7 @@
             this.loadAutoComplete();
         },
         refreshSubmitForm: function () {
-            this.$("form").attr('action', '/buscar/' + this.searchBox.val());
+            this.$("form").attr('action', '/buscar/' + this.searchBox.val().replace(/(\&|\:|\<|\>|\\|\%|\*)/g, '').replace(/ /g, '-'));
         },
         search: function () {
             if (this.searchBox.val() == "") {
