@@ -132,6 +132,7 @@
                     this.$('#btnShowVendor').hide();
                     this.$('.product-vendor').show();
                     this.$('#phoneHashed').hide();
+                    this.trackGAEvent('Compra', 'Exitosa');
                     //this.scrollFocusObject('.product-vendor', -50);
                 }
 
