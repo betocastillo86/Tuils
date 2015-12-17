@@ -1032,43 +1032,6 @@ html.oldie .container { width: 940px; }
         .btn_anuncia i{display: block;}
         .btn_anuncia b{display: none;}
 
-
-    .hide-button-resp {
-        display:none !important;
-    }
-
-    .btn_float_bottom {
-        position: fixed; 
-        bottom: 0; 
-        left: 0; 
-        border-radius: 0; 
-        width: 100%; 
-        top: auto; 
-        padding:15px 0; 
-        
-    }
-    .btn_contact_responsive {
-        background: rgb(246,113,78); 
-        transition:ease all 0.2s; 
-        background: -moz-linear-gradient(top,  rgba(246,113,78,1) 0%, rgba(245,78,26,1) 100%); 
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(246,113,78,1)), color-stop(100%,rgba(245,78,26,1))); 
-        background: -webkit-linear-gradient(top,  rgba(246,113,78,1) 0%,rgba(245,78,26,1) 100%); 
-        background: -o-linear-gradient(top,  rgba(246,113,78,1) 0%,rgba(245,78,26,1) 100%);
-        background: -ms-linear-gradient(top,  rgba(246,113,78,1) 0%,rgba(245,78,26,1) 100%);
-        background: linear-gradient(to bottom,  rgba(246,113,78,1) 0%,rgba(245,78,26,1) 100%); 
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6714e', endColorstr='#f54e1a',GradientType=0 );
-    }
-
-    .options-container {
-        position: fixed;
-        bottom: 60px;
-        background-color: #FFF;
-        margin: 10px;
-        width: calc(100% - 20px);
-        border-radius: 5px;
-    }
-
-
     input[type="text"],input[type="password"], select{width:calc(100% - 20px);}
     .field-validation-error{margin:0 20px 0 0;}
     .master-wrapper-page .center-2.columns.ten input[type="text"], .master-wrapper-page .center-2.columns.ten select{width:calc(100% - 20px);}
@@ -1090,6 +1053,24 @@ html.oldie .container { width: 940px; }
     .product-details-page .gallery .picture a{width: 480px; height: 328px;}
     .product-details-page .overview{float: none; width: 100%;}
     .product-details-page h1{font-size: 18px;}
+
+    .hide-button-resp {display:none !important;}
+    .btn_float_bottom {
+        position: fixed; 
+        bottom: 0; 
+        left: 0; 
+        border-radius: 0; 
+        width: 100%; 
+        top: auto; 
+        padding:15px 0;  
+    }
+    .options-container{background: rgba(60, 90, 135, 0.8); position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3;}
+    .options-container ul{margin: 0; padding: 0; list-style: none; position: fixed; bottom:0; background: #FFF; width:100%; border-radius: 0; z-index: 4;}
+    .options-container ul li{font-size: 16px; padding:15px 20px; width: 100%;}
+    .options-container ul li [class^="icon-"]{font-size: 20px; margin: 0 20px 0 0;}
+    .options-container ul li span{float: left; display: block;}
+
+    .btn-contact{position: fixed; bottom: 0; left: 0; z-index: 1; width: 100%; margin: 0 !important; padding: 12px 0; border-radius: 0;}
 
     /*panel de contrlo*/
     .panel-items li{ font-size: 18px; height: 150px;}
