@@ -14,7 +14,7 @@
                 }   
             </div>
         </div>
-        <input type="button" value="@T("Products.SeeVendor")" id="btnShowVendor" data-productid="@Model.Id" data-vendorurl="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName, pid = Model.Id })" class="button-2 btn-contact">
+        <a id="btnShowVendor" data-productid="@Model.Id" data-vendorurl="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName, pid = Model.Id })" class="button-2 btn-contact"><span class="icon-tel"></span> @T("Products.SeeVendor")</a>
 
 
         <div class="product-vendor" itemprop="seller" itemscope itemtype="http://schema.org/Organization" style="display:@(!Model.ProductAlreadyBought ? "none" : string.Empty)">
