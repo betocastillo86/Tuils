@@ -59,6 +59,7 @@ function ($, _, BaseView) {
         },
         closeFilter : function(){
             this.divFilter.hide();
+            $('body').removeClass('body-noscroll');
         },
         render: function () {
             this.render();

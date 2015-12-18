@@ -308,6 +308,15 @@
         isMinSizeMobile: function () {
             var currentWidth = window.innerWidth || document.documentElement.clientWidth;
             return currentWidth <= this.minSizeMobileWith;
+        },
+        windowHeight: function () {
+            return window.innerHeight || document.documentElement.clientHeight;
+        },
+        showRespFilter: function () {
+            $(".filters-main").show().focus();
+            //Permite agregar el scroll al filtro responsive
+            $('.product-filters-wrapper').height(this.windowHeight() - 100).css('overflow', 'auto');
+            $('body').addClass('body-noscroll');
         }
     });
 

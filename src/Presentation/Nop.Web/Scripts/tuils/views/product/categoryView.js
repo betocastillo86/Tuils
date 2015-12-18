@@ -4,18 +4,13 @@
             viewFilter: undefined,
             events: {
                 'click .product-sorting a': 'switchOrderBy',
-                'click #btnFilterByMobile': 'showFilter'
+                'click #btnFilterByMobile': 'showRespFilter'
             },
             initialize: function (args) {
                 this.loadControls();
             },
             switchOrderBy: function () {
                 this.$('.product-sorting select').show();
-            },
-            showFilter: function () {
-                $(".filters-main").show();
-                $(".filters-main").focus();
-                window.scrollTo(0, 0);
             },
             loadControls : function()
             {

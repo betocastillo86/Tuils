@@ -2180,3 +2180,8 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     padding-left:10px;
     padding-right:10px;
 }*/
+.body-noscroll {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+}

@@ -103,6 +103,8 @@
             },
             cancelMoreInfoResp: function () {
                 this.$('#divVendorInfoResponsive').fadeOut();
+                //Quita el evitar hacer scroll
+                $('body').removeClass('body-noscroll').removeAttr('style');
             },
             //userAuthenticated: function () {
             //    //Si quería comprar el producto, despues de aautenticarse realiza de nuevo un intento
@@ -115,7 +117,10 @@
             redirectToVendor: function (model) {
 
                 if (this.isMinSize())
+                {
                     this.$('#divVendorInfoResponsive').show();
+                    $('body').addClass('body-noscroll');
+                }
                 else
                 {
                     //Traquea que un usuario a intentado comprar un producto
@@ -136,13 +141,13 @@
                     //this.scrollFocusObject('.product-vendor', -50);
                 }
 
-                
+                //$('body').css({ 'top': $(window).scrollTop() * -1, height: $('body').height() < $(document).height() ? $(document).height() : $('body').height() }).addClass('body-noscroll');
+
                 this.$('#phoneHashed').hide();
                 this.alreadyBougth = true;
 
                 if(model)
                     this.trackGAEvent('Compra', 'Exitosa');
-
             }
         });
 
