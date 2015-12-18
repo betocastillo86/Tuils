@@ -28,8 +28,8 @@
             <p><span class="label"><span class="icon-tel"></span> @T("Products.Vendor.PhoneNumber"): </span><span class="value tel-vendor">@Model.VendorModel.PhoneNumber</span></p>
 
 
-            <a name="add-question" class="button-1 write-product-review-button" href="tel:@Model.VendorModel.PhoneNumber">Llamar</a>
-            <a name="add-question" class="button-1 write-product-review-button" href="#product-questions">E-Mail</a>
+            <a name="add-question" class="button-1 write-product-review-button" href="tel:@Model.VendorModel.PhoneNumber">@T("Product.Vendor.Call")</a>
+            <a name="add-question" class="button-1 write-product-review-button" href="#product-questions">@T("Product.Vendor.Email")</a>
             @if (Model.VendorModel.VendorType == Nop.Core.Domain.Vendors.VendorType.Market)
             {
                 <a name="add-question" class="button-1 write-product-review-button" href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">Visitar @(Model.VendorModel.VendorSubType == Nop.Core.Domain.Vendors.VendorSubType.Store ? "Almacen" : "Taller")</a>
@@ -50,9 +50,9 @@
                     {
                         <li><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })"><i class="icon-tienda"></i> Visitar @Model.VendorModel.Name</a></li>
                     }
-                    <li><a href="#product-questions"><i class="icon-msj"></i> Deja una pregunta</a></li>
+                    <li><a  href="#product-questions"><i class="icon-msj"></i> @T("Product.Vendor.AskQuestion")</a></li>
                     <li><a href="tel:@Model.VendorModel.PhoneNumber"><i class="icon-tel"></i> @Model.VendorModel.PhoneNumber</a></li>
-                    <li id="btnCancelMoreInfoResp"><a><i class="icon-close"></i> Cancelar</a></li>
+                    <li id="btnCancelMoreInfoResp"><a><i class="icon-close"></i> @T("Common.Cancel")</a></li>
                 </ul>
             </div>
         }

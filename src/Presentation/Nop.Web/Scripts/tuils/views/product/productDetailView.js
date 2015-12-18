@@ -19,9 +19,9 @@
 
             events: {
                 'click #btnShowVendor': 'createOrder',
-                'click #btnShowVendorResponsive': 'createOrder',
-                'click #btnCancelMoreInfoResp' : 'cancelMoreInfoResp',
-                'click .rating a' : 'showReviews'
+                //'click #btnShowVendorResponsive': 'createOrder',
+                'click #divVendorInfoResponsive': 'cancelMoreInfoResp',
+                'click .rating a' : 'showReviews',
             },
 
             initialize: function (args) {
@@ -102,7 +102,7 @@
                 this.model.moreInfo();
             },
             cancelMoreInfoResp: function () {
-                this.$('#divVendorInfoResponsive').hide();
+                this.$('#divVendorInfoResponsive').fadeOut();
             },
             //userAuthenticated: function () {
             //    //Si quería comprar el producto, despues de aautenticarse realiza de nuevo un intento
@@ -131,12 +131,15 @@
                     }*/
                     this.$('#btnShowVendor').hide();
                     this.$('.product-vendor').show();
-                    this.$('#phoneHashed').hide();
-                    this.trackGAEvent('Compra', 'Exitosa');
+                    
+                    
                     //this.scrollFocusObject('.product-vendor', -50);
                 }
 
+                
+                this.$('#phoneHashed').hide();
                 this.alreadyBougth = true;
+                this.trackGAEvent('Compra', 'Exitosa');
 
             }
         });

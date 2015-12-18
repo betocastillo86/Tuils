@@ -1219,6 +1219,11 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Home.Vendors.Title", "Almacenes y talleres de confianza");
                 newLocaleStringResources.Add("PublishProduct.CallForPrice.Alt", "Si el precio de su servicio solo se puede calcular por cotización marque la siguiente casilla");
                 newLocaleStringResources.Add("PublishProduct.CallForPrice", "Precio depende de cotización");
+                newLocaleStringResources.Add("Vendor.CallTo", "Llamar");
+                newLocaleStringResources.Add("Product.Vendor.AskQuestion", "Deja una pregunta");
+                newLocaleStringResources.Add("Product.Vendor.Email", "E-Mail");
+                newLocaleStringResources.Add("Product.Vendor.Call", "Llamar");
+                
                 
                 
                 
