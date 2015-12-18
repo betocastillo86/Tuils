@@ -112,7 +112,7 @@
             //        this.createOrder();
             //   // }
             //},
-            redirectToVendor: function () {
+            redirectToVendor: function (model) {
 
                 if (this.isMinSize())
                     this.$('#divVendorInfoResponsive').show();
@@ -139,7 +139,9 @@
                 
                 this.$('#phoneHashed').hide();
                 this.alreadyBougth = true;
-                this.trackGAEvent('Compra', 'Exitosa');
+
+                if(model)
+                    this.trackGAEvent('Compra', 'Exitosa');
 
             }
         });

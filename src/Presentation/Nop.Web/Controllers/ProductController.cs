@@ -264,9 +264,10 @@ namespace Nop.Web.Controllers
             //vendor
             if (_vendorSettings.ShowVendorOnProductDetailsPage)
             {
+                //Si el producto no está vendido y
                 //Solo se muestra la información del vendedor si no está registrado como vendedor
                 //O si el producto no es del mismo usuario
-                if (_workContext.CurrentVendor == null || product.VendorId != _workContext.CurrentVendor.Id)
+                if (!product.Sold  && (_workContext.CurrentVendor == null || product.VendorId != _workContext.CurrentVendor.Id))
                 {
                     //Si el producto ya fue comprado consulta el vendor
 
