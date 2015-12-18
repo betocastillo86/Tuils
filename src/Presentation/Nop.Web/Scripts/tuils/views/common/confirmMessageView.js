@@ -36,7 +36,6 @@
                         buttons: {
                             'Aceptar': function () {
                                 $(this).dialog('close');
-                                that.afterClose();
                             }
                         },
                         open: function (event, ui) {
@@ -44,10 +43,16 @@
                             {
                                 setTimeout(function () {
                                     that.$el.dialog('close');
-                                    that.afterClose();
                                 }, that.duration);
                             }
+                        },
+                        beforeClose: function () {
+                            $('body').removeClass('body-noscroll');
+                        },
+                        close: function () {
+                            that.afterClose();
                         }
+
                     });
             },
             show: function (args) {
@@ -80,7 +85,9 @@
 
                 this.$el.html(message)
                 
+                $('body').addClass('body-noscroll');
                 this.$el.dialog('open');
+                
             },
             render: function () {
                 //this.loadControls();

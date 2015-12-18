@@ -316,8 +316,14 @@
             $(".filters-main").show().focus();
             //Permite agregar el scroll al filtro responsive
             $('.product-filters-wrapper').height(this.windowHeight() - 100).css('overflow', 'auto');
+            this.freezeBack();    
+        },
+        freezeBack: function () {
             $('body').addClass('body-noscroll');
-        }
+        },
+        unFreezeBack: function () {
+            $('body').removeClass('body-noscroll');
+        },
     });
 
     return BaseView;
