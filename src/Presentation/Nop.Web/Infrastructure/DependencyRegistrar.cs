@@ -42,6 +42,9 @@ namespace Nop.Web.Infrastructure
             builder.RegisterType<CategoriesController>()
                .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"));
 
+            builder.RegisterType<AddressesController>()
+               .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"));
+
             
             //installation localization service
             builder.RegisterType<InstallationLocalizationService>().As<IInstallationLocalizationService>().InstancePerLifetimeScope();

@@ -230,19 +230,19 @@ namespace Nop.Web.Extensions.Api
 
         #region Address
 
-        public static List<AddressModel> ToModels(this IList<Address> list)
+        public static List<AddressModel> ToModels(this IList<Address> list, bool loadVendor = false)
         {
             var models = new List<AddressModel>();
             foreach (var entity in list)
             {
-                models.Add(entity.ToModel());
+                models.Add(entity.ToModel(loadVendor));
             }
             return models;
         }
 
-        public static AddressModel ToModel(this Address entity)
+        public static AddressModel ToModel(this Address entity, bool loadVendor = false)
         {
-            return new AddressModel()
+            var model = new AddressModel()
             {
                 Id = entity.Id,
                 Address = entity.Address1,
@@ -258,6 +258,16 @@ namespace Nop.Web.Extensions.Api
                 Longitude = entity.Longitude ?? 0,
                 StateProvinceName = entity.StateProvince != null ? entity.StateProvince.Name : null
             };
+
+            if (loadVendor)
+            {
+                model.Vendor = new VendorModel();
+                model.Vendor.Id = entity.Id;
+                model.Vendor.Name = entity.Vendor.Name;
+                model.Vendor.SeName = entity.Vendor.GetSeName();
+            }
+
+            return model;
         }
 
         public static Address ToEntity(this AddressModel model)

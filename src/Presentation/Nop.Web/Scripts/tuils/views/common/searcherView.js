@@ -17,6 +17,8 @@
         },
         loadControls: function () {
             this.searchBox = this.$("#small-searchterms");
+            if (this.searchBox.length == 0)
+                return;
             this.handleResize();
             this.on("window-resized-max", this.hideResponsiveSearch, this);
             this.autocompleteUrl = this.searchBox.attr("data-url");

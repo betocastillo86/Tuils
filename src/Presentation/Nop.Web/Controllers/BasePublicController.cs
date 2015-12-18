@@ -40,5 +40,17 @@ namespace Nop.Web.Controllers
             this.ViewData.Add("hidePublishButton", true);
         }
 
+        [NonAction]
+        protected void HideDefaultHeader()
+        {
+            this.ViewData.Add("hideDefaultHeader", true);
+        }
+
+        [NonAction]
+        protected void RemoveWidth()
+        {
+            this.ViewData.Add("noWidth", true);
+        }
+
     }
 }

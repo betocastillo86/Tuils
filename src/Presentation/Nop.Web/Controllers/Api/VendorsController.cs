@@ -54,8 +54,20 @@ namespace Nop.Web.Controllers.Api
         {
             return Ok(_addressService.GetAddressesByVendorId(id).ToModels());
         }
-#region Header
-          [AuthorizeApi]
+
+        #region Filter Autocomplete
+
+        [HttpGet]
+        [Route("api/vendors/autocompleteSearch")]
+        public IHttpActionResult AutocompleteSearch([FromUri]string term)
+        {
+            
+            return Ok();
+        }
+        #endregion
+
+        #region Header
+        [AuthorizeApi]
         [HttpPut]
         [Route("api/vendors/header")]
         public IHttpActionResult UpdateVendorHeader(VendorModel model)

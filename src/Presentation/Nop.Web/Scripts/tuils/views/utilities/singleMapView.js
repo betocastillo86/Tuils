@@ -1,7 +1,7 @@
 ﻿define(['jquery', 'underscore', 'backbone', 'async!maps'],
     function ($, _, Backbone) {
 
-    var SelectPointMapView = Backbone.View.extend({
+    var SingleMapView = Backbone.View.extend({
         map: undefined,
 
         lat: 4.57262365310281,
@@ -63,5 +63,5 @@
         }
     });
 
-    return SelectPointMapView;
+    return SingleMapView;
 });

@@ -60,6 +60,16 @@ namespace Nop.Services.Common
 
         IList<Address> GetAddressesByVendorId(int vendorId);
 
+        /// <summary>
+        /// Filtra todas las sedes de los vendors de acuerdo a los filtros entregados
+        /// </summary>
+        /// <param name="stateProvinceId">filtro obligatorio en el que se buscan las sedes de una ciudad especifica</param>
+        /// <param name="vendorId">Id del vendor especifico del que se quieren traer las direcciones</param>
+        /// <param name="subVendorType">sub tipo de vendedor por el que se quieren traer las direcciones</param>
+        /// <param name="categoryId">Categorias especiales de los vendors existentes por la que se quiere filtrar</param>
+        /// <returns>lista de sedes</returns>
+        IList<Address> SearchVendorsAddresses(int stateProvinceId, int? vendorId = null, int? subVendorType= null, int? categoryId= null);
+
         IList<Picture> GetPicturesByAddressId(int addressId);
 
         AddressPicture InsertPicture(int addressId, byte[] file, string extension, string seoName = null);

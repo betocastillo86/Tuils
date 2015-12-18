@@ -1,6 +1,7 @@
 ﻿using Nop.Core.Caching;
 using Nop.Core.Domain.Blogs;
 using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Configuration;
 using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Localization;
@@ -38,6 +39,10 @@ namespace Nop.Web.Infrastructure.Cache
         IConsumer<EntityInserted<Vendor>>,
         IConsumer<EntityUpdated<Vendor>>,
         IConsumer<EntityDeleted<Vendor>>,
+        //Address
+        IConsumer<EntityInserted<Address>>,
+        IConsumer<EntityUpdated<Address>>,
+        IConsumer<EntityDeleted<Address>>,
         //product manufacturers
         IConsumer<EntityInserted<ProductManufacturer>>,
         IConsumer<EntityUpdated<ProductManufacturer>>,
@@ -171,6 +176,19 @@ namespace Nop.Web.Infrastructure.Cache
         /// </summary>
         public const string VENDOR_NAVIGATION_MODEL_KEY = "Nop.pres.vendor.navigation";
         public const string VENDOR_NAVIGATION_PATTERN_KEY = "Nop.pres.vendor.navigation";
+
+
+
+        /// <summary>
+        /// Key for buscar direcciones
+        /// </summary>
+        /// <remarks>
+        /// {0} : state province id
+        /// {1} : vendor subtype
+        /// {2} : category id
+        /// </remarks>
+        public const string VENDOR_ADDRESS_SEARCH_KEY = "Nop.pres.vendors.addresses-{0}-{1}-{2}";
+        public const string VENDOR_ADDRESS_SEARCH_PATTERN_KEY = "Nop.pres.vendors.addresses";
 
         /// <summary>
         /// Llave de los vendedores en el home
@@ -795,6 +813,25 @@ namespace Nop.Web.Infrastructure.Cache
 
             if (eventMessage.Entity.VendorType == VendorType.Market)
                 _cacheManager.Remove(VENDOR_HOMEPAGE_KEY);
+        }
+
+
+
+        //addresses
+        public void HandleEvent(EntityInserted<Address> eventMessage)
+        {
+            if (eventMessage.Entity.VendorId.HasValue)
+                _cacheManager.RemoveByPattern(VENDOR_ADDRESS_SEARCH_PATTERN_KEY);
+        }
+        public void HandleEvent(EntityUpdated<Address> eventMessage)
+        {
+            if (eventMessage.Entity.VendorId.HasValue)
+                _cacheManager.RemoveByPattern(VENDOR_ADDRESS_SEARCH_PATTERN_KEY);
+        }
+        public void HandleEvent(EntityDeleted<Address> eventMessage)
+        {
+            if (eventMessage.Entity.VendorId.HasValue)
+                _cacheManager.RemoveByPattern(VENDOR_ADDRESS_SEARCH_PATTERN_KEY);
         }
 
         //manufacturers

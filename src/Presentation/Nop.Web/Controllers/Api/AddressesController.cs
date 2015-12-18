@@ -19,6 +19,8 @@ using Nop.Services.Vendors;
 using Nop.Utilities;
 using Nop.Services.Seo;
 using Nop.Web.Framework.Mvc.Api;
+using Nop.Core.Caching;
+using Nop.Web.Infrastructure.Cache;
 
 namespace Nop.Web.Controllers.Api
 {
@@ -34,6 +36,7 @@ namespace Nop.Web.Controllers.Api
         private readonly TuilsSettings _tuilsSettings;
         private readonly ILocalizationService _localizationService;
         private readonly IVendorService _vendorService;
+        private readonly ICacheManager _cacheManager;
         #endregion
 
         #region ctor
@@ -44,7 +47,8 @@ namespace Nop.Web.Controllers.Api
             MediaSettings mediaSettings,
             ILocalizationService localizationService,
             TuilsSettings tuilsSettings,
-            IVendorService vendorService)
+            IVendorService vendorService,
+            ICacheManager cacheManager)
         {
             this._addressService = addressService;
             this._logger = logger;
@@ -54,6 +58,7 @@ namespace Nop.Web.Controllers.Api
             this._localizationService = localizationService;
             this._tuilsSettings = tuilsSettings;
             this._vendorService = vendorService;
+            this._cacheManager = cacheManager;
         }
         #endregion
 
@@ -90,6 +95,7 @@ namespace Nop.Web.Controllers.Api
                     var address = model.ToEntity();
                     try
                     {
+                        address.Active = true;
                         _addressService.InsertAddress(address);
                         model.Id = address.Id;
                         return Ok(model);
@@ -311,6 +317,46 @@ namespace Nop.Web.Controllers.Api
                 return BadRequest();
             }
 
+        }
+        #endregion
+
+        #region Filter Addresses
+        [Route("api/vendors/addresses")]
+        public IHttpActionResult Get([FromUri] SearchVendorsFilter filter)
+        {
+            var key = string.Format(ModelCacheEventConsumer.VENDOR_ADDRESS_SEARCH_KEY, filter.StateProvinceId, filter.SubTypeId, filter.VendorId);
+
+
+
+            var model = _cacheManager.Get(key, () => {
+                //Realiza el filtro de las direcciones de acuerdo a los datos del filtro
+                var addresses = _addressService.SearchVendorsAddresses(filter.StateProvinceId, filter.VendorId, filter.SubTypeId, filter.CategoryId);
+                var modelList = new List<SearchVendorsAddress>();
+
+                foreach (var item in addresses)
+                {
+                    if (!item.Longitude.HasValue || !item.Latitude.HasValue)
+                        continue;
+
+                    modelList.Add(new SearchVendorsAddress()
+                    {
+                        id = item.Id,
+                        //name = item.FirstName,
+                        address = item.Address1,
+                        //phone = item.PhoneNumber,
+                        lat = item.Latitude.Value,
+                        lon = item.Longitude.Value,
+                        vId = item.Vendor.Id,
+                        vType = item.Vendor.VendorSubTypeId,
+                        seName = item.Vendor.GetSeName(),
+                        vName = item.Vendor.Name
+                    });
+                }
+
+                return modelList;
+            });
+            
+            return Ok(model);
         }
         #endregion
 

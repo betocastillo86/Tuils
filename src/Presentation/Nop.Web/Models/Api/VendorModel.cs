@@ -17,5 +17,9 @@ namespace Nop.Web.Models.Api
         public bool EnableCreditCardPayment { get; set; }
 
         public int? BackgroundPosition { get; set; }
+
+        public string  PictureUrl { get; set; }
+
+        public string SeName { get; set; }
     }
 }

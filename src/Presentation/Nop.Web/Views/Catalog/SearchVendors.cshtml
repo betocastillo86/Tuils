@@ -1,0 +1,47 @@
+﻿@model Nop.Web.Models.Catalog.SearchVendorsModel
+@using Nop.Core.Domain.Vendors;
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+}
+
+<style>
+    #divVendorFilter {
+            width: 350px;
+            position: absolute;
+            left: 10px;
+            z-index: 3;
+            background: #fff;
+    }
+</style>
+
+<div id="divMainSection">
+
+    <div id="divVendorFilter">
+        <div class="inputs">
+            @Html.DropDownRequired("StateProvinceId", Model.StateProvinces, labelResource: "selectPlan.fields.stateprovince")
+        </div>
+        <div>
+            <input id="txtFilter" type="text" />
+        </div>
+        <ul id="subTypeSelector" class="tipe-register">
+            <li>
+                <a  data-id="@(Convert.ToInt32(VendorSubType.Store))">
+                    <span class="icon-user"></span>
+                    <p>Tienda</p>
+                </a>
+            </li>
+            <li>
+                <a  data-id="@(Convert.ToInt32(VendorSubType.RepairShop))">
+                    <span class="icon-tienda"></span>
+                    <p>Taller</p>
+                </a>
+            </li>
+        </ul>
+        <div>
+            <input type="button" value="Buscar" class="btn" />
+        </div>
+    </div>
+
+    <div id="divMap" style="width:100%; height:500px">
+    </div>
+</div>

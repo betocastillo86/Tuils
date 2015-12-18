@@ -38,5 +38,7 @@ namespace Nop.Web.Models.Api
         public int VendorId { get; set; }
 
         public bool IsMainly { get; set; }
+
+        public VendorModel Vendor { get; set; }
     }
 }

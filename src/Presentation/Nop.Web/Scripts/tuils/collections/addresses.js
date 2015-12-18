@@ -15,7 +15,11 @@
         getPictures: function (id) {
             this.url = this.baseUrl + '/' + id + '/pictures';
             this.fetch();
-        }
+        },
+        searchOffices: function (filter) {
+            this.url = '/api/vendors/addresses';
+            this.fetch({ data : $.param(filter) });
+        },
     });
 
     return AddressCollection;

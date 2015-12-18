@@ -9,26 +9,33 @@
 
     /*store name*/
     var storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+    var hideDefaultHeader = this.ViewData["hideDefaultHeader"] != null && Convert.ToBoolean(this.ViewData["hideDefaultHeader"]);
 }
 
 <div class="header">
     @Html.Widget("header")
-    <h1 class="header-logo">
-        <a href="@Url.RouteUrl("HomePage")">
-            <img title="" alt="@storeName" src="@Url.Content(logoPath)">
-            <span>Tuils a rodar se dijo</span>
+
+    @if (!hideDefaultHeader)
+    {
+        <h1 class="header-logo">
+            <a href="@Url.RouteUrl("HomePage")">
+                <img title="" alt="@storeName" src="@Url.Content(logoPath)">
+                <span>Tuils a rodar se dijo</span>
+            </a>
+            @*<div class="menu">
+                    @Html.Action("TopMenu", "Catalog")
+                </div>*@
+        </h1>
+        <div class="search-box">
+            @Html.Action("SearchBox", "Catalog")
+        </div>
+        <a href="@Url.Action("Index", "Sales")" class="btn_anuncia @(this.ViewData["hidePublishButton"] != null && Convert.ToBoolean(this.ViewData["hidePublishButton"]) ? "hide-button-resp" : string.Empty)">
+            <i>@T("header.publishproduct.widescreen")</i>
+            <b>@T("header.publishproduct.mobile")</b>
         </a>
-        @*<div class="menu">
-            @Html.Action("TopMenu", "Catalog")
-        </div>*@
-    </h1>
-    <div class="search-box">
-        @Html.Action("SearchBox", "Catalog")
-    </div>
-    <a href="@Url.Action("Index", "Sales")" class="btn_anuncia @(this.ViewData["hidePublishButton"] != null && Convert.ToBoolean(this.ViewData["hidePublishButton"]) ? "hide-button-resp" : string.Empty)">
-        <i>@T("header.publishproduct.widescreen")</i>
-        <b>@T("header.publishproduct.mobile")</b>
-    </a>
+    }
+
+
 
     @*<div class="header-selectors-wrapper">
         <div class="tax-display-type-selector">

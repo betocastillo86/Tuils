@@ -1038,7 +1038,6 @@ namespace Nop.Web.Controllers
                     .OrderBy(c => c.ColumnId)
                     .OrderBy(c => c.Order);
 
-                int column = 0;
                 foreach (var parentCategory in categoriesHomePage)
                 {
                     //Consulta el detalle de la categoria
@@ -1656,6 +1655,24 @@ namespace Nop.Web.Controllers
         }
 
         #endregion
+
+        #region SearchVendors
+        public ActionResult SearchVendors()
+        {
+            var model = new SearchVendorsModel();
+            
+            string cacheStatesKey = string.Format(ModelCacheEventConsumer.STATEPROVINCES_BY_COUNTRY_MODEL_KEY, _tuilsSettings.defaultCountry, "empty", _workContext.WorkingLanguage.Id);
+            model.StateProvinces = new SelectList(
+                _cacheManager.Get(cacheStatesKey, () => { return _stateProvinceService.GetStateProvincesByCountryId(_tuilsSettings.defaultCountry); })
+                , "Id", "Name");
+            
+
+            this.HideDefaultHeader();
+            this.RemoveWidth();
+            return View(model);
+        }
+        #endregion
+
 
         #region Searching
 

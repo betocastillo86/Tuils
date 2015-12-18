@@ -158,6 +158,8 @@ namespace Nop.Web.Infrastructure
                             new[] { "Nop.Web.Controllers" });
 
 
+
+
             //add product to cart (without any attributes and options). used on catalog pages.
             routes.MapLocalizedRoute("AddProductToCart-Catalog",
                             "addproducttocart/catalog/{productId}/{shoppingCartTypeId}/{quantity}",
@@ -685,6 +687,12 @@ namespace Nop.Web.Infrastructure
                new { controller = "Common", action = "JsResources" },
                new[] { "Nop.Web.Controllers" }
                );
+
+
+            routes.MapLocalizedRoute("SearchVendors",
+                            "buscar-negocios",
+                            new { controller = "Catalog", action = "SearchVendors" },
+                            new[] { "Nop.Web.Controllers" });
             
             
             #region Sales

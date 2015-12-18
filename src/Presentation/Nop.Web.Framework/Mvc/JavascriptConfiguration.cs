@@ -80,7 +80,10 @@ namespace Nop.Web.Framework.Mvc
                 {
                     reviewsPageSize = vendorSettings.DefaultReviewsPageSize,
                     minWidthCover = vendorSettings.MinWidthCover,
-                    minHeightCover = vendorSettings.MinHeightCover
+                    minHeightCover = vendorSettings.MinHeightCover,
+                    subTypeUser = VendorSubType.User,
+                    subTypeStore = VendorSubType.Store,
+                    subTypeRepairShop = VendorSubType.RepairShop
                 },
                 catalog = new
                 {

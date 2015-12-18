@@ -394,6 +394,41 @@ namespace Nop.Services.Common
         #endregion
 
 
+
+        #region Search
+        /// <summary>
+        /// Filtra todas las sedes de los vendors de acuerdo a los filtros entregados
+        /// </summary>
+        /// <param name="stateProvinceId">filtro obligatorio en el que se buscan las sedes de una ciudad especifica</param>
+        /// <param name="vendorId">Id del vendor especifico del que se quieren traer las direcciones</param>
+        /// <param name="subVendorType">sub tipo de vendedor por el que se quieren traer las direcciones</param>
+        /// <param name="categoryId">Categorias especiales de los vendors existentes por la que se quiere filtrar</param>
+        /// <returns>lista de sedes</returns>
+        public IList<Address> SearchVendorsAddresses(int stateProvinceId, int? vendorId = null, int? subVendorType = null, int? categoryId = null)
+        {
+            var query = _addressRepository.Table.Where(a => 
+                a.Active &&
+                !a.Deleted &&
+                a.StateProvinceId == stateProvinceId);
+
+            //El filtro del vendedor anula los demás filtros
+            if (vendorId.HasValue)
+            {
+                query = query.Where(a => a.VendorId == vendorId.Value);
+            }
+            else
+            { 
+                //Si no viene filtrado por vendor, valida que la dirección sea de un vendor
+                query = query.Where(a => a.VendorId.HasValue);
+
+                if (subVendorType.HasValue)
+                    query = query.Where(a => a.Vendor.VendorSubTypeId == subVendorType.Value);
+            }
+
+            return query.ToList();
+        }
+        #endregion
+
         
     }
 }
