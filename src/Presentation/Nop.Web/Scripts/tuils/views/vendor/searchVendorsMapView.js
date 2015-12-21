@@ -9,7 +9,9 @@
             //Usado para localizar las direcciones
             geocoder: undefined,
 
-            marks : [],
+            marks: [],
+
+            currentCity : 0,
 
             initialize: function () {
                 this.loadEmptyMap();
@@ -89,14 +91,46 @@
 
                 //this.markersArray.push(marker);
             },
-            showOffices: function (offices) {
+            showOffices: function (response) {
+
+                var offices = response.offices;
+
                 //Limpia las marcas antes de cargarlas de nuevo
                 this.clearMarks();
                 var that = this;
+
+                //Varibale que controla si se está mostrando o no algún punto
+                var isShowingPoint = false;
+                var currentBounds = this.map.getBounds();
+
                 _.each(offices, function (element, index) {
                    // var location = new google.maps.LatLng(element.lat, element.lon);
-                    that.marks.push(that.placeMarker(element));
+                    var mark = that.placeMarker(element);
+                    that.marks.push(mark);
+
+                    /*//Si ningun punto se ha mostrado hasta ahora sigue validando hasta cambiar la bandera
+                    if (!isShowingPoint && currentBounds.contains(mark.position))
+                        isShowingPoint = true;*/
                 });
+
+                /*if (!isShowingPoint && that.marks.length > 0)
+                    this.map.setCenter(that.marks[0].position);
+                if (that.marks.length == 1)
+                    this.map.setZoom(16);
+                else if(that.marks.length > 1)
+                    this.map.setZoom(13);*/
+
+                if (!that.marks.length)
+                    this.alert('No hay resultados que coincidan con tu busqueda');
+                else
+                {
+                    //Si hay resultados y la ciudad cambió se debe mover hacia la ciudad
+                    if(this.currentCity && this.currentCity != response.city)
+                        this.map.setCenter(that.marks[0].position);
+                }
+
+                //Actualiza la ciudad
+                this.currentCity = response.city;
             },
             clearMarks: function () {
                 _.each(this.marks, function (element, index) {

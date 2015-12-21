@@ -17,12 +17,16 @@
 <div id="divMainSection">
 
     <div id="divVendorFilter">
+
+        <div id="divVendorResult"></div>
+        
         <div class="inputs">
             @Html.DropDownRequired("StateProvinceId", Model.StateProvinces, labelResource: "selectPlan.fields.stateprovince")
         </div>
         <div>
-            <input id="txtFilter" type="text" />
-        </div>
+            <div id="divSelectedFilter" ></div>
+            <input id="txtFilter" type="text" placeholder="Busca negocios por su nombre, productos o servicios" />
+        </div>  
         <ul id="subTypeSelector" class="tipe-register">
             <li>
                 <a  data-id="@(Convert.ToInt32(VendorSubType.Store))">
@@ -42,6 +46,34 @@
         </div>
     </div>
 
+    <script id="templateSelectedItem" type="text/x-handlebars-template">
+        <ul class="tagit ui-widget" style="width:90%" data-type="{{type}}">
+            <li class="tagit-choice">
+            <span class="tagit-label">{{label}}</span>
+            <a class="tagit-close"><span class="icon-close"></span></a>
+            </li>
+        </ul>
+    </script>
+
+    <script id="templateOfficesCount" type="text/x-handlebars-template">
+        {{#if this}}
+            Se encontraron {{this}} resultados
+        {{else}}
+            <span style="color:red">No se encontraron resultados</span>
+        {{/if}}
+    </script>
+
     <div id="divMap" style="width:100%; height:500px">
     </div>
 </div>
+<style>
+    .ui-menu .ui-menu-item {
+        text-decoration: none;
+        display: block;
+        padding: 2px .4em;
+        line-height: 1.5;
+        min-height: 0;
+        /* support: IE7; */
+        font-weight: normal;
+    }
+</style>

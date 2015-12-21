@@ -723,6 +723,11 @@ namespace Nop.Services.Catalog
             return GetAllCategoriesByParentCategoryId(_tuilsSettings.productBaseTypes_service, includeSubcategories: true, showHidden: true);
         }
 
+        public IList<Category> GetAllProducts()
+        {
+            return GetAllCategoriesByParentCategoryId(_tuilsSettings.productBaseTypes_product, includeSubcategories: true, showHidden: true);
+        }
+
         /// <summary>
         /// Retorna la lista de Ids de categorias hijas
         /// </summary>
@@ -790,5 +795,8 @@ namespace Nop.Services.Catalog
             
             return categories;
         }
+
+
+       
     }
 }

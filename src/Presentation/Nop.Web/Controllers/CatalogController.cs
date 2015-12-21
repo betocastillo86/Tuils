@@ -1657,7 +1657,7 @@ namespace Nop.Web.Controllers
         #endregion
 
         #region SearchVendors
-        public ActionResult SearchVendors()
+        public ActionResult SearchVendors(string pathInfo)
         {
             var model = new SearchVendorsModel();
             

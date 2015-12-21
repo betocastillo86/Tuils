@@ -16,6 +16,7 @@ using Nop.Services.Media;
 using Nop.Services.Localization;
 using Nop.Core.Domain.Media;
 using Nop.Services.Seo;
+using Nop.Core.Domain.Catalog;
 
 
 namespace Nop.Web.Controllers.Api
@@ -127,8 +128,8 @@ namespace Nop.Web.Controllers.Api
             string cacheKey = ModelCacheEventConsumer.CATEGORIES_API_ALL_BIKEREFERENCES;
             return Ok(_cacheManager.Get(cacheKey, () =>
             {
-                var references = this._categoryService.GetAllBikeReferences(null).ToBaseModels();
-                return GetMinifiedCategories(references);
+                var categories = this._categoryService.GetAllBikeReferences(null);
+                return GetMinifiedCategories(categories);
             }));
         }
 
@@ -147,7 +148,18 @@ namespace Nop.Web.Controllers.Api
             }));
         }
 
-        private List<object> GetMinifiedCategories(List<CategoryBaseModel> list)
+        [Route("api/categories/products")]
+        public IHttpActionResult GetAllProducts()
+        {
+            string cacheKey = ModelCacheEventConsumer.CATEGORIES_API_ALL_PRODUCTS;
+            return Ok(_cacheManager.Get(cacheKey, () =>
+            {
+                var products = this._categoryService.GetAllProducts();
+                return GetMinifiedCategories(products);
+            }));
+        }
+
+        private List<object> GetMinifiedCategories(IList<Category> list)
         {
             //Ya que son muchas referencias se retorna un objeto con el minimo de información posible
             var minlist = new List<object>();
@@ -158,7 +170,7 @@ namespace Nop.Web.Controllers.Api
                     {
                         Id = reference.Id,
                         Name = reference.Name,
-                        ChildrenCategories = (reference.ChildrenCategories != null && reference.ChildrenCategories.Count > 0) ? reference.ChildrenCategories.Select(r => new { Id = r.Id, Name = r.Name }) : null
+                        ChildrenCategories = (reference.SubCategories != null && reference.SubCategories.Count > 0) ? GetMinifiedCategories(reference.SubCategories.ToList()) : null
                     });
             }
             return minlist;

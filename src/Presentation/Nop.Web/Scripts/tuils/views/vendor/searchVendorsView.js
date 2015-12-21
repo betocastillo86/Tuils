@@ -19,8 +19,9 @@
                 this.filter = new SearchVendorsFilterView({ el: '#divVendorFilter', location: location });
                 this.filter.on('offices-loaded', this.loadMap, this);
             },
-            loadMap: function (offices) {
-                this.map.showOffices(offices.toJSON());
+            loadMap: function (response) {
+                Backbone.history.navigate('buscar-negocios/' + response.filter.StateProvinceId + '/' + response.filter.CategoryId + '/' + response.filter.VendorId + '/' + response.filter.SubTypeId);
+                this.map.showOffices({ offices: response.offices.toJSON(), city: response.city });
             },
         });
 

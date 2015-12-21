@@ -61,8 +61,10 @@ namespace Nop.Web.Controllers.Api
         [Route("api/vendors/autocompleteSearch")]
         public IHttpActionResult AutocompleteSearch([FromUri]string term)
         {
-            
-            return Ok();
+            //Retorna los vendedores por filtro de texto
+            var filteredVendors = _vendorService.GetAllVendors(name: term, vendorType: VendorType.Market)
+                .Select(v => new { value = v.Name, id = v.Id, type="ven" }); 
+            return Ok(filteredVendors);
         }
         #endregion
 

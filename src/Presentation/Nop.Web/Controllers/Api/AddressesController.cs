@@ -324,7 +324,7 @@ namespace Nop.Web.Controllers.Api
         [Route("api/vendors/addresses")]
         public IHttpActionResult Get([FromUri] SearchVendorsFilter filter)
         {
-            var key = string.Format(ModelCacheEventConsumer.VENDOR_ADDRESS_SEARCH_KEY, filter.StateProvinceId, filter.SubTypeId, filter.VendorId);
+            var key = string.Format(ModelCacheEventConsumer.VENDOR_ADDRESS_SEARCH_KEY, filter.StateProvinceId, filter.SubTypeId, filter.CategoryId, filter.VendorId);
 
 
 

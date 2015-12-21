@@ -59,7 +59,7 @@
                 'tarifas-y-precios': 'aboutUs',
                 'passwordrecovery/confirm(/*query)' : 'passwordRecovery',
                 'planes(/:tab)': 'plans',
-                'buscar-negocios' : 'searchVendors',
+                'buscar-negocios(/:stateProvId)(/:categoryId)(/:vendorId)(/:subTypeId)': 'searchVendors',
                 '*path' : 'defaultRoute'
             },
             defaultRoute: function (path) {
@@ -154,7 +154,7 @@
                 this.currentView = new VendorDetailView({ el: this.defaultEl });
                 this.loadSubViews();
             },
-            searchVendors: function () {
+            searchVendors: function (stateProvId, categoryId, vendorId, subTypeId) {
                 this.currentView = new SearchVendorsView({el: this.defaultEl});
                 this.loadSubViews();
             },

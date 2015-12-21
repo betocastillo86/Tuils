@@ -690,7 +690,7 @@ namespace Nop.Web.Infrastructure
 
 
             routes.MapLocalizedRoute("SearchVendors",
-                            "buscar-negocios",
+                            "buscar-negocios/{*pathInfo}",
                             new { controller = "Catalog", action = "SearchVendors" },
                             new[] { "Nop.Web.Controllers" });
             
@@ -750,7 +750,7 @@ namespace Nop.Web.Infrastructure
 
 
             routes.MapLocalizedRoute("ShowPlans",
-               "planes/{tab}",
+               "planes",
                new { controller = "Sales", action = "Plans", tab = UrlParameter.Optional },
                new[] { "Nop.Web.Controllers" }
                );

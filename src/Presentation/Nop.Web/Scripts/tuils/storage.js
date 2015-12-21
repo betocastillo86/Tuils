@@ -3,16 +3,23 @@ define(['jquery', 'categoryCollection', 'configuration'], function ($, CategoryC
     var TuilsStorage = {
 
         bikeReferences: undefined,
+        productCategories: undefined,
+        serviceCategories: undefined,
         //Variable en el storage que almacena un producto que se está creando para retomar una próxima vez
         
         keyPublishProduct: 'tuils-publishProduct',
         keyReloadBikeReferences: 'tuils-keyReloadReferences',
+        keyReloadServices: 'tuils-keyReloadServices',
+        keyReloadProducts: 'tuils-keyReloadProducts',
+        //Listado deCategorias de productos
+        keyProductCategories: 'tuils-productCategories',
+        keyServiceCategories: 'tuils-serviceCategories',
 
         //Carga las referencias de las motocicletas en la propiedad 
         loadBikeReferences: function (callback, ctx) {
             var key = 'tuils-bikeReferences';
             ctx = ctx ? ctx : this;
-            if (TuilsStorage.hasToReloadReferences()) {
+            if (TuilsStorage.hasToReloadReferences(TuilsStorage.keyReloadBikeReferences)) {
                 var categories = new CategoryCollection();
                 categories.on("sync", function (response) {
                     localStorage.setItem(key, JSON.stringify(response.toJSON()))
@@ -31,6 +38,51 @@ define(['jquery', 'categoryCollection', 'configuration'], function ($, CategoryC
             }
         },
 
+        loadProductCategories: function (callback, ctx) {
+            var key = TuilsStorage.keyProductCategories;
+            ctx = ctx ? ctx : this;
+            //Usa la misma llave de bikereferences
+            if (TuilsStorage.hasToReloadReferences(TuilsStorage.keyReloadProducts)) {
+                var categories = new CategoryCollection();
+                categories.on("sync", function (response) {
+                    localStorage.setItem(key, JSON.stringify(response.toJSON()))
+                    TuilsStorage.productCategories = response.toJSON();
+
+                    if (callback)
+                        callback.call(ctx, ctx);
+                }, this);
+
+                categories.getProductCategories();
+            }
+            else {
+                TuilsStorage.productCategories = JSON.parse(localStorage.getItem(key));
+                if (callback)
+                    callback.call(ctx, ctx);
+            }
+        },
+        loadServiceCategories: function (callback, ctx) {
+            var key = TuilsStorage.keyServiceCategories;
+            ctx = ctx ? ctx : this;
+            //Usa la misma llave de bikereferences
+            if (TuilsStorage.hasToReloadReferences(TuilsStorage.keyReloadServices)) {
+                var categories = new CategoryCollection();
+                categories.on("sync", function (response) {
+                    localStorage.setItem(key, JSON.stringify(response.toJSON()))
+                    TuilsStorage.serviceCategories = response.toJSON();
+
+                    if (callback)
+                        callback.call(ctx, ctx);
+                }, this);
+
+                categories.getServices();
+            }
+            else {
+                TuilsStorage.serviceCategories = JSON.parse(localStorage.getItem(key));
+                if (callback)
+                    callback.call(ctx, ctx);
+            }
+        },
+
         setPublishProduct: function (product) {
             if (product)
                 localStorage.setItem(TuilsStorage.keyPublishProduct, JSON.stringify(product.toJSON()));
@@ -42,13 +94,13 @@ define(['jquery', 'categoryCollection', 'configuration'], function ($, CategoryC
                 return JSON.parse(localStorage.getItem(TuilsStorage.keyPublishProduct));
         },
         //Valida si la llave de recarga corresponde con la nueva
-        hasToReloadReferences: function () {
-            var oldKey = localStorage.getItem(TuilsStorage.keyReloadBikeReferences);
+        hasToReloadReferences: function (key) {
+            var oldKey = localStorage.getItem(key);
             if (oldKey == TuilsConfiguration.expirationBikeReferencesKey && localStorage.getItem('tuils-bikeReferences'))
                 return false;
             else
             {
-                localStorage.setItem(TuilsStorage.keyReloadBikeReferences, TuilsConfiguration.expirationBikeReferencesKey);
+                localStorage.setItem(key, TuilsConfiguration.expirationBikeReferencesKey);
                 return true;
             }
         }

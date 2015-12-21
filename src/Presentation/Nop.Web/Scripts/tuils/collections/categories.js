@@ -17,6 +17,11 @@
             this.url = this.baseUrl + 'services';
             this.fetch();
             return this;
+        },
+        getProductCategories: function () {
+            this.url = this.baseUrl + 'products';
+            this.fetch();
+            return this;
         }
     });
 

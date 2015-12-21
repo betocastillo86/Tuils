@@ -186,8 +186,9 @@ namespace Nop.Web.Infrastructure.Cache
         /// {0} : state province id
         /// {1} : vendor subtype
         /// {2} : category id
+        /// {3} : vendor Id
         /// </remarks>
-        public const string VENDOR_ADDRESS_SEARCH_KEY = "Nop.pres.vendors.addresses-{0}-{1}-{2}";
+        public const string VENDOR_ADDRESS_SEARCH_KEY = "Nop.pres.vendors.addresses-{0}-{1}-{2}-{3}";
         public const string VENDOR_ADDRESS_SEARCH_PATTERN_KEY = "Nop.pres.vendors.addresses";
 
         /// <summary>
@@ -308,6 +309,7 @@ namespace Nop.Web.Infrastructure.Cache
         
 
         public const string CATEGORIES_API_ALL_SERVICES = "Nop.category.api.services";
+        public const string CATEGORIES_API_ALL_PRODUCTS = "Nop.category.api.products";
         public const string CATEGORIES_API_ALL_BIKEREFERENCES = "Nop.category.api.allbikebrands";
 
         public const string CATEGORIES_HOMEPAGE = "Nop.category.homepage";
@@ -885,6 +887,7 @@ namespace Nop.Web.Infrastructure.Cache
              _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
              _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_BIKEREFERENCES);
              _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_SERVICES);
+             _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_PRODUCTS);
              _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);
              _cacheManager.RemoveByPattern(CATEGORIES_HOMEPAGE);    
              
@@ -901,6 +904,7 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
             _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_BIKEREFERENCES);
             _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_SERVICES);
+            _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_PRODUCTS);
             _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);
             _cacheManager.RemoveByPattern(CATEGORIES_HOMEPAGE);    
         }
@@ -916,6 +920,7 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(SITEMAP_PATTERN_KEY);
             _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_BIKEREFERENCES);
             _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_SERVICES);
+            _cacheManager.RemoveByPattern(CATEGORIES_API_ALL_PRODUCTS);
             _cacheManager.RemoveByPattern(CATEGORIES_API_CATEGORY_MODEL_KEY);
             _cacheManager.RemoveByPattern(CATEGORIES_HOMEPAGE);    
         }
@@ -1269,6 +1274,8 @@ namespace Nop.Web.Infrastructure.Cache
         {
             _cacheManager.RemoveByPattern(CART_PICTURE_PATTERN_KEY);
         }
+
+
 
 
         

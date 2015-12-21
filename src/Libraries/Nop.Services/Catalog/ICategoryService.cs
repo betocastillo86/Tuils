@@ -162,6 +162,12 @@ namespace Nop.Services.Catalog
         IList<Category> GetAllServices();
 
         /// <summary>
+        /// Retorna todas las categorias de productos existentes en el sistema
+        /// </summary>
+        /// <returns></returns>
+        IList<Category> GetAllProducts();
+
+        /// <summary>
         /// Retorna la categoria de primer nivel padre de una categoria
         /// </summary>
         /// <param name="categoryId">Categoria que se desea buscar el padre</param>

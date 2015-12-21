@@ -11,6 +11,7 @@ using Nop.Core.Domain.Media;
 using Nop.Services.Media;
 using Nop.Services.Seo;
 using Nop.Services.Logging;
+using Nop.Core.Domain.Vendors;
 
 namespace Nop.Services.Common
 {
@@ -37,6 +38,7 @@ namespace Nop.Services.Common
         #region Fields
 
         private readonly IRepository<Address> _addressRepository;
+        private readonly IRepository<SpecialCategoryVendor> _specialCategoryVendorRepository;
         private readonly IRepository<Picture> _pictureRepository;
         private readonly IRepository<AddressPicture> _addressPictureRepository;
         private readonly IRepository<StateProvince> _stateProvinceRepository;
@@ -75,7 +77,8 @@ namespace Nop.Services.Common
             IRepository<AddressPicture> addressPictureRepository,
             IRepository<Picture> pictureRepository,
             IPictureService pictureService,
-            ILogger logger)
+            ILogger logger,
+            IRepository<SpecialCategoryVendor> specialCategoryVendorRepository)
         {
             this._cacheManager = cacheManager;
             this._addressRepository = addressRepository;
@@ -89,6 +92,7 @@ namespace Nop.Services.Common
             this._pictureRepository = pictureRepository;
             this._pictureService = pictureService;
             this._logger = logger;
+            this._specialCategoryVendorRepository = specialCategoryVendorRepository;
         }
 
         #endregion
@@ -423,6 +427,15 @@ namespace Nop.Services.Common
 
                 if (subVendorType.HasValue)
                     query = query.Where(a => a.Vendor.VendorSubTypeId == subVendorType.Value);
+
+                if (categoryId.HasValue)
+                {
+                    //Consulta los vendors que venden esa categoria en especifico
+                    var vendorsWithCategories = _specialCategoryVendorRepository.Table.Where(v => v.CategoryId == categoryId)
+                        .Select(v => v.VendorId);
+
+                    query = query.Where(a => vendorsWithCategories.Contains(a.VendorId.Value));
+                }
             }
 
             return query.ToList();
