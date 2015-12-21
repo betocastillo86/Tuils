@@ -32,6 +32,7 @@
                 "quiero-vender/producto(/:step)": "sellProduct",
                 "quiero-vender/moto(/:step)": "sellBike",
                 "quiero-vender/servicio-especializado(/:step)": "sellService",
+                'mi-cuenta': 'homePanel',
                 "mi-cuenta/datos-basicos": "myAccount",
                 "mi-cuenta/sedes": "myOffices",
                 "mi-tienda/motos-y-servicios": "vendorServices",
@@ -52,6 +53,7 @@
                 'buscar(/*query)': 'search',
                 'recordar-clave': 'passwordRecovery',
                 'mapa-del-sitio': 'sitemap',
+                'Home/Close(/*query)' : 'loadSubViews',
                 'quiero-vender/confirmacion/:id':'loadSubViews',
                 'condiciones-de-uso': 'useConditions',
                 'contacto': 'contactUs',
@@ -102,6 +104,9 @@
                 }
 
                 this.loadSubViews();
+            },
+            homePanel: function () {
+                this.loadSubViewsPanel();
             },
             myAccount: function () {
                 this.currentView = new MyAccountView({ el: this.defaultEl });

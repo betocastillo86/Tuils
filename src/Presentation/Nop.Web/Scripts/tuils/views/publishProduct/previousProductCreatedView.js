@@ -16,7 +16,7 @@
                 this.trigger('previousProduct-recover');
             },
             initialize: function (args) {
-                this.template = Handlebars.compile(this.$("#templateRecreateProduct").html());
+                this.template = Handlebars.compile($("#templateRecreateProduct").html());
                 this.model = args.model;
                 this.render();
             },
