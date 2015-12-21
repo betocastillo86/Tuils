@@ -1796,6 +1796,7 @@
     <Content Include="Scripts\tuils\main.js" />
     <Content Include="Scripts\tuils\views\utilities\selectPointMapView.js" />
     <Content Include="Scripts\tuils\views\utilities\singleMapView.js" />
+    <Content Include="Scripts\tuils\views\vendor\searchVendorsFilterListView.js" />
     <Content Include="Scripts\tuils\views\vendor\searchVendorsFilterView.js" />
     <Content Include="Scripts\tuils\views\vendor\searchVendorsMapView.js" />
     <Content Include="Scripts\tuils\views\vendor\searchVendorsView.js" />

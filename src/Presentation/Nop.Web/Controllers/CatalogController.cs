@@ -1671,6 +1671,24 @@ namespace Nop.Web.Controllers
             this.RemoveWidth();
             return View(model);
         }
+
+        /// <summary>
+        /// Retorna la imagen principal de un vendedor por el id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult VendorMapImg(int id)
+        { 
+            int pictureSize = 150;
+            //Consulta la imagen del vendor
+            string pictureUrl = _pictureService.GetPictureUrl(_vendorService.GetVendorById(id).Picture, pictureSize, crop: true).ToLower();
+            string[] nameParts = pictureUrl.Split(new char[]{'/'});
+            //Toma la parte final del nombredesde la carpeta content y genera la ruta
+            string path = Server.MapPath("~/"+string.Join("/",nameParts.ToList().Skip(nameParts.ToList().IndexOf("content")))) ;
+            return base.File(path, "image/jpeg");
+        }
+
         #endregion
 
 

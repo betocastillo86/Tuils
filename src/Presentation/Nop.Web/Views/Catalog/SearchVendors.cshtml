@@ -6,11 +6,11 @@
 
 <style>
     #divVendorFilter {
-            width: 350px;
-            position: absolute;
-            left: 10px;
-            z-index: 3;
-            background: #fff;
+        width: 350px;
+        position: absolute;
+        left: 10px;
+        z-index: 3;
+        background: #fff;
     }
 </style>
 
@@ -19,23 +19,24 @@
     <div id="divVendorFilter">
 
         <div id="divVendorResult"></div>
-        
+
         <div class="inputs">
             @Html.DropDownRequired("StateProvinceId", Model.StateProvinces, labelResource: "selectPlan.fields.stateprovince")
         </div>
         <div>
-            <div id="divSelectedFilter" ></div>
+            <div id="divSelectedFilter"></div>
             <input id="txtFilter" type="text" placeholder="Busca negocios por su nombre, productos o servicios" />
-        </div>  
+        </div>
+
         <ul id="subTypeSelector" class="tipe-register">
             <li>
-                <a  data-id="@(Convert.ToInt32(VendorSubType.Store))">
+                <a data-id="@(Convert.ToInt32(VendorSubType.Store))">
                     <span class="icon-user"></span>
                     <p>Tienda</p>
                 </a>
             </li>
             <li>
-                <a  data-id="@(Convert.ToInt32(VendorSubType.RepairShop))">
+                <a data-id="@(Convert.ToInt32(VendorSubType.RepairShop))">
                     <span class="icon-tienda"></span>
                     <p>Taller</p>
                 </a>
@@ -46,20 +47,64 @@
         </div>
     </div>
 
+    <div>
+        <div id="divFilteredList">
+
+            
+        </div>
+        <script id="templateFilteredList" type="text/x-handlebars-template">
+
+            {{#if this.length}}
+            {{#each this}}
+            <div id="officeList{{id}}" data-id="{{id}}" class="office-box">
+                <div>
+                    <img src="/catalog/vendormapimg/{{vId}}" width="80" height="80" />
+                </div>
+                <div>
+                    <a href="/{{seName}}"><b>{{vName}}</b></a>
+                </div>
+                <div>
+                    {{address}}
+                </div>
+                <div><a href="/{{seBane}}" class="btn">Visitalo</a></div>
+            </div>
+            {{/each}}
+
+            {{else}}
+            <div><h3>NO SE ESTÁN MOSTRANDO RESULTADOS</h3></div>
+            {{/if}}
+
+
+        </script>
+    </div>
+
+    <script id="templateMapInfoOffice" type="text/x-handlebars-template">
+        <div>
+            <img src="/catalog/vendormapimg/{{vId}}" width="80" height="80" />
+        </div>
+        <div>
+            <a href="/{{seName}}"><b>{{vName}}</b></a>
+        </div>
+        <div>
+            {{address}}
+        </div>
+        <div><a href="/{{seBane}}" class="btn">Visitalo</a></div>
+    </script>
+
     <script id="templateSelectedItem" type="text/x-handlebars-template">
         <ul class="tagit ui-widget" style="width:90%" data-type="{{type}}">
             <li class="tagit-choice">
-            <span class="tagit-label">{{label}}</span>
-            <a class="tagit-close"><span class="icon-close"></span></a>
+                <span class="tagit-label">{{label}}</span>
+                <a class="tagit-close"><span class="icon-close"></span></a>
             </li>
         </ul>
     </script>
 
     <script id="templateOfficesCount" type="text/x-handlebars-template">
         {{#if this}}
-            Se encontraron {{this}} resultados
+        Se encontraron {{this}} resultados
         {{else}}
-            <span style="color:red">No se encontraron resultados</span>
+        <span style="color:red">No se encontraron resultados</span>
         {{/if}}
     </script>
 
@@ -75,5 +120,13 @@
         min-height: 0;
         /* support: IE7; */
         font-weight: normal;
+    }
+
+    #divFilteredList {
+        right: 0;
+        width: 250px;
+        background: #fff;
+        position: absolute !important;
+        z-index: 3;
     }
 </style>

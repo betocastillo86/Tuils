@@ -59,7 +59,7 @@
                 'tarifas-y-precios': 'aboutUs',
                 'passwordrecovery/confirm(/*query)' : 'passwordRecovery',
                 'planes(/:tab)': 'plans',
-                'buscar-negocios(/:stateProvId)(/:categoryId)(/:vendorId)(/:subTypeId)': 'searchVendors',
+                'buscar-negocios(/:stateProvId)(/:categoryId)(/:vendorId)(/:subTypeId)(/:lat)(/:lon)(/:zoon)': 'searchVendors',
                 '*path' : 'defaultRoute'
             },
             defaultRoute: function (path) {
@@ -154,8 +154,18 @@
                 this.currentView = new VendorDetailView({ el: this.defaultEl });
                 this.loadSubViews();
             },
-            searchVendors: function (stateProvId, categoryId, vendorId, subTypeId) {
-                this.currentView = new SearchVendorsView({el: this.defaultEl});
+            searchVendors: function (stateProvId, categoryId, vendorId, subTypeId, lat, lon, zoom) {
+                this.currentView = new SearchVendorsView(
+                    {
+                        el: this.defaultEl,
+                        stateProvinceId: stateProvId == "undefined" ? undefined : stateProvId,
+                        categoryId: categoryId == "undefined" ? undefined : categoryId,
+                        vendorId: vendorId == "undefined" ? undefined : vendorId,
+                        subTypeId: subTypeId == "undefined" ? undefined : subTypeId,
+                        lat: lat == "undefined" ? undefined : lat,
+                        lon: lon == "undefined" ? undefined : lon,
+                        zoom: zoom == "undefined" ? undefined : zoom
+                    });
                 this.loadSubViews();
             },
             sitemap: function () {

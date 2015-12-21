@@ -14,6 +14,8 @@
             //Ubicacion principal del mapa
             mapLocation: undefined,
 
+            preselectedFilter : undefined,
+
             templateSelected: undefined,
 
             templateCount : undefined,
@@ -21,6 +23,8 @@
             listCategories : [],
 
             initialize: function (args) {
+                this.preselectedFilter = args.preselectedFilter;
+
                 //Carga el filtro
                 this.model = new SearchVendorModel();
                 this.model.on('change', this.searchOffices, this);
@@ -28,20 +32,47 @@
                 //La colección de direcciones que vienen en el filtro
                 this.collection = new AddressCollection();
                 this.collection.on('sync', this.officesLoaded, this);
-                
+
+                this.mapLocation = args.location;
+                this.loadControls(args);
+
                 //Carga las caregorias de los productos para posteriormente cargarlas como opciones
                 TuilsStorage.loadProductCategories(this.loadOptionCategories, this);
                 TuilsStorage.loadServiceCategories(this.loadOptionCategories, this);
 
-                this.mapLocation = args.location;
-                this.loadControls();
                 this.render();
             },
-            loadControls: function () {
-                //La ubicación principal de la ciudad debe venir por defecto
-                this.setCity(this.mapLocation);
+            loadControls: function (args) {
+                
+                //Si habia un filtro previamente seleccionado lo carga
+                if (this.preselectedFilter.StateProvinceId)
+                    this.loadPrefilter();
+                else
+                    //La ubicación principal de la ciudad debe venir por defecto
+                    this.setCity(this.mapLocation);
+
                 this.templateCount = Handlebars.compile($('#templateOfficesCount').html());
+                this.templateSelected = Handlebars.compile($('#templateSelectedItem').html());
                 //this.loadAutoComplete();
+            },
+            loadPrefilter: function () {
+                //Asigna las propiedades al filtro
+                this.model.set(this.preselectedFilter);
+                //Selecciona el subtipo
+                if (this.preselectedFilter.SubTypeId)
+                    this.$('#subTypeSelector a[data-id="' + this.preselectedFilter.SubTypeId + '"]').addClass('active');
+
+                if (this.preselectedFilter.VendorId)
+                {
+                    //Si tiene el vendedor preseleccionado cuando cargue la lista toma el valor
+                    this.collection.once('sync', function () {
+                        this.selectFilterText({ label: this.collection.first().toJSON().vName, type: 'ven' });
+                    }, this);
+                }
+            },
+            selectFilterText: function (args) {
+                this.$('#txtFilter').hide();
+                this.$('#divSelectedFilter').html(this.templateSelected(args));
             },
             //Cuando el mapa carga selecciona la posición
             setCity: function (location) {
@@ -76,8 +107,7 @@
             loadAutoComplete: function () {
                 var that = this;
 
-                this.templateSelected = Handlebars.compile($('#templateSelectedItem').html());
-
+                
                 this.$('#txtFilter').autocomplete({
                     delay: 200,
                     minLength: 3,
@@ -106,6 +136,7 @@
                         that.$('#divSelectedFilter').html(that.templateSelected({ label: ui.item.value, type: ui.item.type }));
                         that.model.set(ui.item.type == 'ven' ? 'VendorId' : 'CategoryId', ui.item.id);
                     }
+
                 })
                 .data("ui-autocomplete")._renderMenu = function (ul, items) {
                     var thatRender = this;
@@ -119,6 +150,7 @@
                             type = item.type;
                         }
                     });
+
 
                 };
                 
@@ -143,6 +175,11 @@
 
                     //Agrega todos los tags que se van a usar para realizar las busquedas
                     recursiveCategories(_.union(TuilsStorage.serviceCategories, TuilsStorage.productCategories), undefined);
+
+                    //Si tiene seleccionado alguna categoría por defecto la autoselecciona
+                    if (this.preselectedFilter.CategoryId) {
+                        this.selectFilterText({ label: _.findWhere(this.listCategories, { id: parseInt(this.preselectedFilter.CategoryId) }).label, type: 'cat' });
+                    }
 
                     this.loadAutoComplete();
 

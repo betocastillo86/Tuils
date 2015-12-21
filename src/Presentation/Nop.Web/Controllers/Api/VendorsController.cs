@@ -66,6 +66,7 @@ namespace Nop.Web.Controllers.Api
                 .Select(v => new { value = v.Name, id = v.Id, type="ven" }); 
             return Ok(filteredVendors);
         }
+
         #endregion
 
         #region Header

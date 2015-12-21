@@ -349,7 +349,8 @@ namespace Nop.Web.Controllers.Api
                         vId = item.Vendor.Id,
                         vType = item.Vendor.VendorSubTypeId,
                         seName = item.Vendor.GetSeName(),
-                        vName = item.Vendor.Name
+                        vName = item.Vendor.Name/*,
+                        img = _pictureService.GetPictureUrl(item.Vendor.Picture,)*/
                     });
                 }
 

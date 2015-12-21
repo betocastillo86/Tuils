@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'baseView', 'configuration'],
-    function ($, _, BaseView, TuilsConfiguration) {
+﻿define(['jquery', 'underscore', 'baseView', 'configuration', 'handlebars'],
+    function ($, _, BaseView, TuilsConfiguration, Handlebars) {
 
         var SearchVendorsMapView = BaseView.extend({
 
@@ -9,16 +9,35 @@
             //Usado para localizar las direcciones
             geocoder: undefined,
 
+            templateInfo: undefined,
+
+            infoWindow : undefined,
+
             marks: [],
 
             currentCity : 0,
 
-            initialize: function () {
-                this.loadEmptyMap();
+            initialize: function (args) {
+                this.loadEmptyMap(args);
+                this.templateInfo = Handlebars.compile($('#templateMapInfoOffice').html());
+                this.infoWindow = new google.maps.InfoWindow({ content: '' });
+                var that = this;
+                google.maps.event.addListener(this.infoWindow, 'closeclick', function () {
+                    that.trigger('selected', undefined);
+                });
             },
 
-            loadEmptyMap: function () {
-                this.getCurrentLocation();
+            loadEmptyMap: function (args) {
+                if (args.lat && args.lon && args.zoom) {
+                    this.lat = parseFloat(args.lat);
+                    this.lon = parseFloat(args.lon);
+                    this.updateLocation(parseInt(args.zoom));
+                }
+                else {
+                    //Si no viene previamente seleccionada la posición del mapa carga la actual
+                    this.getCurrentLocation();
+                }
+                
             },
 
             getCurrentLocation: function () {
@@ -27,23 +46,28 @@
                     navigator.geolocation.getCurrentPosition(function (position) {
                         that.lat = position.coords.latitude;
                         that.lon = position.coords.longitude;
-                        that.updateLocation(true);
+                        that.updateLocation(15);
                     });
                 }
                 else {
                     //Si no tiene geolocalización lo ubica en la posición por defecto
-                    this.updateLocation();
+                    this.updateLocation(12);
                 }
             },
             updateLocation: function (zoom) {
                 var latlng = new google.maps.LatLng(this.lat, this.lon);
                 var myOptions = {
-                    zoom: zoom ? 15 : 12,
+                    zoom: zoom,
                     center: latlng,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
                 this.map = new google.maps.Map(this.$el[0], myOptions);
                 this.loadCity();
+
+                var that = this;
+                google.maps.event.addListener(this.map, 'idle', function () {
+                    that.updateFilterList();
+                });
             },
             loadCity: function () {
                 var that = this;
@@ -80,16 +104,32 @@
                     map: this.map,
                     icon: '/Content/Images/icons/' + (office.vType == TuilsConfiguration.vendor.subTypeStore ? 'tienda' : 'taller') + '.png'
                 });
-                marker.selectedId = id;
+                marker.office = office;
+                marker.officeId = office.id;
                 //Agrega el evento del clic
                 var that = this;
                 google.maps.event.addListener(marker, 'click', function () {
-                    that.trigger('point-selected', this.selectedId);
+                    that.infoWindow.setContent(that.templateInfo(this.office));
+                    that.infoWindow.open(that.map, this);
+                    that.trigger('selected', this.office);
                 });
 
                 return marker;
-
                 //this.markersArray.push(marker);
+            },
+            updateFilterList: function () {
+                var that = this;
+
+                var officesOnList = [];
+                var currentBounds = this.map.getBounds();
+                _.each(this.marks, function (element, index) {
+                    //Si ningun punto se ha mostrado hasta ahora sigue validando hasta cambiar la bandera
+                    if (currentBounds.contains(element.position))
+                    {
+                        officesOnList.push(element.office);
+                    }
+                });
+                this.trigger('list-filtered', { offices: officesOnList, lat: this.map.getCenter().lat(), lon: this.map.getCenter().lng(), zoom: this.map.getZoom() });
             },
             showOffices: function (response) {
 
@@ -107,19 +147,9 @@
                    // var location = new google.maps.LatLng(element.lat, element.lon);
                     var mark = that.placeMarker(element);
                     that.marks.push(mark);
-
-                    /*//Si ningun punto se ha mostrado hasta ahora sigue validando hasta cambiar la bandera
-                    if (!isShowingPoint && currentBounds.contains(mark.position))
-                        isShowingPoint = true;*/
                 });
 
-                /*if (!isShowingPoint && that.marks.length > 0)
-                    this.map.setCenter(that.marks[0].position);
-                if (that.marks.length == 1)
-                    this.map.setZoom(16);
-                else if(that.marks.length > 1)
-                    this.map.setZoom(13);*/
-
+                
                 if (!that.marks.length)
                     this.alert('No hay resultados que coincidan con tu busqueda');
                 else
@@ -131,6 +161,14 @@
 
                 //Actualiza la ciudad
                 this.currentCity = response.city;
+                this.updateFilterList();
+            },
+            selectOffice: function (office) {
+                var mark = _.findWhere(this.marks, { officeId: office.id });
+                if (mark) {
+                    this.infoWindow.setContent(this.templateInfo(office));
+                    this.infoWindow.open(this.map, mark);
+                }
             },
             clearMarks: function () {
                 _.each(this.marks, function (element, index) {
