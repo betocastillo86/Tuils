@@ -14,6 +14,7 @@ using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Vendors;
 using Nop.Services.Logging;
 using Nop.Web.Extensions.Api;
+using Nop.Services.Messages;
 
 namespace Nop.Web.Controllers.Api
 {
@@ -25,18 +26,22 @@ namespace Nop.Web.Controllers.Api
         private readonly CatalogSettings _catalogSettings;
         private readonly ILocalizationService _localizationService;
         private readonly ICustomerActivityService _customerActivityService;
+        private readonly IWorkflowMessageService _workflowMessageService;
+        
 
         public VendorReviewsController (IVendorService vendorService,
             IWorkContext workContext,
             CatalogSettings catalogSettings,
             ILocalizationService localizationService,
-            ICustomerActivityService customerActivityService)
+            ICustomerActivityService customerActivityService,
+            IWorkflowMessageService workflowMessageService)
 	    {
             this._vendorService = vendorService;
             this._workContext = workContext;
             this._catalogSettings = catalogSettings;
             this._localizationService = localizationService;
             this._customerActivityService = customerActivityService;
+            this._workflowMessageService = workflowMessageService;
 	    }
 
 
@@ -85,8 +90,8 @@ namespace Nop.Web.Controllers.Api
                 _vendorService.UpdateVendor(vendor);
 
                 //notify store owner
-                /*TODO: if (_catalogSettings.NotifyStoreOwnerAboutNewProductReviews)
-                    _workflowMessageService.SendProductReviewNotificationMessage(vendorReview, 2);*/
+                if (_catalogSettings.NotifyStoreOwnerAboutNewProductReviews)
+                    _workflowMessageService.SendVendorReviewNotificationMessage(vendorReview, 2);
 
                 //activity log
                 _customerActivityService.InsertActivity("PublicStore.AddVendorReview", _localizationService.GetResource("ActivityLog.PublicStore.AddVendorReview"), vendor.Name);

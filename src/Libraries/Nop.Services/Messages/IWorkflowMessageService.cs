@@ -273,6 +273,10 @@ namespace Nop.Services.Messages
         int SendProductReviewNotificationMessage(ProductReview productReview,
             int languageId);
 
+
+        int SendVendorReviewNotificationMessage(VendorReview vendorReview,
+            int languageId);
+
         /// <summary>
         /// Sends a gift card notification
         /// </summary>

@@ -2779,6 +2779,15 @@ namespace Nop.Data.Migrations
                         IsActive = true,
                         EmailAccountId = 1
                     },
+                    new MessageTemplate()
+                    {
+                        Id = 53,
+                        Name = "Vendor.VendorReview",
+                        Subject = "%Store.Name%. Han dejado un comentario de un vendedor",
+                        Body = "<p> Han dejado un comentario de un vendedor %Vendor.Name% </p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
                     
                 };
 
