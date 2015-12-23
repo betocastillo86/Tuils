@@ -1205,7 +1205,6 @@
     <Content Include="Scripts\tuils\views\product\reviewView.js" />
     <Content Include="Scripts\tuils\views\product\categoryView.js" />
     <Content Include="Scripts\tuils\views\product\searchView.js" />
-    <Content Include="Scripts\tuils\views\publishProduct\finish.js" />
     <Content Include="Scripts\tuils\views\publishProduct\previousProductCreatedView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\publishView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\selectPlanView.js" />
@@ -2566,7 +2565,6 @@
     <Content Include="Views\Sales\_Summary.cshtml" />
     <Content Include="Views\Sales\_BikeDetail.cshtml" />
     <Content Include="Views\Sales\_CommonFieldsProductBikeDetail.cshtml" />
-    <Content Include="Views\Sales\_Finish.cshtml" />
     <Content Include="Views\Sales\_ServiceDetail.cshtml" />
     <Content Include="Views\Customer\_CreateUser.cshtml" />
     <Content Include="Views\Customer\_Login.cshtml" />

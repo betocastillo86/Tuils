@@ -1,9 +1,9 @@
 ﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'storage',
     'configuration', 'publishProductSelectCategoryView', 'publishProductProductDetailView',
-    'publishProductFinishedView', 'publishProductSummaryView', 'tuils/views/publishProduct/previousProductCreatedView', 'imageSelectorView'],
+     'publishProductSummaryView', 'tuils/views/publishProduct/previousProductCreatedView', 'imageSelectorView'],
     function ($, _, BaseView, ProductModel, TuilsStorage,
         TuilsConfiguration, SelectCategoryView, ProductDetailView,
-        PublishFinishedView, SummaryView, PreviousProductCreatedView, ImagesSelectorView) {
+        SummaryView, PreviousProductCreatedView, ImagesSelectorView) {
 
         var PublishProductView = BaseView.extend({
 

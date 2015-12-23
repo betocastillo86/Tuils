@@ -101,11 +101,6 @@
             'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.amd.min',
             'handlebars.min'
         ],
-        //accounting: [
-        //    'https://cdnjs.cloudflare.com/ajax/libs/accounting.js/0.4.1/accounting.min',
-        //    'accounting.min'
-        //],
-
 
         //jquery: 'jquery-1.10.2',
         //jqueryui: 'jquery-ui-1.10.3.custom.min',
@@ -151,7 +146,6 @@
         publishProductSelectCategoryView: 'tuils/views/publishProduct/selectCategory',
         publishProductProductDetailView: 'tuils/views/publishProduct/productDetail',
         publishProductSummaryView: 'tuils/views/publishProduct/summary',
-        publishProductFinishedView: 'tuils/views/publishProduct/finish',
 
         confirm : 'tuils/views/common/confirmMessageView',
 
@@ -159,7 +153,7 @@
         loginCreateUserView: 'tuils/views/login/createUser',
 
 
-        htmlEditorView: 'tuils/views/utilities/htmlEditorView',
+       
         imageSelectorView: 'tuils/views/utilities/imagesSelectorView',
 
         //NopCommerce
@@ -172,7 +166,6 @@
         //mmenu: 'mmenu/js_umd/jquery.mmenu.umd',
         //mmenunav: 'mmenu/js_umd/addons/jquery.mmenu.navbars.umd',
         tagit: 'tag-it',
-        wysihtml5: 'wysihtml5-0.3.0.min',
         resize: 'resize',
         canvasBlob: 'canvas-to-blob.min',
         carousel: 'owl.carousel.min',

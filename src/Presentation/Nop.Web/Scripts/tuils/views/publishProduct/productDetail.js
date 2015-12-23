@@ -1,7 +1,7 @@
 ﻿define(['jquery', 'underscore', 'backbone', 'baseView', 'manufacturerModel', 'manufacturerCollection', 'storage',
-    'util', 'htmlEditorView', 'configuration', 'specificationAttributeModel', 'tagit', 'validations', 'stickit'],
+    'util', 'configuration', 'specificationAttributeModel', 'tagit', 'validations', 'stickit'],
     function ($, _, Backbone, BaseView, ManufacturerModel, ManufacturerCollection, TuilsStorage,
-        TuilsUtil, HtmlEditorView, TuilsConfiguration, SpecificationAttributeModel) {
+        TuilsUtil, TuilsConfiguration, SpecificationAttributeModel) {
     "use strict"
     var ProductDetailView = BaseView.extend({
 

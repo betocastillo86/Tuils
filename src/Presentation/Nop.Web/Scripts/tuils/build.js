@@ -17,7 +17,6 @@
        // stickit: 'empty:',
        // validations: 'empty:',
         handlebars: 'empty:',
-       // accounting: 'empty:',
         jquery: 'empty:',
         jqueryui: 'empty:',
         'jquery.weekline.min': 'empty:',
