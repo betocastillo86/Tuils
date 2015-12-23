@@ -35,6 +35,7 @@
                 var errors = this.validateControls();
                 if (this.model.isValid())
                 {
+                    this.showLoadingAll();
                     this.validateAuthorization();
                     this.model.newVendorReview();
                 }
