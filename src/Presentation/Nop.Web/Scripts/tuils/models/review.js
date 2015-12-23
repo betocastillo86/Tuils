@@ -1,7 +1,9 @@
-﻿define(['underscore', 'backbone'], function (_, Backbone) {
-    var ReviewModel = Backbone.Model.extend({
+﻿define(['underscore', 'backbone', '_authenticationModel'], function (_, Backbone, AuthenticationModel) {
+    var ReviewModel = AuthenticationModel.extend({
 
         idAttribute: "Id",
+
+
 
         validation: {
             Title: {
@@ -21,7 +23,11 @@
             Title: 'Titulo',
             ReviewText: 'Comentarios',
             Rating: 'Calificación',
-        }
+        },
+        newVendorReview: function () {
+            this.url = '/api/vendors/' + this.get('VendorId') + '/reviews';
+            this.save();
+        },
     });
 
     return ReviewModel;

@@ -103,6 +103,7 @@
     <Compile Include="Domain\Common\AddressAttribute.cs" />
     <Compile Include="Domain\Common\AddressAttributeValue.cs" />
     <Compile Include="Domain\Common\AddressPicture.cs" />
+    <Compile Include="Domain\Common\IReview.cs" />
     <Compile Include="Domain\Common\SearchTermReportLine.cs" />
     <Compile Include="Domain\Common\SearchTerm.cs" />
     <Compile Include="Domain\Common\TuilsSettings.cs" />
@@ -119,6 +120,8 @@
     <Compile Include="Domain\Shipping\DeliveryDate.cs" />
     <Compile Include="Domain\Vendors\SpecialCategoryVendor.cs" />
     <Compile Include="Domain\Vendors\SpecialCategoryVendorType.cs" />
+    <Compile Include="Domain\Vendors\VendorReview.cs" />
+    <Compile Include="Domain\Vendors\VendorReviewHelpfulness.cs" />
     <Compile Include="Domain\Vendors\VendorSettings.cs" />
     <Compile Include="Domain\Vendors\Vendor.cs" />
     <Compile Include="Domain\Vendors\VendorSubType.cs" />

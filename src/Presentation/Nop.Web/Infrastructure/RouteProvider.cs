@@ -331,6 +331,12 @@ namespace Nop.Web.Infrastructure
                             new { controller = "Product", action = "SetProductReviewHelpfulness" },
                             new[] { "Nop.Web.Controllers" });
 
+
+            routes.MapRoute("SetVendorReviewHelpfulness",
+                            "setvendorreviewhelpfulness",
+                            new { controller = "Catalog", action = "SetVendorReviewHelpfulness" },
+                            new[] { "Nop.Web.Controllers" });
+
             //customer account links
             //routes.MapLocalizedRoute("CustomerReturnRequests",
             //                "returnrequest/history",

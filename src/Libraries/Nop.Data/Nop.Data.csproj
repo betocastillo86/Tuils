@@ -70,6 +70,8 @@
     <Compile Include="Mapping\Common\AddressAttributeMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeValueMap.cs" />
     <Compile Include="Mapping\Common\AddressPictureMap.cs" />
+    <Compile Include="Mapping\Vendors\VendorReviewHelpfulnessMap.cs" />
+    <Compile Include="Mapping\Vendors\VendorReviewMap.cs" />
     <Compile Include="Mapping\Vendors\SpecialCategoryVendorMap.cs" />
     <Compile Include="Migrations\201503270505120_SpecialCategoryByProduct.cs" />
     <Compile Include="Migrations\201503270505120_SpecialCategoryByProduct.Designer.cs">
@@ -250,6 +252,10 @@
     <Compile Include="Migrations\201512101611060_AddColumn_ScheduledOnUtc_Table_QueueEmail.cs" />
     <Compile Include="Migrations\201512101611060_AddColumn_ScheduledOnUtc_Table_QueueEmail.Designer.cs">
       <DependentUpon>201512101611060_AddColumn_ScheduledOnUtc_Table_QueueEmail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512221937464_AddTable_VendorReviews.cs" />
+    <Compile Include="Migrations\201512221937464_AddTable_VendorReviews.Designer.cs">
+      <DependentUpon>201512221937464_AddTable_VendorReviews.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
@@ -510,6 +516,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512101611060_AddColumn_ScheduledOnUtc_Table_QueueEmail.resx">
       <DependentUpon>201512101611060_AddColumn_ScheduledOnUtc_Table_QueueEmail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512221937464_AddTable_VendorReviews.resx">
+      <DependentUpon>201512221937464_AddTable_VendorReviews.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

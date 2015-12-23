@@ -180,8 +180,31 @@
                 </div>*@
             </div>
         </div>
-    </div>
 
+
+
+
+
+
+
+        <div id="tab-container" class="tab-container">
+            <ul class="etabs">
+                <li class="tab"><a href="#product-questions">@T("Vendors.VendorReviews")</a></li>
+                @*<li class="tab" data-name="reviews"><a href="@(Url.Action("ProductReviews", new { productId  = Model.Id })) #product-reviews-page" data-target="#product-reviews-page" alt="@T("custom.reviews.productreviews.Alt")">@T("Custom.Reviews.ProductReviews")</a></li>*@
+            </ul>
+            <div class="panel-container">
+                <div id="product-reviews-page">
+                    @Html.Action("VendorReviews", new { vendorId = Model.Id })
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+    
 
     @if (Model.IsMobileDevice)
     {
@@ -190,5 +213,5 @@
         </a>
     }
 
-
+    
 </div>

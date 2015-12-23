@@ -171,27 +171,6 @@ namespace Nop.Web.Controllers.Api
 
         #region Reviewss
 
-        
-        [HttpGet]
-        [Route("api/vendors/{id}/reviews")]
-        public IHttpActionResult GetReviews(int id, [FromUri]int page = 0)
-        {
-            if (id > 0)
-            {
-                //var urlHelper = new UrlHelper(this.ControllerContext.RequestContext);
-                return Ok(_vendorService.GetReviewsByVendorId(id)
-                    .Skip(_vendorSettings.DefaultReviewsPageSize * page)
-                    .Take(_vendorSettings.DefaultReviewsPageSize)
-                    .ToList()
-                    .ToModels(this.Url));
-
-            }
-            else
-            {
-                return NotFound();
-            }
-        }
-
         #endregion
     }
 }

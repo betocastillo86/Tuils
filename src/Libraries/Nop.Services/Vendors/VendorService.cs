@@ -15,6 +15,7 @@ using Nop.Core.Domain.Customers;
 using Nop.Services.Catalog;
 using Nop.Core.Domain.Orders;
 using Nop.Services.Common;
+using Nop.Core.Domain.Common;
 
 namespace Nop.Services.Vendors
 {
@@ -25,9 +26,18 @@ namespace Nop.Services.Vendors
     {
         #region Fields
 
+        /// <summary>
+        /// Key for caching
+        /// </summary>
+        /// <remarks>
+        /// {0} : product ID
+        /// </remarks>
+        private const string VENDORS_BY_ID_KEY = "Nop.vendor.id-{0}";
+
         private readonly IRepository<Vendor> _vendorRepository;
         private readonly IRepository<Customer> _customerRepository;
         private readonly IRepository<ProductReview> _productReviewRepository;
+        private readonly IRepository<VendorReview> _vendorReviewRepository;
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Category> _categoryRepository;
         private readonly IRepository<SpecialCategoryVendor> _specialCategoryVendorRepository;
@@ -56,7 +66,8 @@ namespace Nop.Services.Vendors
             IRepository<Category> categoryRepository,
             IRepository<ProductReview> productReviewRepository,
             IRepository<Product> productRepository,
-            IRepository<Customer> customerRepository)
+            IRepository<Customer> customerRepository,
+            IRepository<VendorReview> vendorReviewRepository)
         {
             this._vendorRepository = vendorRepository;
             this._eventPublisher = eventPublisher;
@@ -69,6 +80,7 @@ namespace Nop.Services.Vendors
             this._productReviewRepository = productReviewRepository;
             this._productRepository = productRepository;
             this._customerRepository = customerRepository;
+            this._vendorReviewRepository = vendorReviewRepository;
         }
 
         #endregion
@@ -398,23 +410,29 @@ namespace Nop.Services.Vendors
         /// Retorna el listado de reviews hechos a los productos de un vendedor
         /// </summary>
         /// <returns></returns>
-        public IList<ProductReview> GetReviewsByVendorId(int vendorId)
+        public IList<IReview> GetReviewsByVendorId(int vendorId)
         {
-            var query = from r in _productReviewRepository.Table
-                        join p in _productRepository.Table on r.ProductId equals p.Id
-                        join c in _customerRepository.Table on r.CustomerId equals c.Id
-                        where p.VendorId == vendorId && r.IsApproved
-                        orderby r.CreatedOnUtc descending
-                        select r;
+            var queryProduct = (from r in _productReviewRepository.Table
+                                   //join p in _vendorRepository.Table on r.ProductId equals p.Id
+                                   join c in _customerRepository.Table on r.CustomerId equals c.Id
+                                   where r.IsApproved
 
-            return query.ToList();
+                                   select r).ToList<IReview>();
+
+            var queryVendor = (from r in _vendorReviewRepository.Table
+                                //join p in _vendorRepository.Table on r.ProductId equals p.Id
+                                join c in _customerRepository.Table on r.CustomerId equals c.Id
+                                where r.IsApproved
+                                select r).ToList<IReview>();
+
+            return queryVendor.Union(queryProduct).ToList();
         }
 
         /// <summary>
         /// Actualiza los valores de AvgRating y NumRating del vendor dependiendo de los reviews recibidos
         /// </summary>
         /// <param name="vendorId">Vendedor a ser actualziado</param>
-        public void UpdateRatings(int vendorId)
+        public void UpdateRatingsTotal(int vendorId)
         {
             if (vendorId <= 0)
                 return;
@@ -425,7 +443,7 @@ namespace Nop.Services.Vendors
                 var reviews = GetReviewsByVendorId(vendorId);
 
                 vendor.NumRatings = reviews.Count;
-                vendor.AvgRating = reviews.Average(r => r.Rating);
+                vendor.AvgRating = reviews.Count > 0 ? reviews.Average(r => r.Rating) : 0;
                 UpdateVendor(vendor);
             }
         }
@@ -477,5 +495,74 @@ namespace Nop.Services.Vendors
 
             return vendor;
         }
+
+        #region Product reviews
+
+        /// <summary>
+        /// Gets all product reviews
+        /// </summary>
+        /// <param name="customerId">Customer identifier; 0 to load all records</param>
+        /// <param name="approved">A value indicating whether to content is approved; null to load all records</param> 
+        /// <param name="fromUtc">Item creation from; null to load all records</param>
+        /// <param name="toUtc">Item item creation to; null to load all records</param>
+        /// <param name="message">Search title or review text; null to load all records</param>
+        /// <returns>Reviews</returns>
+        public virtual IList<VendorReview> GetAllVendorReviews(int? customerId = null, bool? approved = null,
+            DateTime? fromUtc = null, DateTime? toUtc = null,
+            string message = null, int? vendorId = null)
+        {
+            var query = _vendorReviewRepository.Table;
+            if (approved.HasValue)
+                query = query.Where(c => c.IsApproved == approved);
+            if (customerId > 0)
+                query = query.Where(c => c.CustomerId == customerId);
+            if (fromUtc.HasValue)
+                query = query.Where(c => fromUtc.Value <= c.CreatedOnUtc);
+            if (toUtc.HasValue)
+                query = query.Where(c => toUtc.Value >= c.CreatedOnUtc);
+            if (vendorId.HasValue)
+                query = query.Where(c => vendorId.Value == c.VendorId);
+            if (!String.IsNullOrEmpty(message))
+                query = query.Where(c => c.Title.Contains(message) || c.ReviewText.Contains(message));
+
+            query = query.OrderBy(c => c.CreatedOnUtc);
+            var content = query.ToList();
+            return content;
+        }
+
+        /// <summary>
+        /// Gets product review
+        /// </summary>
+        /// <param name="productReviewId">Product review identifier</param>
+        /// <returns>Product review</returns>
+        public virtual VendorReview GetVendorReviewById(int vendorReviewId)
+        {
+            if (vendorReviewId == 0)
+                return null;
+
+            return _vendorReviewRepository.GetById(vendorReviewId);
+        }
+
+        /// <summary>
+        /// Deletes a product review
+        /// </summary>
+        /// <param name="vendorReview">Product review</param>
+        public virtual void DeleteVendorReview(VendorReview vendorReview)
+        {
+            if (vendorReview == null)
+                throw new ArgumentNullException("vendorReview");
+
+            _vendorReviewRepository.Delete(vendorReview);
+
+            //_cacheManager.RemoveByPattern(VENDORS_BY_ID_KEY);
+        }
+
+        public virtual bool CustomerHasVendorReview(int customerId, int vendorId)
+        {
+            var reviews = GetAllVendorReviews(customerId: customerId, vendorId:vendorId);
+            return reviews != null && reviews.Count > 1;
+        }
+
+        #endregion
     }
 }

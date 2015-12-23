@@ -1,42 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using Nop.Admin.Models.Catalog;
-using Nop.Core.Domain.Catalog;
-using Nop.Core.Domain.Customers;
-using Nop.Services.Catalog;
+﻿using Nop.Admin.Controllers;
+using Nop.Admin.Models.Vendors;
+using Nop.Core.Domain.Vendors;
 using Nop.Services.Helpers;
 using Nop.Services.Localization;
-using Nop.Services.Security;
-using Nop.Web.Framework;
-using Nop.Web.Framework.Controllers;
-using Nop.Web.Framework.Kendoui;
 using Nop.Services.Orders;
+using Nop.Services.Security;
 using Nop.Services.Vendors;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Nop.Core.Domain.Customers;
+using Nop.Web.Framework.Kendoui;
+using Nop.Web.Framework.Controllers;
+using Nop.Web.Framework;
 
 namespace Nop.Admin.Controllers
 {
-    public partial class ProductReviewController : BaseAdminController
+    public class VendorReviewController : BaseAdminController
     {
-        #region Fields
+         #region Fields
 
-        private readonly IProductService _productService;
+        private readonly IVendorService _vendorService;
         private readonly IDateTimeHelper _dateTimeHelper;
         private readonly ILocalizationService _localizationService;
         private readonly IPermissionService _permissionService;
         private readonly IOrderService _orderService;
-        private readonly IVendorService _vendorService;
+       
 
         #endregion Fields
 
         #region Constructors
 
-        public ProductReviewController(IProductService productService, IDateTimeHelper dateTimeHelper,
+        public VendorReviewController(IVendorService vendorService, IDateTimeHelper dateTimeHelper,
             ILocalizationService localizationService, IPermissionService permissionService,
-            IOrderService orderService, IVendorService vendorService)
+            IOrderService orderService)
         {
-            this._productService = productService;
+            this._vendorService = vendorService;
             this._dateTimeHelper = dateTimeHelper;
             this._localizationService = localizationService;
             this._permissionService = permissionService;
@@ -49,31 +50,31 @@ namespace Nop.Admin.Controllers
         #region Utilities
 
         [NonAction]
-        protected virtual void PrepareProductReviewModel(ProductReviewModel model,
-            ProductReview productReview, bool excludeProperties, bool formatReviewText)
+        protected virtual void PrepareProductReviewModel(VendorReviewModel model,
+            VendorReview vendorReview, bool excludeProperties, bool formatReviewText)
         {
             if (model == null)
                 throw new ArgumentNullException("model");
 
-            if (productReview == null)
+            if (vendorReview == null)
                 throw new ArgumentNullException("productReview");
 
-            model.Id = productReview.Id;
-            model.ProductId = productReview.ProductId;
-            model.ProductName = productReview.Product.Name;
-            model.CustomerId = productReview.CustomerId;
-            var customer = productReview.Customer;
+            model.Id = vendorReview.Id;
+            model.VendorId = vendorReview.VendorId;
+            model.VendorName = vendorReview.Vendor.Name;
+            model.CustomerId = vendorReview.CustomerId;
+            var customer = vendorReview.Customer;
             model.CustomerInfo = customer.IsRegistered() ? customer.Email : _localizationService.GetResource("Admin.Customers.Guest");
-            model.Rating = productReview.Rating;
-            model.CreatedOn = _dateTimeHelper.ConvertToUserTime(productReview.CreatedOnUtc, DateTimeKind.Utc);
+            model.Rating = vendorReview.Rating;
+            model.CreatedOn = _dateTimeHelper.ConvertToUserTime(vendorReview.CreatedOnUtc, DateTimeKind.Utc);
             if (!excludeProperties)
             {
-                model.Title = productReview.Title;
+                model.Title = vendorReview.Title;
                 if (formatReviewText)
-                    model.ReviewText = Core.Html.HtmlHelper.FormatText(productReview.ReviewText, false, true, false, false, false, false);
+                    model.ReviewText = Core.Html.HtmlHelper.FormatText(vendorReview.ReviewText, false, true, false, false, false, false);
                 else
-                    model.ReviewText = productReview.ReviewText;
-                model.IsApproved = productReview.IsApproved;
+                    model.ReviewText = vendorReview.ReviewText;
+                model.IsApproved = vendorReview.IsApproved;
             }
         }
 
@@ -92,12 +93,12 @@ namespace Nop.Admin.Controllers
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProductReviews))
                 return AccessDeniedView();
 
-            var model = new ProductReviewListModel();
+            var model = new VendorReviewListModel();
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult List(DataSourceRequest command, ProductReviewListModel model)
+        public ActionResult List(DataSourceRequest command, VendorReviewListModel model)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProductReviews))
                 return AccessDeniedView();
@@ -108,13 +109,13 @@ namespace Nop.Admin.Controllers
             DateTime? createdToFromValue = (model.CreatedOnTo == null) ? null
                             : (DateTime?)_dateTimeHelper.ConvertToUtcTime(model.CreatedOnTo.Value, _dateTimeHelper.CurrentTimeZone).AddDays(1);
 
-            var productReviews = _productService.GetAllProductReviews(0, null, 
+            var productReviews = _vendorService.GetAllVendorReviews(0, null, 
                 createdOnFromValue, createdToFromValue, model.SearchText);
             var gridModel = new DataSourceResult
             {
                 Data = productReviews.PagedForCommand(command).Select(x =>
                 {
-                    var m = new ProductReviewModel();
+                    var m = new VendorReviewModel();
                     PrepareProductReviewModel(m, x, false, true);
                     return m;
                 }),
@@ -130,52 +131,48 @@ namespace Nop.Admin.Controllers
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProductReviews))
                 return AccessDeniedView();
 
-            var productReview = _productService.GetProductReviewById(id);
-            if (productReview == null)
+            var vendorReview = _vendorService.GetVendorReviewById(id);
+            if (vendorReview == null)
                 //No product review found with the specified id
                 return RedirectToAction("List");
 
-            var model = new ProductReviewModel();
-            PrepareProductReviewModel(model, productReview, false, false);
+            var model = new VendorReviewModel();
+            PrepareProductReviewModel(model, vendorReview, false, false);
             return View(model);
         }
 
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
-        public ActionResult Edit(ProductReviewModel model, bool continueEditing)
+        public ActionResult Edit(VendorReviewModel model, bool continueEditing)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProductReviews))
                 return AccessDeniedView();
 
-            var productReview = _productService.GetProductReviewById(model.Id);
-            if (productReview == null)
+            var vendorReview = _vendorService.GetVendorReviewById(model.Id);
+            if (vendorReview == null)
                 //No product review found with the specified id
                 return RedirectToAction("List");
 
             if (ModelState.IsValid)
             {
-                productReview.Title = model.Title;
-                productReview.ReviewText = model.ReviewText;
-                productReview.IsApproved = model.IsApproved;
-                _productService.UpdateProduct(productReview.Product);
+                vendorReview.Title = model.Title;
+                vendorReview.ReviewText = model.ReviewText;
+                vendorReview.IsApproved = model.IsApproved;
+                _vendorService.UpdateVendor(vendorReview.Vendor);
                 
                 //update product totals
-                _productService.UpdateProductReviewTotals(productReview.Product);
+                //_vendorService.UpdateVendorReviewTotals(vendorReview.Vendor);
 
                 //Marca como hecha la calificacion
-                if (model.IsApproved)
-                {
-                    _orderService.MarkOrderItemAsRated(productReview.OrderItemId);
-                    _vendorService.UpdateRatingsTotal(productReview.Product.VendorId);
-                }
+                _vendorService.UpdateRatingsTotal(vendorReview.VendorId);
                     
 
                 SuccessNotification(_localizationService.GetResource("Admin.Catalog.ProductReviews.Updated"));
-                return continueEditing ? RedirectToAction("Edit", productReview.Id) : RedirectToAction("List");
+                return continueEditing ? RedirectToAction("Edit", vendorReview.Id) : RedirectToAction("List");
             }
 
 
             //If we got this far, something failed, redisplay form
-            PrepareProductReviewModel(model, productReview, true, false);
+            PrepareProductReviewModel(model, vendorReview, true, false);
             return View(model);
         }
         
@@ -186,15 +183,15 @@ namespace Nop.Admin.Controllers
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProductReviews))
                 return AccessDeniedView();
 
-            var productReview = _productService.GetProductReviewById(id);
-            if (productReview == null)
+            var vendorReview = _vendorService.GetVendorReviewById(id);
+            if (vendorReview == null)
                 //No product review found with the specified id
                 return RedirectToAction("List");
 
-            var product = productReview.Product;
-            _productService.DeleteProductReview(productReview);
+            var vendor = vendorReview.Vendor;
+            _vendorService.DeleteVendorReview(vendorReview);
             //update product totals
-            _productService.UpdateProductReviewTotals(product);
+            _vendorService.UpdateRatingsTotal(vendor.Id);
 
             SuccessNotification(_localizationService.GetResource("Admin.Catalog.ProductReviews.Deleted"));
             return RedirectToAction("List");
@@ -210,13 +207,13 @@ namespace Nop.Admin.Controllers
             {
                 foreach (var id in selectedIds)
                 {
-                    var productReview = _productService.GetProductReviewById(id);
-                    if (productReview != null)
+                    var vendorReview = _vendorService.GetVendorReviewById(id);
+                    if (vendorReview != null)
                     {
-                        productReview.IsApproved = true;
-                        _productService.UpdateProduct(productReview.Product);
+                        vendorReview.IsApproved = true;
+                        _vendorService.UpdateVendor(vendorReview.Vendor);
                         //update product totals
-                        _productService.UpdateProductReviewTotals(productReview.Product);
+                        //_vendorService.UpdateVendorReviewTotals(vendorReview.Vendor);
                     }
                 }
             }
@@ -234,13 +231,13 @@ namespace Nop.Admin.Controllers
             {
                 foreach (var id in selectedIds)
                 {
-                    var productReview = _productService.GetProductReviewById(id);
+                    var productReview = _vendorService.GetVendorReviewById(id);
                     if (productReview != null)
                     {
                         productReview.IsApproved = false;
-                        _productService.UpdateProduct(productReview.Product);
+                        _vendorService.UpdateVendor(productReview.Vendor);
                         //update product totals
-                        _productService.UpdateProductReviewTotals(productReview.Product);
+                        //_vendorService.UpdateProductReviewTotals(productReview.Product);
                     }
                 }
             }

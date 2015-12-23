@@ -14,6 +14,8 @@ using Nop.Services.Configuration;
 using System;
 using System.Collections.Generic;
 using Nop.Core.Infrastructure;
+using Nop.Web.Framework.Security;
+using Nop.Web.Framework.UI.Captcha;
 
 namespace Nop.Admin.Controllers
 {
@@ -330,5 +332,6 @@ namespace Nop.Admin.Controllers
             return View(model);
         }
         #endregion
+
     }
 }

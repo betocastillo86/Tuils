@@ -13,6 +13,7 @@ namespace Nop.Core.Domain.Vendors
     {
         private ICollection<SpecialCategoryVendor> _specialCategoryVendors;
         private ICollection<Address> _addresses;
+        private ICollection<VendorReview> _vendorReviews;
         
         /// <summary>
         /// Gets or sets the name
@@ -146,9 +147,16 @@ namespace Nop.Core.Domain.Vendors
 
         public virtual Picture BackgroundPicture { get; set; }
 
-        public virtual Nop.Core.Domain.Orders.Order CurrentOrderPlan { get; set; } 
+        public virtual Nop.Core.Domain.Orders.Order CurrentOrderPlan { get; set; }
 
-        
+        /// <summary>
+        /// Gets or sets the collection of product reviews
+        /// </summary>
+        public virtual ICollection<VendorReview> VendorReviews
+        {
+            get { return _vendorReviews ?? (_vendorReviews = new List<VendorReview>()); }
+            protected set { _vendorReviews = value; }
+        }
 
         /// <summary>
         /// Numero de veces que ha sido calificado un producto vendido por el usuario

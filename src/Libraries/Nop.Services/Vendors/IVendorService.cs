@@ -1,7 +1,9 @@
 using Nop.Core;
 using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Vendors;
+using System;
 using System.Collections.Generic;
 
 namespace Nop.Services.Vendors
@@ -92,7 +94,7 @@ namespace Nop.Services.Vendors
         /// </summary>
         /// <param name="vendorId"></param>
         /// <returns></returns>
-        IList<ProductReview> GetReviewsByVendorId(int vendorId);
+        IList<IReview> GetReviewsByVendorId(int vendorId);
 
         bool InsertUpdateVendorSpecialCategories(int vendorId, IList<SpecialCategoryVendor> specialCategories);
 
@@ -100,7 +102,7 @@ namespace Nop.Services.Vendors
         /// Actualiza los valores de AvgRating y NumRating del vendor dependiendo de los reviews recibidos
         /// </summary>
         /// <param name="vendorId">Vendedor a ser actualziado</param>
-        void UpdateRatings(int vendorId);
+        void UpdateRatingsTotal(int vendorId);
 
         /// <summary>
         /// Actualiza el plan del vendor de acuerdo a la orden que se está comprando
@@ -108,5 +110,47 @@ namespace Nop.Services.Vendors
         /// </summary>
         /// <param name="order">Orden de la que se desea agregar al plan</param>
         Vendor AddPlanToVendor(Order order);
+
+
+        #region Vendor reviews
+
+        /// <summary>
+        /// Gets all vendor reviews
+        /// </summary>
+        /// <param name="customerId">Customer identifier; 0 to load all records</param>
+        /// <param name="approved">A value indicating whether to content is approved; null to load all records</param> 
+        /// <param name="fromUtc">Item creation from; null to load all records</param>
+        /// <param name="toUtc">Item item creation to; null to load all records</param>
+        /// <param name="message">Search title or review text; null to load all records</param>
+        /// <param name="orderItemId">Filtra por orden a las calificaciones de un producto</param>
+        /// <returns>Reviews</returns>
+        IList<VendorReview> GetAllVendorReviews(int? customerId = null, bool? approved = null,
+            DateTime? fromUtc = null, DateTime? toUtc = null,
+            string message = null, int? vendorId = null);
+
+        /// <summary>
+        /// Gets product review
+        /// </summary>
+        /// <param name="vendorReviewId">Product review identifier</param>
+        /// <returns>Product review</returns>
+        VendorReview GetVendorReviewById(int vendorReviewId);
+
+        /// <summary>
+        /// Deletes a product review
+        /// </summary>
+        /// <param name="vendorReview">Product review</param>
+        void DeleteVendorReview(VendorReview vendorReview);
+
+
+        /// <summary>
+        /// Valida si el usuario ya hizo review a un vendor
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        bool CustomerHasVendorReview(int customerId, int vendorId);
+        #endregion
+
+        
     }
 }

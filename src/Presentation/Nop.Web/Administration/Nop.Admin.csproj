@@ -228,6 +228,8 @@
     <Compile Include="Models\Templates\ProductTemplateModel.cs" />
     <Compile Include="Models\Templates\CategoryTemplateModel.cs" />
     <Compile Include="Models\Vendors\DefaultCoversModel.cs" />
+    <Compile Include="Models\Vendors\VendorReviewListModel.cs" />
+    <Compile Include="Models\Vendors\VendorReviewModel.cs" />
     <Compile Include="Models\Vendors\VendorListModel.cs" />
     <Compile Include="Models\Vendors\VendorModel.cs" />
     <Compile Include="Models\Customers\OnlineCustomerModel.cs" />
@@ -343,6 +345,7 @@
     <Compile Include="Validators\Common\AddressValidator.cs" />
     <Compile Include="Validators\Shipping\WarehouseValidator.cs" />
     <Compile Include="Validators\Shipping\DeliveryDateValidator.cs" />
+    <Compile Include="Validators\Vendors\VendorReviewValidator.cs" />
     <Compile Include="Validators\Vendors\VendorValidator.cs" />
     <Compile Include="Validators\Stores\StoreValidator.cs" />
     <Compile Include="Validators\Tasks\ScheduleTaskValidator.cs" />
@@ -382,6 +385,7 @@
     <Compile Include="Validators\Localization\LanguageResourceValidator.cs" />
     <Compile Include="Validators\Localization\LanguageValidator.cs" />
     <Compile Include="Validators\Catalog\ProductValidator.cs" />
+    <Compile Include="Controllers\VendorReviewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\images\ajax_loader_small.gif" />
@@ -437,6 +441,9 @@
     <Content Include="Views\Vendor\DefaultCovers.cshtml" />
     <Content Include="Views\Product\_CreateOrUpdate.SpecialCategories.cshtml" />
     <Content Include="Views\Setting\Plans.cshtml" />
+    <Content Include="Views\VendorReview\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\VendorReview\Edit.cshtml" />
+    <Content Include="Views\VendorReview\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Category\Create.cshtml" />

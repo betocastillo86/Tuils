@@ -1223,6 +1223,17 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Product.Vendor.AskQuestion", "Deja una pregunta");
                 newLocaleStringResources.Add("Product.Vendor.Email", "E-Mail");
                 newLocaleStringResources.Add("Product.Vendor.Call", "Llamar");
+
+                newLocaleStringResources.Add("vendorreview.vendorreviewpublished", "Tu calificación fue dejada con éxito");
+                newLocaleStringResources.Add("vendors.vendorreviews", "Opiniiones");
+                newLocaleStringResources.Add("VendorReviews.NoReviews", "No hay opiniones actualmente, dejanos una");
+                newLocaleStringResources.Add("VendorReviews.SubmitButton", "Deja tu opinión");
+                newLocaleStringResources.Add("VendorReviews.LeaveReview", "¿Conoces {0}? Dejanos tu opinión acerca de ellos");
+                
+                
+                
+
+                
                 
                 
                 

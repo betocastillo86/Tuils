@@ -1,0 +1,53 @@
+﻿@model VendorReviewOverviewModel
+@using System.Globalization
+@using Nop.Web.Models.Catalog;
+@{
+    int ratingPercent = 0;
+    if (Model.TotalReviews != 0)
+    {
+        ratingPercent = ((Model.RatingSum * 100) / Model.TotalReviews) / 5;
+    }
+}
+@if (Model.AllowCustomerReviews)
+{
+    <div class="product-reviews-overview"
+         @if (Model.ShowSnippets) 
+         {   
+             @: itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating"
+         }
+         >
+        <div class="product-review-box">
+            <div class="rating">
+                <div style="width: @(ratingPercent)%">
+                    @if (Model.IsVendorDetail)
+                    {
+                        <a href="#tab-container" title="@T("custom.reviews.productreviews.Alt")"></a>
+                    }
+                    else
+                    {
+                        <a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorSeName })#product-reviews-page" title="@T("custom.reviews.productreviews.Alt")"></a>
+                    }
+                </div>
+                @if (Model.ShowSnippets)
+                {
+                    <span itemprop="ratingValue" style="display:none">@(Model.RatingSum / (Model.TotalReviews > 0 ? Model.TotalReviews : 1))</span>
+                    <span itemprop="reviewCount" style="display:none">@(Model.TotalReviews)</span>
+                }
+            </div>
+            @*added*@
+            <div class="product-rating-total">
+                @if (Model.IsVendorDetail)
+                {
+                    <a href="#tab-container" title="@T("custom.reviews.productreviews.Alt")"></a>
+                }
+                else
+                {
+                    @:(<a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorSeName })#product-reviews-page" title="@T("custom.reviews.productreviews.Alt")">@Model.TotalReviews</a>)
+                }
+
+            </div>
+            @*@added*@
+        </div>
+
+    </div>
+}

@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'baseView', 'tuils/views/vendor/vendorOfficesView', /*'tuils/views/vendor/vendorReviewsView', */'tuils/views/vendor/vendorHeaderView'],
-    function ($, _, BaseView, VendorOfficesView, /*VendorReviewsView, */VendorHeaderView) {
+﻿define(['jquery', 'underscore', 'baseView', 'tuils/views/vendor/vendorOfficesView', /*'tuils/views/vendor/vendorReviewsView', */'tuils/views/vendor/vendorHeaderView','tuils/views/vendor/vendorReviewView'],
+    function ($, _, BaseView, VendorOfficesView, /*VendorReviewsView, */VendorHeaderView, VendorReviewView) {
 
         var VendorDetailView = BaseView.extend({
             events: {
@@ -20,7 +20,7 @@
             {
                 this.loadHeader();
                 this.loadOffices();
-                //this.loadReviews();
+                this.loadReviews();
             },
             loadHeader: function () {
                 if (this.allowEdit)
@@ -43,10 +43,10 @@
             loadOffices: function () {
                 this.view = new VendorOfficesView({ el : "#divOffices", id : this.id });
             },
-            /*
             loadReviews: function () {
-                this.viewReviews = new VendorReviewsView({ el: '.conte-comment', id: this.id });
-            }*/
+                this.viewReviews = new VendorReviewView({ el: '#product-reviews-page', vendorId: this.id });
+                this.requiredViewsWithAuthentication.push(this.viewReviews);
+            }
         });
 
         return VendorDetailView;

@@ -34,6 +34,9 @@ using Nop.Services.Orders;
 using Nop.Services.Customers;
 using Nop.Core.Domain.Orders;
 using Nop.Web.Framework;
+using Nop.Web.Framework.UI.Captcha;
+using Nop.Services.Messages;
+using Nop.Services.Helpers;
 
 namespace Nop.Web.Controllers
 {
@@ -78,6 +81,8 @@ namespace Nop.Web.Controllers
         private readonly IOrderProcessingService _orderProcessingService;
         private readonly IAddressService _addressService;
         private readonly PlanSettings _planSettings;
+        private readonly IWorkflowMessageService _workflowMessageService;
+        private readonly IDateTimeHelper _dateTimeHelper;
 
 
         #endregion
@@ -120,7 +125,9 @@ namespace Nop.Web.Controllers
             TuilsSettings tuilsSettings,
             IOrderProcessingService orderProcessingService,
             PlanSettings planSettings,
-            IAddressService addressService)
+            IAddressService addressService,
+            IWorkflowMessageService workflowMessageService,
+            IDateTimeHelper dateTimeHelper)
         {
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
@@ -159,6 +166,8 @@ namespace Nop.Web.Controllers
             this._orderProcessingService = orderProcessingService;
             this._planSettings = planSettings;
             this._addressService = addressService;
+            this._workflowMessageService = workflowMessageService;
+            this._dateTimeHelper = dateTimeHelper;
         }
 
         #endregion
@@ -1542,6 +1551,135 @@ namespace Nop.Web.Controllers
                 .ToList();
 
             return View(model);
+        }
+
+        #endregion
+
+        #region Vendor reviews
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult VendorReviews(int vendorId)
+        {
+            var vendor = _vendorService.GetVendorById(vendorId);
+            if (vendor == null || vendor.Deleted)
+                return RedirectToRoute("HomePage");
+
+            var model = new VendorReviewsModel();
+
+            PrepareVendorReviewsModel(model, vendor);
+            //only registered users can leave reviews
+            if (_workContext.CurrentCustomer.IsGuest() && !_catalogSettings.AllowAnonymousUsersToReviewProduct)
+                ModelState.AddModelError("", _localizationService.GetResource("Reviews.OnlyRegisteredUsersCanWriteReviews"));
+            //default value
+            model.AddVendorReview.Rating = _catalogSettings.DefaultProductRatingValue;
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult SetVendorReviewHelpfulness(int vendorReviewId, bool washelpful)
+        {
+            var vendorReview = _vendorService.GetVendorReviewById(vendorReviewId);
+            if (vendorReview == null)
+                throw new ArgumentException("No vendor review found with the specified id");
+
+            if (_workContext.CurrentCustomer.IsGuest() && !_catalogSettings.AllowAnonymousUsersToReviewProduct)
+            {
+                return Json(new
+                {
+                    Result = _localizationService.GetResource("Reviews.Helpfulness.OnlyRegistered"),
+                    TotalYes = vendorReview.HelpfulYesTotal,
+                    TotalNo = vendorReview.HelpfulNoTotal
+                });
+            }
+
+            //customers aren't allowed to vote for their own reviews
+            if (vendorReview.CustomerId == _workContext.CurrentCustomer.Id)
+            {
+                return Json(new
+                {
+                    Result = _localizationService.GetResource("Reviews.Helpfulness.YourOwnReview"),
+                    TotalYes = vendorReview.HelpfulYesTotal,
+                    TotalNo = vendorReview.HelpfulNoTotal
+                });
+            }
+
+            //delete previous helpfulness
+            var prh = vendorReview.VendorReviewHelpfulnessEntries
+                .FirstOrDefault(x => x.CustomerId == _workContext.CurrentCustomer.Id);
+            if (prh != null)
+            {
+                //existing one
+                prh.WasHelpful = washelpful;
+            }
+            else
+            {
+                //insert new helpfulness
+                prh = new VendorReviewHelpfulness
+                {
+                    VendorReviewId = vendorReview.Id,
+                    CustomerId = _workContext.CurrentCustomer.Id,
+                    WasHelpful = washelpful,
+                };
+                vendorReview.VendorReviewHelpfulnessEntries.Add(prh);
+            }
+            _vendorService.UpdateVendor(vendorReview.Vendor);
+
+            //new totals
+            vendorReview.HelpfulYesTotal = vendorReview.VendorReviewHelpfulnessEntries.Count(x => x.WasHelpful);
+            vendorReview.HelpfulNoTotal = vendorReview.VendorReviewHelpfulnessEntries.Count(x => !x.WasHelpful);
+            _vendorService.UpdateVendor(vendorReview.Vendor);
+
+            return Json(new
+            {
+                Result = _localizationService.GetResource("Reviews.Helpfulness.SuccessfullyVoted"),
+                TotalYes = vendorReview.HelpfulYesTotal,
+                TotalNo = vendorReview.HelpfulNoTotal
+            });
+        }
+
+        [NonAction]
+        protected virtual void PrepareVendorReviewsModel(VendorReviewsModel model, Vendor vendor)
+        {
+            if (vendor == null)
+                throw new ArgumentNullException("vendor");
+
+            if (model == null)
+                throw new ArgumentNullException("model");
+
+            model.VendorId = vendor.Id;
+            model.VendorName = vendor.GetLocalized(x => x.Name);
+            model.VendorSeName = vendor.GetSeName();
+
+            var vendorReviews = vendor.VendorReviews.Where(pr => pr.IsApproved).OrderBy(pr => pr.CreatedOnUtc);
+            foreach (var vr in vendorReviews)
+            {
+                var customer = vr.Customer;
+                model.Items.Add(new VendorReviewModel
+                {
+                    Id = vr.Id,
+                    CustomerId = vr.CustomerId,
+                    CustomerName = customer.FormatUserName(),
+                    AllowViewingProfiles = /*_customerSettings.AllowViewingProfiles*/false && customer != null && !customer.IsGuest(),
+                    Title = vr.Title,
+                    ReviewText = vr.ReviewText,
+                    Rating = vr.Rating,
+                    Helpfulness = new VendorReviewHelpfulnessModel
+                    {
+                        VendorReviewId = vr.Id,
+                        HelpfulYesTotal = vr.HelpfulYesTotal,
+                        HelpfulNoTotal = vr.HelpfulNoTotal,
+                    },
+                    WrittenOnStr = _dateTimeHelper.ConvertToUserTime(vr.CreatedOnUtc, DateTimeKind.Utc).ToString("g"),
+                });
+            }
+
+
+            //Si no teie reviews previamente dejados puede dejar        
+            if (_workContext.CurrentCustomer != null && !_workContext.CurrentCustomer.IsGuest())
+                model.AddVendorReview.CanCurrentCustomerLeaveReview = !_vendorService.CustomerHasVendorReview(_workContext.CurrentCustomer.Id, vendor.Id);
+            else
+                model.AddVendorReview.CanCurrentCustomerLeaveReview = true;
+             
+            model.AddVendorReview.DisplayCaptcha = false/*_captchaSettings.Enabled && _captchaSettings.ShowOnProductReviewPage*/;
         }
 
         #endregion

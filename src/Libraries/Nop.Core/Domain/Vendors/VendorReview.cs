@@ -1,17 +1,19 @@
+﻿using Nop.Core.Domain.Common;
+using Nop.Core.Domain.Customers;
 using System;
 using System.Collections.Generic;
-using Nop.Core.Domain.Customers;
-using Nop.Core.Domain.Orders;
-using Nop.Core.Domain.Common;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Nop.Core.Domain.Catalog
+namespace Nop.Core.Domain.Vendors
 {
     /// <summary>
-    /// Represents a product review
+    /// Represents a vendor review
     /// </summary>
-    public partial class ProductReview : BaseEntity, IReview
+    public partial class VendorReview : BaseEntity, IReview
     {
-        private ICollection<ProductReviewHelpfulness> _productReviewHelpfulnessEntries;
+        private ICollection<VendorReviewHelpfulness> _vendorReviewHelpfulnessEntries;
 
         /// <summary>
         /// Gets or sets the customer identifier
@@ -21,7 +23,7 @@ namespace Nop.Core.Domain.Catalog
         /// <summary>
         /// Gets or sets the product identifier
         /// </summary>
-        public int ProductId { get; set; }
+        public int VendorId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the content is approved
@@ -37,11 +39,6 @@ namespace Nop.Core.Domain.Catalog
         /// Gets or sets the review text
         /// </summary>
         public string ReviewText { get; set; }
-
-        /// <summary>
-        /// Se vincula el order item 
-        /// </summary>
-        public int OrderItemId { get; set; }
 
         /// <summary>
         /// Review rating
@@ -71,21 +68,16 @@ namespace Nop.Core.Domain.Catalog
         /// <summary>
         /// Gets the product
         /// </summary>
-        public virtual Product Product { get; set; }
-
-        /// <summary>
-        /// Gets the order item
-        /// </summary>
-        public virtual OrderItem OrderItem { get; set; }
+        public virtual Vendor Vendor { get; set; }
 
 
         /// <summary>
         /// Gets the entries of product review helpfulness
         /// </summary>
-        public virtual ICollection<ProductReviewHelpfulness> ProductReviewHelpfulnessEntries
+        public virtual ICollection<VendorReviewHelpfulness> VendorReviewHelpfulnessEntries
         {
-            get { return _productReviewHelpfulnessEntries ?? (_productReviewHelpfulnessEntries = new List<ProductReviewHelpfulness>()); }
-            protected set { _productReviewHelpfulnessEntries = value; }
+            get { return _vendorReviewHelpfulnessEntries ?? (_vendorReviewHelpfulnessEntries = new List<VendorReviewHelpfulness>()); }
+            protected set { _vendorReviewHelpfulnessEntries = value; }
         }
     }
 }

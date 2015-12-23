@@ -126,7 +126,7 @@
             },
             showCoverOptions: function (e) {
 
-                if (e.target.id == 'btnMoveCover')
+                if (e && e.target.id == 'btnMoveCover')
                     return;
 
                 //Si es desde un dispositivo movil abre automáticamente la carga de archivos

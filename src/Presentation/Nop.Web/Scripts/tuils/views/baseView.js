@@ -324,6 +324,16 @@
         unFreezeBack: function () {
             $('body').removeClass('body-noscroll');
         },
+        //Valida un error y muestra un alert con el
+        handleAlertError: function (response) {
+            if (response)
+            {
+                if (response.responseJSON)
+                {
+                    this.alert(response.responseJSON.Message);
+                }
+            }
+        }
     });
 
     return BaseView;
