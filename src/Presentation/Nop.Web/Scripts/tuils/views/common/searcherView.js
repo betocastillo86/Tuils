@@ -5,7 +5,8 @@
             'click .icon-lupa': 'showSearchBox',
             'click .closeSearchResponsive': 'hideResponsiveSearch',
             'submit form' : 'search',
-            'keyup #small-searchterms' : 'refreshSubmitForm'
+            'keyup #small-searchterms': 'refreshSubmitForm',
+            'change #selSearchType': 'redirectSearchType'
         },
 
         autocompleteUrl: undefined,
@@ -42,6 +43,9 @@
                 this.switchResponsiveSearch(true);
             else
                 this.$("form").submit();
+        },
+        redirectSearchType: function () {
+            document.location.href = '/buscar-negocios';
         },
         hideResponsiveSearch: function () {
             this.switchResponsiveSearch(false);

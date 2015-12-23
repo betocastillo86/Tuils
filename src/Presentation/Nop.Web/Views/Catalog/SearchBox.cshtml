@@ -9,6 +9,12 @@
     </div>
 
     @Html.Widget("searchbox_before_search_button")
+    
+    <select id="selSearchType">
+        <option id="0">Productos</option>
+        <option id="1">Almacenes y Talleres</option>
+    </select>
+    
     <a href="javascript:;" type="submit" class="btn_search responsiveSearch"><span class="icon-lupa"></span></a>
     <input id="Search_EnterSearchTerms" value="@Html.Raw(HttpUtility.JavaScriptStringEncode(T("Search.EnterSearchTerms").Text))" type="hidden" />
 
