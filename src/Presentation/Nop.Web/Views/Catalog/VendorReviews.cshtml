@@ -9,11 +9,8 @@
 }
 @*edited*@
 @*<div class="page product-reviews-page">*@
-<div class="page product-reviews-page" id="product-reviews-page" itemscope itemtype="http://schema.org/Review">
-    @*edited*@
-    @*<div class="page-title" itemprop="itemReviewed" itemscope itemtype="http://schema.org/Product">
-        <h1>@T("Reviews.VendorReviewsFor") <a href="@Url.RouteUrl("Product", new { SeName = Model.ProductSeName })">@Model.ProductName</a></h1>
-    </div>*@
+<div class="page product-reviews-page" id="product-reviews-page">
+    
     <div class="page-body">
 
         @if (Model.AddVendorReview.CanCurrentCustomerLeaveReview)
@@ -89,8 +86,18 @@
                     </div>*@
                 @foreach (var review in Model.Items)
                 {
+
+
+
                     int ratingPercent = review.Rating * 20;
-                    <div class="product-review-item">
+                    <div class="product-review-item" itemscope itemtype="http://schema.org/Review">
+
+                        @*edited*@
+                        <div class="page-title" itemprop="itemReviewed" itemscope itemtype="http://schema.org/LocalBusiness" style="display:none">
+                            <span itemprop="name">@Model.VendorName</span>
+                            <span itemprop="url">@Model.VendorUrl</span>
+                        </div>
+
                         <div class="review-title">
                             <h3>@review.Title</h3>
                             @*<a href="javascript:;">Denunciar</a>*@
@@ -102,8 +109,14 @@
                                 }
                                 else
                                 {
-                                    @review.CustomerName
+                                    <span itemprop="author">
+                                        @review.CustomerName
+                                    </span>
                                 }
+
+
+
+
                                 <span class="separator">|</span>
                                 @T("Reviews.Date"):
                                 @review.WrittenOnStr

@@ -45,6 +45,8 @@ namespace Nop.Web.Models.Catalog
 
         public string VendorSeName { get; set; }
 
+        public string VendorUrl { get; set; }
+
         public IList<VendorReviewModel> Items { get; set; }
         public AddVendorReviewModel AddVendorReview { get; set; }
     }

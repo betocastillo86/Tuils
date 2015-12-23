@@ -22,6 +22,8 @@ namespace Nop.Web.Models.Catalog
 
         public string Email { get; set; }
 
+        public double ReviewCount { get; set; }
+
         public double AvgRating { get; set; }
 
         public string PhoneNumber { get; set; }

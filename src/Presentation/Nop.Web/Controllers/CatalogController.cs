@@ -1648,6 +1648,7 @@ namespace Nop.Web.Controllers
             model.VendorId = vendor.Id;
             model.VendorName = vendor.GetLocalized(x => x.Name);
             model.VendorSeName = vendor.GetSeName();
+            model.VendorUrl = string.Concat(_storeContext.CurrentStore.Url, Url.RouteUrl("Vendor", new { seName = model.VendorSeName }));
 
             var vendorReviews = vendor.VendorReviews.Where(pr => pr.IsApproved).OrderBy(pr => pr.CreatedOnUtc);
             foreach (var vr in vendorReviews)

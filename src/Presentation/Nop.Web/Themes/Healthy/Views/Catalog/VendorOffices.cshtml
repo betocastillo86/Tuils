@@ -25,36 +25,51 @@
 
         <script type="application/ld+json">
             @{
-                var storeContext = Nop.Core.Infrastructure.EngineContext.Current.Resolve<Nop.Core.IStoreContext>();  
+                var storeContext = Nop.Core.Infrastructure.EngineContext.Current.Resolve<Nop.Core.IStoreContext>();
+                string paymentAccepted = string.Format("Cash,{0}", Model.EnableCreditCardPayment ? "Credit Card" : string.Empty);
             }
-            @foreach (var office in Model.Offices)
-            {
-                string paymentAccepted = string.Format("Cash,{0}", Model.EnableCreditCardPayment ? "Credit Card" : string.Empty) ;
-                <text>
+
+            
+                {
+                    "@@context" : "http://schema.org",
+                    "@@type" : "@(Model.VendorSubType == Nop.Core.Domain.Vendors.VendorSubType.RepairShop ? "MotorcycleRepair" : "MotorcycleDealer")",
+         
+                    @if (Model.Offices.Count > 0)
                     {
-                        "@@context" : "http://schema.org",
-                        "@@type" : "@(Model.VendorSubType == Nop.Core.Domain.Vendors.VendorSubType.RepairShop ? "MotorcycleRepair" : "MotorcycleDealer")",
-                        "name" : "@Model.Name @office.Name",
-                        "address" :{
-                            "@@type" : "PostalAddress",
-                            "streetAddress" : "@office.Address",
-                            "addressLocality" : "@office.StateProvinceName",
-                            "addressCountry":"CO"
-                        },
-                        "geo" :{
-                            "@@type" : "GeoCoordinates",
-                            "latitude" : @office.Latitude.ToString(new System.Globalization.CultureInfo("en-US")),
-                            "longitude" : @office.Longitude.ToString(new System.Globalization.CultureInfo("en-US"))
-                        },
-                        "url" : "@storeContext.CurrentStore.Url@Url.RouteUrl("Vendor", new { seName = Model.SeName })",
-                        "telephone" : "+57@(Model.PhoneNumber)",
-                        "paymentAccepted" : "@paymentAccepted",
-                        "logo" : "@Model.Picture.ImageUrl",
-                        "openingHours" : "@office.Schedule.Replace("Lun", "Mo").Replace("Mar", "Tu").Replace("Mie", "We").Replace("Jue", "Th").Replace("Vie", "Fr").Replace("Sab", "Sa").Replace("Dom", "Su")"
+                        foreach (var office in Model.Offices)
+                        {
+                    
+                           <text>
+                                "name" : "@Model.Name @office.Name",
+                                "address" :{
+                                    "@@type" : "PostalAddress",
+                                    "streetAddress" : "@office.Address",
+                                    "addressLocality" : "@office.StateProvinceName",
+                                    "addressCountry":"CO"
+                                },
+                                "geo" :{
+                                    "@@type" : "GeoCoordinates",
+                                    "latitude" : @office.Latitude.ToString(new System.Globalization.CultureInfo("en-US")),
+                                    "longitude" : @office.Longitude.ToString(new System.Globalization.CultureInfo("en-US"))
+                                },
+                                "openingHours" : "@office.Schedule.Replace("Lun", "Mo").Replace("Mar", "Tu").Replace("Mie", "We").Replace("Jue", "Th").Replace("Vie", "Fr").Replace("Sab", "Sa").Replace("Dom", "Su")",
+                            </text> 
+                        }
                     }
-                </text>
-
-
+                    else
+                    {
+                       <text>
+                        "name" : "@Model.Name",
+                        </text>
+                    }
+                    "url" : "@storeContext.CurrentStore.Url@Url.RouteUrl("Vendor", new { seName = Model.SeName })",
+                    "telephone" : "+57@(Model.PhoneNumber)",
+                    "paymentAccepted" : "@paymentAccepted",
+                    "logo" : "@Model.Picture.ImageUrl",
+                    "AggregateRating" :{
+                        "ratingCount" : "@Model.ReviewCount",
+                        "ratingValue" : "@(Model.AvgRating) / 5"
+                    }
             }
         </script>
 

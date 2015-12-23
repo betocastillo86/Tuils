@@ -189,6 +189,7 @@ namespace Nop.Web.Extensions
                 MetaTitle = vendor.GetLocalized(x => x.MetaTitle),
                 SeName = vendor.GetSeName(),
                 AvgRating = vendor.AvgRating ?? 0,
+                ReviewCount = vendor.NumRatings,
                 EnableCreditCardPayment = vendor.EnableCreditCardPayment ?? false,
                 EnableShipping = vendor.EnableShipping ?? false,
                 AllowEdit = workContext.CurrentVendor != null && workContext.CurrentVendor.Id == vendor.Id,
