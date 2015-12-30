@@ -134,5 +134,51 @@ namespace Nop.Services.Catalog
         void UpdateProductSpecificationAttribute(ProductSpecificationAttribute productSpecificationAttribute);
 
         #endregion
+
+        #region Category specification attribute
+
+        /// <summary>
+        /// Deletes a category specification attribute mapping
+        /// </summary>
+        /// <param name="categorySpecificationAttribute">Product specification attribute</param>
+        void DeleteCategorySpecificationAttribute(CategorySpecificationAttribute categorySpecificationAttribute);
+
+        /// <summary>
+        /// Gets a product specification attribute mapping collection
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <returns>Product specification attribute mapping collection</returns>
+        IList<CategorySpecificationAttribute> GetCategorySpecificationAttributesByCategoryId(int categoryId);
+
+        /// <summary>
+        /// Gets a product specification attribute mapping collection
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="allowFiltering">0 to load attributes with AllowFiltering set to false, 0 to load attributes with AllowFiltering set to true, null to load all attributes</param>
+        /// <param name="showOnProductPage">0 to load attributes with ShowOnProductPage set to false, 0 to load attributes with ShowOnProductPage set to true, null to load all attributes</param>
+        /// <returns>Product specification attribute mapping collection</returns>
+        IList<CategorySpecificationAttribute> GetCategorySpecificationAttributesByCategoryId(int categoryId,
+            bool? allowFiltering, bool? showOnCategoryPage);
+
+        /// <summary>
+        /// Gets a product specification attribute mapping 
+        /// </summary>
+        /// <param name="productSpecificationAttributeId">Product specification attribute mapping identifier</param>
+        /// <returns>Product specification attribute mapping</returns>
+        CategorySpecificationAttribute GetCategorySpecificationAttributeById(int categorySpecificationAttributeId);
+
+        /// <summary>
+        /// Inserts a product specification attribute mapping
+        /// </summary>
+        /// <param name="productSpecificationAttribute">Product specification attribute mapping</param>
+        void InsertCategorySpecificationAttribute(CategorySpecificationAttribute categorySpecificationAttribute);
+
+        /// <summary>
+        /// Updates the product specification attribute mapping
+        /// </summary>
+        /// <param name="productSpecificationAttribute">Product specification attribute mapping</param>
+        void UpdateCategorySpecificationAttribute(CategorySpecificationAttribute categorySpecificationAttribute);
+
+        #endregion
     }
 }

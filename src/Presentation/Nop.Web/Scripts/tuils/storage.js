@@ -5,15 +5,18 @@ define(['jquery', 'categoryCollection', 'configuration'], function ($, CategoryC
         bikeReferences: undefined,
         productCategories: undefined,
         serviceCategories: undefined,
+        bikeReferencesSameLevel: undefined,
         //Variable en el storage que almacena un producto que se está creando para retomar una próxima vez
         
         keyPublishProduct: 'tuils-publishProduct',
         keyReloadBikeReferences: 'tuils-keyReloadReferences',
         keyReloadServices: 'tuils-keyReloadServices',
         keyReloadProducts: 'tuils-keyReloadProducts',
+        keyReloadBikeReferencesSameLevel: 'tuils-keyReloadReferencesSameLevel',
         //Listado deCategorias de productos
         keyProductCategories: 'tuils-productCategories',
         keyServiceCategories: 'tuils-serviceCategories',
+        keyBikeReferencesSameLevel: 'tuils-bikeReferencesSameLevel',
 
         //Carga las referencias de las motocicletas en la propiedad 
         loadBikeReferences: function (callback, ctx) {
@@ -82,7 +85,28 @@ define(['jquery', 'categoryCollection', 'configuration'], function ($, CategoryC
                     callback.call(ctx, ctx);
             }
         },
+        loadBikeReferencesSameLevel: function (callback, ctx) {
+            var key = TuilsStorage.keyBikeReferencesSameLevel;
+            ctx = ctx ? ctx : this;
+            //Usa la misma llave de bikereferences
+            if (TuilsStorage.hasToReloadReferences(TuilsStorage.keyReloadBikeReferencesSameLevel)) {
+                var categories = new CategoryCollection();
+                categories.on("sync", function (response) {
+                    localStorage.setItem(key, JSON.stringify(response.toJSON()))
+                    TuilsStorage.bikeReferencesSameLevel = response.toJSON();
 
+                    if (callback)
+                        callback.call(ctx, ctx);
+                }, this);
+
+                categories.getBikeReferencesSameLevel();
+            }
+            else {
+                TuilsStorage.bikeReferencesSameLevel = JSON.parse(localStorage.getItem(key));
+                if (callback)
+                    callback.call(ctx, ctx);
+            }
+        },
         setPublishProduct: function (product) {
             if (product)
                 localStorage.setItem(TuilsStorage.keyPublishProduct, JSON.stringify(product.toJSON()));

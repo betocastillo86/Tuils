@@ -1,0 +1,128 @@
+﻿@using Nop.Web.Models.Catalog;
+@model VersusModel
+@{
+    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+
+
+    Html.AddTitleParts(T("PageTitle.Versus").Text);
+    Html.AddCanonicalUrlParts(Url.RouteUrl("Versus", new { catSlug1 = Model.Categories[0].SeName, catSlug2 = Model.Categories[1].SeName, year1 = Model.Categories[0].Year, year2 = Model.Categories[1].Year }));
+}
+@*<script>
+        var bikeRefSameLevel = @Model.CategoriesToSelectJson;
+    </script>*@
+
+@helper ShowYears(int idDll, int yearSelected)
+{
+    <select id="ddlYear@(idDll)">
+        @for (int iYear = 2000; iYear < DateTime.Now.Year + 1; iYear++)
+        {
+            <option @(yearSelected == iYear ? "selected" : string.Empty)>@iYear</option>
+        }
+    </select>
+}
+
+@helper ShowCategories(int idDll, int catSelected)
+{
+    <select id="ddlCategory@(idDll)">
+        @foreach (var cat in Model.CategoriesToSelect)
+        {<option data-url="@cat.SeName" @(cat.Id == catSelected ? "selected": string.Empty)>@cat.Name</option>}
+    </select>
+}
+<div id="divMainSection">
+
+    <div>
+        @ShowCategories(1, Model.Categories[0].Id)
+        @ShowYears(1, Model.Year1)
+        vs
+        @ShowCategories(2, Model.Categories[1].Id)
+        @ShowYears(2, Model.Year2)
+
+        <input id="btnVersus" type="button" class="btn button-1" value="Mostrar Versus" />
+    </div>
+
+
+    @for (int i = 0; i < Model.Categories.Count; i++)
+    {
+        var category = Model.Categories[i];
+        var imageUrl = category.MainProduct != null ? category.MainProduct.DefaultPictureModel.ImageUrl : category.PictureModel.ImageUrl;
+        var hrefMainProduct = category.MainProduct != null ? Url.RouteUrl("Product", new { seName = category.MainProduct.SeName }) : string.Empty; 
+        var altImage = category.MainProduct != null ? category.MainProduct.DefaultPictureModel.AlternateText : category.Name; 
+
+
+
+        <div style="float:left">
+            
+
+
+            <div>
+                <a href="@hrefMainProduct" title="@altImage">
+                    <img src="@imageUrl" width="200" height="200" />
+                </a>
+                <br />
+                <b>Nombre:</b> @category.Name<br />
+
+                @foreach (var spec in category.SpecificationAttributes)
+                {
+                    <b>@spec.SpecificationAttributeName:</b>@spec.ValueRaw <br />
+                }
+            </div>
+
+
+
+            @if (category.MainProduct != null)
+            {
+                <div>
+                    <b>Nombre:</b>@category.MainProduct.Name <br />
+                    <b>Precio:</b>@category.MainProduct.ProductPrice.Price <br />
+                    @{
+                var currentSpec = 0;
+                    }
+                    @foreach (var spec in category.MainProduct.SpecificationAttributeModels.OrderBy(sa => sa.SpecificationAttributeName))
+                    {
+                        if (spec.SpecificationAttributeId != currentSpec)
+                        {
+                            currentSpec = spec.SpecificationAttributeId;
+                            <br /><b>@spec.SpecificationAttributeName:</b>
+                            @spec.ValueRaw
+                        }
+                        else
+                        {
+                            @:,@spec.ValueRaw
+                        }
+
+                    }
+                </div>
+            }
+
+
+            @if (category.Products.Count > 0)
+            {
+                <h2>Otras @category.Name para comparar en Tuils</h2>
+                foreach (var product in category.Products)
+                {
+                    var productYear = product.SpecificationAttributeModels.FirstOrDefault(s => s.SpecificationAttributeId == Model.SpecificationAttributeYearId).ValueRaw;
+                    var year1 = i == 0 ? productYear : Model.Year1.ToString();
+                    var year2 = i == 1 ? productYear : Model.Year2.ToString();
+                    var pId1 = i == 0 ? product.Id : Model.ProductId1;
+                    var pId2 = i == 1 ? product.Id : Model.ProductId2;
+                    <div>
+                        <div><img src="@product.DefaultPictureModel.ImageUrl" width="200" height="200" /></div>
+                        <div>@product.Name</div>
+                        <a href="@Url.RouteUrl("Versus", new { catSlug1 = Model.Slug1, year1 = year1, year2 = year2, catSlug2 = Model.Slug2, pId1 = pId1, pId2 = pId2 })">Comparar</a>
+                    </div>
+                }
+            }
+
+            else
+            {
+                <div>NO HAY @category.Name modelo @category.Year PARA COMPARAR</div>
+            }
+
+
+
+        </div>
+
+    }
+    @Html.HiddenFor(m => m.Year1)
+    @Html.HiddenFor(m => m.Year2)
+</div>

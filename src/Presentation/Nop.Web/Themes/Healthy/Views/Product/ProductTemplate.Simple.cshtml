@@ -60,6 +60,31 @@
     <div class="page product-details-page" itemscope itemtype="http://schema.org/Product">
         <div class="page-body">
             @Html.Widget("productdetails_top", Model.Id)
+
+            @if (Model.ShowVersus)
+            { 
+                <div>
+                    <input id="defaultSlugVs" type="hidden" value="@(Model.Category.SeName)-@Model.Year" />
+                    @Model.Category.Name @Model.Year vs
+
+                    
+                    <select id="ddlVersusCategory">
+                            @foreach (var cat in Model.VersusCategories)
+                            {<option data-url="@cat.SeName" @(cat.Id == Model.Category.Id ? "selected" : string.Empty)>@cat.Name</option>}
+                    </select>
+
+                    <select id="ddlYearVersus">
+                        @for (int iYear = 2000; iYear < DateTime.Now.Year + 1; iYear++)
+                        {
+                            <option @(Model.Year == iYear ? "selected" : string.Empty)>@iYear</option>
+                        }
+                    </select>
+                    <input id="btnVersus" type="button" class="btn button-1" value="Mostrar Versus" />
+                </div>
+
+            }
+
+
             @*added*@
             <div class="product-name">
                 <h1 itemprop="name">@Model.Name</h1>

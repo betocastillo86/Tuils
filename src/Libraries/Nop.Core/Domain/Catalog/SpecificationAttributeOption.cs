@@ -10,6 +10,8 @@ namespace Nop.Core.Domain.Catalog
     public partial class SpecificationAttributeOption : BaseEntity, ILocalizedEntity, ISlugSupported
     {
         private ICollection<ProductSpecificationAttribute> _productSpecificationAttributes;
+        private ICollection<CategorySpecificationAttribute> _categorySpecificationAttributes;
+        
 
         /// <summary>
         /// Gets or sets the specification attribute identifier
@@ -38,6 +40,16 @@ namespace Nop.Core.Domain.Catalog
         {
             get { return _productSpecificationAttributes ?? (_productSpecificationAttributes = new List<ProductSpecificationAttribute>()); }
             protected set { _productSpecificationAttributes = value; }
+        }
+
+
+        /// <summary>
+        /// Gets or sets the product specification attribute
+        /// </summary>
+        public virtual ICollection<CategorySpecificationAttribute> CategorySpecificationAttributes
+        {
+            get { return _categorySpecificationAttributes ?? (_categorySpecificationAttributes = new List<CategorySpecificationAttribute>()); }
+            protected set { _categorySpecificationAttributes = value; }
         }
     }
 }

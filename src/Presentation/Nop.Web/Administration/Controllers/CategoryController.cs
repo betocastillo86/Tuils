@@ -23,6 +23,8 @@ using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Mvc;
 using Nop.Core.Domain.Common;
 using Nop.Services.Configuration;
+using Nop.Core;
+using System.Web;
 
 namespace Nop.Admin.Controllers
 {
@@ -52,6 +54,7 @@ namespace Nop.Admin.Controllers
         private readonly ISettingService _settingService;
         private readonly CatalogSettings _catalogSettings;
         private readonly TuilsSettings _tuilsSettings;
+        private readonly IWorkContext _workContext;
 
 
 
@@ -78,7 +81,8 @@ namespace Nop.Admin.Controllers
             CatalogSettings catalogSettings,
             TuilsSettings tuilsSettings,
             ISpecificationAttributeService specificationAttributeService,
-            ISettingService settingService)
+            ISettingService settingService,
+            IWorkContext workContext)
         {
             this._categoryService = categoryService;
             this._categoryTemplateService = categoryTemplateService;
@@ -102,6 +106,7 @@ namespace Nop.Admin.Controllers
             this._tuilsSettings = tuilsSettings;
             this._specificationAttributeService = specificationAttributeService;
             this._settingService = settingService;
+            this._workContext = workContext;
         }
 
         #endregion
@@ -465,6 +470,8 @@ namespace Nop.Admin.Controllers
                 return RedirectToAction("List");
 
             var model = category.ToModel();
+
+
             //locales
             AddLocales(_languageService, model.Locales, (locale, languageId) =>
             {
@@ -476,6 +483,7 @@ namespace Nop.Admin.Controllers
                 locale.SeName = category.GetSeName(languageId, false, false);
             });
 
+            
             //Agrega los attributos
             PrepareSpecificationAttributeModel(model);
             //templates
@@ -488,8 +496,27 @@ namespace Nop.Admin.Controllers
             PrepareAclModel(model, category, false);
             //Stores
             PrepareStoresMappingModel(model, category, false);
+            //category specificastions
+            PrepareCategorySpecificationAttribute(model);
 
             return View(model);
+        }
+
+        private void PrepareCategorySpecificationAttribute(CategoryModel model)
+        {
+            //specification attributes
+            var specificationAttributes = _specificationAttributeService.GetSpecificationAttributes();
+            for (int i = 0; i < specificationAttributes.Count; i++)
+            {
+                var sa = specificationAttributes[i];
+                model.AddSpecificationAttributeModel.AvailableAttributes.Add(new SelectListItem { Text = sa.Name, Value = sa.Id.ToString() });
+                if (i == 0)
+                {
+                    //attribute options
+                    foreach (var sao in _specificationAttributeService.GetSpecificationAttributeOptionsBySpecificationAttribute(sa.Id))
+                        model.AddSpecificationAttributeModel.AvailableOptions.Add(new SelectListItem { Text = sao.Name, Value = sao.Id.ToString() });
+                }
+            }
         }
 
         private void PrepareSpecificationAttributeModel(CategoryModel model)
@@ -609,6 +636,8 @@ namespace Nop.Admin.Controllers
             PrepareAclModel(model, category, true);
             //Stores
             PrepareStoresMappingModel(model, category, true);
+            //category specificastions
+            PrepareCategorySpecificationAttribute(model);
 
             return View(model);
         }
@@ -847,6 +876,137 @@ namespace Nop.Admin.Controllers
             foreach (var c in categories)
                 model.AvailableCategories.Add(new SelectListItem { Text = c.GetFormattedBreadCrumb(categories), Value = c.Id.ToString() });
         }
+        #endregion
+
+        #region Category specification attributes
+
+        [ValidateInput(false)]
+        public ActionResult CategorySpecificationAttributeAdd(int attributeTypeId, int specificationAttributeOptionId,
+            string customValue, bool allowFiltering, bool showOnCategoryPage,
+            int displayOrder, int categoryId, int year)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
+                return AccessDeniedView();
+
+            //we allow filtering only for "Option" attribute type
+            if (attributeTypeId != (int)SpecificationAttributeType.Option)
+            {
+                allowFiltering = false;
+            }
+
+            var csa = new CategorySpecificationAttribute
+            {
+                AttributeTypeId = attributeTypeId,
+                SpecificationAttributeOptionId = specificationAttributeOptionId,
+                CategoryId = categoryId,
+                CustomValue = customValue,
+                AllowFiltering = allowFiltering,
+                ShowOnCategoryPage = showOnCategoryPage,
+                DisplayOrder = displayOrder,
+                Year = year
+            };
+
+            _specificationAttributeService.InsertCategorySpecificationAttribute(csa);
+
+            return Json(new { Result = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult CategorySpecAttrList(DataSourceRequest command, int categoryId)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
+                return AccessDeniedView();
+
+
+            var categoryrSpecs = _specificationAttributeService.GetCategorySpecificationAttributesByCategoryId(categoryId);
+
+            var categoryrSpecsModel = categoryrSpecs
+                .Select(x =>
+                {
+                    var psaModel = new CategorySpecificationAttributeModel
+                    {
+                        Id = x.Id,
+                        AttributeTypeName = x.AttributeType.GetLocalizedEnum(_localizationService, _workContext),
+                        AttributeName = x.SpecificationAttributeOption.SpecificationAttribute.Name,
+                        AllowFiltering = x.AllowFiltering,
+                        ShowOnCategoryPage = x.ShowOnCategoryPage,
+                        DisplayOrder = x.DisplayOrder,
+                        Year = x.Year
+                    };
+                    switch (x.AttributeType)
+                    {
+                        case SpecificationAttributeType.Option:
+                            psaModel.ValueRaw = HttpUtility.HtmlEncode(x.SpecificationAttributeOption.Name);
+                            break;
+                        case SpecificationAttributeType.CustomText:
+                            psaModel.ValueRaw = HttpUtility.HtmlEncode(x.CustomValue);
+                            break;
+                        case SpecificationAttributeType.CustomHtmlText:
+                            //do not encode?
+                            //psaModel.ValueRaw = x.CustomValue;
+                            psaModel.ValueRaw = HttpUtility.HtmlEncode(x.CustomValue);
+                            break;
+                        case SpecificationAttributeType.Hyperlink:
+                            psaModel.ValueRaw = x.CustomValue;
+                            break;
+                        default:
+                            break;
+                    }
+                    return psaModel;
+                })
+                .ToList();
+
+            var gridModel = new DataSourceResult
+            {
+                Data = categoryrSpecsModel,
+                Total = categoryrSpecsModel.Count
+            };
+
+            return Json(gridModel);
+        }
+
+        [HttpPost]
+        public ActionResult CategorySpecAttrUpdate(CategorySpecificationAttributeModel model)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
+                return AccessDeniedView();
+
+            var csa = _specificationAttributeService.GetCategorySpecificationAttributeById(model.Id);
+            if (csa == null)
+                return Content("No product specification attribute found with the specified id");
+
+            var categoryId = csa.Category.Id;
+
+
+
+            //we do not allow editing these fields anymore (when we have distinct attribute types)
+            //psa.CustomValue = model.CustomValue;
+            //psa.AllowFiltering = model.AllowFiltering;
+            csa.ShowOnCategoryPage = model.ShowOnCategoryPage;
+            csa.DisplayOrder = model.DisplayOrder;
+            csa.Year = model.Year;
+            _specificationAttributeService.UpdateCategorySpecificationAttribute(csa);
+
+            return new NullJsonResult();
+        }
+
+        [HttpPost]
+        public ActionResult CategorySpecAttrDelete(int id)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
+                return AccessDeniedView();
+
+            var csa = _specificationAttributeService.GetCategorySpecificationAttributeById(id);
+            if (csa == null)
+                throw new ArgumentException("No specification attribute found with the specified id");
+
+            var categoryId = csa.CategoryId;
+
+            _specificationAttributeService.DeleteCategorySpecificationAttribute(csa);
+
+            return new NullJsonResult();
+        }
+
         #endregion
     }
 }

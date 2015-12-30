@@ -19,6 +19,7 @@ namespace Nop.Core.Domain.Catalog
         private ICollection<SpecialCategoryVendor> _specialCategoriesByVendor;
         private ICollection<Category> _subCategories;
         private ICollection<ManufacturerCategory> _manufacturers;
+        private ICollection<CategorySpecificationAttribute> _categorySpecificationAttributes;
         
 
         /// <summary>
@@ -195,6 +196,16 @@ namespace Nop.Core.Domain.Catalog
         {
             get { return _specialCategoriesByVendor ?? (_specialCategoriesByVendor = new List<SpecialCategoryVendor>()); }
             protected set { _specialCategoriesByVendor = value; }
+        }
+
+
+        /// <summary>
+        /// Gets or sets the category specification attribute
+        /// </summary>
+        public virtual ICollection<CategorySpecificationAttribute> CategorySpecificationAttributes
+        {
+            get { return _categorySpecificationAttributes ?? (_categorySpecificationAttributes = new List<CategorySpecificationAttribute>()); }
+            protected set { _categorySpecificationAttributes = value; }
         }
 
 

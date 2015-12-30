@@ -23,6 +23,9 @@
         <li @Html.RenderSelectedTabIndex(5, GetSelectedTabIndex())>
             @T("Admin.Catalog.Categories.Stores")
         </li>
+        <li @Html.RenderSelectedTabIndex(6, GetSelectedTabIndex())>
+            @T("Admin.Catalog.Products.SpecificationAttributes")
+        </li>
     </ul>
     <div>
         @TabInfo()
@@ -41,6 +44,9 @@
     </div>
     <div>
         @TabStores()
+    </div>
+    <div>
+        @TabSpecificationAttributes()
     </div>
 </div>
 <script>
@@ -616,4 +622,8 @@
             </td>
         </tr>
     </table>
+}
+@helper TabSpecificationAttributes()
+{
+    @Html.Partial("_CreateOrUpdate.SpecificationAttributes", Model)
 }

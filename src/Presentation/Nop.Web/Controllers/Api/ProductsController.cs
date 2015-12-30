@@ -78,7 +78,9 @@ namespace Nop.Web.Controllers.Api
         [AuthorizeApi]
         public IHttpActionResult PublishProduct(ProductBaseModel model)
         {
-            if (ModelState.IsValid && model.Validate(ModelState))
+            var productType = ProductCategoryType.None;
+
+            if (ModelState.IsValid && model.Validate(ModelState, out productType))
             {
                
                 try
@@ -89,6 +91,9 @@ namespace Nop.Web.Controllers.Api
 
 
                     var product = model.ToEntity(_categoryService);
+                    
+                    //Actualiza el valor del tipo de producto 
+                    product.ProductCategoryType = productType;
 
                     //Si el vendor no existe, es necesario crearlo con base en el usuario
                     if (_workContext.CurrentVendor == null || _workContext.CurrentVendor.Id == 0)

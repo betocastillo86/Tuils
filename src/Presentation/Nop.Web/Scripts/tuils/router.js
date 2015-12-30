@@ -4,13 +4,13 @@
 , 'tuils/views/common/header', 'tuils/views/panel/offices', 'tuils/views/panel/menu', 'tuils/views/panel/myProductsView', 'tuils/views/home/homeView',
 'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView', 'tuils/views/publishProduct/publishView',
 'tuils/views/common/footerView', 'tuils/views/panel/editProductView', 'tuils/views/publishProduct/selectPlanView', 'tuils/views/panel/myOrdersView',
-'tuils/views/publishProduct/showPlansView', 'tuils/views/login/staticLoginView', 'tuils/views/vendor/searchVendorsView',
+'tuils/views/publishProduct/showPlansView', 'tuils/views/login/staticLoginView', 'tuils/views/vendor/searchVendorsView', 'tuils/views/versus/versusView',
 'ajaxCart', 'nopCommon'],
     function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView,
         MyAccountView,VendorServicesView ,QuestionsView ,VendorDetailView,
         ProductDetailView, NewsletterView, SearcherView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
         HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView, EditProductView, SelectPlanView, MyOrdersView, 
-        ShowPlansView, StaticLoginView, SearchVendorsView) {
+        ShowPlansView, StaticLoginView, SearchVendorsView, VersusView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -60,6 +60,7 @@
                 'passwordrecovery/confirm(/*query)' : 'passwordRecovery',
                 'planes(/:tab)': 'plans',
                 'buscar-negocios(/:stateProvId)(/:categoryId)(/:vendorId)(/:subTypeId)(/:lat)(/:lon)(/:zoon)': 'searchVendors',
+                'comparacion/*path':'versus',
                 '*path' : 'defaultRoute'
             },
             defaultRoute: function (path) {
@@ -92,6 +93,10 @@
             selectPlan: function (id) {
                 this.currentView = new SelectPlanView({ el: this.defaultEl, id: parseInt(id) });
                 this.loadSubViews();
+            },
+            versus: function () {
+                this.currentView = new VersusView({ el: this.defaultEl });
+                this.loadTwoColumns();
             },
             sellSwitch: function (type, step) {
                 if (!this.currentView) {

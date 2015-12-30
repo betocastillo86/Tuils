@@ -761,10 +761,6 @@ namespace Nop.Web.Infrastructure
             
             #endregion
             
-
-            
-
-
             #region Panel de Control
             routes.MapLocalizedRoute("ControlPanel",
               "mi-cuenta",
@@ -824,6 +820,10 @@ namespace Nop.Web.Infrastructure
 
             #endregion
 
+            routes.MapLocalizedRoute("Versus",
+                            "comparacion/{catSlug1}-{year1}-versus-{catSlug2}-{year2}/{*query}",
+                            new { controller = "Product", action = "Versus", query = System.Web.Mvc.UrlParameter.Optional, year1 = @"\d+", year2 = @"\d+" },
+                            new[] { "Nop.Web.Controllers" });
 
         }
 

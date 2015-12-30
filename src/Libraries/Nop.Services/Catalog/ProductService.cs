@@ -3049,7 +3049,7 @@ namespace Nop.Services.Catalog
             //realiza validaciones para usuarios tipo persona
             if (vendor.VendorType == VendorType.User)
             {
-                activateDisablingFeatured = EnableProductUser(product, vendor);
+                activateDisablingFeatured = EnableProductUser(product, vendor, forceEnable);
             }
             else
             {
@@ -3093,7 +3093,7 @@ namespace Nop.Services.Catalog
         /// <param name="product">Datos del producto</param>
         /// <param name="vendor">Datos del vendedor</param>
         /// <returns>true: Debe desactivar destacados del producto False: Solo debe actualizar el producto</returns>
-        private bool EnableProductUser(Product product, Vendor vendor)
+        private bool EnableProductUser(Product product, Vendor vendor, bool forceEnable = false)
         {
             //Si tiene plan y todavia está activo reactiva el producto
             if (product.OrderPlanId.HasValue && product.AvailableEndDateTimeUtc > DateTime.UtcNow)
@@ -3116,7 +3116,7 @@ namespace Nop.Services.Catalog
                 int productLimitPublished = GetPlanById(_planSettings.PlanProductsFree).NumProducts;
                 //Si el numero de productos publicados por el usuario es mayor o igual que el cupo que se tiene gratis
                 //el usuario no puede reactivarlo
-                if (numProductsVendor >= productLimitPublished)
+                if (!forceEnable && numProductsVendor >= productLimitPublished)
                 {
                     throw new NopException("Ha alcanzado el limite de publicaciones gratis");
                 }

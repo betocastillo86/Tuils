@@ -713,6 +713,30 @@ namespace Nop.Services.Catalog
             }
         }
 
+        /// <summary>
+        /// Listado de referencias de moto pero en el mismo nivel
+        /// </summary>
+        /// <param name="categoryBrandId"></param>
+        /// <returns></returns>
+        public IList<Category> GetAllBikeReferencesSameLevel(int? categoryBrandId)
+        {
+            var categories = GetAllBikeReferences(categoryBrandId);
+            var categoriesSameLevel = new List<Category>();
+            GetChildrenWithoutChildren(categories, categoriesSameLevel);
+            return categoriesSameLevel;
+        }
+
+        private void GetChildrenWithoutChildren(IList<Category> parents, IList<Category> baseList)
+        {
+            foreach (var parent in parents)
+            {
+                if (parent.SubCategories.Count > 0)
+                    GetChildrenWithoutChildren(parent.SubCategories.ToList(), baseList);
+                else
+                    baseList.Add(parent);
+            }
+        }
+
         #endregion
         /// <summary>
         /// Retorna todos los productos de tipo servicio existentes

@@ -30,6 +30,7 @@ namespace Nop.Web.Models.Catalog
             PagingFilteringContext = new CatalogPagingFilteringModel();
             SubCategories = new List<SubCategoryModel>();
             CategoryBreadcrumb = new List<CategoryModel>();
+            SpecificationAttributes = new List<ProductSpecificationModel>();
         }
 
         public string MetaDescription { get; set; }
@@ -43,6 +44,8 @@ namespace Nop.Web.Models.Catalog
         public IList<CategoryModel> CategoryBreadcrumb { get; set; }
         
         public IList<SubCategoryModel> SubCategories { get; set; }
+        
+        public IList<ProductSpecificationModel> SpecificationAttributes { get; set; }
 
         public IList<ProductOverviewModel> FeaturedProducts { get; set; }
         public IList<ProductOverviewModel> Products { get; set; }

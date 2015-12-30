@@ -508,6 +508,26 @@ namespace Nop.Core.Domain.Catalog
         public int NumClicksForMoreInfo { get; set; }
 
         /// <summary>
+        /// Contiene que tipo de producto es de acuerdo a la categorí
+        /// </summary>
+        public int ProductCategoryTypeId { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets ProductCategoryTypeId
+        /// </summary>
+        public ProductCategoryType ProductCategoryType
+        {
+            get
+            {
+                return (ProductCategoryType)this.ProductCategoryTypeId;
+            }
+            set
+            {
+                this.ProductCategoryTypeId = (int)value;
+            }
+        }
+        /// <summary>
         /// Gets or sets the product type
         /// </summary>
         public ProductType ProductType

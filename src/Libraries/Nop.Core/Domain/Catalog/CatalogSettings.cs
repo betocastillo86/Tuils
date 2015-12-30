@@ -410,5 +410,10 @@ namespace Nop.Core.Domain.Catalog
         /// Imagen por defecto relacionada a los servicios
         /// </summary>
         public int DefaultServicePicture { get; set; }
+
+        /// <summary>
+        /// Especificacion del año
+        /// </summary>
+        public int SpecificationAttributeYear { get; set; }
     }
 }

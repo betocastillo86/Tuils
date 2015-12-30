@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapping\Catalog\CategorySpecificationAttributeMap.cs" />
     <Compile Include="Mapping\Catalog\ManufacturerCategoryMap.cs" />
     <Compile Include="Mapping\Catalog\ProductQuestionMap.cs" />
     <Compile Include="Mapping\Catalog\SpecialCategoryProductMap.cs" />
@@ -250,6 +251,14 @@
     <Compile Include="Migrations\201512101611060_AddColumn_ScheduledOnUtc_Table_QueueEmail.cs" />
     <Compile Include="Migrations\201512101611060_AddColumn_ScheduledOnUtc_Table_QueueEmail.Designer.cs">
       <DependentUpon>201512101611060_AddColumn_ScheduledOnUtc_Table_QueueEmail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512281732299_AddTable_CategorySpecificationAttribute.cs" />
+    <Compile Include="Migrations\201512281732299_AddTable_CategorySpecificationAttribute.Designer.cs">
+      <DependentUpon>201512281732299_AddTable_CategorySpecificationAttribute.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512301424022_AddColumn_ProductCategoryTypeId_Table_Product.cs" />
+    <Compile Include="Migrations\201512301424022_AddColumn_ProductCategoryTypeId_Table_Product.Designer.cs">
+      <DependentUpon>201512301424022_AddColumn_ProductCategoryTypeId_Table_Product.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
@@ -510,6 +519,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512101611060_AddColumn_ScheduledOnUtc_Table_QueueEmail.resx">
       <DependentUpon>201512101611060_AddColumn_ScheduledOnUtc_Table_QueueEmail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512281732299_AddTable_CategorySpecificationAttribute.resx">
+      <DependentUpon>201512281732299_AddTable_CategorySpecificationAttribute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512301424022_AddColumn_ProductCategoryTypeId_Table_Product.resx">
+      <DependentUpon>201512301424022_AddColumn_ProductCategoryTypeId_Table_Product.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

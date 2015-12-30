@@ -133,6 +133,26 @@ namespace Nop.Web.Controllers.Api
             }));
         }
 
+        /*[Route("api/categories/bikereferencesSameLevel")]
+        public IHttpActionResult GetAllBikeReferencesSameLevel()
+        {
+            string cacheKey = ModelCacheEventConsumer.CATEGORIES_API_ALL_BIKEREFERENCES_SAME_LEVEL;
+            return Ok(_cacheManager.Get(cacheKey, () =>
+            {
+                var categories = this._categoryService.GetAllBikeReferencesSameLevel(null).OrderBy(c => c.Name);
+                var model = new List<object>();
+                foreach (var category in categories)
+                {
+                    model.Add(new { Id = category.Id, Name = category.Name, SeName = category.GetSeName() });
+                }
+
+                return model;
+            }));
+        }*/
+
+
+        
+
         /// <summary>
         /// Retorna todas las categorias de tipo servicio existentes
         /// </summary>

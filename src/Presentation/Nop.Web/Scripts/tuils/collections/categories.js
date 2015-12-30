@@ -13,6 +13,12 @@
             return this;
         },
 
+        getBikeReferencesSameLevel: function () {
+            this.url = this.baseUrl + "bikereferencesSameLevel";
+            this.fetch();
+            return this;
+        },
+
         getServices: function () {
             this.url = this.baseUrl + 'services';
             this.fetch();

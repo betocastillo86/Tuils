@@ -155,6 +155,17 @@ namespace Nop.Services.Catalog
         /// <param name="categoryBrandId"></param>
         /// <returns></returns>
         IList<Category> GetAllBikeReferences(int? categoryBrandId);
+
+
+        /// <summary>
+        /// Trae todas las referencias de motocuicletas al mismo nivel
+        /// </summary>
+        /// <param name="categoryBrandId"></param>
+        /// <returns></returns>
+        IList<Category> GetAllBikeReferencesSameLevel(int? categoryBrandId);
+
+
+
         /// <summary>
         /// Retorna todos los servicios existentes en el sistema
         /// </summary>

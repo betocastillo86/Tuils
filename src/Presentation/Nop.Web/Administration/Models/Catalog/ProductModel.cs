@@ -399,8 +399,6 @@ namespace Nop.Admin.Models.Catalog
         public int[] SelectedDiscountIds { get; set; }
 
 
-
-
         //add specification attribute model
         public AddProductSpecificationAttributeModel AddSpecificationAttributeModel { get; set; }
 

@@ -1,5 +1,6 @@
-﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'resources','tuils/models/review', 'tuils/views/product/reviewView','tuils/views/product/questionView', 'jpopup', 'jtabs'],
-    function ($, _, BaseView, ProductModel, Resources, ReviewModel, ReviewView, QuestionView) {
+﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'resources', 'tuils/models/review', 'tuils/views/product/reviewView', 'tuils/views/product/questionView', 'storage',
+    'jpopup', 'jtabs'],
+    function ($, _, BaseView, ProductModel, Resources, ReviewModel, ReviewView, QuestionView, TuilsStorage) {
 
         var ProductDetailView = BaseView.extend({
 
@@ -21,7 +22,8 @@
                 'click #btnShowVendor': 'createOrder',
                 'click #btnShowVendorResponsive': 'createOrder',
                 'click #btnCancelMoreInfoResp' : 'cancelMoreInfoResp',
-                'click .rating a' : 'showReviews'
+                'click .rating a' : 'showReviews',
+                'click #btnVersus': 'showVersus'
             },
 
             initialize: function (args) {
@@ -38,6 +40,11 @@
                 this.loadGallery();
                 this.loadTabs();
                 this.loadComments();
+            },
+            showVersus: function () {
+                var slug1 = this.$('#defaultSlugVs').val();
+                var slug2 = this.$('#ddlVersusCategory option:selected').data('url') + '-' + this.$('#ddlYearVersus').val();
+                document.location.href = '/comparacion/' + slug1 + '-versus-' + slug2;
             },
             loadGallery: function () {
 

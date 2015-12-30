@@ -335,6 +335,7 @@
     <Compile Include="Models\Catalog\ProductDetailsModel.cs" />
     <Compile Include="Models\Catalog\VendorOfficesModel.cs" />
     <Compile Include="Models\Catalog\VendorsHomePageModel.cs" />
+    <Compile Include="Models\Catalog\VersusModel.cs" />
     <Compile Include="Models\Checkout\CheckoutShippingAddressModel.cs" />
     <Compile Include="Models\Checkout\CheckoutProgressModel.cs" />
     <Compile Include="Models\Checkout\CheckoutBillingAddressModel.cs" />
@@ -1804,6 +1805,7 @@
     <Content Include="Scripts\tuils\views\vendor\vendorDetailView.js" />
     <Content Include="Scripts\tuils\views\vendor\vendorHeaderView.js" />
     <Content Include="Scripts\tuils\views\vendor\vendorReviewsView.js" />
+    <Content Include="Scripts\tuils\views\versus\versusView.js" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore-min.js" />
     <Content Include="Scripts\underscore-min.map" />
@@ -2632,6 +2634,7 @@
     <Content Include="Views\Sales\Plans.cshtml" />
     <Content Include="Themes\Healthy\Views\Catalog\VendorOffices.cshtml" />
     <Content Include="Views\Catalog\SearchVendors.cshtml" />
+    <Content Include="Views\Product\Versus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

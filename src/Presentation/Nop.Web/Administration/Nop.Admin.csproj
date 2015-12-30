@@ -194,6 +194,7 @@
     <Compile Include="Extensions\MappingExtensions.cs" />
     <Compile Include="Infrastructure\AutoMapperStartupTask.cs" />
     <Compile Include="Models\Catalog\AddProductAttributeCombinationModel.cs" />
+    <Compile Include="Models\Catalog\CategorySpecificationAttributeModel.cs" />
     <Compile Include="Models\Catalog\LowStockProductModel.cs" />
     <Compile Include="Models\Catalog\BulkEditProductModel.cs" />
     <Compile Include="Models\Catalog\BulkEditListModel.cs" />
@@ -437,6 +438,7 @@
     <Content Include="Views\Vendor\DefaultCovers.cshtml" />
     <Content Include="Views\Product\_CreateOrUpdate.SpecialCategories.cshtml" />
     <Content Include="Views\Setting\Plans.cshtml" />
+    <Content Include="Views\Category\_CreateOrUpdate.SpecificationAttributes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Category\Create.cshtml" />

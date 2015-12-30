@@ -24,6 +24,7 @@ namespace Nop.Admin.Models.Catalog
             Locales = new List<CategoryLocalizedModel>();
             AvailableCategoryTemplates = new List<SelectListItem>();
             AvailableCategories = new List<SelectListItem>();
+            AddSpecificationAttributeModel = new AddCategorySpecificationAttributeModel();
         }
 
         [NopResourceDisplayName("Admin.Catalog.Categories.Fields.Name")]
@@ -133,6 +134,9 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Categories.Fields.SpecificationAttributeOptionId")]
         public int? SpecificationAttributeOptionId { get; set; }
 
+        //add specification attribute model
+        public AddCategorySpecificationAttributeModel AddSpecificationAttributeModel { get; set; }
+
         #region Nested classes
 
         public partial class CategoryProductModel : BaseNopEntityModel
@@ -225,5 +229,41 @@ namespace Nop.Admin.Models.Catalog
         public string SeName { get; set; }
 
 
+    }
+
+    public partial class AddCategorySpecificationAttributeModel : BaseNopModel
+    {
+        public AddCategorySpecificationAttributeModel()
+        {
+            AvailableAttributes = new List<SelectListItem>();
+            AvailableOptions = new List<SelectListItem>();
+        }
+
+        [NopResourceDisplayName("Admin.Catalog.Products.SpecificationAttributes.Fields.SpecificationAttribute")]
+        public int SpecificationAttributeId { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Products.SpecificationAttributes.Fields.AttributeType")]
+        public int AttributeTypeId { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Products.SpecificationAttributes.Fields.SpecificationAttributeOption")]
+        public int SpecificationAttributeOptionId { get; set; }
+
+        [AllowHtml]
+        [NopResourceDisplayName("Admin.Catalog.Products.SpecificationAttributes.Fields.CustomValue")]
+        public string CustomValue { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Products.SpecificationAttributes.Fields.AllowFiltering")]
+        public bool AllowFiltering { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Products.SpecificationAttributes.Fields.ShowOnProductPage")]
+        public bool ShowOnCategoryPage { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Products.SpecificationAttributes.Fields.DisplayOrder")]
+        public int DisplayOrder { get; set; }
+
+        public int Year { get; set; }
+
+        public IList<SelectListItem> AvailableAttributes { get; set; }
+        public IList<SelectListItem> AvailableOptions { get; set; }
     }
 }

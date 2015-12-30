@@ -29,7 +29,7 @@ namespace Nop.Data.Mapping.Catalog
             this.Property(p => p.AllowedQuantities).HasMaxLength(1000);
             this.Property(p => p.DetailShipping).HasMaxLength(500);
 
-
+            this.Ignore(p => p.ProductCategoryType);
             this.Ignore(p => p.ProductType);
             this.Ignore(p => p.BackorderMode);
             this.Ignore(p => p.DownloadActivationType);

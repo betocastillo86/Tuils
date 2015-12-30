@@ -103,7 +103,14 @@ namespace Nop.Data.Migrations
                     new SpecificationAttributeOption() { Id = 50, Name = "NEGRO       ".Trim(),SpecificationAttributeId = 5},
                     new SpecificationAttributeOption() { Id = 51, Name = "PLATEADO    ".Trim(),SpecificationAttributeId = 5},
                     new SpecificationAttributeOption() { Id = 52, Name = "ROJO        ".Trim(),SpecificationAttributeId = 5},
-                    new SpecificationAttributeOption() { Id = 53, Name = "VINO TINTO  ".Trim(),SpecificationAttributeId = 5}};
+                    new SpecificationAttributeOption() { Id = 53, Name = "VINO TINTO  ".Trim(),SpecificationAttributeId = 5},
+                    new SpecificationAttributeOption() { Name = "2000", SpecificationAttributeId = 27},
+                    new SpecificationAttributeOption() { Name = "2000", SpecificationAttributeId = 28},
+                    new SpecificationAttributeOption() { Name = "2000", SpecificationAttributeId = 29},
+                    new SpecificationAttributeOption() { Name = "2000", SpecificationAttributeId = 30},
+                    new SpecificationAttributeOption() { Name = "2000", SpecificationAttributeId = 31},
+                    new SpecificationAttributeOption() { Name = "2000", SpecificationAttributeId = 32}
+            };
 
             if (runSpecificationAttributes)
             {
@@ -135,7 +142,13 @@ namespace Nop.Data.Migrations
                     new SpecificationAttribute() { Id = 23, Name = "Productos destacados", DisplayOrder = 0 },
                     new SpecificationAttribute() { Id = 24, Name = "Productos en Home Page", DisplayOrder = 0 },
                     new SpecificationAttribute() { Id = 25, Name = "Productos en redes sociales", DisplayOrder = 0 },
-                    new SpecificationAttribute() { Id = 26, Name = "Elaboración de la pagina", DisplayOrder = 0 }
+                    new SpecificationAttribute() { Id = 26, Name = "Elaboración de la pagina", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 27, Name = "Cilindraje", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 28, Name = "Caballos de Fuerza", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 29, Name = "Peso (Kg)", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 30, Name = "Altura asiento", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 31, Name = "Llantas (Trasera-Delantera)", DisplayOrder = 0 },
+                    new SpecificationAttribute() { Id = 32, Name = "Relación de la compresión", DisplayOrder = 0 },
                 };
                 specificationAttributeTable.AddOrUpdate(sa => sa.Id, specificationAttributes);
                 #endregion
@@ -2542,7 +2555,8 @@ namespace Nop.Data.Migrations
                 settings.Add("vendorsettings.DaysUpdateShopFirstEmail", "2");
                 settings.Add("vendorsettings.DaysUpdateShopSecondEmail", "30");
                 settings.Add("commonSettings.ActiveFacebookPixels", "701079780023326");
-
+                settings.Add("catalogSettings.SpecificationAttributeYear", "2");
+                
                 
                 
 

@@ -79,5 +79,21 @@ namespace Nop.Core.Domain.Catalog
 
             return true;
         }
+
+        /// <summary>
+        /// Retorna el año de la motocicleta
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        public static int GetYear(this Product product, CatalogSettings catalogSettings)
+        {
+            if (product.ProductCategoryType == ProductCategoryType.Motorcycle)
+            {
+                var attribute = product.ProductSpecificationAttributes.FirstOrDefault(p => p.SpecificationAttributeOption.SpecificationAttributeId == catalogSettings.SpecificationAttributeYear);
+                return attribute != null ? attribute.SpecificationAttributeOptionId : 0;
+            }
+            else
+                return 0;
+        }
     }
 }

@@ -59,6 +59,17 @@ namespace Nop.Web.Models.Catalog
 
         public bool HasSampleDownload { get; set; }
 
+        #region Versus
+        public CategorySimpleModel Category { get; set; }
+
+        public int Year { get; set; }
+
+        public bool ShowVersus { get; set; }
+
+        public List<CategoryBaseModel> VersusCategories { get; set; }
+        #endregion
+        
+
         public GiftCardModel GiftCard { get; set; }
 
         public bool IsShipEnabled { get; set; }
