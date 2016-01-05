@@ -25,8 +25,9 @@
             },
 
             initialize: function (args) {
-                this.loadControls();
+                
 
+                this.loadControls();
                 this.model = new ProductModel();
                 this.model.on('sync', this.redirectToVendor, this);
                 this.model.set('Id', this.productId);
@@ -36,7 +37,7 @@
             loadControls: function () {
                 this.productId = parseInt($("#productId").val());
                 this.loadGallery();
-                this.loadTabs();
+                //this.loadTabs();
                 this.loadComments();
             },
             loadGallery: function () {
@@ -63,7 +64,7 @@
             showReviews: function () {
                 this.$('.tab[data-name="reviews"] a').click();
             },
-            loadTabs : function(){
+            /*loadTabs : function(){
                 var that = this;
                 $('#tab-container').easytabs();
                 $('#tab-container').on('easytabs:ajax:complete', function (a,b) {
@@ -73,10 +74,10 @@
             },
             loadReviews : function(){
                 this.viewReviews = new ReviewView({ el: '#product-reviews-page' });
-            },
+            },*/
             loadComments: function () {
                 this.viewQuestions = new QuestionView({ el: '#product-questions' });
-                var that = this;
+                //var that = this;
                 //this.viewQuestions.on('unauthorized', function () { that.trigger('unauthorized'); });
                 //agrega la vista de preguntas como una de las que requiere autenticacion
                 this.requiredViewsWithAuthentication.push(this.viewQuestions);
@@ -92,12 +93,12 @@
                 {
                     var obj = $(e.target);
                     this.disableButtonForSeconds(obj);
-                    this.vendorUrl = obj.attr('data-vendorUrl');
+                    //this.vendorUrl = obj.attr('data-vendorUrl');
                     //Traquea que un usuario a intentado comprar un producto
                     //this.trackGAEvent('Compra', 'Intento');
                 }
 
-                this.validateAuthorization();
+                //this.validateAuthorization();
                 this.showLoadingAll();
                 this.model.moreInfo();
             },

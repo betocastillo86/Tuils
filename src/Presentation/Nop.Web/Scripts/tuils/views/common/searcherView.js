@@ -10,13 +10,15 @@
 
         autocompleteUrl: undefined,
         minLengthAutocomplete : 2,
-        searchBox : undefined,
+        searchBox: undefined,
+        form : undefined,
 
         initialize: function () {
             this.render();
         },
         loadControls: function () {
             this.searchBox = this.$("#small-searchterms");
+            this.form = this.$("form");
             this.handleResize();
             this.on("window-resized-max", this.hideResponsiveSearch, this);
             this.autocompleteUrl = this.searchBox.attr("data-url");
@@ -24,7 +26,7 @@
             this.loadAutoComplete();
         },
         refreshSubmitForm: function () {
-            this.$("form").attr('action', '/buscar/' + this.searchBox.val().replace(/(\&|\:|\<|\>|\\|\%|\*)/g, '').replace(/ /g, '-'));
+            this.form.attr('action', '/buscar/' + this.searchBox.val().replace(/(\&|\:|\<|\>|\\|\%|\*)/g, '').replace(/ /g, '-'));
         },
         search: function () {
             if (this.searchBox.val() == "") {
@@ -70,7 +72,7 @@
                     this.form.submit();
                 }
             })
-            .data("ui-autocomplete")._renderItem = function(ul, item) {
+            /*.data("ui-autocomplete")._renderItem = function(ul, item) {
                 var t = item.label;
                 //html encode
                 t = htmlEncode(t);
@@ -78,7 +80,7 @@
                     .data("item.autocomplete", item)
                     .append("<a>" + t + "</a>")
                 .appendTo(ul);
-            };
+            };*/
         },
         render: function () {
             this.loadControls();
