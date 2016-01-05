@@ -1,7 +1,7 @@
 ﻿@model SearchBoxModel
 @using Nop.Web.Models.Catalog;
 
-@using (Html.BeginForm("Search", "Catalog", new { query = string.Empty }, FormMethod.Get))
+@using (Html.BeginForm("Search", "Catalog", new { }, FormMethod.Get))
 {
     <div id="divSearchText" class="responsiveSearch">
         <input type="text" class="search-box-text" id="small-searchterms" autocomplete="off" name="q" placeholder="@T("Search.SearchBox.Tooltip")" data-url="@(Url.RouteUrl("ProductSearchAutoComplete"))" data-minlength="@(Model.SearchTermMinimumLength.ToString())" value="@Model.CurrentSearchTerms" />

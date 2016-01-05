@@ -7,7 +7,7 @@
         @for (int i = 0; i < Model.Searches.Count; i++)
         {
             var item = Model.Searches[i];
-            <a href="@Url.Action("Search", new { q = item, query = string.Empty })" title="@T("similarSearches.suggest.title", item)" rel="nofollow"><li>@item@(i == Model.Searches.Count - 1 ? string.Empty : ",")</li></a>
+            <a href="@Url.Action("Search", "Catalog")?q=@item" title="@T("similarSearches.suggest.title", item)" rel="nofollow"><li>@item@(i == Model.Searches.Count - 1 ? string.Empty : ",")</li></a>
         }
     </ul>
 </div>

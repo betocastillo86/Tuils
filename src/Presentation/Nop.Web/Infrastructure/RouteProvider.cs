@@ -79,7 +79,7 @@ namespace Nop.Web.Infrastructure
 
             //product search
             routes.MapLocalizedRoute("ProductSearch",
-                            "buscar/{q}/{*query}",
+                            "buscar/{*query}",
                             new { controller = "Catalog", action = "Search", q = UrlParameter.Optional, query = UrlParameter.Optional },
                             new[] { "Nop.Web.Controllers" });
 

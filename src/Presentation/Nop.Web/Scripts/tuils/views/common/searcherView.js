@@ -5,7 +5,7 @@
             'click .icon-lupa': 'showSearchBox',
             'click .closeSearchResponsive': 'hideResponsiveSearch',
             'submit form' : 'search',
-            'keyup #small-searchterms' : 'refreshSubmitForm'
+            //'keyup #small-searchterms' : 'refreshSubmitForm'
         },
 
         autocompleteUrl: undefined,
@@ -25,9 +25,9 @@
             this.minLengthAutocomplete = this.searchBox.attr("data-minlength");
             this.loadAutoComplete();
         },
-        refreshSubmitForm: function () {
+        /*refreshSubmitForm: function () {
             this.form.attr('action', '/buscar/' + this.searchBox.val().replace(/(\&|\:|\<|\>|\\|\%|\*)/g, '').replace(/ /g, '-'));
-        },
+        },*/
         search: function () {
             if (this.searchBox.val() == "") {
                 alert(this.$("#Search_EnterSearchTerms").val());
