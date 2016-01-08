@@ -2198,3 +2198,10 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     color: #f84c2a;
 }
 
+
+.helpStepPublish {
+float:none !important;
+color:inherit !important;
+font-size:inherit !important; 
+display:inline !important;
+}

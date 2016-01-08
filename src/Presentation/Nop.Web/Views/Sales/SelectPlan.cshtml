@@ -72,10 +72,11 @@
 
 
         </div>
-
-        <div class="legal_plan">Consulta los <a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })" target="_blank">Términos de uso</a> para obtener más información.</div>
-        <input id="btnPay" name="Submit" type="button" value="@T("selectplan.buttonpay")" style="@(Model.AutoShowAdditionalData ? string.Empty : "display:none")" class="btn_continue button-1">
+        
+        
+        <input id="btnPay" name="Submit" type="button" value="@T("selectplan.buttonpay")" style="@(Model.AutoShowAdditionalData ? string.Empty : "display:none")" class="btn_continue button-1" ></input>
         @Html.ActionLink(T("SelectPlan.ContinueWithoutPlan").Text, "ConfirmationWithoutPlan", "Sales", new { id = Model.ProductId }, new { style = "display:none", @class = "btn_continue button-1", id = "btnContinue" })
+    <div class="legal_plan">Consulta los <a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })" target="_blank">Términos de uso</a> para obtener más información.</div>
         <br />
 
     }

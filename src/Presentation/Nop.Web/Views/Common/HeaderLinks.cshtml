@@ -10,7 +10,8 @@
 <nav id="nav" class="header-links">
     <ul>
         @*@Html.Widget("header_links_before")*@
-        <li class="btn_home"><h2><a href="@Url.RouteUrl("HomePage")">@T("HeaderLinks.Home")</a></h2></li>
+        <li ><h2><a href="@Url.RouteUrl("HomePage")">@T("HeaderLinks.Home")</a></h2></li>
+        <li class="btn_home"><h2><a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("acercadenosotros") })">@T("AboutUs")</a></h2></li>
         @if (Model.UnansweredQuestions > 0)
         {
             <li class="btn_noti"><a href="@Url.Action("Questions", "ControlPanel")" class="icon-camp" title="@T("Account.UnansweredQuestions.Alt", Model.UnansweredQuestions)"></a><span>@Model.UnansweredQuestions</span></li>
@@ -30,9 +31,12 @@
         @foreach (var category in Model.Categories)
         {
             <li style="display:none">
-                <a href="@Url.RouteUrl("Category", new { seName = category.SeName })"><h2>@category.Name</h2></a>
+                <h2><a href="@Url.RouteUrl("Category", new { seName = category.SeName })">@category.Name</a></h2>
            </li>
         }
+
+        <li style="display:none"><h2><a href="@Url.RouteUrl("PublishNewItem")">@T("headerlinks.publish")</a></h2></li>
+        
 
         @if (Model.AllowPrivateMessages)
         {

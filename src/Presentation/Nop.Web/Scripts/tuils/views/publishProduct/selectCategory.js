@@ -94,7 +94,7 @@
 
                     //actualiza la miga de pan
                     this.breadCrumbCategories = _.first(this.breadCrumbCategories, this.currentLevel - 1);
-                    this.breadCrumbCategories.push(obj.text());
+                    this.breadCrumbCategories.push(obj.find('option:selected').text());
                     this.model.set('breadCrumb', this.breadCrumbCategories);
                     //Empuja al array la secuencia de categorías seleccionadas
                     this.arrayCategories = _.first(this.arrayCategories, this.currentLevel - 1);

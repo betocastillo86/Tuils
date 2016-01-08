@@ -172,7 +172,13 @@
                 }
                 //Si le dan atras en el navegador y no tiene registrado el paso, debe redireccionar al paso principal
                 if (this.currentStep !== null)
+                {
                     this.$("#divStep_" + this.currentStep).show();
+                    //Actualiza el mensaje del paso en el que se encuentre
+                    var messageStep = this.$('#helpStep');
+                    if(messageStep.length)
+                        messageStep.html(window.stepMessages['step' + this.currentStep]);
+                }
                 else
                     document.location.href = '/quiero-vender';
             },

@@ -44,6 +44,24 @@
                     {
                         <div class="alert-public"><span class="icon-alert"></span> <p>@T(string.Concat("PublishProduct.HasReachedLimitOfProducts", Model.VendorType), Model.NumLimitOfProducts)</p><br/></div>
                     }
+                    else
+                    {
+                        <div class="alert-public">@Html.Raw(T("PublishProduct.MessageFree")). 
+                            <span id="helpStep" class="helpStepPublish">@T("PublishProduct.MessageFreeStep2")</span> 
+                            <br />
+                        </div>
+                        
+                        <script>
+                            window.stepMessages = {
+                                step1 : '@T("PublishProduct.MessageFreeStep2")',
+                                step2 : '@T("PublishProduct.MessageFreeStep3")',
+                                step3: '@T("PublishProduct.MessageFreeStep4")',
+                                step4: '@T("PublishProduct.MessageFreeStep5")'
+                            }
+                        </script>
+                        
+                    }
+                        
 
                     <div id="divStep_1">
                         @Html.Partial("_SelectCategory")

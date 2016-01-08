@@ -23,6 +23,11 @@
                 { 
                     <div class="alert-public"><span class="icon-alert"></span> <p>@T(string.Concat("PublishProduct.HasReachedLimitOfProducts", Model.VendorType), Model.NumLimitOfProducts)</p><br/></div>
                 }
+                else
+                {
+                    <div class="alert-public">@Html.Raw(T("PublishProduct.MessageFree")). @T("PublishProduct.MessageFreeStep1")<br /></div>
+                }
+                
                 <p class="wizard-help">Elige qué quieres vender</p>
                 <nav class="nav-category">
                     <a href="@Url.Action("PublishProduct")" title="@T("Publish.Bike.Img.Alt")"><li class="hub-std"><span class="icon-casco"></span><p>productos</p></li></a>

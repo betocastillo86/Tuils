@@ -1229,6 +1229,13 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("VendorReviews.NoReviews", "No hay opiniones actualmente, dejanos una");
                 newLocaleStringResources.Add("VendorReviews.SubmitButton", "Deja tu opinión");
                 newLocaleStringResources.Add("VendorReviews.LeaveReview", "¿Conoces {0}? Dejanos tu opinión acerca de ellos");
+                newLocaleStringResources.Add("headerlinks.publish", "Publica GRATIS");
+                newLocaleStringResources.Add("PublishProduct.MessageFree", "Publica tu anuncio <b style='color:green'>GRATIS</b> en solo tres pasos");
+                newLocaleStringResources.Add("PublishProduct.MessageFreeStep1", "Selecciona lo que quieres publicar");
+                newLocaleStringResources.Add("PublishProduct.MessageFreeStep2", "Selecciona la categoría");
+                newLocaleStringResources.Add("PublishProduct.MessageFreeStep3", "Ingresa la información lo más completa posible");
+                newLocaleStringResources.Add("PublishProduct.MessageFreeStep4", "Selecciona las mejores imagenes que tengas");
+                newLocaleStringResources.Add("PublishProduct.MessageFreeStep5", "Verifica la información");
                 
                 
                 
