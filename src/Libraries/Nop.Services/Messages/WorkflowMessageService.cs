@@ -1845,7 +1845,73 @@ namespace Nop.Services.Messages
 
         #endregion
 
+        #region Products
+        public int SendProductFeaturedGiftNotificationMessage(Product product, int languageId)
+        {
+            if (product == null)
+                throw new ArgumentNullException("product");
+
+            var store = _storeContext.CurrentStore;
+            languageId = EnsureLanguageIsActive(languageId, store.Id);
+
+            var messageTemplate = GetActiveMessageTemplate("Product.FeaturedGift", store.Id);
+            if (messageTemplate == null)
+                return 0;
+
+            //email account
+            var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);
+
+            //tokens
+            var tokens = new List<Token>();
+            _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
+            _messageTokenProvider.AddProductTokens(tokens, product, languageId, true);
+
+            //event notification
+            _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
+
+            var toEmail = product.Vendor.Email;
+            var toName = product.Vendor.Name;
+            return SendNotification(messageTemplate, emailAccount,
+                languageId, tokens,
+                toEmail, toName);
+        }
+
+
+        public int SendPoorProductPicturesNotificationMessage(Product product, int languageId)
+        {
+            if (product == null)
+                throw new ArgumentNullException("product");
+
+            var store = _storeContext.CurrentStore;
+            languageId = EnsureLanguageIsActive(languageId, store.Id);
+
+            var messageTemplate = GetActiveMessageTemplate("Product.PoorProductPictures", store.Id);
+            if (messageTemplate == null)
+                return 0;
+
+            //email account
+            var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);
+
+            //tokens
+            var tokens = new List<Token>();
+            _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
+            _messageTokenProvider.AddProductTokens(tokens, product, languageId, true);
+
+            //event notification
+            _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
+
+            var toEmail = product.Vendor.Email;
+            var toName = product.Vendor.Name;
+            return SendNotification(messageTemplate, emailAccount,
+                languageId, tokens,
+                toEmail, toName);
+        }
         #endregion
+
+        #endregion
+
+
+
 
 
 

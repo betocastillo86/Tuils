@@ -23,6 +23,7 @@ using Nop.Web.Infrastructure;
 using Nop.Services.Seo;
 using Nop.Utilities;
 using Nop.Web.Models.Catalog;
+using Nop.Services.Logging;
 
 
 namespace Nop.Web.Controllers.Api
@@ -43,6 +44,7 @@ namespace Nop.Web.Controllers.Api
         private readonly MediaSettings _mediaSettings;
         private readonly IPictureService _pictureService;
         private readonly IPriceFormatter _priceFormatter;
+        private readonly ILogger _logger;
         #endregion
 
         #region Ctor
@@ -57,7 +59,8 @@ namespace Nop.Web.Controllers.Api
             MediaSettings mediaSettings,
             IPictureService pictureService,
             IPriceFormatter priceFormatter,
-            PlanSettings planSettings)
+            PlanSettings planSettings,
+            ILogger logger)
         {
             this._productService = productService;
             this._workContext = workContext;
@@ -71,6 +74,7 @@ namespace Nop.Web.Controllers.Api
             this._pictureService = pictureService;
             this._priceFormatter = priceFormatter;
             this._planSettings = planSettings;
+            this._logger = logger;
         }
         #endregion
         [Route("api/products")]
@@ -131,7 +135,7 @@ namespace Nop.Web.Controllers.Api
                 //{
                 //    errors.AppendFormat("{0}\n", error);
                 //}
-
+                _logger.Error("Contenido del model State" + ModelState.ToErrorString());
                 return BadRequest(ModelState);
             }
         }

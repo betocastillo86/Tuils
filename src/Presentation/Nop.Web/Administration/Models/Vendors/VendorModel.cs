@@ -88,6 +88,12 @@ namespace Nop.Admin.Models.Vendors
         [NopResourceDisplayName("Admin.Vendors.Fields.ShowOnHomePage")]
         public bool ShowOnHomePage { get; set; }
 
+        [NopResourceDisplayName("Admin.Vendors.Fields.PhoneNumber")]
+        /// <summary>
+        /// Numero de contacto principal del vendedor
+        /// </summary>
+        public string PhoneNumber { get; set; }
+
         [NopResourceDisplayName("Admin.Vendors.Fields.VendorType")]
         public VendorType VendorType { get; set; }
 

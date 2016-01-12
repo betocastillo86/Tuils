@@ -11,6 +11,10 @@
             @T("Admin.Catalog.Products.EditProductDetails") - @Model.Name @Html.ActionLink("(" + T("Admin.Catalog.Products.BackToList") + ")", "List")
         </div>
         <div class="options">
+            
+            <input type="button" value="Enviar correo destacado" onclick="javascript:sendEmailGiftFeatured()" class="k-button" />
+            <input type="button" value="Notificar malas fotos" onclick="javascript:sendEmailBadPictures()" class="k-button" />
+
             <input type="submit" value="@T("Admin.Common.Preview")" onclick="javascript:OpenWindow('@Url.RouteUrl("Product", new { SeName = Model.SeName })', 800, 600, true); return false;" class="k-button" />
             <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />
             <input type="submit" name="save-continue" class="k-button" value="@T("Admin.Common.SaveContinue")" />
@@ -77,4 +81,36 @@
             window.data('kendoWindow').center().open();
         });
     });
+
+    function sendEmailGiftFeatured()
+    {
+        if(confirm('¿Está seguro de enviar el correo de regalo de destacado?'))
+        {
+            var id = @Model.Id;
+            $.ajax({
+                method : 'POST',
+                url : '@Url.Action("SendEmailFeaturedGift")',
+                data : {
+                    id : id
+                }
+            });
+        }
+    }
+
+
+    function sendEmailBadPictures()
+    {
+        if(confirm('¿Está seguro de enviar el correo que las fotos no son de calidad?'))
+        {
+            var id = @Model.Id;
+            $.ajax({
+                method : 'POST',
+                url : '@Url.Action("SendEmailPoorProductPictures")',
+                data : {
+                    id : id
+                }
+            });
+        }
+    }
+    
 </script>

@@ -79,11 +79,15 @@ namespace Nop.Web.Extensions.Api
                 {
                     modelState.AddModelError("DetailShipping", "Detallar mejor los datos del envío");
                     return false;
-                } 
+                }
             }
             //No puede existir oto tipo de producto
             else
+            {
+                modelState.AddModelError("ErrorProductType", "Tipo de producto invalido");
                 return false;
+            }
+                
 
             return true;
         }

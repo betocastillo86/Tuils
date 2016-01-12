@@ -4337,6 +4337,47 @@ namespace Nop.Admin.Controllers
 
         #endregion
 
+        #region Send Notifications
+
+        /// <summary>
+        /// Realiza el envio de los correos notificando que se le regala el destacado
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SendEmailFeaturedGift(int id)
+        { 
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+            
+            var product = _productService.GetProductById(id);
+
+            if(product == null)
+                return HttpNotFound();
+
+            _workflowMessageService.SendProductFeaturedGiftNotificationMessage(product, _workContext.WorkingLanguage.Id);
+
+            return new NullJsonResult();
+        }
+
+        [HttpPost]
+        public ActionResult SendEmailPoorProductPictures(int id)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            var product = _productService.GetProductById(id);
+
+            if (product == null)
+                return HttpNotFound();
+
+            _workflowMessageService.SendPoorProductPicturesNotificationMessage(product, _workContext.WorkingLanguage.Id);
+
+            return new NullJsonResult();
+        }
+
+        #endregion
+
         #endregion
     }
 }

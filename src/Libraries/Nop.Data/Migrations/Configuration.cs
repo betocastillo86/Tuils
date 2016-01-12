@@ -1236,6 +1236,7 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("PublishProduct.MessageFreeStep3", "Ingresa la información lo más completa posible");
                 newLocaleStringResources.Add("PublishProduct.MessageFreeStep4", "Selecciona las mejores imagenes que tengas");
                 newLocaleStringResources.Add("PublishProduct.MessageFreeStep5", "Verifica la información");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.PhoneNumber", "Teléfono");
                 
                 
                 
@@ -2795,6 +2796,26 @@ namespace Nop.Data.Migrations
                         IsActive = true,
                         EmailAccountId = 1
                     },
+                    new MessageTemplate()
+                    {
+                        Id = 54,
+                        Name = "Product.FeaturedGift",
+                        Subject = "Felicitaciones. Te ganaste un producto destacado",
+                        Body = "<p> Felicitaciones. Te has ganado que el producto %Product.Name% sea destacado completamente gratis!</p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    },
+                    new MessageTemplate()
+                    {
+                        Id = 55,
+                        Name = "Product.PoorProductPictures",
+                        Subject = "Las fotos que subiste no son de buena calidad para publicar",
+                        Body = "<p> Te recomendamos que las fotografías sean de mejor calidad.</p>",
+                        IsActive = true,
+                        EmailAccountId = 1
+                    }
+                    
+                    
                     
                 };
 

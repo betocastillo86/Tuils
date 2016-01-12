@@ -375,6 +375,24 @@ namespace Nop.Services.Messages
         /// <param name="languageId"></param>
         /// <returns></returns>
         int SendProductFinishedNotificationMessage(Product product, int languageId);
+
+
+
+        /// <summary>
+        /// Se envia correo informando se le regalo la destacada del producto
+        /// </summary>
+        /// <param name="product">Información del producto</param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        int SendProductFeaturedGiftNotificationMessage(Product product, int languageId);
+
+        /// <summary>
+        /// Se envia correo informado que las fotos no son de buena calidad
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        int SendPoorProductPicturesNotificationMessage(Product product, int languageId);
         #endregion
 
         #region Vendor
