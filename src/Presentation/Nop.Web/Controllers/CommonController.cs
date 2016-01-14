@@ -821,6 +821,8 @@ namespace Nop.Web.Controllers
                                                    "/uploadfileproductattribute",
                                                    "/uploadfilecheckoutattribute",
                                                    "/wishlist",
+                                                   "/productreviews",
+                                                   "/buscar"
                                                };
                 
             }
