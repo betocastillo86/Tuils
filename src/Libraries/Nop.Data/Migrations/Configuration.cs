@@ -1237,8 +1237,11 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("PublishProduct.MessageFreeStep4", "Selecciona las mejores imagenes que tengas");
                 newLocaleStringResources.Add("PublishProduct.MessageFreeStep5", "Verifica la información");
                 newLocaleStringResources.Add("Admin.Vendors.Fields.PhoneNumber", "Teléfono");
-                
-                
+
+
+                newLocaleStringResources.Add("PublishProduct.ShareFriends.Button", "Participa ya");
+                newLocaleStringResources.Add("PublishProduct.ShareFriends.Title", "¿Quieres que tu producto salga en nuestro fanpage de Facebook GRATIS?");
+                newLocaleStringResources.Add("PublishProduct.ShareFriends.Content", "Cada tercer día regalamos una publicación gratis en nuestro fanpage de Facebook, para participar lo único que debes hacer es contarle a tus amigos acerca de Tuils.");
                 
 
                 

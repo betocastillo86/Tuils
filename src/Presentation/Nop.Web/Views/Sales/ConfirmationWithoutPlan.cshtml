@@ -21,3 +21,15 @@
         <p>@T("PublishProduct.TimeOutPost"+Model.VendorType, Model.LimitDaysOfProductPublished)</p>
         @Html.ActionLink(T("SelectFeaturedAttributesByPlan.gotoMyProducts").Text, "MyProducts", "ControlPanel", new { p = false }, new { })
     </div>
+
+    <div>
+        @if (!Model.IsMobileDevice)
+        { 
+            <text>
+                <div><b>@T("PublishProduct.ShareFriends.Title")</b></div>
+                <div>@T("PublishProduct.ShareFriends.Content")</div>
+                
+            </text>
+            @Html.Partial("_InviteFacebookFriends", new Nop.Web.Models.Common.InviteFacebookFriendsModel() { UrlToShare = "http://www.tuils.com", TextButton = T("PublishProduct.ShareFriends.Button").Text });
+        }
+    </div>
