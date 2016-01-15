@@ -477,6 +477,7 @@ namespace Nop.Web.Controllers
             //De acuerdo a si es tienda o no carga el limite de dias de publicación
             model.LimitDaysOfProductPublished = _workContext.CurrentVendor.GetCurrentPlan(_productService, _planSettings).DaysPlan;
             model.VendorType = _workContext.CurrentVendor.VendorType;
+            model.IsMobileDevice = Request.Browser.IsMobileDevice;
             
 
             return View(model);

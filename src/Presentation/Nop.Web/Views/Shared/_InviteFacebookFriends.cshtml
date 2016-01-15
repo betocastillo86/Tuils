@@ -1,0 +1,34 @@
+﻿@model Nop.Web.Models.Common.InviteFacebookFriendsModel
+@using Nop.Core.Infrastructure;
+@{
+    var settingService = EngineContext.Current.Resolve<Nop.Services.Configuration.ISettingService>();
+    var facebookKey = settingService.GetSettingByKey<string>("facebookexternalauthsettings.clientkeyidentifier");
+}
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script>
+    FB.init({
+        appId: '@facebookKey', cookie: true,
+        status: true, xfbml: true
+    });
+    function FacebookInviteFriends() {
+        FB.ui({
+            method: 'send',
+            link: '@Model.UrlToShare',
+        });
+    }</script>
+
+<div>
+    <a class="fb-btn" onclick="FacebookInviteFriends()">@Model.TextButton</a>
+</div>
+<style>
+    .fb-btn {
+        font-size: 20px;
+        border-radius: 2px;
+        color: #FFF !important;
+        background: #3A5699;
+        height: auto;
+        margin: 10px 0 0;
+        padding: 8px 10px;
+        box-sizing: border-box;
+    }
+</style>

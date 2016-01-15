@@ -350,6 +350,7 @@
     <Compile Include="Models\Common\AddressAttributeModel.cs" />
     <Compile Include="Models\Common\FooterModel.cs" />
     <Compile Include="Models\Common\FaviconModel.cs" />
+    <Compile Include="Models\Common\InviteFacebookFriendsModel.cs" />
     <Compile Include="Models\Common\PagerModel.cs" />
     <Compile Include="Models\Common\StoreThemeModel.cs" />
     <Compile Include="Models\Common\LanguageSelectorModel.cs" />
@@ -2630,6 +2631,7 @@
     <Content Include="Themes\Healthy\Views\Shared\_VendorReviewOverview.cshtml" />
     <Content Include="Views\Catalog\_VendorReviewHelpfulness.cshtml" />
     <Content Include="Views\Catalog\_VendorReviewOverview.cshtml" />
+    <Content Include="Views\Shared\_InviteFacebookFriends.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
