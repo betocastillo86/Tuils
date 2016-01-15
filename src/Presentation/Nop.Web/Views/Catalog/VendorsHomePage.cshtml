@@ -6,11 +6,10 @@
 
 @if (Model.Vendors.Count > 0)
 {
-    <div class="title">
-        <strong>@T("Home.Vendors.Title")</strong>
-    </div>
-
     <div class="home-tiendas_grid">
+        <div class="title">
+            @T("Home.Vendors.Title")
+        </div>
         <div id="vendorCarousel">
             @foreach (var vendor in Model.Vendors)
             {
