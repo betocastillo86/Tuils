@@ -1665,6 +1665,11 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .retoma_publi .resumen-final{width: calc(100% - 120px);}
     .retoma_publi .resumen-final p{margin: 0 0 10px;}
 
+    .comparte_fb{background: #d2f2f1; border-radius: 3px; padding: 10px; margin:0 0 20px; }
+    .comparte_fb h3{color: #1cc0b9; margin: 0; font-size: 18px}
+    .comparte_fb p{margin: 0 0 10px; padding: 7px 0;}
+    .comparte_fb .fb-btn{cursor: pointer; text-decoration: none !important; display: block; width: 240px; margin: 0; text-align: center;}
+
     .resumen-final .resumen-product p { margin: 0; padding: 3px 0;}
     .conte_btnDoble .link_back{text-decoration: underline;}
     .conte_btnDoble .link_back:hover{color: #3b5a83; text-decoration: underline;}
