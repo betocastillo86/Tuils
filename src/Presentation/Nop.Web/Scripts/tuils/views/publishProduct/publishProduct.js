@@ -176,7 +176,7 @@
                     this.$("#divStep_" + this.currentStep).show();
                     //Actualiza el mensaje del paso en el que se encuentre
                     var messageStep = this.$('#helpStep');
-                    if(messageStep.length)
+                    if (messageStep.length && window.stepMessages /**Para evitar bug que sale en algunos navegadores*/)
                         messageStep.html(window.stepMessages['step' + this.currentStep]);
                 }
                 else
