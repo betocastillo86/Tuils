@@ -53,13 +53,13 @@
 
 }
 <script>
-    window.onerror = function tuilsErrorHandler(errorMsg, url, lineNumber, column) {
+    window.onerror = function tuilsErrorHandler(errorMsg, url, lineNumber, column, error) {
         if (lineNumber > 0 || column > 0)
         {
             var xhttp = new XMLHttpRequest();
             xhttp.open("POST", "/api/errors", true);
             xhttp.setRequestHeader("Content-type", "application/json");
-            xhttp.send(JSON.stringify({ Message: errorMsg, File: url, Line: lineNumber, Column: column, Url: document.location.href }));
+            xhttp.send(JSON.stringify({ Message: errorMsg, File: url, Line: lineNumber, Column: column, Url: document.location.href, Stack: error && error.stack ? error.stack.toString() : 'No hay Stack' }));
         }
     }
 </script>

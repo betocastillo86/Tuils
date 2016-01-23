@@ -25,7 +25,7 @@ namespace Nop.Web.Controllers.Api
         [Route("api/errors")]
         public IHttpActionResult RegisterError(ErrorJavascriptModel model)
         {
-            string error = string.Format("Error Javascript: {0},\n File:{1},\n Line: {2},\n Column: {3},\n Browser:{4}, \n URL:{5}", model.Message, model.File, model.Line, model.Column, Request.Headers.UserAgent, model.Url);
+            string error = string.Format("Error Javascript: {0},\n File:{1},\n Line: {2},\n Column: {3},\n Browser:{4}, \n URL:{5} <br> Stack:{6}", model.Message, model.File, model.Line, model.Column, Request.Headers.UserAgent, model.Url, model.Stack);
             _logger.Error(error);
             return Ok();
         }

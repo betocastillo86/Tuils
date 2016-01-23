@@ -19,5 +19,7 @@ namespace Nop.Web.Models.Api
         public int Column { get; set; }
 
         public string Url { get; set; }
+
+        public string Stack { get; set; }
     }
 }
