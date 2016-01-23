@@ -50,6 +50,7 @@
                 return this;
             },
             loadControls: function () {
+                this.beforeUnload();
                 this.model = new ProductModel({ 'ProductTypeId': this.productType });
                 this.on("user-authenticated", this.save, this);
                 this.model.on('sync', this.productSaved, this);
@@ -171,16 +172,20 @@
                         Backbone.history.navigate('quiero-vender/' + this.productTypeName + '/' + this.currentStep);
                 }
                 //Si le dan atras en el navegador y no tiene registrado el paso, debe redireccionar al paso principal
-                if (this.currentStep !== null)
-                {
+                if (this.currentStep !== null) {
                     this.$("#divStep_" + this.currentStep).show();
                     //Actualiza el mensaje del paso en el que se encuentre
                     var messageStep = this.$('#helpStep');
                     if (messageStep.length && window.stepMessages /**Para evitar bug que sale en algunos navegadores*/)
                         messageStep.html(window.stepMessages['step' + this.currentStep]);
                 }
-                else
+                else {
+                    //Las siguientes dos lineas se hacen para que si el usuario no quiere abandonar la pagina, esta no quede en blanco
+                    this.currentStep = 1;
+                    $('#divStep_1').show();
                     document.location.href = '/quiero-vender';
+                }
+                    
             },
             showStepBack: function () {
                 this.showStep(--this.currentStep);
@@ -253,6 +258,7 @@
                 this.$(".wizard-breadcrumb").hide();
             },
             productSaved: function (model) {
+                this.cancelBeforeUnload();
                 this.viewSelectCategory.remove();
                 if (this.viewImageSelector) this.viewImageSelector.remove();
                 this.viewProductDetail.remove();

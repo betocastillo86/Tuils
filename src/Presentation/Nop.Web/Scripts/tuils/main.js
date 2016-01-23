@@ -29,6 +29,9 @@
             deps: ['modernizr', 'jquery'],
             exports: 'simpleMenu'
         },
+        jqueryui: {
+            deps : ['jquery']
+        }
         //mmenunav: {
         //    deps : ['mmenu']
         //}
@@ -67,11 +70,11 @@
         //Externas
         jquery: [
             'https://code.jquery.com/jquery-1.10.2.min',
-            'jquery-1.10.2'
+            'https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.js'
         ],
         jqueryui: [
             'http://code.jquery.com/ui/1.11.4/jquery-ui.min',
-            'jquery-ui-1.10.3.custom.min'
+            'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/i18n/jquery-ui-i18n.js'
         ],
         //jqueryunobtrusive: [
         //    'http://ajax.aspnetcdn.com/ajax/mvc/5.0/jquery.validate.unobtrusive.min',

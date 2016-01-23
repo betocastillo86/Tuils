@@ -116,6 +116,15 @@
             
             displayAjaxLoading(true);
         },
+        beforeUnload : function(message){
+            window.onbeforeunload = function(){
+                return message ? message : "¿Estas seguro de cerrar esta pagina?"
+            }
+        },
+        cancelBeforeUnload: function () {
+            window.onbeforeunload = function () {
+            }
+        },
         //Agrega o reemplaza el html
         showLoading: function(model, append)
         {
