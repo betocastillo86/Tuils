@@ -50,7 +50,7 @@
                 return this;
             },
             loadControls: function () {
-                this.beforeUnload();
+                this.beforeUnload('No has terminado la publicación del producto');
                 this.model = new ProductModel({ 'ProductTypeId': this.productType });
                 this.on("user-authenticated", this.save, this);
                 this.model.on('sync', this.productSaved, this);

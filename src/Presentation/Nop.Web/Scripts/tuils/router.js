@@ -50,6 +50,7 @@
                 "m/:manufacturerName(/*query)": "manufacturer",
                 "p/:query": "product",
                 'entrar' : 'login',
+                'Catalog/Search(/*query)': 'search',
                 'buscar(/*query)': 'search',
                 'recordar-clave': 'passwordRecovery',
                 'mapa-del-sitio': 'sitemap',

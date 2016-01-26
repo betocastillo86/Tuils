@@ -48,7 +48,7 @@
             this.trigger("file-saved", this);
         },
         errorUploaded: function (resp) {
-            this.trigger("file-error", resp);
+            this.trigger("file-error", {error:resp, model : this});
         },
         remove: function () {
             this.url = this.baseUrl + '/' + this.removeExtension(this.get('fileGuid'));

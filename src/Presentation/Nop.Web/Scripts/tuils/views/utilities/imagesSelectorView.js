@@ -185,9 +185,10 @@
             }
             else {
                 ctrl.find("img").removeAttr("src").hide();
-                ctrl.removeAttr(this.attributeFile);
-                ctrl.removeAttr(this.attributeFileUsed);
-                ctrl.find("span").show();
+                ctrl.removeAttr(this.attributeFile)
+                .removeAttr(this.attributeFileUsed)
+                .removeClass('loadingBack');
+                ctrl.find("span").removeAttr('style');
             }
 
             ctrl.find(".icon-delete").css('display', urlImage ? 'block' : 'none');
@@ -200,7 +201,9 @@
             control.attr(this.attributeFile, guidImage);
         },
         fileErrorUpload: function (resp) {
-            this.switchImage(undefined, resp.get('control'));
+            this.switchImage(undefined, resp.model.get('control'));
+            this.alert({ message: 'Error guardando la imagen, intenta de nuevo' , duration: 2500 });
+            console.log('Error guardando la imagen');
         },
         save: function () {
             if (this.collection.length >=  this.minFilesUploaded) {

@@ -20,6 +20,7 @@
                 this.productId = args.productId;
                 this.loadModel();
                 this.loadControls();
+                this.hidePublishButton();
             },
             loadModel: function () {
                 this.model = new EditProductModel();
