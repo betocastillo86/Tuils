@@ -26,7 +26,8 @@
 */
 
 define(['jquery', 'jqueryui'], function ($) {
-
+    if (!$.widget)
+        return;
     $.widget('ui.tagit', {
         options: {
             allowDuplicates: false,

@@ -51,6 +51,7 @@
                 "p/:query": "product",
                 'entrar' : 'login',
                 'Catalog/Search(/*query)': 'search',
+                'catalog/search(/*query)': 'search',
                 'buscar(/*query)': 'search',
                 'recordar-clave': 'passwordRecovery',
                 'mapa-del-sitio': 'sitemap',
@@ -61,7 +62,8 @@
                 'quienes-somos': 'aboutUs',
                 'tarifas-y-precios': 'aboutUs',
                 'passwordrecovery/confirm(/*query)' : 'passwordRecovery',
-                'planes(/:tab)' : 'plans',
+                'planes(/:tab)': 'plans',
+                'Sales/PaymentResponse(/*query)' : 'paymentResponse',
                 '*path' : 'defaultRoute'
             },
             defaultRoute: function (path) {
@@ -104,6 +106,9 @@
                     this.currentView.showStep();
                 }
 
+                this.loadSubViews();
+            },
+            paymentResponse: function () {
                 this.loadSubViews();
             },
             homePanel: function () {
