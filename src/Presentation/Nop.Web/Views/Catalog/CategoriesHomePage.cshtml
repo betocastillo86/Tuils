@@ -16,7 +16,7 @@
                 @foreach (var parent in Model.Categories.Where(c => c.Column == i + 1))
                 {
                     <ul class="box_category">
-                        <h2 class="tit_category"><span><img class="img-cat" src="@parent.PictureModel.ImageUrl" /></span><a href="@Url.Action("Category", "Catalog", new { seName = parent.SeName })">@parent.Name</a><br /></h2>
+                        <h3 class="tit_category"><span><img class="img-cat" src="@parent.PictureModel.ImageUrl" /></span><a href="@Url.Action("Category", "Catalog", new { seName = parent.SeName })">@parent.Name</a><br /></h3>
                         @foreach (var children in parent.ChildrenCategories)
                         {
                             <li><a href="@Url.Action("Category", "Catalog", new { seName = children.SeName })">@children.Name</a></li>

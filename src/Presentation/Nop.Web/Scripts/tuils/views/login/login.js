@@ -16,7 +16,12 @@
         template : undefined,
 
         bindings: {
-            "#txtEmail": "Email",
+            "#txtEmail": {
+                observe: 'Email',
+                onSet: function (value) {
+                    return value.replace(/ /g, '');
+                }
+            },
             "#txtPassword": "Password"
         },
 
@@ -40,11 +45,7 @@
             else
                 this.$el.fixedDialog(this.dialogBasicOptions);
 
-            //var that = this;
-            //require(['text!/Customer/FastLogin'], function (template) {
-                //that.template = Handlebars.compile(template);
-                this.render();
-            //});
+            this.render();
         },
         register: function () {
             this.trigger("register", this.sourceModel);

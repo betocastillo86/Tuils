@@ -5,6 +5,7 @@
     Html.AddTitleParts(Model.Title);
     Html.AddMetaDescriptionParts(Model.Description);
     Html.AddHeadPreviousNextPage(Model.PagingFilteringContext);
+    Html.AddHeadCustomParts("<meta name=\"robots\" content=\"nofollow\" />");
 }
 @using Nop.Web.Models.Catalog;
 @using Nop.Web.Extensions;

@@ -145,7 +145,7 @@
         },
         handleResize : function(){
             var that = this;
-            jQuery(window).resize(function () {
+            $(window).resize(function () {
                 // get browser width
                 if (!that.isMinSize())
                     that.trigger("window-resized-max");

@@ -2005,28 +2005,28 @@ namespace Nop.Web.Controllers
                     //specs
                     model.PagingFilteringContext.SpecificationFilter.PrepareSpecsFilters(alreadyFilteredSpecOptionIds,
                 filterableSpecificationAttributeOptionIds,
-                _specificationAttributeService, _webHelper, _workContext);
+                _specificationAttributeService, _webHelper, _workContext, addFilterNameToUrl: false);
 
                     //categories
                     model.PagingFilteringContext.CategoryFilter.PrepareCategoriesFilters(alreadyFilteredCategoryIds,
                 filterableCategoryIds,
-                _categoryService, _webHelper, _workContext);
+                _categoryService, _webHelper, _workContext, addFilterNameToUrl:false);
 
                     //state provinces
                     model.PagingFilteringContext.StateProvinceFilter.PrepareStateProvinceFilters(stateProvinceId,
                 filterableStateProvinceIds,
-                _stateProvinceService, _webHelper, _workContext);
+                _stateProvinceService, _webHelper, _workContext, addFilterNameToUrl: false);
 
                     //manufacturer
                     model.PagingFilteringContext.ManufacturerFilter.PrepareFilters(manufacturerId,
                 filterableManufacturerIds,
-                _manufacturerService, _webHelper, _workContext);
+                _manufacturerService, _webHelper, _workContext, addFilterNameToUrl: false);
 
 
                     //bike references
                     model.PagingFilteringContext.BikeReferenceFilter.PrepareFilters(specialCategoryId,
                 filterableSpecialCategoryIds,
-                _categoryService, _webHelper, _workContext);
+                _categoryService, _webHelper, _workContext, addFilterNameToUrl: false);
 
                     model.NoResults = !model.Products.Any();
 
