@@ -133,6 +133,10 @@
                 
 
                 if (obj.ChildrenCategories.length > 0) {
+                    
+                    if (!this.divShowCategories)
+                        this.divShowCategories = this.$('.divShowCategories');
+
                     this.divShowCategories.append(this.template(obj));
 
                     //Solo permite mostrar el buscador para más de 5 categorias

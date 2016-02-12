@@ -121,6 +121,7 @@ namespace Nop.Web.Controllers.Api
                 }
                 catch (NopException e)
                 {
+                    _logger.Error("Excepción publicando el producto", e);
                     ModelState.AddModelError("ErrorCode", Convert.ToInt32(e.Code).ToString());
                     ModelState.AddModelError("ErrorMessage", e.Message);
                     return BadRequest(ModelState);
