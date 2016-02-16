@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no">
+    <title>@Html.NopTitle(true)</title>
+    @{
+        Html.AppendCssFileParts("~/Themes/Healthy/Content/landing.css");
+        Html.AppendCssFileParts("~/Themes/Healthy/Content/normalize.css");
+    }
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700' rel='stylesheet' type='text/css'>
+    <!-- <link rel="stylesheet" href="css/style.min.css" type="text/css" media="screen"> -->
+    <!--[if IE]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <meta name="description" content="@(Html.NopMetaDescription())" />
+    <meta name="keywords" content="@(Html.NopMetaKeywords())" />
+
+    @Html.NopCssFiles(this.Url, ResourceLocation.Head)
+    @Html.NopScripts(this.Url, ResourceLocation.Head)
+
+</head>
+
+<body>
+
+    @RenderBody()
+
+    <footer>
+        <div class="footer-links">
+            <ul>
+                <li><a href="javascript:;">contacto</a></li>
+                <li><a href="javascript:;">politicas de privacidad</a></li>
+                <li><a href="javascript:;">quienes somos</a></li>
+                <li><a href="javascript:;">blog</a></li>
+                <br />
+            </ul>
+            <div class="credits">Copyright © 2016 Tuils</div>
+            <div class="social">
+                <a class="facebook" href=""><span class="icon-fb"></span></a>
+                <a class="youtube" href=""><span class="icon-ytb"></span></a>
+            </div>
+            <br />
+        </div>
+    </footer>
+</body>
+</html>

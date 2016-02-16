@@ -2357,6 +2357,7 @@
     <Content Include="Themes\Healthy\Content\images\zoomloader.gif" />
     <Content Include="Themes\Healthy\Content\jquery.jqzoom.css" />
     <Content Include="Themes\Healthy\Content\jquery.jscrollpane.css" />
+    <Content Include="Themes\Healthy\Content\landing.css" />
     <Content Include="Themes\Healthy\Content\owl.carousel.css" />
     <Content Include="Themes\Healthy\Content\owl.carousel\assets\css\bootstrapTheme.css" />
     <Content Include="Themes\Healthy\Content\owl.carousel\assets\css\custom.css" />
@@ -2632,6 +2633,8 @@
     <Content Include="Views\Catalog\_VendorReviewHelpfulness.cshtml" />
     <Content Include="Views\Catalog\_VendorReviewOverview.cshtml" />
     <Content Include="Views\Shared\_InviteFacebookFriends.cshtml" />
+    <Content Include="Views\Shared\_LandingLayout.cshtml" />
+    <Content Include="Views\Sales\LandingStores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
