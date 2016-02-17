@@ -2200,6 +2200,9 @@
     <Content Include="Themes\DefaultClean\Content\images\progress-step-inactive.gif" />
     <Content Include="Themes\DefaultClean\Content\styles.css" />
     <Content Include="Themes\Healthy\change list.txt" />
+    <Content Include="Themes\Healthy\Content\beto_01.png" />
+    <Content Include="Themes\Healthy\Content\canvas_01.png" />
+    <Content Include="Themes\Healthy\Content\cover_home.png" />
     <Content Include="Themes\Healthy\Content\custom.css" />
     <Content Include="Themes\Healthy\Content\custom.rtl.css" />
     <Content Include="Themes\Healthy\Content\fontawesome.css" />
@@ -2213,6 +2216,7 @@
     <Content Include="Themes\Healthy\Content\images\arrow-up.png" />
     <Content Include="Themes\Healthy\Content\images\arrows.png" />
     <Content Include="Themes\Healthy\Content\images\bbeditor-button-bg.gif" />
+    <Content Include="Themes\Healthy\Content\images\beto_01.png" />
     <Content Include="Themes\Healthy\Content\images\bg-body.gif" />
     <Content Include="Themes\Healthy\Content\images\bg-container.gif" />
     <Content Include="Themes\Healthy\Content\images\bgTextBox.gif" />
@@ -2226,6 +2230,7 @@
     <Content Include="Themes\Healthy\Content\images\bkg_header.jpg" />
     <Content Include="Themes\Healthy\Content\images\box-header-left.gif" />
     <Content Include="Themes\Healthy\Content\images\box-header-right.gif" />
+    <Content Include="Themes\Healthy\Content\images\brillo_footer.png" />
     <Content Include="Themes\Healthy\Content\images\browsers.png" />
     <Content Include="Themes\Healthy\Content\images\btn_download_bg.gif" />
     <Content Include="Themes\Healthy\Content\images\btn_left.gif" />
@@ -2234,6 +2239,8 @@
     <Content Include="Themes\Healthy\Content\images\bullet-left.gif" />
     <Content Include="Themes\Healthy\Content\images\bullet-right.gif" />
     <Content Include="Themes\Healthy\Content\images\bullet.gif" />
+    <Content Include="Themes\Healthy\Content\images\bull_fil.gif" />
+    <Content Include="Themes\Healthy\Content\images\canvas_01.png" />
     <Content Include="Themes\Healthy\Content\images\cart-footer-bg.gif" />
     <Content Include="Themes\Healthy\Content\images\cart-header-bg.gif" />
     <Content Include="Themes\Healthy\Content\images\cart.png" />
@@ -2243,6 +2250,7 @@
     <Content Include="Themes\Healthy\Content\images\category-title.gif" />
     <Content Include="Themes\Healthy\Content\images\checkbox.gif" />
     <Content Include="Themes\Healthy\Content\images\closelabel.gif" />
+    <Content Include="Themes\Healthy\Content\images\cover_home.png" />
     <Content Include="Themes\Healthy\Content\images\credit-cards-sprite.png" />
     <Content Include="Themes\Healthy\Content\images\cross.png" />
     <Content Include="Themes\Healthy\Content\images\delicious.png" />
@@ -2267,6 +2275,7 @@
     <Content Include="Themes\Healthy\Content\images\grey_button_bg.gif" />
     <Content Include="Themes\Healthy\Content\images\grid-bg.gif" />
     <Content Include="Themes\Healthy\Content\images\grid_header_back.png" />
+    <Content Include="Themes\Healthy\Content\images\header_quienes.jpg" />
     <Content Include="Themes\Healthy\Content\images\help.png" />
     <Content Include="Themes\Healthy\Content\images\hint.gif" />
     <Content Include="Themes\Healthy\Content\images\ico-account.gif" />
@@ -2291,9 +2300,15 @@
     <Content Include="Themes\Healthy\Content\images\ico-rss.gif" />
     <Content Include="Themes\Healthy\Content\images\ico-wishlist.gif" />
     <Content Include="Themes\Healthy\Content\images\ImageAttribution.txt" />
+    <Content Include="Themes\Healthy\Content\images\img_callto.png" />
     <Content Include="Themes\Healthy\Content\images\img_categorias.svg" />
     <Content Include="Themes\Healthy\Content\images\img_categorias_gris.svg" />
+    <Content Include="Themes\Healthy\Content\images\img_popular.png" />
     <Content Include="Themes\Healthy\Content\images\img_user.jpg" />
+    <Content Include="Themes\Healthy\Content\images\img_user.svg" />
+    <Content Include="Themes\Healthy\Content\images\img_uxdesign.png" />
+    <Content Include="Themes\Healthy\Content\images\img_venta01.png" />
+    <Content Include="Themes\Healthy\Content\images\img_venta02.png" />
     <Content Include="Themes\Healthy\Content\images\loading.gif" />
     <Content Include="Themes\Healthy\Content\images\logo.gif" />
     <Content Include="Themes\Healthy\Content\images\logo.png" />
@@ -2302,6 +2317,7 @@
     <Content Include="Themes\Healthy\Content\images\logo_260x90_white.png" />
     <Content Include="Themes\Healthy\Content\images\logo_320x100_grey.png" />
     <Content Include="Themes\Healthy\Content\images\logo_320x100_white.png" />
+    <Content Include="Themes\Healthy\Content\images\logo_payu.png" />
     <Content Include="Themes\Healthy\Content\images\logo_white.png" />
     <Content Include="Themes\Healthy\Content\images\mail.png" />
     <Content Include="Themes\Healthy\Content\images\miscellaneous_sprite.png" />
@@ -2325,6 +2341,7 @@
     <Content Include="Themes\Healthy\Content\images\radio.gif" />
     <Content Include="Themes\Healthy\Content\images\readme.txt" />
     <Content Include="Themes\Healthy\Content\images\rss.png" />
+    <Content Include="Themes\Healthy\Content\images\sale_stamp.png" />
     <Content Include="Themes\Healthy\Content\images\SavedStar.png" />
     <Content Include="Themes\Healthy\Content\images\select_left.gif" />
     <Content Include="Themes\Healthy\Content\images\select_right.gif" />
@@ -2340,6 +2357,7 @@
     <Content Include="Themes\Healthy\Content\images\star_x_inactive.gif" />
     <Content Include="Themes\Healthy\Content\images\tab-line.png" />
     <Content Include="Themes\Healthy\Content\images\tab.png" />
+    <Content Include="Themes\Healthy\Content\images\table_respon.gif" />
     <Content Include="Themes\Healthy\Content\images\technorati.png" />
     <Content Include="Themes\Healthy\Content\images\top-menu-background.png" />
     <Content Include="Themes\Healthy\Content\images\top-menu-divider.png" />
@@ -2355,9 +2373,17 @@
     <Content Include="Themes\Healthy\Content\images\zoom.gif" />
     <Content Include="Themes\Healthy\Content\images\zoom.png" />
     <Content Include="Themes\Healthy\Content\images\zoomloader.gif" />
+    <Content Include="Themes\Healthy\Content\img_callto.png" />
+    <Content Include="Themes\Healthy\Content\img_popular.png" />
+    <Content Include="Themes\Healthy\Content\img_uxdesign.png" />
+    <Content Include="Themes\Healthy\Content\img_venta01.png" />
+    <Content Include="Themes\Healthy\Content\img_venta02.png" />
     <Content Include="Themes\Healthy\Content\jquery.jqzoom.css" />
     <Content Include="Themes\Healthy\Content\jquery.jscrollpane.css" />
     <Content Include="Themes\Healthy\Content\landing.css" />
+    <Content Include="Themes\Healthy\Content\logo.svg" />
+    <Content Include="Themes\Healthy\Content\logo_payu.png" />
+    <Content Include="Themes\Healthy\Content\normalize.css" />
     <Content Include="Themes\Healthy\Content\owl.carousel.css" />
     <Content Include="Themes\Healthy\Content\owl.carousel\assets\css\bootstrapTheme.css" />
     <Content Include="Themes\Healthy\Content\owl.carousel\assets\css\custom.css" />
@@ -2634,7 +2660,6 @@
     <Content Include="Views\Catalog\_VendorReviewOverview.cshtml" />
     <Content Include="Views\Shared\_InviteFacebookFriends.cshtml" />
     <Content Include="Views\Shared\_LandingLayout.cshtml" />
-    <Content Include="Views\Sales\LandingStores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

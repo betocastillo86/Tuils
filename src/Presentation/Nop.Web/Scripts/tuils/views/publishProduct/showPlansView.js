@@ -64,7 +64,7 @@
                 this.$("a[for='plan_" + tab + "']").addClass('active');
                 this.$("a[for='plan_" + previuosTab + "']").removeClass('active');
 
-                Backbone.history.navigate('planes/' + tab);
+                Backbone.history.navigate('precios/' + tab);
             },
 
             isFreePlan: function () {

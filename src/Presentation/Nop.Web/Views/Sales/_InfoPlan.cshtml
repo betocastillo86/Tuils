@@ -52,6 +52,7 @@
             <div class="plan-row">
                 <div class="columnHeader">@spec.Name
                     <a href="javascript:void(0)" class="linkPlanSpecDescription" data-description="@spec.Description" title="¿Qué es @spec.Name?"><span class="icon-help"></span></a></div>
+                <div style="display:none">@Html.Raw(spec.Description) </div>
                 @*<div id="linkPlanSpecDescription" style="display:none">@spec.Description</div>*@
                 @foreach (var plan in Model.Plans)
                 {

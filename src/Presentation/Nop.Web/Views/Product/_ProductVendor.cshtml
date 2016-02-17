@@ -10,7 +10,7 @@
                 <span class="icon-tel"></span>
                 @if (!string.IsNullOrEmpty(Model.VendorModel.PhoneNumber) && Model.VendorModel.PhoneNumber.Length > 3)
                 { 
-                    @(string.Format("{0}XXXXXXX", Model.VendorModel.PhoneNumber.Substring(Model.VendorModel.PhoneNumber.Length - 4, 3)))
+                    @(string.Format("XXXXXXX{0}", Model.VendorModel.PhoneNumber.Substring(Model.VendorModel.PhoneNumber.Length - 4, 3)))
                 }   
             </div>
         </div>

@@ -1,4 +1,4 @@
-﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'resources',/*'tuils/models/review', 'tuils/views/product/reviewView',*/'tuils/views/product/questionView', 'jpopup', 'jtabs'],
+﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'resources',/*'tuils/models/review', 'tuils/views/product/reviewView',*/'tuils/views/product/questionView', 'jpopup'/*, 'jtabs'*/],
     function ($, _, BaseView, ProductModel, Resources, /*ReviewModel, ReviewView,*/ QuestionView) {
 
         var ProductDetailView = BaseView.extend({

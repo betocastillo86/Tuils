@@ -4,13 +4,13 @@
 , 'tuils/views/common/header', 'tuils/views/panel/offices', 'tuils/views/panel/menu', 'tuils/views/panel/myProductsView', 'tuils/views/home/homeView',
 'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView', 'tuils/views/publishProduct/publishView',
 'tuils/views/common/footerView', 'tuils/views/panel/editProductView', 'tuils/views/publishProduct/selectPlanView', 'tuils/views/panel/myOrdersView',
-'tuils/views/publishProduct/showPlansView', 'tuils/views/login/staticLoginView',
+'tuils/views/publishProduct/showPlansView', 'tuils/views/login/staticLoginView', 'tuils/views/home/aboutUsView',
 'ajaxCart', 'nopCommon'],
     function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView,
         MyAccountView,VendorServicesView ,QuestionsView ,VendorDetailView,
         ProductDetailView, NewsletterView, SearcherView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
         HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView, EditProductView, SelectPlanView, MyOrdersView,
-        ShowPlansView, StaticLoginView) {
+        ShowPlansView, StaticLoginView, AboutUsView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -62,7 +62,7 @@
                 'quienes-somos': 'aboutUs',
                 'tarifas-y-precios': 'aboutUs',
                 'passwordrecovery/confirm(/*query)' : 'passwordRecovery',
-                'planes(/:tab)': 'plans',
+                'precios(/:tab)': 'plans',
                 'Sales/PaymentResponse(/*query)' : 'paymentResponse',
                 '*path' : 'defaultRoute'
             },
@@ -190,6 +190,7 @@
                 this.loadTwoColumns();
             },
             aboutUs: function () {
+                this.currentView = new AboutUsView({ el: '.conte_quien' });
                 this.loadTwoColumns();
             },
             passwordRecovery: function () {
