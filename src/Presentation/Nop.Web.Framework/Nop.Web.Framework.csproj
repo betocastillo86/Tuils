@@ -154,6 +154,7 @@
     <Compile Include="Mvc\Api\AsyncFileUploadApiFilter.cs" />
     <Compile Include="Mvc\Api\AuthorizeApiAttribute.cs" />
     <Compile Include="Mvc\Api\AuthorizeApiVendorAttribute.cs" />
+    <Compile Include="Mvc\Api\ExceptionHandlingAttribute.cs" />
     <Compile Include="Mvc\Api\InMemoryMultipartFormDataStreamProvider.cs" />
     <Compile Include="Mvc\ConditionalValidationAttribute.cs" />
     <Compile Include="Mvc\DependencyRegistrarExtensions.cs" />

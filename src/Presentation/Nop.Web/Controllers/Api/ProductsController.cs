@@ -84,7 +84,7 @@ namespace Nop.Web.Controllers.Api
         {
             if (ModelState.IsValid && model.Validate(ModelState))
             {
-               
+
                 try
                 {
                     //Si llegan más valores de los posibles para categorias especiales, toma solo los permitidos
@@ -113,8 +113,7 @@ namespace Nop.Web.Controllers.Api
                     _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, SystemCustomerAttributeNames.Phone, model.PhoneNumber);
                     _workContext.CurrentVendor.PhoneNumber = model.PhoneNumber;
                     _vendorService.UpdateVendor(_workContext.CurrentVendor);
-                    
-                    
+
                     //Crea el producto en un estado inactivo 
                     _productService.PublishProduct(product);
                     return Ok(new { Id = product.Id });
@@ -126,8 +125,12 @@ namespace Nop.Web.Controllers.Api
                     ModelState.AddModelError("ErrorMessage", e.Message);
                     return BadRequest(ModelState);
                 }
-                
-               
+                /*catch (Exception e)
+                {
+                    _logger.Error("Excepción publicando el producto", e);
+                    return InternalServerError(new Exception("Ocurrió un error guardando el producto"));
+                }*/
+
             }
             else
             {

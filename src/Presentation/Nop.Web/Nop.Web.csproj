@@ -1181,6 +1181,7 @@
     <Content Include="Scripts\tuils\views\common\newsletterView.js" />
     <Content Include="Scripts\tuils\views\common\searcherView.js" />
     <Content Include="Scripts\tuils\views\common\topMenuView.js" />
+    <Content Include="Scripts\tuils\views\home\aboutUsView.js" />
     <Content Include="Scripts\tuils\views\home\categoriesHomeView.js" />
     <Content Include="Scripts\tuils\views\home\homeView.js" />
     <Content Include="Scripts\tuils\views\home\vendorsHomeView.js" />

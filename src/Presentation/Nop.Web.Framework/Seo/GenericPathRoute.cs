@@ -127,7 +127,20 @@ namespace Nop.Web.Framework.Seo
                     var webHelper = EngineContext.Current.Resolve<IWebHelper>();
                     var response = httpContext.Response;
                     response.Status = "301 Moved Permanently";
-                    response.RedirectLocation = string.Format("{0}{1}", webHelper.GetStoreLocation(false), activeSlug);
+
+
+                    ///Se agrega url de complemento para los productos, ya que las redireacciones que hace no son las correctas
+                    var complementUrl = string.Empty;
+                    switch (urlRecord.EntityName)
+                    {
+                        case "Product":
+                            complementUrl = "p/";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    response.RedirectLocation = string.Format("{0}{2}{1}", webHelper.GetStoreLocation(false), activeSlug, complementUrl);
                     response.End();
                     return null;
                 }
