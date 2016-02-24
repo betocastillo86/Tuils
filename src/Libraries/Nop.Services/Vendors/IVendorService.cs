@@ -35,7 +35,7 @@ namespace Nop.Services.Vendors
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
         IPagedList<Vendor> GetAllVendors(string name = "", 
-            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false, bool? showOnHomePage = null, bool? withPlan = null, VendorType? vendorType = null);
+            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false, bool? showOnHomePage = null, bool? withPlan = null, VendorType? vendorType = null, string email = null,VendorOrderBy order = VendorOrderBy.Name);
 
         /// <summary>
         /// Inserts a vendor

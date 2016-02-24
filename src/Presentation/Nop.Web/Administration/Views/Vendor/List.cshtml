@@ -18,6 +18,14 @@
 <table width="100%">
     <tr>
         <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Email):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Email)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
             @Html.NopLabelFor(model => model.SearchName):
         </td>
         <td class="adminData">
@@ -153,17 +161,25 @@
                 return false;
             }
         });
+
+        $("#@Html.FieldIdFor(model => model.Email)").keydown(function (event) {
+            if (event.keyCode == 13) {
+                $("#btnSearch").click();
+                return false;
+            }
+        });
     });
 
     function additionalData() {
         return {
             SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
+            Email: $('#@Html.FieldIdFor(model => model.Email)').val(),
             ShowOnHome: $('#@Html.FieldIdFor(model => model.ShowOnHome)').is(':checked'),
             WithPlan: $('#@Html.FieldIdFor(model => model.WithPlan)').is(':checked'),
             VendorType: $('#VendorType').val()
-                    };
-                }
-            </script>
+        };
+    }
+</script>
         </td>
     </tr>
 </table>

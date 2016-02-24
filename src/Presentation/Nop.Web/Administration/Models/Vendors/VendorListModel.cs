@@ -11,6 +11,10 @@ namespace Nop.Admin.Models.Vendors
         [AllowHtml]
         public string SearchName { get; set; }
 
+        [NopResourceDisplayName("Admin.Vendors.List.Email")]
+        [AllowHtml]
+        public string Email { get; set; }
+
         [NopResourceDisplayName("Admin.Vendors.List.ShowOnHome")]
         public bool ShowOnHome { get; set; }
 
