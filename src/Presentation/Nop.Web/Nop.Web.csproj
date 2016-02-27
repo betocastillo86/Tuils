@@ -537,6 +537,7 @@
     <Content Include="Content\files\ExportImport\Index.htm" />
     <Content Include="Content\files\Index.htm" />
     <Content Include="Content\Images\ajax-loader.gif" />
+    <Content Include="Content\Images\logo-tuils-motos.png" />
     <Content Include="Content\Images\ogBike.jpg" />
     <Content Include="Content\Images\ogBike.png" />
     <Content Include="Content\Images\ogHome.jpg" />

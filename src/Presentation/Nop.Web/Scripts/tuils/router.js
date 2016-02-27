@@ -250,7 +250,7 @@
                         for (var i = 0; i < that.currentView.requiredViewsWithAuthentication.length; i++) {
                             var view = that.currentView.requiredViewsWithAuthentication[i];
                             //se atacha al evento de solicitud de ingreso
-                            view.on('unauthorized', that.viewHeader.showLogin, that.viewHeader);
+                            view.on('unauthorized', that.viewHeader.showRegister, that.viewHeader);
                             //atacha a la vista actual al evento cuando el usuario se autenticó
                             that.viewHeader.on('user-authenticated', view.userAuthenticated, view);
                         }

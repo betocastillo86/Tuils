@@ -1,6 +1,6 @@
-﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'tuils/views/login/login', 'tuils/views/login/createUser',
+﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'tuils/views/login/login', 'tuils/views/login/createUser', 'util',
     'baseView', 'baseModel'],
-    function ($, _, Backbone, Handlebars, LoginView, CreateUserView,
+    function ($, _, Backbone, Handlebars, LoginView, CreateUserView,  TuilsUtilities,
         BaseView, BaseModel) {
     var HeaderView = BaseView.extend({
 
@@ -18,6 +18,19 @@
         },
         initialize: function () {
             this.render();
+
+            //Si viene por querystring reg = 1 significa que debe mostrar el registro
+            if (TuilsUtilities.getParameterByName('reg') == '1')
+            {
+                //Si por defecto tiene el registro de empresas lo envia
+                var model = new BaseModel(
+                    {
+                        default_reg: TuilsUtilities.getParameterByName('reg_emp') == '1' ? 'empresas' : undefined,
+                        ga_action: TuilsUtilities.getParameterByName('reg_src')
+                    });
+                this.showRegister(model);
+            }
+                
         },
         showLogin: function (model) {
             var that = this;

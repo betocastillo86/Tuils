@@ -6,16 +6,19 @@
 }
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script>
-    FB.init({
-        appId: '@facebookKey', cookie: true,
-        status: true, xfbml: true
-    });
+    (function () {
+        FB.init({
+            appId: '@facebookKey', cookie: true,
+            status: true, xfbml: true
+        });
+    })();
+
     function FacebookInviteFriends() {
         FB.ui({
             method: 'send',
             link: '@Model.UrlToShare',
         });
-    }</script>
+}</script>
 
 <div>
     <a class="fb-btn" onclick="FacebookInviteFriends()">@Model.TextButton</a>

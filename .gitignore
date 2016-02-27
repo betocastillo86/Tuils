@@ -164,6 +164,7 @@ ClientBin/
 *.publishsettings
 node_modules/
 bower_components/
+__TestProfilesForFilePreview__/
 
 # RIA/Silverlight projects
 Generated_Code/
