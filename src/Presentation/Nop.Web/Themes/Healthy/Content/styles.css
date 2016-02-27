@@ -691,7 +691,7 @@ td.fieldname{font-size:12px;}
 .product-grid .item-box:hover{background:#F8F8F9; border-bottom:3px solid #FDB7AA; height: 347px;}
 .product-grid .product-item{text-align:left;margin:0;padding:0;width:155px; position: relative;}
 .product-grid .product-item .product-title{font-weight:normal;font-size:18px;padding:0; color:#292732;}
-.product-grid .product-item .product-title a{display:block;height:auto;line-height:1.3em;overflow:hidden; white-space: nowrap; text-overflow:ellipsis; padding:4px 0 8px; color:#292732; font-weight: 500; max-height: 50px;}
+.product-grid .product-item .product-title a{display:block;height:40px;line-height:1.3em;overflow:hidden; text-overflow:ellipsis; padding:4px 0 0; margin: 0 0 8px; color:#292732; font-weight: 500;}
 .product-grid .product-item .details{margin: 0 15px;}
 .product-grid .product-item .product-rating-box{}
 .product-grid .product-item .picture{background:none repeat scroll 0 0 #FFFFFF;text-align:center;border-bottom:1px solid #E5E5E5;height:140px;overflow:hidden;}
