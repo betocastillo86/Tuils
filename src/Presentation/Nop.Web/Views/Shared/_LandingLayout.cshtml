@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Nop.Core.Infrastructure;
+<!DOCTYPE html>
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
 <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
 <!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
@@ -13,6 +14,9 @@
     @{
         Html.AppendCssFileParts("~/Themes/Healthy/Content/landing.css");
         Html.AppendCssFileParts("~/Themes/Healthy/Content/normalize.css");
+        var seoSettings = EngineContext.Current.Resolve<Nop.Core.Domain.Seo.SeoSettings>();
+        var tuilsSettings = EngineContext.Current.Resolve<Nop.Core.Domain.Common.TuilsSettings>();
+        Html.AppendCssFileParts(ResourceLocation.Foot, "~/Content/jquery-ui-themes/smoothness/jquery-ui-1.10.3.custom.min.css");
     }
     <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700' rel='stylesheet' type='text/css'>
     <!-- <link rel="stylesheet" href="css/style.min.css" type="text/css" media="screen"> -->
@@ -23,6 +27,17 @@
 
     @Html.NopCssFiles(this.Url, ResourceLocation.Head)
     @Html.NopScripts(this.Url, ResourceLocation.Head)
+    
+    @if (!seoSettings.EnableJsBundling)
+    {
+        @:
+        <script data-main="/scripts/tuils/main" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js"></script>
+    }
+    else
+    {
+        @:
+        <script data-main="/scripts/tuils/built.js?cache=@(tuilsSettings.KeyCacheBuiltJavascript)" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js" async></script>
+    }
 
 </head>
 
@@ -47,5 +62,8 @@
             <br />
         </div>
     </footer>
+
+    @Html.NopCssFiles(this.Url, ResourceLocation.Foot)
+    @Html.NopScripts(this.Url, ResourceLocation.Foot)
 </body>
 </html>

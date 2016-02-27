@@ -97,6 +97,25 @@
             </tr>
             <tr>
                 <td class="adminTitle">
+                    @Html.LabelFor(m => m.LandingStoreSuscriptionListId):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(m => m.LandingStoreSuscriptionListId, Model.ListOptions)
+                    @Html.ValidationMessageFor(m => m.LandingStoreSuscriptionListId)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(m => m.LandingRepairShopSuscriptionListId):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(m => m.LandingRepairShopSuscriptionListId, Model.ListOptions)
+                    @Html.ValidationMessageFor(m => m.LandingRepairShopSuscriptionListId)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
                     @Html.LabelFor(m => m.DoubleOptin):
                 </td>
                 <td class="adminData">

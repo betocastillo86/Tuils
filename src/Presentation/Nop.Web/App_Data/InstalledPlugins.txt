@@ -5,5 +5,5 @@ Widgets.GoogleAnalytics
 Widgets.NivoSlider
 Widgets.MegaMenu
 Widgets.ResponsiveSlider
-Misc.MailChimp
 Payments.PayUExternal
+Misc.MailChimp

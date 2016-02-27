@@ -62,6 +62,13 @@ namespace Nop.Plugin.Misc.MailChimp.Models
         public virtual string RepairShopSuscriptionListId { get; set; }
 
 
+        [NopResourceDisplayName("Plugin.Misc.MailChimp.LandingRepairShopSuscriptionListId")]
+        public virtual string LandingRepairShopSuscriptionListId { get; set; }
+
+        [NopResourceDisplayName("Plugin.Misc.MailChimp.LandingStoreSuscriptionListId")]
+        public virtual string LandingStoreSuscriptionListId { get; set; }
+
+
         [NopResourceDisplayName("Plugin.Misc.MailChimp.DoubleOptin")]
         public virtual bool DoubleOptin { get; set; }
 

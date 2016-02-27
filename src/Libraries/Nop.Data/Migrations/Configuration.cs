@@ -1245,6 +1245,8 @@ namespace Nop.Data.Migrations
 
                 newLocaleStringResources.Add("Admin.Vendors.List.Email", "Email");
                 newLocaleStringResources.Add("Admin.Vendors.List.Email.Hint", "Email");
+                newLocaleStringResources.Add("Plugin.Misc.MailChimp.LandingRepairShopSuscriptionListId", "Suscritos a landing de talleres");
+                newLocaleStringResources.Add("Plugin.Misc.MailChimp.LandingStoreSuscriptionListId", "Suscritos a landing de tiendas");
 
 
                 

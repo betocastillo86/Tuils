@@ -4,13 +4,13 @@
 , 'tuils/views/common/header', 'tuils/views/panel/offices', 'tuils/views/panel/menu', 'tuils/views/panel/myProductsView', 'tuils/views/home/homeView',
 'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView', 'tuils/views/publishProduct/publishView',
 'tuils/views/common/footerView', 'tuils/views/panel/editProductView', 'tuils/views/publishProduct/selectPlanView', 'tuils/views/panel/myOrdersView',
-'tuils/views/publishProduct/showPlansView', 'tuils/views/login/staticLoginView', 'tuils/views/home/aboutUsView',
+'tuils/views/publishProduct/showPlansView', 'tuils/views/login/staticLoginView', 'tuils/views/home/aboutUsView', 'tuils/views/landing/landingStoresView',
 'ajaxCart', 'nopCommon'],
     function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView,
         MyAccountView,VendorServicesView ,QuestionsView ,VendorDetailView,
         ProductDetailView, NewsletterView, SearcherView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
-        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView, EditProductView, SelectPlanView, MyOrdersView,
-        ShowPlansView, StaticLoginView, AboutUsView) {
+        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView, EditProductView, SelectPlanView, MyOrdersView, 
+        ShowPlansView, StaticLoginView, AboutUsView, LandingStoresView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -63,7 +63,9 @@
                 'tarifas-y-precios': 'aboutUs',
                 'passwordrecovery/confirm(/*query)' : 'passwordRecovery',
                 'precios(/:tab)': 'plans',
-                'Sales/PaymentResponse(/*query)' : 'paymentResponse',
+                'Sales/PaymentResponse(/*query)': 'paymentResponse',
+                'promociona-tu-taller-de-motos-con-tuils': 'landingRepair',
+                'promociona-tu-negocio-de-motos-con-tuils': 'landingStore',
                 '*path' : 'defaultRoute'
             },
             defaultRoute: function (path) {
@@ -195,6 +197,12 @@
             },
             passwordRecovery: function () {
                 this.loadTwoColumns();
+            },
+            landingRepair: function () {
+                this.currentView = new LandingStoresView({el:this.defaultEl, type : 'repair' });
+            },
+            landingStore: function () {
+                this.currentView = new LandingStoresView({ el: this.defaultEl, type: 'store' });
             },
             login: function () {
                 this.currentView = new StaticLoginView({ el: this.defaultEl });

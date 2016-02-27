@@ -8,6 +8,7 @@ namespace Nop.Data.Mapping.Messages
         {
             this.ToTable("NewsLetterSubscription");
             this.HasKey(nls => nls.Id);
+            this.Ignore(nls => nls.SuscriptionType);
 
             this.Property(nls => nls.Email).IsRequired().HasMaxLength(255);
         }

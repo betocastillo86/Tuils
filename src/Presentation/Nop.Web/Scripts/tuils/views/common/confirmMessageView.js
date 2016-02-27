@@ -10,7 +10,7 @@
 
             height: 150,
 
-            afterClose: function () { },
+            afterClose: undefined,
 
             duration:3000,
 
@@ -50,12 +50,16 @@
                             $('body').removeClass('body-noscroll');
                         },
                         close: function () {
-                            that.afterClose();
+                            if (that.afterClose)
+                                that.afterClose.call(that.ctx);
                         }
 
                     });
             },
             show: function (args) {
+
+                args = args || {};
+
                 if (!this.$el.hasClass('ui-dialog-content'))
                 {
                     this.loadControls();
@@ -66,28 +70,25 @@
                     message = args;
                 if (args.message)
                     message = args.message;
+                
+                this.ctx = args.ctx ? args.ctx : this;
+                this.autoclose = args.autoclose != undefined ? args.autoclose : true;
+                this.duration = args.duration ? args.duration : 3000;
 
-                if (args.autoclose != undefined)
-                    this.autoclose = args.autoclose;
-
-                if (args.duration)
-                    this.duration = args.duration;
-
-                if (args.height)
-                {
+                if (args.height) {
                     this.height = args.height;
                     this.$el.dialog("option", "height", this.height);
                 }
+                else {
+                    this.height = 150;
+                }
                     
-
-                if (args && args.afterClose)
-                    this.afterClose = args.afterClose;
+                this.afterClose = args.afterClose ? args.afterClose : undefined;
 
                 this.$el.html(message)
                 
                 $('body').addClass('body-noscroll');
                 this.$el.dialog('open');
-                
             },
             render: function () {
                 //this.loadControls();
