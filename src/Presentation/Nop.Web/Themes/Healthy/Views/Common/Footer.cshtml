@@ -16,6 +16,8 @@
 
             @*<li>@T("Custom.ShoppingGuide")</li>*@
             <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
+            <li><a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("cartaTalleres") })">@T("Landing.Repair")</a></li>
+            <li><a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("cartaTienda") })">@T("Landing.Store")</a></li>
             @*<li>@T("Custom.LiveChat")</li>*@
             @*<li>@T("Custom.FAQ")</li>
             <li>@T("Custom.Help")</li>*@
