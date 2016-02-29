@@ -1248,14 +1248,9 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Plugin.Misc.MailChimp.LandingRepairShopSuscriptionListId", "Suscritos a landing de talleres");
                 newLocaleStringResources.Add("Plugin.Misc.MailChimp.LandingStoreSuscriptionListId", "Suscritos a landing de tiendas");
 
+                newLocaleStringResources.Add("Landing.Repair", "¿Tienes un taller de motos?");
+                newLocaleStringResources.Add("Landing.Store", "¿Tienes un almacen de motos?");
 
-                
-
-                
-                
-                
-                
-                
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)
