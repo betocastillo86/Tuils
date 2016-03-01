@@ -1929,15 +1929,18 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 .txt_quienes{text-align: center; line-height: 160%; font-size: 23px; font-weight: 300; position: relative; margin: 20px 0 0;}
 .txt_quienes:after{content: ""; width: auto; max-width:430px; background:#fb7055; display: block; margin: 15px auto 50px; height: 2px;}
 .conte_quien{margin: 0 0 30px;}
-.desta_quienes{background:#f8f8f9; border-radius:3px; width: calc(33.3% - 17px); float: left; margin: 50px 0 0 25px; box-sizing:border-box; padding:70px 20px 20px; position: relative; height: 465px; box-shadow:0 2px 2px rgba(60, 90, 130, 0.5);}
+.desta_quienes{background:#f8f8f9; border-radius:3px; width: calc(33.3% - 17px); float: left; margin: 50px 0 0 25px; box-sizing:border-box; padding:70px 20px 20px; position: relative; box-shadow:0 2px 2px rgba(60, 90, 130, 0.5);}
 .desta_quienes:first-child{margin:50px 0 0;}
 .desta_quienes [class^="icon-"]{background:#e8ebef; font-size: 60px; text-align: center; color:#3b5a83; padding: 20px; border-radius: 50%; position: absolute; left: calc(50% - 50px); top: -50px; box-shadow:0 2px 1px rgba(60, 90, 130, 0.5);}
 .desta_quienes span em{font-size: 1px; color: transparent;}
 .desta_quienes h3{color:#f94c2a; font-size: 25px; text-align: center; font-size: 700;}
 .desta_quienes h4{color: #292732; text-align: center; font-size: 18px; font-weight: 400; font-style: italic; height: 45px;}
 .desta_quienes h5{color: #3b5a83; font-size: 16px; margin: 10px 0 0;}
-.desta_quienes ul{color: #627b9c; margin: 0 0 0 15px; padding: 0; list-style: url(images/bull_fil.gif);}
+.desta_quienes ul{color: #627b9c; margin: 0 0 0 15px; height: 290px; padding: 0; list-style: url(images/bull_fil.gif);}
 .desta_quienes ul li{padding: 8px 0;}
+.btn_callNego{background: #fb7055; color: #FFF !important; cursor: pointer; font-size: 18px; font-weight: 400; width: 200px; text-align: center; border-radius: 3px; padding: 8px 0; margin: 10px auto; display: block;}
+.btn_callNego2{cursor: pointer; font-size: 18px; font-weight: 400; text-align: center; padding: 8px 0; margin: 10px auto; display: block;}
+
 .somos-indi{background:#f3f5f7;}
 .somos-indi [class^="icon-"]{background: #fedbd4; color: #fa4c2a; box-shadow:0 2px 1px rgba(250, 75, 45, 0.5);}
 
