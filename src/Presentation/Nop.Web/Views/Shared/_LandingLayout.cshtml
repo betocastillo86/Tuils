@@ -48,16 +48,16 @@
     <footer>
         <div class="footer-links">
             <ul>
-                <li><a href="javascript:;">contacto</a></li>
-                <li><a href="javascript:;">politicas de privacidad</a></li>
-                <li><a href="javascript:;">quienes somos</a></li>
-                <li><a href="javascript:;">blog</a></li>
+                <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
+                <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })">@T("ConditionsOfUse")</a></li>
+                <li><a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("acercadenosotros") })">@T("AboutUs")</a></li>
+                <li><a href="http://blog.tuils.com" target="_blank">@T("Blog")</a></li>
                 <br />
             </ul>
-            <div class="credits">Copyright © 2016 Tuils</div>
+            <div class="credits">Copyright © @DateTime.Now.Year Tuils</div>
             <div class="social">
-                <a class="facebook" href=""><span class="icon-fb"></span></a>
-                <a class="youtube" href=""><span class="icon-ytb"></span></a>
+                <a class="facebook" href="https://www.facebook.com/mototuils" target="_blank"><span class="icon-fb"></span></a>
+                <a class="youtube" href="https://www.youtube.com/channel/UCgzw8b_eRFYm9Mu_jAJyx3A" target="_blank"><span class="icon-ytb"></span></a>
             </div>
             <br />
         </div>
@@ -65,5 +65,6 @@
 
     @Html.NopCssFiles(this.Url, ResourceLocation.Foot)
     @Html.NopScripts(this.Url, ResourceLocation.Foot)
+    @Html.Widget("body_end_html_tag_before")
 </body>
 </html>

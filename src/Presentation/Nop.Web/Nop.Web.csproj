@@ -2214,6 +2214,7 @@
     <Content Include="Themes\Healthy\Content\custom.rtl.css" />
     <Content Include="Themes\Healthy\Content\fontawesome.css" />
     <Content Include="Themes\Healthy\Content\fonts\fontawesome\fontawesome.svg" />
+    <Content Include="Themes\Healthy\Content\fonts\icomoon.svg" />
     <Content Include="Themes\Healthy\Content\ie6.css" />
     <Content Include="Themes\Healthy\Content\ie7.css" />
     <Content Include="Themes\Healthy\Content\images\AjaxLoader.gif" />
@@ -2667,6 +2668,9 @@
     <Content Include="Views\Catalog\_VendorReviewOverview.cshtml" />
     <Content Include="Views\Shared\_InviteFacebookFriends.cshtml" />
     <Content Include="Views\Shared\_LandingLayout.cshtml" />
+    <Content Include="Themes\Healthy\Content\fonts\icomoon.eot" />
+    <Content Include="Themes\Healthy\Content\fonts\icomoon.ttf" />
+    <Content Include="Themes\Healthy\Content\fonts\icomoon.woff" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

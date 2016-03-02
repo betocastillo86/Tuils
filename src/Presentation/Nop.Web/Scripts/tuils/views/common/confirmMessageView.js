@@ -82,6 +82,12 @@
                 else {
                     this.height = 150;
                 }
+
+                if (args.width)
+                {
+                    this.width = args.width;
+                    this.$el.dialog("option", "width", this.width);
+                }
                     
                 this.afterClose = args.afterClose ? args.afterClose : undefined;
 

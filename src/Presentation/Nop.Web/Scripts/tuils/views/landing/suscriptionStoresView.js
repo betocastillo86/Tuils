@@ -24,7 +24,7 @@ define(['jquery', 'underscore', 'baseView', 'tuils/models/landingSuscription'],
                     this.model.save();
             },
             saved: function () {
-                this.alert({ message : 'Quedaste suscrito correctamente', afterClose : this.dispose, ctx : this });
+                this.alert({ message : $('#templateModal').html(), afterClose : this.dispose, ctx : this, height : 300, width:'80%' });
             },
             errorSaving: function () {
                 this.alert('Ocurrió un error guardando, intenta de nuevo');

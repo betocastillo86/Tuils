@@ -1,7 +1,6 @@
 ExternalAuth.Facebook
 Misc.WebServices
 RequestQuote.ContactUs
-Widgets.GoogleAnalytics
 Widgets.NivoSlider
 Widgets.MegaMenu
 Widgets.ResponsiveSlider
