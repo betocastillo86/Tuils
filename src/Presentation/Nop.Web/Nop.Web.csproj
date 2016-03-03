@@ -2248,7 +2248,10 @@
     <Content Include="Themes\Healthy\Content\images\bullet-right.gif" />
     <Content Include="Themes\Healthy\Content\images\bullet.gif" />
     <Content Include="Themes\Healthy\Content\images\bull_fil.gif" />
-    <Content Include="Themes\Healthy\Content\images\canvas_01.png" />
+    <Content Include="Themes\Healthy\Content\images\tuils-multiplataforma-celulares-computador.png" />
+    <Content Include="Themes\Healthy\Content\images\taller-tienda-virtual-tuils.png" />
+    <Content Include="Themes\Healthy\Content\images\organizar-productos-servicios-tuils.png" />
+    <Content Include="Themes\Healthy\Content\images\tienda-taller-virtual-muy-facil-tuils.png" />
     <Content Include="Themes\Healthy\Content\images\cart-footer-bg.gif" />
     <Content Include="Themes\Healthy\Content\images\cart-header-bg.gif" />
     <Content Include="Themes\Healthy\Content\images\cart.png" />
