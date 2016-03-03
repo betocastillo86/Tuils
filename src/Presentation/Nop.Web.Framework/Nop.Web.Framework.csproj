@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckAffiliateAttribute.cs" />
+    <Compile Include="CheckFacebookBrowserAttribute.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BasePluginController.cs" />
     <Compile Include="Controllers\MinifyApiAttribute.cs" />

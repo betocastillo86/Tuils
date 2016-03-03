@@ -95,6 +95,7 @@ namespace Nop.Web.Controllers
         /// Pantalla principal para vender un producto
         /// </summary>
         /// <returns></returns>
+        [CheckFacebookBrowser]
         public ActionResult Index()
         {
             var model = new SelectPublishCategoryModel();
