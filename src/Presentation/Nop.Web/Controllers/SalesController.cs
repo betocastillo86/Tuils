@@ -128,6 +128,7 @@ namespace Nop.Web.Controllers
         /// Publicación de producto simple
         /// </summary>
         /// <returns></returns>
+        [CheckFacebookBrowser]
         public ActionResult PublishProduct(int? id)
         {
             var model = GetPublishModel();
@@ -143,6 +144,7 @@ namespace Nop.Web.Controllers
         /// Publicación de producto tipo motocicleta
         /// </summary>
         /// <returns></returns>
+        [CheckFacebookBrowser]
         public ActionResult PublishProductBike(int? id)
         {
             var model = GetPublishModel();
@@ -181,6 +183,7 @@ namespace Nop.Web.Controllers
         /// OPción para publicar un servicio
         /// </summary>
         /// <returns></returns>
+        [CheckFacebookBrowser]
         public ActionResult PublishProductService(int? id)
         {
             var model = GetPublishModel();

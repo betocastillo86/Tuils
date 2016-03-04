@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Nop.Core.Infrastructure;
+using Nop.Services.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,14 +15,29 @@ namespace Nop.Web.Framework
     /// </summary>
     public class CheckFacebookBrowserAttribute : ActionFilterAttribute
     {
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        private readonly ILogger _logger;
+        public CheckFacebookBrowserAttribute()
+        {
+            _logger = EngineContext.Current.Resolve<ILogger>();
+        }
+        
+        public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             string browser = filterContext.RequestContext.HttpContext.Request.UserAgent;
+            
+            //Si la expresión regular corresponde actualiza la vista que va a rederizar
+            var regex = new Regex("(?=.*Android)(?=.*FBAV)", RegexOptions.IgnoreCase);
 
-            var regex = new Regex("Android|FBAV", RegexOptions.IgnoreCase);
-            if(regex.Matches(browser).Count >= 2)
-                filterContext.Result = new RedirectResult("~/Content/Images/error_fb.png");
+            if(regex.IsMatch(browser))
+            {
+                var view = (ViewResultBase) (filterContext.Result);
+                view.ViewName = "_ErrorFacebookBrowser";
+                filterContext.Result = view;
+                
+                _logger.Debug(string.Format("Navegador de facebook detectado con user agent------>{0}", browser));
+            }
 
+            base.OnActionExecuted(filterContext);
         }
     }
 }

@@ -2634,6 +2634,7 @@
     <Content Include="Views\Catalog\_VendorReviewHelpfulness.cshtml" />
     <Content Include="Views\Catalog\_VendorReviewOverview.cshtml" />
     <Content Include="Views\Shared\_InviteFacebookFriends.cshtml" />
+    <Content Include="Views\Shared\_ErrorFacebookBrowser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
