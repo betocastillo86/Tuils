@@ -15,10 +15,9 @@ namespace Nop.Web.Framework
     /// </summary>
     public class CheckFacebookBrowserAttribute : ActionFilterAttribute
     {
-        private readonly ILogger _logger;
         public CheckFacebookBrowserAttribute()
         {
-            _logger = EngineContext.Current.Resolve<ILogger>();
+            
         }
         
         public override void OnActionExecuted(ActionExecutedContext filterContext)
@@ -28,13 +27,15 @@ namespace Nop.Web.Framework
             //Si la expresión regular corresponde actualiza la vista que va a rederizar
             var regex = new Regex("(?=.*Android)(?=.*FBAV)", RegexOptions.IgnoreCase);
 
-            if(regex.IsMatch(browser))
+            if (regex.IsMatch(browser))
             {
                 var view = (ViewResultBase) (filterContext.Result);
                 view.ViewName = "_ErrorFacebookBrowser";
                 filterContext.Result = view;
-                
-                _logger.Debug(string.Format("Navegador de facebook detectado con user agent------>{0}", browser));
+                //Se inicializa acá debido a
+                //http://www.nopcommerce.com/boards/t/22318/exception-thrown-when-actionfilter-calls-another-class-using-ilogger.aspx
+                var _logger = EngineContext.Current.Resolve<ILogger>();
+                _logger.Warning(string.Format("Navegador de facebook detectado con user agent------>{0}", browser));
             }
 
             base.OnActionExecuted(filterContext);
