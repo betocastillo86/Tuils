@@ -1591,7 +1591,7 @@ namespace Nop.Web.Controllers
         {
             var product = _productService.GetProductById(productId);
             if (product == null || product.Deleted || !product.Published || !product.AllowCustomerReviews)
-                return RedirectToRoute("HomePage");
+                return Content(string.Empty);
 
             var model = new QuestionsModel();
             model.Questions = _productService.GetProductQuestions(productId).ToModels(_dateTimeHelper);

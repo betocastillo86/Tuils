@@ -42,6 +42,6 @@ namespace Nop.Core.Domain.Messages
         /// </summary>
         public string AdditionalInfo { get; set; }
 
-        public NewsLetterSuscriptionType SuscriptionType { get { return (NewsLetterSuscriptionType)SuscriptionTypeId; } }
+        public NewsLetterSuscriptionType SuscriptionType { get { return (NewsLetterSuscriptionType)SuscriptionTypeId; } set { SuscriptionTypeId = Convert.ToInt32(value); } }
     }
 }

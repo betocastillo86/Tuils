@@ -1,0 +1,70 @@
+﻿@using Nop.Core.Infrastructure;
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no">
+    <title>@Html.NopTitle(true)</title>
+    @{
+        Html.AppendCssFileParts("~/Themes/Healthy/Content/landing.css");
+        Html.AppendCssFileParts("~/Themes/Healthy/Content/normalize.css");
+        var seoSettings = EngineContext.Current.Resolve<Nop.Core.Domain.Seo.SeoSettings>();
+        var tuilsSettings = EngineContext.Current.Resolve<Nop.Core.Domain.Common.TuilsSettings>();
+        Html.AppendCssFileParts(ResourceLocation.Foot, "~/Content/jquery-ui-themes/smoothness/jquery-ui-1.10.3.custom.min.css");
+    }
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700' rel='stylesheet' type='text/css'>
+    <!-- <link rel="stylesheet" href="css/style.min.css" type="text/css" media="screen"> -->
+    <!--[if IE]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <meta name="description" content="@(Html.NopMetaDescription())" />
+    <meta name="keywords" content="@(Html.NopMetaKeywords())" />
+
+    @Html.NopCssFiles(this.Url, ResourceLocation.Head)
+    @Html.NopScripts(this.Url, ResourceLocation.Head)
+    
+    @if (!seoSettings.EnableJsBundling)
+    {
+        @:
+        <script data-main="/scripts/tuils/main" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js"></script>
+    }
+    else
+    {
+        @:
+        <script data-main="/scripts/tuils/built.js?cache=@(tuilsSettings.KeyCacheBuiltJavascript)" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js" async></script>
+    }
+
+</head>
+
+<body>
+
+    @RenderBody()
+
+    <footer>
+        <div class="footer-links">
+            <ul>
+                <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
+                <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })">@T("ConditionsOfUse")</a></li>
+                <li><a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("acercadenosotros") })">@T("AboutUs")</a></li>
+                <li><a href="http://blog.tuils.com" target="_blank">@T("Blog")</a></li>
+                <br />
+            </ul>
+            <div class="credits">Copyright © @DateTime.Now.Year Tuils</div>
+            <div class="social">
+                <a class="facebook" href="https://www.facebook.com/mototuils" target="_blank"><span class="icon-fb"></span></a>
+                <a class="youtube" href="https://www.youtube.com/channel/UCgzw8b_eRFYm9Mu_jAJyx3A" target="_blank"><span class="icon-ytb"></span></a>
+            </div>
+            <br />
+        </div>
+    </footer>
+
+    @Html.NopCssFiles(this.Url, ResourceLocation.Foot)
+    @Html.NopScripts(this.Url, ResourceLocation.Foot)
+    @Html.Widget("body_end_html_tag_before")
+</body>
+</html>

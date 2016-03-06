@@ -116,6 +116,8 @@ define(['jquery'], function ($) {
                     }
                 };
 
+                if (!document.getElementById('nav-open-btn')) return;
+
                 // open nav with main "nav" button
                 document.getElementById('nav-open-btn').addEventListener('click', app.toggleNav, false);
 

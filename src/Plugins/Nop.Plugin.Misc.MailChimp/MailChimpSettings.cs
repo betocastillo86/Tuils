@@ -48,6 +48,9 @@ namespace Nop.Plugin.Misc.MailChimp
         /// </summary>
         public virtual string RepairShopSuscriptionListId { get; set; }
 
+        public virtual string LandingRepairShopSuscriptionListId { get; set; }
+        public virtual string LandingStoreSuscriptionListId { get; set; }
+
         /// <summary>
         /// Habilita el doubleoptin en la suscripción a la lista
         /// </summary>

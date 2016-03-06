@@ -137,6 +137,12 @@ namespace Nop.Plugin.Misc.MailChimp.Services
                     case Nop.Core.Domain.Messages.NewsLetterSuscriptionType.RepairShop:
                         listId = _mailChimpSettings.RepairShopSuscriptionListId;
                         break;
+                    case Nop.Core.Domain.Messages.NewsLetterSuscriptionType.LandingRepairs:
+                        listId = _mailChimpSettings.LandingRepairShopSuscriptionListId;
+                        break;
+                    case Nop.Core.Domain.Messages.NewsLetterSuscriptionType.LandingStores:
+                        listId = _mailChimpSettings.LandingStoreSuscriptionListId;
+                        break;
                     default:
                         break;
                 }
@@ -181,6 +187,13 @@ namespace Nop.Plugin.Misc.MailChimp.Services
                     var additionalInfoValues = sub.AdditionalInfo.Split(new char[] { '|' });
                     //La primera posición es la del nombre
                     mergeVars.Add("FNAME", additionalInfoValues[0]);
+
+                    //Agrega el nombre de la tienda
+                    if(additionalInfoValues.Length > 1)
+                        mergeVars.Add("FCOMPANY", additionalInfoValues[1]);
+                    //Agrega el numero telefonico
+                    if (additionalInfoValues.Length > 2)
+                        mergeVars.Add("FPHONE", additionalInfoValues[2]);
                 }
 
                 listEmails.Add(new BatchEmailParameter()

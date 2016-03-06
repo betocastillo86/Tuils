@@ -124,9 +124,12 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             var vendors = _vendorService.GetAllVendors(model.SearchName, command.Page - 1, command.PageSize, true, 
+                email : model.Email,
                 showOnHomePage: model.ShowOnHome ? (bool?) true : null,
                 withPlan: model.WithPlan ? (bool?) true : null,
-                vendorType : model.VendorType != -1 ? (VendorType?)model.VendorType : (VendorType?)null);
+                vendorType : model.VendorType != -1 ? (VendorType?)model.VendorType : (VendorType?)null,
+                order: VendorOrderBy.Id);
+
             var gridModel = new DataSourceResult
             {
                 Data = vendors.Select(x =>

@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.WebApi;
 using Nop.Core.Infrastructure;
+using Nop.Web.Framework.Mvc.Api;
 using Nop.Web.Framework.Mvc.Routes;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace Nop.Web.Infrastructure
             //WebApiConfig.Register(config);
             var config = GlobalConfiguration.Configuration;
 
+            
+
             config.MapHttpAttributeRoutes();
 
             //config.Routes.MapHttpRoute(
@@ -33,6 +36,9 @@ namespace Nop.Web.Infrastructure
             builder.Update(EngineContext.Current.ContainerManager.Container);
             //var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(EngineContext.Current.ContainerManager.Container);
+
+
+            config.Filters.Add(new ExceptionHandlingAttribute());
 
 
             GlobalConfiguration.Configuration.EnsureInitialized();

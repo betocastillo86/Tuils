@@ -1242,13 +1242,15 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("PublishProduct.ShareFriends.Button", "Comparte y Participa ya");
                 newLocaleStringResources.Add("PublishProduct.ShareFriends.Title", "¿Quieres que tu producto salga en nuestro fanpage de Facebook GRATIS?");
                 newLocaleStringResources.Add("PublishProduct.ShareFriends.Content", "Cada tercer día regalamos una publicación gratis en nuestro fanpage de Facebook, para participar lo único que debes hacer es contarle a tus amigos acerca de Tuils.");
-                
 
-                
-                
-                
-                
-                
+                newLocaleStringResources.Add("Admin.Vendors.List.Email", "Email");
+                newLocaleStringResources.Add("Admin.Vendors.List.Email.Hint", "Email");
+                newLocaleStringResources.Add("Plugin.Misc.MailChimp.LandingRepairShopSuscriptionListId", "Suscritos a landing de talleres");
+                newLocaleStringResources.Add("Plugin.Misc.MailChimp.LandingStoreSuscriptionListId", "Suscritos a landing de tiendas");
+
+                newLocaleStringResources.Add("Landing.Repair", "¿Tienes un taller de motos?");
+                newLocaleStringResources.Add("Landing.Store", "¿Tienes un almacen de motos?");
+
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)

@@ -66,11 +66,11 @@
             toolbar: "insertfile undo redo | styleselect | fontselect | fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image@(allowJbimages ? " jbimages" : null)",
             //"relative_urls" required by jbimages plugin to be set to "false"
             relative_urls: false,
-            @if (allowJavaScript){
-                <text>
+            @*@if (allowJavaScript){
+                <text>*@
             valid_elements: "*[*]",
-                </text>
-            }
+            //    </text>
+            //}
             @if (allowRoxyFileman){
                 <text>
             //picture manager
@@ -82,8 +82,16 @@
             convert_urls: false,
             force_br_newlines: false,
             force_p_newlines: false,
-            forced_root_block: ''
+            forced_root_block: '',
+            formats: {
+                bold: { inline: 'b' },
+                //italic : {inline : 'i' },
+                //underline : {inline : 'u'}
+            },
+            valid_children :'*[*]'
+
         };
+        
 
         function getAdditionalEditorSettings@(random)(settings) {
             @Html.Raw(additionalEditorSettings)

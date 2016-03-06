@@ -14,13 +14,13 @@
             initialize: function (args) {
                 this.on('user-authenticated', this.redirectVendorPlans, this);
                 var defaultTab = args.tab ? args.tab : 'personas';
-                this.activeTab(defaultTab);
+                this.activeTab(defaultTab, false);
                 this.model = new BaseModel();
                 this.render();
             },
             changeTab: function (obj) {
 
-                this.activeTab($(obj.target).attr('for') == 'plan_personas' ? 'personas' : 'empresas');
+                this.activeTab($(obj.target).attr('for') == 'plan_personas' ? 'personas' : 'empresas', true);
             },
             authToVendorPlans: function () {
                 this.model.set('ga_action', 'ComprarPlanTienda');
@@ -36,7 +36,7 @@
                 }
                 else {
                     this.alert({ message: TuilsResources.loginMessages.getPlanMarketLikeUserError, duration: 10000 });
-                    this.activeTab('personas');
+                    this.activeTab('personas', true);
                 }
 
             },
@@ -55,7 +55,7 @@
                 if(btnBuy.length > 0)
                     btnBuy.css('display', this.isFreePlan() ? 'none' : 'block');
             },
-            activeTab: function (tab) {
+            activeTab: function (tab, nav) {
                 this.currentTab = tab;
                 var previuosTab = tab == 'personas' ? 'empresas' : 'personas';
                 this.$("[for='show_plan_" + tab + "']").show();
@@ -64,7 +64,8 @@
                 this.$("a[for='plan_" + tab + "']").addClass('active');
                 this.$("a[for='plan_" + previuosTab + "']").removeClass('active');
 
-                Backbone.history.navigate('planes/' + tab);
+                if(nav)
+                    Backbone.history.navigate('precios/' + tab, { replace :true });
             },
 
             isFreePlan: function () {

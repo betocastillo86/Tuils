@@ -36,6 +36,16 @@ namespace Nop.Core.Domain.Messages
         /// <summary>
         /// Suscripciones de usuarios de tipo taller
         /// </summary>
-        RepairShop = 6
+        RepairShop = 6,
+        
+        /// <summary>
+        /// Suscripciones en el landing como tiendas
+        /// </summary>
+        LandingStores = 7,
+
+        /// <summary>
+        /// Suscripciones en el landing como taller
+        /// </summary>
+        LandingRepairs = 8
     }
 }

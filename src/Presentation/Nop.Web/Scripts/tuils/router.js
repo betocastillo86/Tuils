@@ -4,13 +4,13 @@
 , 'tuils/views/common/header', 'tuils/views/panel/offices', 'tuils/views/panel/menu', 'tuils/views/panel/myProductsView', 'tuils/views/home/homeView',
 'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView', 'tuils/views/publishProduct/publishView',
 'tuils/views/common/footerView', 'tuils/views/panel/editProductView', 'tuils/views/publishProduct/selectPlanView', 'tuils/views/panel/myOrdersView',
-'tuils/views/publishProduct/showPlansView', 'tuils/views/login/staticLoginView',
+'tuils/views/publishProduct/showPlansView', 'tuils/views/login/staticLoginView', 'tuils/views/home/aboutUsView', 'tuils/views/landing/landingStoresView',
 'ajaxCart', 'nopCommon'],
     function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView,
         MyAccountView,VendorServicesView ,QuestionsView ,VendorDetailView,
         ProductDetailView, NewsletterView, SearcherView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
-        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView, EditProductView, SelectPlanView, MyOrdersView,
-        ShowPlansView, StaticLoginView) {
+        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView, EditProductView, SelectPlanView, MyOrdersView, 
+        ShowPlansView, StaticLoginView, AboutUsView, LandingStoresView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -62,8 +62,10 @@
                 'quienes-somos': 'aboutUs',
                 'tarifas-y-precios': 'aboutUs',
                 'passwordrecovery/confirm(/*query)' : 'passwordRecovery',
-                'planes(/:tab)': 'plans',
-                'Sales/PaymentResponse(/*query)' : 'paymentResponse',
+                'precios(/:tab)': 'plans',
+                'Sales/PaymentResponse(/*query)': 'paymentResponse',
+                'promociona-tu-taller-de-motos-con-tuils': 'landingRepair',
+                'promociona-tu-negocio-de-motos-con-tuils': 'landingStore',
                 '*path' : 'defaultRoute'
             },
             defaultRoute: function (path) {
@@ -190,10 +192,17 @@
                 this.loadTwoColumns();
             },
             aboutUs: function () {
+                this.currentView = new AboutUsView({ el: '.conte_quien' });
                 this.loadTwoColumns();
             },
             passwordRecovery: function () {
                 this.loadTwoColumns();
+            },
+            landingRepair: function () {
+                this.currentView = new LandingStoresView({el:this.defaultEl, type : 'repair' });
+            },
+            landingStore: function () {
+                this.currentView = new LandingStoresView({ el: this.defaultEl, type: 'store' });
             },
             login: function () {
                 this.currentView = new StaticLoginView({ el: this.defaultEl });
@@ -249,7 +258,7 @@
                         for (var i = 0; i < that.currentView.requiredViewsWithAuthentication.length; i++) {
                             var view = that.currentView.requiredViewsWithAuthentication[i];
                             //se atacha al evento de solicitud de ingreso
-                            view.on('unauthorized', that.viewHeader.showLogin, that.viewHeader);
+                            view.on('unauthorized', that.viewHeader.showRegister, that.viewHeader);
                             //atacha a la vista actual al evento cuando el usuario se autenticó
                             that.viewHeader.on('user-authenticated', view.userAuthenticated, view);
                         }

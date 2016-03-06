@@ -856,7 +856,8 @@ html.oldie .container { width: 940px; }
     .tipo-marca ul.tagit{width: calc(100% - 190px);}
     /*QUIENES SOMOS*/
     .tit_quienes{padding: 80px 0;}
-    .desta_quienes{margin: 40px 0 0 25px; padding: 50px 20px 20px; height: 495px;}
+    .desta_quienes{margin: 40px 0 0 25px; padding: 50px 20px 20px;}
+    .desta_quienes ul{height: 340px;}
     .desta_quienes:first-child{margin: 40px 0 0;}
     .desta_quienes h3{font-size: 23px;}
     .desta_quienes [class^="icon-"]{font-size: 40px; left: calc(50% - 40px); top: -40px;}
@@ -1012,11 +1013,12 @@ html.oldie .container { width: 940px; }
     /*QUIENES SOMOS*/
     .tit_quienes{padding: 50px 0;}
     .txt_quienes{font-size: 18px;}
-    .desta_quienes{margin: 33px 0 0 25px; padding: 33px 20px 20px; height: 465px;}
+    .desta_quienes{margin: 33px 0 0 25px; padding: 33px 20px 20px;}
     .desta_quienes:first-child{margin: 33px 0 0;}
     .desta_quienes h3{font-size: 17px; margin: 5px 0 0;}
     .desta_quienes h4{font-size: 14px; height: 40px;}
     .desta_quienes [class^="icon-"]{font-size: 35px; left: calc(50% - 33px); top: -33px; padding: 15px;}
+    .desta_quienes ul{height: 380px;}
     .desta_quienes ul li{font-size: 12px;}
     /*FIN QUIENES SOMOS*/
     /*PLANES*/
@@ -1133,9 +1135,10 @@ html.oldie .container { width: 940px; }
     .tit_quienes{font-size: 35px;}
     .txt_quienes{font-size: 16px;}
     .desta_quienes:first-child{margin: 33px 0 20px;}
-    .desta_quienes{height: auto; width: 100%; margin: 33px 0 20px;}
+    .desta_quienes{width: 100%; margin: 33px 0 20px;}
     .desta_quienes h3{font-size: 23px;}
     .desta_quienes h4{font-size: 16px; height: auto;}
+    .desta_quienes ul{height: auto;}
     /*FIN QUIENES SOMOS*/
     /*PLANES*/
     .menu_planes{font-size: 20px; width: 305px;}

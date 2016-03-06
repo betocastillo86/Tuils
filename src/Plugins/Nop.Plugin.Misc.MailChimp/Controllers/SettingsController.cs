@@ -60,6 +60,8 @@ namespace Nop.Plugin.Misc.MailChimp.Controllers
             model.WebHookKey = _settings.WebHookKey;
             model.GeneralSuscriptionListId = _settings.GeneralSuscriptionListId;
             model.UserSuscriptionListId = _settings.UserSuscriptionListId;
+            model.LandingStoreSuscriptionListId = _settings.LandingStoreSuscriptionListId;
+            model.LandingRepairShopSuscriptionListId = _settings.LandingRepairShopSuscriptionListId;
             model.ShopSuscriptionListId = _settings.ShopSuscriptionListId;
             model.RepairShopSuscriptionListId = _settings.RepairShopSuscriptionListId;
             model.DoubleOptin = _settings.DoubleOptin;
@@ -106,6 +108,8 @@ namespace Nop.Plugin.Misc.MailChimp.Controllers
                 _settings.UserSuscriptionListId = model.UserSuscriptionListId;
                 _settings.ShopSuscriptionListId = model.ShopSuscriptionListId;
                 _settings.RepairShopSuscriptionListId = model.RepairShopSuscriptionListId;
+                _settings.LandingRepairShopSuscriptionListId = model.LandingRepairShopSuscriptionListId;
+                _settings.LandingStoreSuscriptionListId = model.LandingStoreSuscriptionListId;
                 _settings.DoubleOptin = model.DoubleOptin;
 
                 _settingService.SaveSetting(_settings);

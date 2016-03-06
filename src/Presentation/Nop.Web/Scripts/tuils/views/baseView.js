@@ -342,7 +342,21 @@
                     this.alert(response.responseJSON.Message);
                 }
             }
-        }
+        },
+        dispose: function () {
+            //http://hjortureh.tumblr.com/post/23041479297/backbonejs-send-zombies-to-heaven
+            // same as this.$el.remove();
+            this.remove();
+
+            // unbind events that are
+            // set on this view
+            this.off();
+
+            // remove all models bindings
+            // made by this view
+            if(this.model)
+                this.model.off(null, null, this);
+        },
     });
 
     return BaseView;

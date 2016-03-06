@@ -91,21 +91,27 @@
         }
     </div>
 }
-<div class="page topic-page" id="ph-topic">
+
 
     @if (!Model.HideTitle)
     {
-        <div id="ph-title">
-            <div class="page-title">
-                <h1>
-                    @Model.Title
-                </h1>
+        <div class="page topic-page" id="ph-topic">
+            <div id="ph-title">
+                <div class="page-title">
+                    <h1>
+                        @Model.Title
+                    </h1>
+                </div>
+            </div>
+            <div class="page-body">
+                @Html.Raw(Model.Body)
             </div>
         </div>
     }
-
-    
-    <div class="page-body">
+    else
+    { 
         @Html.Raw(Model.Body)
-    </div>
-</div>
+    }
+
+
+            

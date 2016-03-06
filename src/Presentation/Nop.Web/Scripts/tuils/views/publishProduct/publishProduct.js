@@ -237,11 +237,11 @@
                 this.stepFinished = this.currentStep;
             },
             errorOnSaving: function (model, response) {
-                if (response.responseJSON.ModelState &&
+                if (response.responseJSON && response.responseJSON.ModelState &&
                     (response.responseJSON.ModelState.ErrorCode == TuilsConfiguration.errorCodes.publishInvalidCategory
                         || response.responseJSON.ModelState.ErrorCode == TuilsConfiguration.errorCodes.hasReachedLimitOfProducts))
                     this.alert(response.responseJSON.ModelState.ErrorMessage[0]);
-                else if (response.responseJSON.ModelState)
+                else if (response.responseJSON && response.responseJSON.ModelState)
                 {
                     var msg = "";
                     _.each(response.responseJSON.ModelState, function (element, index) {
@@ -250,7 +250,7 @@
                     this.alert(msg);
                 }
                 else
-                    this.alert("Ocurrió un error, intentalo de nuevo");
+                    this.alert("Ocurrió un error, intentalo de nuevo. Si el error persiste, <a href='https://www.facebook.com/mototuils' target='_blank'>escribenos a nuestro Facebook</a> y te ayudamos con la publicación");
             },
             showFinish: function () {
                 this.showNextStep();

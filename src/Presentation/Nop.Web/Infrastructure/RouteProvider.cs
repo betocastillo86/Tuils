@@ -748,14 +748,10 @@ namespace Nop.Web.Infrastructure
 
 
             routes.MapLocalizedRoute("ShowPlans",
-               "planes/{tab}",
+               "precios/{tab}",
                new { controller = "Sales", action = "Plans", tab = UrlParameter.Optional },
                new[] { "Nop.Web.Controllers" }
                );
-
-            
-
-
             
             #endregion
             

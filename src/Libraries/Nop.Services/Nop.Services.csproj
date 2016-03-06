@@ -220,6 +220,7 @@
     <Compile Include="Shipping\EventPublisherExtensions.cs" />
     <Compile Include="Vendors\ValidateVendorExpiredPlansTask.cs" />
     <Compile Include="Vendors\VendorExtensions.cs" />
+    <Compile Include="Vendors\VendorOrderBy.cs" />
     <Compile Include="Vendors\VendorService.cs" />
     <Compile Include="Vendors\IVendorService.cs" />
     <Compile Include="Customers\ICustomerRegistrationService.cs" />
