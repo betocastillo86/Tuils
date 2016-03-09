@@ -31,7 +31,7 @@
         @foreach (var category in Model.Categories)
         {
             <li style="display:none">
-                <h2><a href="@Url.RouteUrl("Category", new { seName = category.SeName })">@category.Name</a></h2>
+                <h2><a href="@Url.RouteUrl("CategoryGenericUrl", new { generic_se_name = category.SeName, query = "" })">@category.Name</a></h2>
            </li>
         }
 

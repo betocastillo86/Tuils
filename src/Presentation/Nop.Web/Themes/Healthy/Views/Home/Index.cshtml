@@ -29,3 +29,15 @@
         @Html.Action("SimilarSearches", "Catalog")
     </div>
 </div>
+<script type="application/ld+json">
+    {
+    "@@context": "http://schema.org",
+    "@@type": "WebSite",
+    "url": "http://wwww.tuils.com/",
+    "potentialAction": {
+            "@@type": "SearchAction",
+            "target": "http://wwww.tuils.com/buscar?&q={query}",
+            "query-input": "required name=query"
+        }
+    }
+</script>
