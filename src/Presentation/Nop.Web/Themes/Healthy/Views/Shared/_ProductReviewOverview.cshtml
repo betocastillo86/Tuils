@@ -13,7 +13,7 @@
     <div class="product-reviews-overview"
          @if (Model.ShowSnippets) 
          {   
-             @: itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating"
+             @*@: itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating"*@
          }
          >
         <div class="product-review-box">
@@ -30,8 +30,8 @@
                 </div>
                 @if (Model.ShowSnippets)
                 {
-                    <span itemprop="ratingValue" style="display:none">@(Model.RatingSum / (Model.TotalReviews > 0 ? Model.TotalReviews : 1))</span>
-                    <span itemprop="reviewCount" style="display:none">@(Model.TotalReviews)</span>
+                    @*<span itemprop="ratingValue" style="display:none">@(Model.RatingSum / (Model.TotalReviews > 0 ? Model.TotalReviews : 1))</span>
+                    <span itemprop="reviewCount" style="display:none">@(Model.TotalReviews)</span>*@
                 }
             </div>
             @*added*@

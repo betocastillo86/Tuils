@@ -425,20 +425,20 @@ namespace Nop.Services.Vendors
         /// <returns></returns>
         public IList<IReview> GetReviewsByVendorId(int vendorId)
         {
-            var queryProduct = (from r in _productReviewRepository.Table
-                                   //join p in _vendorRepository.Table on r.ProductId equals p.Id
-                                   join c in _customerRepository.Table on r.CustomerId equals c.Id
-                                   where r.IsApproved
+            //var queryProduct = (from r in _productReviewRepository.Table
+            //                       //join p in _vendorRepository.Table on r.ProductId equals p.Id
+            //                       join c in _customerRepository.Table on r.CustomerId equals c.Id
+            //                       where r.IsApproved
 
-                                   select r).ToList<IReview>();
+            //                       select r).ToList<IReview>();
 
             var queryVendor = (from r in _vendorReviewRepository.Table
                                 //join p in _vendorRepository.Table on r.ProductId equals p.Id
                                 join c in _customerRepository.Table on r.CustomerId equals c.Id
-                                where r.IsApproved
+                                where r.IsApproved && r.VendorId == vendorId
                                 select r).ToList<IReview>();
 
-            return queryVendor.Union(queryProduct).ToList();
+            return queryVendor.ToList();
         }
 
         /// <summary>
