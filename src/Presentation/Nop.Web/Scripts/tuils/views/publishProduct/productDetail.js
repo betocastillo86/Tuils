@@ -53,7 +53,10 @@
                 observe: "Price",
                 onSet: function (value) {
                     return parseInt(value);
-                }
+                },
+                onGet: function (value) {
+                    return parseInt(value);
+                },
             },
             '#chkCallForPrice': 'CallForPrice',
             "#txtBikeReferencesProduct": {

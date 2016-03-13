@@ -343,6 +343,7 @@
                 }
             }
         },
+        logHtml:function(t){$("body").prepend(t+"</br>")},
         dispose: function () {
             //http://hjortureh.tumblr.com/post/23041479297/backbonejs-send-zombies-to-heaven
             // same as this.$el.remove();
