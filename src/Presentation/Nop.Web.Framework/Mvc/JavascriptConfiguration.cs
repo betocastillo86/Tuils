@@ -91,8 +91,9 @@ namespace Nop.Web.Framework.Mvc
                 errorCodes = new
                 {
                     publishInvalidCategory = (int)CodeNopException.UserTypeNotAllowedPublishProductType,
-                    hasReachedLimitOfProducts = (int)CodeNopException.UserHasReachedLimitOfProducts
-                },  
+                    hasReachedLimitOfProducts = (int)CodeNopException.UserHasReachedLimitOfProducts,
+                    hasPublishedSimilarProduct = (int)CodeNopException.UserHasHasPublishedSimilarProduct
+                },
                 //Cada vez que se recargue la información del javascript los clientes
                 //deben eliminar del localstorage las referencias de motos que tienen
                 expirationBikeReferencesKey = tuilsSettings.ExpirationBikeReferencesKey
@@ -126,7 +127,9 @@ namespace Nop.Web.Framework.Mvc
                 products = new
                 {
                     confirmBuy = _localizationService.GetResource("products.confirmBuy", languageId),
-                    hasReachedLimitFeaturedAlert = _localizationService.GetResource("myproducts.hasReachedLimitFeaturedAlert", languageId)
+                    hasReachedLimitFeaturedAlert = _localizationService.GetResource("myproducts.hasReachedLimitFeaturedAlert", languageId),
+                    defaultErrorPublishingProduct = _localizationService.GetResource("PublishProduct.DefaultErrorResponse", languageId),
+                    hasPublisedSimilarProduct = _localizationService.GetResource("PublishProduct.AskUserPublishSimilarProduct", languageId)
                 },
                 loginMessages = new
                 {

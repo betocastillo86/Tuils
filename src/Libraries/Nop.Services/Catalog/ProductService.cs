@@ -2375,6 +2375,24 @@ namespace Nop.Services.Catalog
             }
 
         }
+
+        /// <summary>
+        /// Realiza las validaciones necesarias para determinar si un producto ya fue publicado con características similares previamente por el 
+        /// usuario en los dias anteriores
+        /// </summary>
+        /// <param name="product">Información del producto</param>
+        /// <param name="days">Días previos en los que se realiza la validación</param>
+        /// <returns></returns>
+        public bool UserHasSimilarProductPublised(Product product, int days)
+        {
+            var categoryId = product.ProductCategories.FirstOrDefault().CategoryId;
+            var newDate = DateTime.UtcNow.AddDays(days*-1);
+            return _productRepository.Table
+                .Any(p => p.VendorId == product.VendorId
+                    && p.CreatedOnUtc > newDate
+                    && p.ProductCategories.Any(pc => pc.CategoryId == categoryId));
+        }
+
         #endregion
 
         #region Questions
@@ -3194,5 +3212,8 @@ namespace Nop.Services.Catalog
                 return true;
             }
         }
+
+
+        
     }
 }

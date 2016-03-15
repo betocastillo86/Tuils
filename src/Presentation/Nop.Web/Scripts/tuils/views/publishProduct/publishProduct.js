@@ -1,9 +1,9 @@
 ﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'storage',
     'configuration', 'publishProductSelectCategoryView', 'publishProductProductDetailView',
-     'publishProductSummaryView', 'tuils/views/publishProduct/previousProductCreatedView', 'imageSelectorView'],
+     'publishProductSummaryView', 'tuils/views/publishProduct/previousProductCreatedView', 'imageSelectorView', 'resources'],
     function ($, _, BaseView, ProductModel, TuilsStorage,
         TuilsConfiguration, SelectCategoryView, ProductDetailView,
-        SummaryView, PreviousProductCreatedView, ImagesSelectorView) {
+        SummaryView, PreviousProductCreatedView, ImagesSelectorView, TuilsResources) {
 
         var PublishProductView = BaseView.extend({
 
@@ -241,8 +241,16 @@
                     (response.responseJSON.ModelState.ErrorCode == TuilsConfiguration.errorCodes.publishInvalidCategory
                         || response.responseJSON.ModelState.ErrorCode == TuilsConfiguration.errorCodes.hasReachedLimitOfProducts))
                     this.alert(response.responseJSON.ModelState.ErrorMessage[0]);
-                else if (response.responseJSON && response.responseJSON.ModelState)
+                else if (response.responseJSON && response.responseJSON.ModelState && response.responseJSON.ModelState.ErrorCode == TuilsConfiguration.errorCodes.hasPublishedSimilarProduct)
                 {
+                    //Si el usuario acepta republicar, realiza la republicación
+                    if (confirm(TuilsResources.products.hasPublisedSimilarProduct))
+                    {
+                        this.model.set('OmitRepetedProduct', true);
+                        this.save();
+                    }
+                }
+                else if (response.responseJSON && response.responseJSON.ModelState) {
                     var msg = "";
                     _.each(response.responseJSON.ModelState, function (element, index) {
                         msg += element + "\n";
@@ -250,7 +258,7 @@
                     this.alert(msg);
                 }
                 else
-                    this.alert("Ocurrió un error, intentalo de nuevo. Si el error persiste, <a href='https://www.facebook.com/mototuils' target='_blank'>escribenos a nuestro Facebook</a> y te ayudamos con la publicación");
+                    this.alert(TuilsResources.products.hasPublisedSimilarProduct);
             },
             showFinish: function () {
                 this.showNextStep();

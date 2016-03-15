@@ -114,6 +114,17 @@ namespace Nop.Web.Controllers.Api
                     _workContext.CurrentVendor.PhoneNumber = model.PhoneNumber;
                     _vendorService.UpdateVendor(_workContext.CurrentVendor);
 
+                    //Si se debe validar si el producto es repetido y el usuario tiene un producto similar publicado
+                    //retorna el error
+                    if (!model.OmitRepetedProduct && _productService.UserHasSimilarProductPublised(product, 1))
+                    {
+                        _logger.Debug(string.Format("Usuario intenta publicar un producto doble vez: {0}", product.Name));
+                        ModelState.AddModelError("ErrorCode", Convert.ToInt32(CodeNopException.UserHasHasPublishedSimilarProduct).ToString());
+                        ModelState.AddModelError("ErrorMessage", _localizationService.GetResource("PublishProduct.AskUserPublishSimilarProduct"));
+                        return BadRequest(ModelState);
+                    }
+
+
                     //Crea el producto en un estado inactivo 
                     _productService.PublishProduct(product);
                     return Ok(new { Id = product.Id });

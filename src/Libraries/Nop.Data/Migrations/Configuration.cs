@@ -1250,6 +1250,8 @@ namespace Nop.Data.Migrations
 
                 newLocaleStringResources.Add("Landing.Repair", "¿Tienes un taller de motos?");
                 newLocaleStringResources.Add("Landing.Store", "¿Tienes un almacen de motos?");
+                newLocaleStringResources.Add("PublishProduct.DefaultErrorResponse", "Ocurrió un error, intentalo de nuevo. Si el error persiste, <a href='https://www.facebook.com/mototuils' target='_blank'>escribenos a nuestro Facebook</a> y te ayudamos con la publicación");
+                newLocaleStringResources.Add("PublishProduct.AskUserPublishSimilarProduct", "Ya tienes publicado un producto similar a este hace muy poco tiempo. ¿Estas seguro que deseas publicarlo?");
 
 
                 //Recorre todas las llaves que desea adicional

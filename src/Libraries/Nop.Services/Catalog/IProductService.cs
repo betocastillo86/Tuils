@@ -708,5 +708,14 @@ namespace Nop.Services.Catalog
         /// <param name="id"></param>
         /// <returns></returns>
         PlanModel GetPlanById(int id);
+
+        /// <summary>
+        /// Realiza las validaciones necesarias para determinar si un producto ya fue publicado con características similares previamente por el 
+        /// usuario en los dias anteriores
+        /// </summary>
+        /// <param name="product">Información del producto</param>
+        /// <param name="days">Días previos en los que se realiza la validación</param>
+        /// <returns></returns>
+        bool UserHasSimilarProductPublised(Product product, int days);
     }
 }

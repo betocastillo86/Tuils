@@ -93,6 +93,11 @@ namespace Nop.Core
         /// </summary>
         UserHasReachedLimitOfProducts = 102,
 
+        /// <summary>
+        /// El vendedor a alcanzado el limite de productos permitidos para vender
+        /// </summary>
+        UserHasHasPublishedSimilarProduct = 103,
+
 
         #endregion
 

@@ -52,10 +52,10 @@
             "#txtPrice": {
                 observe: "Price",
                 onSet: function (value) {
-                    return parseInt(value);
+                    return value ? parseInt(value) : '';
                 },
                 onGet: function (value) {
-                    return parseInt(value);
+                    return value ? parseInt(value) : '';
                 },
             },
             '#chkCallForPrice': 'CallForPrice',

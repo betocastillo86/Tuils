@@ -69,5 +69,10 @@ namespace Nop.Web.Models.Api
         public string ImageUrl { get; set; }
 
         public bool CallForPrice { get; set; }
+
+        /// <summary>
+        /// Cuando viene en True no tiene en cuenta si el usuario a creado productos similares o no
+        /// </summary>
+        public bool OmitRepetedProduct { get; set; }
     }
 }
