@@ -35,7 +35,7 @@
 
             },
             loadControls: function () {
-                this.productId = parseInt($("#productId").val());
+                this.productId = parseInt($("#ProductId").val());
                 this.loadGallery();
                 //this.loadTabs();
                 this.loadComments();
@@ -147,8 +147,13 @@
                 this.$('#phoneHashed').hide();
                 this.alreadyBougth = true;
 
-                if(model)
+                if (model)
+                {
+                    //Marca conversion de google adwords para compra
+                    //this.markAdwordsConvertion(957791126, "LqbeCPCv5WQQlvfayAM", false);
                     this.trackGAEvent('Compra', 'Exitosa');
+                }
+                    
             }
         });
 

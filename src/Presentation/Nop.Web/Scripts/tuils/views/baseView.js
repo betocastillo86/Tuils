@@ -343,6 +343,17 @@
                 }
             }
         },
+        markAdwordsConvertion: function (id, label, remarketing) {
+            
+              goog_snippet_vars = function() {
+                  var w = window;
+                  w.google_conversion_id = id;
+                  w.google_conversion_label = label;
+                  w.google_remarketing_only = remarketing;
+              }
+              goog_report_conversion(document.location.href);
+              console.log('conversion en adwords guardada');
+        },
         logHtml:function(t){$("body").prepend(t+"</br>")},
         dispose: function () {
             //http://hjortureh.tumblr.com/post/23041479297/backbonejs-send-zombies-to-heaven
