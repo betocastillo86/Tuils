@@ -1191,7 +1191,7 @@ td.fieldname{font-size:12px;}
 .product-details-page .gallery{float:left; width:50%;}
 .product-details-page .gallery .picture{margin: 30px 30px 0 0; position: relative;}
 .product-details-page .gallery .picture a{height: 375px; display: block; background: #FFF; overflow: hidden;}
-.product-details-page .gallery .picture img{max-width: 100%;}
+.product-details-page .gallery .picture img{max-width: 100%; max-height: 100%; display: block; margin: 0 auto;}
 .product-details-page .gallery .picture-thumbs{margin:10px 0 0;}
 .product-details-page .gallery .picture-thumbs a{margin-right:10px; width: 70px !important; height: 70px !important; overflow: hidden; display: inline-block; background: #FFF;}
 .product-details-page .overview{float:right; width: 50%;}
