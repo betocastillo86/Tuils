@@ -101,6 +101,7 @@
                     that.viewProductDetail = new ProductDetailView({ el: "#divStep_2", productType: that.productType, selectedCategory: this.model.get('CategoryId'), model: that.model });
                     that.viewProductDetail.on("detail-product-finished", that.showPictures, that);
                     that.viewProductDetail.on("detail-product-back", that.showStepBack, that);
+                    that.viewProductDetail.on("save-preproduct", that.savePreproduct, that);
                 }
             },
             recoverProduct: function () {
@@ -274,17 +275,17 @@
                 this.viewPublishFinished = new PublishFinishedView({ el: '#divStep_5', model: this.model, images: this.images });
                 this.$(".wizard-breadcrumb").hide();
             },
-            savePreproduct: function (model) {
+            savePreproduct: function () {
                 
                 //Intenta guardar el premodelo
                 if(!this.preModel)
                     this.preModel = new PreproductModel();
 
-                this.preModel.set(model.toJSON());
+                this.preModel.set(this.model.toJSON());
                 //Se agrega evento ONCE ya que va intentar salvar el producto
                 this.once("user-authenticated", this.savePreproduct, this);
                 
-                this.showLoadingAll(this.preModel);
+                //this.showLoadingAll(this.preModel);
                 this.validateAuthorization(this.preModel);
 
                 this.preModel.save();

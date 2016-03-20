@@ -10,7 +10,6 @@
         getBikeReferences: function () {
             this.url = this.baseUrl + "bikereferences";
             this.fetch();
-            return this;
         },
         getSubcategories: function (id) {
             this.url = '/api/categories/' + id + '/subcategories';
