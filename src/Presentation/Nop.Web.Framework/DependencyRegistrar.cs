@@ -143,6 +143,7 @@ namespace Nop.Web.Framework
             builder.RegisterType<ProductAttributeParser>().As<IProductAttributeParser>().InstancePerLifetimeScope();
             builder.RegisterType<ProductAttributeService>().As<IProductAttributeService>().InstancePerLifetimeScope();
             builder.RegisterType<ProductService>().As<IProductService>().InstancePerLifetimeScope();
+            builder.RegisterType<PreproductService>().As<IPreproductService>().InstancePerLifetimeScope();
             builder.RegisterType<CopyProductService>().As<ICopyProductService>().InstancePerLifetimeScope();
             builder.RegisterType<SpecificationAttributeService>().As<ISpecificationAttributeService>().InstancePerLifetimeScope();
             builder.RegisterType<ProductTemplateService>().As<IProductTemplateService>().InstancePerLifetimeScope();

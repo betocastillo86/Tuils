@@ -1,9 +1,11 @@
 ﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'storage',
     'configuration', 'publishProductSelectCategoryView', 'publishProductProductDetailView',
-     'publishProductSummaryView', 'tuils/views/publishProduct/previousProductCreatedView', 'imageSelectorView', 'resources'],
+     'publishProductSummaryView', 'tuils/views/publishProduct/previousProductCreatedView', 'imageSelectorView', 'resources',
+       'tuils/models/preproduct'],
     function ($, _, BaseView, ProductModel, TuilsStorage,
         TuilsConfiguration, SelectCategoryView, ProductDetailView,
-        SummaryView, PreviousProductCreatedView, ImagesSelectorView, TuilsResources) {
+        SummaryView, PreviousProductCreatedView, ImagesSelectorView, TuilsResources,
+        PreproductModel) {
 
         var PublishProductView = BaseView.extend({
 
@@ -51,18 +53,24 @@
             },
             loadControls: function () {
                 this.beforeUnload('No has terminado la publicación del producto');
+
+                //Creacion del modelo
                 this.model = new ProductModel({ 'ProductTypeId': this.productType });
-                this.on("user-authenticated", this.save, this);
-                this.model.on('sync', this.productSaved, this);
+                
+                //this.model.on('sync', this.productSaved, this);
                 this.model.on('error', this.errorOnSaving, this);
 
-                if (this.hasPreviousProductStorage()) {
-                    this.showPreviousProductCreated();
-                }
-                else {
-                    this.showStep();
-                    this.showCategories();
-                }
+                ///////REHACERR-----if (this.hasPreviousProductStorage()) {
+                ///////REHACERR-----    this.showPreviousProductCreated();
+                ///////REHACERR-----}
+                ///////REHACERR-----else {
+                ///////REHACERR-----    this.showStep();
+                ///////REHACERR-----    this.showCategories();
+                ///////REHACERR-----}
+
+                //Carga el paso 1 y las categorias
+                this.showStep();
+                this.showCategories();
 
                 this.hidePublishButton();
             },
@@ -77,6 +85,7 @@
                 var that = this;
                 that.viewSelectCategory = new SelectCategoryView({ el: "#divStep_1", productType: that.productType, model: this.model, autoSelectCategories: autoSelectCategories });
                 that.viewSelectCategory.on("category-selected", that.showProductDetail, that);
+                that.viewSelectCategory.on("save-preproduct", that.savePreproduct, that);
                 //that.viewSelectCategory.once("categories-loaded", TuilsStorage.loadBikeReferences);
                 that.viewSelectCategory.on("categories-middle-selected", that.restartNextStep, that);
             },
@@ -165,9 +174,9 @@
                     this.$("div[id^='divStep_']").hide();
                     this.scrollFocusObject('.wizard-breadcrumb', -50);
 
-                    //Actualiza el producto en el storage y realiza la navegación
-                    if (this.currentStep > 1)
-                        this.model.on('change', TuilsStorage.setPublishProduct);
+                    ////////Actualiza el producto en el storage y realiza la navegación
+                    ////////AJUSTAR -->if (this.currentStep > 1)
+                    ////////AJUSTAR -->    this.model.on('change', TuilsStorage.setPublishProduct);
                     if (this.currentStep)
                         Backbone.history.navigate('quiero-vender/' + this.productTypeName + '/' + this.currentStep);
                 }
@@ -265,6 +274,21 @@
                 this.viewPublishFinished = new PublishFinishedView({ el: '#divStep_5', model: this.model, images: this.images });
                 this.$(".wizard-breadcrumb").hide();
             },
+            savePreproduct: function (model) {
+                
+                //Intenta guardar el premodelo
+                if(!this.preModel)
+                    this.preModel = new PreproductModel();
+
+                this.preModel.set(model.toJSON());
+                //Se agrega evento ONCE ya que va intentar salvar el producto
+                this.once("user-authenticated", this.savePreproduct, this);
+                
+                this.showLoadingAll(this.preModel);
+                this.validateAuthorization(this.preModel);
+
+                this.preModel.save();
+            },
             productSaved: function (model) {
                 this.cancelBeforeUnload();
                 this.viewSelectCategory.remove();
@@ -278,6 +302,7 @@
                 document.location.href = '/mis-productos/seleccionar-plan/' + this.model.get('Id');
             },
             save: function () {
+                this.once("user-authenticated", this.save, this);
                 this.showLoadingAll(this.model);
                 this.validateAuthorization();
                 this.model.publish();

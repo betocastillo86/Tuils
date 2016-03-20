@@ -12,7 +12,10 @@
             this.fetch();
             return this;
         },
-
+        getSubcategories: function (id) {
+            this.url = '/api/categories/' + id + '/subcategories';
+            this.fetch();
+        },
         getServices: function () {
             this.url = this.baseUrl + 'services';
             this.fetch();

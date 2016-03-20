@@ -40,6 +40,9 @@ namespace Nop.Web.Controllers
             if (_customerSettings.HideNewsletterBlock)
                 return Content("");
 
+            if (Request.Browser.IsMobileDevice)
+                return Content(string.Empty);
+
             return PartialView(new NewsletterBoxModel());
         }
 

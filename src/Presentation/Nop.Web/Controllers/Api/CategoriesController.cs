@@ -147,6 +147,24 @@ namespace Nop.Web.Controllers.Api
             }));
         }
 
+        [HttpGet]
+        [Route("api/categories/{id:int}/subcategories")]
+        public IHttpActionResult GetSubcategories(int id)
+        {
+            string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORIES_API_CATEGORY_MODEL_KEY, id, false);
+
+            var category = _cacheManager.Get(cacheKey, () =>
+            {
+                var entityCategory = _categoryService.GetCategoryById(id, true, true);
+                return entityCategory.ToModel();
+            });
+
+            if (category != null)
+                return Ok(category.ChildrenCategories);
+            else
+                return NotFound();
+        }
+
         private List<object> GetMinifiedCategories(List<CategoryBaseModel> list)
         {
             //Ya que son muchas referencias se retorna un objeto con el minimo de información posible

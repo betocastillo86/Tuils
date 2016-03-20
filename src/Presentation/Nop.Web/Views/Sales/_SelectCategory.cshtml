@@ -32,10 +32,10 @@
 {
     <script id="templateCategorySelector" type="text/x-handlebars-template">
         <div class="category-column">
-            <select tuils-level="{{currentLevel}}" tuils-level='{{currentLevel}}'>
-                {{#if ChildrenCategories.length }}
+            <select data-level='{{CurrentLevel}}'>
+                {{#if Categories.length }}
                 <option value="">@T("PublishProduct.SelectCategory")</option>
-                {{#each ChildrenCategories}}
+                {{#each Categories}}
                 <option value="{{Id}}">{{Name}}</option>
                 {{/each}}
                 {{/if}}
@@ -47,12 +47,11 @@ else
 {
     <script id="templateCategorySelector" type="text/x-handlebars-template">
         <div class="category-column">
-            <ul class="divCategorySelector" tuils-level="{{currentLevel}}">
-                {{#if ChildrenCategories.length }}
-                <input type="text" placeholder="@T("PublishProduct.SelectCategoryFilter")" />
-                {{#each ChildrenCategories}}
-                <li tuils-id="{{Id}}" tuils-filter="{{toLowerCase Name}}" tuils-level='{{../currentLevel}}' title="Selecciona {{Name}}">{{Name}}</li>
-                {{/each}}
+            <ul class="divCategorySelector" data-level="{{CurrentLevel}}">
+                {{#if Categories.length }}
+                    {{#each Categories}}
+                        <li data-id="{{Id}}" data-level='{{../CurrentLevel}}' title="Selecciona {{Name}}">{{Name}}</li>
+                    {{/each}}
                 {{/if}}
             </ul>
         </div>

@@ -208,6 +208,7 @@
     <Compile Include="Controllers\Api\OrderPlansController.cs" />
     <Compile Include="Controllers\Api\OrdersController.cs" />
     <Compile Include="Controllers\Api\PicturesController.cs" />
+    <Compile Include="Controllers\Api\PreproductsController.cs" />
     <Compile Include="Controllers\Api\ProductsController.cs" />
     <Compile Include="Controllers\Api\QuestionsController.cs" />
     <Compile Include="Controllers\Api\SpecificationAttributeController.cs" />
@@ -1161,6 +1162,7 @@
     <Content Include="Scripts\tuils\extensions\numbers.js" />
     <Content Include="Scripts\tuils\models\address.js" />
     <Content Include="Scripts\tuils\models\baseModel.js" />
+    <Content Include="Scripts\tuils\models\preproduct.js" />
     <Content Include="Scripts\tuils\models\question.js" />
     <Content Include="Scripts\tuils\models\review.js" />
     <Content Include="Scripts\tuils\models\newsletter.js" />

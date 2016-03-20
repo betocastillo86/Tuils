@@ -42,10 +42,11 @@
         showRegister: function (model) {
             this.trigger('unauthorized-register', model);
         },
-        validateAuthorization: function ()
+        validateAuthorization: function (model)
         {
+            model = model || this.model;
             this.validateSendRequestAfterSession = true;
-            this.model.once('unauthorized', this.showLogin, this);
+            model.once('unauthorized', this.showLogin, this);
         },
         userAuthenticated: function (model) {
             if (this.validateSendRequestAfterSession)
