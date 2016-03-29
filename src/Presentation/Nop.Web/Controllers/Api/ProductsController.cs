@@ -118,7 +118,7 @@ namespace Nop.Web.Controllers.Api
                     //retorna el error
                     if (!model.OmitRepetedProduct && _productService.UserHasSimilarProductPublised(product, 1))
                     {
-                        _logger.Debug(string.Format("Usuario intenta publicar un producto doble vez: {0}", product.Name));
+                        _logger.Warning(string.Format("Usuario intenta publicar un producto doble vez: {0}", product.Name));
                         ModelState.AddModelError("ErrorCode", Convert.ToInt32(CodeNopException.UserHasHasPublishedSimilarProduct).ToString());
                         ModelState.AddModelError("ErrorMessage", _localizationService.GetResource("PublishProduct.AskUserPublishSimilarProduct"));
                         return BadRequest(ModelState);

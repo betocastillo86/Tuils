@@ -142,8 +142,15 @@
                             this.showLoadingBack(fileModel, controlImage);
                             fileModel.on("file-saved", this.fileUploaded, this);
                             fileModel.on("file-error", this.fileErrorUpload, this);
-                            this.resizeImage(file, fileModel);
-                            
+                            //this.resizeImage(file, fileModel);
+                            //Atacha evento para actualizar la imagen
+                            fileModel.on('sync', function (model) {
+                                console.log("sync method->" + model.get('guid'));
+                                that.switchImage('/TempFiles/' + model.get('thumbnail'), model.get('control'));
+                            }, this);
+
+                            fileModel.set('file', file);
+                            fileModel.upload({ saveUrl: this.urlSave });
                         }
                         else {
                             this.alert("Las imágenes tienen que estar en formatos .jpg, .gif o .png.");
@@ -162,21 +169,21 @@
             
 
         },
-        resizeImage: function (file, fileModel) {
-            var that = this;
-            this.resizer.photo(file, TuilsConfiguration.media.productImageMaxSizeResize, 'file', function (resizedFile) {
+        //////resizeImage: function (file, fileModel) {
+        //////    var that = this;
+        //////    this.resizer.photo(file, TuilsConfiguration.media.productImageMaxSizeResize, 'file', function (resizedFile) {
 
-                that.resizer.photoCrop(resizedFile, 400, 'dataURL', function (thumbnail) {
-                    fileModel.set({ src: thumbnail, file: resizedFile });
-                    //Hasta que la imagen no haya sido subida 
-                    fileModel.on('sync', function () {
-                        that.switchImage(thumbnail, fileModel.get('control'));
-                    });
-                    fileModel.upload({ saveUrl: that.urlSave });
+        //////        that.resizer.photoCrop(resizedFile, 400, 'dataURL', function (thumbnail) {
+        //////            fileModel.set({ src: thumbnail, file: resizedFile });
+        //////            //Hasta que la imagen no haya sido subida 
+        //////            fileModel.on('sync', function () {
+        //////                that.switchImage(thumbnail, fileModel.get('control'));
+        //////            });
+        //////            fileModel.upload({ saveUrl: that.urlSave });
 
-                });
-            });
-        },
+        //////        });
+        //////    });
+        //////},
         switchImage : function(urlImage, ctrl)
         {
             if (urlImage) {
@@ -195,6 +202,7 @@
         },
         fileUploaded: function (model) {
             //var srcImage = this.currentControlImage.find("img", "src");
+            console.log("FileUploaded method->" + model.get('guid'));
             var guidImage = model.get('guid');
             this.collection.add(model);
             var control = model.get('control');

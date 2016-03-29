@@ -574,6 +574,87 @@ namespace Nop.Services.Media
         }
 
         /// <summary>
+        /// Crea el Thumbnail de una imagen sin importar si está creada en BD o no
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="targetSize"></param>
+        /// <returns></returns>
+        public virtual string CreateThumbnailImage(string filePath, int targetSize, bool crop= false)
+        {
+            string fileExtension = Path.GetExtension(filePath);
+            string thumbFileName = string.Format("{0}_{1}{2}",
+                    Path.GetFileNameWithoutExtension(filePath),
+                    targetSize,
+                    fileExtension);
+            string directory = Path.GetDirectoryName(filePath);
+
+            //Obtiene la ruta del nuevo archivo
+           // var relativeThumbPath = string.Format("{0}{1}", directory, thumbFileName);
+            var thumbFilePath = string.Format("{0}\\{1}", directory, thumbFileName);
+            
+            if (!File.Exists(thumbFilePath))
+            {
+                using (var stream = new FileStream(filePath, FileMode.Open))
+                {
+                    Bitmap b = null;
+                    try
+                    {
+                        //try-catch to ensure that picture binary is really OK. Otherwise, we can get "Parameter is not valid" exception if binary is corrupted for some reasons
+                        b = new Bitmap(stream);
+                    }
+                    catch (ArgumentException exc)
+                    {
+                        _logger.Error(string.Format("Error generating picture thumb. Url={0}", filePath), exc);
+                    }
+                    if (b == null)
+                    {
+                        //bitmap could not be loaded for some reasons
+                        return filePath;
+                    }
+
+                    var newSize = CalculateDimensions(b.Size, targetSize);
+
+                    var destStream = new MemoryStream();
+
+                    //Si debe cortar la imagen carga el ancho y alto fijo
+                    ResizeSettings settings;
+                    if (crop)
+                    {
+                        if (newSize.Width > newSize.Height)
+                            newSize.Height = newSize.Width;
+                        else
+                            newSize.Width = newSize.Height;
+
+                        settings = new ResizeSettings
+                        {
+                            Width = newSize.Width,
+                            Height = newSize.Width,
+                            Mode = FitMode.Crop,
+                            Quality = _mediaSettings.DefaultImageQuality
+                        };
+                    }
+                    else
+                        settings = new ResizeSettings
+                        {
+                            Width = newSize.Width,
+                            Height = newSize.Height,
+                            Scale = ScaleMode.Both,
+                            Quality = _mediaSettings.DefaultImageQuality
+                        };
+
+
+                    ImageBuilder.Current.Build(b, destStream, settings);
+                    var destBinary = destStream.ToArray();
+                    File.WriteAllBytes(thumbFilePath, destBinary);
+
+                    b.Dispose();
+                }
+            }
+
+            return thumbFilePath;
+        }
+
+        /// <summary>
         /// Get a picture local path
         /// </summary>
         /// <param name="picture">Picture instance</param>
@@ -866,7 +947,7 @@ namespace Nop.Services.Media
             //http://www.sfsu.edu/training/mimetype.htm
             if (String.IsNullOrEmpty(contentType))
             {
-                switch (fileExtension)
+                switch (fileExtension.ToLower())
                 {
                     case ".bmp":
                         contentType = "image/bmp";
@@ -936,6 +1017,110 @@ namespace Nop.Services.Media
                         //we do not validate picture binary here to ensure that no exception ("Parameter is not valid") will be thrown when "moving" pictures
                     }
                 }
+            }
+        }
+
+        #endregion
+
+        #region Correct Image Orientation From Phone EXIF
+        /// <summary>
+        /// Realiza la validación y reorientación de una imagen si está quedó torcida
+        /// </summary>
+        /// <param name="originalFile"></param>
+        /// <returns></returns>
+        public bool CorrectImageOrientationEXIF(string originalFile)
+        {
+            var image = System.Drawing.Image.FromFile(originalFile);
+            return CorrectImageOrientationEXIF(image, originalFile);
+        }
+
+        public bool CorrectImageOrientationEXIF(System.IO.Stream originalFile, string pathToSave)
+        {
+            var image = System.Drawing.Image.FromStream(originalFile);
+            return CorrectImageOrientationEXIF(image, pathToSave);
+        }
+
+        private bool CorrectImageOrientationEXIF(Image image, string pathToSave)
+        {
+
+            try
+            {
+                //Valor quemado que contiene el valor del header
+                int orientationEXIFHeader = 274;
+
+                if (image.PropertyIdList.Contains(orientationEXIFHeader))
+                {
+                    var orientationProperty = image.GetPropertyItem(orientationEXIFHeader);
+                    var orientation = (EXIFPictureOrientationType)orientationProperty.Value[0];
+
+                    var rotationToApply = RotateFlipType.RotateNoneFlipNone;
+
+                    switch (orientation)
+                    {
+                        case EXIFPictureOrientationType.TopLeft:
+                            rotationToApply = System.Drawing.RotateFlipType.RotateNoneFlipNone;
+                            break;
+                        case EXIFPictureOrientationType.TopRight:
+                            rotationToApply = System.Drawing.RotateFlipType.RotateNoneFlipX;
+                            break;
+                        case EXIFPictureOrientationType.BottomRight:
+                            rotationToApply = System.Drawing.RotateFlipType.Rotate180FlipNone;
+                            break;
+                        case EXIFPictureOrientationType.BottomLeft:
+                            rotationToApply = System.Drawing.RotateFlipType.Rotate180FlipX;
+                            break;
+                        case EXIFPictureOrientationType.LeftTop:
+                            rotationToApply = System.Drawing.RotateFlipType.Rotate90FlipX;
+                            break;
+                        case EXIFPictureOrientationType.RightTop:
+                            rotationToApply = System.Drawing.RotateFlipType.Rotate90FlipNone;
+                            break;
+                        case EXIFPictureOrientationType.RightBottom:
+                            rotationToApply = System.Drawing.RotateFlipType.Rotate270FlipX;
+                            break;
+                        case EXIFPictureOrientationType.LeftBottom:
+                            rotationToApply = System.Drawing.RotateFlipType.Rotate270FlipNone;
+                            break;
+                        default:
+                            rotationToApply = System.Drawing.RotateFlipType.RotateNoneFlipNone;
+                            break;
+                    }
+
+                    image.RotateFlip(System.Drawing.RotateFlipType.Rotate180FlipNone);
+                    image.RotateFlip(System.Drawing.RotateFlipType.Rotate180FlipNone);
+
+                    image.RotateFlip(rotationToApply);
+                    image.GetPropertyItem(orientationEXIFHeader).Value[0] = (byte)EXIFPictureOrientationType.TopLeft;
+
+                    //System.Drawing.Image newImage = image.GetThumbnailImage(image.Width, image.Height, null, IntPtr.Zero);
+                    //image.Dispose();
+                    //ImageCodecInfo jgpEncoder = GetEncoder(ImageFormat.Jpeg);
+                    //
+                    //System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
+                    //EncoderParameters myEncoderParameters = new EncoderParameters(1);
+                    //
+                    //EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, 80L);
+                    //myEncoderParameters.Param[0] = myEncoderParameter;
+
+                    ////newImage.Save(originalFile);
+                    ////newImage.Dispose();
+
+                    image.Save(pathToSave, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Error guardando la imagen desde telefono", e);
+                return false;
+            }
+            finally
+            {
+                image.Dispose();
             }
         }
 

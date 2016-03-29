@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using Nop.Web.Framework.Mvc.Api;
+using Nop.Services.Media;
 
 namespace Nop.Web.Controllers.Api
 {
@@ -17,15 +18,18 @@ namespace Nop.Web.Controllers.Api
     public class FilesController : ApiController
     {
         #region Ctor
-        public FilesController(TuilsSettings tuilsSettings)
+        public FilesController(TuilsSettings tuilsSettings, 
+            IPictureService pictureService)
         {
             this._tuilsSettings = tuilsSettings;
+            _pictureService = pictureService;
         }
 
         #endregion
 
         #region Fields
         private readonly TuilsSettings _tuilsSettings;
+        private readonly IPictureService _pictureService;
         #endregion
 
         #region Actions
@@ -65,9 +69,10 @@ namespace Nop.Web.Controllers.Api
                         }
 
                         string fileName = string.Empty;
-                        SaveTempFile(fileToUpload.Data, extension, out fileName);
+                        string thumbnailName = string.Empty;
+                        SaveTempFile(fileToUpload.Data, extension, out fileName, out thumbnailName);
 
-                        return Ok(new { fileGuid = string.Concat(fileName, extension) });
+                        return Ok(new { fileGuid = string.Concat(fileName, extension), thumbnail = thumbnailName });
                     }
                     else
                     {
@@ -107,33 +112,37 @@ namespace Nop.Web.Controllers.Api
         /// <param name="archivo"></param>
         /// <returns></returns>
         [NonAction]
-        public bool SaveTempFile(byte[] archivo, string extension, out string fileName)
+        public bool SaveTempFile(byte[] archivo, string extension, out string fileName, out string thumbnailName)
         {
             fileName = Guid.NewGuid().ToString();
 
             string ruta = System.IO.Path.Combine(HttpContext.Current.Server.MapPath(_tuilsSettings.tempUploadFiles), string.Concat(fileName, extension));
 
             //Si el archivo ya existe se intenta crear uno nuevo
+            //con un nuevo guid aleatoreo
             if (!File.Exists(ruta))
             {
-                try
+                //Si la imagen no es procesada por el corrector de imagnes
+                //Esta es guardada directamente en disco
+                if (!_pictureService.CorrectImageOrientationEXIF(new MemoryStream(archivo), ruta))
                 {
                     using (System.IO.FileStream stream = new System.IO.FileStream(ruta, System.IO.FileMode.Create, System.IO.FileAccess.Write))
                     {
                         stream.Write(archivo, 0, archivo.Length);
                         stream.Close();
                     }
-                    return true;
                 }
-                catch (Exception)
-                {
-                    throw;
-                }
+
+                //Realiza un corte de la imagen para ser cargada en el cliente
+                //Se quema el tamaño del thumbnail que se va a ver reflejado en el cliente
+                thumbnailName = Path.GetFileName(_pictureService.CreateThumbnailImage(ruta, 300, true));
+
+                return true;
 
             }
             else
             {
-                return SaveTempFile(archivo, extension, out fileName);
+                return SaveTempFile(archivo, extension, out fileName, out thumbnailName);
             }
         }
         #endregion
