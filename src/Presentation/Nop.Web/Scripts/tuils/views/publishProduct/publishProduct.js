@@ -57,9 +57,26 @@
                 //Creacion del modelo
                 this.model = new ProductModel({ 'ProductTypeId': this.productType });
                 
-                //this.model.on('sync', this.productSaved, this);
+                this.model.on('sync', this.productSaved, this);
                 this.model.on('error', this.errorOnSaving, this);
 
+                this.validatePreproduct();
+
+                //Carga el paso 1 y las categorias
+                //this.showStep();
+                //this.showCategories();
+
+                this.hidePublishButton();
+            },
+            validatePreproduct: function () {
+                var preproductModel = new PreproductModel();
+                preproductModel.on('sync', this.preproductLoaded, this);
+
+                //Valida autorización
+                this.once("user-authenticated", this.validatePreproduct, this);
+                this.validateAuthorization(preproductModel);
+
+                preproductModel.getByProductType(this.productType);
                 ///////REHACERR-----if (this.hasPreviousProductStorage()) {
                 ///////REHACERR-----    this.showPreviousProductCreated();
                 ///////REHACERR-----}
@@ -67,12 +84,16 @@
                 ///////REHACERR-----    this.showStep();
                 ///////REHACERR-----    this.showCategories();
                 ///////REHACERR-----}
-
-                //Carga el paso 1 y las categorias
-                this.showStep();
-                this.showCategories();
-
-                this.hidePublishButton();
+            },
+            preproductLoaded: function (preproductModel) {
+                if (preproductModel.get('Id') > 0) {
+                    this.model = preproductModel;
+                    this.showPreviousProductCreated();
+                }
+                else {
+                    this.showStep();
+                    this.showCategories();
+                }
             },
             showPreviousProductCreated: function () {
                 this.viewPreviousProductCreated = new PreviousProductCreatedView({ el: '#divStep_0', model: this.model });
@@ -141,6 +162,7 @@
                         that.viewImageSelector = new ImagesSelectorView({ el: "#divStep_3", model: that.model, minFilesUploaded: minFilesUploaded });
                         that.viewImageSelector.on("images-save", that.showSummary, that);
                         that.viewImageSelector.on("images-back", that.showStepBack, that);
+                        that.viewImageSelector.on("save-preproduct", that.savePreproduct, that);
                     }
                 }
                 else {
@@ -291,6 +313,8 @@
                 this.preModel.save();
             },
             productSaved: function (model) {
+                this.$('#divStep_5').show();
+                this.$('.alert-public').hide();
                 this.cancelBeforeUnload();
                 this.viewSelectCategory.remove();
                 if (this.viewImageSelector) this.viewImageSelector.remove();

@@ -63,7 +63,7 @@
         //prebind: actualiza los valores del modelo de acuerdo a los controles
         stickThem: function (preBind) {
 
-            if (preBind && this.bindings != undefined)
+            if (preBind === true && this.bindings != undefined)
             {
                 var that = this;
                 _.each(this.bindings, function (element, index) {

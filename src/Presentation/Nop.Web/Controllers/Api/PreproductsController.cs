@@ -27,6 +27,27 @@ namespace Nop.Web.Controllers.Api
             _workContext = workContext;
         }
 
+        [HttpGet]
+        [AuthorizeApi]
+        public IHttpActionResult GetByType(int productType)
+        {
+            var preproduct = _preproductService.GetByUserAndType(_workContext.CurrentCustomer.Id, productType);
+            
+            //Si existe preproducto lo retorna, sino retorna 0
+            if (preproduct != null)
+            {
+                var jsonSerializer = new JavaScriptSerializer();
+                //var model = (ProductBaseModel)jsonSerializer.DeserializeObject(preproduct.JsonObject);
+                var model = (ProductBaseModel)jsonSerializer.Deserialize(preproduct.JsonObject, typeof(ProductBaseModel));
+                model.Id = preproduct.Id;
+                return Ok(model);
+            }
+            else
+            {
+                return Ok(new { Id = 0});
+            }
+        }
+
         [HttpPost]
         [AuthorizeApi]
         public IHttpActionResult Post(ProductBaseModel model)

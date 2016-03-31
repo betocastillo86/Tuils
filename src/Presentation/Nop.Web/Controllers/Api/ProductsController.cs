@@ -33,6 +33,7 @@ namespace Nop.Web.Controllers.Api
     {
         #region Fields
         private readonly IProductService _productService;
+        private readonly IPreproductService _preproductService;
         private readonly IWorkContext _workContext;
         private readonly IVendorService _vendorService;
         private readonly ICategoryService _categoryService;
@@ -60,7 +61,8 @@ namespace Nop.Web.Controllers.Api
             IPictureService pictureService,
             IPriceFormatter priceFormatter,
             PlanSettings planSettings,
-            ILogger logger)
+            ILogger logger,
+            IPreproductService preproductService)
         {
             this._productService = productService;
             this._workContext = workContext;
@@ -75,6 +77,7 @@ namespace Nop.Web.Controllers.Api
             this._priceFormatter = priceFormatter;
             this._planSettings = planSettings;
             this._logger = logger;
+            this._preproductService = preproductService;
         }
         #endregion
         [Route("api/products")]
@@ -127,6 +130,9 @@ namespace Nop.Web.Controllers.Api
 
                     //Crea el producto en un estado inactivo 
                     _productService.PublishProduct(product);
+
+                    _preproductService.RemovePreproductsByCustomerId(_workContext.CurrentCustomer.Id, model.ProductTypeId);
+
                     return Ok(new { Id = product.Id });
                 }
                 catch (NopException e)

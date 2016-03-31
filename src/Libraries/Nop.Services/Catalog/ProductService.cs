@@ -2287,7 +2287,7 @@ namespace Nop.Services.Catalog
             var rootCategory = _categoryService.GetRootCategoryByCategoryId(product.ProductCategories.FirstOrDefault().CategoryId);
             if (rootCategory == null)
                 throw new NopException(CodeNopException.CategoryDoesntExist);
-            else if (rootCategory.Id == _tuilsSettings.productBaseTypes_service && _workContext.CurrentVendor.VendorType != Core.Domain.Vendors.VendorType.Market)
+            else if (rootCategory.Id == _tuilsSettings.productBaseTypes_service && _workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.User)
                 throw new NopException(CodeNopException.UserTypeNotAllowedPublishProductType, _localizationService.GetResource("publishProduct.error.publishInvalidCategoryService"));
 
             //Si tiene imagenes temporales por cargar las crea

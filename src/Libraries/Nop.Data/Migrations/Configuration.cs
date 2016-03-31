@@ -1253,6 +1253,9 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("PublishProduct.DefaultErrorResponse", "Ocurrió un error, intentalo de nuevo. Si el error persiste, <a href='https://www.facebook.com/mototuils' target='_blank'>escribenos a nuestro Facebook</a> y te ayudamos con la publicación");
                 newLocaleStringResources.Add("PublishProduct.AskUserPublishSimilarProduct", "Ya tienes publicado un producto similar a este hace muy poco tiempo. ¿Estas seguro que deseas publicarlo?");
 
+                newLocaleStringResources.Add("PublishProduct.LoadingLastStep", "Espera un momento mientras carga el último paso");
+                
+
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)

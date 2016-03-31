@@ -47,5 +47,28 @@ namespace Nop.Services.Catalog
                 _preproductRepository.Insert(product);
             }
         }
+
+        /// <summary>
+        /// Elimina los preproductos creados para el usuario en el tipo de producto
+        /// </summary>
+        public void RemovePreproductsByCustomerId(int customerId, int productTypeId)
+        {
+            var preproducts = _preproductRepository.Table.Where(p => p.CustomerId == customerId && p.ProductTypeId == productTypeId);
+            _preproductRepository.Delete(preproducts);
+        }
+
+        /// <summary>
+        /// Retorna un preproducto por usuario y tipo de producto
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="productTypeId"></param>
+        /// <returns></returns>
+        public Preproduct GetByUserAndType(int customerId, int productTypeId)
+        {
+            var preproduct = _preproductRepository.Table
+                .OrderByDescending(p => p.Id)
+                .FirstOrDefault(p => p.CustomerId == customerId && p.ProductTypeId == productTypeId);
+            return preproduct;
+        }
     }
 }

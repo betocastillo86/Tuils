@@ -6,7 +6,9 @@
 
             url: '/api/preproducts',
 
-            
+            getByProductType: function (productType) {
+                this.fetch({ data: { productType: productType } });
+            },
         });
 
         return PreproductModel;

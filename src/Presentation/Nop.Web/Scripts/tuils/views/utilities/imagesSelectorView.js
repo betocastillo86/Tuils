@@ -145,7 +145,6 @@
                             //this.resizeImage(file, fileModel);
                             //Atacha evento para actualizar la imagen
                             fileModel.on('sync', function (model) {
-                                console.log("sync method->" + model.get('guid'));
                                 that.switchImage('/TempFiles/' + model.get('thumbnail'), model.get('control'));
                             }, this);
 
@@ -202,7 +201,6 @@
         },
         fileUploaded: function (model) {
             //var srcImage = this.currentControlImage.find("img", "src");
-            console.log("FileUploaded method->" + model.get('guid'));
             var guidImage = model.get('guid');
             this.collection.add(model);
             var control = model.get('control');
@@ -216,6 +214,7 @@
         save: function () {
             if (this.collection.length >=  this.minFilesUploaded) {
                 this.trigger("images-save", this.collection);
+                this.trigger('save-preproduct');
             }
             else {
                 this.alert("Para publicar tu anuncio debes subir por lo menos " + this.minFilesUploaded + " imágen" + (this.minFilesUploaded > 1 ? "es" : ""));

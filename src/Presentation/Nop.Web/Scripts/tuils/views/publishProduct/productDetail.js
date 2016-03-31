@@ -157,7 +157,7 @@
         suppliesCollection : undefined,
 
         initialize: function (args) {
-            this.model = args.model;
+            //this.model = args.model;
             this.productType = args.productType;
             this.selectedCategory = args.selectedCategory;
             this.loadControls();
@@ -190,7 +190,7 @@
             //Las marcas solo aplican para productos
             if (this.productType == TuilsConfiguration.productBaseTypes.product) {
                 this.manufacturersCollection = new ManufacturerCollection();
-                this.manufacturersCollection.on("sync", this.stickThem, this);
+                this.manufacturersCollection.on("sync", function () { this.stickThem(this.model, this.bindings, true);}, this);
                 this.manufacturersCollection.getByCategoryId(this.selectedCategory);
             }
         },

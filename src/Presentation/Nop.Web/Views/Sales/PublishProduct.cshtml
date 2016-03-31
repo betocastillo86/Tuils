@@ -2,7 +2,7 @@
 @using Nop.Core.Domain.Seo;
 
 @{
-    if(Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Bike)
+    if (Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Bike)
     {
         Html.AddTitleParts(T("PageTitle.Publish.Bike").Text);
         Html.AddMetaDescriptionParts(T("Publish.Bike.MetaDescription").Text);
@@ -17,8 +17,8 @@
         Html.AddTitleParts(T("PageTitle.Publish.Product").Text);
         Html.AddMetaDescriptionParts(T("Publish.Product.MetaDescription").Text);
     }
-        
-        
+
+
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
     Html.AppendCssFileParts("~/Content/tagit/jquery.tagit.css");
@@ -42,26 +42,27 @@
                     </ol>
                     @if (Model.HasReachedLimitOfProducts)
                     {
-                        <div class="alert-public"><span class="icon-alert"></span> <p>@T(string.Concat("PublishProduct.HasReachedLimitOfProducts", Model.VendorType), Model.NumLimitOfProducts)</p><br/></div>
+                        <div class="alert-public"><span class="icon-alert"></span> <p>@T(string.Concat("PublishProduct.HasReachedLimitOfProducts", Model.VendorType), Model.NumLimitOfProducts)</p><br /></div>
                     }
                     else
                     {
-                        <div class="alert-public">@Html.Raw(T("PublishProduct.MessageFree")). 
-                            <span id="helpStep" class="helpStepPublish">@T("PublishProduct.MessageFreeStep2")</span> 
-                            <br />
-                        </div>
-                        
+                        <div class="alert-public">
+                            @Html.Raw(T("PublishProduct.MessageFree")).
+                        <span id="helpStep" class="helpStepPublish">@T("PublishProduct.MessageFreeStep2")</span>
+                        <br />
+                    </div>
+
                         <script>
                             window.stepMessages = {
-                                step1 : '@T("PublishProduct.MessageFreeStep2")',
-                                step2 : '@T("PublishProduct.MessageFreeStep3")',
+                                step1: '@T("PublishProduct.MessageFreeStep2")',
+                                step2: '@T("PublishProduct.MessageFreeStep3")',
                                 step3: '@T("PublishProduct.MessageFreeStep4")',
                                 step4: '@T("PublishProduct.MessageFreeStep5")'
                             }
                         </script>
-                        
+
                     }
-                        
+
 
                     <div id="divStep_1">
                         @Html.Partial("_SelectCategory")
@@ -69,18 +70,18 @@
                     <div id="divStep_2" style="display:none">
 
                         @if (Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Bike)
-                        { 
+                        {
                             @Html.Partial("_BikeDetail")
                         }
                         else if (Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Product)
-                        { 
+                        {
                             @Html.Partial("_ProductDetail")
                         }
                         else
                         {
                             @Html.Partial("_ServiceDetail")
                         }
-                            
+
                     </div>
                     <div id="divStep_3" style="display:none">
                         <div class="title">@T("PublishProduct.SelectImagesDescription")</div>
@@ -93,12 +94,16 @@
                     <div id="divStep_4" style="display:none">
                         @Html.Partial("_Summary")
                     </div>
+                    <div id="divStep_5" style="display:none">
+                        <h2>@T("PublishProduct.LoadingLastStep")</h2>
+                    </div>
                     <div id="divStep_0" style="display:none">
                         @Html.Partial("_PreviousProductCreated")
                     </div>
                     <br />
                 </div>
-                
+
+
             </div>
         </div>
 
