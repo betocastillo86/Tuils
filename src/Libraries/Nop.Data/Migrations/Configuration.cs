@@ -2576,6 +2576,8 @@ namespace Nop.Data.Migrations
                 settings.Add("vendorsettings.DaysUpdateShopFirstEmail", "2");
                 settings.Add("vendorsettings.DaysUpdateShopSecondEmail", "30");
                 settings.Add("commonSettings.ActiveFacebookPixels", "701079780023326");
+                settings.Add("catalogSettings.DisabledCategoriesForUsedProducts", "94,79");
+                
 
                 
                 

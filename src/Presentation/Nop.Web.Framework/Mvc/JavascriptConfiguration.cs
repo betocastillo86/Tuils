@@ -86,7 +86,8 @@ namespace Nop.Web.Framework.Mvc
                 {
                     limitOfSpecialCategories = catalogSettings.LimitOfSpecialCategories,
                     //limitDaysOfProductPublished = catalogSettings.LimitDaysOfProductPublished,
-                    limitNumPictures = catalogSettings.LimitNumPictures
+                    limitNumPictures = catalogSettings.LimitNumPictures,
+                    disabledCategoriesForUsedProducts = catalogSettings.DisabledCategoriesForUsedProducts
                 },
                 errorCodes = new
                 {

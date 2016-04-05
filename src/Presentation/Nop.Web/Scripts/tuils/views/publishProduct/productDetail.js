@@ -223,9 +223,24 @@
 
                 if (this.productType != TuilsConfiguration.productBaseTypes.product)
                     this.myStickit();
+                else
+                {
+                    //Realiza la validacion para mostrar o ocultar el campo de nuevo usado
+                    //En los casos como aceites o lubricantes no lo muestra ya que no aplica
+                    var disabledCats = TuilsConfiguration.catalog.disabledCategoriesForUsedProducts;
+                    if (disabledCats && _.contains(disabledCats.split(/,/g), this.selectedCategory.toString())) {
+                        this.$('div[data-field="IsNew"]').hide();
+                        this.model.set('IsNew', true);
+                    }
+                    else
+                        this.$('div[data-field="IsNew"]').show();
+                }
 
                 if (this.model.get('CallForPrice'))
                     this.$('#divPrice').hide();
+
+               
+                    
             },
             //loadHtmlEditor: function () {
             //    //el HTML no está habilitado para las motos

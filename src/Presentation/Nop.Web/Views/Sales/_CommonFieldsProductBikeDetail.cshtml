@@ -23,7 +23,7 @@
 
 @if (Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Product)
 {
-    <div class="inputs" title="@T("PublishProduct.IsNew.Alt")">
+    <div class="inputs" data-field="IsNew" title="@T("PublishProduct.IsNew.Alt")">
         @Html.LabelT("PublishProduct.IsNew")
         <select id="ddlIsNew">
             <option>-</option>
