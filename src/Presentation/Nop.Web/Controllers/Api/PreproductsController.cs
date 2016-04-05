@@ -9,6 +9,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using Nop.Web.Extensions.Api;
+using Nop.Services.Media;
 
 namespace Nop.Web.Controllers.Api
 {
@@ -18,13 +20,17 @@ namespace Nop.Web.Controllers.Api
 
         #region Fields
         private readonly IPreproductService _preproductService;
+        private readonly IPictureService _pictureService;
         private readonly IWorkContext _workContext;
+
         #endregion
         public PreproductsController(IPreproductService preproductService,
-            IWorkContext workContext)
+            IWorkContext workContext,
+            IPictureService pictureService)
         {
             _preproductService = preproductService;
             _workContext = workContext;
+            _pictureService = pictureService;
         }
 
         [HttpGet]
@@ -36,9 +42,9 @@ namespace Nop.Web.Controllers.Api
             //Si existe preproducto lo retorna, sino retorna 0
             if (preproduct != null)
             {
-                var jsonSerializer = new JavaScriptSerializer();
+                
                 //var model = (ProductBaseModel)jsonSerializer.DeserializeObject(preproduct.JsonObject);
-                var model = (ProductBaseModel)jsonSerializer.Deserialize(preproduct.JsonObject, typeof(ProductBaseModel));
+                var model = preproduct.ToSerializedObject();
                 model.Id = preproduct.Id;
                 return Ok(model);
             }
@@ -62,6 +68,39 @@ namespace Nop.Web.Controllers.Api
         {
             Save(model);
             return Ok(new { Id = model.Id });
+        }
+
+        /// <summary>
+        /// Elimina los preproductos de un usuario
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete]
+        [AuthorizeApi]
+        [Route("api/preproducts")]
+        public IHttpActionResult Delete(int productType)
+        {
+            var preproducts = _preproductService.GetAllByUserAndType(_workContext.CurrentCustomer.Id, productType);
+            if (preproducts.Count > 0)
+            {
+                foreach (var preproduct in preproducts)
+                {
+                    var model = preproduct.ToSerializedObject();
+                    //Elimina el registro de Base de datos
+                    _preproductService.Delete(preproduct);
+
+                    if (model.TempFiles != null)
+                    {
+                        //Elimina los archivos de base de datos
+                        _pictureService.RemovePicturesFromTempFiles(model.TempFiles.ToArray(), 300);
+                    }
+                }
+
+                return Ok(new { Id = 0 });
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         private void Save(ProductBaseModel model)

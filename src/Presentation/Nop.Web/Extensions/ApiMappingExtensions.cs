@@ -16,6 +16,7 @@ using Nop.Services.Directory;
 using Nop.Services.Catalog;
 using Nop.Services.Localization;
 using Nop.Services.Media;
+using System.Web.Script.Serialization;
 
 namespace Nop.Web.Extensions.Api
 {
@@ -29,7 +30,7 @@ namespace Nop.Web.Extensions.Api
             entity.FullDescription = model.FullDescription;
             entity.ShortDescription = model.FullDescription;
             entity.IsShipEnabled = model.IsShipEnabled;
-            //entity.AdditionalShippingCharge = model.AdditionalShippingCharge;
+            entity.AdditionalShippingCharge = model.AdditionalShippingCharge;
             entity.Price = model.Price;
             entity.CallForPrice = model.CallForPrice;
 
@@ -458,6 +459,15 @@ namespace Nop.Web.Extensions.Api
                 CreatedOnUtc = model.CreatedOnUtc,
                 AnsweredOnUtc = model.AnsweredOnUtc
             };
+        }
+        #endregion
+
+        #region Preproduct
+        public static ProductBaseModel ToSerializedObject(this Preproduct entity)
+        {
+            var jsonSerializer = new JavaScriptSerializer();
+            var model = (ProductBaseModel)jsonSerializer.Deserialize(entity.JsonObject, typeof(ProductBaseModel));
+            return model;
         }
         #endregion
     }

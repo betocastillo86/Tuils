@@ -201,5 +201,12 @@ namespace Nop.Services.Media
         /// <param name="crop"></param>
         /// <returns></returns>
         string CreateThumbnailImage(string filePath, int targetSize, bool crop = false);
+
+        /// <summary>
+        /// Elimina los archivos temporales que se crean en las cargas
+        /// </summary>
+        /// <param name="tempFiles">lista de archivos</param>
+        /// <param name="resizes">lsita de tamaños que debe eliminar</param>
+        void RemovePicturesFromTempFiles(string[] tempFiles, params int[] resizes);
     }
 }

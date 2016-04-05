@@ -931,6 +931,44 @@ namespace Nop.Services.Media
             return pictures;
         }
 
+        /// <summary>
+        /// Elimina todas las fotos temporales que se han cargado 
+        /// </summary>
+        /// <param name="tempFiles"></param>
+        /// <param name="resizes"></param>
+        public void RemovePicturesFromTempFiles(string[] tempFiles, params int[] resizes)
+        {
+            for (int iTempFile = 0; iTempFile < tempFiles.Length; iTempFile++)
+            {
+                string fileName = tempFiles[iTempFile];
+
+                string fullName = Path.Combine(_webHelper.MapPath(_tuilsSettings.tempUploadFiles), fileName);
+
+                //Elimina los thumbnails que se crearon
+                foreach (var size in resizes)
+                {
+                    string fullNameSize = Path.Combine(_webHelper.MapPath(_tuilsSettings.tempUploadFiles), string.Format("{0}_{1}{2}", Path.GetFileNameWithoutExtension(fileName), size, Path.GetExtension(fileName)));
+                    try
+                    {
+                        File.Delete(fullNameSize);
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.Error(e.ToString());
+                    }
+                }
+
+                try
+                {
+                    File.Delete(fullName);
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e.ToString());
+                }
+            }
+        }
+
         
         #endregion
 

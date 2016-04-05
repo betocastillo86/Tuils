@@ -250,6 +250,8 @@
                     that.currentView.on('close-menu-responsive', that.viewHeader.closeMenuResponsive, that.viewHeader);
                     //atacha a la vista actual al evento cuando el usuario se autenticó
                     that.viewHeader.on('user-authenticated', that.currentView.userAuthenticated, that.currentView);
+                    //atacha a la vista actual al evento cuando el usuario cerro la ventana de autenticación
+                    that.viewHeader.on('close-authentication', that.currentView.closeAuthentication, that.currentView);
 
                     //Recorre todas las vistas anidadas que requieren autenticación y les agrega los eventos de autorizacion
                     //Esto se hace para controlar estos eventos en las vistas que no son de primer nivel
@@ -261,6 +263,8 @@
                             view.on('unauthorized', that.viewHeader.showRegister, that.viewHeader);
                             //atacha a la vista actual al evento cuando el usuario se autenticó
                             that.viewHeader.on('user-authenticated', view.userAuthenticated, view);
+                            //atacha a la vista actual al evento cuando el usuario cerro la ventana de autenticacion
+                            that.viewHeader.on('close-authentication', view.closeAuthentication, view);
                         }
                     }
 

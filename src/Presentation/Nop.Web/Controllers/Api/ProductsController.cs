@@ -24,6 +24,7 @@ using Nop.Services.Seo;
 using Nop.Utilities;
 using Nop.Web.Models.Catalog;
 using Nop.Services.Logging;
+using Nop.Core.Infrastructure;
 
 
 namespace Nop.Web.Controllers.Api
@@ -131,7 +132,30 @@ namespace Nop.Web.Controllers.Api
                     //Crea el producto en un estado inactivo 
                     _productService.PublishProduct(product);
 
-                    _preproductService.RemovePreproductsByCustomerId(_workContext.CurrentCustomer.Id, model.ProductTypeId);
+                    //Elimina los preproductos existentes previamente
+                    Task.Factory.StartNew(() => {
+                        var preproductService = EngineContext.Current.Resolve<IPreproductService>();
+                        var pictureService = EngineContext.Current.Resolve<IPictureService>();
+
+                        var preproducts = preproductService.GetAllByUserAndType(_workContext.CurrentCustomer.Id, model.ProductTypeId);
+                        if (preproducts.Count > 0)
+                        {
+                            foreach (var preproduct in preproducts)
+                            {
+                                var modelPreproduct = preproduct.ToSerializedObject();
+                                //Elimina el registro de Base de datos
+                                preproductService.Delete(preproduct);
+
+                                if (modelPreproduct.TempFiles != null)
+                                {
+                                    //Elimina los archivos de base de datos
+                                    pictureService.RemovePicturesFromTempFiles(modelPreproduct.TempFiles.ToArray(), 300);
+                                }
+                            }
+                        }
+                    });
+
+                    //_preproductService.RemovePreproductsByCustomerId(_workContext.CurrentCustomer.Id, model.ProductTypeId);
 
                     return Ok(new { Id = product.Id });
                 }

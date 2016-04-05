@@ -39,6 +39,7 @@
                 that.viewLogin = new LoginView({ $el: that.$('#divLoginUser'), sourceModel: model });
                 that.viewLogin.on("register", that.showRegister, that);
                 that.viewLogin.on("user-authenticated", that.showUserAuthenticated, that);
+                that.viewLogin.on("close-authentication", that.closeAuthentication, that);
                 that.viewLogin.on("close-menu-responsive", that.closeMenuResponsive, that);
             }
             else {
@@ -58,6 +59,9 @@
         loadRegisterForm : function(e){
             this.showRegister(this.getNewSourceModel());
         },
+        closeAuthentication: function () {
+            this.trigger('close-authentication');
+        },
         showRegister : function(sourceModel){
             var that = this;
 
@@ -66,6 +70,7 @@
                 that.viewRegister.on("user-authenticated", that.showUserAuthenticated, that);
                 that.viewRegister.on("login", that.showLogin, that);
                 that.viewRegister.on("close-menu-responsive", that.closeMenuResponsive, that);
+                that.viewRegister.on("close-authentication", that.closeAuthentication, that);
             }
             else {
                 this.viewRegister.sourceModel = sourceModel;

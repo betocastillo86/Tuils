@@ -60,6 +60,14 @@
                 this.validateSendRequestAfterSession = false;
             }
         },
+        closeAuthentication: function () {
+            if (this.validateSendRequestAfterSession)
+            {
+                console.log('Cerraron sin autenticarse');
+                this.trigger('authentication-closed');
+                this.validateSendRequestAfterSession = false;
+            }
+        },
         //prebind: actualiza los valores del modelo de acuerdo a los controles
         stickThem: function (preBind) {
 

@@ -19,6 +19,7 @@
             viewImageSelector: undefined,
             viewSummary: undefined,
             viewPublishFinished: undefined,
+            preproductModel : undefined,
             //EndViews
 
             currentStep: 1,
@@ -60,7 +61,8 @@
                 this.model.on('sync', this.productSaved, this);
                 this.model.on('error', this.errorOnSaving, this);
 
-                this.validatePreproduct();
+                if (!this.skipPreproduct)
+                    this.validatePreproduct();
 
                 //Carga el paso 1 y las categorias
                 //this.showStep();
@@ -69,25 +71,36 @@
                 this.hidePublishButton();
             },
             validatePreproduct: function () {
-                var preproductModel = new PreproductModel();
-                preproductModel.on('sync', this.preproductLoaded, this);
+                this.preproductModel = new PreproductModel();
+                this.preproductModel.once('sync', this.preproductLoaded, this);
 
                 //Valida autorización
                 this.once("user-authenticated", this.validatePreproduct, this);
-                this.validateAuthorization(preproductModel);
+                this.once('authentication-closed', this.showCategories, this);
+                this.once('close-authentication', function () { debugger; }, this);
+                this.validateAuthorization(this.preproductModel);
 
-                preproductModel.getByProductType(this.productType);
-                ///////REHACERR-----if (this.hasPreviousProductStorage()) {
-                ///////REHACERR-----    this.showPreviousProductCreated();
-                ///////REHACERR-----}
-                ///////REHACERR-----else {
-                ///////REHACERR-----    this.showStep();
-                ///////REHACERR-----    this.showCategories();
-                ///////REHACERR-----}
+                this.preproductModel.getByProductType(this.productType);
             },
             preproductLoaded: function (preproductModel) {
                 if (preproductModel.get('Id') > 0) {
-                    this.model = preproductModel;
+                    this.model.set(preproductModel.toJSON());
+                    this.model.unset('Id');
+
+                    //realiza la validación de los campos numericos que no pueden ser 0
+                    if (this.model.get('ManufacturerId') == 0)
+                        this.model.unset('ManufacturerId');
+                    if (this.model.get('Price') == 0)
+                        this.model.unset('Price');
+                    if (this.model.get('StateProvince') == 0)
+                        this.model.unset('StateProvince');
+                    if (this.model.get('SuppliesValue') == 0)
+                        this.model.unset('SuppliesValue');
+                    if (this.model.get('Kms') == 0)
+                        this.model.unset('Kms');
+                    if (this.model.get('AdditionalShippingCharge') == 0)
+                        this.model.unset('AdditionalShippingCharge');
+                    
                     this.showPreviousProductCreated();
                 }
                 else {
@@ -97,14 +110,29 @@
             },
             showPreviousProductCreated: function () {
                 this.viewPreviousProductCreated = new PreviousProductCreatedView({ el: '#divStep_0', model: this.model });
-                this.viewPreviousProductCreated.on('previousProduct-createNew', this.loadControls, this);
+                this.viewPreviousProductCreated.on('previousProduct-createNew', this.removePreproduct, this);
                 this.viewPreviousProductCreated.on('previousProduct-recover', this.recoverProduct, this);
                 this.currentStep = 0;
                 this.showStep();
             },
+            removePreproduct: function () {
+                //Despues que se escoge remover el preproducto se elimina y marca para saltarse la carga del preproducto
+                this.preproductModel.deleteById(this.productType);
+                this.skipPreproduct = true;
+                
+                this.loadControls();
+                this.currentStep = 1;
+                this.showStep();
+                this.showCategories();
+            },
             showCategories: function (autoSelectCategories) {
                 var that = this;
-                that.viewSelectCategory = new SelectCategoryView({ el: "#divStep_1", productType: that.productType, model: this.model, autoSelectCategories: autoSelectCategories });
+                that.viewSelectCategory = new SelectCategoryView({
+                    el: "#divStep_1",
+                    productType: that.productType,
+                    model: this.model,
+                    autoSelectCategories: autoSelectCategories
+                });
                 that.viewSelectCategory.on("category-selected", that.showProductDetail, that);
                 that.viewSelectCategory.on("save-preproduct", that.savePreproduct, that);
                 //that.viewSelectCategory.once("categories-loaded", TuilsStorage.loadBikeReferences);
@@ -119,7 +147,13 @@
                 if (!this.viewProductDetail) {
 
                     var that = this;
-                    that.viewProductDetail = new ProductDetailView({ el: "#divStep_2", productType: that.productType, selectedCategory: this.model.get('CategoryId'), model: that.model });
+                    that.viewProductDetail = new ProductDetailView({
+                        el: "#divStep_2",
+                        productType: that.productType,
+                        selectedCategory: this.model.get('CategoryId'),
+                        model: that.model,
+                        isPreproduct : that.isPreproduct
+                    });
                     that.viewProductDetail.on("detail-product-finished", that.showPictures, that);
                     that.viewProductDetail.on("detail-product-back", that.showStepBack, that);
                     that.viewProductDetail.on("save-preproduct", that.savePreproduct, that);
@@ -127,6 +161,7 @@
             },
             recoverProduct: function () {
                 this.currentStep = 1;
+                this.isPreproduct = true;
                 //Envia parametro en el que debe autoseleccionar las categorias previamente escogidas en el modelo
                 this.showCategories(true);
                 this.showProductDetail();
@@ -155,18 +190,13 @@
                 this.showNextStep();
                 var that = this;
 
-                if (this.productType != TuilsConfiguration.productBaseTypes.service) {
-                    if (!this.viewImageSelector) {
-                        //Si es de tipo motocicleta debe cargar 4 imagenes
-                        var minFilesUploaded = this.productType == TuilsConfiguration.productBaseTypes.bike ? 4 : 1;
-                        that.viewImageSelector = new ImagesSelectorView({ el: "#divStep_3", model: that.model, minFilesUploaded: minFilesUploaded });
-                        that.viewImageSelector.on("images-save", that.showSummary, that);
-                        that.viewImageSelector.on("images-back", that.showStepBack, that);
-                        that.viewImageSelector.on("save-preproduct", that.savePreproduct, that);
-                    }
-                }
-                else {
-                    this.showSummary();
+                if (!this.viewImageSelector) {
+                    //Si es de tipo motocicleta debe cargar 4 imagenes
+                    var minFilesUploaded = this.productType == TuilsConfiguration.productBaseTypes.bike ? 4 : 2;
+                    that.viewImageSelector = new ImagesSelectorView({ el: "#divStep_3", model: that.model, minFilesUploaded: minFilesUploaded });
+                    that.viewImageSelector.on("images-save", that.showSummary, that);
+                    that.viewImageSelector.on("images-back", that.showStepBack, that);
+                    that.viewImageSelector.on("save-preproduct", that.savePreproduct, that);
                 }
 
             },

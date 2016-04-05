@@ -70,5 +70,25 @@ namespace Nop.Services.Catalog
                 .FirstOrDefault(p => p.CustomerId == customerId && p.ProductTypeId == productTypeId);
             return preproduct;
         }
+
+        public Preproduct GetById(int id)
+        {
+            return _preproductRepository.GetById(id);
+        }
+
+        public void Delete(Preproduct preproduct)
+        {
+            if (preproduct == null)
+                throw new ArgumentNullException("preproduct");
+
+            _preproductRepository.Delete(preproduct);
+        }
+
+        public IList<Preproduct> GetAllByUserAndType(int customerId, int productTypeId)
+        {
+            return _preproductRepository.Table
+                .Where(p => p.CustomerId == customerId && p.ProductTypeId == productTypeId)
+                .ToList();
+        }
     }
 }

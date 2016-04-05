@@ -56,10 +56,10 @@
             },
             loadControls: function () {
 
-                /////PENDIENTE----->if (this.autoSelectCategories) {
-                /////PENDIENTE----->    //Toma el valor original de las categorias e intenta para realizar las cargas automáticas
-                /////PENDIENTE----->    this._tempPreviousCategories = this.model.get('_arrayCategories');
-                /////PENDIENTE----->}
+                if (this.autoSelectCategories) {
+                    //Toma el valor original de las categorias e intenta para realizar las cargas automáticas
+                    this._tempPreviousCategories = this.model.get('_arrayCategories');
+                }
 
                 this.loadDefaultCategories();
                 this.divShowCategories = this.$(".divShowCategories");
@@ -82,19 +82,19 @@
 
                     this.divShowCategories.append(this.template({ CurrentLevel: this.currentLevel, Categories: categories.toJSON() }));
 
-                    //////PENDIENTE------>if (!this.autoSelectCategories && this.isMobile())
-                    //////PENDIENTE------>    this.scrollFocusObject(".category-column:last", -50);
-                    //////PENDIENTE------>
-                    //////PENDIENTE------>//Intenta autoseleccionar categorias si es necesario
-                    //////PENDIENTE------>this.autoselectCategory();
+                    if (!this.autoSelectCategories && this.isMobile())
+                        this.scrollFocusObject(".category-column:last", -50);
+                    
+                    //Intenta autoseleccionar categorias si es necesario
+                    this.autoselectCategory();
 
                     this.trigger("categories-loaded");
                     this.$(".btn_continue").hide();
                 }
                 else {
                     this.$(".btn_continue").show();
-                    ///////PENDIENTE---->if (!this.autoSelectCategories)
-                    ///////PENDIENTE---->    this.scrollFocusObject(".btn_continue", -150);
+                    if (!this.autoSelectCategories)
+                        this.scrollFocusObject(".btn_continue", -150);
                 }
             },
             loadDefaultCategories: function () {
@@ -147,9 +147,9 @@
                 {
                     var newCategory = this._tempPreviousCategories[0];
                     if (this.isMobile())
-                        this.$('select[tuils-level="' + this.currentLevel + '"]').val(newCategory).change();
+                        this.$('select[data-level="' + this.currentLevel + '"]').val(newCategory).change();
                     else
-                        this.$('li[tuils-id="' + newCategory + '"]').click();
+                        this.$('li[data-id="' + newCategory + '"]').click();
                     //Elimina la posición ya fue cargada
                     this._tempPreviousCategories.splice(0, 1);
                 }

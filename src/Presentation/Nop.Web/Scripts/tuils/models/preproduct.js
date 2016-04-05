@@ -4,10 +4,17 @@
 
             idAttribute: "Id",
 
+            urlRoot: '/api/preproducts/id',
+
             url: '/api/preproducts',
 
             getByProductType: function (productType) {
                 this.fetch({ data: { productType: productType } });
+            },
+            //Envia el comando de eliminación de preproductos para el usuario
+            deleteById: function (productType) {
+                this.url = '/api/preproducts?productType=' + productType;
+                this.destroy();
             },
         });
 

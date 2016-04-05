@@ -22,5 +22,26 @@ namespace Nop.Services.Catalog
         /// <param name="p"></param>
         /// <param name="productType"></param>
         Preproduct GetByUserAndType(int customerId, int productTypeId);
+        
+        /// <summary>
+        /// Retorna todos los preproductos 
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="productTypeId"></param>
+        /// <returns></returns>
+        IList<Preproduct> GetAllByUserAndType(int customerId, int productTypeId);
+
+        /// <summary>
+        /// Retorna un preproducto por id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Preproduct GetById(int id);
+
+        /// <summary>
+        /// Elimina el preproducto que se envia
+        /// </summary>
+        /// <param name="preproduct">contenido del preproduct</param>
+        void Delete(Preproduct preproduct);
     }
 }

@@ -29,8 +29,8 @@ define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars
             render: function () {
                 this.$el.html(this.template({ Images: this.images != undefined ? this.images.toJSON() : undefined, Properties: this.productProperties }));
 
-                if (this.productType == TuilsConfiguration.productBaseTypes.service)
-                    this.$("#divImageSummary").hide();
+                //if (this.productType == TuilsConfiguration.productBaseTypes.service)
+                //this.$("#divImageSummary").hide();
 
                 return this;
             },
