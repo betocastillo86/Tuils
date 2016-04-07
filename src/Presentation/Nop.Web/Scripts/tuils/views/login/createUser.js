@@ -143,6 +143,7 @@
                 this.trigger("login", this.sourceModel);
             },
             show: function () {
+                var that = this;
                 this.$el.dialog({
                     width: window.innerWidth < 365 ? 300 : 365,
                     title: Resources.account.newCustomer,

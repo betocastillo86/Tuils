@@ -2309,12 +2309,15 @@ namespace Nop.Services.Catalog
             else
             {
                 //Carga la imagen por defecto de los servicios
-                product.ProductPictures.Add(new ProductPicture()
+                if (rootCategory.Id == _tuilsSettings.productBaseTypes_service)
                 {
-                    PictureId = _catalogSettings.DefaultServicePicture,
-                    DisplayOrder = 0,
-                    Active = true
-                });
+                    product.ProductPictures.Add(new ProductPicture()
+                    {
+                        PictureId = _catalogSettings.DefaultServicePicture,
+                        DisplayOrder = 0,
+                        Active = true
+                    });    
+                }
             }
 
 

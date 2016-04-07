@@ -33,6 +33,8 @@
                     this.model.set('PhoneNumber', this.$('#CustomerAddressInformation_PhoneNumber').val());
                 if (this.$('#ddlStateProvinceId').val().length > 0)
                     this.model.set('StateProvinceId', this.$('#ddlStateProvinceId').val());
+
+                this.hidePublishButton();
                 
                 this.render();
                 this.preselectUpgrade();

@@ -45,7 +45,12 @@
             if (args.urlSave)
                 this.urlSave = args.urlSave;
 
-            
+            //Cuando el navegador es android y facebook muestra un mensaje y le permite al usuario subir un producto sin imagenes
+            if (this.isFacebookAndroidBrowser())
+            {
+                this.$('.fbBrowserError').show();
+                this.minFilesUploaded = 0;
+            }  
         },
         render: function () {
             return this;

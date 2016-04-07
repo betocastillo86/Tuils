@@ -363,6 +363,9 @@
               goog_report_conversion(document.location.href);
               console.log('conversion en adwords guardada');
         },
+        isFacebookAndroidBrowser: function () {
+            return /(?=.*Android)(?=.*FBAV)/.test(navigator.userAgent || navigator.vendor || window.opera);
+        },
         logHtml:function(t){$("body").prepend(t+"</br>")},
         dispose: function () {
             //http://hjortureh.tumblr.com/post/23041479297/backbonejs-send-zombies-to-heaven
