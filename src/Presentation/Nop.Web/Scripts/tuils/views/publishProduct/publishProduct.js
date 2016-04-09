@@ -71,7 +71,7 @@
                 this.hidePublishButton();
             },
             validatePreproduct: function () {
-                this.preproductModel = new PreproductModel();
+                this.preproductModel = new PreproductModel({ 'ga_action' : 'Publicacion'});
                 this.preproductModel.once('sync', this.preproductLoaded, this);
 
                 //Valida autorización
@@ -331,7 +331,7 @@
                 
                 //Intenta guardar el premodelo
                 if(!this.preModel)
-                    this.preModel = new PreproductModel();
+                    this.preModel = new PreproductModel({ 'ga_action': 'Publicacion' });
 
                 this.preModel.set(this.model.toJSON());
                 //Se agrega evento ONCE ya que va intentar salvar el producto

@@ -243,7 +243,7 @@
                 if (that.currentView != undefined)
                 {
                     //se atacha al evento de solicitud de ingreso
-                    that.currentView.on('unauthorized', that.viewHeader.showLogin, that.viewHeader);
+                    that.currentView.on('unauthorized', that.viewHeader.showRegister, that.viewHeader);
                     //se atacha al evento de solicitud de registro
                     that.currentView.on('unauthorized-register', that.viewHeader.showRegister, that.viewHeader);
                     //evento para cerrar el menu responsive

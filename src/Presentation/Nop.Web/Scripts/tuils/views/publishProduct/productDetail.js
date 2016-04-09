@@ -1,6 +1,6 @@
 ﻿define(['jquery', 'underscore', 'backbone', 'baseView', 'manufacturerModel', 'manufacturerCollection', 'storage',
     'util', 'configuration', 'specificationAttributeModel', 'categoryCollection',
-    , 'tagit', 'validations', 'stickit'],
+     'tagit', 'validations', 'stickit'],
     function ($, _, Backbone, BaseView, ManufacturerModel, ManufacturerCollection, TuilsStorage,
         TuilsUtil, TuilsConfiguration, SpecificationAttributeModel, CategoryCollection) {
         "use strict"
