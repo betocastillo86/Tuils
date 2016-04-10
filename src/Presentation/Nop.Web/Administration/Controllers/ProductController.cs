@@ -1008,7 +1008,13 @@ namespace Nop.Admin.Controllers
             
             int limit;
             if (model.VendorId > 0)
-                model.HasReachedLimitOfProducts = _productService.HasReachedLimitOfProducts(_vendorService.GetVendorById(model.VendorId), out limit);
+            {
+                var vendor = _vendorService.GetVendorById(model.VendorId);
+                model.HasReachedLimitOfProducts = _productService.HasReachedLimitOfProducts(vendor, out limit);
+                model.VendorPhone = vendor.PhoneNumber;
+                model.VendorEmail = vendor.Email;
+            }
+                
 
             PrepareAclModel(model, product, false);
             PrepareStoresMappingModel(model, product, false);

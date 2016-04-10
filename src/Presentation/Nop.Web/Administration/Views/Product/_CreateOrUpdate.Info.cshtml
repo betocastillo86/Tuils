@@ -479,6 +479,10 @@
         <td class="adminData">
             @Html.DropDownListFor(model => model.VendorId, Model.AvailableVendors)
             @Html.ValidationMessageFor(model => model.VendorId)
+            @if (Model.VendorId > 0)
+            { 
+                @:Número tel: @Model.VendorPhone - @Model.VendorEmail <a href="/Admin/Vendor/Edit/@Model.VendorId" target="_blank">Ver</a>
+            }
         </td>
     </tr>
     <tr >

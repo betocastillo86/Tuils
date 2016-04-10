@@ -2,8 +2,16 @@
 @using Nop.Core.Infrastructure
 @using Nop.Core.Domain.Common
 @{
-    var tuilsSettings = EngineContext.Current.Resolve<TuilsSettings>();
-    var valueUrl = typeof(TuilsSettings).GetProperty(Model).GetValue(tuilsSettings);
+    
+    string valueUrl = Model;
+    //Para que funcione, el settings debe empezar con url_og, de lo contrario toma la ruta completa
+    if (Model.StartsWith("Url_OG"))
+    {
+        var tuilsSettings = EngineContext.Current.Resolve<TuilsSettings>();
+        valueUrl = typeof(TuilsSettings).GetProperty(Model).GetValue(tuilsSettings).ToString();    
+    }
+    
+    
 
     Html.AddHeadCustomParts("<meta property=\"og:type\" content=\"article\" />");
     Html.AddHeadCustomParts("<meta property=\"og:image\" content=\"" + valueUrl + "\" />");

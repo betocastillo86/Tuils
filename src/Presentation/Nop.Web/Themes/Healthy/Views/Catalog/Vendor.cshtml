@@ -13,6 +13,7 @@
     }
 
     Html.AppendCssFileParts("~/Content/magnific-popup/magnific-popup.css");
+    @Html.Partial("_OpenGraph", Model.Picture.ImageUrl)
 }
 @using Nop.Core.Domain.Seo;
 @using Nop.Core.Infrastructure;

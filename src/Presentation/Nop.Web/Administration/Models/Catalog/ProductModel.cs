@@ -77,6 +77,8 @@ namespace Nop.Admin.Models.Catalog
 
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.Vendor")]
         public int VendorId { get; set; }
+        public string VendorPhone { get; set; }
+        public string VendorEmail { get; set; }
         public IList<SelectListItem> AvailableVendors { get; set; }
 
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.ShowOnHomePage")]
