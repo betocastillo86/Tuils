@@ -1315,7 +1315,7 @@ html.oldie .container { width: 940px; }
     .plan-confirm h2{font-size: 16px;}
 
     /*FIN PLANES*/
-    .comparte_fb{margin: 10px 0 20px;}
+    .comparte_fb{display: none;}
 }
 @media screen and (max-width:568px) {
     .item-tienda{width: calc(25% - 10px);}
