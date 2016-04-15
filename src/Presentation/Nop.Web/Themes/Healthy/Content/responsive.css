@@ -84,7 +84,7 @@
     /*Main*/
     .inputs { margin: 2px 0; width: 50%; float: left; font-size: 14px; height: 54px; margin:0 0 12px;}
     .inputs label{width: 150px; padding: 0 8px 0 0; position: relative; display:inline-block; text-align: right;}
-    .input_check { margin: 2px 0; width: 50%; float: left; font-size: 14px; height:auto; margin:0 0 12px;}
+    .input_check { margin: 2px 0; width: 50%; float: left; font-size: 14px; margin:0 0 12px;}
     .blog-page .blog-posts .post .post-date { display: block; }
     .blog-page .blog-posts { margin: 0; padding: 0; }
     .blogpost-page .new-comment .comment-text { min-width: 280px; width: auto; }
@@ -1161,7 +1161,7 @@ html.oldie .container { width: 940px; }
     /*header*/
 
     input[type="text"],input[type="password"], select{width:calc(100% - 10px);}
-    .inputs{width: 100%; margin: 0 0 5px;}
+    .inputs, .input_check{width: 100%; margin: 0 0 5px;}
 
     /*HOME*/
     .product-grid .product-item .picture, .item .picture{height: 145px;}

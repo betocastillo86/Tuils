@@ -60,8 +60,8 @@
                 <label>@condition.Name</label>
             </div>
         }
+        <br/>
     </div>
-    <br />
     <div class="title" title="@T("PublishProduct.AccesoriesOptions.Alt")">@T("PublishProduct.AccesoriesOptions")</div>
     <div class="form-public">
         @foreach (var accesory in Model.AccesoriesOptions)
@@ -71,8 +71,8 @@
                 <label>@accesory.Name</label>
             </div>
         }
+        <br/>
     </div>
-    <br />
     <div class="title" >@T("PublishProduct.Product.Html")</div>
     <div class="descript_crea" >
         @Html.TextAreaRequired("FullDescription", labelText: string.Empty, controlHtmlAttributes: new { maxLength = 500 }, showAsterisk: false)
