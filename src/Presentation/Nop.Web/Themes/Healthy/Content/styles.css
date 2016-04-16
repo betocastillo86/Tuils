@@ -29,7 +29,7 @@ textarea{width:100%;border:1px solid transparent; background:#F3F5F7; border-rad
 checkbox,input,radio,select,button{}
 fieldset{margin:0px 0px 15px;border:1px solid #c9c9c9;padding:15px;}
 legend{font-weight:bold;line-height:20px;font-size:16px;}
-input[type="text"],input[type="password"], select{border:1px solid transparent; background:#F3F5F7; border-radius: 3px; color:#53525A; font-family: 'Ubuntu', sans-serif; font-size: 14px; padding: 9px 10px; box-sizing: border-box; width: 300px; position: relative;}
+input[type="text"],input[type="password"], select{border:1px solid transparent; background:#F3F5F7; border-radius: 3px; color:#53525A; font-family: 'Ubuntu', sans-serif; font-size: 14px; padding: 9px 10px; box-sizing: border-box; width: 300px; height: 35px; position: relative;}
 input[type="text"]:disabled{background:none repeat scroll 0 0 #FFF;}
 
 .right{float: right;}
@@ -57,77 +57,79 @@ input[type="text"]:disabled{background:none repeat scroll 0 0 #FFF;}
 
 [class^="icon-"], [class*=" icon-"] { font-family: 'icomoon'; speak: none; font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; /* Better Font Rendering =========== */ -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
 
-.icon-help:before {content: "\e946";}
-.icon-planes:before {content: "\e945";}
-.icon-check:before {content: "\e900";}
-.icon-fb:before {content: "\e901";}
-.icon-mail:before {content: "\e902";}
-.icon-manos:before {content: "\e903";}
-.icon-twt:before {content: "\e904";}
-.icon-alert:before {content: "\e905";}
-.icon-tel:before {content: "\e906";}
-.icon-accesorio:before {content: "\e907";}
-.icon-camp:before {content: "\e908";}
-.icon-casco:before {content: "\e909";}
-.icon-chaqueta:before {content: "\e90a";}
-.icon-equip:before {content: "\e90b";}
-.icon-gota:before {content: "\e90c";}
-.icon-llanta:before {content: "\e90d";}
-.icon-mas:before {content: "\e90e";}
-.icon-menos:before {content: "\e90f";}
-.icon-msj:before {content: "\e910";}
-.icon-msj2:before {content: "\e911";}
-.icon-mujer:before {content: "\e912";}
-.icon-pint:before {content: "\e913";}
-.icon-regalo:before {content: "\e914";}
-.icon-repuesto:before {content: "\e915";}
-.icon-whatsapp:before {content: "\e916";}
-.icon-ytb:before {content: "\e917";}
-.icon-filtros:before {content: "\e918";}
-.icon-m_a:before {content: "\e919";}
-.icon-m_b:before {content: "\e91a";}
-.icon-m_c:before {content: "\e91b";}
-.icon-placa:before {content: "\e91c";}
-.icon-card:before {content: "\e91d";}
-.icon-chopper:before {content: "\e91e";}
-.icon-de_calle:before {content: "\e91f";}
-.icon-deportiva:before {content: "\e920";}
-.icon-enduro:before {content: "\e921";}
-.icon-envio:before {content: "\e922";}
-.icon-loc:before {content: "\e923";}
-.icon-menu:before {content: "\e924";}
-.icon-scooter:before {content: "\e925";}
-.icon-turismo:before {content: "\e926";}
-.icon-buzon:before {content: "\e927";}
-.icon-calendar:before {content: "\e928";}
-.icon-close:before {content: "\e929";}
-.icon-compra:before {content: "\e92a";}
-.icon-cotiza:before {content: "\e92b";}
-.icon-delete:before {content: "\e92c";}
-.icon-edit:before {content: "\e92d";}
-.icon-print:before {content: "\e92e";}
-.icon-publica:before {content: "\e92f";}
-.icon-tienda:before {content: "\e930";}
-.icon-tool:before {content: "\e931";}
-.icon-user:before {content: "\e932";}
-.icon-venta:before {content: "\e933";}
-.icon-volver:before {content: "\e934";}
-.icon-car:before {content: "\e935";}
-.icon-cc:before {content: "\e936";}
-.icon-clip:before {content: "\e937";}
-.icon-config:before {content: "\e938";}
-.icon-corazon:before {content: "\e939";}
-.icon-down:before {content: "\e93a";}
-.icon-foto:before {content: "\e93b";}
-.icon-home:before {content: "\e93c";}
-.icon-llave:before {content: "\e93d";}
-.icon-lupa:before {content: "\e93e";}
-.icon-next:before {content: "\e93f";}
-.icon-prev:before {content: "\e940";}
-.icon-share:before {content: "\e941";}
-.icon-star:before {content: "\e942";}
-.icon-ubica:before {content: "\e943";}
-.icon-up:before {content: "\e944";}
+.icon-img:before { content: "\e948";}
+.icon-comun:before { content: "\e947";}
+.icon-help:before { content: "\e946";}
+.icon-planes:before { content: "\e945";}
+.icon-check:before { content: "\e900";}
+.icon-fb:before { content: "\e901";}
+.icon-mail:before { content: "\e902";}
+.icon-manos:before { content: "\e903";}
+.icon-twt:before { content: "\e904";}
+.icon-alert:before { content: "\e905";}
+.icon-tel:before { content: "\e906";}
+.icon-accesorio:before { content: "\e907";}
+.icon-camp:before { content: "\e908";}
+.icon-casco:before { content: "\e909";}
+.icon-chaqueta:before { content: "\e90a";}
+.icon-equip:before { content: "\e90b";}
+.icon-gota:before { content: "\e90c";}
+.icon-llanta:before { content: "\e90d";}
+.icon-mas:before { content: "\e90e";}
+.icon-menos:before { content: "\e90f";}
+.icon-msj:before { content: "\e910";}
+.icon-msj2:before { content: "\e911";}
+.icon-mujer:before { content: "\e912";}
+.icon-pint:before { content: "\e913";}
+.icon-regalo:before { content: "\e914";}
+.icon-repuesto:before { content: "\e915";}
+.icon-whatsapp:before { content: "\e916";}
+.icon-ytb:before { content: "\e917";}
+.icon-filtros:before { content: "\e918";}
+.icon-m_a:before { content: "\e919";}
+.icon-m_b:before { content: "\e91a";}
+.icon-m_c:before { content: "\e91b";}
+.icon-placa:before { content: "\e91c";}
+.icon-card:before { content: "\e91d";}
+.icon-chopper:before { content: "\e91e";}
+.icon-de_calle:before { content: "\e91f";}
+.icon-deportiva:before { content: "\e920";}
+.icon-enduro:before { content: "\e921";}
+.icon-envio:before { content: "\e922";}
+.icon-loc:before { content: "\e923";}
+.icon-menu:before { content: "\e924";}
+.icon-scooter:before { content: "\e925";}
+.icon-turismo:before { content: "\e926";}
+.icon-buzon:before { content: "\e927";}
+.icon-calendar:before { content: "\e928";}
+.icon-close:before { content: "\e929";}
+.icon-compra:before { content: "\e92a";}
+.icon-cotiza:before { content: "\e92b";}
+.icon-delete:before { content: "\e92c";}
+.icon-edit:before { content: "\e92d";}
+.icon-print:before { content: "\e92e";}
+.icon-publica:before { content: "\e92f";}
+.icon-tienda:before { content: "\e930";}
+.icon-tool:before { content: "\e931";}
+.icon-user:before { content: "\e932";}
+.icon-venta:before { content: "\e933";}
+.icon-volver:before { content: "\e934";}
+.icon-car:before { content: "\e935";}
+.icon-cc:before { content: "\e936";}
+.icon-clip:before { content: "\e937";}
+.icon-config:before { content: "\e938";}
+.icon-corazon:before { content: "\e939";}
+.icon-down:before { content: "\e93a";}
+.icon-foto:before { content: "\e93b";}
+.icon-home:before { content: "\e93c";}
+.icon-llave:before { content: "\e93d";}
+.icon-lupa:before { content: "\e93e";}
+.icon-next:before { content: "\e93f";}
+.icon-prev:before { content: "\e940";}
+.icon-share:before { content: "\e941";}
+.icon-star:before { content: "\e942";}
+.icon-ubica:before { content: "\e943";}
+.icon-up:before { content: "\e944";}
 
 /* HEADER AND MENU */
 .header{padding:0 0 10px; height:auto; position: relative;}
@@ -1616,10 +1618,11 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
         .category-column ul li:hover{background:#FEDBD4;}
         .category-column ul li.cat_select{background:#FB7055; color: #FFF;}
     .btn_continue{float:right; padding: 7px 25px !important; cursor: pointer;}
+	.cat-label{color: #292732; font-weight: 500; margin: 0 0 5px;}
 
     .content-public{}
     .content-public .title{color:#F84C2A; font-size: 16px; font-weight: 500; margin: 0 0 10px;}
-    .form-public{padding: 7px 0 0;}
+    .form-public{padding: 7px 0 20px;}
     	.form-public #imgBrand{ display: block; margin: 0 auto;}
     .input-validation-error{background:#FFF1EE !important; border-color: #FD562C !important;}
     .text-character{float: left; margin:0 0 0 160px; color: #889BB4; font-size: 12px;}
@@ -1641,6 +1644,10 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
         .picture-uploader li .icon-delete{font-size: 15px; text-align: center; color: #FFF; height: 20px; width: 20px; position: absolute; top: 10px; right: 10px; text-shadow:0 0 6px rgba(40, 40, 50 , 0.7); transition:ease all 0.4s;}
         .picture-uploader li .icon-delete:hover{color: #fa4c2a;}
         hr{margin: 20px 0 10px; border-top: solid 1px #D8DEE6; clear: both;}
+    
+    .fbBrowserError{font-weight: 300; background: #ffbd55; border-radius: 3px; padding: 10px; color: #FFF; font-size: 16px; position: relative;}
+    .fbBrowserError span{display: block; font-size: 40px; text-align: center; margin: 0 0 10px; color: #ffdeaa;}
+    .fbBrowserError .icon-close{ font-size: 16px; color: #FFF; position: absolute; top: 5px; right: 5px;}
 
     .resumen-product{width: 50%; float: left; margin: 0 0 20px;}
     .resumen-product p{margin: 0; padding: 3px 0;}
@@ -1675,6 +1682,10 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .conte_btnDoble .link_back:hover{color: #3b5a83; text-decoration: underline;}
 
     #divStep_3 .title{color: #f84c2a; font-size: 16px; font-weight: 500; margin: 0 0 10px;}
+    .input_check.refMoto{width: 100%; float: none;}
+    .cotiza_price{height: 71px; padding: 20px 0 0; box-sizing:border-box;}
+    ul.tagit li.tagit-new{padding: 0 !important; height: 25px;}
+    ul.tagit input[type="text"]{height: auto;}
 
 /*PANEL DE CONTROL*/
 .menu-panel{padding:0 !important;}
