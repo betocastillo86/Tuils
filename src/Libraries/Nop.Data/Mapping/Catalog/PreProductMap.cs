@@ -14,6 +14,7 @@ namespace Nop.Data.Mapping.Catalog
             this.ToTable("PreProduct");
             this.HasKey(p => p.Id);
             this.Property(p => p.JsonObject).IsRequired();
+            this.Property(p => p.ProductName).HasMaxLength(400);
             
             
             this.Ignore(p => p.ProductType);

@@ -166,25 +166,6 @@
                 this.showCategories(true);
                 this.showProductDetail();
             },
-            //Valia si hay un producto almacenado valido para esta sección
-            //Solo es valido si es del mismo tipo. Es decir si el usuario está entrando en 
-            //publicar un servicio el producto en el storage debe ser de tipo servicio
-            //de lo contrario es eliminado
-            hasPreviousProductStorage: function () {
-                var publishedProduct = TuilsStorage.getPublishProduct();
-                if (publishedProduct && publishedProduct.ProductTypeId == this.productType) {
-                    ////Si hay datos pasa automáticamente al paso 2
-                    this.model.set(publishedProduct);
-                    //this.showProductDetail(publishedProduct.CategoryId);
-                    return true;
-                }
-                else {
-                    this.currentStep = 1;
-                    TuilsStorage.setPublishProduct(undefined);
-                    return false;
-                }
-
-            },
             showPictures: function (model) {
                 this.model = model;
                 this.showNextStep();
@@ -208,11 +189,10 @@
                 this.showNextStep();
 
                 if (!this.viewSummary) {
-
-                    var that = this;
-                    that.viewSummary = new SummaryView({ el: "#divStep_4", product: that.model, images: that.images, productType: that.productType });
-                    that.viewSummary.on("summary-back", that.showStepBack, that);
-                    that.viewSummary.on("summary-save", that.save, that);
+                    this.viewSummary = new SummaryView({ el: "#divStep_4", product: this.model, images: this.images, productType: this.productType });
+                    this.viewSummary.on('summary-back', this.showStepBack, this);
+                    this.viewSummary.on('summary-save', this.save, this);
+                    this.viewSummary.on('save-preproduct', this.savePreproduct, this);
                 }
                 else {
                     this.viewSummary.loadControls({ product: this.model, images: this.images, breadCrumb: this.viewSelectCategory.breadCrumbCategories });
@@ -330,17 +310,17 @@
             savePreproduct: function () {
                 
                 //Intenta guardar el premodelo
-                if(!this.preModel)
-                    this.preModel = new PreproductModel({ 'ga_action': 'Publicacion' });
+                if (!this.preproductModel)
+                    this.preproductModel = new PreproductModel({ 'ga_action': 'Publicacion' });
 
-                this.preModel.set(this.model.toJSON());
+                this.preproductModel.set(this.model.toJSON());
                 //Se agrega evento ONCE ya que va intentar salvar el producto
                 this.once("user-authenticated", this.savePreproduct, this);
                 
                 //this.showLoadingAll(this.preModel);
-                this.validateAuthorization(this.preModel);
+                this.validateAuthorization(this.preproductModel);
 
-                this.preModel.save();
+                this.preproductModel.save();
             },
             productSaved: function (model) {
                 this.$('#divStep_5').show();

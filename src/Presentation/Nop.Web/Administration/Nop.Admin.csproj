@@ -136,6 +136,7 @@
     <Compile Include="Controllers\BaseAdminController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\AddressAttributeController.cs" />
+    <Compile Include="Controllers\PreproductController.cs" />
     <Compile Include="Models\Catalog\CategoryHomeMenuModel.cs" />
     <Compile Include="Controllers\CustomerAttributeController.cs" />
     <Compile Include="Controllers\CheckoutAttributeController.cs" />
@@ -220,6 +221,9 @@
     <Compile Include="Models\Payments\PaymentMethodRestrictionModel.cs" />
     <Compile Include="Models\Plugins\OfficialFeedListModel.cs" />
     <Compile Include="Models\Plugins\PluginListModel.cs" />
+    <Compile Include="Models\Preproducts\PreproductListModel.cs" />
+    <Compile Include="Models\Preproducts\PreproductModel.cs" />
+    <Compile Include="Models\Preproducts\ProductBaseModel.cs" />
     <Compile Include="Models\Settings\PlansSettingsModel.cs" />
     <Compile Include="Models\Settings\VendorSettingsModel.cs" />
     <Compile Include="Models\Shipping\WarehouseModel.cs" />
@@ -444,6 +448,8 @@
     <Content Include="Views\VendorReview\_CreateOrUpdate.cshtml" />
     <Content Include="Views\VendorReview\Edit.cshtml" />
     <Content Include="Views\VendorReview\List.cshtml" />
+    <Content Include="Views\Preproduct\List.cshtml" />
+    <Content Include="Views\Preproduct\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Category\Create.cshtml" />

@@ -16,11 +16,15 @@ namespace Nop.Core.Domain.Catalog
 
         public string JsonObject { get; set; }
 
+        public string ProductName { get; set; }
+
         public int ProductTypeId { get; set; }
 
         public DateTime CreatedOnUtc{ get; set; }
 
         public Nullable<DateTime> UpdatedOnUtc { get; set; }
+
+        public string UserAgent { get; set; }
 
         public ProductType ProductType 
         { 

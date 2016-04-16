@@ -1255,9 +1255,13 @@ namespace Nop.Data.Migrations
 
                 newLocaleStringResources.Add("PublishProduct.LoadingLastStep", "Espera un momento mientras carga el último paso");
                 newLocaleStringResources.Add("PublishProduct.ErrorBrowserFacebook", "Estas entrando desde Facebook. Si tienes algún problema subiendo las fotos de tu producto <a href='https://www.facebook.com/mototuils' target='_blank'>escribenos a nuestra pagina de Facebook.</a> y realiza la publicación sin fotos");
+                newLocaleStringResources.Add("Admin.Catalog.Preproducts.Manage", "Administrar preproductos");
+                newLocaleStringResources.Add("Admin.Catalog.Preproducts.Fields.ProductName", "Nombre de producto");
+                newLocaleStringResources.Add("Admin.Catalog.Preproducts.Fields.CreatedOnUtc", "Fecha de creación");
+                newLocaleStringResources.Add("Admin.Catalog.Preproducts.Fields.UpdatedOnUtc", "Fecha de actualización");
+                newLocaleStringResources.Add("Admin.Configuration.Preproduct.Edit", "Cargar preproducto");
+
                 
-
-
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)
                 {

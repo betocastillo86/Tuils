@@ -16,6 +16,7 @@ using Nop.Admin.Models.Orders;
 using Nop.Admin.Models.Payments;
 using Nop.Admin.Models.Plugins;
 using Nop.Admin.Models.Polls;
+using Nop.Admin.Models.Preproducts;
 using Nop.Admin.Models.Settings;
 using Nop.Admin.Models.Shipping;
 using Nop.Admin.Models.Stores;
@@ -1025,6 +1026,9 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<ProductTemplateModel, ProductTemplate>();
+            //preproduct
+            Mapper.CreateMap<Preproduct, PreproductModel>()
+                /*.ForMember(dest => dest.CustomerE, mo => mo.MapFrom(src => src.Customer != null ? src.Customer.Na : null))*/;
         }
         
         public int Order

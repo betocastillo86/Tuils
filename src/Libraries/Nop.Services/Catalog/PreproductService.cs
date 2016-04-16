@@ -31,6 +31,7 @@ namespace Nop.Services.Catalog
                 if (insertedPreproduct != null)
                 {
                     insertedPreproduct.JsonObject = product.JsonObject;
+                    insertedPreproduct.ProductName = product.ProductName;
                     insertedPreproduct.UpdatedOnUtc = DateTime.UtcNow;
                     //Crea el producto nuevamente
                     _preproductRepository.Update(insertedPreproduct);
@@ -89,6 +90,23 @@ namespace Nop.Services.Catalog
             return _preproductRepository.Table
                 .Where(p => p.CustomerId == customerId && p.ProductTypeId == productTypeId)
                 .ToList();
+        }
+
+
+        public IPagedList<Preproduct> GetAllPreproducts(string customerEmail = null, string productName = null, int pageIndex = 0, int pageSize = int.MaxValue)
+        {
+            var query = _preproductRepository.Table;
+
+            if (!string.IsNullOrEmpty(customerEmail))
+                query = query.Where(p => p.Customer.Email.Contains(customerEmail));
+
+            if (!string.IsNullOrEmpty(productName))
+                query = query.Where(p => p.ProductName.Contains(productName));
+
+            query = query.OrderByDescending(c => c.CreatedOnUtc);
+
+            return new PagedList<Preproduct>(query, pageIndex, pageSize);
+
         }
     }
 }

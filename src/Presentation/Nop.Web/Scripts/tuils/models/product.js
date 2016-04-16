@@ -68,7 +68,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                 },
                 PhoneNumber: {
                     required: false,
-                    minLength : 6
+                    minLength : 7
                 },
                 Condition: {
                     required: function (val, attr, computed) {

@@ -1,4 +1,5 @@
-﻿using Nop.Core.Domain.Catalog;
+﻿using Nop.Core;
+using Nop.Core.Domain.Catalog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,14 @@ namespace Nop.Services.Catalog
         /// <param name="productTypeId"></param>
         /// <returns></returns>
         IList<Preproduct> GetAllByUserAndType(int customerId, int productTypeId);
+
+        /// <summary>
+        /// Retorna todos los preproductos por la busqueda especifica
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="productTypeId"></param>
+        /// <returns></returns>
+        IPagedList<Preproduct> GetAllPreproducts(string customerEmail = null, string productName = null, int page = 0, int pageSize = int.MaxValue);
 
         /// <summary>
         /// Retorna un preproducto por id

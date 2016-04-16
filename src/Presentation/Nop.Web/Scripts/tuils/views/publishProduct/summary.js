@@ -106,9 +106,11 @@ define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars
                 //Realiza la validación manual, sin bindings porque el telefóno solo es necesario en el ultimo paso
                 this.removeErrors();
                 var phoneNumber = this.$("#PhoneNumber").val();
+                this.model.set('PhoneNumber', phoneNumber, { silent: true });
+                this.trigger('save-preproduct');
+
                 if (phoneNumber.length > 6)
                 {
-                    this.model.set('PhoneNumber', phoneNumber, {silent:true});
                     return true;
                 }
                 else

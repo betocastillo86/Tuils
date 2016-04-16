@@ -130,7 +130,7 @@ namespace Nop.Web.Controllers.Api
 
 
                     //Crea el producto en un estado inactivo 
-                    _productService.PublishProduct(product);
+                    _productService.PublishProduct(product, _workContext.CurrentVendor);
 
                     //Elimina los preproductos existentes previamente
                     Task.Factory.StartNew(() => {

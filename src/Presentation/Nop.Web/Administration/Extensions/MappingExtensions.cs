@@ -50,6 +50,7 @@ using Nop.Services.Common;
 using Nop.Services.Payments;
 using Nop.Services.Shipping;
 using Nop.Services.Tax;
+using Nop.Admin.Models.Preproducts;
 
 namespace Nop.Admin.Extensions
 {
@@ -64,7 +65,19 @@ namespace Nop.Admin.Extensions
         {
             return Mapper.Map(source, destination);
         }
-        
+
+        #region Preproduct
+        public static PreproductModel ToModel(this Preproduct entity)
+        {
+            return entity.MapTo<Preproduct, PreproductModel>();
+        }
+
+        public static Preproduct ToEntity(this PreproductModel model)
+        {
+            return model.MapTo<PreproductModel, Preproduct>();
+        }
+        #endregion
+
         #region Category
 
         public static CategoryModel ToModel(this Category entity)

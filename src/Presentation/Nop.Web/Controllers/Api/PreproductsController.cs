@@ -110,6 +110,11 @@ namespace Nop.Web.Controllers.Api
             preproduct.CustomerId = _workContext.CurrentCustomer.Id;
             preproduct.JsonObject = new JavaScriptSerializer().Serialize(model);
             preproduct.ProductTypeId = model.ProductTypeId;
+            preproduct.ProductName = model.Name;
+            
+            if (Request.Headers.UserAgent != null)
+                preproduct.UserAgent = Request.Headers.UserAgent.ToString();
+
             preproduct.Id = model.Id;
             //Actualiza los datos y retorna los valores
             _preproductService.SavePreproduct(preproduct);

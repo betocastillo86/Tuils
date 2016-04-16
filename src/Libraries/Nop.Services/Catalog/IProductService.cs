@@ -554,7 +554,7 @@ namespace Nop.Services.Catalog
         #endregion
 
         #region Publish Product external user
-        void PublishProduct(Product product);
+        void PublishProduct(Product product, Vendor vendor, bool sendNotification = true);
         #endregion
 
         #region ProductQuestions

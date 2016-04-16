@@ -262,6 +262,10 @@
     <Compile Include="Migrations\201603192352042_Add_Table_Preproduct.Designer.cs">
       <DependentUpon>201603192352042_Add_Table_Preproduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604102038041_AddColumns_UserAgent_ProductName_TablePreproduct.cs" />
+    <Compile Include="Migrations\201604102038041_AddColumns_UserAgent_ProductName_TablePreproduct.Designer.cs">
+      <DependentUpon>201604102038041_AddColumns_UserAgent_ProductName_TablePreproduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Extensions.cs" />
@@ -527,6 +531,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603192352042_Add_Table_Preproduct.resx">
       <DependentUpon>201603192352042_Add_Table_Preproduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604102038041_AddColumns_UserAgent_ProductName_TablePreproduct.resx">
+      <DependentUpon>201604102038041_AddColumns_UserAgent_ProductName_TablePreproduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
