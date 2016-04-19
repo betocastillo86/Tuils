@@ -6,7 +6,9 @@
             "click .icon-delete": "removeImage",
             "change input[type=file]": "uploadImage",
             "click .btnNext": "save",
-            "click .btnBack": "back"
+            "click .btnBack": "back",
+            'click .icon-mas': 'morePictures',
+            'click .fbBrowserError .icon-close' : 'closeFacebookError'
         },
         //controls
         fileUpload: undefined,
@@ -50,7 +52,9 @@
             {
                 this.$('.fbBrowserError').show();
                 this.minFilesUploaded = 0;
-            }  
+            }
+
+            this.validateMoreImagesButton();
         },
         render: function () {
             return this;
@@ -170,6 +174,13 @@
                 }
             }
 
+            if (obj.target.files.length > 7)
+            {
+                this.$('.addImageGalery').show();
+                this.$('.icon-mas').hide();
+            }
+                
+
             
 
         },
@@ -231,10 +242,33 @@
 
             this.trigger("images-back");
         },
-        removeAllImages: function () {
-
+        numPicturesBoxes : 10,
+        validateMoreImagesButton: function () {
+            var currentWidth = window.innerWidth || document.documentElement.clientWidth;
+            //Oculta los que no se deben mostrar
+            //Cuenta el numero de cajas activas para activar mas si es necesario con el mas
+            if (currentWidth <= 640 && currentWidth > 480)
+            {
+                this.$('.picture-uploader li:nth-child(n8)').hide();
+                this.$('.icon-mas').show();
+                this.numPicturesBoxes = 7;
+            }
+            else if (currentWidth <= 480)
+            {
+                this.$('.picture-uploader li:nth-child(n9)').hide();
+                this.$('.icon-mas').show();
+                this.numPicturesBoxes = 8;
+            }
+        },
+        morePictures: function () {
+            this.numPicturesBoxes++;
+            this.$('.picture-uploader li:nth-child(' + (this.numPicturesBoxes) + ')').show().click();
+            if(this.numPicturesBoxes == 10)
+                this.$('.icon-mas').hide();
+        },
+        closeFacebookError: function () {
+            this.$('.fbBrowserError').hide();
         }
-
     });
 
     return ImagesSelectorView;

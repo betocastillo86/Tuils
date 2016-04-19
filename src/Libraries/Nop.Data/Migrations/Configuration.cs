@@ -1254,7 +1254,7 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("PublishProduct.AskUserPublishSimilarProduct", "Ya tienes publicado un producto similar a este hace muy poco tiempo. ¿Estas seguro que deseas publicarlo?");
 
                 newLocaleStringResources.Add("PublishProduct.LoadingLastStep", "Espera un momento mientras carga el último paso");
-                newLocaleStringResources.Add("PublishProduct.ErrorBrowserFacebook", "Estas entrando desde Facebook. Si tienes algún problema subiendo las fotos de tu producto <a href='https://www.facebook.com/mototuils' target='_blank'>escribenos a nuestra pagina de Facebook.</a> y realiza la publicación sin fotos");
+                newLocaleStringResources.Add("PublishProduct.ErrorBrowserFacebook", "Si tienes algún problema subiendo las fotos de tu producto <a href='https://www.facebook.com/mototuils' target='_blank'>escribenos a nuestra pagina de Facebook.</a> y realiza la publicación sin fotos");
                 newLocaleStringResources.Add("Admin.Catalog.Preproducts.Manage", "Administrar preproductos");
                 newLocaleStringResources.Add("Admin.Catalog.Preproducts.Fields.ProductName", "Nombre de producto");
                 newLocaleStringResources.Add("Admin.Catalog.Preproducts.Fields.CreatedOnUtc", "Fecha de creación");
