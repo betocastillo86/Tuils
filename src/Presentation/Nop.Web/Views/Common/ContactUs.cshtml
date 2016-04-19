@@ -11,7 +11,7 @@
         <h1>@T("PageTitle.ContactUs")</h1>
     </div>
     @Html.Action("TopicBlock", "Topic", new { systemName = "ContactUs" })
-    <div class="page-body">
+    <div class="form-public">
         @Html.Widget("contactus_top")
         @if (Model.SuccessfullySent)
         {
@@ -26,39 +26,34 @@
             <div class="message-error">
                 @Html.ValidationSummary(true)
             </div>
-            <div class="form-fields">
-                <div class="inputs-left">
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.FullName)
-                        <div class="input-box">
-                            @Html.TextBoxFor(model => model.FullName, new { @class = "fullname", placeholder = T("ContactUs.FullName.Hint") })
-                        </div>
-                        @Html.ValidationMessageFor(model => model.FullName)
-                    </div>
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.Email)
-                        <div class="input-box">
-                            @Html.TextBoxFor(model => model.Email, new { @class = "email", placeholder = T("ContactUs.Email.Hint") })
-                        </div>
-                        @Html.ValidationMessageFor(model => model.Email)
-                    </div>
+            <div class="form-fields">   
+                <div class="inputs">
+                    @Html.LabelFor(model => model.FullName)
+                        @Html.TextBoxFor(model => model.FullName, new { @class = "fullname", placeholder = T("ContactUs.FullName.Hint") })
+                    @Html.ValidationMessageFor(model => model.FullName)
+                </div>
+                <div class="inputs">
+                    @Html.LabelFor(model => model.Email)
+
+                        @Html.TextBoxFor(model => model.Email, new { @class = "email", placeholder = T("ContactUs.Email.Hint") })
+
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
                     @if (Model.DisplayCaptcha)
                     {
                         <div class="captcha-box">
                             @Html.Raw(Html.GenerateCaptcha())
                         </div>
                     }
-                </div>
-                <div class="inputs-right inputs">
+                <div class="descript_crea">
                     @Html.LabelFor(model => model.Enquiry)
-                    <div class="input-box">
-                        @Html.TextAreaFor(model => model.Enquiry, new { @class = "enquiry", placeholder = T("ContactUs.Enquiry.Hint") })
-                    </div>
+
+                        @Html.TextAreaFor(model => model.Enquiry, new { @class = "", placeholder = T("ContactUs.Enquiry.Hint") })
                     @Html.ValidationMessageFor(model => model.Enquiry)
                 </div>
             </div>
             <div class="buttons">
-                <input type="submit" name="send-email" class="button-1 contact-us-button" value="@T("ContactUs.Button")" />
+                <input type="submit" name="send-email" class="btn_continue button-1 btnNext" value="@T("ContactUs.Button")" />
             </div>
             }
         }
