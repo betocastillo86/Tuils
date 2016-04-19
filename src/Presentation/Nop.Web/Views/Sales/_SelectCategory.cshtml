@@ -28,11 +28,11 @@
 </div>
 <input type="button" class="btn_continue button-1" value="Continuar" style="display:none">
 
-@if (Model.IsMobileDevice)
+@if (Html.IsMobile(false))
 {
     <script id="templateCategorySelector" type="text/x-handlebars-template">
         <div class="category-column">
-        <div class="cat-label">Selecciona una categoría</div>
+        <div class="cat-label">@T("PublishProduct.SelectCategory")</div>
             <select data-level='{{CurrentLevel}}'>
                 {{#if Categories.length }}
                 <option value="">@T("PublishProduct.SelectCategory")</option>
