@@ -94,7 +94,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                         return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.bike;
                     },
                     pattern: 'number',
-                    maxLength :10
+                    max :1000000
                 },
                 IsNew: {
                     required: function (val, attr, computed) {

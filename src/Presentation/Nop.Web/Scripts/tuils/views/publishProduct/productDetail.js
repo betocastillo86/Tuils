@@ -95,7 +95,15 @@
                 }
             },
             "#ddlYear": "Year",
-            "#txtKms": "Kms",
+            "#txtKms": {
+                observe : 'Kms',
+                onSet: function (value) {
+                    return value ? parseInt(value) : '';
+                },
+                onGet: function (value) {
+                    return value ? parseInt(value) : '';
+                },
+            },
             "[name='Negotiation']": {
                 observe: "Negotiation",
                 onSet: function (value, ctx) {
