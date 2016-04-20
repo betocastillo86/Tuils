@@ -55,6 +55,7 @@
             }
 
             this.validateMoreImagesButton();
+			this.showHelp();
         },
         render: function () {
             return this;
@@ -268,7 +269,10 @@
         },
         closeFacebookError: function () {
             this.$('.fbBrowserError').hide();
-        }
+        },
+		showHelp : function(){
+			this.alert({message : $('#templateHelpImages').html(), autoclose: autoclose});
+		}
     });
 
     return ImagesSelectorView;
