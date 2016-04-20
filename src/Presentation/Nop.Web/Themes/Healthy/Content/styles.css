@@ -1687,6 +1687,14 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     ul.tagit li.tagit-new{padding: 0 !important; height: 25px;}
     ul.tagit input[type="text"]{height: auto;}
 
+    .modal_malFoto{width: 100%; box-sizing:border-box; padding: 0 40px 40px;}
+    .modal_malFoto h4{color: #f84c2a; font-size: 20px; font-weight: 500; margin: 0 0 10px;}
+    .modal_malFoto ul{text-align: left; margin:10px 0; padding: 0 0 0 20px;}
+    .modal_malFoto ul li{color: #3B5A83; padding: 6px 0;}
+    .modal_malFoto ul li span{color: #5C5B5B;}
+    .modal_malFoto img{width: calc(50% - 22px); margin: 0 10px;}
+    .modal_malFoto a{padding:8px 30px;}
+/*FIN PUBLICAR*/
 /*PANEL DE CONTROL*/
 .menu-panel{padding:0 !important;}
     .nav-item-panel{color:#3A5983; font-size: 14px; font-weight: 400; transition:ease all 0.4s; display: block; padding: 6px 15px;}
