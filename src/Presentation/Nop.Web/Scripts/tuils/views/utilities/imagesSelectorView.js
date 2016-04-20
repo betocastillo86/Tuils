@@ -271,7 +271,7 @@
             this.$('.fbBrowserError').hide();
         },
 		showHelp : function(){
-			this.alert({message : $('#templateHelpImages').html(), autoclose: autoclose});
+			this.alert({message : $('#templateHelpImages').html(), autoclose: false});
 		}
     });
 
