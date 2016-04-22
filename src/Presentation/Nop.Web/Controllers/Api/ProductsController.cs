@@ -128,7 +128,8 @@ namespace Nop.Web.Controllers.Api
                         return BadRequest(ModelState);
                     }
 
-
+                    //Reemplaza los saltos de linea con BR en la descripción
+                    product.FullDescription = product.FullDescription.Replace("\n", "</br>");
                     //Crea el producto en un estado inactivo 
                     _productService.PublishProduct(product, _workContext.CurrentVendor);
 

@@ -38,6 +38,7 @@
                 
                 this.render();
                 this.preselectUpgrade();
+                this.validateScroll();
             },
             /**Preselecciona un plan para hacer upgrade*/
             preselectUpgrade : function(){
@@ -108,6 +109,20 @@
                     this.alert(err.responseJSON.ExceptionMessage);
                 else if (err.responseJSON.Message)
                     this.alert(err.responseJSON.Message);
+            },
+            validateScroll: function () {
+                if (this.isMobile()) {
+                    var objScroll = this.$('.headerPlans');
+                    var height = objScroll.offset().top;
+                    var that = this;
+                    $(window).on('scroll', function () {
+                        if ($(window).scrollTop() > 120) {
+                            objScroll.addClass('menu-fixed');
+                        } else {
+                            objScroll.removeClass('menu-fixed');
+                        }
+                    });
+                }
             },
             isFreePlan : function(){
                 var selectedPlan = this.model.get('PlanId');
