@@ -146,9 +146,10 @@
         //Esta opción para cargar la clase loadingBack al elemento que envien
         showLoadingBack : function(model, el)
         {
+            var that = this;
             model = model ? model : this.model;
-            model.once("sync", this.removeLoading, this);
-            model.once("error", this.removeLoading, this);
+            model.once("sync", function () { that.removeLoading(el) }, this);
+            model.once("error", function () { that.removeLoading(el) }, this);
             model.once("unauthorized", this.removeLoading, this);
             el.addClass('loadingBack');
         },
@@ -162,9 +163,12 @@
                     that.trigger("window-resized-min");
             });
         },
-        removeLoading : function(){
-            this.$el.find("#divLoadingback").remove();
-            this.$el.find('.loadingBack').removeClass('loadingBack');
+        removeLoading: function (el) {
+            //Valida que sea un elemento jquery
+            if (!el || !el.html)
+                el = this.$el;
+            el.find("#divLoadingback").remove();
+            el.find('.loadingBack').removeClass('loadingBack');
             displayAjaxLoading(false);
         },
         //Muestra un mesaje de alerta ya sea con un Resource o con el mensaje directamente

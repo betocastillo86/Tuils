@@ -270,8 +270,9 @@
         closeFacebookError: function () {
             this.$('.fbBrowserError').hide();
         },
-		showHelp : function(){
-			this.alert({message : $('#templateHelpImages').html(), autoclose: false});
+        showHelp: function () {
+            var currentWidth = window.innerWidth || document.documentElement.clientWidth;
+			this.alert({message : $('#templateHelpImages').html(), autoclose: false, width : (currentWidth < 600 ?  '100%' : 740), height:500 });
 		}
     });
 
