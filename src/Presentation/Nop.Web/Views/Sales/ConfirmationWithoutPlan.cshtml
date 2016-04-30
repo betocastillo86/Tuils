@@ -13,12 +13,11 @@
     </div>
     <div class="resumen-final">
         <h2>@T(string.Concat("PublishProduct.PublishFinished", Model.VendorType))</h2>
+        <p>@T("PublishProduct.TimeOutPost" + Model.VendorType, Model.LimitDaysOfProductPublished)</p>
         <h3>@Model.ProductDetails.Name </h3>
 
         <h4>@(Model.ProductDetails.ProductPrice.CallForPrice ? T("Products.CallForPrice").Text : Model.ProductDetails.ProductPrice.Price)</h4>
 
-        
-        <p>@T("PublishProduct.TimeOutPost"+Model.VendorType, Model.LimitDaysOfProductPublished)</p>
         @Html.ActionLink(T("SelectFeaturedAttributesByPlan.gotoMyProducts").Text, "MyProducts", "ControlPanel", new { p = false }, new { })
 
     </div>

@@ -19,8 +19,10 @@
 
         @if (Model.IsAuthenticated)
         {
+            <li><a href="@Url.RouteUrl("ControlPanel", "MyProducts")" class="ico-logout" title="@T("ControlPanel.MyProducts")">@T("ControlPanel.MyProducts")</a></li>
             <li class="user-li"><a href="@Url.RouteUrl("ControlPanel")" title="@T("Account.MyAccount.Alt")"><img src="~/Themes/Healthy/Content/images/img_user.svg" /> <p>@Model.CustomerEmailUsername</p><br /></a></li>
             <li><a href="@Url.RouteUrl("Logout")" class="ico-logout" title="@T("Account.Logout.Alt")">@T("Account.Logout")</a></li>
+            
         }
         else
         {

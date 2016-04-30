@@ -56,7 +56,7 @@
                 this.login();
         },
         login: function () {
-            this.validateControls(undefined, false);
+            this.validateControls(undefined, false, true);
 
             if (this.model.isValid()) {
                 this.showLoadingAll(this.model);

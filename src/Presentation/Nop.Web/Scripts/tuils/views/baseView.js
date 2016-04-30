@@ -178,7 +178,7 @@
 
             this.viewConfirm.show(args);
         },
-        validateControls: function (model, goToFocus) {
+        validateControls: function (model, goToFocus, unostrusive) {
             //Formatea los mensajes de respuesta contra los label
             
             this.removeErrors();
@@ -211,6 +211,12 @@
             {
                 this.scrollFocusObject('.input-validation-error:first', -50);
             }
+            if (unostrusive)
+            {
+                var that = this;
+                model.once('change', function () { that.validateControls(model, goToFocus, unostrusive); }, this);
+            }
+            
 
             return errors;
         },
