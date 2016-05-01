@@ -11,12 +11,18 @@
         <li @Html.RenderSelectedTabIndex(1, GetSelectedTabIndex())>
             @T("Admin.Common.SEO")
         </li>
+        <li @Html.RenderSelectedTabIndex(2, GetSelectedTabIndex())>
+            @T("Admin.Common.Products")
+        </li>
     </ul>
     <div>
         @TabInfo()
     </div>
     <div>
         @TabSeo()
+    </div>
+    <div>
+        @TabProducts()
     </div>
 </div>
 <script>
@@ -70,7 +76,7 @@
             }
         }
     </script>
-    
+
     @(Html.LocalizedEditor<VendorModel, VendorLocalizedModel>("vendor-info-localized",
     @<table class="adminContent">
         <tr>
@@ -99,26 +105,26 @@
         </tr>
     </table>
                 ,
-                @<table class="adminContent">
-                    <tr>
-                        <td class="adminTitle">
-                            @Html.NopLabelFor(model => model.Name):
-                        </td>
-                        <td class="adminData">
-                            @Html.EditorFor(model => model.Name)
-                            @Html.ValidationMessageFor(model => model.Name)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="adminTitle">
-                            @Html.NopLabelFor(model => model.Description):
-                        </td>
-                        <td class="adminData">
-                            @Html.EditorFor(x => x.Description, "RichEditor")
-                            @Html.ValidationMessageFor(model => model.Description)
-                        </td>
-                    </tr>
-                </table>
+    @<table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Name):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Description):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(x => x.Description, "RichEditor")
+                @Html.ValidationMessageFor(model => model.Description)
+            </td>
+        </tr>
+    </table>
                                             ))
     <table class="adminContent">
         <tr>
@@ -126,7 +132,7 @@
                 @Html.NopLabelFor(model => model.VendorType):
             </td>
             <td class="adminData">
-                <select id="VendorType" name="VendorType" >
+                <select id="VendorType" name="VendorType">
                     <option value="0" @(Model.VendorType == Nop.Core.Domain.Vendors.VendorType.User ? "selected" : string.Empty)>Usuario</option>
                     <option value="1" @(Model.VendorType == Nop.Core.Domain.Vendors.VendorType.Market ? "selected" : string.Empty)>Empresa</option>
                 </select>
@@ -166,6 +172,21 @@
             <td class="adminData">
                 @Html.EditorFor(model => model.ShowOnHomePage)
                 @Html.ValidationMessageFor(model => model.ShowOnHomePage)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.CustomerId):
+            </td>
+            <td class="adminData">
+                @if (Model.CustomerId.HasValue)
+                {
+                    @Html.ActionLink("Ver", "Edit", "Customer", new { id = Model.CustomerId }, new { })
+                }
+                else
+                {
+                    @:No
+                }
             </td>
         </tr>
         <tr>
@@ -314,42 +335,121 @@
         </tr>
     </table>
                ,
-            @<table class="adminContent">
-                <tr>
-                    <td class="adminTitle">
-                        @Html.NopLabelFor(model => model.MetaKeywords):
-                    </td>
-                    <td class="adminData">
-                        @Html.EditorFor(x => x.MetaKeywords)
-                        @Html.ValidationMessageFor(model => model.MetaKeywords)
-                    </td>
-                </tr>
-                <tr>
-                    <td class="adminTitle">
-                        @Html.NopLabelFor(model => model.MetaDescription):
-                    </td>
-                    <td class="adminData">
-                        @Html.TextAreaFor(x => x.MetaDescription)
-                        @Html.ValidationMessageFor(model => model.MetaDescription)
-                    </td>
-                </tr>
-                <tr>
-                    <td class="adminTitle">
-                        @Html.NopLabelFor(model => model.MetaTitle):
-                    </td>
-                    <td class="adminData">
-                        @Html.EditorFor(x => x.MetaTitle)
-                        @Html.ValidationMessageFor(model => model.MetaTitle)
-                    </td>
-                </tr>
-                <tr>
-                    <td class="adminTitle">
-                        @Html.NopLabelFor(model => model.SeName):
-                    </td>
-                    <td class="adminData">
-                        @Html.EditorFor(x => x.SeName)
-                        @Html.ValidationMessageFor(model => model.SeName)
-                    </td>
-                </tr>
-            </table>))
+    @<table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.MetaKeywords):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(x => x.MetaKeywords)
+                @Html.ValidationMessageFor(model => model.MetaKeywords)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.MetaDescription):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(x => x.MetaDescription)
+                @Html.ValidationMessageFor(model => model.MetaDescription)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.MetaTitle):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(x => x.MetaTitle)
+                @Html.ValidationMessageFor(model => model.MetaTitle)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SeName):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(x => x.SeName)
+                @Html.ValidationMessageFor(model => model.SeName)
+            </td>
+        </tr>
+    </table>))
+}
+
+@helper TabProducts()
+{
+    if (Model.Id > 0)
+    {
+        
+            <div id="products-grid"></div>
+
+            <script>
+                $(document).ready(function () {
+                    $("#products-grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: {
+                                    url: "@Html.Raw(Url.Action("ProductsList", "Vendor", new { vendorId = Model.Id }))",
+                                    type: "POST",
+                                    dataType: "json"
+                                }
+                            },
+                            schema: {
+                                data: "Data",
+                                total: "Total",
+                                errors: "Errors",
+                                model: {
+                                    id: "Id",
+                                    fields: {
+                                        Name: { type: "string" },
+                                        //ProductId: { editable: false, type: "number" },
+                                        ProductId: { editable: false, type: "number" },
+                                        Published: { editable: false, type: "boolean" }
+                                    }
+                                }
+                            },
+                            error: function (e) {
+                                display_kendoui_grid_error(e);
+                                // Cancel the changes
+                                this.cancelChanges();
+                            },
+                            pageSize: 10,
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true
+                        },
+                        pageable: {
+                            refresh: true,
+                            pageSizes: [10,20,30,100]
+                        },
+                        scrollable: false,
+                        columns: [{
+                            field: "Id",
+                            title: "@T("Admin.Catalog.Products.Vendors.Products.ProductId")",
+                            width: 200
+                        },
+                        {
+                            field: "Name",
+                            title: "@T("Admin.Catalog.Products.Vendors.Products.Name")",
+                            width: 200
+                        },
+                        {
+                            field: "Published",
+                            title: "@T("Admin.Catalog.Products.Vendors.Products.Published")",
+                            width: 200
+                        },
+                        {
+                            field: "Ver",
+                            template: '<a href="/admin/product/edit/#=Id#">Ver</a>'
+                        }]
+                    });
+                });
+
+            </script>
+        }
+        else
+        {
+            @T("Admin.Catalog.Products.SpecialCategories.NoCategoriesAvailable")
+        }
+    
 }

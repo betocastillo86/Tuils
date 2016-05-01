@@ -1160,7 +1160,15 @@ namespace Nop.Admin.Controllers
 
 
             }*/
-            _productService.EnableProduct(product, true, false);
+            try
+            {
+                _productService.EnableProduct(product, true, false);
+            }
+            catch (Exception e)
+            {
+                ErrorNotification(e.Message);
+                
+            }
         }
 
         //delete product

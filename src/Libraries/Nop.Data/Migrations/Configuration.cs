@@ -1252,7 +1252,13 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Landing.Store", "¿Tienes un almacen de motos?");
                 newLocaleStringResources.Add("PublishProduct.DefaultErrorResponse", "Ocurrió un error, intentalo de nuevo. Si el error persiste, <a href='https://www.facebook.com/mototuils' target='_blank'>escribenos a nuestro Facebook</a> y te ayudamos con la publicación");
                 newLocaleStringResources.Add("PublishProduct.AskUserPublishSimilarProduct", "Ya tienes publicado un producto similar a este hace muy poco tiempo. ¿Estas seguro que deseas publicarlo?");
-
+                newLocaleStringResources.Add("admin.common.products", "Productos");
+                newLocaleStringResources.Add("admin.catalog.products.vendors.products.productid", "Id");
+                newLocaleStringResources.Add("admin.catalog.products.vendors.products.name", "Nombre");
+                newLocaleStringResources.Add("admin.catalog.products.vendors.products.published", "Publicado");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.CustomerId", "Usuario");
+                newLocaleStringResources.Add("Admin.Vendors.Fields.CustomerId.Hint", "Usuario asociado");
+                newLocaleStringResources.Add("Admin.Catalog.Products.Fields.NumClicksForMoreInfo", "Vistas del teléfono");
 
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)

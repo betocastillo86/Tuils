@@ -29,7 +29,7 @@
 
                 this.loadControls();
                 this.model = new ProductModel();
-                this.model.on('sync', this.redirectToVendor, this);
+                //this.model.on('sync', this.redirectToVendor, this);
                 this.model.set('Id', this.productId);
                 //this.on("user-authenticated", this.createOrder, this);
 
@@ -83,12 +83,12 @@
                 this.requiredViewsWithAuthentication.push(this.viewQuestions);
             },
             createOrder: function (e) {
-                if (this.alreadyBougth)
-                {
-                    this.redirectToVendor();
-                    return;
-                }
-                    
+                //if (this.alreadyBougth)
+                //{
+                //    this.redirectToVendor();
+                //    return;
+                //}
+                this.redirectToVendor();
                 if (e && e.target)
                 {
                     var obj = $(e.target);
@@ -99,7 +99,7 @@
                 }
 
                 //this.validateAuthorization();
-                this.showLoadingAll();
+                //this.showLoadingAll();
                 this.model.moreInfo();
             },
             cancelMoreInfoResp: function () {
@@ -145,7 +145,7 @@
                 //$('body').css({ 'top': $(window).scrollTop() * -1, height: $('body').height() < $(document).height() ? $(document).height() : $('body').height() }).addClass('body-noscroll');
 
                 this.$('#phoneHashed').hide();
-                this.alreadyBougth = true;
+                //this.alreadyBougth = true;
 
                 if (model)
                 {

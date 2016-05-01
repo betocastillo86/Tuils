@@ -97,7 +97,10 @@ namespace Nop.Admin.Models.Vendors
         [NopResourceDisplayName("Admin.Vendors.Fields.VendorType")]
         public VendorType VendorType { get; set; }
 
-        
+        [NopResourceDisplayName("Admin.Vendors.Fields.CustomerId")]
+        public int? CustomerId { get; set; }
+
+
         /// <summary>
         /// Numero de veces que ha sido calificado un producto vendido por el usuario
         /// </summary>

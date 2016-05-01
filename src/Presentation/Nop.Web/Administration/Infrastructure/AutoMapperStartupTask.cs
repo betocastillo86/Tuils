@@ -240,6 +240,8 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<Vendor, VendorModel>()
                 .ForMember(dest => dest.AssociatedCustomerEmails, mo => mo.Ignore())
                 .ForMember(dest => dest.Locales, mo => mo.Ignore())
+                .ForMember(dest => dest.HasPlan, mo => mo.Ignore())
+                .ForMember(dest => dest.CustomerId, mo => mo.Ignore())
                 .ForMember(dest => dest.IsMobileDevice, mo => mo.Ignore())
 
 

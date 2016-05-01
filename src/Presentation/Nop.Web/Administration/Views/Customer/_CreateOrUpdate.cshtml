@@ -263,6 +263,10 @@
             <td class="adminData">
                 @Html.DropDownListFor(model => model.VendorId, Model.AvailableVendors)
                 @Html.ValidationMessageFor(model => model.VendorId)
+                @if (Model.VendorId > 0)
+                {
+                    @Html.ActionLink("Ver", "Edit", "Vendor", new { id = Model.VendorId }, new { })
+                }
                 <em>@T("Admin.Customers.Customers.VendorShouldBeInVendorsRole")</em>
             </td>
         </tr>

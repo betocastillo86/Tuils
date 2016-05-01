@@ -119,6 +119,9 @@ namespace Nop.Admin.Models.Catalog
         /// </summary>
         public bool PreviousPublisedProduct { get; set; }
 
+        [NopResourceDisplayName("Admin.Catalog.Products.Fields.NumClicksForMoreInfo")]
+        public int NumClicksForMoreInfo { get; set; }
+
 
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.Sku")]
         [AllowHtml]
@@ -984,5 +987,7 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.SeName")]
         [AllowHtml]
         public string SeName { get; set; }
+
+       
     }
 }
