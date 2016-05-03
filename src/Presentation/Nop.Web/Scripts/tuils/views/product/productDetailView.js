@@ -147,12 +147,12 @@
                 this.$('#phoneHashed').hide();
                 //this.alreadyBougth = true;
 
-                if (model)
-                {
+                //if (model)
+                //{
                     //Marca conversion de google adwords para compra
                     //this.markAdwordsConvertion(957791126, "LqbeCPCv5WQQlvfayAM", false);
                     this.trackGAEvent('Compra', 'Exitosa');
-                }
+                //}
                     
             }
         });
