@@ -1241,7 +1241,6 @@ html.oldie .container { width: 940px; }
     /*top menu*/
     #mainMenu {display: none !important;}
 
-
     .nav-category li{height: 152px; }
     /*PUBLICAR PRODUCTO*/
     .retoma_publi{margin: 20px 0;}
@@ -1399,6 +1398,7 @@ html.oldie .container { width: 940px; }
     .retoma_publi .button-1{padding: 8px 5px;}
     .retoma_publi .icon-publica{font-size: 50px; height: 50px;}
     .retoma_publi .resumen-final h2{font-size: 16px;}
+    .resumen-final a{margin: 0;}
     .msj_noreg{display: block; background: transparent; position: relative; text-align: left; padding: 0 !important; color: #fb7055; font-size: 16px; margin: 10px 0 0;}
     .no_service br{display: block;}
     .msj_noreg i{display: none;}
