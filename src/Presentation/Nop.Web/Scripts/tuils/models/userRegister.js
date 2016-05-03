@@ -13,7 +13,7 @@
                 //required: function (val, attr, computed) {
                 //    return computed.VendorType == 0;
                 //}
-                required : false
+                required: false
             },
             Name: {
                 required: function (val, attr, computed) {
@@ -22,12 +22,16 @@
             },
             Email: {
                 required: true,
-                pattern : 'email'
+                pattern: 'email'
             },
-            Password: {
+            Password: [{
                 required: true,
-                minLength : 5
+                msg: 'La contraseña es obligatoria'
             },
+            {
+                minLength: 5,
+                msg: 'Debe tener minimo 5 carateres'
+            }],
             VendorSubType: {
                 required: function (val, attr, computed) {
                     return computed.VendorType != 0 && computed.IsRegister;
@@ -46,10 +50,10 @@
             Name: "Nombre",
             Email: "Correo electrónico",
             Password: "Contraseña",
-            CompanyName : "Nombre establecimiento",
+            CompanyName: "Nombre establecimiento",
             TermsOfUse: "Terminos y condiciones",
             Bike: 'con tu Motocicleta',
-            VendorSubType : 'Tipo de Empresa'
+            VendorSubType: 'Tipo de Empresa'
         },
         oAuth: function () {
             this.credentials = {
@@ -60,7 +64,7 @@
             this.set('Password', this.credentials.password.replace(/./gi, "*"));
         },
         login: function () {
-            
+
             this.oAuth();
 
             this.url = this.baseUrl;

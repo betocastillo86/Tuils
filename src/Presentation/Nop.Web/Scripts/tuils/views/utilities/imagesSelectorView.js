@@ -234,7 +234,10 @@
                 this.trigger('save-preproduct');
             }
             else {
-                this.alert("Para publicar tu anuncio debes subir por lo menos " + this.minFilesUploaded + " imágen" + (this.minFilesUploaded > 1 ? "es" : ""));
+                this.alert({ 
+                message: "Para publicar tu anuncio debes subir por lo menos " + this.minFilesUploaded + " imágen" + (this.minFilesUploaded > 1 ? "es" : "") ,
+                height: 150
+                });
             }
         },
         back: function () {
