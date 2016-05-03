@@ -1399,6 +1399,10 @@ html.oldie .container { width: 940px; }
     .retoma_publi .button-1{padding: 8px 5px;}
     .retoma_publi .icon-publica{font-size: 50px; height: 50px;}
     .retoma_publi .resumen-final h2{font-size: 16px;}
+    .msj_noreg{display: block; background: transparent; position: relative; text-align: left; padding: 0 !important; color: #fb7055; font-size: 16px; margin: 10px 0 0;}
+    .no_service br{display: block;}
+    .msj_noreg i{display: none;}
+    .no_service{opacity: 1;}
 
     .picture-uploader li:nth-child(3n){margin-right: 0;}
     .conte_btnDoble .btn_continue{width: calc(50% - 10px); box-sizing:border-box; float: right;}

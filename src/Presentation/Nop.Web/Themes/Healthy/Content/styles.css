@@ -1657,8 +1657,9 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .txt-terminos{color:#A9A9AC; text-align: right; margin: 5px 0;}
     .txt-terminos a{color: #F24C19;}
 
-    .imgPublicada{ width: 200px; height: 200px; float: left; margin: 20px 20px 20px 0; overflow: hidden;}
+    .imgPublicada{ width: 200px; height: 200px; float: left; margin: 20px 20px 20px 0; overflow: hidden; position: relative;}
     .imgPublicada img {width: 100%;}
+    .imgPublicada .icon-check{}
     .resumen-final{float: left; width:calc(100% - 220px); margin: 20px 0 0;}
     .resumen-final h2{color:#3A5983; font-weight: 500; font-size: 20px;}
     .resumen-final h3{font-weight: 500; font-size: 16px; color: #292732; margin: 10px 0 0;}
@@ -1696,8 +1697,11 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .modal_malFoto a{padding:8px 30px;}
 
     .no_service{opacity: 0.5; cursor: default; position: relative;}
-    .msj_noreg{display: block; position: absolute; width: 100%; height: 100%; top: 0; left: 0; background: red;}
-    .no_service:hover .msj_noreg{display: block;}
+    .no_service:hover{opacity: 1; transition: ease all 0.3s;}
+    .msj_noreg{display: none; position: absolute; text-align: center; width: 100%; height: 100%; top: 0; left: 0; background: #FFF; color: #3B5A83;}
+    .no_service:hover .msj_noreg{display: block; padding: 20% 0;}
+    .msj_noreg i{font-size: 30px; display: block; color: #fb7055;}
+	.no_service br{display: none;}
 /*FIN PUBLICAR*/
 /*PANEL DE CONTROL*/
 .menu-panel{padding:0 !important;}
