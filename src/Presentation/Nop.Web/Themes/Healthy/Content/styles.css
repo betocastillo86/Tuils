@@ -1604,7 +1604,7 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
 .master-wrapper-page .center-2.columns.ten .field-validation-error{margin: 0 20px 0 0;}
 
     .nav-category{list-style: none;}
-    .nav-category li{position:relative; width: 33.3%; height: 312px; float: left; cursor: pointer; background-image: url(images/img_categorias_gris.svg); background-size: 300% auto; background-repeat: no-repeat; transition:ease ease 0.4s;}
+    .nav-category li{position:relative; width: 33.3%; height: 312px; float: left; background-image: url(images/img_categorias_gris.svg); background-size: 300% auto; background-repeat: no-repeat; transition:ease ease 0.4s;}
     .nav-category li p{position: absolute; bottom: 44px; right: 50px; color: #FFF; font-size: 30px; font-weight: 700; text-align: right; text-transform: uppercase; text-shadow:1px 3px 1px rgba(0, 0, 0, 0.6);}
     .nav-category li span{display: none;}
     .nav-category li:hover, .nav-category li:active, .nav-category li.cat_select{background-image: url(images/img_categorias.svg); background-size: 300% auto;}
@@ -1694,6 +1694,10 @@ pre{white-space:pre-wrap;white-space:normal;word-wrap:break-word;}
     .modal_malFoto ul li span{color: #5C5B5B;}
     .modal_malFoto img{width: calc(50% - 22px); margin: 0 10px;}
     .modal_malFoto a{padding:8px 30px;}
+
+    .no_service{opacity: 0.5; cursor: default; position: relative;}
+    .msj_noreg{display: block; position: absolute; width: 100%; height: 100%; top: 0; left: 0; background: red;}
+    .no_service:hover .msj_noreg{display: block;}
 /*FIN PUBLICAR*/
 /*PANEL DE CONTROL*/
 .menu-panel{padding:0 !important;}

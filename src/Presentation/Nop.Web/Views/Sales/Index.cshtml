@@ -32,9 +32,11 @@
                 <nav class="nav-category">
                     <a href="@Url.Action("PublishProduct")" title="@T("Publish.Bike.Img.Alt")"><li class="hub-std"><span class="icon-casco"></span><p>productos</p></li></a>
                     
-                    <a href="@(Model.CanSelectService ? Url.Action("PublishProductService") : "#")" title="@T("Publish.Service.Img.Alt")" class="@(!Model.CanSelectService ? "no_service" : string.Empty)"><li class="hub-srv"><span class="icon-tool"></span><p>servicios</p></li></a>
-                    
                     <a href="@Url.Action("PublishProductBike")" title="@T("Publish.Product.Img.Alt")"><li class="hub-mot"><span class="icon-deportiva"></span><p>motos</p></li></a>
+
+                    <a href="@(Model.CanSelectService ? Url.Action("PublishProductService") : "#")" title="@T("Publish.Service.Img.Alt")" class="@(!Model.CanSelectService ? "no_service" : string.Empty)"><li class="hub-srv"><span class="icon-tool"></span><p>servicios</p></li>
+                    <span class="msj_noreg">Para publicar servicios debes registrarte como un negocio en tuils</span>
+                    </a>
                 </nav>
                 <br />
             </div>

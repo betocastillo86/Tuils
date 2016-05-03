@@ -1299,29 +1299,22 @@ html.oldie .container { width: 940px; }
     .planOptions{border-collapse:separate; border-spacing:0 27px;}
     .cell-e.name-plan, .cell-e.name-plan{border: none !important;}
     .planTable .plan-row{border-bottom: 0;}
-    .cell-p:nth-child(3){border-left:1px solid #e8ebef; border-right: 1px solid #e8ebef;}
-    .cell-e:nth-child(2), .cell-e:nth-child(3), .cell-e:nth-child(4){border-right: 1px solid #e8ebef;}
+    .cell-p:nth-child(3n){border-left:1px solid #e8ebef; border-right: 1px solid #e8ebef;}
+    .cell-e:nth-child(4n){ border: none;}
     .planTable .cell-p, .headerRow .cell-p{width:33.3%; padding:8px 0; box-sizing:border-box;}
     .planTable .cell-e, .headerRow .cell-e{width: 25%; padding:8px 0; box-sizing:border-box;}
+    .planTable .cell-e{border-right: 1px solid #e8ebef;}
     .planTable .columnHeader{display: none;}
-    .planTable .alt{display: block; font-size: 14px; position: absolute; text-align: center; width:calc(100% - 40px);}
+    .planTable .alt{display: block; font-size: 14px; position: absolute; text-align: center; width:calc(100% - 20px);}
 
-    .legal_plan{margin: 0 0 20px;}
+    .legal_plan{margin: 0 0 20px; float: none;}
 
     .conte_planConfirm .img_mjs{margin: 0 auto 20px; float: none; width: 50px; height: 50px; font-size: 40px;}
     .conte_planConfirm .icon-alert{margin: 0 auto 20px; float: none; width: 50px; height: 50px; font-size: 50px;}
         .img_mjs [class^="icon-"]{padding: 6px 0 0;}
     .plan-confirm{width: 100%; float: none;}
     .plan-confirm h2{font-size: 16px;}
-    .menu-fixed {	
-        position:fixed;
-	    z-index:1000;
-	    top:0;
-	    /*max-width:1000px;*/
-	    left:0;
-	    width:100%;
-	    box-shadow:0px 4px 3px rgba(0,0,0,.5);
-    }
+    .menu-fixed {background: #FFF; position:fixed; z-index:1000;top:0;/*max-width:1000px;*/left:0;width:100%; box-shadow:0 2px 4px rgba(0, 0, 0, 0.1);}
 
     /*FIN PLANES*/
     .comparte_fb{display: none;}
