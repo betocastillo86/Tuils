@@ -139,6 +139,7 @@
                 }
             },
             back: function () {
+                this.isChangingLogin = true;
                 this.close();
                 this.trigger("login", this.sourceModel);
             },
@@ -150,7 +151,7 @@
                     modal: true,
                     close: function () {
                         //Cierra la ventana si no fue autenticado
-                        if (!that.authenticated)
+                        if (!that.authenticated && !that.isChangingLogin)
                             that.trigger('close-authentication');
                     }
                 });

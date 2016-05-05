@@ -77,7 +77,7 @@
                 //Valida autorización
                 this.once("user-authenticated", this.validatePreproduct, this);
                 this.once('authentication-closed', this.showCategories, this);
-                this.once('close-authentication', function () { debugger; }, this);
+                
                 this.validateAuthorization(this.preproductModel);
 
                 this.preproductModel.getByProductType(this.productType);
