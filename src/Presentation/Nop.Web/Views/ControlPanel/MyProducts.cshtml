@@ -109,7 +109,11 @@
 
 
                     <p>@T("myproducts.AvailableStartDate"): @product.AvailableStartDate.ToShortDateString()</p>
-                    <p>@T("myproducts.AvailableEndDate"): @product.AvailableEndDate.ToShortDateString()</p>
+                    @if (product.Published)
+                    {
+                        <p>@T("myproducts.AvailableEndDate"): @product.AvailableEndDate.ToShortDateString()</p>
+                    }
+                    
 
                     <div class="conte_btn">
                         @if (product.Available)

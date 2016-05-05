@@ -275,7 +275,13 @@
         },
         showHelp: function () {
             var currentWidth = window.innerWidth || document.documentElement.clientWidth;
-			this.alert({message : $('#templateHelpImages').html(), autoclose: false, width : (currentWidth < 600 ?  '100%' : 740), height:500 });
+            this.alert({ 
+                message: $('#templateHelpImages').html(), 
+                autoclose: false,
+                width: (currentWidth < 600 ? '100%' : 740), 
+                height: 500 ,
+                position: this.isMobile() ? ['top', 10] : undefined
+                });
 		}
     });
 
