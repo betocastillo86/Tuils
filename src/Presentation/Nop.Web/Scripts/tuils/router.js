@@ -1,16 +1,18 @@
 ﻿define(['jquery', 'underscore', 'backbone', 'configuration', 'storage', 'publishProductView',
-  'tuils/views/panel/myAccount','tuils/views/panel/vendorServices','tuils/views/panel/questionsView','tuils/views/vendor/vendorDetailView'			
-,'tuils/views/product/productDetailView','tuils/views/common/newsletterView','tuils/views/common/searcherView','tuils/views/common/leftFeaturedProductsView'	
+  'tuils/views/panel/myAccount', 'tuils/views/panel/vendorServices', 'tuils/views/panel/questionsView', 'tuils/views/vendor/vendorDetailView'
+, 'tuils/views/product/productDetailView', 'tuils/views/common/newsletterView', 'tuils/views/common/searcherView', 'tuils/views/common/leftFeaturedProductsView'
 , 'tuils/views/common/header', 'tuils/views/panel/offices', 'tuils/views/panel/menu', 'tuils/views/panel/myProductsView', 'tuils/views/home/homeView',
 'tuils/views/product/searchView', 'tuils/views/product/categoryView', 'tuils/views/product/manufacturerView', 'tuils/views/publishProduct/publishView',
 'tuils/views/common/footerView', 'tuils/views/panel/editProductView', 'tuils/views/publishProduct/selectPlanView', 'tuils/views/panel/myOrdersView',
 'tuils/views/publishProduct/showPlansView', 'tuils/views/login/staticLoginView', 'tuils/views/home/aboutUsView', 'tuils/views/landing/landingStoresView',
+'tuils/views/publishProduct/confirmationView',
 'ajaxCart', 'nopCommon'],
     function ($, _, Backbone, TuilsConfiguration, TuilsStorage, PublishProductView,
-        MyAccountView,VendorServicesView ,QuestionsView ,VendorDetailView,
+        MyAccountView, VendorServicesView, QuestionsView, VendorDetailView,
         ProductDetailView, NewsletterView, SearcherView, LeftFeaturedProductsView, HeaderView, OfficesView, MenuPanelView, MyProductsView,
-        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView, EditProductView, SelectPlanView, MyOrdersView, 
-        ShowPlansView, StaticLoginView, AboutUsView, LandingStoresView) {
+        HomeView, SearchView, CategoryView, ManufacturerView, PublishView, FooterView, EditProductView, SelectPlanView, MyOrdersView,
+        ShowPlansView, StaticLoginView, AboutUsView, LandingStoresView,
+        ConfirmationView) {
 
         var TuilsRouter = Backbone.Router.extend({
             currentView: undefined,
@@ -21,7 +23,7 @@
             viewSearcher: undefined,
             viewNewsletter: undefined,
             viewLeftFeatured: undefined,
-            viewFooter : undefined,
+            viewFooter: undefined,
 
             //el por defecto para las vistas
             defaultEl: "#divMainSection",
@@ -44,29 +46,29 @@
                 "ControlPanel/EditProduct(/:id)": "editProduct",
                 "mis-deseos(/:customerGuid)": 'wishlist',
                 "comparar": 'compare',
-                "customer/changepassword" : "changePassword",
+                "customer/changepassword": "changePassword",
                 //"v/:query": "vendor",
                 "c/:categoryName(/*query)": "category",
                 "m/:manufacturerName(/*query)": "manufacturer",
                 "p/:query": "product",
-                'entrar' : 'login',
+                'entrar': 'login',
                 'Catalog/Search(/*query)': 'search',
                 'catalog/search(/*query)': 'search',
                 'buscar(/*query)': 'search',
                 'recordar-clave': 'passwordRecovery',
                 'mapa-del-sitio': 'sitemap',
-                'Home/Close(/*query)' : 'loadSubViews',
-                'quiero-vender/confirmacion/:id':'loadSubViews',
+                'Home/Close(/*query)': 'loadSubViews',
+                'quiero-vender/confirmacion/:id': 'sellConfirm',
                 'condiciones-de-uso': 'useConditions',
                 'contacto': 'contactUs',
                 'quienes-somos': 'aboutUs',
                 'tarifas-y-precios': 'aboutUs',
-                'passwordrecovery/confirm(/*query)' : 'passwordRecovery',
+                'passwordrecovery/confirm(/*query)': 'passwordRecovery',
                 'precios(/:tab)': 'plans',
                 'Sales/PaymentResponse(/*query)': 'paymentResponse',
                 'promociona-tu-taller-de-motos-con-tuils': 'landingRepair',
                 'promociona-tu-negocio-de-motos-con-tuils': 'landingStore',
-                '*path' : 'defaultRoute'
+                '*path': 'defaultRoute'
             },
             defaultRoute: function (path) {
                 //Lo usa para rutas no configuradas en el router, principalmente vendor
@@ -76,15 +78,17 @@
                 else
                     throw "Ruta sin configurar: " + document.location.href;
             },
-            home : function()
-            {
+            home: function () {
                 this.currentView = new HomeView();
                 this.loadSubViews();
             },
-            sell : function()
-            {
+            sell: function () {
                 this.loadSubViews();
-                this.currentView = new PublishView({ el : this.defaultEl });
+                this.currentView = new PublishView({ el: this.defaultEl });
+            },
+            sellConfirm: function (id) {
+                this.loadSubViews();
+                this.currentView = new ConfirmationView({ el: this.defaultEl });
             },
             sellProduct: function (step) {
                 this.sellSwitch(TuilsConfiguration.productBaseTypes.product, step);
@@ -128,12 +132,11 @@
                 this.currentView = new MyOrdersView({ el: this.defaultEl });
                 this.loadSubViewsPanel();
             },
-            plans : function(tab){
-                this.currentView = new ShowPlansView({ el : this.defaultEl, tab : tab });
+            plans: function (tab) {
+                this.currentView = new ShowPlansView({ el: this.defaultEl, tab: tab });
                 this.loadSubViews();
             },
-            changePassword : function()
-            {
+            changePassword: function () {
                 this.loadSubViewsPanel();
             },
             wishlist: function () {
@@ -142,8 +145,7 @@
             compare: function () {
                 this.loadTwoColumns();
             },
-            myProducts : function()
-            {
+            myProducts: function () {
                 var that = this;
                 that.currentView = new MyProductsView({ el: that.defaultEl });
                 this.loadSubViewsPanel();
@@ -161,16 +163,14 @@
                 this.currentView = new VendorServicesView({ el: this.defaultEl });
                 this.loadSubViewsPanel();
             },
-            vendor : function(query)
-            {
+            vendor: function (query) {
                 this.currentView = new VendorDetailView({ el: this.defaultEl });
                 this.loadSubViews();
             },
             sitemap: function () {
                 this.loadSubViews();
             },
-            category : function(categoryName, specification, query)
-            {
+            category: function (categoryName, specification, query) {
                 this.currentView = new CategoryView({ el: this.defaultEl });
                 this.loadTwoColumns();
             },
@@ -199,7 +199,7 @@
                 this.loadTwoColumns();
             },
             landingRepair: function () {
-                this.currentView = new LandingStoresView({el:this.defaultEl, type : 'repair' });
+                this.currentView = new LandingStoresView({ el: this.defaultEl, type: 'repair' });
             },
             landingStore: function () {
                 this.currentView = new LandingStoresView({ el: this.defaultEl, type: 'store' });
@@ -212,8 +212,7 @@
                 this.currentView = new ProductDetailView({ el: this.defaultEl });
                 this.loadSubViews();
             },
-            loadTwoColumns : function()
-            {
+            loadTwoColumns: function () {
                 this.loadSubViews();
                 this.loadLeftFeaturedProducts();
                 this.loadNewsletter();
@@ -234,14 +233,12 @@
                 var that = this;
                 that.viewLeftFeatured = new LeftFeaturedProductsView({ el: '.bestsellers' });
             },
-            loadHeader : function()
-            {
+            loadHeader: function () {
                 var that = this;
 
                 that.viewHeader = new HeaderView();
 
-                if (that.currentView != undefined)
-                {
+                if (that.currentView != undefined) {
                     //se atacha al evento de solicitud de ingreso
                     that.currentView.on('unauthorized', that.viewHeader.showRegister, that.viewHeader);
                     //se atacha al evento de solicitud de registro
@@ -255,8 +252,7 @@
 
                     //Recorre todas las vistas anidadas que requieren autenticación y les agrega los eventos de autorizacion
                     //Esto se hace para controlar estos eventos en las vistas que no son de primer nivel
-                    if (that.currentView.requiredViewsWithAuthentication && that.currentView.requiredViewsWithAuthentication.length > 0)
-                    {
+                    if (that.currentView.requiredViewsWithAuthentication && that.currentView.requiredViewsWithAuthentication.length > 0) {
                         for (var i = 0; i < that.currentView.requiredViewsWithAuthentication.length; i++) {
                             var view = that.currentView.requiredViewsWithAuthentication[i];
                             //se atacha al evento de solicitud de ingreso
