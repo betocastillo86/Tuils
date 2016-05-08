@@ -83,10 +83,7 @@
                     this.height = 150;
                 }
 
-                if (args.position)
-                {
-                    this.$el.parent().css('top', 10);
-                }
+                
 
                 if (args.width)
                 {
@@ -100,6 +97,11 @@
                 
                 $('body').addClass('body-noscroll');
                 this.$el.dialog('open');
+
+                if (args.position) {
+                    this.$el.parent().css('top', 10);
+                    $('body').removeClass('body-noscroll');
+                }
             },
             render: function () {
                 //this.loadControls();

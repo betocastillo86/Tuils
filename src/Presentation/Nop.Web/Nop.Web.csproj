@@ -1217,6 +1217,7 @@
     <Content Include="Scripts\tuils\views\product\reviewView.js" />
     <Content Include="Scripts\tuils\views\product\categoryView.js" />
     <Content Include="Scripts\tuils\views\product\searchView.js" />
+    <Content Include="Scripts\tuils\views\publishProduct\confirmationView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\previousProductCreatedView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\publishView.js" />
     <Content Include="Scripts\tuils\views\publishProduct\selectPlanView.js" />
