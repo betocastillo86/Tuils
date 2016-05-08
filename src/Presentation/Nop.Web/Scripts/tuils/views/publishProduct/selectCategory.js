@@ -1,11 +1,11 @@
-﻿define(['jquery', 'underscore', 'backbone', 'categoryModel', 'handlebars', 'configuration', 'baseView', 'handlebarsh'],
-    function ($, _, Backbone, CategoryModel, Handlebars, TuilsConfiguration, BaseView) {
+﻿define(['jquery', 'underscore', 'backbone', 'categoryModel', 'handlebars', 'configuration', 'baseView', 'categoryCollection', 'handlebarsh'],
+    function ($, _, Backbone, CategoryModel, Handlebars, TuilsConfiguration, BaseView, CategoryCollection) {
         
         var SelectCategoryView = BaseView.extend({
 
             events: {
-                "click .divCategorySelector li": "loadCategories",
-                "change select": "loadCategories",
+                "click .divCategorySelector li": "loadSubCategories",
+                "change select": "loadSubCategories",
                 "keyup input[type='text']": "filterCategories",
                 "click .btn_continue": "finishSelection"
             },
@@ -65,25 +65,52 @@
                 this.divShowCategories = this.$(".divShowCategories");
             },
             loadChildrenCategories: function (parentId) {
-                var category = new CategoryModel();
-                category.on("sync", this.showCategories, this);
-                category.getCategory(this.currentCategory);
-                this.showLoading(category, true);
-                
+                //var category = new CategoryModel();
+                //category.on("sync", this.showCategories, this);
+                //category.getCategory(this.currentCategory);
+                //this.showLoading(category, true);
+                var categories = new CategoryCollection();
+                categories.on('sync', this.showCategories, this);
+                categories.getSubcategories(this.currentCategory);
+                this.showLoadingAll(categories);
+            },
+            showCategories: function (categories) {
+                if (categories.length > 0) {
+
+                    if (!this.divShowCategories)
+                        this.divShowCategories = this.$('.divShowCategories');
+
+                    this.divShowCategories.append(this.template({ CurrentLevel: this.currentLevel, Categories: categories.toJSON() }));
+
+                    if (!this.autoSelectCategories && this.isMobile())
+                        this.scrollFocusObject(".category-column:last", -50);
+                    
+                    //Intenta autoseleccionar categorias si es necesario
+                    this.autoselectCategory();
+
+                    this.trigger("categories-loaded");
+                    this.$(".btn_continue").hide();
+                }
+                else {
+                    this.$(".btn_continue").show();
+                    if (!this.autoSelectCategories)
+                        this.scrollFocusObject(".btn_continue", -150);
+                }
             },
             loadDefaultCategories: function () {
                 this.currentCategory = this.productType;
                 this.loadChildrenCategories();
             },
-            loadCategories: function (obj) {
+            loadSubCategories: function (obj) {
                 obj = $(obj.currentTarget);
                 var isSelect = obj.is('select');
-                var categoryId = parseInt(isSelect ? obj.val() : obj.attr("tuils-id"));
-                var selectedLevel = parseInt(obj.attr("tuils-level"));
+                var categoryId = parseInt(isSelect ? obj.val() : obj.data('id'));
+                var selectedLevel = parseInt(obj.data('level'));
 
                 //Si la selección llega a ser del botón entonces no la tiene en cuenta
                 if (!isNaN(categoryId)) {
 
+                    //Agrega el estilo al seleccionado
                     if (!isSelect) {
                         obj.parent().find(".cat_select").removeClass("cat_select");
                         obj.addClass("cat_select");
@@ -94,7 +121,7 @@
 
                     //actualiza la miga de pan
                     this.breadCrumbCategories = _.first(this.breadCrumbCategories, this.currentLevel - 1);
-                    this.breadCrumbCategories.push(obj.find('option:selected').text());
+                    this.breadCrumbCategories.push(this.isMobile() ?  obj.find('option:selected').text() : obj.html());
                     this.model.set('breadCrumb', this.breadCrumbCategories);
                     //Empuja al array la secuencia de categorías seleccionadas
                     this.arrayCategories = _.first(this.arrayCategories, this.currentLevel - 1);
@@ -120,43 +147,14 @@
                 {
                     var newCategory = this._tempPreviousCategories[0];
                     if (this.isMobile())
-                        this.$('select[tuils-level="' + this.currentLevel + '"]').val(newCategory).change();
+                        this.$('select[data-level="' + this.currentLevel + '"]').val(newCategory).change();
                     else
-                        this.$('li[tuils-id="' + newCategory + '"]').click();
+                        this.$('li[data-id="' + newCategory + '"]').click();
                     //Elimina la posición ya fue cargada
                     this._tempPreviousCategories.splice(0, 1);
                 }
             },
-            showCategories: function (category) {
-                var obj = category.toJSON();
-                obj['currentLevel'] = this.currentLevel;
-                
-
-                if (obj.ChildrenCategories.length > 0) {
-                    
-                    if (!this.divShowCategories)
-                        this.divShowCategories = this.$('.divShowCategories');
-
-                    this.divShowCategories.append(this.template(obj));
-
-                    //Solo permite mostrar el buscador para más de 5 categorias
-                    //if (!this.isMobile() && obj.ChildrenCategories.length < this.minChildrenCategoriesForFiltering)
-                    //    this.divShowCategories.find("ul:last input[type='text']").hide();
-                    if (!this.autoSelectCategories && this.isMobile())
-                        this.scrollFocusObject(".category-column:last", -50);
-
-                    //Intenta autoseleccionar categorias si es necesario
-                    this.autoselectCategory();
-
-                    this.trigger("categories-loaded");
-                    this.$(".btn_continue").hide();
-                }
-                else {
-                    this.$(".btn_continue").show();
-                    if (!this.autoSelectCategories)
-                        this.scrollFocusObject(".btn_continue", -150);
-                }
-            },
+            
             filterCategories: function (obj) {
 
                 var parentObj = $(obj.target.parentElement);
@@ -175,6 +173,7 @@
             finishSelection: function () {
                 this.model.set('CategoryId', this.currentCategory);
                 this.trigger("category-selected", this.model);
+                this.trigger("save-preproduct", this.model);
             }
         });
 

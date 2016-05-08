@@ -1,0 +1,71 @@
+﻿@model Nop.Admin.Models.Preproducts.PreproductModel
+@{
+    //page title
+    ViewBag.Title = T("Admin.Configuration.Preproduct.Edit").Text;
+}
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "country-form" }))
+{
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-configuration.png")" alt="" />
+            @T("Admin.Configuration.Preproduct.Edit")
+        </div>
+        <div class="options">
+            <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />
+        </div>
+    </div>
+
+
+
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Id):
+            </td>
+            <td class="adminData">
+                @Html.DisplayFor(model => model.Id)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.ProductName):
+            </td>
+            <td class="adminData">
+                @Html.DisplayFor(model => model.ProductName)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.CustomerEmail):
+            </td>
+            <td class="adminData">
+                @Html.DisplayFor(model => model.CustomerEmail)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.CreatedOnUtc):
+            </td>
+            <td class="adminData">
+                @Html.DisplayFor(model => model.CreatedOnUtc)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.UpdatedOnUtc):
+            </td>
+            <td class="adminData">
+                @Html.DisplayFor(model => model.UpdatedOnUtc)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.JsonObject):
+            </td>
+            <td class="adminData">
+                @Html.Raw(Model.JsonObject.Replace(",\"", ",<br>\""))
+            </td>
+        </tr>
+    </table>
+
+}

@@ -13,7 +13,7 @@
             <ul class="picture-resume">
                 {{#each Images}}
                 <li>
-                    <img src="{{src}}" />
+                    <img src="/TempFiles/{{#if thumbnail}}{{thumbnail}}{{else}}{{guid}}{{/if}}" />
                 </li>
 
                 {{/each}}

@@ -1,9 +1,11 @@
 ﻿define(['jquery', 'underscore', 'baseView', 'productModel', 'storage',
     'configuration', 'publishProductSelectCategoryView', 'publishProductProductDetailView',
-     'publishProductSummaryView', 'tuils/views/publishProduct/previousProductCreatedView', 'imageSelectorView', 'resources'],
+     'publishProductSummaryView', 'tuils/views/publishProduct/previousProductCreatedView', 'imageSelectorView', 'resources',
+       'tuils/models/preproduct'],
     function ($, _, BaseView, ProductModel, TuilsStorage,
         TuilsConfiguration, SelectCategoryView, ProductDetailView,
-        SummaryView, PreviousProductCreatedView, ImagesSelectorView, TuilsResources) {
+        SummaryView, PreviousProductCreatedView, ImagesSelectorView, TuilsResources,
+        PreproductModel) {
 
         var PublishProductView = BaseView.extend({
 
@@ -17,6 +19,7 @@
             viewImageSelector: undefined,
             viewSummary: undefined,
             viewPublishFinished: undefined,
+            preproductModel : undefined,
             //EndViews
 
             currentStep: 1,
@@ -51,32 +54,87 @@
             },
             loadControls: function () {
                 this.beforeUnload('No has terminado la publicación del producto');
+
+                //Creacion del modelo
                 this.model = new ProductModel({ 'ProductTypeId': this.productType });
-                this.on("user-authenticated", this.save, this);
+                
                 this.model.on('sync', this.productSaved, this);
                 this.model.on('error', this.errorOnSaving, this);
 
-                if (this.hasPreviousProductStorage()) {
+                if (!this.skipPreproduct)
+                    this.validatePreproduct();
+
+                //Carga el paso 1 y las categorias
+                //this.showStep();
+                //this.showCategories();
+
+                this.hidePublishButton();
+            },
+            validatePreproduct: function () {
+                this.preproductModel = new PreproductModel({ 'ga_action' : 'Publicacion'});
+                this.preproductModel.once('sync', this.preproductLoaded, this);
+
+                //Valida autorización
+                this.once("user-authenticated", this.validatePreproduct, this);
+                this.once('authentication-closed', this.showCategories, this);
+                
+                this.validateAuthorization(this.preproductModel);
+
+                this.preproductModel.getByProductType(this.productType);
+            },
+            preproductLoaded: function (preproductModel) {
+                if (preproductModel.get('Id') > 0) {
+                    this.model.set(preproductModel.toJSON());
+                    this.model.unset('Id');
+
+                    //realiza la validación de los campos numericos que no pueden ser 0
+                    if (this.model.get('ManufacturerId') == 0)
+                        this.model.unset('ManufacturerId');
+                    if (this.model.get('Price') == 0)
+                        this.model.unset('Price');
+                    if (this.model.get('StateProvince') == 0)
+                        this.model.unset('StateProvince');
+                    if (this.model.get('SuppliesValue') == 0)
+                        this.model.unset('SuppliesValue');
+                    if (this.model.get('Kms') == 0)
+                        this.model.unset('Kms');
+                    if (this.model.get('AdditionalShippingCharge') == 0)
+                        this.model.unset('AdditionalShippingCharge');
+                    
                     this.showPreviousProductCreated();
                 }
                 else {
                     this.showStep();
                     this.showCategories();
                 }
-
-                this.hidePublishButton();
             },
             showPreviousProductCreated: function () {
                 this.viewPreviousProductCreated = new PreviousProductCreatedView({ el: '#divStep_0', model: this.model });
-                this.viewPreviousProductCreated.on('previousProduct-createNew', this.loadControls, this);
+                this.viewPreviousProductCreated.on('previousProduct-createNew', this.removePreproduct, this);
                 this.viewPreviousProductCreated.on('previousProduct-recover', this.recoverProduct, this);
                 this.currentStep = 0;
                 this.showStep();
             },
+            removePreproduct: function () {
+                //Despues que se escoge remover el preproducto se elimina y marca para saltarse la carga del preproducto
+                this.preproductModel.deleteById(this.productType);
+                this.skipPreproduct = true;
+                
+                this.loadControls();
+                this.currentStep = 1;
+                this.showStep();
+                this.showCategories();
+            },
             showCategories: function (autoSelectCategories) {
                 var that = this;
-                that.viewSelectCategory = new SelectCategoryView({ el: "#divStep_1", productType: that.productType, model: this.model, autoSelectCategories: autoSelectCategories });
+                that.viewSelectCategory = new SelectCategoryView({
+                    el: "#divStep_1",
+                    productType: that.productType,
+                    model: this.model,
+                    autoSelectCategories: autoSelectCategories
+                });
                 that.viewSelectCategory.on("category-selected", that.showProductDetail, that);
+                that.viewSelectCategory.on("save-preproduct", that.savePreproduct, that);
                 //that.viewSelectCategory.once("categories-loaded", TuilsStorage.loadBikeReferences);
                 that.viewSelectCategory.on("categories-middle-selected", that.restartNextStep, that);
             },
@@ -89,52 +147,37 @@
                 if (!this.viewProductDetail) {
 
                     var that = this;
-                    that.viewProductDetail = new ProductDetailView({ el: "#divStep_2", productType: that.productType, selectedCategory: this.model.get('CategoryId'), model: that.model });
+                    that.viewProductDetail = new ProductDetailView({
+                        el: "#divStep_2",
+                        productType: that.productType,
+                        selectedCategory: this.model.get('CategoryId'),
+                        model: that.model,
+                        isPreproduct : that.isPreproduct
+                    });
                     that.viewProductDetail.on("detail-product-finished", that.showPictures, that);
                     that.viewProductDetail.on("detail-product-back", that.showStepBack, that);
+                    that.viewProductDetail.on("save-preproduct", that.savePreproduct, that);
                 }
             },
             recoverProduct: function () {
                 this.currentStep = 1;
+                this.isPreproduct = true;
                 //Envia parametro en el que debe autoseleccionar las categorias previamente escogidas en el modelo
                 this.showCategories(true);
                 this.showProductDetail();
-            },
-            //Valia si hay un producto almacenado valido para esta sección
-            //Solo es valido si es del mismo tipo. Es decir si el usuario está entrando en 
-            //publicar un servicio el producto en el storage debe ser de tipo servicio
-            //de lo contrario es eliminado
-            hasPreviousProductStorage: function () {
-                var publishedProduct = TuilsStorage.getPublishProduct();
-                if (publishedProduct && publishedProduct.ProductTypeId == this.productType) {
-                    ////Si hay datos pasa automáticamente al paso 2
-                    this.model.set(publishedProduct);
-                    //this.showProductDetail(publishedProduct.CategoryId);
-                    return true;
-                }
-                else {
-                    this.currentStep = 1;
-                    TuilsStorage.setPublishProduct(undefined);
-                    return false;
-                }
-
             },
             showPictures: function (model) {
                 this.model = model;
                 this.showNextStep();
                 var that = this;
 
-                if (this.productType != TuilsConfiguration.productBaseTypes.service) {
-                    if (!this.viewImageSelector) {
-                        //Si es de tipo motocicleta debe cargar 4 imagenes
-                        var minFilesUploaded = this.productType == TuilsConfiguration.productBaseTypes.bike ? 4 : 1;
-                        that.viewImageSelector = new ImagesSelectorView({ el: "#divStep_3", model: that.model, minFilesUploaded: minFilesUploaded });
-                        that.viewImageSelector.on("images-save", that.showSummary, that);
-                        that.viewImageSelector.on("images-back", that.showStepBack, that);
-                    }
-                }
-                else {
-                    this.showSummary();
+                if (!this.viewImageSelector) {
+                    //Si es de tipo motocicleta debe cargar 4 imagenes
+                    var minFilesUploaded = this.productType == TuilsConfiguration.productBaseTypes.bike ? 4 : 2;
+                    that.viewImageSelector = new ImagesSelectorView({ el: "#divStep_3", model: that.model, minFilesUploaded: minFilesUploaded });
+                    that.viewImageSelector.on("images-save", that.showSummary, that);
+                    that.viewImageSelector.on("images-back", that.showStepBack, that);
+                    that.viewImageSelector.on("save-preproduct", that.savePreproduct, that);
                 }
 
             },
@@ -146,11 +189,10 @@
                 this.showNextStep();
 
                 if (!this.viewSummary) {
-
-                    var that = this;
-                    that.viewSummary = new SummaryView({ el: "#divStep_4", product: that.model, images: that.images, productType: that.productType });
-                    that.viewSummary.on("summary-back", that.showStepBack, that);
-                    that.viewSummary.on("summary-save", that.save, that);
+                    this.viewSummary = new SummaryView({ el: "#divStep_4", product: this.model, images: this.images, productType: this.productType });
+                    this.viewSummary.on('summary-back', this.showStepBack, this);
+                    this.viewSummary.on('summary-save', this.save, this);
+                    this.viewSummary.on('save-preproduct', this.savePreproduct, this);
                 }
                 else {
                     this.viewSummary.loadControls({ product: this.model, images: this.images, breadCrumb: this.viewSelectCategory.breadCrumbCategories });
@@ -165,9 +207,9 @@
                     this.$("div[id^='divStep_']").hide();
                     this.scrollFocusObject('.wizard-breadcrumb', -50);
 
-                    //Actualiza el producto en el storage y realiza la navegación
-                    if (this.currentStep > 1)
-                        this.model.on('change', TuilsStorage.setPublishProduct);
+                    ////////Actualiza el producto en el storage y realiza la navegación
+                    ////////AJUSTAR -->if (this.currentStep > 1)
+                    ////////AJUSTAR -->    this.model.on('change', TuilsStorage.setPublishProduct);
                     if (this.currentStep)
                         Backbone.history.navigate('quiero-vender/' + this.productTypeName + '/' + this.currentStep);
                 }
@@ -265,7 +307,24 @@
                 this.viewPublishFinished = new PublishFinishedView({ el: '#divStep_5', model: this.model, images: this.images });
                 this.$(".wizard-breadcrumb").hide();
             },
+            savePreproduct: function () {
+                
+                //Intenta guardar el premodelo
+                if (!this.preproductModel)
+                    this.preproductModel = new PreproductModel({ 'ga_action': 'Publicacion' });
+
+                this.preproductModel.set(this.model.toJSON());
+                //Se agrega evento ONCE ya que va intentar salvar el producto
+                this.once("user-authenticated", this.savePreproduct, this);
+                
+                //this.showLoadingAll(this.preModel);
+                this.validateAuthorization(this.preproductModel);
+
+                this.preproductModel.save();
+            },
             productSaved: function (model) {
+                this.$('#divStep_5').show();
+                this.$('.alert-public').hide();
                 this.cancelBeforeUnload();
                 this.viewSelectCategory.remove();
                 if (this.viewImageSelector) this.viewImageSelector.remove();
@@ -278,6 +337,7 @@
                 document.location.href = '/mis-productos/seleccionar-plan/' + this.model.get('Id');
             },
             save: function () {
+                this.once("user-authenticated", this.save, this);
                 this.showLoadingAll(this.model);
                 this.validateAuthorization();
                 this.model.publish();

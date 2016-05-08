@@ -56,7 +56,7 @@
                 this.login();
         },
         login: function () {
-            this.validateControls(undefined, false);
+            this.validateControls(undefined, false, true);
 
             if (this.model.isValid()) {
                 this.showLoadingAll(this.model);
@@ -65,6 +65,7 @@
         },
         userAuthenticated : function(model){
             this.trigger("user-authenticated", model);
+            this.authenticated = true;
             this.$el.dialog('close');
 
             //Si el origen del registro es por darle clic en el boton registro
@@ -77,10 +78,16 @@
             alert(error.responseJSON.ModelState ? error.responseJSON.ModelState.errorMessage : error.responseJSON.Message);
         },
         show: function () {
+            var that = this;
             this.$el.dialog({
                 width: window.innerWidth < 365 ? 300 : 365,
                 title : Resources.account.login,
-                modal : true
+                modal : true,
+                close: function () {
+                    //Cierra la ventana si no fue autenticado
+                    if (!that.authenticated)
+                        that.trigger('close-authentication');
+                }
             });
         },
         close : function(){

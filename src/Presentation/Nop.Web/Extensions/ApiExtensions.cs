@@ -26,7 +26,7 @@ namespace Nop.Web.Extensions.Api
         public static MinifiedJson ToMinifiedModel<T>(this T model, string label = "Name", string value = "Id") where T : class
         {
             string labelValue = model.GetType().GetProperty(label).GetValue(model).ToString();
-            string valueValue = model.GetType().GetProperty(value).GetValue(model).ToString();
+            int valueValue = int.Parse(model.GetType().GetProperty(value).GetValue(model).ToString());
             return new MinifiedJson(valueValue, labelValue);
         }
 

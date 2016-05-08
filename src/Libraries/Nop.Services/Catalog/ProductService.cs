@@ -2278,7 +2278,9 @@ namespace Nop.Services.Catalog
         /// </summary>
         /// <param name="customerId">Id del usuario que crea el contenido</param>
         /// <param name="product">Datos del producto</param>
-        public void PublishProduct(Product product)
+        /// <param name="vendor">Vendedor que está publicando el producto</param>
+        /// <param name="sendNotification">True: envia la notificación de publicación</param>
+        public void PublishProduct(Product product, Vendor vendor, bool sendNotification = true)
         {
 
             //Busca cual es el plan gratis y cara el valor DisplayOrder por defecto
@@ -2287,7 +2289,7 @@ namespace Nop.Services.Catalog
             var rootCategory = _categoryService.GetRootCategoryByCategoryId(product.ProductCategories.FirstOrDefault().CategoryId);
             if (rootCategory == null)
                 throw new NopException(CodeNopException.CategoryDoesntExist);
-            else if (rootCategory.Id == _tuilsSettings.productBaseTypes_service && _workContext.CurrentVendor.VendorType != Core.Domain.Vendors.VendorType.Market)
+            else if (rootCategory.Id == _tuilsSettings.productBaseTypes_service && vendor.VendorType == Core.Domain.Vendors.VendorType.User)
                 throw new NopException(CodeNopException.UserTypeNotAllowedPublishProductType, _localizationService.GetResource("publishProduct.error.publishInvalidCategoryService"));
 
             //Si tiene imagenes temporales por cargar las crea
@@ -2309,12 +2311,15 @@ namespace Nop.Services.Catalog
             else
             {
                 //Carga la imagen por defecto de los servicios
-                product.ProductPictures.Add(new ProductPicture()
+                if (rootCategory.Id == _tuilsSettings.productBaseTypes_service)
                 {
-                    PictureId = _catalogSettings.DefaultServicePicture,
-                    DisplayOrder = 0,
-                    Active = true
-                });
+                    product.ProductPictures.Add(new ProductPicture()
+                    {
+                        PictureId = _catalogSettings.DefaultServicePicture,
+                        DisplayOrder = 0,
+                        Active = true
+                    });    
+                }
             }
 
 
@@ -2336,7 +2341,7 @@ namespace Nop.Services.Catalog
             product.OrderMaximumQuantity = 1;
             product.StockQuantity = _tuilsSettings.defaultStockQuantity;
 
-            var vendor = _workContext.CurrentVendor;
+            //var vendor = _workContext.CurrentVendor;
 
 
             //Ya que al publicar todavía no se cuenta con la compra del plan se selecciona el plan gratis
@@ -2366,7 +2371,7 @@ namespace Nop.Services.Catalog
             try
             {
                 //Despues de insertar envía la notificación
-                if (product.Id > 0)
+                if (product.Id > 0 && sendNotification)
                     _workflowMessageService.SendProductPublishedNotificationMessage(product, _workContext.WorkingLanguage.Id);
             }
             catch (Exception e)

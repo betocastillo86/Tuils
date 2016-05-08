@@ -410,5 +410,11 @@ namespace Nop.Core.Domain.Catalog
         /// Imagen por defecto relacionada a los servicios
         /// </summary>
         public int DefaultServicePicture { get; set; }
+
+
+        /// <summary>
+        /// Listado de categorias separadas por coma que no pueden permitir productos usados
+        /// </summary>
+        public string DisabledCategoriesForUsedProducts { get; set; }
     }
 }

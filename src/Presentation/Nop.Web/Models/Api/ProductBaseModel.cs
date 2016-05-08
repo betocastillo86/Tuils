@@ -27,7 +27,7 @@ namespace Nop.Web.Models.Api
         public bool IsShipEnabled { get; set; }
 
         //[RequiredIf("IsShipEnabled", true)]
-        //public decimal AdditionalShippingCharge { get; set; }
+        public decimal AdditionalShippingCharge { get; set; }
 
         public decimal Price { get; set; }
 
@@ -74,5 +74,8 @@ namespace Nop.Web.Models.Api
         /// Cuando viene en True no tiene en cuenta si el usuario a creado productos similares o no
         /// </summary>
         public bool OmitRepetedProduct { get; set; }
+
+        public IList<int> _arrayCategories { get; set; }
+        
     }
 }

@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mapping\Catalog\ManufacturerCategoryMap.cs" />
+    <Compile Include="Mapping\Catalog\PreProductMap.cs" />
     <Compile Include="Mapping\Catalog\ProductQuestionMap.cs" />
     <Compile Include="Mapping\Catalog\SpecialCategoryProductMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeMap.cs" />
@@ -256,6 +257,14 @@
     <Compile Include="Migrations\201512221937464_AddTable_VendorReviews.cs" />
     <Compile Include="Migrations\201512221937464_AddTable_VendorReviews.Designer.cs">
       <DependentUpon>201512221937464_AddTable_VendorReviews.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603192352042_Add_Table_Preproduct.cs" />
+    <Compile Include="Migrations\201603192352042_Add_Table_Preproduct.Designer.cs">
+      <DependentUpon>201603192352042_Add_Table_Preproduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604102038041_AddColumns_UserAgent_ProductName_TablePreproduct.cs" />
+    <Compile Include="Migrations\201604102038041_AddColumns_UserAgent_ProductName_TablePreproduct.Designer.cs">
+      <DependentUpon>201604102038041_AddColumns_UserAgent_ProductName_TablePreproduct.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="QueryableExtensions.cs" />
@@ -519,6 +528,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512221937464_AddTable_VendorReviews.resx">
       <DependentUpon>201512221937464_AddTable_VendorReviews.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603192352042_Add_Table_Preproduct.resx">
+      <DependentUpon>201603192352042_Add_Table_Preproduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604102038041_AddColumns_UserAgent_ProductName_TablePreproduct.resx">
+      <DependentUpon>201604102038041_AddColumns_UserAgent_ProductName_TablePreproduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

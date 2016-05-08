@@ -18,7 +18,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                     this.set('IncludeSuppliesName', this.get('IncludeSupplies') ? 'Si' : 'No')
                 }, this);
                 this.on('change:CallForPrice', function () {
-                    this.set('Price', this.get('CallForPrice') ? 0 : '');
+                    this.set('Price', this.get('CallForPrice') ? 0 : this.get('Price'));
                 });
             },
 
@@ -68,7 +68,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                 },
                 PhoneNumber: {
                     required: false,
-                    minLength : 6
+                    minLength : 7
                 },
                 Condition: {
                     required: function (val, attr, computed) {
@@ -94,7 +94,10 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                         return computed.ProductTypeId == TuilsConfiguration.productBaseTypes.bike;
                     },
                     pattern: 'number',
+
                     max :1000000
+
+                    //maxLength :10
                 },
                 IsNew: {
                     required: function (val, attr, computed) {

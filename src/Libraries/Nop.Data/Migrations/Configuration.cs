@@ -1252,6 +1252,7 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Landing.Store", "¿Tienes un almacen de motos?");
                 newLocaleStringResources.Add("PublishProduct.DefaultErrorResponse", "Ocurrió un error, intentalo de nuevo. Si el error persiste, <a href='https://www.facebook.com/mototuils' target='_blank'>escribenos a nuestro Facebook</a> y te ayudamos con la publicación");
                 newLocaleStringResources.Add("PublishProduct.AskUserPublishSimilarProduct", "Ya tienes publicado un producto similar a este hace muy poco tiempo. ¿Estas seguro que deseas publicarlo?");
+
                 newLocaleStringResources.Add("admin.common.products", "Productos");
                 newLocaleStringResources.Add("admin.catalog.products.vendors.products.productid", "Id");
                 newLocaleStringResources.Add("admin.catalog.products.vendors.products.name", "Nombre");
@@ -1260,6 +1261,16 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Vendors.Fields.CustomerId.Hint", "Usuario asociado");
                 newLocaleStringResources.Add("Admin.Catalog.Products.Fields.NumClicksForMoreInfo", "Vistas del teléfono");
 
+
+                newLocaleStringResources.Add("PublishProduct.LoadingLastStep", "Espera un momento mientras carga el último paso");
+                newLocaleStringResources.Add("PublishProduct.ErrorBrowserFacebook", "Si tienes algún problema subiendo las fotos de tu producto <a href='https://www.facebook.com/mototuils' target='_blank'>escribenos a nuestra pagina de Facebook.</a> y realiza la publicación sin fotos");
+                newLocaleStringResources.Add("Admin.Catalog.Preproducts.Manage", "Administrar preproductos");
+                newLocaleStringResources.Add("Admin.Catalog.Preproducts.Fields.ProductName", "Nombre de producto");
+                newLocaleStringResources.Add("Admin.Catalog.Preproducts.Fields.CreatedOnUtc", "Fecha de creación");
+                newLocaleStringResources.Add("Admin.Catalog.Preproducts.Fields.UpdatedOnUtc", "Fecha de actualización");
+                newLocaleStringResources.Add("Admin.Configuration.Preproduct.Edit", "Cargar preproducto");
+
+                
                 //Recorre todas las llaves que desea adicional
                 foreach (var resource in newLocaleStringResources)
                 {
@@ -2579,6 +2590,8 @@ namespace Nop.Data.Migrations
                 settings.Add("vendorsettings.DaysUpdateShopFirstEmail", "2");
                 settings.Add("vendorsettings.DaysUpdateShopSecondEmail", "30");
                 settings.Add("commonSettings.ActiveFacebookPixels", "701079780023326");
+                settings.Add("catalogSettings.DisabledCategoriesForUsedProducts", "94,79");
+                
 
                 
                 

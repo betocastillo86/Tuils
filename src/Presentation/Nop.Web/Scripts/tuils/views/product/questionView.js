@@ -33,7 +33,9 @@
 
                     if (TuilsConfiguration.captcha.showOnQuestions)
                         this.model.set("recaptcha_challenge_field", this.$("#recaptcha_challenge_field").val());
+
                     this.model.set("ProductId", $("#ProductId").val());
+
                     this.validateAuthorization();
                     this.model.newQuestion();
                 }

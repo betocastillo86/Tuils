@@ -24,6 +24,7 @@ using Nop.Services.Seo;
 using Nop.Utilities;
 using Nop.Web.Models.Catalog;
 using Nop.Services.Logging;
+using Nop.Core.Infrastructure;
 
 
 namespace Nop.Web.Controllers.Api
@@ -33,6 +34,7 @@ namespace Nop.Web.Controllers.Api
     {
         #region Fields
         private readonly IProductService _productService;
+        private readonly IPreproductService _preproductService;
         private readonly IWorkContext _workContext;
         private readonly IVendorService _vendorService;
         private readonly ICategoryService _categoryService;
@@ -60,7 +62,8 @@ namespace Nop.Web.Controllers.Api
             IPictureService pictureService,
             IPriceFormatter priceFormatter,
             PlanSettings planSettings,
-            ILogger logger)
+            ILogger logger,
+            IPreproductService preproductService)
         {
             this._productService = productService;
             this._workContext = workContext;
@@ -75,6 +78,7 @@ namespace Nop.Web.Controllers.Api
             this._priceFormatter = priceFormatter;
             this._planSettings = planSettings;
             this._logger = logger;
+            this._preproductService = preproductService;
         }
         #endregion
         [Route("api/products")]
@@ -118,15 +122,42 @@ namespace Nop.Web.Controllers.Api
                     //retorna el error
                     if (!model.OmitRepetedProduct && _productService.UserHasSimilarProductPublised(product, 1))
                     {
-                        _logger.Debug(string.Format("Usuario intenta publicar un producto doble vez: {0}", product.Name));
+                        _logger.Warning(string.Format("Usuario intenta publicar un producto doble vez: {0}", product.Name));
                         ModelState.AddModelError("ErrorCode", Convert.ToInt32(CodeNopException.UserHasHasPublishedSimilarProduct).ToString());
                         ModelState.AddModelError("ErrorMessage", _localizationService.GetResource("PublishProduct.AskUserPublishSimilarProduct"));
                         return BadRequest(ModelState);
                     }
 
-
+                    //Reemplaza los saltos de linea con BR en la descripción
+                    product.FullDescription = product.FullDescription.Replace("\n", "</br>");
                     //Crea el producto en un estado inactivo 
-                    _productService.PublishProduct(product);
+                    _productService.PublishProduct(product, _workContext.CurrentVendor);
+
+                    //Elimina los preproductos existentes previamente
+                    Task.Factory.StartNew(() => {
+                        var preproductService = EngineContext.Current.Resolve<IPreproductService>();
+                        var pictureService = EngineContext.Current.Resolve<IPictureService>();
+
+                        var preproducts = preproductService.GetAllByUserAndType(_workContext.CurrentCustomer.Id, model.ProductTypeId);
+                        if (preproducts.Count > 0)
+                        {
+                            foreach (var preproduct in preproducts)
+                            {
+                                var modelPreproduct = preproduct.ToSerializedObject();
+                                //Elimina el registro de Base de datos
+                                preproductService.Delete(preproduct);
+
+                                if (modelPreproduct.TempFiles != null)
+                                {
+                                    //Elimina los archivos de base de datos
+                                    pictureService.RemovePicturesFromTempFiles(modelPreproduct.TempFiles.ToArray(), 300);
+                                }
+                            }
+                        }
+                    });
+
+                    //_preproductService.RemovePreproductsByCustomerId(_workContext.CurrentCustomer.Id, model.ProductTypeId);
+
                     return Ok(new { Id = product.Id });
                 }
                 catch (NopException e)

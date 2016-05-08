@@ -150,8 +150,10 @@
     <Compile Include="Catalog\CategoryTemplateService.cs" />
     <Compile Include="Catalog\IBackInStockSubscriptionService.cs" />
     <Compile Include="Catalog\IManufacturerTemplateService.cs" />
+    <Compile Include="Catalog\IPreproductService.cs" />
     <Compile Include="Catalog\LeftFeaturedByVendorModel.cs" />
     <Compile Include="Catalog\PlanModel.cs" />
+    <Compile Include="Catalog\PreproductService.cs" />
     <Compile Include="Catalog\RoundingHelper.cs" />
     <Compile Include="Catalog\ManufacturerTemplateService.cs" />
     <Compile Include="Catalog\ICategoryTemplateService.cs" />
@@ -216,6 +218,7 @@
     <Compile Include="Helpers\ObjectExtensions.cs" />
     <Compile Include="Helpers\UserAgentHelper.cs" />
     <Compile Include="Logging\ClearLogTask.cs" />
+    <Compile Include="Media\PictureOrientationType.cs" />
     <Compile Include="Media\ResizeType.cs" />
     <Compile Include="Shipping\EventPublisherExtensions.cs" />
     <Compile Include="Vendors\ValidateVendorExpiredPlansTask.cs" />

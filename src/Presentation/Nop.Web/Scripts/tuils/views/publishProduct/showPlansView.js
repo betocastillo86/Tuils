@@ -16,6 +16,7 @@
                 var defaultTab = args.tab ? args.tab : 'personas';
                 this.activeTab(defaultTab, false);
                 this.model = new BaseModel();
+                this.validateScroll();
                 this.render();
             },
             changeTab: function (obj) {
@@ -67,7 +68,21 @@
                 if(nav)
                     Backbone.history.navigate('precios/' + tab, { replace :true });
             },
-
+            validateScroll: function () {
+                if (this.isMobile())
+                {
+                    var objScroll = this.$('.headerPlans');
+                    var height = objScroll.offset().top;
+                    var that = this;
+                    $(window).on('scroll', function () {
+                        if ($(window).scrollTop() > 120) {
+                            objScroll.addClass('menu-fixed');
+                        } else {
+                            objScroll.removeClass('menu-fixed');
+                        }
+                    });
+                }
+            },
             isFreePlan: function () {
                 return this.selectedPlan == TuilsConfiguration.plan.planProductsFree || this.selectedPlan == TuilsConfiguration.plan.planStoresFree;
             },

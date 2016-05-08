@@ -178,5 +178,35 @@ namespace Nop.Services.Media
         /// </summary>
         /// <returns></returns>
         string GetDefaultCoverLocation();
+
+        /// <summary>
+        /// Realiza la validación y reorientación de una imagen si está quedó torcida
+        /// </summary>
+        /// <param name="originalFile"></param>
+        /// <returns>True: La imagen fue modificada y guardada. False: No se realizó ninguna operación con la imagen</returns>
+        bool CorrectImageOrientationEXIF(string originalFile);
+        /// <summary>
+        /// Realiza la validación y reorientación de una imagen si está quedó torcida
+        /// </summary>
+        /// <param name="originalFile"></param>
+        /// <returns>True: La imagen fue modificada y guardada. False: No se realizó ninguna operación con la imagen</returns>
+        bool CorrectImageOrientationEXIF(System.IO.Stream originalFile, string pathToSave);
+
+        /// <summary>
+        /// Redimensiona una imagen que no necesariamente está creada en la tabla Pictures
+        /// Es usada para temp Files
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="targetSize"></param>
+        /// <param name="crop"></param>
+        /// <returns></returns>
+        string CreateThumbnailImage(string filePath, int targetSize, bool crop = false);
+
+        /// <summary>
+        /// Elimina los archivos temporales que se crean en las cargas
+        /// </summary>
+        /// <param name="tempFiles">lista de archivos</param>
+        /// <param name="resizes">lsita de tamaños que debe eliminar</param>
+        void RemovePicturesFromTempFiles(string[] tempFiles, params int[] resizes);
     }
 }

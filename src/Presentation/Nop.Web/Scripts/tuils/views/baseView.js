@@ -42,10 +42,11 @@
         showRegister: function (model) {
             this.trigger('unauthorized-register', model);
         },
-        validateAuthorization: function ()
+        validateAuthorization: function (model)
         {
+            model = model || this.model;
             this.validateSendRequestAfterSession = true;
-            this.model.once('unauthorized', this.showLogin, this);
+            model.once('unauthorized', this.showLogin, this);
         },
         userAuthenticated: function (model) {
             if (this.validateSendRequestAfterSession)
@@ -59,10 +60,18 @@
                 this.validateSendRequestAfterSession = false;
             }
         },
+        closeAuthentication: function () {
+            if (this.validateSendRequestAfterSession)
+            {
+                console.log('Cerraron sin autenticarse');
+                this.trigger('authentication-closed');
+                this.validateSendRequestAfterSession = false;
+            }
+        },
         //prebind: actualiza los valores del modelo de acuerdo a los controles
         stickThem: function (preBind) {
 
-            if (preBind && this.bindings != undefined)
+            if (preBind === true && this.bindings != undefined)
             {
                 var that = this;
                 _.each(this.bindings, function (element, index) {
@@ -137,9 +146,10 @@
         //Esta opción para cargar la clase loadingBack al elemento que envien
         showLoadingBack : function(model, el)
         {
+            var that = this;
             model = model ? model : this.model;
-            model.once("sync", this.removeLoading, this);
-            model.once("error", this.removeLoading, this);
+            model.once("sync", function () { that.removeLoading(el) }, this);
+            model.once("error", function () { that.removeLoading(el) }, this);
             model.once("unauthorized", this.removeLoading, this);
             el.addClass('loadingBack');
         },
@@ -153,9 +163,12 @@
                     that.trigger("window-resized-min");
             });
         },
-        removeLoading : function(){
-            this.$el.find("#divLoadingback").remove();
-            this.$el.find('.loadingBack').removeClass('loadingBack');
+        removeLoading: function (el) {
+            //Valida que sea un elemento jquery
+            if (!el || !el.html)
+                el = this.$el;
+            el.find("#divLoadingback").remove();
+            el.find('.loadingBack').removeClass('loadingBack');
             displayAjaxLoading(false);
         },
         //Muestra un mesaje de alerta ya sea con un Resource o con el mensaje directamente
@@ -165,7 +178,7 @@
 
             this.viewConfirm.show(args);
         },
-        validateControls: function (model, goToFocus) {
+        validateControls: function (model, goToFocus, unostrusive) {
             //Formatea los mensajes de respuesta contra los label
             
             this.removeErrors();
@@ -198,6 +211,12 @@
             {
                 this.scrollFocusObject('.input-validation-error:first', -50);
             }
+            if (unostrusive)
+            {
+                var that = this;
+                model.once('change', function () { that.validateControls(model, goToFocus, unostrusive); }, this);
+            }
+            
 
             return errors;
         },
@@ -353,6 +372,9 @@
               }
               goog_report_conversion(document.location.href);
               console.log('conversion en adwords guardada');
+        },
+        isFacebookAndroidBrowser: function () {
+            return /(?=.*Android)(?=.*FBAV)/.test(navigator.userAgent || navigator.vendor || window.opera);
         },
         logHtml:function(t){$("body").prepend(t+"</br>")},
         dispose: function () {

@@ -7,20 +7,18 @@
 }
 
 
-
+    
     <div class="imgPublicada">
+        <span class="icon-check"></span>
         <img src="@Model.ProductDetails.DefaultPictureModel.ImageUrl" />
     </div>
     <div class="resumen-final">
         <h2>@T(string.Concat("PublishProduct.PublishFinished", Model.VendorType))</h2>
-        <h3>@Model.ProductDetails.Name </h3>
-
-        <h4>@(Model.ProductDetails.ProductPrice.CallForPrice ? T("Products.CallForPrice").Text : Model.ProductDetails.ProductPrice.Price)</h4>
-
-        
-        <p>@T("PublishProduct.TimeOutPost"+Model.VendorType, Model.LimitDaysOfProductPublished)</p>
-        @Html.ActionLink(T("SelectFeaturedAttributesByPlan.gotoMyProducts").Text, "MyProducts", "ControlPanel", new { p = false }, new { })
-
+        <div class="confi_txt">@T("PublishProduct.TimeOutPost" + Model.VendorType, Model.LimitDaysOfProductPublished)</div>
+        @*<h4>Datos del producto:</h4>
+        <p>@Model.ProductDetails.Name <b>@(Model.ProductDetails.ProductPrice.CallForPrice ? T("Products.CallForPrice").Text : Model.ProductDetails.ProductPrice.Price)</b></p>*@
+        @Html.ActionLink(T("SelectFeaturedAttributesByPlan.finish").Text, "MyProducts", "ControlPanel", new { p = false }, new { @class="btn_continue button-1 btnNext"})
+        <br/>
     </div>
     <br/>
     <div class="comparte_fb">

@@ -8,22 +8,22 @@
     @ShowRequired("Name")
 </div>
 
+<div id="divPrice" class="inputs" title="@T("PublishProduct.Price.Alt")">
+    @Html.LabelT("PublishProduct.Price")
+    <input id="txtPrice" type="text" tuils-val="int" placeholder="@T("PublishProduct.PriceExample")" maxlength="12" />
+    @ShowRequired("Price")
+</div>
+
 @if (Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Service)
 {
-    <div class="input_check" title="@T("PublishProduct.CallForPrice.Alt")">
+    <div class="input_check cotiza_price" title="@T("PublishProduct.CallForPrice.Alt")">
         <input id="chkCallForPrice" type="checkbox" /> @Html.Label(@T("PublishProduct.CallForPrice").Text)
     </div>
 }
 
-<div id="divPrice" class="inputs" title="@T("PublishProduct.Price.Alt")">
-    @Html.LabelT("PublishProduct.Price")
-    <input id="txtPrice" type="text" tuils-val="int" placeholder="@T("PublishProduct.PriceExample")" maxlength="8" />
-    @ShowRequired("Price")
-</div>
-
 @if (Model.ProductType == Nop.Web.Controllers.ProductTypePublished.Product)
 {
-    <div class="inputs" title="@T("PublishProduct.IsNew.Alt")">
+    <div class="inputs" data-field="IsNew" title="@T("PublishProduct.IsNew.Alt")">
         @Html.LabelT("PublishProduct.IsNew")
         <select id="ddlIsNew">
             <option>-</option>

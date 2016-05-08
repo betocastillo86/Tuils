@@ -73,49 +73,40 @@ namespace Nop.Services.ControlPanel
 
             modules.Add(salesModule);
 
-            //Mis datos
-            modules.Add(new ControlPanelModule()
-            {
-                Name = "MyAccount",
-                Controller = "ControlPanel",
-                Action = "MyAccount",
-                IconMini = "icon-cc",
-                IconBig = "icon-cc",
-                SubModules = new List<ControlPanelModule>() { 
-                         new ControlPanelModule()
-                        {
-                             Name = "MyAccount",
-                            Controller = "ControlPanel",
-                            Action = "MyAccount",
-                            IconMini = "icon-cc",
-                            IconBig = "icon-cc"
-                        },
-                        new ControlPanelModule()
-                        {
-                            Name = "ChangePassword",
-                            Controller = "Customer",
-                            Action = "ChangePassword",
-                            IconMini = "icon-cc",
-                            IconBig = "icon-cc"
-                        }
-                    }
-
-            });
-
             if (vendor != null)
             {
+                //Mis productos
                 modules.Add(new ControlPanelModule()
                 {
-                    Name = string.Concat( "MyOrders", vendor.VendorType == Core.Domain.Vendors.VendorType.Market ? "Market" : string.Empty),
+                    Name = "MyProducts",
                     Controller = "ControlPanel",
-                    Action = "MyOrders",
-                    IconMini = "icon-planes",
-                    IconBig = "icon-planes"
-                });
-                
-            }
+                    Action = "MyProducts",
+                    IconMini = "icon-scooter",
+                    IconBig = "icon-scooter",
+                    //Parameters = new { p = true },
+                    SubModules = new List<ControlPanelModule>() {
+                    new ControlPanelModule()
+                    {
+                        Name = "MyProductsPublished",
+                        Controller = "ControlPanel",
+                        Action = "MyProducts",
+                        IconMini = "icon-scooter",
+                        IconBig = "icon-scooter"
+                    },
+                    new ControlPanelModule()
+                    {
+                        Name = "MyProductsUnpublished",
+                        Controller = "ControlPanel",
+                        Action = "MyProducts",
+                        IconMini = "icon-scooter",
+                        IconBig = "icon-scooter",
+                        Parameters = new { p = false }
+                    }
+                }
 
-            
+                });
+
+            }
 
             //Tienda
             if (vendor != null && vendor.VendorType != Core.Domain.Vendors.VendorType.User)
@@ -128,7 +119,7 @@ namespace Nop.Services.ControlPanel
                     IconMini = "icon-tienda",
                     IconBig = "icon-tienda",
                     Parameters = new { seName = vendor.GetSeName() },
-                    SubModules = new List<ControlPanelModule>() { 
+                    SubModules = new List<ControlPanelModule>() {
                         new ControlPanelModule()
                         {
                             Name = "Vendor",
@@ -157,6 +148,54 @@ namespace Nop.Services.ControlPanel
                     }
                 });
             }
+
+
+
+            if (vendor != null)
+            {
+                modules.Add(new ControlPanelModule()
+                {
+                    Name = string.Concat( "MyOrders", vendor.VendorType == Core.Domain.Vendors.VendorType.Market ? "Market" : string.Empty),
+                    Controller = "ControlPanel",
+                    Action = "MyOrders",
+                    IconMini = "icon-planes",
+                    IconBig = "icon-planes"
+                });
+                
+            }
+
+            //Mis datos
+            modules.Add(new ControlPanelModule()
+            {
+                Name = "MyAccount",
+                Controller = "ControlPanel",
+                Action = "MyAccount",
+                IconMini = "icon-cc",
+                IconBig = "icon-cc",
+                SubModules = new List<ControlPanelModule>() {
+                         new ControlPanelModule()
+                        {
+                             Name = "MyAccount",
+                            Controller = "ControlPanel",
+                            Action = "MyAccount",
+                            IconMini = "icon-cc",
+                            IconBig = "icon-cc"
+                        },
+                        new ControlPanelModule()
+                        {
+                            Name = "ChangePassword",
+                            Controller = "Customer",
+                            Action = "ChangePassword",
+                            IconMini = "icon-cc",
+                            IconBig = "icon-cc"
+                        }
+                    }
+
+            });
+
+
+
+            
 
             //if (vendor != null)
             //{
@@ -209,40 +248,7 @@ namespace Nop.Services.ControlPanel
 
             //}
 
-            if (vendor != null)
-            {
-                //Mis productos
-                modules.Add(new ControlPanelModule()
-                {
-                    Name = "MyProducts",
-                    Controller = "ControlPanel",
-                    Action = "MyProducts",
-                    IconMini = "icon-scooter",
-                    IconBig = "icon-scooter",
-                    //Parameters = new { p = true },
-                    SubModules = new List<ControlPanelModule>() { 
-                    new ControlPanelModule()
-                    {
-                        Name = "MyProductsPublished",
-                        Controller = "ControlPanel",
-                        Action = "MyProducts",
-                        IconMini = "icon-scooter",
-                        IconBig = "icon-scooter"
-                    },
-                    new ControlPanelModule()
-                    {
-                        Name = "MyProductsUnpublished",
-                        Controller = "ControlPanel",
-                        Action = "MyProducts",
-                        IconMini = "icon-scooter",
-                        IconBig = "icon-scooter",
-                        Parameters = new { p = false }
-                    }
-                }
-
-                });
-                
-            }
+            
 
 
             //Compras

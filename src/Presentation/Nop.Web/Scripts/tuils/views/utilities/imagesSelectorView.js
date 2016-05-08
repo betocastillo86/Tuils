@@ -6,7 +6,9 @@
             "click .icon-delete": "removeImage",
             "change input[type=file]": "uploadImage",
             "click .btnNext": "save",
-            "click .btnBack": "back"
+            "click .btnBack": "back",
+            'click .icon-mas': 'morePictures',
+            'click .fbBrowserError .icon-close' : 'closeFacebookError'
         },
         //controls
         fileUpload: undefined,
@@ -45,7 +47,15 @@
             if (args.urlSave)
                 this.urlSave = args.urlSave;
 
-            
+            //Cuando el navegador es android y facebook muestra un mensaje y le permite al usuario subir un producto sin imagenes
+            if (this.isFacebookAndroidBrowser())
+            {
+                this.$('.fbBrowserError').show();
+                this.minFilesUploaded = 0;
+            }
+
+            this.validateMoreImagesButton();
+			this.showHelp();
         },
         render: function () {
             return this;
@@ -142,8 +152,14 @@
                             this.showLoadingBack(fileModel, controlImage);
                             fileModel.on("file-saved", this.fileUploaded, this);
                             fileModel.on("file-error", this.fileErrorUpload, this);
-                            this.resizeImage(file, fileModel);
-                            
+                            //this.resizeImage(file, fileModel);
+                            //Atacha evento para actualizar la imagen
+                            fileModel.on('sync', function (model) {
+                                that.switchImage('/TempFiles/' + model.get('thumbnail'), model.get('control'));
+                            }, this);
+
+                            fileModel.set('file', file);
+                            fileModel.upload({ saveUrl: this.urlSave });
                         }
                         else {
                             this.alert("Las imágenes tienen que estar en formatos .jpg, .gif o .png.");
@@ -159,24 +175,31 @@
                 }
             }
 
+            if (obj.target.files.length > 7)
+            {
+                this.$('.addImageGalery').show();
+                this.$('.icon-mas').hide();
+            }
+                
+
             
 
         },
-        resizeImage: function (file, fileModel) {
-            var that = this;
-            this.resizer.photo(file, TuilsConfiguration.media.productImageMaxSizeResize, 'file', function (resizedFile) {
+        //////resizeImage: function (file, fileModel) {
+        //////    var that = this;
+        //////    this.resizer.photo(file, TuilsConfiguration.media.productImageMaxSizeResize, 'file', function (resizedFile) {
 
-                that.resizer.photoCrop(resizedFile, 400, 'dataURL', function (thumbnail) {
-                    fileModel.set({ src: thumbnail, file: resizedFile });
-                    //Hasta que la imagen no haya sido subida 
-                    fileModel.on('sync', function () {
-                        that.switchImage(thumbnail, fileModel.get('control'));
-                    });
-                    fileModel.upload({ saveUrl: that.urlSave });
+        //////        that.resizer.photoCrop(resizedFile, 400, 'dataURL', function (thumbnail) {
+        //////            fileModel.set({ src: thumbnail, file: resizedFile });
+        //////            //Hasta que la imagen no haya sido subida 
+        //////            fileModel.on('sync', function () {
+        //////                that.switchImage(thumbnail, fileModel.get('control'));
+        //////            });
+        //////            fileModel.upload({ saveUrl: that.urlSave });
 
-                });
-            });
-        },
+        //////        });
+        //////    });
+        //////},
         switchImage : function(urlImage, ctrl)
         {
             if (urlImage) {
@@ -208,9 +231,13 @@
         save: function () {
             if (this.collection.length >=  this.minFilesUploaded) {
                 this.trigger("images-save", this.collection);
+                this.trigger('save-preproduct');
             }
             else {
-                this.alert("Para publicar tu anuncio debes subir por lo menos " + this.minFilesUploaded + " imágen" + (this.minFilesUploaded > 1 ? "es" : ""));
+                this.alert({ 
+                message: "Para publicar tu anuncio debes subir por lo menos " + this.minFilesUploaded + " imágen" + (this.minFilesUploaded > 1 ? "es" : "") ,
+                height: 150
+                });
             }
         },
         back: function () {
@@ -219,10 +246,43 @@
 
             this.trigger("images-back");
         },
-        removeAllImages: function () {
-
-        }
-
+        numPicturesBoxes : 10,
+        validateMoreImagesButton: function () {
+            var currentWidth = window.innerWidth || document.documentElement.clientWidth;
+            //Oculta los que no se deben mostrar
+            //Cuenta el numero de cajas activas para activar mas si es necesario con el mas
+            if (currentWidth <= 640 && currentWidth > 480)
+            {
+                this.$('.picture-uploader li:nth-child(n8)').hide();
+                this.$('.icon-mas').show();
+                this.numPicturesBoxes = 7;
+            }
+            else if (currentWidth <= 480)
+            {
+                this.$('.picture-uploader li:nth-child(n9)').hide();
+                this.$('.icon-mas').show();
+                this.numPicturesBoxes = 8;
+            }
+        },
+        morePictures: function () {
+            this.numPicturesBoxes++;
+            this.$('.picture-uploader li:nth-child(' + (this.numPicturesBoxes) + ')').show().click();
+            if(this.numPicturesBoxes == 10)
+                this.$('.icon-mas').hide();
+        },
+        closeFacebookError: function () {
+            this.$('.fbBrowserError').hide();
+        },
+        showHelp: function () {
+            var currentWidth = window.innerWidth || document.documentElement.clientWidth;
+            this.alert({ 
+                message: $('#templateHelpImages').html(), 
+                autoclose: false,
+                width: (currentWidth < 600 ? '100%' : 740), 
+                height: 500 ,
+                position: this.isMobile() ? ['top', 10] : undefined
+                });
+		}
     });
 
     return ImagesSelectorView;

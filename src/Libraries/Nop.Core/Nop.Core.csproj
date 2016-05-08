@@ -89,6 +89,7 @@
     <Compile Include="Domain\Catalog\CategoryOrganizationHomeMenu.cs" />
     <Compile Include="Domain\Catalog\ManufacturerCategory.cs" />
     <Compile Include="Domain\Catalog\PlanSettings.cs" />
+    <Compile Include="Domain\Catalog\PreProduct.cs" />
     <Compile Include="Domain\Catalog\ProductQuestion.cs" />
     <Compile Include="Domain\Catalog\QuestionStatus.cs" />
     <Compile Include="Domain\Catalog\RentalPricePeriod.cs" />

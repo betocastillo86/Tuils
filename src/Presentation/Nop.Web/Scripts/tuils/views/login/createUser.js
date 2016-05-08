@@ -87,6 +87,7 @@
             },
             userAuthenticated: function (model) {
                 this.trigger("user-authenticated", model);
+                this.authenticated = true;
                 this.$el.dialog('close');
                 this.validateRedirect();
             },
@@ -105,7 +106,7 @@
                 this.showForm();
             },
             createUser: function () {
-                this.validateControls(undefined, false);
+                this.validateControls(undefined, false, true);
 
                 if (this.model.isValid()) {
                     this.showLoadingAll(this.model);
@@ -116,6 +117,7 @@
                 this.trackGA();
                 this.alert(Resources.confirm.userRegistered);
                 this.trigger("user-authenticated", this.model);
+                this.authenticated = true;
                 this.close();
                 this.validateRedirect();
             },
@@ -137,16 +139,22 @@
                 }
             },
             back: function () {
+                this.isChangingLogin = true;
                 this.close();
                 this.trigger("login", this.sourceModel);
             },
             show: function () {
+                var that = this;
                 this.$el.dialog({
                     width: window.innerWidth < 365 ? 300 : 365,
                     title: Resources.account.newCustomer,
-                    modal: true
+                    modal: true,
+                    close: function () {
+                        //Cierra la ventana si no fue autenticado
+                        if (!that.authenticated && !that.isChangingLogin)
+                            that.trigger('close-authentication');
+                    }
                 });
-
 
                 //Valida si debe seleccionar por defecto alguno de los tipos de usuarios
                 if (this.sourceModel.get('default_reg')) {
