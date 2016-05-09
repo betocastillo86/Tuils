@@ -66,6 +66,14 @@
                 @Html.Raw(Model.JsonObject.Replace(",\"", ",<br>\""))
             </td>
         </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.UserAgent):
+            </td>
+            <td class="adminData">
+                @Html.DisplayFor(model => model.UserAgent)
+            </td>
+        </tr>
     </table>
 
 }

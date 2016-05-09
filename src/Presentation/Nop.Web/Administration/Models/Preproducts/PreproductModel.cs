@@ -21,5 +21,7 @@ namespace Nop.Admin.Models.Preproducts
         public string JsonObject { get; set; }
 
         public string CustomerEmail { get; set; }
+
+        public string UserAgent { get; set; }
     }
 }
