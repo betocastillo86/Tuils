@@ -229,9 +229,9 @@
             console.log('Error guardando la imagen');
         },
         save: function () {
-            if (this.collection.length >=  this.minFilesUploaded) {
+            this.trigger('save-preproduct');
+            if (this.collection.length >= this.minFilesUploaded) {
                 this.trigger("images-save", this.collection);
-                this.trigger('save-preproduct');
             }
             else {
                 this.alert({ 

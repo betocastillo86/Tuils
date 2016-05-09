@@ -68,10 +68,10 @@ namespace Nop.Web.MVC.Tests.Plugins.PayUExternal
             context.SetupGet(x => x.Response).Returns(response.Object);
             
 
-            controller = new PayUExternalController(_settings, _settingService, _localizationService, _workContext, _orderService, _productService, _priceFormater, _planSettings, _logger, _dateTimeHelper, _orderProcessingService);
-            var routeData = new RouteData();
-            controller.ControllerContext = // set mocked context
-                 new ControllerContext(ctx, routeData, controller);
+            //controller = new PayUExternalController(_settings, _settingService, _localizationService, _workContext, _orderService, _productService, _priceFormater, _planSettings, _logger, _dateTimeHelper, _orderProcessingService);
+            //var routeData = new RouteData();
+            //controller.ControllerContext = // set mocked context
+            //     new ControllerContext(ctx, routeData, controller);
 
         }
 

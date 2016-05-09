@@ -153,10 +153,10 @@ namespace Nop.Services.Tests.Customers
                 _genericAttributeRepo, _orderRepo, _forumPostRepo, _forumTopicRepo,
                 null, null, null, null, null,
                 _genericAttributeService, null, null, _eventPublisher, _customerSettings, null);
-            _customerRegistrationService = new CustomerRegistrationService(_customerService,
-                _encryptionService, _newsLetterSubscriptionService, _localizationService,
-                _storeService, _rewardPointsSettings, _customerSettings, _genericAttributeService, _logger, _workflowMessageService, _workContext,
-                _vendorService, _urlRecordService, _languageService, _localizedEntityService, _pictureService );
+            //_customerRegistrationService = new CustomerRegistrationService(_customerService,
+            //    _encryptionService, _newsLetterSubscriptionService, _localizationService,
+            //    _storeService, _rewardPointsSettings, _customerSettings, _genericAttributeService, _logger, _workflowMessageService, _workContext,
+            //    _vendorService, _urlRecordService, _languageService, _localizedEntityService, _pictureService );
         }
 
         //[Test]
