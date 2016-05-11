@@ -316,7 +316,7 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
 
-            var products = _productService.SearchProducts(vendorId: vendorId, pageIndex: command.Page-1, pageSize:command.PageSize);
+            var products = _productService.SearchProducts(vendorId: vendorId, pageIndex: command.Page-1, pageSize:command.PageSize, showHidden:true);
             var productsModel = products
                 .Select(x => new ProductModel
                 {

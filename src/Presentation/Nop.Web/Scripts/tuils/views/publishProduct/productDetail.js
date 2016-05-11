@@ -188,7 +188,8 @@
                     onSet: function (value) {
                         return value ? parseInt(value) : '';
                     }
-                }
+                },
+                '#PhoneNumber' : 'PhoneNumber'
             },
 
             //views
@@ -257,6 +258,8 @@
                 }
             },
             myStickit: function () {
+                //Le pega el teléfono al modelo
+                this.model.set('PhoneNumber', this.$('#PhoneNumber').val());
                 this.stickThem();
             },
             loadSupplies: function () {

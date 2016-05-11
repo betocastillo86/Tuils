@@ -67,8 +67,9 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                     pattern: 'number'
                 },
                 PhoneNumber: {
-                    required: false,
-                    minLength : 7
+                    required: true,
+                    minLength: 7,
+                    maxLength: 10
                 },
                 Condition: {
                     required: function (val, attr, computed) {
@@ -151,7 +152,7 @@ define(['underscore', 'backbone', '_authenticationModel', 'configuration', 'reso
                 IncludeSupplies : 'Incluye los insumos',
                 SuppliesValue: 'Valor de Insumos',
                 Supplies: 'Insumos',
-                PhoneNumber: 'Número de contacto',
+                PhoneNumber: 'Teléfono de contacto',
                 CallPrice : 'Precio por cotización'
 
             },

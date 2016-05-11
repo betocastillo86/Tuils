@@ -49,6 +49,7 @@ define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars
                 this.productProperties = new Array();
 
                 pushProperty(this, 'Name');
+                pushProperty(this, 'PhoneNumber');
 
 
                 if (this.model.get('Price'))
@@ -102,27 +103,8 @@ define(['jquery', 'underscore', 'baseView', 'configuration', 'util', 'handlebars
             switchButtonBar: function (show) {
                 this.$("#buttonsBar input[type='button']").prop("disabled", !show);
             },
-            validateForm: function () {
-                //Realiza la validación manual, sin bindings porque el telefóno solo es necesario en el ultimo paso
-                this.removeErrors();
-                var phoneNumber = this.$("#PhoneNumber").val();
-                this.model.set('PhoneNumber', phoneNumber, { silent: true });
-                this.trigger('save-preproduct');
-
-                if (phoneNumber.length > 6)
-                {
-                    return true;
-                }
-                else
-                {
-                    this.markErrorsOnForm(this.errors, { "PhoneNumber": "#PhoneNumber" });
-                    return false;
-                }
-            },
             save: function () {
-                if (!this.validateForm())
-                    return;
-                else if (this.$("#chkConditions").is(":checked")) {
+                if (this.$("#chkConditions").is(":checked")) {
                     this.switchButtonBar(false);
                     this.trigger("summary-save");
                 }

@@ -118,6 +118,7 @@
             removePreproduct: function () {
                 //Despues que se escoge remover el preproducto se elimina y marca para saltarse la carga del preproducto
                 this.preproductModel.deleteById(this.productType);
+                this.preproductModel = undefined;
                 this.skipPreproduct = true;
                 
                 this.loadControls();
@@ -182,10 +183,10 @@
 
             },
             showSummary: function (images) {
-
-
+                
                 this.images = images;
                 this.model.set('TempFiles', _.pluck(this.images ? this.images.toJSON() : undefined, 'guid'));
+                this.savePreproduct();
                 this.showNextStep();
 
                 if (!this.viewSummary) {

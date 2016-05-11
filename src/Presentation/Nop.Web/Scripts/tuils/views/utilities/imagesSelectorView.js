@@ -229,11 +229,12 @@
             console.log('Error guardando la imagen');
         },
         save: function () {
-            this.trigger('save-preproduct');
+            
             if (this.collection.length >= this.minFilesUploaded) {
                 this.trigger("images-save", this.collection);
             }
             else {
+                this.trigger('save-preproduct');
                 this.alert({ 
                 message: "Para publicar tu anuncio debes subir por lo menos " + this.minFilesUploaded + " imágen" + (this.minFilesUploaded > 1 ? "es" : "") ,
                 height: 150

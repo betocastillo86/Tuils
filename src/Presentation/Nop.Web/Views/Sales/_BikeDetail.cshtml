@@ -47,6 +47,9 @@
             @Html.DropDownList("ddlStateProvince", Model.StateProvinces, "-")
             @ShowRequired("StateProvince")
         </div>
+        <div class="inputs">
+            @Html.TextBoxRequiredFor(m => m.PhoneNumber, labelText: T("PublishProduct.PhoneNumber").Text, htmlAttributes: new { maxLength = 15, tuils_val = "int" })
+        </div>
 
             <br />
         </div>

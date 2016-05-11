@@ -5,7 +5,9 @@
     <div class="form-public">
 
         @Html.Partial("_CommonFieldsProductBikeDetail", Model)
-        
+        <div class="inputs">
+            @Html.TextBoxRequiredFor(m => m.PhoneNumber, labelText: T("PublishProduct.PhoneNumber").Text, htmlAttributes: new { maxLength = 15, tuils_val = "int" })
+        </div>
         <br/>
         <div class="input_check refMoto" title="@T("PublishProduct.HasSpecialBikes.Alt")" >
             <input id="chkHasSpecialBikes" type="checkbox" /> @Html.Label(@T("PublishProduct.HasSpecialBikes").Text)
