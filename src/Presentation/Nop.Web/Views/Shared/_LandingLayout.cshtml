@@ -13,6 +13,7 @@
     <title>@Html.NopTitle(true)</title>
     @{
         Html.AppendCssFileParts("~/Themes/Healthy/Content/landing.css");
+        Html.AppendCssFileParts("~/Themes/Healthy/Content/popup/popup.css");
         Html.AppendCssFileParts("~/Themes/Healthy/Content/normalize.css");
         var seoSettings = EngineContext.Current.Resolve<Nop.Core.Domain.Seo.SeoSettings>();
         var tuilsSettings = EngineContext.Current.Resolve<Nop.Core.Domain.Common.TuilsSettings>();

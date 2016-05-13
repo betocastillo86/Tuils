@@ -136,6 +136,7 @@
         baseModel: 'tuils/models/baseModel',
         manufacturerModel: 'tuils/models/manufacturer',
         fileModel: 'tuils/models/file',
+        popup: 'jquery.popup',
         specificationAttributeModel: 'tuils/models/specificationAttribute',
         //Colecciones
         productCollection: 'tuils/collections/products',

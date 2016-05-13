@@ -30,7 +30,7 @@
         },*/
         search: function () {
             if (this.searchBox.val() == "") {
-                alert(this.$("#Search_EnterSearchTerms").val());
+                this.alertError(this.$("#Search_EnterSearchTerms").val());
                 this.searchBox.focus();
                 return false;
             }

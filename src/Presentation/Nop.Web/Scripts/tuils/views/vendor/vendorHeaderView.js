@@ -18,7 +18,6 @@
                 '#Description' : 'Description'
             },
 
-            hideCoverOptions: function () { alert('a');},
             id: 0,
 
             allowEdit : false,
@@ -169,13 +168,13 @@
                                 
                         }
                         else {
-                            this.alert("La extensión del archivo no es valida");
+                            this.alertError("La extensión del archivo no es valida");
                         }
                         
                     }
                     else
                     {
-                        this.alert("El tamaño excede el limite");
+                        this.alertError("El tamaño excede el limite máximo de peso");
                     }
                 }
             },

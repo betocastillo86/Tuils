@@ -127,10 +127,10 @@
 
                             that.trigger('set-address', { address: results[0].formatted_address.split(' a ')[0], cityName : cityName });
                         } else {
-                            alert('No results found');
+                            this.alertError('No se encontraron resultados del mapa');
                         }
                     } else {
-                        alert('Geocoder failed due to: ' + status);
+                        this.alertError('Geocoder failed due to: ' + status);
                     }
                 });
             }

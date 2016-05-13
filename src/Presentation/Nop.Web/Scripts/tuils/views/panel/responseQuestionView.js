@@ -39,7 +39,7 @@
                         that.remove();
                     }
                 });
-                this.alert('Operación exitosa');
+                this.alert('La pregunta ha sido respondida correctamente');
                 
             }
 

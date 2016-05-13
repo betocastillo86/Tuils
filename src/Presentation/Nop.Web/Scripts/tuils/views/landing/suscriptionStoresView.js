@@ -24,10 +24,10 @@ define(['jquery', 'underscore', 'baseView', 'tuils/models/landingSuscription'],
                     this.model.save();
             },
             saved: function () {
-                this.alert({ message : $('#templateModal').html(), afterClose : this.dispose, ctx : this, height : 300, width:'80%' });
+                this.alert({ message : $('#templateModal').html(), afterClose : this.dispose, ctx : this });
             },
             errorSaving: function () {
-                this.alert('Ocurrió un error guardando, intenta de nuevo');
+                this.alertError('Ocurrió un error guardando, intenta de nuevo');
             },
             render: function () {
                 Backbone.Validation.bind(this);

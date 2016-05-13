@@ -162,13 +162,13 @@
                             fileModel.upload({ saveUrl: this.urlSave });
                         }
                         else {
-                            this.alert("Las imágenes tienen que estar en formatos .jpg, .gif o .png.");
+                            this.alertError("Las imágenes tienen que estar en formatos .jpg, .gif o .png.");
                             return false;
                         }
 
                     }
                     else {
-                        this.alert("El tamaño máximo permitido para tus archivos es de " + TuilsConfiguration.maxFileUploadSize / 1024000 + "Mb");
+                        this.alertError("El tamaño máximo permitido para tus archivos es de " + TuilsConfiguration.maxFileUploadSize / 1024000 + "Mb");
                         return false;
                     }
 
@@ -225,7 +225,7 @@
         },
         fileErrorUpload: function (resp) {
             this.switchImage(undefined, resp.model.get('control'));
-            this.alert({ message: 'Error guardando la imagen, intenta de nuevo' , duration: 2500 });
+            this.alertError({ message: 'Error guardando la imagen, intenta de nuevo', duration: 2500 });
             console.log('Error guardando la imagen');
         },
         save: function () {
@@ -235,7 +235,7 @@
             }
             else {
                 this.trigger('save-preproduct');
-                this.alert({ 
+                this.alertError({
                 message: "Para publicar tu anuncio debes subir por lo menos " + this.minFilesUploaded + " imágen" + (this.minFilesUploaded > 1 ? "es" : "") ,
                 height: 150
                 });
@@ -277,12 +277,8 @@
         showHelp: function () {
             var currentWidth = window.innerWidth || document.documentElement.clientWidth;
             this.alert({ 
-                message: $('#templateHelpImages').html(), 
-                autoclose: false,
-                width: (currentWidth < 600 ? '100%' : 740), 
-                height: 500 ,
-                position: this.isMobile() ? ['top', 10] : undefined
-                });
+                message: $('#templateHelpImages').html()
+            });
 		}
     });
 

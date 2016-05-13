@@ -186,7 +186,7 @@
                 this.pictureCollection.getPictures(this.id);
             },
             errorPicture: function (error) {
-                this.alert(error.Message);
+                this.alertError(error.Message);
             },
             showPictures: function () {
                 this.$("#divPictures").html(this.templatePictures(
@@ -256,12 +256,12 @@
                             this.model.saveImage(file, this.selectedPictureId);
                         }
                         else {
-                            alert("La extensión del archivo no es valida");
+                            this.alertError("La extensión del archivo no es valida");
                         }
 
                     }
                     else {
-                        alert("El tamaño excede el limite");
+                        this.alertError("El tamaño excede el limite");
                     }
                 }
             },
@@ -272,7 +272,7 @@
             },
             errorSaving: function (error)
             {
-                alert("Ocurrió un error, porfavor intentalo de nuevo");
+                this.alertError("Ocurrió un error, porfavor intentalo de nuevo");
                 this.btnSave.attr('disabled', false);
             },
             back: function ()

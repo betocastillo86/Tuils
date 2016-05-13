@@ -72,7 +72,7 @@
                         that.$('#helpfulness-vote-result-' + reviewId).fadeIn("slow").delay(1000).fadeOut("slow");
                     },
                     error:function (xhr, ajaxOptions, thrownError){
-                        alert('Failed to vote. Please refresh the page and try one more time.');
+                        this.alert('Failed to vote. Please refresh the page and try one more time.');
                     }  
                 });
             },

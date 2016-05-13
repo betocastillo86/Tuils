@@ -35,20 +35,10 @@
                 //var that = this;
                 this.loadModel();
 
-                if (this.isMobile()) {
-                    this.$el.dialog(this.dialogBasicOptions);
-                    this.trigger('close-menu-responsive');
-                }
-                else
-                    this.$el.fixedDialog(this.dialogBasicOptions);
-
                 if (args.sourceModel)
                     this.sourceModel = args.sourceModel;
 
-                //require(['text!/Customer/CreateUser'], function (template) {
-                //that.template = Handlebars.compile(thistemplate);
                 this.render();
-                //});
             },
             loadModel: function () {
                 this.model = new UserRegisterModel();
@@ -82,14 +72,14 @@
                 else {
                     //Si no hay un source model registrado debe mostrar una alerta para programarla
                     //ya que la idea es registrar exactamente desde donde se registró un usuario
-                    alert('No hay source model registrado para este evento');
+                    this.alert('No hay source model registrado para este evento');
                 }
             },
             userAuthenticated: function (model) {
                 this.trigger("user-authenticated", model);
                 this.authenticated = true;
-                this.$el.dialog('close');
                 this.validateRedirect();
+                this.close();
             },
             validateRedirect: function () {
                 //Si el origen del registro es por darle clic en el boton registro
@@ -115,14 +105,14 @@
             },
             userCreated: function (model) {
                 this.trackGA();
-                this.alert(Resources.confirm.userRegistered);
+                this.alert({ message: Resources.confirm.userRegistered, afterClose: this.validateRedirect, ctx : this});
                 this.trigger("user-authenticated", this.model);
                 this.authenticated = true;
                 this.close();
-                this.validateRedirect();
+                //this.validateRedirect();
             },
             errorCreating: function (model, exception) {
-                alert(exception.responseJSON.Message);
+                this.alert(exception.responseJSON.Message);
             },
             showForm: function () {
 
@@ -140,28 +130,7 @@
             },
             back: function () {
                 this.isChangingLogin = true;
-                this.close();
                 this.trigger("login", this.sourceModel);
-            },
-            show: function () {
-                var that = this;
-                this.$el.dialog({
-                    width: window.innerWidth < 365 ? 300 : 365,
-                    title: Resources.account.newCustomer,
-                    modal: true,
-                    close: function () {
-                        //Cierra la ventana si no fue autenticado
-                        if (!that.authenticated && !that.isChangingLogin)
-                            that.trigger('close-authentication');
-                    }
-                });
-
-                //Valida si debe seleccionar por defecto alguno de los tipos de usuarios
-                if (this.sourceModel.get('default_reg')) {
-                    var active = this.sourceModel.get('default_reg') == 'empresas' ? 1 : 0;
-                    this.$("#step1 a[tuils-action='" + active + "']").click();
-                }
-
             },
             tagBikeReferences: function () {
 
@@ -203,11 +172,18 @@
                 }
             },
             close: function () {
-                this.$el.dialog('close');
+                console.log('lanza cierre');
+                this.trigger('close');
             },
             render: function () {
                 this.$el.html(this.template());
-                this.show();
+
+                //Valida si debe seleccionar por defecto alguno de los tipos de usuarios
+                if (this.sourceModel.get('default_reg')) {
+                    var active = this.sourceModel.get('default_reg') == 'empresas' ? 1 : 0;
+                    this.$("#step1 a[tuils-action='" + active + "']").click();
+                }
+
                 this.tagBikeReferences();
 
                 Backbone.Validation.bind(this);

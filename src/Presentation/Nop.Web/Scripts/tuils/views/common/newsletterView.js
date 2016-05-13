@@ -40,7 +40,7 @@
             }
         },
         errorSuscription : function(){
-            alert('Failed to subscribe.');
+            this.alertError('Failed to subscribe.');
             this.subscribeProgress.hide();
         },
         render: function () {

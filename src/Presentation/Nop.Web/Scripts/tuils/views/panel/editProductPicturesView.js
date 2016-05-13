@@ -73,7 +73,7 @@
                 {
                     var pictureId = parseInt($(obj.currentTarget).attr("data-id"));
                     var picture = this.collection.findWhere({ Id: pictureId });
-                    picture.on('error', function () { this.alert('Error eliminando la imagen, intenta de nuevo'); }, this);
+                    picture.on('error', function () { this.alertError('Error eliminando la imagen, intenta de nuevo'); }, this);
                     picture.removeFromProduct(this.productId);
                 }
             },

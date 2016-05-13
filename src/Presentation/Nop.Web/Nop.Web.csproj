@@ -560,6 +560,7 @@
     <Content Include="Content\news\images\logo.png" />
     <Content Include="Content\news\images\whatsapp.jpg" />
     <Content Include="Content\news\images\ytb_tuils.jpg" />
+    <Content Include="Themes\Healthy\Content\popup\popup.css" />
     <Content Include="Content\weekline\jquery.weekline.css" />
     <Content Include="Content\kendo\2014.1.318\Black\editor.png" />
     <Content Include="Content\kendo\2014.1.318\Black\imagebrowser.png" />
@@ -1144,6 +1145,7 @@
     <Content Include="Scripts\modernizr.custom.min.js" />
     <Content Include="Scripts\owl.carousel.js" />
     <Content Include="Scripts\owl.carousel.min.js" />
+    <Content Include="Scripts\jquery.popup.js" />
     <Content Include="Scripts\simpleMenu.js" />
     <Content Include="Scripts\tuils\build.js" />
     <Content Include="Scripts\tuils\collections\addresses.js" />
@@ -1187,6 +1189,7 @@
     <Content Include="Scripts\tuils\views\common\header.js" />
     <Content Include="Scripts\tuils\views\common\leftFeaturedProductsView.js" />
     <Content Include="Scripts\tuils\views\common\newsletterView.js" />
+    <Content Include="Scripts\tuils\views\common\popupView.js" />
     <Content Include="Scripts\tuils\views\common\searcherView.js" />
     <Content Include="Scripts\tuils\views\common\topMenuView.js" />
     <Content Include="Scripts\tuils\views\home\aboutUsView.js" />

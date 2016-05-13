@@ -283,7 +283,7 @@
                 if (response.responseJSON && response.responseJSON.ModelState &&
                     (response.responseJSON.ModelState.ErrorCode == TuilsConfiguration.errorCodes.publishInvalidCategory
                         || response.responseJSON.ModelState.ErrorCode == TuilsConfiguration.errorCodes.hasReachedLimitOfProducts))
-                    this.alert(response.responseJSON.ModelState.ErrorMessage[0]);
+                    this.alertError(response.responseJSON.ModelState.ErrorMessage[0]);
                 else if (response.responseJSON && response.responseJSON.ModelState && response.responseJSON.ModelState.ErrorCode == TuilsConfiguration.errorCodes.hasPublishedSimilarProduct)
                 {
                     //Si el usuario acepta republicar, realiza la republicación
@@ -298,10 +298,10 @@
                     _.each(response.responseJSON.ModelState, function (element, index) {
                         msg += element + "\n";
                     });
-                    this.alert(msg);
+                    this.alertError(msg);
                 }
                 else
-                    this.alert(TuilsResources.products.hasPublisedSimilarProduct);
+                    this.alertError(TuilsResources.products.hasPublisedSimilarProduct);
             },
             showFinish: function () {
                 this.showNextStep();

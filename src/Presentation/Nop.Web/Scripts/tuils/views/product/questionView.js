@@ -53,7 +53,7 @@
                 //si hay error en el captcha muestra el mensaje
                 if (response.responseJSON && response.responseJSON.ModelState && response.responseJSON.ModelState.captcha)
                 {
-                    alert(response.responseJSON.ModelState.message);
+                    this.alertError(response.responseJSON.ModelState.message);
                     Recaptcha.reload();
                 }
             },

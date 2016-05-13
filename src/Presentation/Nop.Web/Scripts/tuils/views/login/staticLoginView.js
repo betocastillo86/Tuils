@@ -31,7 +31,7 @@
 
             },
             errorAuthenticated: function (model, error) {
-                alert(error.responseJSON.ModelState ? error.responseJSON.ModelState.errorMessage : error.responseJSON.Message);
+                this.alert(error.responseJSON.ModelState ? error.responseJSON.ModelState.errorMessage : error.responseJSON.Message);
             },
             render: function () {
                 return this;

@@ -244,7 +244,7 @@
                     //se atacha al evento de solicitud de registro
                     that.currentView.on('unauthorized-register', that.viewHeader.showRegister, that.viewHeader);
                     //evento para cerrar el menu responsive
-                    that.currentView.on('close-menu-responsive', that.viewHeader.closeMenuResponsive, that.viewHeader);
+                    //that.currentView.on('close-menu-responsive', that.viewHeader.closeMenuResponsive, that.viewHeader);
                     //atacha a la vista actual al evento cuando el usuario se autenticó
                     that.viewHeader.on('user-authenticated', that.currentView.userAuthenticated, that.currentView);
                     //atacha a la vista actual al evento cuando el usuario cerro la ventana de autenticación

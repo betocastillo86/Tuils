@@ -106,9 +106,9 @@
             },
             errorCreatingOrder: function (resp, err) {
                 if (err.responseJSON.ExceptionMessage)
-                    this.alert(err.responseJSON.ExceptionMessage);
+                    this.alertError(err.responseJSON.ExceptionMessage);
                 else if (err.responseJSON.Message)
-                    this.alert(err.responseJSON.Message);
+                    this.alertError(err.responseJSON.Message);
             },
             validateScroll: function () {
                 if (this.isMobile()) {

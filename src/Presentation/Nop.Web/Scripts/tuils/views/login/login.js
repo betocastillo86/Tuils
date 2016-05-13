@@ -37,19 +37,12 @@
             if (args.sourceModel)
                 this.sourceModel = args.sourceModel;
 
-            if (this.isMobile())
-            {
-                this.$el.dialog(this.dialogBasicOptions);
-                this.trigger('close-menu-responsive');
-            }
-            else
-                this.$el.fixedDialog(this.dialogBasicOptions);
-
             this.render();
         },
         register: function () {
+            //this.close();
             this.trigger("register", this.sourceModel);
-            this.close();
+            
         },
         validateEnter: function (e) {
             if(e.keyCode==13)
@@ -66,32 +59,16 @@
         userAuthenticated : function(model){
             this.trigger("user-authenticated", model);
             this.authenticated = true;
-            this.$el.dialog('close');
 
             //Si el origen del registro es por darle clic en el boton registro
             //cuando termine lo redirecciona al panel de control
             if (this.sourceModel && this.sourceModel.get('ga_action') == 'Registro')
                 document.location.href = '/mi-cuenta';
 
+            this.close();
         },
         errorAuthenticated: function (model, error) {
-            alert(error.responseJSON.ModelState ? error.responseJSON.ModelState.errorMessage : error.responseJSON.Message);
-        },
-        show: function () {
-            var that = this;
-            this.$el.dialog({
-                width: window.innerWidth < 365 ? 300 : 365,
-                title : Resources.account.login,
-                modal : true,
-                close: function () {
-                    //Cierra la ventana si no fue autenticado
-                    if (!that.authenticated)
-                        that.trigger('close-authentication');
-                }
-            });
-        },
-        close : function(){
-            this.$el.dialog('close');
+            this.alert(error.responseJSON.ModelState ? error.responseJSON.ModelState.errorMessage : error.responseJSON.Message);
         },
         intervalAuthentication :undefined,
         externalAuthentication : function()
@@ -114,10 +91,12 @@
                 this.userAuthenticated(model);
             }
         },
+        close: function () {
+            this.trigger('close');
+            //NO PONER:this.dispose();
+        },
         render: function () {
             this.$el.html(this.template({ MessageLogin: this.sourceModel ? this.sourceModel.get('message_login') : '' }));
-            this.show();
-
             Backbone.Validation.bind(this);
             this.stickit();
             return this;

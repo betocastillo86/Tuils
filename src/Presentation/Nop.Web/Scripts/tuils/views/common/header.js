@@ -34,18 +34,22 @@
         },
         showLogin: function (model) {
             var that = this;
-            if (!this.viewLogin) {
-                //Debe validar si el modelo es un evento o un modelo, si es evento no lo envía
-                that.viewLogin = new LoginView({ $el: that.$('#divLoginUser'), sourceModel: model });
-                that.viewLogin.on("register", that.showRegister, that);
-                that.viewLogin.on("user-authenticated", that.showUserAuthenticated, that);
-                that.viewLogin.on("close-authentication", that.closeAuthentication, that);
-                that.viewLogin.on("close-menu-responsive", that.closeMenuResponsive, that);
+            if (this.viewLogin) {
+                this.viewLogin.dispose();
             }
-            else {
-                this.viewLogin.sourceModel = model;
-                this.viewLogin.show();
-            }
+            //Debe validar si el modelo es un evento o un modelo, si es evento no lo envía
+            this.viewLogin = new LoginView({ $el: this.$('#divLoginUser'), sourceModel: model });
+            this.viewLogin.on("register", this.showRegister, this);
+            this.viewLogin.on('close', this.closeAlert, this);
+            this.viewLogin.on("user-authenticated", this.showUserAuthenticated, this);
+            this.alert({
+                message: this.viewLogin.$el,
+                alertType: 'window',
+                afterClose: function () {
+                    if (!that.viewLogin.authenticated)
+                        that.closeAuthentication();
+                }
+            });
         },
         getNewSourceModel: function () {
             var sourceModel = new BaseModel();
@@ -63,19 +67,26 @@
             this.trigger('close-authentication');
         },
         showRegister : function(sourceModel){
-            var that = this;
 
-            if (!this.viewRegister) {
-                that.viewRegister = new CreateUserView({ $el: that.$('#divRegisterUser'), sourceModel : sourceModel });
-                that.viewRegister.on("user-authenticated", that.showUserAuthenticated, that);
-                that.viewRegister.on("login", that.showLogin, that);
-                that.viewRegister.on("close-menu-responsive", that.closeMenuResponsive, that);
-                that.viewRegister.on("close-authentication", that.closeAuthentication, that);
+            var that = this;
+            if (this.viewRegister) {
+                this.viewRegister.dispose();
             }
-            else {
-                this.viewRegister.sourceModel = sourceModel;
-                this.viewRegister.show();
-            }
+            //Debe validar si el modelo es un evento o un modelo, si es evento no lo envía
+            this.viewRegister = new CreateUserView({ $el: this.$('#divRegisterUser'), sourceModel: sourceModel });
+            this.viewRegister.on("user-authenticated", this.showUserAuthenticated, this);
+            this.viewRegister.on("login", this.showLogin, this);
+            this.viewRegister.on("close", this.closeAlert, this);
+
+            this.alert({
+                message: this.viewRegister.$el,
+                alertType : 'window',
+                afterClose: function () {
+                    if (!that.viewRegister.authenticated)
+                        that.closeAuthentication();
+                    that.viewRegister.dispose();
+                }
+            });
         },
         showUserAuthenticated: function (model) {
             this.refreshUserData(model);

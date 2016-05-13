@@ -12,7 +12,7 @@
                 this.hidePublishButton();
             },
             remove: function (obj) {
-                if (confirm("¿Seguro desea eliminar este producto?"))
+                if (confirm("¿Seguro desea desactivar este producto?"))
                 {
                     var id = parseInt($(obj.target).attr('data-id'));
                     var product = new ProductModel({ Id: id });
@@ -39,17 +39,17 @@
                 this.alert('El producto fue habilitado correctamente');
             },
             showLimitMessage: function () {
-                this.alert({ message: TuilsResources.products.hasReachedLimitFeaturedAlert , duration : 10000});
+                this.alertError({ message: TuilsResources.products.hasReachedLimitFeaturedAlert , duration : 10000});
             },
             productErrorRemoved: function () {
-                this.alert('No fue posible deshabilitar el producto. Intenta de nuevo o comentanos tu problema a info@tuils.com');
+                this.alertError('No fue posible deshabilitar el producto. Intenta de nuevo o comentanos tu problema a info@tuils.com');
             },
             productErrorActivated: function (resp, err) {
                 if (err.responseJSON.Message) {
-                    this.alert(err.responseJSON.Message);
+                    this.alertError(err.responseJSON.Message);
                 }
                 else {
-                    this.alert('No fue posible habilitar el producto. Intenta de nuevo o comentanos tu problema a info@tuils.com');
+                    this.alertError('No fue posible habilitar el producto. Intenta de nuevo o comentanos tu problema a nuestra pagina de Facebook');
                 }
             },
             search: function (obj) {

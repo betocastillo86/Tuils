@@ -1,5 +1,5 @@
-﻿define(['jquery', 'underscore', 'backbone', 'util', 'confirm', 'validations', 'stickit' ],
-    function ($, _, Backbone, TuilsUtil, ConfirmMessageView) {
+﻿define(['jquery', 'underscore', 'backbone', 'util', 'tuils/views/common/popupView', 'validations', 'stickit' ],
+    function ($, _, Backbone, TuilsUtil, PopupView) {
     
     var BaseView = Backbone.View.extend({
 
@@ -9,7 +9,9 @@
 
         viewLogin: undefined,
 
-        viewConfirm : undefined,
+        viewConfirm: undefined,
+
+        viewPopup: undefined,
 
         _isMobile: undefined,
 
@@ -26,14 +28,14 @@
 
         minSizeMobileWith: 400,
 
-        dialogBasicOptions: {
+        /*dialogBasicOptions: {
             modal: true,
             draggable: false,
             resizable: false,
             open: function () {
                 $('.ui-dialog-titlebar button').html('<span class="icon-close"></span>');
             }
-        },
+        },*/
 
         showLogin: function (model)
         {
@@ -173,10 +175,37 @@
         },
         //Muestra un mesaje de alerta ya sea con un Resource o con el mensaje directamente
         alert: function (args) {
-            if (!this.viewConfirm)
-                this.viewConfirm = new ConfirmMessageView();
-
-            this.viewConfirm.show(args);
+            ///if (!this.viewConfirm)
+            ///    this.viewConfirm = new ConfirmMessageView();
+            ///
+            ///this.viewConfirm.show(args);
+            if (!this.viewPopup)
+                this.viewPopup = new PopupView();
+            this.viewPopup.show(args);
+        },
+        alertError: function (args) {
+            if (typeof (args) == 'string')
+            {
+                args = { message: args, alertType: 'error' };
+            }
+            else
+            {
+                args['alertType'] = 'error';
+            }
+            this.alert(args);
+        },
+        popup: function (args) {
+            if (!this.viewPopup)
+            {
+                this.viewPopup = new PopupView();
+            }
+            this.viewPopup.show(args);
+        },
+        closeAlert: function () {
+            this.viewPopup.close();
+        },
+        centerAlert: function () {
+            this.viewPopup.pu.center();
         },
         validateControls: function (model, goToFocus, unostrusive) {
             //Formatea los mensajes de respuesta contra los label
@@ -318,12 +347,12 @@
                         return true;
                     }
                     else {
-                        this.alert("La extensión del archivo no es valida");
+                        this.alertError("La extensión del archivo no es valida");
                         return false;
                     }
                 }
                 else {
-                    this.alert("El tamaño excede el limite");
+                    this.alertError("El tamaño excede el limite");
                     return false;
                 }
             }
@@ -358,7 +387,7 @@
             {
                 if (response.responseJSON)
                 {
-                    this.alert(response.responseJSON.Message);
+                    this.alertError(response.responseJSON.Message);
                 }
             }
         },
