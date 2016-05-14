@@ -47,6 +47,7 @@
             var options = {
                 containerClass: containerClass,
                 modal: args.modal,
+                closeContent: '<div class="popup_close"><span class="icon-close"></span></div>',
                 afterClose: function () {
                     $('body').removeClass('body-noscroll');
                     if (args.afterClose)
