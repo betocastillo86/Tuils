@@ -43,13 +43,12 @@
 
 .popup_back {
 	cursor: pointer;
-	background-color: #222;
+	background-color: #3B5A83;
 }
 
 div.popup {
 	background: #fff;
 	padding: 25px;
-	box-shadow: 0 3px 10px #222;
 }
 
 .preloader {

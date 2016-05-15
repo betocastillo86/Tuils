@@ -8,17 +8,17 @@
 <nav id="nav" class="header-links">
     <ul>
         @*@Html.Widget("header_links_before")*@
-        <li ><h2><a href="@Url.RouteUrl("HomePage")">@T("HeaderLinks.Home")</a></h2></li>
+        <li><h2><a href="@Url.RouteUrl("HomePage")">@T("HeaderLinks.Home")</a></h2></li>
         <li class="btn_home"><h2><a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("acercadenosotros") })">@T("AboutUs")</a></h2></li>
         @if (Model.UnansweredQuestions > 0)
         {
-            <li class="btn_noti"><a href="@Url.Action("Questions", "ControlPanel")" class="icon-camp" title="@T("Account.UnansweredQuestions.Alt", Model.UnansweredQuestions)"></a><span>@Model.UnansweredQuestions</span></li>
+            <li class="btn_noti"><a href="@Url.Action("Questions", "ControlPanel")" class="icon-camp" title="@T("Account.UnansweredQuestions.Alt", Model.UnansweredQuestions)"></a>Notificaciones<span>@Model.UnansweredQuestions</span></li>
         }
 
         @if (Model.IsAuthenticated)
         {
             <li><a href="@Url.RouteUrl("ControlPanel", "MyProducts")" class="ico-logout" title="@T("ControlPanel.MyProducts")">@T("ControlPanel.MyProducts")</a></li>
-            <li class="user-li"><a href="@Url.RouteUrl("ControlPanel")" title="@T("Account.MyAccount.Alt")"><img src="~/Themes/Healthy/Content/images/img_user.svg" /> <p>@Model.CustomerEmailUsername</p><br /></a></li>
+            <li class="user-li"><a href="@Url.RouteUrl("ControlPanel")" title="@T("Account.MyAccount.Alt")">@Model.CustomerEmailUsername</a></li>
             <li><a href="@Url.RouteUrl("Logout")" class="ico-logout" title="@T("Account.Logout.Alt")">@T("Account.Logout")</a></li>
             
         }
@@ -47,26 +47,7 @@
                 </a>
             </li>
         }
-        @if (Model.ShoppingCartEnabled)
-        {
-            @*<li id="topcartlink" style="padding:0 5px;">
-                    <a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">
-                        <span class="icon-car"></span>
-                        <span class="cart-label">@T("ShoppingCart")</span>
-                        <span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
-                    </a>
-                </li>*@
-        }
-        @if (Model.WishlistEnabled)
-        {
-            <li style="padding:0 5px;@(Model.WishlistItems == 0  ? "display:none" : string.Empty) " id="divWishlist">
-                <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">
-                    <span class="icon-corazon"></span>
-                    <span class="wishlist-label">@T("Wishlist")</span>
-                    <span class="wishlist-qty"><i>@T("Wishlist.HeaderQuantity", Model.WishlistItems)</i></span>
-                </a>
-            </li>
-        }
+
         @*@Html.Widget("header_links_after")*@
         <li id="nav-close-btn" style="display:none">x</li>
         <li id="social">
@@ -81,7 +62,7 @@
     {
         <script id="templateLoggedUser" type="text/x-handlebars-template">
 
-            <li class="user-li"><a href="@Url.RouteUrl("ControlPanel")" title="@T("Account.MyAccount.Alt")"><img src="/Themes/Healthy/Content/images/img_user.svg" /> <p>Hola {{Name}}</p> <br /></a></li>
+            <li class="user-li"><a href="@Url.RouteUrl("ControlPanel")" title="@T("Account.MyAccount.Alt")">Hola {{Name}}</a></li>
             <li><a href="@Url.RouteUrl("Logout")" class="ico-logout" title="@T("Account.Logout.Alt")">@T("Account.Logout")</a></li>
 
         </script>
@@ -130,7 +111,7 @@
 
             @if (Model.IsAuthenticated)
             {
-                <div class="user-li"><a href="@Url.RouteUrl("ControlPanel")"><img src="~/Themes/Healthy/Content/images/img_user.svg"/> <p>@Model.CustomerEmailUsername</p><br/></a></div>
+                <div class="user-li"><a href="@Url.RouteUrl("ControlPanel")">@Model.CustomerEmailUsername</a></div>
             }
             else
             {
@@ -156,7 +137,7 @@
         </script>*@
 
     @*<script id="templateLoggedInResponsive" type="text/x-handlebars-template">
-        <div class="user-li"><a href="@Url.RouteUrl("ControlPanel")"><img src="/Themes/Healthy/Content/images/img_user.svg" /> <p>{{Name}}</p><br /></a></div>
+        <div class="user-li"><a href="@Url.RouteUrl("ControlPanel")">{{Name}}</a></div>
     </script>*@
 
     @*<script id="templateLogoutResponsiveMenu" type="text/x-handlebars">
