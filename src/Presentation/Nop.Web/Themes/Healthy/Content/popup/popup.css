@@ -29,12 +29,14 @@
 */
 
 .popup_close {
-	color: #888;
+	color: #FFF;
+	background: #FA4C2A;
+	border-radius: 2px;
 	cursor: pointer;
 	position: absolute;
 	padding: 5px;
 	right: 5px;
-	top: 0;
+	top: 5px;
 }
 
 .popup_close:hover {
@@ -56,4 +58,20 @@ div.popup {
 	margin: -10px 0 0 -25px;
 	position: fixed;
 	top: 50%;
+}
+@media screen and (max-width: 799px), (max-height: 720px){
+	.popup_cont {
+	    top: 0!important;
+	    left: 0!important;
+	    width: 100%;
+	    height: 100%;
+	}
+	div.popup {
+	    height: 100%;
+	    overflow-y: auto;
+	}
+	.popup_content {
+	    width: 100% !important;
+	    height: 100%;
+	}
 }
