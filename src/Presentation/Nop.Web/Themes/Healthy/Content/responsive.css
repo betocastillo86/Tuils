@@ -2285,6 +2285,9 @@ html.oldie .container .columns:first-child, html.oldie .container .columns.first
 		left: 0;
 		z-index: 3;
 	}
+	.main-item-menu{
+		display: block !important;
+	}
 
 	.header-links-wrapper #social {
 		display: none;
@@ -2332,11 +2335,62 @@ html.oldie .container .columns:first-child, html.oldie .container .columns.first
 	.header-links ul li {
 		display: block;
 		width: 100%;
-		box-sizing: border-box;
 		text-align: left;
 		font-size: 16px;
-		padding: 20px;
 		border-top: 1px solid #627b9c;
+		padding: 0;
+	}
+	.header-links ul li [class^="icon-"]{
+		float: right;
+		font-size: 20px;
+	}
+	.header-links ul li a{
+		padding: 16px 20px;
+		box-sizing: border-box;
+		display: block;
+		width: 100%;
+	}
+	.header-links .menu_sub_list{
+		background: #284771;
+		display: block;
+	}
+	.header-links .menu_sub_list li{
+		border: none;
+	}
+	.header-links .menu_sub_list li a{
+		padding: 11px 20px 11px 40px;
+	}
+	.menu_sub_list li a.active{
+		font-weight: 500;
+		color: #fb7055;
+	}
+	a.log_out{
+		background: #284771;
+		color: #fb7055;
+	}
+	.log_out .icon-power{
+		display: block;
+	}
+	.header-links ul li.btn_noti{
+		margin: 0;
+		padding: 0;
+	}
+	.txt_noti_menu{
+		display: inline;
+	}
+	.btn_noti .icon-camp{
+		display: none;
+	}
+	.btn_noti .globo_noti{
+		display: block;
+		float: right;
+		position: relative;
+		top: auto;
+		left: auto;
+		font-size: 16px;
+		border-radius: 12px;
+		min-height: 25px;
+		min-width: 25px;
 	}
 	.btn_home {
 		margin: 0;
