@@ -2248,9 +2248,9 @@ html.oldie .container .columns:first-child, html.oldie .container .columns.first
 }
 @media screen and (max-width:1024px) {
 
-	/*Header*/
-
-	/*Header*/
+}
+@media screen and (max-width:960px) {
+		/*Header*/
 	.header {
 		padding: 0;
 		width: 100%;
@@ -2408,37 +2408,7 @@ html.oldie .container .columns:first-child, html.oldie .container .columns.first
 		display: block;
 		z-index: 2;
 	}
-	.nav-menu {
-		top: 10px;
-		height: 100px;
-	}
-	.nav-menu .mm-menu ul li:first-child {
-		margin-left: 260px;
-	}
 
-	/*segundo nivel*/
-	.childrenOptions li:first-child {
-		margin-left: 220px !important;
-	}
-}
-@media screen and (max-width:960px) {
-
-	/*Header*/
-	.header {
-		position: relative;
-		height: 60px;
-	}
-	.btn_anuncia {
-		right: 60px;
-	}
-
-	/*top menu*/
-	.nav-menu {
-		display: none;
-	}
-	.mm-menu ul li a [class^="icon-"] {
-		display: none;
-	}
 	input[type="text"], input[type="password"], select {
 		width: 300px;
 	}
