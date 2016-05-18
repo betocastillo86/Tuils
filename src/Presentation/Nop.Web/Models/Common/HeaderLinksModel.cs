@@ -1,4 +1,5 @@
-﻿using Nop.Web.Framework.Mvc;
+﻿using Nop.Core.Domain.ControlPanel;
+using Nop.Web.Framework.Mvc;
 using Nop.Web.Models.Catalog;
 using System.Collections.Generic;
 
@@ -22,6 +23,15 @@ namespace Nop.Web.Models.Common
         public int UnansweredQuestions { get; set; }
 
         public List<CategorySimpleModel> Categories { get; set; }
+
+        /// <summary>
+        /// Listado de modulos a los que el usuario tiene acceso
+        /// </summary>
+        public List<ControlPanelModule> Modules { get; set; }
+
+        public string SelectedModule { get; set; }
+
+        public string SelectedParentModule { get; set; }
 
         public string YoutubeLink { get; set; }
 

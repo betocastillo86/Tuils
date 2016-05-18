@@ -1,6 +1,33 @@
 ﻿@model HeaderLinksModel
 @using Nop.Web.Models.Common;
 
+@if (Model.Modules != null)
+{
+    foreach (var option in Model.Modules)
+    {
+        bool hasSubMenu = option.SubModules.Count > 0;
+        bool selected = Model.SelectedParentModule == option.Name;
+
+        <li>
+            <a class="nav-item-panel @(hasSubMenu ? "nav-with-sub" : string.Empty) @(selected ? "active" : string.Empty)" href="@Url.Action(option.Action, option.Controller, option.Parameters)"><span class="@option.IconBig"></span>@T(string.Format("controlpanel.{0}", option.Name)) </a>
+
+            @if (hasSubMenu)
+            {
+                <ul class="sub-menu-panel" style="display:@(Model.SelectedParentModule == option.Name ? "block" : "none")">
+                    @foreach (var subMenu in option.SubModules)
+                    {
+                        selected = subMenu.Name.Equals(Model.SelectedModule);
+                        <li>
+                            <a href="@Url.Action(subMenu.Action, subMenu.Controller, subMenu.Parameters)" class="sub-item-panel @(selected ? "active" : string.Empty)">@T(string.Format("controlpanel.{0}", subMenu.Name)) </a>
+                        </li>
+                    }
+                </ul>
+            }
+
+        </li>
+    }
+}
+
 
 <div id="nav-open-btn" class="headerButtonMenuResponsive">
     <a class="icon-menu"></a>
@@ -8,7 +35,7 @@
 <nav id="nav" class="header-links">
     <ul>
         @*@Html.Widget("header_links_before")*@
-        <li ><h2><a href="@Url.RouteUrl("HomePage")">@T("HeaderLinks.Home")</a></h2></li>
+        <li><h2><a href="@Url.RouteUrl("HomePage")">@T("HeaderLinks.Home")</a></h2></li>
         <li class="btn_home"><h2><a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("acercadenosotros") })">@T("AboutUs")</a></h2></li>
         @if (Model.UnansweredQuestions > 0)
         {
@@ -20,7 +47,7 @@
             <li><a href="@Url.RouteUrl("ControlPanel", "MyProducts")" class="ico-logout" title="@T("ControlPanel.MyProducts")">@T("ControlPanel.MyProducts")</a></li>
             <li class="user-li"><a href="@Url.RouteUrl("ControlPanel")" title="@T("Account.MyAccount.Alt")"><img src="~/Themes/Healthy/Content/images/img_user.svg" /> <p>@Model.CustomerEmailUsername</p><br /></a></li>
             <li><a href="@Url.RouteUrl("Logout")" class="ico-logout" title="@T("Account.Logout.Alt")">@T("Account.Logout")</a></li>
-            
+
         }
         else
         {
@@ -32,11 +59,11 @@
         {
             <li style="display:none">
                 <h2><a href="@Url.RouteUrl("CategoryGenericUrl", new { generic_se_name = category.SeName, query = "" })">@category.Name</a></h2>
-           </li>
+            </li>
         }
 
         <li style="display:none"><h2><a href="@Url.RouteUrl("PublishNewItem")">@T("headerlinks.publish")</a></h2></li>
-        
+
 
         @if (Model.AllowPrivateMessages)
         {
@@ -101,27 +128,31 @@
     @if (Model.ShoppingCartEnabled)
     {
         @*<script type="text/javascript">
-            $(document).ready(function () {
-                $('.header').on('mouseenter', '#topcartlink', function () {
-                    $('#flyout-cart').addClass('active');
+                $(document).ready(function () {
+                    $('.header').on('mouseenter', '#topcartlink', function () {
+                        $('#flyout-cart').addClass('active');
+                    });
+                    $('.header').on('mouseleave', '#topcartlink', function () {
+                        $('#flyout-cart').removeClass('active');
+                    });
+                    $('.header').on('mouseenter', '#flyout-cart', function () {
+                        $('#flyout-cart').addClass('active');
+                    });
+                    $('.header').on('mouseleave', '#flyout-cart', function () {
+                        $('#flyout-cart').removeClass('active');
+                    });
                 });
-                $('.header').on('mouseleave', '#topcartlink', function () {
-                    $('#flyout-cart').removeClass('active');
-                });
-                $('.header').on('mouseenter', '#flyout-cart', function () {
-                    $('#flyout-cart').addClass('active');
-                });
-                $('.header').on('mouseleave', '#flyout-cart', function () {
-                    $('#flyout-cart').removeClass('active');
-                });
-            });
-        </script>*@
+            </script>*@
     }
-    
+
     @if (!Model.IsAuthenticated)
-    { 
-        <script id="templateLogin" type="text/x-handlebars-template">@Html.Partial("~/Views/Customer/_Login.cshtml")</script>
-        <script id="templateCreateUser" type="text/x-handlebars-template">@Html.Partial("~/Views/Customer/_CreateUser.cshtml")</script>
+    {
+        <script id="templateLogin" type="text/x-handlebars-template">
+            @Html.Partial("~/Views/Customer/_Login.cshtml")
+    </script>
+        <script id="templateCreateUser" type="text/x-handlebars-template">
+            @Html.Partial("~/Views/Customer/_CreateUser.cshtml")
+    </script>
     }
 
     @*<script id="templateLinksResponsiveMenu" type="text/x-handlebars-template">
@@ -156,8 +187,8 @@
         </script>*@
 
     @*<script id="templateLoggedInResponsive" type="text/x-handlebars-template">
-        <div class="user-li"><a href="@Url.RouteUrl("ControlPanel")"><img src="/Themes/Healthy/Content/images/img_user.svg" /> <p>{{Name}}</p><br /></a></div>
-    </script>*@
+            <div class="user-li"><a href="@Url.RouteUrl("ControlPanel")"><img src="/Themes/Healthy/Content/images/img_user.svg" /> <p>{{Name}}</p><br /></a></div>
+        </script>*@
 
     @*<script id="templateLogoutResponsiveMenu" type="text/x-handlebars">
             @if (Model.IsAuthenticated)

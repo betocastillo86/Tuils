@@ -1,11 +1,13 @@
 ﻿@model Nop.Web.Models.ControlPanel.MenuModel
 @{
-    Html.AddCssFileParts(ResourceLocation.Foot, "~/Content/simpleMenu/simpleMenu.css");
+
+    Layout = null;
 }
+
 <div id="nav-open-btn" class="headerButtonMenuResponsive">
     <a class="icon-menu"></a>
 </div>
-<div id="divPanelMenu" class="side-2 columns two"  >
+<div id="divPanelMenu" class="side-2 columns two">
     <nav id="nav" class="@(!Model.IsMobileDevice ? "block block-category-navigation" : string.Empty )" role="navigation" style="@(Model.IsMobileDevice ? "display:none" : string.Empty)">
         @if (!Model.IsMobileDevice)
         {
@@ -42,14 +44,14 @@
                 </li>
             }
             @*@if (Model.IsMobileDevice)
-            {
-                <li id="nav-close-btn">Cerrar</li>
-            }*@
-            
+                {
+                    <li id="nav-close-btn">Cerrar</li>
+                }*@
+
         </ul>
         @if (!Model.IsMobileDevice)
         {
-        @:</div>
+            @:</div>
             }
 
     </nav>

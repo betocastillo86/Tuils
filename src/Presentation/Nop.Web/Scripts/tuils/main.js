@@ -25,10 +25,6 @@
             deps: ['backbone'],
             exports: 'Backbone'
         },
-        simpleMenu: {
-            deps: ['modernizr', 'jquery'],
-            exports: 'simpleMenu'
-        },
         jqueryui: {
             deps : ['jquery']
         }
@@ -119,7 +115,7 @@
 
 
         modernizr: 'modernizr.custom.min',
-        simpleMenu: 'simpleMenu',
+        
 
         handlebarsh: 'handelbars.helpers',
         maps: 'http://maps.google.com/maps/api/js?sensor=false',

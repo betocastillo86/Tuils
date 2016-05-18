@@ -40,6 +40,10 @@ using Nop.Web.Models.Common;
 using Nop.Web.Models.Topics;
 using Nop.Core.Domain.Vendors;
 using Nop.Core.Domain.Seo;
+using Nop.Core.Domain.Customers;
+using Nop.Services.ControlPanel;
+using Nop.Core.Domain.ControlPanel;
+using Nop.Web.Models.ControlPanel;
 
 namespace Nop.Web.Controllers
 {
@@ -67,6 +71,7 @@ namespace Nop.Web.Controllers
         private readonly IPermissionService _permissionService;
         private readonly ICacheManager _cacheManager;
         private readonly ICustomerActivityService _customerActivityService;
+        private readonly IControlPanelService _controlPanelService;
 
         private readonly CustomerSettings _customerSettings;
         private readonly TaxSettings _taxSettings;
@@ -106,6 +111,7 @@ namespace Nop.Web.Controllers
             IPermissionService permissionService,
             ICacheManager cacheManager,
             ICustomerActivityService customerActivityService,
+            IControlPanelService controlPanelService,
             CustomerSettings customerSettings, 
             TaxSettings taxSettings, 
             CatalogSettings catalogSettings,
@@ -154,6 +160,7 @@ namespace Nop.Web.Controllers
             this._captchaSettings = captchaSettings;
             this._tuilsSettings = tuilsSettings;
             this._seoSettings = seoSettings;
+            this._controlPanelService = controlPanelService;
         }
 
         #endregion
@@ -408,7 +415,19 @@ namespace Nop.Web.Controllers
 
             model.Categories = cachedCategoriesModel;
             #endregion
-            
+
+            #region AdditionalModules
+            if (!_workContext.CurrentCustomer.IsGuest())
+            {
+                model.Modules = _controlPanelService.GetModulesActiveUser();
+                //Busca cual es el modulo actual
+                string parentModule = string.Empty;
+                model.SelectedModule = GetCurrentModule(model.Modules, ref parentModule);
+                model.SelectedParentModule = parentModule;
+                model.IsMobileDevice = Request.Browser.IsMobileDevice;
+            }
+            #endregion
+
 
             //performance optimization (use "HasShoppingCartItems" property)
             if (customer.HasShoppingCartItems)
@@ -427,6 +446,100 @@ namespace Nop.Web.Controllers
 
             return PartialView(model);
         }
+
+        #region ControlPanel Menu
+
+
+        [ChildActionOnly]
+        public ActionResult ControlPanelMenu()
+        {
+            var model = new MenuModel();
+            model.Modules = this._controlPanelService.GetModulesActiveUser();
+
+            //Busca cual es el modulo actual
+            string parentModule = string.Empty;
+            model.SelectedModule = GetCurrentModule(model.Modules, ref parentModule);
+            model.SelectedParentModule = parentModule;
+            model.IsMobileDevice = Request.Browser.IsMobileDevice;
+
+            return View(model);
+        }
+
+        /// <summary>
+        /// Retorna el modulo seleccionado actualmente, por referencia envia el modulo padre seleccionado
+        /// </summary>
+        /// <param name="modules"></param>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        private string GetCurrentModule(List<ControlPanelModule> modules, ref string parent)
+        {
+            string currentAction = ControllerContext.ParentActionViewContext.RouteData.Values["action"].ToString().ToLower();
+            string currentController = ControllerContext.ParentActionViewContext.RouteData.Values["controller"].ToString().ToLower();
+            foreach (var module in modules)
+            {
+                //Valida que todas las llaves del módulo sean iguales al querystring
+                Func<System.Collections.Specialized.NameValueCollection, object, object, bool> validateQueryString = delegate (System.Collections.Specialized.NameValueCollection queryString, object routeValuesModule, object routeValuesModuleOptional)
+                {
+                    if (routeValuesModule != null)
+                    {
+                        //Recorre todas las llaves que tiene el modulo como parametros OBLIGATORIOS
+                        foreach (var property in routeValuesModule.GetType().GetProperties())
+                        {
+                            var valueParam = property.GetValue(routeValuesModule).ToString().ToLower();
+                            //Si la variable de querystring es nula o es diferente al valor que debe tener esa propiedad retorna false
+                            if (queryString[property.Name] == null || !queryString[property.Name].ToLower().Equals(valueParam))
+                            {
+                                return false;
+                            }
+                        }
+                    }
+
+                    if (routeValuesModuleOptional != null)
+                    {
+                        //Recorre todas las llaves que tiene el modulo como parametros OPCIONALES
+                        foreach (var property in routeValuesModuleOptional.GetType().GetProperties())
+                        {
+                            var valueParam = property.GetValue(routeValuesModuleOptional).ToString().ToLower();
+                            //Si la variable de querystring es diferente al valor que debe tener esa propiedad retorna false
+                            //Si la variable llega a ser null no retorna False ya que esta es opcional
+                            if (queryString[property.Name] != null && !queryString[property.Name].ToLower().Equals(valueParam))
+                            {
+                                return false;
+                            }
+                        }
+                    }
+
+                    return true;
+                };
+
+                parent = module.Name;
+                //Valida que no tenga submodulos activos, que corresponda a la misma acción y que los parametros adicionales coincidan todos
+                var queryStringParent = ControllerContext.ParentActionViewContext.RequestContext.HttpContext.Request.QueryString;
+                if (module.SubModules.Count == 0
+                    && module.Action.ToLower().Equals(currentAction)
+                    && module.Controller.ToLower().Equals(currentController)
+                    && validateQueryString(queryStringParent, module.Parameters, module.OptionalParameters))
+                    return module.Name;
+                else
+                {
+
+                    string subModuleName = string.Empty;
+                    //Si no es de tipo padre recorre los submodulos
+                    foreach (var sm in module.SubModules)
+                    {
+                        if (sm.Action.ToLower().Equals(currentAction) && sm.Controller.ToLower().Equals(currentController) && validateQueryString(queryStringParent, sm.Parameters, sm.OptionalParameters))
+                            subModuleName = sm.Name;
+                    }
+                    //Si algún submodulo fue encontrado lo retorna
+                    if (!string.IsNullOrEmpty(subModuleName)) return subModuleName;
+                }
+
+
+
+            }
+            return string.Empty;
+        }
+        #endregion
 
         [NonAction]
         protected virtual IList<CategorySimpleModel> PrepareCategoryTopMenuSimpleModels()
