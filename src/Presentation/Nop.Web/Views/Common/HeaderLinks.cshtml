@@ -1,42 +1,66 @@
 ﻿@model HeaderLinksModel
 @using Nop.Web.Models.Common;
 
-@if (Model.Modules != null)
-{
-    foreach (var option in Model.Modules)
-    {
-        bool hasSubMenu = option.SubModules.Count > 0;
-        bool selected = Model.SelectedParentModule == option.Name;
-
-        <li>
-            <a class="nav-item-panel @(hasSubMenu ? "nav-with-sub" : string.Empty) @(selected ? "active" : string.Empty)" href="@Url.Action(option.Action, option.Controller, option.Parameters)"><span class="@option.IconBig"></span>@T(string.Format("controlpanel.{0}", option.Name)) </a>
-
-            @if (hasSubMenu)
-            {
-                <ul class="sub-menu-panel" style="display:@(Model.SelectedParentModule == option.Name ? "block" : "none")">
-                    @foreach (var subMenu in option.SubModules)
-                    {
-                        selected = subMenu.Name.Equals(Model.SelectedModule);
-                        <li>
-                            <a href="@Url.Action(subMenu.Action, subMenu.Controller, subMenu.Parameters)" class="sub-item-panel @(selected ? "active" : string.Empty)">@T(string.Format("controlpanel.{0}", subMenu.Name)) </a>
-                        </li>
-                    }
-                </ul>
-            }
-
-        </li>
-    }
-}
 
 
-<div id="nav-open-btn" class="headerButtonMenuResponsive">
-    <a class="icon-menu"></a>
-</div>
+
+
 <nav id="nav" class="header-links">
+    <div id="nav-open-btn" class="headerButtonMenuResponsive">
+        <a class="icon-menu"></a>
+    </div>
 
     <ul>
-        <li>
-            <a href="javascript:;">Julian Castillo <span class="icon-down"></span></a>
+
+
+        @if (!Model.IsAuthenticated)
+        {
+            <li><a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("acercadenosotros") })">@T("AboutUs")</a></li>
+            <li id="liRegister" class="preLogin"><a href="javascript:;">@T("Account.Register")</a></li>
+            <li id="liLogin" class="preLogin"><a href="javascript:;">@T("Account.Login")</a></li>
+        }
+        
+
+        @if (Model.Modules != null)
+        {
+            foreach (var option in Model.Modules)
+            {
+                bool hasSubMenu = option.SubModules.Count > 0;
+                bool selected = Model.SelectedParentModule == option.Name;
+                //En el modulo de mi cuenta muestra el nombre del usuario
+                string moduleName = option.Name.Equals("MyAccount") && Model.IsAuthenticated ? Model.CustomerEmailUsername : T(string.Format("controlpanel.{0}", option.Name)).Text;
+
+                <li class="main-item-menu">
+                    <a  href="@Url.Action(option.Action, option.Controller, option.Parameters)" @(hasSubMenu ? "class=submenuResponsive" : string.Empty)>
+                        @if (hasSubMenu)
+                        {
+                            <span class="icon-@(selected ? "next" : "down")"></span>
+                        }
+                        @moduleName
+                    </a>
+
+                    @if (hasSubMenu)
+                    {
+                        <ul class="menu_sub_list" style="display:@(Model.SelectedParentModule == option.Name ? "block" : "none")">
+                            @foreach (var subMenu in option.SubModules)
+                            {
+                                selected = subMenu.Name.Equals(Model.SelectedModule);
+                                <li>
+                                    <a href="@Url.Action(subMenu.Action, subMenu.Controller, subMenu.Parameters)" class="@(selected ? "active" : string.Empty)">@T(string.Format("controlpanel.{0}", subMenu.Name)) </a>
+                                </li>
+                            }
+                        </ul>
+                    }
+
+                </li>
+            }
+        }
+
+        
+
+
+        @*<li>
+            <a href="javascript:;">@Model.CustomerEmailUsername <span class="icon-down"></span></a>
             <ul class="menu_sub_list">
                 <li><a href="javascript:;">Mis datos</a></li>
                 <li><a href="javascript:;">Cambiar clave</a></li>
@@ -58,12 +82,18 @@
                 <li><a href="javascript:;">Editar servicios</a></li>
             </ul>
         </li>
-        <li class="main-item-menu"><a href="javascript:;">Mis pagos</a></li>
-        <li class="btn_noti"><a href="javascript:;"><i class="icon-camp"></i><span class="txt_noti_menu">Notificaciones</span><span class="globo_noti">4</span></a></li>
-        <li><a href="javascript:;">Quíenes somos</a></li>
-        <li><a href="javascript:;">Regístrate</a></li>
-        <li><a href="javascript:;">Inicia sesión</a></li>
-        <li><a class="log_out" href="javascript:;">Cerrar sesión <span class="icon-power"></span></a></li>
+        <li class="main-item-menu"><a href="javascript:;">Mis pagos</a></li>*@
+
+        @if (Model.UnansweredQuestions > 0)
+        {
+            <li class="btn_noti"><a href="@Url.Action("Questions", "ControlPanel")" title="@T("Account.UnansweredQuestions.Alt", Model.UnansweredQuestions)"><i class="icon-camp"></i><span class="txt_noti_menu">Notificaciones</span><span class="globo_noti">@Model.UnansweredQuestions</span></a></li>
+        }
+
+        @if (Model.IsAuthenticated)
+        {
+            <li><a class="log_out" href="@Url.RouteUrl("Logout")">@T("Account.Logout") <span class="icon-power"></span></a></li>
+        }
+        
         <li id="social">
             <p>@T("Account.SocialNetworks")</p>
             <a class="facebook first" href="@Model.FacebookLink" target="_blank" title="facebook"><span class="icon-fb"></span></a>

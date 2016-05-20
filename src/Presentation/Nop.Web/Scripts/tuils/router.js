@@ -274,6 +274,7 @@
             loadSubViewsPanel: function () {
                 var that = this;
                 that.viewLeftMenu = new MenuPanelView({ el: "#divPanelMenu" });
+                this.loadHeader();
             }
         });
 

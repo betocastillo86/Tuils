@@ -3,108 +3,42 @@
     var TopMenuView = BaseView.extend({
         events: {
             'click .ico-register': 'register',
-            'click .ico-login': 'login'
+            'click .ico-login': 'login',
+            'click .submenuResponsive': 'submenu'
         },
-        //responsiveMenuOptions :{
-        //    // options
-        //    extensions: ["theme-dark"],
-        //    dividers: {
-        //        fixed: true
-        //    },
-        //    navbar :{
-        //        title : ''
-        //    },
-        //    navbars: [
-        //        {
-        //            position: 'bottom',
-        //            content: [$("#templateLogoutResponsiveMenu").html()]
-        //        }
-        //    ]
-        //},
 
         $menu : undefined,
 
         initialize: function () {
-            this.loadControls();
-            //this.handleResize();
-            //this.on("window-resized-max", this.hideMenuResponsive, this);
-            //this.on("window-resized-min", this.showMenuResponsive, this);
-        },
-        loadControls: function () {
-            //this.selectDefaultMenuOption();
-            //this.loadResponsiveMenu();
-            //this.hoverMenu();
-            //se registra este evento de esta manera, ya que no se encuentra en el $el
-            //var that = this;
-            //$(".main-registro .ico-register").click(function () {
-            //    that.register(that);
-            //});
-            //$(".main-registro .ico-login").click(function () {
-            //    that.login(that);
-            //});
         },
         register: function () {
-            //this.hideMenuResponsive();
             this.trigger('register');
         },
         login: function () {
-            //this.hideMenuResponsive();
             this.trigger('login');
         },
-        //selectDefaultMenuOption: function () {
-        //    if (!this.isMobile())
-        //    {
-        //        //Solo muestra estas opciones si no es mobile
-        //        var defaultOption = this.$("#SelectedSpecificationAttribute").val();
-        //        this.$(".nav-menu .aFirstLevel").removeClass("active");
-        //        this.$(".nav-menu li[data-id='" + defaultOption + "'] .aFirstLevel").addClass("active");
-        //        this.$(".nav-menu .childrenOptions").hide();
-        //        this.$(".nav-menu li[data-id='" + defaultOption + "'] .childrenOptions").show();
-        //    }
-        //},
-        //showMenuResponsive : function(){
-        //    this.loadResponsiveMenu();
-        //},
-        //hideMenuResponsive: function () {
-        //    //if(this.$menu)
-        //    //    $("#mainMenu").data("mmenu").close();
-        //},
-        //loadResponsiveMenu: function () {
-        //    //Para poder crear el menu, no debe existir previamente
-        //    if (!this.$menu && this.isMinSize())
-        //    {
-        //        ////Se clona el menu y se carga dinámicamente
-        //        //this.$menu = this.$("#mainMenu").clone();
-        //        //this.$menu.attr("id", "my-mobile-menu");
-        //        //this.$menu.mmenu(this.responsiveMenuOptions);
+        submenu: function (obj) {
+            var $obj = $(obj.currentTarget);
 
-        //        //this.$("#mainMenu").mmenu(this.responsiveMenuOptions, {
-        //        //    clone: true
-        //        //});
+            var $container = $obj.next('ul:first');
+            var isHidden = $container.is(':hidden');
 
-        //        ////agrega las funcionalidades adicionales del menú
-        //        //$(".mm-panel:first").prepend($("#templateLinksResponsiveMenu").html());
-        //    }
-        //},
-        //hoverMenu : function()
-        //{
-        //    if(!this.isMobile())
-        //    {
-        //        var that = this;
-        //        //Funcionalidad de mouse over para ocultar y mostrar los hijos del menú
-        //        that.$(".nav-menu nav > ul > li").hover(
-        //            function () {
-        //                that.$(".nav-menu .childrenOptions").hide();
-        //                that.$(".nav-menu .aFirstLevel.active").removeClass("active");
-        //                $(this).find(".childrenOptions").show();
-        //                $(this).find("a:first").addClass("active");
-        //            },
-        //            function () {
-        //                that.selectDefaultMenuOption();
-        //            }
-        //        );
-        //    }
-        //}
+            $container.css('display', isHidden ? '' : 'none');
+            
+            //Cambia el icono del menu
+            if(isHidden)
+            {
+                $obj.find('span').removeClass('icon-down').addClass('icon-next');
+            }
+            else
+            {
+                $obj.find('span').addClass('icon-down').removeClass('icon-next');
+            }
+            
+            obj.stopPropagation();
+            return false;
+        }
+        
 
     });
 

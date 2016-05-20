@@ -360,13 +360,6 @@ namespace Nop.Web.Controllers
         [ChildActionOnly]
         public ActionResult HeaderLinks()
         {
-            //Este header no se muestra si el tipo de dispositivo es movil
-            //Si esta en el panel de control
-            //y no está en el home del panel de control
-            //La razón es para no duplicar el menú
-            if (Request.Browser.IsMobileDevice && ControllerContext.ParentActionViewContext.RouteData.Values["controller"].Equals("ControlPanel") && !ControllerContext.ParentActionViewContext.RouteData.Values["action"].Equals("Index"))
-                return Content("");
-            
             
             var customer = _workContext.CurrentCustomer;
 
@@ -537,6 +530,7 @@ namespace Nop.Web.Controllers
 
 
             }
+            parent = string.Empty;
             return string.Empty;
         }
         #endregion
