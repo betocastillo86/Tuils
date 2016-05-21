@@ -41,23 +41,23 @@ namespace Nop.Services.ControlPanel
                 Action = "Index",
                 IconMini = "icon-publica",
                 IconBig = "icon-publica",
-                SubModules = new List<ControlPanelModule>() 
-                { 
-                    new ControlPanelModule(){
-                        Name = "PublishProductBike",
-                        Controller = "Sales",
-                        Action = "PublishProductBike",
-                        IconMini = "icon-publica",
-                        IconBig = "icon-publica"
-                    } ,
-                     new ControlPanelModule(){
-                        Name = "PublishProduct",
-                        Controller = "Sales",
-                        Action = "PublishProduct",
-                        IconMini = "icon-publica",
-                        IconBig = "icon-publica"
-                    }
-                }
+                //SubModules = new List<ControlPanelModule>() 
+                //{ 
+                //    new ControlPanelModule(){
+                //        Name = "PublishProductBike",
+                //        Controller = "Sales",
+                //        Action = "PublishProductBike",
+                //        IconMini = "icon-publica",
+                //        IconBig = "icon-publica"
+                //    } ,
+                //     new ControlPanelModule(){
+                //        Name = "PublishProduct",
+                //        Controller = "Sales",
+                //        Action = "PublishProduct",
+                //        IconMini = "icon-publica",
+                //        IconBig = "icon-publica"
+                //    }
+                //}
             };
 
             //Solo pueden vender servicios los que tienen tienda
@@ -72,6 +72,37 @@ namespace Nop.Services.ControlPanel
             //    });
 
             modules.Add(salesModule);
+
+
+            //Mis datos
+            modules.Add(new ControlPanelModule()
+            {
+                Name = "MyAccount",
+                Controller = "ControlPanel",
+                Action = "MyAccount",
+                IconMini = "icon-cc",
+                IconBig = "icon-cc",
+                SubModules = new List<ControlPanelModule>() {
+                         new ControlPanelModule()
+                        {
+                             Name = "MyAccount",
+                            Controller = "ControlPanel",
+                            Action = "MyAccount",
+                            IconMini = "icon-cc",
+                            IconBig = "icon-cc"
+                        },
+                        new ControlPanelModule()
+                        {
+                            Name = "ChangePassword",
+                            Controller = "Customer",
+                            Action = "ChangePassword",
+                            IconMini = "icon-cc",
+                            IconBig = "icon-cc"
+                        }
+                    }
+
+            });
+
 
             if (vendor != null)
             {
@@ -122,7 +153,7 @@ namespace Nop.Services.ControlPanel
                     SubModules = new List<ControlPanelModule>() {
                         new ControlPanelModule()
                         {
-                            Name = "Vendor",
+                            Name = _workContext.CurrentVendor.VendorType == Core.Domain.Vendors.VendorType.Market ? "Vendor" : "RepairShop",
                             Controller = "Catalog",
                             Action = "Vendor",
                             IconMini = "icon-tienda",
@@ -164,34 +195,7 @@ namespace Nop.Services.ControlPanel
                 
             }
 
-            //Mis datos
-            modules.Add(new ControlPanelModule()
-            {
-                Name = "MyAccount",
-                Controller = "ControlPanel",
-                Action = "MyAccount",
-                IconMini = "icon-cc",
-                IconBig = "icon-cc",
-                SubModules = new List<ControlPanelModule>() {
-                         new ControlPanelModule()
-                        {
-                             Name = "MyAccount",
-                            Controller = "ControlPanel",
-                            Action = "MyAccount",
-                            IconMini = "icon-cc",
-                            IconBig = "icon-cc"
-                        },
-                        new ControlPanelModule()
-                        {
-                            Name = "ChangePassword",
-                            Controller = "Customer",
-                            Action = "ChangePassword",
-                            IconMini = "icon-cc",
-                            IconBig = "icon-cc"
-                        }
-                    }
-
-            });
+            
 
 
 

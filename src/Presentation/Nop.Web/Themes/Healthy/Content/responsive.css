@@ -82,6 +82,12 @@ a.logo {
 	display: inline-block;
 	float: none;
 }
+.menu_sub_list {
+    display:none;
+}
+.submenuResponsive span {
+    display:none;
+}
 .top-menu a {
 	font-size: 1em;
 }
@@ -2350,6 +2356,12 @@ html.oldie .container .columns:first-child, html.oldie .container .columns.first
 		display: block;
 		width: 100%;
 	}
+    .hide-nav-responsive, .hideMenuOption {
+        display:none !important;
+    }
+    .submenuResponsive span {
+        display:block !important;
+    }
 	.header-links .menu_sub_list{
 		background: #284771;
 		display: block;

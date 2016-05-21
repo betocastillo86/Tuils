@@ -105,8 +105,7 @@
             //this.viewTopMenu.on("login", this.showLogin, this);
         },
         openMenu: function () {
-            var isHidden = this.viewTopMenu.$el.is(':hidden');
-            this.viewTopMenu.$el.css('display', isHidden ? '' : 'none');
+            this.viewTopMenu.hide();
         },
         loadControls: function () {
             //this.loadTopMenu();

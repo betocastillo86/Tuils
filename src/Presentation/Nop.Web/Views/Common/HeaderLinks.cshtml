@@ -10,7 +10,7 @@
         <a class="icon-menu"></a>
     </div>
 
-    <ul>
+    <ul class="hide-nav-responsive">
 
 
         @if (!Model.IsAuthenticated)
@@ -28,9 +28,11 @@
                 bool hasSubMenu = option.SubModules.Count > 0;
                 bool selected = Model.SelectedParentModule == option.Name;
                 //En el modulo de mi cuenta muestra el nombre del usuario
-                string moduleName = option.Name.Equals("MyAccount") && Model.IsAuthenticated ? Model.CustomerEmailUsername : T(string.Format("controlpanel.{0}", option.Name)).Text;
+                bool isMyAccount = option.Name.Equals("MyAccount") && Model.IsAuthenticated;
+                string moduleName = isMyAccount ? Model.CustomerEmailUsername : T(string.Format("controlpanel.{0}", option.Name)).Text;
 
-                <li class="main-item-menu">
+
+                <li class="@(!isMyAccount ? "main-item-menu" : string.Empty)">
                     <a  href="@Url.Action(option.Action, option.Controller, option.Parameters)" @(hasSubMenu ? "class=submenuResponsive" : string.Empty)>
                         @if (hasSubMenu)
                         {
@@ -41,7 +43,7 @@
 
                     @if (hasSubMenu)
                     {
-                        <ul class="menu_sub_list" style="display:@(Model.SelectedParentModule == option.Name ? "block" : "none")">
+                        <ul class="menu_sub_list @(Model.SelectedParentModule == option.Name ? string.Empty : "hideMenuOption")" >
                             @foreach (var subMenu in option.SubModules)
                             {
                                 selected = subMenu.Name.Equals(Model.SelectedModule);
@@ -86,7 +88,7 @@
 
         @if (Model.UnansweredQuestions > 0)
         {
-            <li class="btn_noti"><a href="@Url.Action("Questions", "ControlPanel")" title="@T("Account.UnansweredQuestions.Alt", Model.UnansweredQuestions)"><i class="icon-camp"></i><span class="txt_noti_menu">Notificaciones</span><span class="globo_noti">@Model.UnansweredQuestions</span></a></li>
+            <li class="btn_noti"><a href="@Url.Action("Questions", "ControlPanel")" title="@T("Account.UnansweredQuestions.Alt", Model.UnansweredQuestions)"><i class="icon-camp"></i><span class="txt_noti_menu">Preguntas por responder</span><span class="globo_noti">@Model.UnansweredQuestions</span></a></li>
         }
 
         @if (Model.IsAuthenticated)

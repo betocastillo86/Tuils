@@ -18,26 +18,36 @@
             this.trigger('login');
         },
         submenu: function (obj) {
+            if (window.innerWidth > 960)
+                return true;
+
             var $obj = $(obj.currentTarget);
 
             var $container = $obj.next('ul:first');
             var isHidden = $container.is(':hidden');
 
-            $container.css('display', isHidden ? '' : 'none');
-            
             //Cambia el icono del menu
             if(isHidden)
             {
                 $obj.find('span').removeClass('icon-down').addClass('icon-next');
+                $container.removeClass('hideMenuOption');
             }
             else
             {
                 $obj.find('span').addClass('icon-down').removeClass('icon-next');
+                $container.addClass('hideMenuOption');
             }
             
             obj.stopPropagation();
             return false;
-        }
+        },
+        hide: function () {
+            var $menu = this.$('ul:first');
+            if (!$menu.hasClass('hide-nav-responsive'))
+                $menu.addClass('hide-nav-responsive');
+            else
+                $menu.removeClass('hide-nav-responsive');
+        },
         
 
     });
