@@ -2284,6 +2284,7 @@ html.oldie .container .columns:first-child, html.oldie .container .columns.first
 		top: 60px;
 		left: 0;
 		z-index: 3;
+		display: none;
 	}
 	.main-item-menu{
 		display: block !important;
