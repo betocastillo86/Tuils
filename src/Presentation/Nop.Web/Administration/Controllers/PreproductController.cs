@@ -19,6 +19,7 @@ using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Vendors;
 using Nop.Core;
 using Nop.Services.Media;
+using Nop.Services.Helpers;
 
 namespace Nop.Admin.Controllers
 {
@@ -32,6 +33,8 @@ namespace Nop.Admin.Controllers
         private readonly IGenericAttributeService _genericAttributeService;
         private readonly IProductService _productService;
         private readonly IPictureService _pictureService;
+        private readonly IDateTimeHelper _dateTimeHelper;
+
         #region Constructor
         public PreproductController(IPermissionService permissionService,
             IPreproductService preproductService,
@@ -40,7 +43,8 @@ namespace Nop.Admin.Controllers
             ICategoryService categoryService,
             IGenericAttributeService genericAttributeService,
             IProductService productService,
-            IPictureService pictureService)
+            IPictureService pictureService,
+            IDateTimeHelper dateTimeHelper)
         {
             _permissionService = permissionService;
             _preproductService = preproductService;
@@ -50,6 +54,7 @@ namespace Nop.Admin.Controllers
             _genericAttributeService = genericAttributeService;
             _productService = productService;
             _pictureService = pictureService;
+            _dateTimeHelper = dateTimeHelper;
         }
         #endregion
 
@@ -79,11 +84,10 @@ namespace Nop.Admin.Controllers
             {
                 Data = preproducts.Select(x =>
                 {
-                    //var jsonSerializer = new JavaScriptSerializer();
-                    //var jsonModel = (ProductBaseModel)jsonSerializer.Deserialize(x.JsonObject, typeof(ProductBaseModel));
-                    //
                     var preproductModel = x.ToModel();
-                    //preproductModel.ProductName = jsonModel.Name;
+                    preproductModel.CreatedOnUtc = _dateTimeHelper.ConvertToUserTime(preproductModel.CreatedOnUtc, DateTimeKind.Utc);
+                    if(preproductModel.UpdatedOnUtc.HasValue)
+                        preproductModel.UpdatedOnUtc = _dateTimeHelper.ConvertToUserTime(preproductModel.UpdatedOnUtc.Value, DateTimeKind.Utc);
                     return preproductModel;
                 }),
                 Total = preproducts.TotalCount

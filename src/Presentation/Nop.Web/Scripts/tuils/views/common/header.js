@@ -1,6 +1,6 @@
-﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'tuils/views/login/login', 'tuils/views/login/createUser', 'util',
+﻿define(['jquery', 'underscore', 'backbone', 'handlebars', 'tuils/views/login/login', 'tuils/views/login/createUser', 'util','tuils/views/common/topMenuView',
     'baseView', 'baseModel'],
-    function ($, _, Backbone, Handlebars, LoginView, CreateUserView,  TuilsUtilities,
+    function ($, _, Backbone, Handlebars, LoginView, CreateUserView,  TuilsUtilities, TopMenuView,
         BaseView, BaseModel) {
     var HeaderView = BaseView.extend({
 
@@ -14,9 +14,11 @@
 
         events : {
             'click #liLogin': 'loadLoginForm',
-            'click #liRegister': 'loadRegisterForm'
+            'click #liRegister': 'loadRegisterForm',
+            'click #nav-open-btn' : 'openMenu'
         },
         initialize: function () {
+            this.loadTopMenu();
             this.render();
 
             //Si viene por querystring reg = 1 significa que debe mostrar el registro
@@ -96,20 +98,14 @@
             this.templateUserAuthenticated = Handlebars.compile(this.$("#templateLoggedUser").html());
             this.$(".preLogin").hide();
             this.$("ul").append(this.templateUserAuthenticated(model.toJSON()));
-            //if (this.isMinSize())
-            //{
-            //    var templateLoggedInResponsive = Handlebars.compile(this.$("#templateLoggedInResponsive").html());
-            //    $("#nav ul").parent().prepend(templateLoggedInResponsive(model.toJSON()));
-            //    $("#nav ul").hide();
-            //}
         },
-        //loadTopMenu: function () {
-        //    this.viewTopMenu = new TopMenuView({ el: '.header-menu' });
-        //    this.viewTopMenu.on("register", this.showRegister, this);
-        //    this.viewTopMenu.on("login", this.showLogin, this);
-        //},
-        closeMenuResponsive: function () {
-            this.viewTopMenu.hideMenuResponsive();
+        loadTopMenu: function () {
+            this.viewTopMenu = new TopMenuView({ el: '.header-links' });
+            //this.viewTopMenu.on("register", this.showRegister, this);
+            //this.viewTopMenu.on("login", this.showLogin, this);
+        },
+        openMenu: function () {
+            this.viewTopMenu.hide();
         },
         loadControls: function () {
             //this.loadTopMenu();
