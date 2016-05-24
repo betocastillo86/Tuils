@@ -13,9 +13,14 @@
 	z-index: 100;
 }
 
-.popup_cont {
+.popup_cont, .alert_cont, .confirm_content {
 	position: fixed;
 	z-index: 102;
+}
+
+.alert_cont{
+	background: #FB7055;
+	color: #FFF;
 }
 
 .preloader {
@@ -37,10 +42,12 @@
 	padding: 5px;
 	right: 5px;
 	top: 5px;
+	transition: ease all 0.3s;
 }
 
 .popup_close:hover {
-	color: #111;
+	color: #FFF;
+	background: #3B5A83;
 }
 
 .popup_back {
@@ -51,6 +58,11 @@
 div.popup {
 	background: #fff;
 	padding: 25px;
+}
+.popup_content{
+	max-height: 719px;
+	overflow-y: auto;
+	width: calc(100% + 15px);
 }
 
 .preloader {
@@ -73,5 +85,25 @@ div.popup {
 	.popup_content {
 	    width: 100% !important;
 	    height: 100%;
+	}
+	.confirm_content{
+		width: 60%;
+		height: auto;
+		position: fixed;
+		z-index: 102;
+		text-align: center;
+	}
+}
+@media screen and (max-width: 480px){
+	.confirm_content{
+		width: 340px;
+	}
+	.confirm_content .popup_close{
+		font-size: 20px;
+	}
+}
+@media screen and (max-width: 360px){
+	.confirm_content{
+		width: 300px;
 	}
 }
