@@ -8479,12 +8479,6 @@ ul.tagit input[type="text"] {
 /*FIN PLANES*/
 
 /*MODAL*/
-.modal {
-	font-family: 'Ubuntu', sans-serif;
-	padding: 10px 20px 20px;
-	position: relative;
-	margin: 0 auto;
-}
 .modal-btn-close {
 	background: #FB7055;
 	color: #FFF !important;
@@ -8495,6 +8489,14 @@ ul.tagit input[type="text"] {
 	right: 10px;
 	color: #FFF;
 	padding: 3px;
+}
+.tit_modal {
+    color: #3B5A83;
+    font-weight: 200;
+    font-size: 30px;
+    text-align: center;
+    margin: 0 0 20px;
+    padding: 0;
 }
 .modal-btn-close:hover {
 	background: #3b5a83;
@@ -8515,6 +8517,22 @@ ul.tagit input[type="text"] {
 }
 .registration-modal a:hover.fb-btn {
 	background: #2F467E;
+}
+.alert_cont .btn_bottom_close {
+    background:#FFF;
+    color: #fa4c2a;
+}
+.btn_bottom_close {
+    background: #FB7055;
+    transition: 0.4s ease all;
+    padding: 8px 10px;
+    margin: 10px auto 0;
+    width: 120px;
+    border: 0 none;
+    color: #FFF;
+    cursor: pointer;
+    box-sizing: border-box;
+    font-weight: 500;
 }
 .loadingBack {
 	background: #e0ffc7 url(/Content/loading_2x.gif) no-repeat center center !important;
