@@ -1182,7 +1182,6 @@
     <Content Include="Scripts\tuils\utilities.js" />
     <Content Include="Scripts\tuils\views\baseView.js" />
     <Content Include="Scripts\tuils\views\common\backTopView.js" />
-    <Content Include="Scripts\tuils\views\common\confirmMessageView.js" />
     <Content Include="Scripts\tuils\views\common\footerView.js" />
     <Content Include="Scripts\tuils\views\common\header.js" />
     <Content Include="Scripts\tuils\views\common\leftFeaturedProductsView.js" />

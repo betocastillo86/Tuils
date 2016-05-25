@@ -112,7 +112,7 @@
                 //this.validateRedirect();
             },
             errorCreating: function (model, exception) {
-                this.alert(exception.responseJSON.Message);
+                this.alertError(exception.responseJSON.Message);
             },
             showForm: function () {
 

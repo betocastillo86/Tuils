@@ -279,7 +279,8 @@
         showHelp: function () {
             var currentWidth = window.innerWidth || document.documentElement.clientWidth;
             this.alert({ 
-                message: $('#templateHelpImages').html()
+                message: $('#templateHelpImages').html(),
+                alertType : 'window'
             });
 		}
     });

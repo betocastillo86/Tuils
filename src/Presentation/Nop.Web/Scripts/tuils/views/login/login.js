@@ -68,7 +68,7 @@
             this.close();
         },
         errorAuthenticated: function (model, error) {
-            this.alert(error.responseJSON.ModelState ? error.responseJSON.ModelState.errorMessage : error.responseJSON.Message);
+            this.alertError(error.responseJSON.ModelState ? error.responseJSON.ModelState.errorMessage : error.responseJSON.Message);
         },
         intervalAuthentication :undefined,
         externalAuthentication : function()

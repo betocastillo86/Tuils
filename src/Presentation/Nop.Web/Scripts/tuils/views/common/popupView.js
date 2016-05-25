@@ -5,7 +5,8 @@
         tagName: 'div',
 
         events: {
-            'click .btn_close': 'close'
+            'click .btn_close': 'close',
+            'click .btn_bottom_close': 'close'
         },
 
         message: undefined,
@@ -34,15 +35,19 @@
         show: function (args) {
             var that = this;
 
-            if (!args.alertType)
-                this.alertType = args.alertType;
+            //Si el tipo de alerta cambió y ya existe el popup, lo elimina
+            if (this.alertType != args.alertType && this.pu)
+                this.pu = undefined;
 
-            var containerClass = undefined;
+
+            this.alertType = args.alertType;
+
+            var containerClass = 'confirm_content';
             //TODO:Cargar el estilo dependiendo del tipo de contenido
             if (this.alertType == 'window')
-                containerClass = undefined;
+                containerClass = 'popup_cont';
             if (this.alertType == 'error')
-                containerClass = undefined;
+                containerClass = 'alert_cont';
 
             var options = {
                 containerClass: containerClass,
@@ -79,6 +84,7 @@
 
             this.relocateZindex();
             this.validateImages();
+            this.addFooter();
             this.pu.center();
         },
         //En los casos en los que hay más de un popup, reacomoda los zindex de los layers
@@ -99,6 +105,14 @@
                         $element.css('z-index', zindex);
                     }
                 });
+            }
+        },
+        addFooter: function () {
+            if (this.alertType != 'window')
+            {
+                this.pu.el.find('.popup_content').append($('<div class="btn_bottom_close">Aceptar</div>'))
+                var that = this;
+                this.pu.el.find('.popup_content .btn_bottom_close').on('click', function () { that.close(); });
             }
         },
         validateImages: function () {
