@@ -12,6 +12,8 @@
         },
         upload: function (args) {
 
+            args = args || {};
+
             var saveUrl = '/api/files/upload';
             if (args && args.saveUrl)
                 saveUrl = args.saveUrl;
@@ -20,7 +22,13 @@
             var file = this.get('file');
             if (file) {
                 var data = new FormData();
-                data.append('file', file);
+
+                if (args.isFacebook !== undefined && args.isFacebook) {
+                    data.append('file', file, (Math.floor(Math.random() * (0 - 50000)) * -1)+'.jpg');
+                }
+                else {
+                    data.append('file', file);
+                }
 
                 var context = this;
 

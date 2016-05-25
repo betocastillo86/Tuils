@@ -131,9 +131,11 @@
                 var file = obj.target.files[iFile];
                 var that = this;
                 if (file) {
+                    
+
 
                     if (TuilsUtilities.isValidSize(obj.target)) {
-                        if (TuilsUtilities.isValidExtension(obj.target, 'image')) {
+                        if (this.isFacebookAndroidBrowser() || TuilsUtilities.isValidExtension(obj.target, 'image')) {
                             var fileModel = new FileModel();
 
                             //Si ya tiene cargado un archivo, toma otro archivo que no tenga imagen, si no hay espacio no sube la imagen
@@ -159,7 +161,7 @@
                             }, this);
 
                             fileModel.set('file', file);
-                            fileModel.upload({ saveUrl: this.urlSave });
+                            fileModel.upload({ saveUrl: this.urlSave, isFacebook: this.isFacebookAndroidBrowser() });
                         }
                         else {
                             this.alertError("Las imágenes tienen que estar en formatos .jpg, .gif o .png.");

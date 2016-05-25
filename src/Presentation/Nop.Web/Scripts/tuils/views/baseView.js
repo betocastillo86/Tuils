@@ -175,10 +175,6 @@
         },
         //Muestra un mesaje de alerta ya sea con un Resource o con el mensaje directamente
         alert: function (args) {
-            ///if (!this.viewConfirm)
-            ///    this.viewConfirm = new ConfirmMessageView();
-            ///
-            ///this.viewConfirm.show(args);
             if (!this.viewPopup)
                 this.viewPopup = new PopupView();
             this.viewPopup.show(args);

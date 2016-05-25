@@ -1,7 +1,7 @@
 ﻿define(['jquery', 'underscore', 'util', 'baseView', 'tuils/collections/addresses', 'handlebars', 'tuils/views/panel/addAddressView','tuils/models/address',
-    'imageSelectorView', 'confirm','handlebarsh'],
+    'imageSelectorView', 'handlebarsh'],
     function ($, _, TuilsUtilities, BaseView, AddressCollection, HandleBars, AddressView, AddressModel,
-        ImageSelectorView, ConfirmMessageView) {
+        ImageSelectorView) {
     var OfficesView = BaseView.extend({
 
         events: {

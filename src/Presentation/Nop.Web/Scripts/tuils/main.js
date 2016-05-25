@@ -147,8 +147,6 @@
         publishProductProductDetailView: 'tuils/views/publishProduct/productDetail',
         publishProductSummaryView: 'tuils/views/publishProduct/summary',
 
-        confirm : 'tuils/views/common/confirmMessageView',
-
         loginView: 'tuils/views/login/createUser',
         loginCreateUserView: 'tuils/views/login/createUser',
 
