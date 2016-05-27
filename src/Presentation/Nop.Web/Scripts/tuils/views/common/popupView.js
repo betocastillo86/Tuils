@@ -42,15 +42,9 @@
 
             this.alertType = args.alertType;
 
-            var containerClass = 'confirm_content';
-            //TODO:Cargar el estilo dependiendo del tipo de contenido
-            if (this.alertType == 'window')
-                containerClass = 'popup_cont';
-            if (this.alertType == 'error')
-                containerClass = 'alert_cont';
-
+            
             var options = {
-                containerClass: containerClass,
+                containerClass: this.getContainerClass(),
                 modal: args.modal,
                 closeContent: '<div class="popup_close"><span class="icon-close"></span></div>',
                 afterClose: function () {
@@ -86,6 +80,15 @@
             this.validateImages();
             this.addFooter();
             this.pu.center();
+        },
+        getContainerClass: function () {
+            if (this.alertType == 'window') {
+                return 'popup_cont';
+            }
+            else if (this.alertType == 'error') {
+                return 'alert_cont';
+            }
+            return 'confirm_content';
         },
         //En los casos en los que hay más de un popup, reacomoda los zindex de los layers
         relocateZindex: function () {
