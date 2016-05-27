@@ -2810,6 +2810,37 @@ html.oldie .container .columns:first-child, html.oldie .container .columns.first
 	.master-wrapper-page .center-2.columns.ten input[type="text"], .master-wrapper-page .center-2.columns.ten select {
 		width: calc(100% - 20px);
 	}
+	.header{
+		height: 45px;
+	}
+	.main-search-box, .headerButtonMenuResponsive{
+		height: 45px;
+		width: 45px;
+		line-height: 45px;
+	}
+	.headerButtonMenuResponsive{
+		top: -45px;
+	}
+	.main-search-box a, .headerButtonMenuResponsive a{
+		padding: 8px;
+		width: 30px;
+		height: 30px;
+	}
+	.divSearchTextResponsive{
+		height: 50px;
+	}
+	#small-searchterms{
+		margin: 5px 10px;
+	}
+	.header-logo{
+		height: 35px;
+		width: 60px;
+		left: calc(50% - 30px);
+		top: 5px;
+	}
+	.top-menu, .header-links-wrapper{
+		top: 45px;
+	}
 
 	/*HOME*/
 	.product-grid .product-item .picture, .item .picture {

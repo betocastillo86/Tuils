@@ -3447,6 +3447,7 @@ td.fieldname {
 .registration-modal {
 	width: 325px;
 	color: #525259;
+	margin: 0 auto;
 }
 .registration-modal a {
 	color: #F84C2A !important;
