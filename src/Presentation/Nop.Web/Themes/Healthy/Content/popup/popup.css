@@ -81,6 +81,7 @@ div.popup {
 	div.popup {
 	    height: 100%;
 	    overflow-y: auto;
+	    box-sizing:border-box;
 	}
 	.popup_content {
 	    width: 100% !important;
