@@ -9,6 +9,8 @@ using Nop.Core.Domain.Forums;
 using Nop.Core.Domain.News;
 using Nop.Services.Catalog;
 using Nop.Services.Topics;
+using Nop.Services.Vendors;
+using Nop.Core.Domain.Vendors;
 
 namespace Nop.Services.Seo
 {
@@ -22,6 +24,7 @@ namespace Nop.Services.Seo
         private readonly IProductService _productService;
         private readonly IManufacturerService _manufacturerService;
         private readonly ITopicService _topicService;
+        private readonly IVendorService _vendorService;
         private readonly CommonSettings _commonSettings;
         private readonly BlogSettings _blogSettings;
         private readonly NewsSettings _newsSettings;
@@ -35,7 +38,8 @@ namespace Nop.Services.Seo
             CommonSettings commonSettings,
             BlogSettings blogSettings,
             NewsSettings newsSettings,
-            ForumSettings forumSettings)
+            ForumSettings forumSettings,
+            IVendorService vendorService)
         {
             this._storeContext = storeContext;
             this._categoryService = categoryService;
@@ -46,6 +50,7 @@ namespace Nop.Services.Seo
             this._blogSettings = blogSettings;
             this._newsSettings = newsSettings;
             this._forumSettings = forumSettings;
+            this._vendorService = vendorService;
         }
 
         /// <summary>
@@ -97,6 +102,9 @@ namespace Nop.Services.Seo
             {
                 WriteProducts(urlHelper);
             }
+
+            WriteVendors(urlHelper);
+
             //topics
             WriteTopics(urlHelper);
         }
@@ -110,6 +118,16 @@ namespace Nop.Services.Seo
                 WriteUrlLocation(url, UpdateFrequency.Weekly, category.UpdatedOnUtc);
 
                 WriteCategories(urlHelper, category.Id);
+            }
+        }
+
+        private void WriteVendors(UrlHelper urlHelper)
+        {
+            var vendors = _vendorService.GetAllVendors(vendorType:VendorType.Market);
+            foreach (var vendor in vendors)
+            {
+                var url = urlHelper.RouteUrl("Vendor", new { SeName = vendor.GetSeName() }, "http");
+                WriteUrlLocation(url, UpdateFrequency.Weekly, DateTime.UtcNow);
             }
         }
 

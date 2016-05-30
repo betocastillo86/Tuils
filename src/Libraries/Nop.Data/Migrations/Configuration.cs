@@ -1269,6 +1269,9 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Catalog.Preproducts.Fields.CreatedOnUtc", "Fecha de creación");
                 newLocaleStringResources.Add("Admin.Catalog.Preproducts.Fields.UpdatedOnUtc", "Fecha de actualización");
                 newLocaleStringResources.Add("Admin.Configuration.Preproduct.Edit", "Cargar preproducto");
+                newLocaleStringResources.Add("Admin.System.QueuedEmails.List.SearchToSubject", "Buscar por asunto");
+                newLocaleStringResources.Add("Admin.System.QueuedEmails.List.SearchToSubject.Hint", "Buscar por asunto");
+                
 
                 
                 //Recorre todas las llaves que desea adicional

@@ -104,8 +104,9 @@
             //this.viewTopMenu.on("register", this.showRegister, this);
             //this.viewTopMenu.on("login", this.showLogin, this);
         },
-        openMenu: function () {
+        openMenu: function (obj) {
             this.viewTopMenu.hide();
+            this.callOnBodyClick(obj, this.viewTopMenu.hide);
         },
         loadControls: function () {
             //this.loadTopMenu();

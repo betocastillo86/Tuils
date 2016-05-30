@@ -52,11 +52,13 @@ namespace Nop.Services.Messages
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="scheduledOnUtc">Fecha en la que se programó el correo para ser enviado</param>
+        /// <param name="subject">Subject filter</param>
         /// <returns>Email item collection</returns>
         IPagedList<QueuedEmail> SearchEmails(string fromEmail,
             string toEmail, DateTime? createdFromUtc, DateTime? createdToUtc, 
             bool loadNotSentItemsOnly, int maxSendTries,
-            bool loadNewest, int pageIndex, int pageSize, DateTime? scheduledOnUtc = null);
+            bool loadNewest, int pageIndex, int pageSize, DateTime? scheduledOnUtc = null,
+            string subject = null);
 
         /// <summary>
         /// Delete all queued emails

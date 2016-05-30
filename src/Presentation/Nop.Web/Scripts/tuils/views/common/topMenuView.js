@@ -39,6 +39,7 @@
             }
             
             obj.stopPropagation();
+
             return false;
         },
         hide: function () {

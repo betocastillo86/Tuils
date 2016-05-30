@@ -401,7 +401,14 @@
         isFacebookAndroidBrowser: function () {
             return /(?=.*Android)(?=.*FBAV)/.test(navigator.userAgent || navigator.vendor || window.opera);
         },
-        logHtml:function(t){$("body").prepend(t+"</br>")},
+        logHtml: function (t) { $("body").prepend(t + "</br>") },
+        callOnBodyClick: function (obj, callback, ctx) {
+            var r = ctx ? ctx : this;
+            obj.stopPropagation();
+            $("body").on("click", function () {
+                callback.call(r)
+            });
+        },
         dispose: function () {
             //http://hjortureh.tumblr.com/post/23041479297/backbonejs-send-zombies-to-heaven
             // same as this.$el.remove();

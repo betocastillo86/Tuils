@@ -15,9 +15,11 @@
 
         @if (!Model.IsAuthenticated)
         {
+            <li><a href="@Url.Action("Index", "Sales")">@T("header.publishproduct")</a></li>
             <li><a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("acercadenosotros") })">@T("AboutUs")</a></li>
             <li id="liRegister" class="preLogin"><a href="javascript:;">@T("Account.Register")</a></li>
             <li id="liLogin" class="preLogin"><a href="javascript:;">@T("Account.Login")</a></li>
+            
         }
         else
         {

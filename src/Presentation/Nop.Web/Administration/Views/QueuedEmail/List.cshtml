@@ -53,6 +53,14 @@
         </tr>
         <tr>
             <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchToSubject):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SearchToSubject)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchLoadNotSent):
             </td>
             <td class="adminData">
@@ -200,6 +208,13 @@
                             }
                         });
 
+                        $("#@Html.FieldIdFor(model => model.SearchToSubject)").keydown(function (event) {
+                            if (event.keyCode == 13) {
+                                $("#btnSearch").click();
+                                return false;
+                            }
+                        });
+
                         //"delete selected" button
                         $('#delete-selected').click(function (e) {
                             e.preventDefault();
@@ -263,6 +278,7 @@
                             SearchEndDate: $('#@Html.FieldIdFor(model => model.SearchEndDate)').val(),
                             SearchFromEmail: $('#@Html.FieldIdFor(model => model.SearchFromEmail)').val(),
                             SearchToEmail: $('#@Html.FieldIdFor(model => model.SearchToEmail)').val(),
+                            SearchToSubject: $('#@Html.FieldIdFor(model => model.SearchToSubject)').val(),
                             SearchLoadNotSent: $('#@Html.FieldIdFor(model => model.SearchLoadNotSent)').is(':checked'),
                             SearchMaxSentTries: $('#@Html.FieldIdFor(model => model.SearchMaxSentTries)').val()
                         };

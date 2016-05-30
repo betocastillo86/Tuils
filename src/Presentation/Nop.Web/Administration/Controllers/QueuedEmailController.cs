@@ -64,7 +64,8 @@ namespace Nop.Admin.Controllers
             var queuedEmails = _queuedEmailService.SearchEmails(model.SearchFromEmail, model.SearchToEmail, 
                 startDateValue, endDateValue, 
                 model.SearchLoadNotSent, model.SearchMaxSentTries, true,
-                command.Page - 1, command.PageSize);
+                command.Page - 1, command.PageSize,
+                subject:model.SearchToSubject);
             var gridModel = new DataSourceResult
             {
                 Data = queuedEmails.Select(x => {

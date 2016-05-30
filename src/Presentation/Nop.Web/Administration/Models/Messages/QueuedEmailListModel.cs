@@ -30,6 +30,9 @@ namespace Nop.Admin.Models.Messages
         [NopResourceDisplayName("Admin.System.QueuedEmails.List.MaxSentTries")]
         public int SearchMaxSentTries { get; set; }
 
+        [NopResourceDisplayName("Admin.System.QueuedEmails.List.SearchToSubject")]
+        public string SearchToSubject { get; set; }
+
         [NopResourceDisplayName("Admin.System.QueuedEmails.List.GoDirectlyToNumber")]
         public int GoDirectlyToNumber { get; set; }
     }
