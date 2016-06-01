@@ -58,6 +58,10 @@ namespace Nop.Admin.Models.Catalog
         [AllowHtml]
         public string GoDirectlyToSku { get; set; }
 
+
+        [NopResourceDisplayName("Admin.Catalog.Products.List.SearchProductsWithOrder")]
+        public bool SearchProductsWithOrder { get; set; }
+
         public bool DisplayProductPictures { get; set; }
 
         public bool IsLoggedInAsVendor { get; set; }

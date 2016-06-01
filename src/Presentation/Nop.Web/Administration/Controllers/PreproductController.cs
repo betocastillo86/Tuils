@@ -85,9 +85,9 @@ namespace Nop.Admin.Controllers
                 Data = preproducts.Select(x =>
                 {
                     var preproductModel = x.ToModel();
-                    preproductModel.CreatedOnUtc = _dateTimeHelper.ConvertToUserTime(preproductModel.CreatedOnUtc, DateTimeKind.Utc);
-                    if(preproductModel.UpdatedOnUtc.HasValue)
-                        preproductModel.UpdatedOnUtc = _dateTimeHelper.ConvertToUserTime(preproductModel.UpdatedOnUtc.Value, DateTimeKind.Utc);
+                    preproductModel.CreatedOn = _dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc).ToString("f");
+                    if(x.UpdatedOnUtc.HasValue)
+                        preproductModel.UpdatedOn = _dateTimeHelper.ConvertToUserTime(x.UpdatedOnUtc.Value, DateTimeKind.Utc).ToString("f");
                     return preproductModel;
                 }),
                 Total = preproducts.TotalCount

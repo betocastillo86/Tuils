@@ -1271,6 +1271,12 @@ namespace Nop.Data.Migrations
                 newLocaleStringResources.Add("Admin.Configuration.Preproduct.Edit", "Cargar preproducto");
                 newLocaleStringResources.Add("Admin.System.QueuedEmails.List.SearchToSubject", "Buscar por asunto");
                 newLocaleStringResources.Add("Admin.System.QueuedEmails.List.SearchToSubject.Hint", "Buscar por asunto");
+
+                newLocaleStringResources.Add("Admin.Catalog.Products.Fields.HasOrder", "Con plan");
+                newLocaleStringResources.Add("Admin.Catalog.Products.List.SearchProductsWithOrder", "Con plan");
+                
+
+                
                 
 
                 

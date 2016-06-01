@@ -14,9 +14,9 @@ namespace Nop.Admin.Models.Preproducts
 
         public int ProductTypeId { get; set; }
 
-        public DateTime CreatedOnUtc { get; set; }
+        public string CreatedOn { get; set; }
 
-        public DateTime? UpdatedOnUtc { get; set; }
+        public string UpdatedOn { get; set; }
 
         public string JsonObject { get; set; }
 

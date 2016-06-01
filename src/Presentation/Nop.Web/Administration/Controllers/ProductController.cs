@@ -861,7 +861,8 @@ namespace Nop.Admin.Controllers
                 hidden: model.ShowHidden,
                 showOnHomePage: model.ShowOnHomePage ? (bool?)true : null,
                 showOnSliders: model.ShowOnSliders? (bool?)true : null,
-                showOnSocialNetworks: model.ShowOnSN ? (bool?)true : null
+                showOnSocialNetworks: model.ShowOnSN ? (bool?)true : null,
+                showWithOrder: !model.SearchProductsWithOrder ? (bool?)null : true
             );
 
             var gridModel = new DataSourceResult();
@@ -874,6 +875,7 @@ namespace Nop.Admin.Controllers
                 //"Error during serialization or deserialization using the JSON JavaScriptSerializer. The length of the string exceeds the value set on the maxJsonLength property. "
                 //also it improves performance
                 productModel.FullDescription = "";
+                productModel.HasPlan = x.OrderPlanId.HasValue;
 
                 if (_adminAreaSettings.DisplayProductPictures)
                 {

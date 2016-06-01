@@ -120,7 +120,8 @@ namespace Nop.Services.Catalog
             bool hidden = false,
             bool? showOnHomePage = null,
             bool? showOnSliders = null,
-            bool? showOnSocialNetworks = null);
+            bool? showOnSocialNetworks = null,
+            bool? showWithOrder= null);
 
 
 
@@ -159,7 +160,8 @@ namespace Nop.Services.Catalog
             bool hidden = false,
             bool? showOnHomePage = null,
             bool? showOnSliders = null,
-            bool? showOnSocialNetworks = null);
+            bool? showOnSocialNetworks = null,
+            bool? showWithOrder = null);
 
 
         /// <summary>
@@ -257,7 +259,8 @@ namespace Nop.Services.Catalog
             bool hidden = false,
             bool? showOnHomePage = null,
             bool? showOnSliders = null,
-            bool? showOnSocialNetworks = null);
+            bool? showOnSocialNetworks = null,
+            bool? showWithOrder = null);
 
 
         /// <summary>

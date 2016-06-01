@@ -80,6 +80,16 @@
                 @Html.EditorFor(model => model.ShowOnHomePage)
             </td>
         </tr>
+
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchProductsWithOrder):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SearchProductsWithOrder)
+            </td>
+        </tr>
+
         <tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.ShowOnSliders):
@@ -220,9 +230,9 @@
                                     title: "@T("Admin.Catalog.Products.Fields.Name")",
                                     width: 300
                                 }, {
-                                    field: "Sku",
-                                    title: "@T("Admin.Catalog.Products.Fields.Sku")",
-                                    width: 100
+                                    field: "HasPlan",
+                                    title: "@T("Admin.Catalog.Products.Fields.HasOrder")",
+                                    width: 50
                                 }, {
                                     field: "Price",
                                     title: "@T("Admin.Catalog.Products.Fields.Price")",
@@ -358,6 +368,7 @@
                 ShowOnHomePage: $('#@Html.FieldIdFor(model => model.ShowOnHomePage)').is(':checked'),
                 ShowOnSliders: $('#@Html.FieldIdFor(model => model.ShowOnSliders)').is(':checked'),
                 ShowOnSN: $('#@Html.FieldIdFor(model => model.ShowOnSN)').is(':checked'),
+                SearchProductsWithOrder: $('#@Html.FieldIdFor(model => model.SearchProductsWithOrder)').is(':checked') ? true : undefined,
                 
                 SearchManufacturerId: $('#SearchManufacturerId').val(),
                 SearchStoreId: $('#SearchStoreId').val(),

@@ -428,7 +428,8 @@ namespace Nop.Services.Catalog
             bool hidden = false,
             bool? showOnHomePage = null,
             bool? showOnSliders = null,
-            bool? showOnSocialNetworks = null)
+            bool? showOnSocialNetworks = null,
+            bool? showWithOrder = null)
         {
             Dictionary<int, int> filterableSpecificationAttributeOptionCount;
             return SearchProducts(
@@ -439,7 +440,7 @@ namespace Nop.Services.Catalog
                 priceMin, priceMax, productTagId, keywords, searchDescriptions, searchSku,
                 searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published, 
                 specialCategoryId, orderBySpecialCategoryId, stateProvinceId, leftFeatured, sold, hidden,
-                showOnHomePage, showOnSliders, showOnSocialNetworks);
+                showOnHomePage, showOnSliders, showOnSocialNetworks, showWithOrder);
         }
 
 
@@ -477,7 +478,8 @@ namespace Nop.Services.Catalog
             bool hidden = false,
             bool? showOnHomePage = null,
             bool? showOnSliders = null,
-            bool? showOnSocialNetworks = null)
+            bool? showOnSocialNetworks = null,
+            bool? showWithOrder = null)
         {
             Dictionary<int, int> filterableCategoryCount;
             Dictionary<int, int> filterableStateProvinceCount;
@@ -499,7 +501,7 @@ namespace Nop.Services.Catalog
                 priceMin, priceMax, productTagId, keywords, searchDescriptions, searchSku,
                 searchProductTags, languageId, filteredSpecs, orderBy, showHidden, published,
                 stateProvinceId, specialCategoryId, orderBySpecialCategoryId, false, leftFeatured, sold, hidden,
-                showOnHomePage, showOnSliders, showOnSocialNetworks);
+                showOnHomePage, showOnSliders, showOnSocialNetworks, showWithOrder);
         }
 
 
@@ -588,7 +590,8 @@ namespace Nop.Services.Catalog
             bool hidden = false,
             bool? showOnHomePage = null,
             bool? showOnSliders = null,
-            bool? showOnSocialNetworks = null)
+            bool? showOnSocialNetworks = null,
+            bool? showWithOrder = null)
         {
             filterableSpecificationAttributeOptionCount = new Dictionary<int, int>();
             filterableCategoryCount = new Dictionary<int, int>();
@@ -834,6 +837,11 @@ namespace Nop.Services.Catalog
             pSold.Value = sold != null ? (object)sold : DBNull.Value;
             pSold.DbType = DbType.Boolean;
 
+            var pWithOrder = _dataProvider.GetParameter();
+            pWithOrder.ParameterName = "ShowWithOrder";
+            pWithOrder.Value = showWithOrder != null ? (object)showWithOrder : DBNull.Value;
+            pWithOrder.DbType = DbType.Boolean;
+
 
             var pStateProvinceId = _dataProvider.GetParameter();
             pStateProvinceId.ParameterName = "StateProvinceId";
@@ -970,6 +978,7 @@ namespace Nop.Services.Catalog
                 pShowOnHomePage,
                 pShowOnSliders,
                 pShowOnSocialNetworks,
+                pWithOrder,
                 pPublished,
                 pSold,
                 pStateProvinceId,
