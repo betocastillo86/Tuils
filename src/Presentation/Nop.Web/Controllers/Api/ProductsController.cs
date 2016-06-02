@@ -32,6 +32,8 @@ namespace Nop.Web.Controllers.Api
     [Route("api/products")]
     public class ProductsController : ApiController
     {
+
+
         #region Fields
         private readonly IProductService _productService;
         private readonly IPreproductService _preproductService;
@@ -395,9 +397,16 @@ namespace Nop.Web.Controllers.Api
             if (product == null)
                 return NotFound();
 
-            //Suma la visita
-            product.NumClicksForMoreInfo++;
-            _productService.UpdateProduct(product);
+            if (_workContext.CurrentVendor != null && _workContext.CurrentVendor.Id == product.VendorId)
+            {
+                return Ok(new { sameUser = true });
+            }
+            else
+            {
+                product.NumClicksForMoreInfo++;
+                _productService.UpdateProduct(product);
+                return Ok(new { moreInfo = true });
+            }
 
             return Ok( new { Id = product.Id });
         }

@@ -130,7 +130,7 @@ namespace Nop.Web.Controllers.Api
                         {
                             var customer = _customerService.GetCustomerByEmail(username.ToString());
                             //Crea la sesion
-                            _authenticationService.SignIn(customer, false);
+                            _authenticationService.SignIn(customer, true);
                             _customerActivityService.InsertActivity("PublicStore.Login", _localizationService.GetResource("ActivityLog.PublicStore.Login"), customer);
 
 
