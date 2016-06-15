@@ -424,6 +424,15 @@ namespace Nop.Web.Controllers
                     Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), model.Name),
                     AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), model.Name),
                 };
+
+                var ogPictureModel = new PictureModel
+                {
+                    ImageUrl = _pictureService.GetPictureUrl(pictures.FirstOrDefault(), 1200, true, cropProportional:true, heightSize:630),
+                    FullSizeImageUrl = _pictureService.GetPictureUrl(pictures.FirstOrDefault(), 0, !isAssociatedProduct),
+                    Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), model.Name),
+                    AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), model.Name),
+                };
+
                 //all pictures
                 var pictureModels = new List<PictureModel>();
                 foreach (var picture in pictures)
@@ -437,10 +446,10 @@ namespace Nop.Web.Controllers
                     });
                 }
 
-                return new { DefaultPictureModel = defaultPictureModel, PictureModels = pictureModels };
+                return new { DefaultPictureModel = defaultPictureModel, PictureModels = pictureModels, OGPicture = ogPictureModel };
             });
             model.DefaultPictureModel = cachedPictures.DefaultPictureModel;
-            model.PictureModels = cachedPictures.PictureModels;
+            model.DefaultPictureOGModel = cachedPictures.OGPicture;
 
             #endregion
 

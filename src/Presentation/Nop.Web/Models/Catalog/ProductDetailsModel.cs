@@ -32,6 +32,8 @@ namespace Nop.Web.Models.Catalog
         //picture(s)
         public bool DefaultPictureZoomEnabled { get; set; }
         public PictureModel DefaultPictureModel { get; set; }
+        public PictureModel DefaultPictureOGModel { get; set; }
+
         public IList<PictureModel> PictureModels { get; set; }
 
         public string Name { get; set; }

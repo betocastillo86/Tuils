@@ -675,6 +675,8 @@ namespace Nop.Admin.Controllers
                 model.Published = true;
                 model.VisibleIndividually = true;
             }
+
+            ViewBag.StoreUrl = _storeContext.CurrentStore.Url;
         }
 
         [NonAction]
@@ -1121,8 +1123,8 @@ namespace Nop.Admin.Controllers
                     //Envia el correo de aprobacion de la publciación
                     _workflowMessageService.SendPublishApprovedNotificationMessage(product, _workContext.WorkingLanguage.Id);
                 }
-                    
 
+                
                 //activity log
                 _customerActivityService.InsertActivity("EditProduct", _localizationService.GetResource("ActivityLog.EditProduct"), product.Name);
                 

@@ -459,7 +459,9 @@ namespace Nop.Services.Media
             bool showDefaultPicture = true, 
             string storeLocation = null, 
             PictureType defaultPictureType = PictureType.Entity,
-            bool crop = false)
+            bool crop = false,
+            bool cropProportional = false,
+            int heightSize = 0)
         {
             string url = string.Empty;
             byte[] pictureBinary = null;
@@ -547,6 +549,17 @@ namespace Nop.Services.Media
                                     Width = newSize.Width,
                                     Height = newSize.Width,
                                     Mode = FitMode.Crop,
+                                    Quality = _mediaSettings.DefaultImageQuality
+                                };
+                            }
+                            else if (cropProportional)
+                            {
+                                settings = new ResizeSettings
+                                {
+                                    Width = targetSize,
+                                    Height = heightSize,
+                                    Mode = FitMode.Crop,
+                                    Scale = ScaleMode.Both,
                                     Quality = _mediaSettings.DefaultImageQuality
                                 };
                             }

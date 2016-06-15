@@ -64,7 +64,9 @@ namespace Nop.Services.Media
             bool showDefaultPicture = true, 
             string storeLocation = null, 
             PictureType defaultPictureType = PictureType.Entity,
-            bool crop = false);
+            bool crop = false,
+            bool cropProportional = false,
+            int heightSize = 0);
 
         /// <summary>
         /// Get a picture local path
