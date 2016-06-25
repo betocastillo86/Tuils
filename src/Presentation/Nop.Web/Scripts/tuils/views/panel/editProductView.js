@@ -43,6 +43,7 @@
                 }
             },
             saved: function () {
+                this.trackGAEvent('ProductUpdated');
                 this.alert({
                     message: 'Tu producto ha sido actualizado',
                     afterClose: function () {

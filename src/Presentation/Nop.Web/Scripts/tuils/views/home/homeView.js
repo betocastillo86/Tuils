@@ -1,63 +1,60 @@
 ﻿
-define(['jquery', 'underscore', 'baseView','tuils/views/home/categoriesHomeView', 'tuils/views/home/vendorsHomeView', 'jqueryui', 'slide'],
+define(['jquery', 'underscore', 'baseView', 'tuils/views/home/categoriesHomeView', 'tuils/views/home/vendorsHomeView', 'jqueryui', 'slide'],
     function ($, _, BaseView, CategoriesHomeView, VendorsHomeView) {
 
-    var HomeView = BaseView.extend({
-        initialize: function (args) {
-            this.loadSlider();
-            this.loadCategories();
-            this.loadVendors();
-        },
+        var HomeView = BaseView.extend({
 
-        viewCategories: undefined,
-        viewVendors : undefined,
-        loadSlider : function()
-        {
-            var totalSlides = $(".rslides li").length;
-            var that = this;
-            $(".rslides").responsiveSlides({
-                timeout: 7000,
-                pager: true,
-                nav: true,
-                prevText: '<span class="icon-prev" title="Anterior"></span>',
-                nextText: '<span class="icon-next" title="Siguiente"></span>',
-                before: function (numSlide) {
-                    if(numSlide+1 <= totalSlides)
-                    {
-                        var image = $($(".rslides li img").get(numSlide+1));
-                        if (image.attr('src') === '')
-                            image.attr('src', image.attr('data-src'));
+            initialize: function (args) {
+                this.loadSlider();
+                this.loadCategories();
+                this.loadVendors();
+            },
+
+            viewCategories: undefined,
+            viewVendors: undefined,
+            loadSlider: function () {
+                var totalSlides = $(".rslides li").length;
+                var that = this;
+                $(".rslides").responsiveSlides({
+                    timeout: 7000,
+                    pager: true,
+                    nav: true,
+                    prevText: '<span class="icon-prev" title="Anterior"></span>',
+                    nextText: '<span class="icon-next" title="Siguiente"></span>',
+                    before: function (numSlide) {
+                        if (numSlide + 1 <= totalSlides) {
+                            var image = $($(".rslides li img").get(numSlide + 1));
+                            if (image.attr('src') === '')
+                                image.attr('src', image.attr('data-src'));
+                        }
+
                     }
+                });
 
+                this.handleResize();
+                this.on("window-resized-max", this.resizeBanner, this);
+                this.on("window-resized-min", this.resizeBanner, this);
+                this.resizeBanner();
+            },
+            loadCategories: function () {
+                if (this.isMobile()) {
+                    this.viewCategories = new CategoriesHomeView({ el: '.conte_categories' });
                 }
-            });
-
-            this.handleResize();
-            this.on("window-resized-max", this.resizeBanner, this);
-            this.on("window-resized-min", this.resizeBanner, this);
-            this.resizeBanner();
-        },
-        loadCategories: function () {
-            if (this.isMobile())
-            {
-                this.viewCategories = new CategoriesHomeView({ el: '.conte_categories' });
+            },
+            loadVendors: function () {
+                this.viewVendors = new VendorsHomeView({ el: '#vendorCarousel' });
+            },
+            resizeBanner: function () {
+                //Si es pantalla pequeña recalcula el alto del banner
+                $(".rslides").css("height", this.isMinSizeMobile() ? (window.innerWidth / 2.5) + "px" : "");
+            },
+            render: function () {
+                return this;
             }
-        },
-        loadVendors: function () {
-            this.viewVendors = new VendorsHomeView({ el : '#vendorCarousel' });
-        },
-        resizeBanner: function () {
-            //Si es pantalla pequeña recalcula el alto del banner
-            $(".rslides").css("height", this.isMinSizeMobile() ? (window.innerWidth / 2.5) + "px" : "");
-        },
-        render: function ()
-        {
-            return this;
-        }
-    });
+        });
 
-    return HomeView;
-});
+        return HomeView;
+    });
 
 
 

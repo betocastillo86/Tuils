@@ -314,14 +314,17 @@
         trackGAEvent: function (category, action, label, value) {
             var ga = window.ga;
             //Valida que exista el metodo
-            if (ga != undefined)
-            {
+            if (ga != undefined) {
                 if (!label)
                     label = document.location.pathname;
 
-                console.log('Evento trackeado CAT:' + category + ' - ACTION:' + action + ' - LABEL:' + label);
+                
                 ga('send', 'event', category, action, label);
             }
+            else {
+                console.log('Evento trackeado CAT:' + category + ' - ACTION:' + action + ' - LABEL:' + label);
+            }
+
         },
         isMobile: function ()
         {
@@ -366,6 +369,8 @@
             return window.innerHeight || document.documentElement.clientHeight;
         },
         showRespFilter: function () {
+            this.trackGAEvent('ShowFilter');
+
             $(".filters-main").show().focus();
             //Permite agregar el scroll al filtro responsive
             $('.product-filters-wrapper').height(this.windowHeight() - 100).css('overflow', 'auto');

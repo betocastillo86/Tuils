@@ -6,7 +6,8 @@ function ($, _, BaseView) {
             'click #btnShowFilter': 'showFilter',
             'click .tit_fil .icon-close': 'closeFilter',
             'focusout .priceFilter input[type="text"]': 'loadLinkPriceFilter',
-            'click .qcat-more-filters' : 'showMoreOptions'
+            'click .qcat-more-filters': 'showMoreOptions',
+            'click .product-filters a' : 'filter'
         },
         divFilter: $(".filters-main"),
 
@@ -60,6 +61,10 @@ function ($, _, BaseView) {
         closeFilter : function(){
             this.divFilter.hide();
             $('body').removeClass('body-noscroll');
+        },
+        filter: function (obj) {
+            var target = $(obj.currentTarget);
+            this.trackGAEvent('Filter', target.attr('for'), target.find('.namefil').html());
         },
         render: function () {
             this.render();

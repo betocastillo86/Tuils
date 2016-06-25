@@ -18,7 +18,7 @@
 
                     @foreach (var spec in groupList)
                     {
-                        <li><a href="@spec.FilterUrl" rel="nofollow"><span class="namefil">@spec.SpecificationAttributeOptionName</span> <span class="fil_cant">@spec.NumOfProducts</span></a></li>
+                        <li><a href="@spec.FilterUrl" rel="nofollow" for="Specs"><span class="namefil">@spec.SpecificationAttributeOptionName</span> <span class="fil_cant">@spec.NumOfProducts</span></a></li>
                     }
                     @if (groupList.Count > Model.MaxNumberOptionsToShow)
                     {

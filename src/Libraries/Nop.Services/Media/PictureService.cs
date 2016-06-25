@@ -461,6 +461,7 @@ namespace Nop.Services.Media
             PictureType defaultPictureType = PictureType.Entity,
             bool crop = false,
             bool cropProportional = false,
+            string[] watermarks = null,
             int heightSize = 0)
         {
             string url = string.Empty;
@@ -479,6 +480,8 @@ namespace Nop.Services.Media
             string lastPart = GetFileExtensionFromMimeType(picture.MimeType);
             string thumbFileName;
             string complementNameCroppedPicture = crop ? "_c" : string.Empty;
+            string queryResizeOptions = watermarks != null && watermarks.Length > 0 ? string.Format("watermark={0}", string.Join(",", watermarks)) : string.Empty;
+
             if (picture.IsNew)
             {
                 DeletePictureThumbs(picture);
@@ -544,7 +547,7 @@ namespace Nop.Services.Media
                                 else
                                     newSize.Width = newSize.Height;
                                 
-                                settings = new ResizeSettings
+                                settings = new ResizeSettings(queryResizeOptions)
                                 {
                                     Width = newSize.Width,
                                     Height = newSize.Width,
@@ -554,7 +557,7 @@ namespace Nop.Services.Media
                             }
                             else if (cropProportional)
                             {
-                                settings = new ResizeSettings
+                                settings = new ResizeSettings(queryResizeOptions)
                                 {
                                     Width = targetSize,
                                     Height = heightSize,
@@ -564,13 +567,16 @@ namespace Nop.Services.Media
                                 };
                             }
                             else
-                                settings = new ResizeSettings
+                            {
+                                settings = new ResizeSettings(queryResizeOptions)
                                 {
                                     Width = newSize.Width,
                                     Height = newSize.Height,
                                     Scale = ScaleMode.Both,
                                     Quality = _mediaSettings.DefaultImageQuality
                                 };
+                            }
+                                
 
 
                             ImageBuilder.Current.Build(b, destStream, settings);

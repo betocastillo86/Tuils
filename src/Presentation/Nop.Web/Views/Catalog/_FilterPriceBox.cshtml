@@ -34,7 +34,7 @@
             </div>
             @foreach (var item in Model.Items)
             {
-                <li><a href="@item.FilterUrl" rel="nofollow">@FormatPriceRangeText(item)</a></li>
+                <li><a href="@item.FilterUrl" rel="nofollow" for="Price">@FormatPriceRangeText(item)</a></li>
             }
         </ul>
     }

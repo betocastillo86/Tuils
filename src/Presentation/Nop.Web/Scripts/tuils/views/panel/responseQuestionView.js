@@ -31,6 +31,7 @@
                 }
             },
             saved: function () {
+                this.trackGAEvent('ResponseQuestion');
                 var that = this;
                 this.$el.fadeOut({
                     complete: function ()

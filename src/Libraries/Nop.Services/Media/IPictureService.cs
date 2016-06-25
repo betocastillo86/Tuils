@@ -66,6 +66,7 @@ namespace Nop.Services.Media
             PictureType defaultPictureType = PictureType.Entity,
             bool crop = false,
             bool cropProportional = false,
+            string[] watermarks = null,
             int heightSize = 0);
 
         /// <summary>

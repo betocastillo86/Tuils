@@ -88,6 +88,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\FluentValidation.MVC5.5.5.0.0\lib\Net45\FluentValidation.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="ImageResizer, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ImageResizer.4.0.5\lib\net45\ImageResizer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImageResizer.Plugins.Watermark, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ImageResizer.Plugins.Watermark.4.0.5\lib\net45\ImageResizer.Plugins.Watermark.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MaxMind.Db, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\MaxMind.DB.1.0.0.0\lib\net40\MaxMind.Db.dll</HintPath>
@@ -111,6 +119,10 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.3.5\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Recaptcha">
       <HintPath>..\..\packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
@@ -543,6 +555,7 @@
     <Content Include="Content\Images\ajax-loader.gif" />
     <Content Include="Content\Images\error_fb.png" />
     <Content Include="Content\Images\logo-tuils-motos.png" />
+    <Content Include="Content\Images\waterTuils100.png" />
     <Content Include="Content\Images\ogBike.jpg" />
     <Content Include="Content\Images\ogBike.png" />
     <Content Include="Content\Images\ogHome.jpg" />
@@ -551,6 +564,7 @@
     <Content Include="Content\Images\ogProduct.png" />
     <Content Include="Content\Images\ogService.jpg" />
     <Content Include="Content\Images\ogService.png" />
+    <Content Include="Content\Images\waterTuils50.png" />
     <Content Include="Content\news\images\correo.jpg" />
     <Content Include="Content\news\images\fb_tuils.jpg" />
     <Content Include="Content\news\images\ico_campana.gif" />
@@ -1296,9 +1310,12 @@
     <Content Include="App_Readme\Handlebarsjs_README.md" />
     <Content Include="App_Readme\Handlebarsjs_LICENSE" />
     <Content Include="Scripts\handelbars.helpers.js" />
+    <None Include="Properties\PublishProfiles\Azure.pubxml" />
     <None Include="Properties\PublishProfiles\PagosPruebas-Release.pubxml" />
     <None Include="Properties\PublishProfiles\Produccion-Release.pubxml" />
     <None Include="Properties\PublishProfiles\Pruebas-Release.pubxml" />
+    <None Include="Properties\PublishProfiles\tuilsprod - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\tuilsprod - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />

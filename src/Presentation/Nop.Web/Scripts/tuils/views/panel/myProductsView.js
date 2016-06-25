@@ -32,11 +32,13 @@
             },
             productRemoved : function(model){
                 this.$('.product-detail[data-id="' + model.get('Id') + '"]').fadeOut();
+                this.trackGAEvent('SoldProduct');
                 this.alert('El producto fue deshabilitado correctamente');
             },
             productActivated: function (model) {
                 this.$('.product-detail[data-id="' + model.get('Id') + '"]').fadeOut();
                 this.alert('El producto fue habilitado correctamente');
+                this.trackGAEvent('RepublishProduct');
             },
             showLimitMessage: function () {
                 this.alertError({ message: TuilsResources.products.hasReachedLimitFeaturedAlert , duration : 10000});

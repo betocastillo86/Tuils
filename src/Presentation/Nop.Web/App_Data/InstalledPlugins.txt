@@ -3,5 +3,5 @@ Misc.WebServices
 RequestQuote.ContactUs
 Widgets.NivoSlider
 Widgets.MegaMenu
-Widgets.ResponsiveSlider
 Payments.PayUExternal
+Widgets.ResponsiveSlider

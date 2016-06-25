@@ -10,7 +10,7 @@
 
             @foreach (var item in Model.NotFilteredItems)
             {
-                <li><a href="@item.FilterUrl"><span class="namefil">@item.Name</span> <span class="fil_cant">@item.NumOfProducts</span></a></li>
+                <li><a href="@item.FilterUrl" for="Manufacturer"><span class="namefil">@item.Name</span> <span class="fil_cant">@item.NumOfProducts</span></a></li>
             }
             @if (Model.NotFilteredItems.Count > Model.MaxNumberOptionsToShow)
             {

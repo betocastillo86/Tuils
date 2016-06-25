@@ -21,7 +21,11 @@
             this.ddlBikeReference = this.$("#BikeReferenceId");
             
             if (this.$('.confirmHiddenField').length > 0)
+            {
                 this.alert({ message: this.$('.confirmHiddenField').val() });
+                this.trackGAEvent('UpdateUserInfo');
+            }
+                
         },
         loadReferences: function () {
 

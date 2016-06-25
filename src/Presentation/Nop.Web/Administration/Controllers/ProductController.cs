@@ -675,8 +675,6 @@ namespace Nop.Admin.Controllers
                 model.Published = true;
                 model.VisibleIndividually = true;
             }
-
-            ViewBag.StoreUrl = _storeContext.CurrentStore.Url;
         }
 
         [NonAction]

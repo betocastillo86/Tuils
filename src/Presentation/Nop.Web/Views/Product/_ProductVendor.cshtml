@@ -28,11 +28,11 @@
             <p><span class="label"><span class="icon-tel"></span> @T("Products.Vendor.PhoneNumber"): </span><span class="value tel-vendor">@Model.VendorModel.PhoneNumber</span></p>
 
 
-            <a name="add-question" class="button-1 write-product-review-button" href="tel:@Model.VendorModel.PhoneNumber">@T("Product.Vendor.Call")</a>
-            <a name="add-question" class="button-1 write-product-review-button" href="#product-questions">@T("Product.Vendor.Email")</a>
+            <a name="add-question" class="button-1 write-product-review-button actionVendor" for="Call" href="tel:@Model.VendorModel.PhoneNumber">@T("Product.Vendor.Call")</a>
+            <a name="add-question" class="button-1 write-product-review-button actionVendor" for="Contact" href="#product-questions">@T("Product.Vendor.Email")</a>
             @if (Model.VendorModel.VendorType == Nop.Core.Domain.Vendors.VendorType.Market)
             {
-                <a name="add-question" class="button-1 write-product-review-button" href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">Visitar @(Model.VendorModel.VendorSubType == Nop.Core.Domain.Vendors.VendorSubType.Store ? "Almacen" : "Taller")</a>
+                <a name="add-question" class="button-1 write-product-review-button actionVendor" for="GoMarket" href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">Visitar @(Model.VendorModel.VendorSubType == Nop.Core.Domain.Vendors.VendorSubType.Store ? "Almacen" : "Taller")</a>
             }
             
 

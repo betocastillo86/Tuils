@@ -25,15 +25,13 @@
             this.minLengthAutocomplete = this.searchBox.attr("data-minlength");
             this.loadAutoComplete();
         },
-        /*refreshSubmitForm: function () {
-            this.form.attr('action', '/buscar/' + this.searchBox.val().replace(/(\&|\:|\<|\>|\\|\%|\*)/g, '').replace(/ /g, '-'));
-        },*/
         search: function () {
             if (this.searchBox.val() == "") {
                 this.alertError(this.$("#Search_EnterSearchTerms").val());
                 this.searchBox.focus();
                 return false;
             }
+            this.trackGAEvent('Search');
             return true;
         },
         showSearchBox: function (obj) {
@@ -71,16 +69,7 @@
                     that.$("#small-searchterms").val(ui.item.value);
                     this.form.submit();
                 }
-            })
-            /*.data("ui-autocomplete")._renderItem = function(ul, item) {
-                var t = item.label;
-                //html encode
-                t = htmlEncode(t);
-                return $("<li></li>")
-                    .data("item.autocomplete", item)
-                    .append("<a>" + t + "</a>")
-                .appendTo(ul);
-            };*/
+            });
         },
         render: function () {
             this.loadControls();

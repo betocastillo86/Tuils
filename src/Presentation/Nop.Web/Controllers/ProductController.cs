@@ -419,7 +419,7 @@ namespace Nop.Web.Controllers
 
                 var defaultPictureModel = new PictureModel
                 {
-                    ImageUrl = _pictureService.GetPictureUrl(pictures.FirstOrDefault(), defaultPictureSize, !isAssociatedProduct),
+                    ImageUrl = _pictureService.GetPictureUrl(pictures.FirstOrDefault(), defaultPictureSize, !isAssociatedProduct, watermarks: new string[] { "logoTuils50" }),
                     FullSizeImageUrl = _pictureService.GetPictureUrl(pictures.FirstOrDefault(), 0, !isAssociatedProduct),
                     Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), model.Name),
                     AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), model.Name),
@@ -427,7 +427,7 @@ namespace Nop.Web.Controllers
 
                 var ogPictureModel = new PictureModel
                 {
-                    ImageUrl = _pictureService.GetPictureUrl(pictures.FirstOrDefault(), 1200, true, cropProportional:true, heightSize:630),
+                    ImageUrl = _pictureService.GetPictureUrl(pictures.FirstOrDefault(), 1200, true, cropProportional:true, watermarks:new string[]{"logoTuils100"}, heightSize:630),
                     FullSizeImageUrl = _pictureService.GetPictureUrl(pictures.FirstOrDefault(), 0, !isAssociatedProduct),
                     Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), model.Name),
                     AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), model.Name),
@@ -451,7 +451,7 @@ namespace Nop.Web.Controllers
             model.DefaultPictureModel = cachedPictures.DefaultPictureModel;
             model.DefaultPictureOGModel = cachedPictures.OGPicture;
 
-            #endregion
+            #endregion  
 
             #region WishList
             //Solo se muestra la lista deseos para usuarios registrados

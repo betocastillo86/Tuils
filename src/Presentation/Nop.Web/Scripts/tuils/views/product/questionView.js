@@ -5,7 +5,7 @@
 
             events: {
                 'click input[name="add-question"]': 'save',
-                'click #divLinkWriteQuestion' : 'showQuestionForm'
+                'click #divLinkWriteQuestion': 'showQuestionForm'
             },
 
             bindings: {
@@ -41,6 +41,7 @@
                 }
             },
             questionSaved: function () {
+                this.trackGAEvent('NewQuestion');
                 var that = this;
                 this.$("#question-form").fadeOut({
                     complete: function () {
