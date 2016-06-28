@@ -450,6 +450,7 @@ namespace Nop.Web.Controllers
             });
             model.DefaultPictureModel = cachedPictures.DefaultPictureModel;
             model.DefaultPictureOGModel = cachedPictures.OGPicture;
+            model.PictureModels = cachedPictures.PictureModels;
 
             #endregion  
 

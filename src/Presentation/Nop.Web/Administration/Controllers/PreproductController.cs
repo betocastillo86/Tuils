@@ -99,7 +99,11 @@ namespace Nop.Admin.Controllers
         public ActionResult Edit(int id)
         {
             var preproduct = _preproductService.GetById(id);
-            return View(preproduct.ToModel());
+            var model = preproduct.ToModel();
+            model.CreatedOn = _dateTimeHelper.ConvertToUserTime(preproduct.CreatedOnUtc, DateTimeKind.Utc).ToString("f");
+            if (preproduct.UpdatedOnUtc.HasValue)
+                model.UpdatedOn = _dateTimeHelper.ConvertToUserTime(preproduct.UpdatedOnUtc.Value, DateTimeKind.Utc).ToString("f");
+            return View(model);
         }
 
         [HttpPost]

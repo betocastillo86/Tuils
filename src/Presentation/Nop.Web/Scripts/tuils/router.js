@@ -79,7 +79,7 @@
                     throw "Ruta sin configurar: " + document.location.href;
             },
             home: function () {
-                this.currentView = new HomeView();
+                this.currentView = new HomeView({ el: '.home-page' });
                 this.loadSubViews();
             },
             sell: function () {

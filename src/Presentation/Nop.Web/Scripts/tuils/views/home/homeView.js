@@ -4,6 +4,15 @@ define(['jquery', 'underscore', 'baseView', 'tuils/views/home/categoriesHomeView
 
         var HomeView = BaseView.extend({
 
+            events: {
+                'click .rslides_container a': 'clickOnBanner',
+                'click .conte_marcas a': 'clickOnManufacturer',
+                'click .product-grid a': 'clickOnProduct',
+                'click .home-tiendas_grid a': 'clickOnStore',
+                'click .conte_categories a': 'clickOnCategory',
+                'click .prods-me a': 'clickOnMyProducts'
+            },
+
             initialize: function (args) {
                 this.loadSlider();
                 this.loadCategories();
@@ -41,6 +50,10 @@ define(['jquery', 'underscore', 'baseView', 'tuils/views/home/categoriesHomeView
                     this.viewCategories = new CategoriesHomeView({ el: '.conte_categories' });
                 }
             },
+            clickOnLink: function (obj) {
+                var target = $(obj.currentTarget);
+                debugger;
+            },
             loadVendors: function () {
                 this.viewVendors = new VendorsHomeView({ el: '#vendorCarousel' });
             },
@@ -50,6 +63,28 @@ define(['jquery', 'underscore', 'baseView', 'tuils/views/home/categoriesHomeView
             },
             render: function () {
                 return this;
+            },
+            clickOnBanner: function (obj) {
+                return this.trackClickHome('Banner', obj);
+            },
+            clickOnManufacturer: function (obj) {
+                return this.trackClickHome('Manufacturer', obj);
+            },
+            clickOnProduct: function (obj) {
+                return this.trackClickHome('Product', obj);
+            },
+            clickOnStore: function (obj) {
+                return this.trackClickHome('Store', obj);
+            },
+            clickOnCategory: function (obj) {
+                return this.trackClickHome('Category', obj);
+            },
+            clickOnMyProducts: function (obj) {
+                return this.trackClickHome('MyProducts', obj);
+            },
+            trackClickHome: function (section, obj) {
+                this.trackGAEvent('HomeClick', section, $(obj.currentTarget).attr('href'));
+                return true;
             }
         });
 
