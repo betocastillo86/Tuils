@@ -14,12 +14,12 @@
             {
                 //string styleShow = i >= Model.MaxNumberOptionsToShow ? "style=display:none" : string.Empty;
                 //i++;
-                <li  ><a href="@category.FilterUrl" for="Category"><span class="namefil">@category.Name</span> <span class="fil_cant">@category.NumOfProducts</span></a></li>
+                <li  ><a href="@category.FilterUrl" for="Category" rel="nofollow"><span class="namefil">@category.Name</span> <span class="fil_cant">@category.NumOfProducts</span></a></li>
             }
 
             @if(Model.NotFilteredItems.Count > Model.MaxNumberOptionsToShow)
             {
-                <a href="javascript:;" class="qcat-more-filters"><b>@T("Filtering.MoreOptions")</b> <span class="icon-down"></span></a>
+                <a href="javascript:;" class="qcat-more-filters" rel="nofollow"><b>@T("Filtering.MoreOptions")</b> <span class="icon-down"></span></a>
             }
         </ul>
     }
