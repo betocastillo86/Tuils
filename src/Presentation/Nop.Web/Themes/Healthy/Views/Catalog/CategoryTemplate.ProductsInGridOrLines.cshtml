@@ -8,7 +8,7 @@
     var canonicalUrlsEnabled = EngineContext.Current.Resolve<SeoSettings>().CanonicalUrlsEnabled;
     if (canonicalUrlsEnabled)
     {
-        var categoryUrl = Url.RouteUrl("Category", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+        var categoryUrl = Url.RouteUrl("Category", new { SeName = Model.SeName, query = string.Empty }, this.Request.Url.Scheme);
         Html.AddCanonicalUrlParts(categoryUrl);
     }
 
