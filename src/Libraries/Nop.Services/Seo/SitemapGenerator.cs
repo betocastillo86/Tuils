@@ -124,6 +124,12 @@ namespace Nop.Services.Seo
         private void WriteVendors(UrlHelper urlHelper)
         {
             var vendors = _vendorService.GetAllVendors(vendorType:VendorType.Market);
+            
+            
+            //Agrega la ruta de todas las tiendas
+            var urlAll = urlHelper.RouteUrl("VendorList", null,  "http");
+            WriteUrlLocation(urlAll, UpdateFrequency.Weekly, DateTime.UtcNow);
+
             foreach (var vendor in vendors)
             {
                 var url = urlHelper.RouteUrl("Vendor", new { SeName = vendor.GetSeName() }, "http");

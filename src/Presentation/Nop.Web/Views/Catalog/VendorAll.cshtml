@@ -2,7 +2,7 @@
 @{
     Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
 
-    
+
     Html.AddTitleParts(T("PageTitle.Vendors").Text);
 }
 @using Nop.Web.Models.Catalog;
@@ -13,16 +13,18 @@
     <div class="page-body">
         @if (Model.Count > 0)
         {
-        <ul class="vendor-list">
-            @foreach (var item in Model)
+
+            foreach (var vendor in Model)
             {
-                <li>
-                    <a href="@Url.RouteUrl("Vendor", new { SeName = item.SeName })" class="vendor">
-                        @item.Name
+                <div class="item-tienda">
+                    <a href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">
+                        <img alt="@vendor.Name" title="@vendor.Name" src="@vendor.Picture.ImageUrl" width="120" height="120" />
                     </a>
-                </li>
+                    <p>@vendor.Name</p>
+                    <a class="btn_tienda" href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">Ir a tienda</a>
+                </div>
             }
-        </ul>
+
         }
     </div>
 </div>

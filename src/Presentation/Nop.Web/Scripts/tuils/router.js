@@ -68,6 +68,7 @@
                 'Sales/PaymentResponse(/*query)': 'paymentResponse',
                 'promociona-tu-taller-de-motos-con-tuils': 'landingRepair',
                 'promociona-tu-negocio-de-motos-con-tuils': 'landingStore',
+                'tiendas' : 'vendors',
                 '*path': 'defaultRoute'
             },
             defaultRoute: function (path) {
@@ -189,6 +190,9 @@
                 this.loadTwoColumns();
             },
             contactUs: function () {
+                this.loadTwoColumns();
+            },
+            vendors: function () {
                 this.loadTwoColumns();
             },
             aboutUs: function () {

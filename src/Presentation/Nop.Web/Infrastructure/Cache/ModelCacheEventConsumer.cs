@@ -167,6 +167,11 @@ namespace Nop.Web.Infrastructure.Cache
         public const string MANUFACTURER_NAVIGATION_PATTERN_KEY = "Nop.pres.manufacturer.navigation";
 
         /// <summary>
+        /// Lista todas las tiendas
+        /// </summary>
+        public const string VENDOR_ALL = "Nop.pres.vendor.all";
+        
+        /// <summary>
         /// Key for VendorNavigationModel caching
         /// </summary>
         public const string VENDOR_NAVIGATION_MODEL_KEY = "Nop.pres.vendor.navigation";
@@ -778,8 +783,12 @@ namespace Nop.Web.Infrastructure.Cache
         {
             _cacheManager.RemoveByPattern(VENDOR_NAVIGATION_PATTERN_KEY);
 
-            if(eventMessage.Entity.VendorType == VendorType.Market)
+            if (eventMessage.Entity.VendorType == VendorType.Market)
+            {
                 _cacheManager.Remove(VENDOR_HOMEPAGE_KEY);
+                _cacheManager.Remove(VENDOR_ALL);
+            }
+                
 
         }
         public void HandleEvent(EntityUpdated<Vendor> eventMessage)
@@ -787,14 +796,20 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(VENDOR_NAVIGATION_PATTERN_KEY);
 
             if (eventMessage.Entity.VendorType == VendorType.Market)
+            {
                 _cacheManager.Remove(VENDOR_HOMEPAGE_KEY);
+                _cacheManager.Remove(VENDOR_ALL);
+            }
         }
         public void HandleEvent(EntityDeleted<Vendor> eventMessage)
         {
             _cacheManager.RemoveByPattern(VENDOR_NAVIGATION_PATTERN_KEY);
 
             if (eventMessage.Entity.VendorType == VendorType.Market)
+            {
                 _cacheManager.Remove(VENDOR_HOMEPAGE_KEY);
+                _cacheManager.Remove(VENDOR_ALL);
+            }
         }
 
         //manufacturers

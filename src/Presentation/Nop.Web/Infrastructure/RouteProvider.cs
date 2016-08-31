@@ -153,7 +153,7 @@ namespace Nop.Web.Infrastructure
                             new[] { "Nop.Web.Controllers" });
             //vendors
             routes.MapLocalizedRoute("VendorList",
-                            "vendor/all/",
+                            "tiendas",
                             new { controller = "Catalog", action = "VendorAll" },
                             new[] { "Nop.Web.Controllers" });
 
