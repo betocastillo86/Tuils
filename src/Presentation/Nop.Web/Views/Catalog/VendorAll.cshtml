@@ -1,30 +1,33 @@
 ﻿@model IList<VendorModel>
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
 
     Html.AddTitleParts(T("PageTitle.Vendors").Text);
 }
 @using Nop.Web.Models.Catalog;
 <div class="page vendor-list-page">
-    <div class="page-title">
-        <h1>@T("Vendors.List")</h1>
-    </div>
-    <div class="page-body">
+    <div class="all_vendor">
+        <h2>@T("Vendors.List")</h2>
+        <div class="txt_allvendor">Aqui encontraras las mejores ofertas para tu moto no dejes pasar esta gran oportunidad.</div>
         @if (Model.Count > 0)
         {
 
             foreach (var vendor in Model)
             {
-                <div class="item-tienda">
+                <div class="box_vendor">
                     <a href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">
-                        <img alt="@vendor.Name" title="@vendor.Name" src="@vendor.Picture.ImageUrl" width="120" height="120" />
+                        <img alt="@vendor.Name" title="@vendor.Name" src="@vendor.Picture.ImageUrl" />
                     </a>
-                    <p>@vendor.Name</p>
+                    <p>
+                        @vendor.Name
+                        <i>Usaquen-Bogotá</i>
+                    </p>
                     <a class="btn_tienda" href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">Ir a tienda</a>
                 </div>
             }
 
         }
+        <br/>
     </div>
 </div>

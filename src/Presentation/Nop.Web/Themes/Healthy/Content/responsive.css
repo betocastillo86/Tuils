@@ -2761,6 +2761,15 @@ html.oldie .container .columns:first-child, html.oldie .container .columns.first
 	}
 
 	/*FIN PLANES*/
+	/*TIENDAS*/
+	.box_vendor p{
+		font-size: 16px;
+	}
+	.box_vendor .btn_tienda{
+		padding: 7px 0;
+
+	}
+	/*FIN TIENDAS*/
 }
 @media screen and (max-width:768px) {
 
@@ -3227,8 +3236,18 @@ html.oldie .container .columns:first-child, html.oldie .container .columns.first
 		margin: 20px 0 0;
 		padding: 20px 0 0;
 	}
-
 	/*FIN PLANES*/
+	/*TIENDAS*/
+	.box_vendor{
+		width: calc(33.3% - 20px);
+	}
+	.box_vendor p{
+		font-size: 20px;
+	}
+	.box_vendor .btn_tienda{
+		padding: 10px 0;
+	}
+	/*FIN TIENDAS*/
 }
 @media screen and (max-width:667px) {
 	.item-tienda {
@@ -3507,6 +3526,22 @@ html.oldie .container .columns:first-child, html.oldie .container .columns.first
 	}
 
 	/*fin panel de control*/
+	/*TIENDAS*/
+	.all_vendor h2{
+		font-size: 20px;
+	}
+	.txt_allvendor{
+		font-size: 14px;
+
+	}
+	.box_vendor p{
+		font-size: 16px;
+		height: 65px;
+	}
+	.box_vendor .btn_tienda{
+		padding: 7px 0;
+	}
+	/*FIN TIENDAS*/
 }
 @media screen and (max-width:600px) {
 
@@ -4151,6 +4186,14 @@ html.oldie .container .columns:first-child, html.oldie .container .columns.first
 	}
 
 	/*FIN PLANES*/
+	/*TIENDAS*/
+	.box_vendor{
+		width: calc(50% - 20px);
+	}
+	.txt_allvendor{
+		display: none;
+	}
+	/*FIN TIENDAS*/
 }
 @media screen and (max-width:440px) {
 	.picture-uploader li:nth-child(3n) {
@@ -4378,5 +4421,9 @@ html.oldie .container .columns:first-child, html.oldie .container .columns.first
 	}
 	.desta_quienes h4 {
 		margin: 0 0 10px;
+	}
+	.box_vendor{
+		width: 100%;
+		margin: 0 0 20px;
 	}
 }
