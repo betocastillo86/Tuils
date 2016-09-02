@@ -4846,9 +4846,11 @@ td.fieldname {
 }
 .tel_prob{
 	font-size: 25px;
-	color: #395983;
 	margin: 5px 0;
 }
+    .tel_prob a {
+        color: #395983;
+    }
 .tel_prob span{
 	color: #FB7055;
 }
