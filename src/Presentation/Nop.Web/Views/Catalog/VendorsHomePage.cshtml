@@ -8,7 +8,7 @@
 {
     <div class="home-tiendas_grid">
         <div class="title">
-            @T("Home.Vendors.Title")
+            @T("Home.Vendors.Title") <a href="@Url.Action("VendorAll", "Catalog")">Ver todos</a>
         </div>
         <div id="vendorCarousel">
             @foreach (var vendor in Model.Vendors)

@@ -21,13 +21,16 @@
                     </a>
                     <p>
                         @vendor.Name
-                        <i>Usaquen-Bogotá</i>
-                    </p>
-                    <a class="btn_tienda" href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">Ir a tienda</a>
-                </div>
+                        @if (vendor.Offices != null && vendor.Offices.Count > 0)
+                        {
+                            <i>@vendor.Offices.FirstOrDefault().StateProvinceName</i>
+                        }
+                        </p>
+                        <a class="btn_tienda" href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">Ir a @(vendor.VendorSubType== Nop.Core.Domain.Vendors.VendorSubType.Store ? "Tienda" : "Taller" )</a>
+                    </div>
             }
 
         }
-        <br/>
+        <br />
     </div>
 </div>

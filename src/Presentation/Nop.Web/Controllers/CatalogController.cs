@@ -1488,7 +1488,7 @@ namespace Nop.Web.Controllers
                 return _vendorService.GetAllVendors(vendorType: VendorType.Market);
             });
 
-            var model = vendors.ToModels(_workContext, _pictureService, _localizationService, _mediaSettings, _vendorService);
+            var model = vendors.ToModels(_workContext, _pictureService, _localizationService, _mediaSettings, _vendorService, _addressService);
             return View(model);
         }
 
