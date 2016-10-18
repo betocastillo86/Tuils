@@ -20,10 +20,8 @@
                         <img alt="@vendor.Name" title="@vendor.Name" src="@vendor.Picture.ImageUrl" />
                     </a>
                     <p>
-                        @vendor.Name
-                        @if (vendor.Offices != null && vendor.Offices.Count > 0)
-                        {
-                            <i>@vendor.Offices.FirstOrDefault().StateProvinceName</i>
+                        <a href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">@vendor.Name</a> 
+                           @if (vendor.Offices != null && vendor.Offices.Count > 0) { <i>@vendor.Offices.FirstOrDefault().StateProvinceName</i>
                         }
                         </p>
                         <a class="btn_tienda" href="@Url.RouteUrl("Vendor", new { seName = vendor.SeName })">Ir a @(vendor.VendorSubType== Nop.Core.Domain.Vendors.VendorSubType.Store ? "Tienda" : "Taller" )</a>

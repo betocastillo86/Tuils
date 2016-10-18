@@ -20,6 +20,15 @@
             </div>*@
         
     </div>
+    
+    if (!string.IsNullOrEmpty(Model.CheckoutLink))
+    {
+        <a href="@Model.CheckoutLink" class="button-2 btn-contact">
+            
+                Agregar al carrito
+            
+        </a>
+    }
     @*<a id="btnShowVendor" data-productid="@Model.Id" data-vendorurl="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName, pid = Model.Id })" class="button-2 btn-contact"><span class="icon-tel"></span> @T("Products.SeeVendor")</a>
 
 

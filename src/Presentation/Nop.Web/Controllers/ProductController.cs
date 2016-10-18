@@ -795,7 +795,15 @@ namespace Nop.Web.Controllers
                 model.ProductSpecifications = this.PrepareProductSpecificationModel(_workContext,
                     _specificationAttributeService,
                     _cacheManager,
-                    product);
+                    product).ToList();
+
+
+                var checkoutLinkAttribute = model.ProductSpecifications.FirstOrDefault(ps => ps.SpecificationAttributeName.Equals("CheckoutLink"));
+                if (checkoutLinkAttribute != null)
+                {
+                    model.CheckoutLink = checkoutLinkAttribute.ValueRaw;
+                    model.ProductSpecifications.Remove(checkoutLinkAttribute);
+                }
             }
             
             #endregion

@@ -27,5 +27,7 @@ namespace Nop.Services.ExportImport
         /// <param name="stream">Stream</param>
         /// <returns>Number of imported states</returns>
         int ImportStatesFromTxt(Stream stream);
+
+        void ImportBasicProductsFromXlsx(Stream stream);
     }
 }

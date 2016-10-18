@@ -12,6 +12,7 @@ using Nop.Services.Media;
 using Nop.Services.Messages;
 using Nop.Services.Seo;
 using OfficeOpenXml;
+using Nop.Services.Vendors;
 
 namespace Nop.Services.ExportImport
 {
@@ -31,6 +32,7 @@ namespace Nop.Services.ExportImport
         private readonly INewsLetterSubscriptionService _newsLetterSubscriptionService;
         private readonly ICountryService _countryService;
         private readonly IStateProvinceService _stateProvinceService;
+        private readonly IVendorService _vendorService;
 
         #endregion
 
@@ -44,7 +46,8 @@ namespace Nop.Services.ExportImport
             IStoreContext storeContext,
             INewsLetterSubscriptionService newsLetterSubscriptionService,
             ICountryService countryService,
-            IStateProvinceService stateProvinceService)
+            IStateProvinceService stateProvinceService,
+            IVendorService vendorService)
         {
             this._productService = productService;
             this._categoryService = categoryService;
@@ -55,6 +58,7 @@ namespace Nop.Services.ExportImport
             this._newsLetterSubscriptionService = newsLetterSubscriptionService;
             this._countryService = countryService;
             this._stateProvinceService = stateProvinceService;
+            this._vendorService = vendorService;
         }
 
         #endregion
@@ -75,9 +79,12 @@ namespace Nop.Services.ExportImport
             return 0;
         }
 
-        protected virtual string ConvertColumnToString(object columnValue)
+        protected virtual string ConvertColumnToString(object columnValue, bool validateNA = false)
         {
             if (columnValue == null)
+                return null;
+
+            if (validateNA && !string.IsNullOrEmpty(columnValue.ToString()) && columnValue.ToString().ToLower().Equals("#n/a"))
                 return null;
 
             return Convert.ToString(columnValue);
@@ -500,6 +507,431 @@ namespace Nop.Services.ExportImport
                             {
                                 Picture = _pictureService.InsertPicture(newPictureBinary, mimeType , _pictureService.GetPictureSeName(name), true),
                                 DisplayOrder = 1,
+                            });
+                            _productService.UpdateProduct(product);
+                        }
+                    }
+
+                    //update "HasTierPrices" and "HasDiscountsApplied" properties
+                    _productService.UpdateHasTierPricesProperty(product);
+                    _productService.UpdateHasDiscountsApplied(product);
+
+
+
+                    //next product
+                    iRow++;
+                }
+            }
+        }
+
+
+        public virtual void ImportBasicProductsFromXlsx(Stream stream)
+        {
+            // ok, we can run the real code of the sample now
+            using (var xlPackage = new ExcelPackage(stream))
+            {
+                // get the first worksheet in the workbook
+                var worksheet = xlPackage.Workbook.Worksheets.FirstOrDefault();
+                if (worksheet == null)
+                    throw new NopException("No worksheet found");
+
+                //the columns
+                var properties = new[]
+                {
+                    "Id",
+                    "CategoryName",
+                    "CategoryId",
+                    "Name",
+                    "Description",
+                    "Price",
+                    "ManufacturerName",
+                    "ManufacturerId",
+                    "ReferenceName1",
+                    "ReferenceName2",
+                    "ReferenceId1",
+                    "ReferenceId2",
+                    "MaterialName1",
+                    "MaterialName2",
+                    "MaterialName3",
+                    "Material1",
+                    "Material2",
+                    "Material3",
+                    "WithMaterials",
+                    "MaterialsPrice",
+                    "VendorId",
+                    "StateProvinceId"
+                };
+
+
+                int iRow = 3;
+                while (true)
+                {
+                    bool theresEmptyCells = false;
+                    for (var i = 1; i <= 6; i++)
+                    {
+                        var cell = worksheet.Cells[iRow, i];
+                        if (cell.Value == null || String.IsNullOrEmpty(cell.Value.ToString()) || cell.Value.ToString().Equals("#N/A"))
+                        {
+                            theresEmptyCells = true;
+                            break;
+                        }
+                    }
+
+
+
+
+                    if (theresEmptyCells)
+                        break;
+
+                    int rowId = Convert.ToInt32(worksheet.Cells[iRow, GetColumnIndex(properties, "Id")].Value);
+                    int productTypeId = Convert.ToInt32(ProductType.SimpleProduct);
+                    bool visibleIndividually = true;
+                    int parentGroupedProductId = 0;
+                    string name = ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "Name")].Value);
+                    string shortDescription = ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "Description")].Value);
+                    string fullDescription = ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "Description")].Value);
+                    int vendorId = Convert.ToInt32(worksheet.Cells[iRow, GetColumnIndex(properties, "VendorId")].Value);
+                    int stateProvinceId = Convert.ToInt32(worksheet.Cells[iRow, GetColumnIndex(properties, "StateProvinceId")].Value);
+                    
+
+
+                    int productTemplateId = 1;
+                    bool showOnHomePage = false;
+                    string metaKeywords = null;
+                    string metaDescription = shortDescription;
+                    string metaTitle = null;
+                    string seName = null;
+                    bool allowCustomerReviews = false;
+                    bool published = false;
+                    string sku = null;
+                    string manufacturerPartNumber = null;
+                    string gtin = null;
+                    bool isGiftCard = false;
+                    int giftCardTypeId = 0;
+                    bool requireOtherProducts = false;
+                    string requiredProductIds = null;
+                    bool automaticallyAddRequiredProducts = false;
+                    bool isDownload = false;
+                    int downloadId = 0;
+                    bool unlimitedDownloads = false;
+                    int maxNumberOfDownloads = 0;
+                    int downloadActivationTypeId = 0;
+                    bool hasSampleDownload = false;
+                    int sampleDownloadId = 0;
+                    bool hasUserAgreement = false;
+                    string userAgreementText = null;
+                    bool isRecurring = false;
+                    int recurringCycleLength = 0;
+                    int recurringCyclePeriodId = 0;
+                    int recurringTotalCycles = 0;
+                    bool isRental = false;
+                    int rentalPriceLength = 0;
+                    int rentalPricePeriodId = 0;
+                    bool isShipEnabled = false;
+                    bool isFreeShipping = false;
+                    bool shipSeparately = false;
+                    decimal additionalShippingCharge = 0;
+                    int deliveryDateId = 0;
+                    bool isTaxExempt = false;
+                    int taxCategoryId = 0;
+                    bool isTelecommunicationsOrBroadcastingOrElectronicServices = false;
+                    int manageInventoryMethodId = 0;
+                    bool useMultipleWarehouses = false;
+                    int warehouseId = 0;
+                    int stockQuantity = 1;
+                    bool displayStockAvailability = false;
+                    bool displayStockQuantity = false;
+                    int minStockQuantity = 1;
+                    int lowStockActivityId = 0;
+                    int notifyAdminForQuantityBelow = 0;
+                    int backorderModeId = 0;
+                    bool allowBackInStockSubscriptions = false;
+                    int orderMinimumQuantity = 1;
+                    int orderMaximumQuantity = 1;
+                    string allowedQuantities = null;
+                    bool allowAddingOnlyExistingAttributeCombinations = false;
+                    bool disableBuyButton = false;
+                    bool disableWishlistButton = false;
+                    bool availableForPreOrder = false;
+                    DateTime? preOrderAvailabilityStartDateTimeUtc = null;
+                    bool callForPrice = false;
+                    decimal price = Convert.ToDecimal(worksheet.Cells[iRow, GetColumnIndex(properties, "Price")].Value);
+                    decimal oldPrice = 0;
+                    decimal productCost = 0;
+                    decimal? specialPrice = null;
+                    DateTime? specialPriceEndDateTimeUtc = null;
+                    bool customerEntersPrice =false;
+                    decimal minimumCustomerEnteredPrice = 0;
+                    decimal maximumCustomerEnteredPrice = 0;
+                    decimal weight = 0;
+                    decimal length = 0;
+                    decimal width = 0;
+                    decimal height = 0;
+                    DateTime createdOnUtc = DateTime.UtcNow;
+                    string categoryIds = ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "CategoryId")].Value, true);
+                    string manufacturerIds = ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "ManufacturerId")].Value, true);
+                    string specialCategories = string.Format("{0},{1}", ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "ReferenceId1")].Value, true), ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "ReferenceId2")].Value, true));
+                    string materials = string.Format("{0},{1},{2}", ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "Material1")].Value), ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "Material2")].Value, true), ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "Material3")].Value, true));
+                    int suppliesPrice = Convert.ToInt32(worksheet.Cells[iRow, GetColumnIndex(properties, "MaterialsPrice")].Value);
+                    var strIncludeSupplies = ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "WithMaterials")].Value);
+                    bool includeSupplies = strIncludeSupplies != null && strIncludeSupplies.Equals("SI");
+
+
+                    string material1 = ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "Material1")].Value, true);
+                    string material2 = ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "Material2")].Value, true);
+                    string material3 = ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "Material3")].Value, true);
+
+                    //string picture1 = ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "Picture1")].Value);
+                    //string picture2 = ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "Picture2")].Value);
+                    //string picture3 = ConvertColumnToString(worksheet.Cells[iRow, GetColumnIndex(properties, "Picture3")].Value);
+
+                    
+
+                    var product = new Product();
+                    bool newProduct = true;
+
+                    product.ProductTypeId = productTypeId;
+                    product.ParentGroupedProductId = parentGroupedProductId;
+                    product.VisibleIndividually = visibleIndividually;
+                    product.Name = name;
+                    product.ShortDescription = shortDescription;
+                    product.FullDescription = fullDescription;
+                    product.VendorId = vendorId;
+                    product.ProductTemplateId = productTemplateId;
+                    product.ShowOnHomePage = showOnHomePage;
+                    product.MetaKeywords = metaKeywords;
+                    product.MetaDescription = metaDescription;
+                    product.MetaTitle = metaTitle;
+                    product.AllowCustomerReviews = allowCustomerReviews;
+                    product.Sku = sku;
+                    product.ManufacturerPartNumber = manufacturerPartNumber;
+                    product.Gtin = gtin;
+                    product.IsGiftCard = isGiftCard;
+                    product.GiftCardTypeId = giftCardTypeId;
+                    product.RequireOtherProducts = requireOtherProducts;
+                    product.RequiredProductIds = requiredProductIds;
+                    product.AutomaticallyAddRequiredProducts = automaticallyAddRequiredProducts;
+                    product.IsDownload = isDownload;
+                    product.DownloadId = downloadId;
+                    product.UnlimitedDownloads = unlimitedDownloads;
+                    product.MaxNumberOfDownloads = maxNumberOfDownloads;
+                    product.DownloadActivationTypeId = downloadActivationTypeId;
+                    product.HasSampleDownload = hasSampleDownload;
+                    product.SampleDownloadId = sampleDownloadId;
+                    product.HasUserAgreement = hasUserAgreement;
+                    product.UserAgreementText = userAgreementText;
+                    product.IsRecurring = isRecurring;
+                    product.RecurringCycleLength = recurringCycleLength;
+                    product.RecurringCyclePeriodId = recurringCyclePeriodId;
+                    product.RecurringTotalCycles = recurringTotalCycles;
+                    product.IsRental = isRental;
+                    product.RentalPriceLength = rentalPriceLength;
+                    product.RentalPricePeriodId = rentalPricePeriodId;
+                    product.IsShipEnabled = isShipEnabled;
+                    product.IsFreeShipping = isFreeShipping;
+                    product.ShipSeparately = shipSeparately;
+                    product.AdditionalShippingCharge = additionalShippingCharge;
+                    product.DeliveryDateId = deliveryDateId;
+                    product.IsTaxExempt = isTaxExempt;
+                    product.TaxCategoryId = taxCategoryId;
+                    product.IsTelecommunicationsOrBroadcastingOrElectronicServices = isTelecommunicationsOrBroadcastingOrElectronicServices;
+                    product.ManageInventoryMethodId = manageInventoryMethodId;
+                    product.UseMultipleWarehouses = useMultipleWarehouses;
+                    product.WarehouseId = warehouseId;
+                    product.StockQuantity = stockQuantity;
+                    product.DisplayStockAvailability = displayStockAvailability;
+                    product.DisplayStockQuantity = displayStockQuantity;
+                    product.MinStockQuantity = minStockQuantity;
+                    product.LowStockActivityId = lowStockActivityId;
+                    product.NotifyAdminForQuantityBelow = notifyAdminForQuantityBelow;
+                    product.BackorderModeId = backorderModeId;
+                    product.AllowBackInStockSubscriptions = allowBackInStockSubscriptions;
+                    product.OrderMinimumQuantity = orderMinimumQuantity;
+                    product.OrderMaximumQuantity = orderMaximumQuantity;
+                    product.AllowedQuantities = allowedQuantities;
+                    product.AllowAddingOnlyExistingAttributeCombinations = allowAddingOnlyExistingAttributeCombinations;
+                    product.DisableBuyButton = disableBuyButton;
+                    product.DisableWishlistButton = disableWishlistButton;
+                    product.AvailableForPreOrder = availableForPreOrder;
+                    product.PreOrderAvailabilityStartDateTimeUtc = preOrderAvailabilityStartDateTimeUtc;
+                    product.CallForPrice = callForPrice;
+                    product.Price = price;
+                    product.OldPrice = oldPrice;
+                    product.ProductCost = productCost;
+                    product.SpecialPrice = specialPrice;
+                    product.SpecialPriceStartDateTimeUtc = null;
+                    product.SpecialPriceEndDateTimeUtc = specialPriceEndDateTimeUtc;
+                    product.CustomerEntersPrice = customerEntersPrice;
+                    product.MinimumCustomerEnteredPrice = minimumCustomerEnteredPrice;
+                    product.MaximumCustomerEnteredPrice = maximumCustomerEnteredPrice;
+                    product.Weight = weight;
+                    product.Length = length;
+                    product.Width = width;
+                    product.Height = height;
+                    product.Published = published;
+                    product.CreatedOnUtc = createdOnUtc;
+                    product.UpdatedOnUtc = DateTime.UtcNow;
+                    product.SuppliesValue = suppliesPrice;
+                    product.IncludeSupplies = includeSupplies;
+                    product.StateProvinceId = stateProvinceId;
+
+
+                    if(!string.IsNullOrEmpty(material1) )
+                    {
+                        product.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute() { 
+                            AttributeType = SpecificationAttributeType.Option,
+                            SpecificationAttributeOptionId = Convert.ToInt32(material1)
+                        });
+                    }
+                    if (!string.IsNullOrEmpty(material2))
+                    {
+                        product.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute()
+                        {
+                            AttributeType = SpecificationAttributeType.Option,
+                            SpecificationAttributeOptionId = Convert.ToInt32(material2)
+                        });
+                    }
+                    if (!string.IsNullOrEmpty(material3))
+                    {
+                        product.ProductSpecificationAttributes.Add(new ProductSpecificationAttribute()
+                        {
+                            AttributeType = SpecificationAttributeType.Option,
+                            SpecificationAttributeOptionId = Convert.ToInt32(material3)
+                        });
+                    }
+
+                    if (newProduct)
+                    {
+                        _productService.InsertProduct(product);
+                    }
+                    else
+                    {
+                        _productService.UpdateProduct(product);
+                    }
+
+                    //search engine name
+                    _urlRecordService.SaveSlug(product, product.ValidateSeName(seName, product.Name, true), 0);
+
+                    //category mappings
+                    if (!String.IsNullOrEmpty(categoryIds))
+                    {
+                        foreach (var id in categoryIds.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(x => Convert.ToInt32(x.Trim())))
+                        {
+                            if (product.ProductCategories.FirstOrDefault(x => x.CategoryId == id) == null)
+                            {
+                                //ensure that category exists
+                                var category = _categoryService.GetCategoryById(id);
+                                if (category != null)
+                                {
+                                    var productCategory = new ProductCategory
+                                    {
+                                        ProductId = product.Id,
+                                        CategoryId = category.Id,
+                                        IsFeaturedProduct = false,
+                                        DisplayOrder = 1
+                                    };
+                                    _categoryService.InsertProductCategory(productCategory);
+                                }
+                            }
+                        }
+                    }
+
+                    //manufacturer mappings
+                    if (!String.IsNullOrEmpty(manufacturerIds))
+                    {
+                        foreach (var id in manufacturerIds.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(x => Convert.ToInt32(x.Trim())))
+                        {
+                            if (product.ProductManufacturers.FirstOrDefault(x => x.ManufacturerId == id) == null)
+                            {
+                                //ensure that manufacturer exists
+                                var manufacturer = _manufacturerService.GetManufacturerById(id);
+                                if (manufacturer != null)
+                                {
+                                    var productManufacturer = new ProductManufacturer
+                                    {
+                                        ProductId = product.Id,
+                                        ManufacturerId = manufacturer.Id,
+                                        IsFeaturedProduct = false,
+                                        DisplayOrder = 1
+                                    };
+                                    _manufacturerService.InsertProductManufacturer(productManufacturer);
+                                }
+                            }
+                        }
+                    }
+
+                    //Special categories
+                    if (!String.IsNullOrEmpty(specialCategories))
+                    {
+                        foreach (var id in specialCategories.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => Convert.ToInt32(x.Trim())))
+                        {
+                            if (product.SpecialCategories.FirstOrDefault(x => x.CategoryId == id) == null)
+                            {
+                                //ensure that manufacturer exists
+                                var cat = _categoryService.GetCategoryById(id);
+                                if (cat != null)
+                                {
+                                    var specialCat = new SpecialCategoryProduct
+                                    {
+                                        ProductId = product.Id,
+                                        CategoryId = cat.Id,
+                                        SpecialType = SpecialCategoryProductType.BikeBrand
+                                    };
+                                    _productService.InsertSpecialCategoryProduct(specialCat);
+                                }
+                            }
+                        }
+                    }
+
+
+                    string rootSite = HttpContext.Current.Server.MapPath("~/");
+                    var pictures = new System.Collections.Generic.List<string>();
+                    for (int iPic = 1; iPic < 6; iPic++)
+                    {
+                        var extensions = new string[] { ".jpg", ".png", ".jpeg" };
+                        string fullPath = string.Format(@"{0}\massiveload\{1}\{2}{{0}}", rootSite, rowId, iPic);
+                        foreach (var ext in extensions)
+                        {
+                            if (System.IO.File.Exists(string.Format(fullPath, ext)))
+                                pictures.Add(string.Format(fullPath, ext));
+                        }
+                    }
+
+
+                    //pictures
+                    foreach (var picturePath in pictures)
+                    {
+                        if (String.IsNullOrEmpty(picturePath))
+                            continue;
+
+                        var mimeType = GetMimeTypeFromFilePath(picturePath);
+                        var newPictureBinary = File.ReadAllBytes(picturePath);
+                        var pictureAlreadyExists = false;
+                        if (!newProduct)
+                        {
+                            //compare with existing product pictures
+                            var existingPictures = _pictureService.GetPicturesByProductId(product.Id);
+                            foreach (var existingPicture in existingPictures)
+                            {
+                                var existingBinary = _pictureService.LoadPictureBinary(existingPicture);
+                                //picture binary after validation (like in database)
+                                var validatedPictureBinary = _pictureService.ValidatePicture(newPictureBinary, mimeType);
+                                if (existingBinary.SequenceEqual(validatedPictureBinary))
+                                {
+                                    //the same picture content
+                                    pictureAlreadyExists = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!pictureAlreadyExists)
+                        {
+                            product.ProductPictures.Add(new ProductPicture
+                            {
+                                Picture = _pictureService.InsertPicture(newPictureBinary, mimeType, _pictureService.GetPictureSeName(name), true),
+                                DisplayOrder = 1,
+                                Active = true
                             });
                             _productService.UpdateProduct(product);
                         }

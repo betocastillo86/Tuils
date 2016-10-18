@@ -2955,6 +2955,39 @@ namespace Nop.Admin.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult ImportBasicExcel()
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            //a vendor cannot import products
+            if (_workContext.CurrentVendor != null)
+                return AccessDeniedView();
+
+            try
+            {
+                var file = Request.Files["importbasicexcelfile"];
+                if (file != null && file.ContentLength > 0)
+                {
+                    _importManager.ImportBasicProductsFromXlsx(file.InputStream);
+                }
+                else
+                {
+                    ErrorNotification(_localizationService.GetResource("Admin.Common.UploadFile"));
+                    return RedirectToAction("List");
+                }
+                SuccessNotification(_localizationService.GetResource("Admin.Catalog.Products.Imported"));
+                return RedirectToAction("List");
+            }
+            catch (Exception exc)
+            {
+                ErrorNotification(exc);
+                return RedirectToAction("List");
+            }
+
+        }
+
         #endregion
 
         #region Low stock reports

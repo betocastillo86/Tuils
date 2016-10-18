@@ -201,6 +201,7 @@ FakesAssemblies/
 #Imagenes de Tuils
 src/Presentation/Nop.Web/Content/Images/Thumbs/*
 src/Presentation/Nop.Web/Content/Images/*
+src/Presentation/Nop.Web/MassiveLoad/*
 
 #Plugins
 src/Presentation/Nop.Web/Plugins/Payments.ExternalPayU/*

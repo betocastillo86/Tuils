@@ -126,6 +126,8 @@ namespace Nop.Web.Models.Catalog
         /// </summary>
         public string StateProvinceName { get; set; }
 
+        public string CheckoutLink { get; set; }
+
         /// <summary>
         /// Detalles del envío
         /// </summary>
