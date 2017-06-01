@@ -80,25 +80,40 @@
                     @Html.Partial("_ProductDetailsPictures", Model)
 
                     <div class="overview">
-                        <!--product price-->
 
-                        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+						<div class="adsense-product">
+								<!--product price-->
 
-                            @{
-                                var dataDictPrice = new ViewDataDictionary();
-                                dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
-                                @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
-                            }
+							<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 
-                            @Html.Partial("_ProductVendor", Model)
+								@{
+									var dataDictPrice = new ViewDataDictionary();
+									dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
+									@Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
+								}
 
-                        </div>
-                        <!--product reviews-->
-                        @Html.Partial("_ProductReviewOverview", Model.ProductReviewOverview)
-                        <!--product creditcard-->
-                        @Html.Partial("_ProductCreditcard", Model)
-                        <!--Información de envío-->
-                        @Html.Partial("_ProductShipping", Model)
+								@Html.Partial("_ProductVendor", Model)
+
+							</div>
+							<!--product reviews-->
+							@Html.Partial("_ProductReviewOverview", Model.ProductReviewOverview)
+							<!--product creditcard-->
+							@Html.Partial("_ProductCreditcard", Model)
+							<!--Información de envío-->
+							@Html.Partial("_ProductShipping", Model)
+						</div>
+						<div class="adsense-banner">
+							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+							<!-- Detalle producto cuadrado -->
+							<ins class="adsbygoogle"
+								 style="display:inline-block;width:300px;height:250px"
+								 data-ad-client="ca-pub-4989702801072526"
+								 data-ad-slot="5304761493"></ins>
+							<script>
+							(adsbygoogle = window.adsbygoogle || []).push({});
+							</script>
+						</div>
+						
                         @if (!String.IsNullOrEmpty(Model.FullDescription))
                         {
                             <div class="full-description" itemprop="description">

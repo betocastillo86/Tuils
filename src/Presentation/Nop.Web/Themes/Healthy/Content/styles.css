@@ -8768,3 +8768,7 @@ ul.tagit input[type="text"] {
 	font-size: inherit !important;
 	display: inline !important;
 }
+
+ins{
+	background-color:#ffffff !important;
+}

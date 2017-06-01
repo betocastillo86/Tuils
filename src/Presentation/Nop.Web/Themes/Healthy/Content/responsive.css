@@ -1114,6 +1114,18 @@ nav #mega-menu li .sub-container.non-mega li a:hover {
 	}
 }
 @media screen and (min-width:768px) {
+	
+	.adsense-product {
+		width:50%;
+		float:left;
+	}
+	
+	.adsense-banner{
+		width:50%;
+		float:left;
+	}
+	
+	
 	.master-wrapper-page {
 		box-shadow: none;
 		display: table;
